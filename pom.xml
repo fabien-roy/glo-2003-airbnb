@@ -22,6 +22,8 @@
         <junit-jupiter-api.version>5.4.2</junit-jupiter-api.version>
         <junit-jupiter-engine.version>5.4.2</junit-jupiter-engine.version>
         <maven-surefire.version>2.22.1</maven-surefire.version>
+        <!-- code coverage -->
+        <jacoco-maven.version>0.8.5</jacoco-maven.version>
         <!-- logging -->
         <slf4j-simple.version>1.7.25</slf4j-simple.version>
         <!-- style -->
@@ -82,6 +84,26 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire.version}</version>
             </plugin>
+            <!-- code coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-code-coverage-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- style -->
             <plugin>
                 <groupId>com.cosium.code</groupId>
@@ -107,5 +129,23 @@
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <!-- code coverage -->
+            <!-- select non-aggregate reports -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
