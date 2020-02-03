@@ -15,4 +15,10 @@ jobs:
       - name: Check Style
         run: mvn git-code-format:validate-code-format
       - name: Tests
-        run: mvn test
+        run: mvn test && mvn jacoco:report
+      - name: Code Coverage
+        uses: codecov/codecov-action@v1
+        run: mvn jacoco:report
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          yml: ./codecov.yml
