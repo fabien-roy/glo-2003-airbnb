@@ -20,6 +20,8 @@
         <spark-core.version>2.9.1</spark-core.version>
         <!-- logging -->
         <slf4j-simple.version>1.7.25</slf4j-simple.version>
+        <!-- style -->
+        <maven-git-code-format.version>1.39</maven-git-code-format.version>
     </properties>
 
     <dependencies>
@@ -56,6 +58,29 @@
                 <configuration>
                     <mainClass>${main-class}</mainClass>
                 </configuration>
+            </plugin>
+            <!-- style -->
+            <plugin>
+                <groupId>com.cosium.code</groupId>
+                <artifactId>maven-git-code-format</artifactId>
+                <version>${maven-git-code-format.version}</version>
+                <executions>
+                    <!-- On commit, format the modified java files -->
+                    <execution>
+                        <id>install-formatter-hook</id>
+                        <goals>
+                            <goal>install-hooks</goal>
+                        </goals>
+                    </execution>
+                    <!-- On Maven verify phase, fail if any file
+                    (including unmodified) is badly formatted -->
+                    <execution>
+                        <id>validate-code-format</id>
+                        <goals>
+                            <goal>validate-code-format</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
