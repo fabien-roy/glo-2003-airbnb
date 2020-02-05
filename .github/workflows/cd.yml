@@ -1,0 +1,16 @@
+name: Project Eq08 CD
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build & Deploy
+        run: mvn clean install &&
+          HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }}
+          mvn clean heroku:deploy
