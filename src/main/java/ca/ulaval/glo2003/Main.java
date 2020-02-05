@@ -1,8 +1,5 @@
 package ca.ulaval.glo2003;
 
-import static spark.Spark.get;
-import static spark.Spark.path;
-
 import java.util.Optional;
 
 public class Main {
@@ -16,8 +13,8 @@ public class Main {
 
   public static void main(String[] args) {
     Server server = new Server();
-    path("/", () -> get("/hello", (req, res) -> "Hello World"));
     server.start(retrievePortNumber());
+    Router.setUpRoutes();
   }
 
   private static Integer retrievePortNumber() {
