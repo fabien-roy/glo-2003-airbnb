@@ -14,7 +14,6 @@ public class Main {
   public static void main(String[] args) {
     Server server = new Server();
     server.start(retrievePortNumber());
-    Router.setUpRoutes();
   }
 
   private static Integer retrievePortNumber() {
