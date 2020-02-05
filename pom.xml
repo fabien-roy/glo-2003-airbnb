@@ -152,8 +152,7 @@
                         <include>target/${jar-file-name}.jar</include>
                     </includes>
                     <processTypes>
-                        <web>java -Dport=$PORT -jar
-                            target/${jar-file-name}.jar</web>
+                        <web>java -Dport=$PORT -jar target/${jar-file-name}.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>
