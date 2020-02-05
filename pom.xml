@@ -18,6 +18,7 @@
         <main-class>ca.ulaval.glo2003.Main</main-class>
         <!-- rest -->
         <spark-core.version>2.9.1</spark-core.version>
+        <jackson-databind.version>2.10.1</jackson-databind.version>
         <!-- test -->
         <junit-jupiter-api.version>5.4.2</junit-jupiter-api.version>
         <junit-jupiter-engine.version>5.4.2</junit-jupiter-engine.version>
@@ -42,6 +43,11 @@
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>${spark-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <!-- test -->
         <dependency>

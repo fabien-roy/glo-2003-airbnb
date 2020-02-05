@@ -1,8 +1,11 @@
 package ca.ulaval.glo2003;
 
 import static spark.Spark.get;
-import static spark.Spark.path;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.eclipse.jetty.http.HttpStatus;
+import spark.Request;
+import spark.Response;
 import spark.RouteGroup;
 
 public class RootResource implements RouteGroup {
@@ -11,6 +14,11 @@ public class RootResource implements RouteGroup {
 
   @Override
   public void addRoutes() {
-    path(ROOT_PATH, () -> get("/hello", (req, res) -> "Hello World"));
+    get(ROOT_PATH + "hello", this::helloWorld, new ObjectMapper()::writeValueAsString);
+  }
+
+  public Object helloWorld(Request request, Response response) {
+    response.status(HttpStatus.OK_200);
+    return "Hello World";
   }
 }
