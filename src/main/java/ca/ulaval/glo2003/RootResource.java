@@ -14,7 +14,7 @@ public class RootResource implements RouteGroup {
 
   @Override
   public void addRoutes() {
-    get(ROOT_PATH + "hello", this::helloWorld, new ObjectMapper()::writeValueAsString);
+    get("/hello", this::helloWorld, new ObjectMapper()::writeValueAsString);
   }
 
   public Object helloWorld(Request request, Response response) {
