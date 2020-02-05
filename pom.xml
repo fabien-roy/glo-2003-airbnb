@@ -28,6 +28,12 @@
         <slf4j-simple.version>1.7.25</slf4j-simple.version>
         <!-- style -->
         <maven-git-code-format.version>1.39</maven-git-code-format.version>
+        <!-- deployment -->
+        <jar-file-name>project-eq08</jar-file-name>
+        <heroku-maven.version>2.0.16</heroku-maven.version>
+        <heroku-maven.appName>glo2003-h2020-eq08</heroku-maven.appName>
+        <maven-shade.version>3.2.1</maven-shade.version>
+        <maven-jar.version>2.4</maven-jar.version>
     </properties>
 
     <dependencies>
@@ -59,6 +65,7 @@
     </dependencies>
 
     <build>
+        <finalName>${jar-file-name}</finalName>
         <plugins>
             <!-- general -->
             <plugin>
@@ -126,6 +133,74 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- deployment -->
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>${heroku-maven.version}</version>
+                <configuration>
+                    <appName>${heroku-maven.appName}</appName>
+                    <includeTarget>false</includeTarget>
+                    <includes>
+                        <include>target/${jar-file-name}.jar</include>
+                    </includes>
+                    <processTypes>
+                        <web>java -Dport=$PORT -jar
+                            target/${jar-file-name}.jar</web>
+                    </processTypes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade.version}</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>module-info.class</exclude>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>
+                                false
+                            </createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation=
+                                                     "org.apache.maven.plugins.shade.resource.
+                                 ManifestResourceTransformer">
+                                    <mainClass>${main-class}</mainClass>
+                                </transformer>
+                                <transformer implementation=
+                                                     "org.apache.maven.plugins.shade.resource.
+                                  ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- avoid third parties dependencies duplication
+                    warnings -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar.version}</version>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                </configuration>
             </plugin>
         </plugins>
     </build>
