@@ -32,6 +32,8 @@ We use trunk based development with `master` as a main branch. Every PR adding a
 
 For each issue, there must be at least one PR (more PRs could be added if the issue is reopened). This PR must build and pass the CI check. Also, two reviewers must approve the PR before it is merged into `master`.
 
+The one in charge of merging the PR is the one in charge of the associated issue.
+
 ## When is a milestone achieved / Definition of done
 
 A milestone is achieved once every of its issues are solved. This includes everything to add for a new release, from adding features, to solving bugs and improving performance.
