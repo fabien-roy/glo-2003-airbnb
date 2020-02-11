@@ -1,40 +1,50 @@
 # Contributing to GLO-2003 (H2020) - Team 8 project
 
-**Contributions are welcome.**
+**Contributions are welcome!**
 
-## How to contribute
+## Code of conduct
 
-If you have found a bug or you have and idea for a new feature, Contributing code is a great way to give something back to open source community Before you did right into the code, there are a few guidelines that we need contributors to follow:
+Before contributing to the project, please read our [code of conduct](https://github.com/glo2003/glo2003-h2020-eq08/blob/master/CODE_OF_CONDUCT.md).
 
-- Consult our contributors license agreements
-- Let us know your changes by creating an clearly described issue
-- Forking the project and setup a new feature branch to work in
-- Go makes it very simple. See our code of conduct.
-- Any significant changes should almost always be accompagning by tests.
-- See our code coverage
-- Do your best to have good commit message for yours changes
-- Push the commit to your fork and submit a pull request by one pull request per issue.
+## Code style
 
-## How to built
+We use [Google Java Code Style](https://google.github.io/styleguide/javaguide.html). It is checked pre-commit and during CI check. To format code, use `mvn git-code-format:format-code-DglobPattern=**/*`.
 
-Maven is use as built automation tool. To start the application, use `mvn clean install` + `mvn exec:java`.
+## Issues
 
-Since we have a pre-commit checker, the code needs to be formatted with Google Java Style. To format code : `mvn git-code-format:format-code-DglobPattern=**/*`.
+We track our issues with GitHub issues. Each issue must have at least one person assigned, a date of delivery, an associated milestone and correct labels.
 
+Milestones represent release numbers. For example, release 1 would be milestone `1`. `1.1` would be release 1 hotfix.
 
-## How to test
+## Test driven development
 
-Running Terminal command `mvn verify` from the root folder.
-To run unit tests, use `mvn surefire:test`.
-For integrating test use `mvn failsafe:integration-test`.
-Coverage report are generated using Jacoco during the report built phase.
+Every single piece of code added to the application must be written using test driven development. For TDD, we follow the tree basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
 
-## Contributors:
+Tests are located in `src/test/java/ca/ulaval/glo2003`. The package naming must be identitical to `src/main/java/ca/ulaval/glo2003`. Test class names must have a `Test` prefix. For instance, the test class for `Main.java` would be `MainTest.java`
 
-- vince2848
-- ExiledNarwal28
-- bigpkd
-- sandrasandra0
-- hugeflower 
-- Arowwa
-- Flyingwhalez
+## Bug reporting
+
+When a bug is spotted in the application, it must be reported as an issue on GitHub issues. There is a `bug` label.
+
+## Pull requests
+
+We use trunk based development with `master` as a main branch. Every PR adding a feature to the application or solving a bug must be merged into `master`.
+
+For each issue, there must be at least one PR (more PRs could be added if the issue is reopened). This PR must build. Also, two reviewers must approve the PR before it is merged into `master`. Once it is merged, it will have to pass CI and CD check on `master`.
+
+The one in charge of merging the PR is the one in charge of the associated issue.
+
+## When is a milestone achieved / Definition of done
+
+A milestone is achieved once every of its issues are solved. This includes everything to add for a new release, from adding features, to solving bugs and improving performance.
+
+## Contributors
+
+- Pakendam Bigou-Lare / bigpkd
+- Thomas Fenot / arowwa
+- Hamza Ben Kirane / flyingwhalez
+- Fabien Roy / ExiledNarwal28
+- Sandrine Diffo Lambo / sandrasandra0
+- Hugo Lafleur / hugeflower
+- Vincent Masse / vince2848
+- Christophe Robillard / Robzilla888
