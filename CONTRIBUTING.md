@@ -4,7 +4,7 @@
 
 ## Code of conduct
 
-Before contributing to the project, please read our [code of conduct](https://github.com/glo2003/glo2003-h2020-eq08/blob/master/CODE_OF_CONDUCT.md).
+Before contributing to the project, please read our [code of conduct](https://github.com/glo2003/glo2003-h2020-eq08/blob/master/CODE_OF_CONDUCT.md). Our [team contract](https://github.com/glo2003/glo2003-h2020-eq08/blob/master/Contrat%20d'%C3%A9quipe.pdf) is also a good insight of our team's rule, but it is completly in french.
 
 ## Code style
 
