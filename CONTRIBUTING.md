@@ -30,7 +30,7 @@ When a bug is spotted in the application, it must be reported as an issue on Git
 
 We use trunk based development with `master` as a main branch. Every PR adding a feature to the application or solving a bug must be merged into `master`.
 
-For each issue, there must be at least one PR (more PRs could be added if the issue is reopened). This PR must build, pass the CI check and the CD check. Also, two reviewers must approve the PR before it is merged into `master`.
+For each issue, there must be at least one PR (more PRs could be added if the issue is reopened). This PR must build. Also, two reviewers must approve the PR before it is merged into `master`. Once it is merged, it will have to pass CI and CD check on `master`.
 
 The one in charge of merging the PR is the one in charge of the associated issue.
 
