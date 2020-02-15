@@ -36,16 +36,104 @@ This is the planned software architecture / file structure for release 1 :
 ```
 /.../glo2003
   /beds
+    /bookings
+      /domain
+        /Booking.java
+          - number : UUID
+          - tenantPublicKey : Base64
+          - arrivalDate : Date
+          - numberOfNights : int
+          - getTotal() : double
+        /BookingFactory.java
+          - create(Booking) : Booking
+            Gives correct UUID to Booking.number
+        /BookingRepository.java -> Interface
+          - add(Booking)
+          - getByNumber(UUID) : Booking
+      /infrastructure
+        /InMemoryBookingRepository.java -> Simple in memory List
+      /rest
+        /exceptions
+          /InvalidArrivalDateException.java
+          /InvalidNumberOfNightsException.java
+        /mappers
+          /BookingMapper.java
+            - fromRequest(BookingRequest) : Booking
+              Validates tenantPublicKey (check if base64)
+              Validates arrivalDate (format and not in the past)
+              Validates numberOfNights
+              Validates package
+            - toResponse(Booking) : BookingResponse
+              Maps Booking to BookingResponse
+              Calculates total (might turn out to be complicated)
+            /InvalidArrivalDateExceptionMapper.java
+          /InvalidNumberOfNightsExceptionMapper.java
+        /BookingRequest.java -> Fits JSON from user story
+        /BookingResource.java
+          - add(BookingRequest)
+            Sends BookingRequest to BookingService and returns correct response and location
+          - getByNumber(String)
+            Sends String to BookingService and returns correct response (BookingResponse)
+        /BedResponse.java -> Fits JSON from user story
+      /services
+         /BookingService.java
+           - add(BookingRequest) : String
+             Maps BookingRequest to Booking using BookingMapper (this validates the request)
+             Gets Bed using BedRepository.get(UUID)
+             Bed.book(Booking)
+             Creates valid Booking using BookingFactory
+             Adds Booking using BookingRepository
+             TransactionService.addBooking(Booking, Bed.ownerPublicKey)
+             Returns Booking.number as String
+           - getByNumber(String) : BookingResponse
+             Maps String to UUID using a mapper (our own or another)
+             Gets Booking using BookingRepository.getByNumber(UUID)
+      /transactions
+        /domain
+          /Transaction.java
+            - timestamp : DateTime
+            - from : String
+            - to : String
+            - total : double
+            - reason : TransactionReasons
+          /TransactionFactory.java
+            - createWithBooking(Booking, String) : Transaction
+              Creates new Transaction with timestamp and information
+          /TransactionReasons.java (enum : StayBooked, StayCompleted)
+          /TransactionRepository.java -> Interface
+            - add(Transaction)
+            - getAll()
+        /infrastructure
+          /InMemoryTransactionRepository.java -> Simple in memory List
+        /rest
+          /TransactionResource.java
+            - getAll()
+              Sends to TransactionService.getAll()
+          /TransactionResponse.java -> Fits JSON from user story
+        /services
+          /TransactionService.java
+            - addBooking(Booking, String)
+              Creates Transaction using TransactionFactory.createWithBooking(Booking, String)
+              Adds Transaction using TransactionRepository.add(Transaction)
+            - getAll() : List<TransactionResponse>
+              Gets all Transaction using TransactionRepository.getAll()
     /domain
       /Bed.java
         - number : UUID
+        - tenantOwnerKey : Base64
         - zipCode : String
         - matressType : MatressTypes
         - cleaningFrequency : CleaningFrequencies
         - bloodTypes : List<BloodTypes>
         - capacity : int
         - package : List<Packages>
+        - bookings : List<Booking> (This might not be a perfect solution)
         - getStars() : int
+        - book(Booking) (This might not be a perfect solution)
+          Validates package is for bed
+          Validates tenant is not owner
+          Validates bed not already booked
+          Adds Booking to list of Booking
       /BedFactory.java
         - create(Bed) : Bed
           Gives correct UUID to Bed.number
@@ -66,6 +154,8 @@ This is the planned software architecture / file structure for release 1 :
       /InMemoryBedRepository.java -> Simple in memory List
     /rest
       /exceptions
+        /BookingNotAllowedException.java
+        /BedAlreadyBookedException.java
         /BedNotFoundException.java
         /CantOfferAllYouCanDrinkPackageException.java
         /CantOfferSweetToothPackageException.java
@@ -77,6 +167,7 @@ This is the planned software architecture / file structure for release 1 :
         /InvalidPackageException.java
         /InvalidPublicKeyException.java
         /InvalidZipCodeException.java
+        /PackageNotAvailableException.java
       /mappers
         /BedMapper.java
           - fromRequest(BedRequest) : Bed
@@ -98,6 +189,8 @@ This is the planned software architecture / file structure for release 1 :
             Maps Bed to BedResponse
             Calculates number of stars (might turn out to be complicated)
         /BedNotFoundExceptionMapper.java
+        /BedAlreadyBookedExceptionMapper.java
+        /BookingNotAllowedExceptionMapper.java
         /CantOfferAllYouCanDrinkPackageExceptionMapper.java
         /CantOfferSweetToothPackageExceptionMapper.java
         /ExceedingAccommodationCapacityExceptionMapper.java
@@ -108,11 +201,12 @@ This is the planned software architecture / file structure for release 1 :
         /InvalidPackageExceptionMapper.java
         /InvalidPublicKeyExceptionMapper.java
         /InvalidZipCodeExceptionMapper.java
+        /PackageNotAvailableExceptionMapper.java
       /BedRequest.java -> Fits JSON from user story
       /BedResource.java
         - add(BedRequest)
           Sends BedRequest to BedService and returns correct response and location
-        - get(params...)
+        - getAll(params...)
           All params are optionnal : package, bedType, cleaningFreq, bloodTypes, minCapacity
           Sends to BedService.get(params...)
         - getByNumber(String)
@@ -125,7 +219,7 @@ This is the planned software architecture / file structure for release 1 :
            Creates valid Bed using BedFactory
            Adds Bed using BedRepository
            Returns Bed.number as String
-         - get(params...) : List<BedResponse>
+         - getAll(params...) : List<BedResponse>
            Validates params using BedMapper
            Gets all Bed using BedRepository.getAll()
            Gets all Bed that match using BedMatcher.matches(Bed, Bed)
