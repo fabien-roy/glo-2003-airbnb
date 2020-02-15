@@ -14,13 +14,7 @@ public class RootResource implements RouteGroup {
 
   @Override
   public void addRoutes() {
-    get("/", (req, res) -> res.status(HttpStatus.BAD_REQUEST_400));
     get("/hello", this::helloWorld, new ObjectMapper()::writeValueAsString);
-  }
-
-  public Object root(Request request, Response response) {
-    response.status(HttpStatus.BAD_REQUEST_400);
-    return "";
   }
 
   public Object helloWorld(Request request, Response response) {
