@@ -1,7 +1,7 @@
 # GLO-2003 (H2020) - Team 8
 
-![Build](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Project%20Eq08%20CI/badge.svg)
-![Deployment](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Project%20Eq08%20CD/badge.svg)
+[![Build](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Project%20Eq08%20CI/badge.svg)](https://github.com/glo2003/glo2003-h2020-eq08/actions?query=workflow%3A%22Project+Eq08+CI%22)
+[![Deployment](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Project%20Eq08%20CD/badge.svg)](https://github.com/glo2003/glo2003-h2020-eq08/actions?query=workflow%3A%22Project+Eq08+CD%22)
 
 This is our project for course GLO-2003 at Laval University.
 
