@@ -57,6 +57,7 @@ This is the planned software architecture / file structure for release 1 :
       /rest
         /exceptions
           /ArrivalDateInThePastException.java
+          /BookingNotFoundException.java
           /InvalidArrivalDateException.java
           /InvalidNumberOfNightsException.java
         /mappers
@@ -70,6 +71,7 @@ This is the planned software architecture / file structure for release 1 :
             - toResponse(Booking) : BookingResponse
               Maps Booking to BookingResponse
               Calculates total (might turn out to be complicated)
+          /BookingNotFoundExceptionMapper.java
           /InvalidArrivalDateExceptionMapper.java
           /InvalidNumberOfNightsExceptionMapper.java
         /BookingRequest.java -> Fits JSON from user story
