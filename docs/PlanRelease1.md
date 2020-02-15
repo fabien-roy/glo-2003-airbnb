@@ -49,8 +49,14 @@ This is the planned software architecture / file structure for release 1 :
       /BedFactory.java
         - create(Bed) : Bed
           Gives correct UUID to Bed.number
+      /BedMatcher.java
+        - matches(Bed, Bed) : boolean
+          Checks if Bed matches other Bed using attributes that are not null
+          Checks for : bedType, cleaningFrequency, bloodTypes, capacity and package
+          We request for a single package while Bed can have many. This should be another separated method.
       /BedRepository.java -> Interface
         - add(Bed)
+        - getAll() : List<Bed>
         - getByNumber(UUID) : Bed
       /BloodTypes.java (enum : O-, O+, AB-, AB+, B-, B+, A-, A+)
       /CleaningFrequencies (enum : Weekly, Monthly, Yearly, Never)
@@ -78,9 +84,16 @@ This is the planned software architecture / file structure for release 1 :
             Validates zipCode has 5 numbers
             Validates bed type exists
             Validates cleaning frequency
-            Validates blood type
+            Validates blood types
             Validates capacity (positive and fits bed type)
             Validates packages (valid + that other packages are included when needed)
+          - fromRequestParams(params...) : Bed
+            Validates bed type exists
+            Validates cleaning frequency
+            Validates blood types
+            Validates capacity (positive)
+            Validates packages (valid + that other packages are included when needed)
+            Returns Bed that fits valid params
           - toResponse(Bed) : BedResponse
             Maps Bed to BedResponse
             Calculates number of stars (might turn out to be complicated)
@@ -99,6 +112,9 @@ This is the planned software architecture / file structure for release 1 :
       /BedResource.java
         - add(BedRequest)
           Sends BedRequest to BedService and returns correct response and location
+        - get(params...)
+          All params are optionnal : package, bedType, cleaningFreq, bloodTypes, minCapacity
+          Sends to BedService.get(params...)
         - getByNumber(String)
           Sends String to BedService and returns correct response (BedResponse)
       /BedResponse.java -> Fits JSON from user story
@@ -109,6 +125,10 @@ This is the planned software architecture / file structure for release 1 :
            Creates valid Bed using BedFactory
            Adds Bed using BedRepository
            Returns Bed.number as String
+         - get(params...) : List<BedResponse>
+           Validates params using BedMapper
+           Gets all Bed using BedRepository.getAll()
+           Gets all Bed that match using BedMatcher.matches(Bed, Bed)
          - getByNumber(String) : BedResponse
            Maps String to UUID using a mapper (our own or another)
            Gets Bed using BedRepository.getByNumber(UUID)
