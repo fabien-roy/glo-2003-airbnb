@@ -124,7 +124,7 @@ This is the planned software architecture / file structure for release 1 :
         - number : UUID
         - tenantOwnerKey : Base64
         - zipCode : String
-        - matressType : MatressTypes
+        - bedType : BedTypes
         - cleaningFrequency : CleaningFrequencies
         - bloodTypes : List<BloodTypes>
         - capacity : int
@@ -148,9 +148,9 @@ This is the planned software architecture / file structure for release 1 :
         - add(Bed)
         - getAll() : List<Bed>
         - getByNumber(UUID) : Bed
+      /BedTypes.java (enum : Latex, MemoryFoam, Springs)
       /BloodTypes.java (enum : O-, O+, AB-, AB+, B-, B+, A-, A+)
       /CleaningFrequencies (enum : Weekly, Monthly, Yearly, Never)
-      /MatressTypes.java (enum : Latex, MemoryFoam, Springs)
       /Packages.java (enum : BloodThirsty, AllYouCanDrink, SweetTooth)
     /infrastructure
       /InMemoryBedRepository.java -> Simple in memory List
