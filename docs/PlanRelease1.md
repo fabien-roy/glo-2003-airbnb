@@ -228,6 +228,7 @@ This is the planned software architecture / file structure for release 1 :
          - getByNumber(String) : BedResponse
            Maps String to UUID using a mapper (our own or another)
            Gets Bed using BedRepository.getByNumber(UUID)
+           Returns BedResponse using BedMapper
   /interfaces
     /rest
       /mappers
