@@ -1,5 +1,8 @@
 # GLO-2003 (H2020) - Team 8
 
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fglo2003%2Fglo2003-h2020-eq08%2Fbadge%3Ftoken%3Dff25c5f138498a6fae3e3edc3ad8b258a4422b1a&%2Fbadge&label=build&logo=none)](https://actions-badge.atrox.dev/glo2003/glo2003-h2020-eq08/goto?token=ff25c5f138498a6fae3e3edc3ad8b258a4422b1a)
+![Heroku](https://heroku-badge.herokuapp.com/?app=glo2003-h2020-eq08&root=hello)
+
 This is our project for course GLO-2003 at Laval University.
 
 Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2003-h2020-eq08.herokuapp.com).
