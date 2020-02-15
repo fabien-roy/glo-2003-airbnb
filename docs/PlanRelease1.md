@@ -56,9 +56,11 @@ This is the planned software architecture / file structure for release 1 :
         /InMemoryBookingRepository.java -> Simple in memory List
       /rest
         /exceptions
+          /ArrivalDateInThePastException.java
           /InvalidArrivalDateException.java
           /InvalidNumberOfNightsException.java
         /mappers
+          /ArrivalDateInThePastExceptionMapper.java
           /BookingMapper.java
             - fromRequest(BookingRequest) : Booking
               Validates tenantPublicKey (check if base64)
@@ -68,7 +70,7 @@ This is the planned software architecture / file structure for release 1 :
             - toResponse(Booking) : BookingResponse
               Maps Booking to BookingResponse
               Calculates total (might turn out to be complicated)
-            /InvalidArrivalDateExceptionMapper.java
+          /InvalidArrivalDateExceptionMapper.java
           /InvalidNumberOfNightsExceptionMapper.java
         /BookingRequest.java -> Fits JSON from user story
         /BookingResource.java
