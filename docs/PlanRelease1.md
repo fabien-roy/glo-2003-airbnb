@@ -31,6 +31,8 @@ The most important part of this first release is to establish a correct software
   Other general config. For instance, a binder (for dependency injection) would be placed here.
 ```
 
+## Software Architecture
+
 This is the planned software architecture / file structure for release 1 : 
 
 ```
@@ -236,3 +238,7 @@ This is the planned software architecture / file structure for release 1 :
   Router.java
   Server.java
 ```
+
+## Development
+
+Everything will be done using TDD.
