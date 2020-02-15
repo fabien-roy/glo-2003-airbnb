@@ -94,6 +94,7 @@ This is the planned software architecture / file structure for release 1 :
            - getByNumber(String) : BookingResponse
              Maps String to UUID using a mapper (our own or another)
              Gets Booking using BookingRepository.getByNumber(UUID)
+             Returns BookingResponse using BookingMapper
       /transactions
         /domain
           /Transaction.java
