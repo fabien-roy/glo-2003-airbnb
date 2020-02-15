@@ -113,6 +113,11 @@ This is the planned software architecture / file structure for release 1 :
         /infrastructure
           /InMemoryTransactionRepository.java -> Simple in memory List
         /rest
+          /mappers
+            /TransactionMapper.java
+              - toResponse(Transaction) : TransactionResponse
+                Maps Booking to BookingResponse
+                Calculates total (might turn out to be complicated)
           /TransactionResource.java
             - getAll()
               Sends to TransactionService.getAll()
@@ -124,6 +129,7 @@ This is the planned software architecture / file structure for release 1 :
               Adds Transaction using TransactionRepository.add(Transaction)
             - getAll() : List<TransactionResponse>
               Gets all Transaction using TransactionRepository.getAll()
+              Returns a list of TransactionResponse using TransactionMapper.toResponse(Transaction)
     /domain
       /Bed.java
         - number : UUID
