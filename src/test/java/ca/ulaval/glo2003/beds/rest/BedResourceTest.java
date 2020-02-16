@@ -6,44 +6,44 @@ import ca.ulaval.glo2003.beds.services.BedService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BedResourceTest {
+public class BedResourceTest {
 
   private BedResource bedResource;
   private BedService bedService;
 
   @BeforeEach
-  private void setUpResource() {
+  public void setUpResource() {
     bedService = mock(BedService.class);
     bedResource = new BedResource(bedService);
   }
 
   @Test
-  private void add_shouldBedNumberAsHeaderLocation() {
+  public void add_shouldBedNumberAsHeaderLocation() {
     // TODO
   }
 
   @Test
-  private void add_shouldSetCreatedAsHttpStatus() {
+  public void add_shouldSetCreatedAsHttpStatus() {
     // TODO
   }
 
   @Test
-  private void get_shouldReturnBed() {
+  public void get_shouldReturnBed() {
     // TODO
   }
 
   @Test
-  private void get_shouldSetOKAsHttpStatus() {
+  public void get_shouldSetOKAsHttpStatus() {
     // TODO
   }
 
   @Test
-  private void getAll_shouldReturnAllBeds() {
+  public void getAll_shouldReturnAllBeds() {
     // TODO
   }
 
   @Test
-  private void getAll_shouldSetOKAsHttpStatus() {
+  public void getAll_shouldSetOKAsHttpStatus() {
     // TODO
   }
 }

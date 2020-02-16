@@ -12,12 +12,12 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class InMemoryBedRepositoryTest {
+public class InMemoryBedRepositoryTest {
 
   private BedRepository bedRepository;
 
   @BeforeEach
-  private void setUpRepository() {
+  public void setUpRepository() {
     bedRepository = new InMemoryBedRepository();
   }
 
