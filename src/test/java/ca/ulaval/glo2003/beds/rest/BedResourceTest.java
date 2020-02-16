@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
@@ -53,13 +54,27 @@ public class BedResourceTest {
   }
 
   @Test
-  public void get_shouldReturnBed() {
-    // TODO
+  public void getByNumber_shouldReturnBed() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    String bedNumber = "bedNumber";
+    when(request.params(eq("number"))).thenReturn(bedNumber);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedService.getByNumber(bedNumber)).thenReturn(expectedBedResponse);
+
+    BedResponse bedResponse = (BedResponse) bedResource.getByNumber(request, response);
+
+    assertSame(expectedBedResponse, bedResponse);
   }
 
   @Test
-  public void get_shouldSetOKAsHttpStatus() {
-    // TODO
+  public void getByNumber_shouldSetOKAsHttpStatus() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+
+    bedResource.getByNumber(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
   }
 
   @Test
