@@ -1,10 +1,20 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import org.eclipse.jetty.http.HttpHeader;
+import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import spark.Request;
+import spark.Response;
 
 public class BedResourceTest {
 
@@ -18,32 +28,94 @@ public class BedResourceTest {
   }
 
   @Test
-  public void add_shouldBedNumberAsHeaderLocation() {
-    // TODO
+  public void add_shouldBedNumberAsHeaderLocation() throws JsonProcessingException {
+    String expectedBedNumber = "expectedBedNumber";
+    String expectedHeaderLocation = "/beds/" + expectedBedNumber;
+    Request request = mock(Request.class);
+    BedRequest bedRequest = mock(BedRequest.class);
+    String requestBody = new ObjectMapper().writeValueAsString(bedRequest);
+    when(request.body()).thenReturn(requestBody);
+    Response response = mock(Response.class);
+    when(bedService.add(any())).thenReturn(expectedBedNumber);
+
+    bedResource.add(request, response);
+
+    verify(response).header(HttpHeader.LOCATION.asString(), expectedHeaderLocation);
   }
 
   @Test
-  public void add_shouldSetCreatedAsHttpStatus() {
-    // TODO
+  public void add_shouldSetCreatedAsHttpStatus() throws JsonProcessingException {
+    Request request = mock(Request.class);
+    BedRequest bedRequest = mock(BedRequest.class);
+    String requestBody = new ObjectMapper().writeValueAsString(bedRequest);
+    when(request.body()).thenReturn(requestBody);
+    Response response = mock(Response.class);
+
+    bedResource.add(request, response);
+
+    verify(response).status(HttpStatus.CREATED_201);
   }
 
   @Test
-  public void get_shouldReturnBed() {
-    // TODO
+  public void getByNumber_shouldReturnBed() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    String bedNumber = "bedNumber";
+    when(request.params(eq("number"))).thenReturn(bedNumber);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedService.getByNumber(bedNumber)).thenReturn(expectedBedResponse);
+
+    BedResponse bedResponse = (BedResponse) bedResource.getByNumber(request, response);
+
+    assertSame(expectedBedResponse, bedResponse);
   }
 
   @Test
-  public void get_shouldSetOKAsHttpStatus() {
-    // TODO
+  public void getByNumber_shouldSetOKAsHttpStatus() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+
+    bedResource.getByNumber(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
   }
 
   @Test
-  public void getAll_shouldReturnAllBeds() {
-    // TODO
+  public void getAll_withOneBed_shouldReturnThatBed() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedService.getAll()).thenReturn(Collections.singletonList(expectedBedResponse));
+
+    List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
+
+    assertEquals(1, bedResponses.size());
+    assertTrue(bedResponses.contains(expectedBedResponse));
+  }
+
+  @Test
+  public void getAll_withMultipleBeds_shouldReturnAllBeds() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    BedResponse otherExpectedBedResponse = mock(BedResponse.class);
+    when(bedService.getAll())
+        .thenReturn(Arrays.asList(expectedBedResponse, otherExpectedBedResponse));
+
+    List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
+
+    assertEquals(2, bedResponses.size());
+    assertTrue(bedResponses.contains(expectedBedResponse));
+    assertTrue(bedResponses.contains(otherExpectedBedResponse));
   }
 
   @Test
   public void getAll_shouldSetOKAsHttpStatus() {
-    // TODO
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+
+    bedResource.getAll(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
   }
 }
