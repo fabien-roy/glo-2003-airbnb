@@ -2,10 +2,13 @@ package ca.ulaval.glo2003.beds.infrastructure;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.rest.exceptions.BedNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,21 +58,47 @@ class InMemoryBedRepositoryTest {
 
   @Test
   private void getByNumber_withNoBed_shouldThrowBedNotFoundException() {
-    // TODO
+    UUID bedNumber = mock(UUID.class);
+
+    assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(bedNumber));
   }
 
   @Test
   private void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException() {
-    // TODO
+    UUID existentBedNumber = mock(UUID.class);
+    UUID nonExistentBedNumber = mock(UUID.class);
+    Bed existentBed = mock(Bed.class);
+    when(existentBed.getNumber()).thenReturn(existentBedNumber);
+    bedRepository.add(existentBed);
+
+    assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(nonExistentBedNumber));
   }
 
   @Test
   private void getByNumber_withOneBed_shouldGetBed() {
-    // TODO
+    UUID bedNumber = mock(UUID.class);
+    Bed expectedBed = mock(Bed.class);
+    when(expectedBed.getNumber()).thenReturn(bedNumber);
+    bedRepository.add(expectedBed);
+
+    Bed actualBed = bedRepository.getByNumber(bedNumber);
+
+    assertSame(expectedBed, actualBed);
   }
 
   @Test
   private void getByNumber_withMultipleBeds_shouldGetBed() {
-    // TODO
+    UUID bedNumber = mock(UUID.class);
+    UUID otherBedNumber = mock(UUID.class);
+    Bed expectedBed = mock(Bed.class);
+    when(expectedBed.getNumber()).thenReturn(bedNumber);
+    Bed otherBed = mock(Bed.class);
+    when(otherBed.getNumber()).thenReturn(otherBedNumber);
+    bedRepository.add(expectedBed);
+    bedRepository.add(otherBed);
+
+    Bed actualBed = bedRepository.getByNumber(bedNumber);
+
+    assertSame(expectedBed, actualBed);
   }
 }

@@ -14,4 +14,8 @@ public class Bed {
   private List<BloodTypes> bloodTypes;
   private int capacity;
   private List<Package> packages;
+
+  public UUID getNumber() {
+    return number;
+  }
 }
