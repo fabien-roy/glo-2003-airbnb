@@ -22,7 +22,7 @@ class InMemoryBedRepositoryTest {
   }
 
   @Test
-  private void add_shouldAddBed() {
+  public void add_shouldAddBed() {
     Bed expectedBed = mock(Bed.class);
 
     bedRepository.add(expectedBed);
@@ -32,7 +32,7 @@ class InMemoryBedRepositoryTest {
   }
 
   @Test
-  private void getAll_withOneBed_shouldGetOneBed() {
+  public void getAll_withOneBed_shouldGetOneBed() {
     Bed expectedBed = mock(Bed.class);
     bedRepository.add(expectedBed);
 
@@ -43,7 +43,7 @@ class InMemoryBedRepositoryTest {
   }
 
   @Test
-  private void getAll_withMultipleBeds_shouldGetMultipleBeds() {
+  public void getAll_withMultipleBeds_shouldGetMultipleBeds() {
     Bed expectedBed = mock(Bed.class);
     Bed otherExpectedBed = mock(Bed.class);
     bedRepository.add(expectedBed);
@@ -57,14 +57,14 @@ class InMemoryBedRepositoryTest {
   }
 
   @Test
-  private void getByNumber_withNoBed_shouldThrowBedNotFoundException() {
+  public void getByNumber_withNoBed_shouldThrowBedNotFoundException() {
     UUID bedNumber = mock(UUID.class);
 
     assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(bedNumber));
   }
 
   @Test
-  private void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException() {
+  public void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException() {
     UUID existentBedNumber = mock(UUID.class);
     UUID nonExistentBedNumber = mock(UUID.class);
     Bed existentBed = mock(Bed.class);
@@ -75,7 +75,7 @@ class InMemoryBedRepositoryTest {
   }
 
   @Test
-  private void getByNumber_withOneBed_shouldGetBed() {
+  public void getByNumber_withOneBed_shouldGetBed() {
     UUID bedNumber = mock(UUID.class);
     Bed expectedBed = mock(Bed.class);
     when(expectedBed.getNumber()).thenReturn(bedNumber);
@@ -87,7 +87,7 @@ class InMemoryBedRepositoryTest {
   }
 
   @Test
-  private void getByNumber_withMultipleBeds_shouldGetBed() {
+  public void getByNumber_withMultipleBeds_shouldGetBed() {
     UUID bedNumber = mock(UUID.class);
     UUID otherBedNumber = mock(UUID.class);
     Bed expectedBed = mock(Bed.class);
