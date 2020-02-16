@@ -16,8 +16,8 @@ public class BedResource implements RouteGroup {
 
   @Override
   public void addRoutes() {
-    post("/", this::add, new ObjectMapper()::writeValueAsString);
-    get("/", this::getAll, new ObjectMapper()::writeValueAsString);
+    post("", this::add, new ObjectMapper()::writeValueAsString);
+    get("", this::getAll, new ObjectMapper()::writeValueAsString);
     get("/:number", this::getByNumber, new ObjectMapper()::writeValueAsString);
   }
 
