@@ -1,11 +1,14 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,12 +81,41 @@ public class BedResourceTest {
   }
 
   @Test
-  public void getAll_shouldReturnAllBeds() {
-    // TODO
+  public void getAll_withOneBed_shouldReturnThatBed() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedService.getAll()).thenReturn(Collections.singletonList(expectedBedResponse));
+
+    List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
+
+    assertEquals(1, bedResponses.size());
+    assertTrue(bedResponses.contains(expectedBedResponse));
+  }
+
+  @Test
+  public void getAll_withMultipleBeds_shouldReturnAllBeds() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    BedResponse otherExpectedBedResponse = mock(BedResponse.class);
+    when(bedService.getAll())
+        .thenReturn(Arrays.asList(expectedBedResponse, otherExpectedBedResponse));
+
+    List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
+
+    assertEquals(2, bedResponses.size());
+    assertTrue(bedResponses.contains(expectedBedResponse));
+    assertTrue(bedResponses.contains(otherExpectedBedResponse));
   }
 
   @Test
   public void getAll_shouldSetOKAsHttpStatus() {
-    // TODO
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+
+    bedResource.getAll(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
   }
 }
