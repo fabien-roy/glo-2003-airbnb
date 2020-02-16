@@ -56,9 +56,12 @@ This is the planned software architecture / file structure for release 1 :
         /InMemoryBookingRepository.java -> Simple in memory List
       /rest
         /exceptions
+          /ArrivalDateInThePastException.java
+          /BookingNotFoundException.java
           /InvalidArrivalDateException.java
           /InvalidNumberOfNightsException.java
         /mappers
+          /ArrivalDateInThePastExceptionMapper.java
           /BookingMapper.java
             - fromRequest(BookingRequest) : Booking
               Validates tenantPublicKey (check if base64)
@@ -68,7 +71,8 @@ This is the planned software architecture / file structure for release 1 :
             - toResponse(Booking) : BookingResponse
               Maps Booking to BookingResponse
               Calculates total (might turn out to be complicated)
-            /InvalidArrivalDateExceptionMapper.java
+          /BookingNotFoundExceptionMapper.java
+          /InvalidArrivalDateExceptionMapper.java
           /InvalidNumberOfNightsExceptionMapper.java
         /BookingRequest.java -> Fits JSON from user story
         /BookingResource.java
@@ -90,6 +94,7 @@ This is the planned software architecture / file structure for release 1 :
            - getByNumber(String) : BookingResponse
              Maps String to UUID using a mapper (our own or another)
              Gets Booking using BookingRepository.getByNumber(UUID)
+             Returns BookingResponse using BookingMapper
       /transactions
         /domain
           /Transaction.java
@@ -108,6 +113,11 @@ This is the planned software architecture / file structure for release 1 :
         /infrastructure
           /InMemoryTransactionRepository.java -> Simple in memory List
         /rest
+          /mappers
+            /TransactionMapper.java
+              - toResponse(Transaction) : TransactionResponse
+                Maps Booking to BookingResponse
+                Calculates total (might turn out to be complicated)
           /TransactionResource.java
             - getAll()
               Sends to TransactionService.getAll()
@@ -119,12 +129,13 @@ This is the planned software architecture / file structure for release 1 :
               Adds Transaction using TransactionRepository.add(Transaction)
             - getAll() : List<TransactionResponse>
               Gets all Transaction using TransactionRepository.getAll()
+              Returns a list of TransactionResponse using TransactionMapper.toResponse(Transaction)
     /domain
       /Bed.java
         - number : UUID
         - tenantOwnerKey : Base64
         - zipCode : String
-        - matressType : MatressTypes
+        - bedType : BedTypes
         - cleaningFrequency : CleaningFrequencies
         - bloodTypes : List<BloodTypes>
         - capacity : int
@@ -148,9 +159,9 @@ This is the planned software architecture / file structure for release 1 :
         - add(Bed)
         - getAll() : List<Bed>
         - getByNumber(UUID) : Bed
+      /BedTypes.java (enum : Latex, MemoryFoam, Springs)
       /BloodTypes.java (enum : O-, O+, AB-, AB+, B-, B+, A-, A+)
       /CleaningFrequencies (enum : Weekly, Monthly, Yearly, Never)
-      /MatressTypes.java (enum : Latex, MemoryFoam, Springs)
       /Packages.java (enum : BloodThirsty, AllYouCanDrink, SweetTooth)
     /infrastructure
       /InMemoryBedRepository.java -> Simple in memory List
@@ -228,6 +239,7 @@ This is the planned software architecture / file structure for release 1 :
          - getByNumber(String) : BedResponse
            Maps String to UUID using a mapper (our own or another)
            Gets Bed using BedRepository.getByNumber(UUID)
+           Returns BedResponse using BedMapper
   /interfaces
     /rest
       /mappers
