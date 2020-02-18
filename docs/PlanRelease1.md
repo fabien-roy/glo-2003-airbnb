@@ -2,9 +2,9 @@
 
 Release 1 has one epic, `Book a stay`. This epic has three user stories : 
 
- - [AUL : Add a bed](https://hackmd.io/J7kxhchaQJyL9ktkQ-WUwg)
- - [CLA : Display all beds](https://hackmd.io/jJANhBXYQxWw6nPYRVkScQ)
- - [RUS : Book a stay](https://hackmd.io/5J_oZo-bT6elSzxG3IdVEA)
+ - [AUL : Add a bed](user-stories/release1/e1s1.md)
+ - [CLA : Display all beds](user-stories/release1/e1s2.md)
+ - [RUS : Book a stay](user-stories/release1/e1s3.md)
 
 The most important part of this first release is to establish a correct software architecture that will be kept throughout the project. For this, we will use the following type of architecture : 
 
