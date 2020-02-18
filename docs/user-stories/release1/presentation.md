@@ -22,6 +22,6 @@ Elle est bien loin l'époque où seuls les humains avaient accès à la technolo
 ### Épique 1 - Réservation d'un séjour
 
 
-- [E1R1 - Afficher Un Lit (AUL)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/e1s1.md)
-- [E1R2 - Consulter les Lits Affichés (CLA)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/e1s2.md)
-- [E1R3 - Réserver Un Séjour (RUS)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/e1s3.md)
+- [E1R1 - Afficher Un Lit (AUL)](e1s1.md)
+- [E1R2 - Consulter les Lits Affichés (CLA)](e1s2.md)
+- [E1R3 - Réserver Un Séjour (RUS)](e1s3.md)
