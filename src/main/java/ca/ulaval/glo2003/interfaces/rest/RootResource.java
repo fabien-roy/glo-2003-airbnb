@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003;
+package ca.ulaval.glo2003.interfaces.rest;
 
 import static spark.Spark.get;
 
