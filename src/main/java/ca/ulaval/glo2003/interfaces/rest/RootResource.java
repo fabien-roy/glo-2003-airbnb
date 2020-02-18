@@ -20,8 +20,8 @@ public class RootResource implements RouteGroup {
     exception(Exception.class, new CatchallExceptionHandler());
   }
 
-  private Object helloWorld(Request request, Response response) throws Exception {
+  private Object helloWorld(Request request, Response response) {
     response.status(HttpStatus.OK_200);
-    throw new Exception();
+    return "Hello World";
   }
 }
