@@ -10,6 +10,9 @@ import java.util.*;
 
 public class BedObjectMother {
 
+  // TODO : This was built during testing for Bed.matches(...)
+  // TODO : Might turn out irrelevant
+
   private BedObjectMother() {}
 
   public static UUID createBedNumber() {

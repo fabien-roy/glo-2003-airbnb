@@ -35,8 +35,21 @@ public class BedBuilder {
   private List<Package> DEFAULT_PACKAGES = createPackages();
   private List<Package> packages = DEFAULT_PACKAGES;
 
+  // TODO : This is unused, remove if not needed. Serves as an example.
   public static BedBuilder aBed() {
     return new BedBuilder();
+  }
+
+  public BedBuilder withNullAttributes() {
+    this.number = null;
+    this.ownerPublicKey = null;
+    this.zipCode = null;
+    this.bedType = null;
+    this.cleaningFrequency = null;
+    this.bloodTypes = null;
+    this.capacity = 0;
+    this.packages = null;
+    return this;
   }
 
   public BedBuilder withBedType(BedTypes bedType) {
