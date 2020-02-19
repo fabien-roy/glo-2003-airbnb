@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003;
+package ca.ulaval.glo2003.interfaces.rest;
 
 import static spark.Spark.get;
 
@@ -17,7 +17,7 @@ public class RootResource implements RouteGroup {
     get("/hello", this::helloWorld, new ObjectMapper()::writeValueAsString);
   }
 
-  public Object helloWorld(Request request, Response response) {
+  private Object helloWorld(Request request, Response response) {
     response.status(HttpStatus.OK_200);
     return "Hello World";
   }

@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
@@ -25,7 +25,7 @@ public class BedResource implements RouteGroup {
 
   @Override
   public void addRoutes() {
-    post("", this::add, new ObjectMapper()::writeValueAsString);
+    post("", this::add);
     get("", this::getAll, new ObjectMapper()::writeValueAsString);
     get("/:number", this::getByNumber, new ObjectMapper()::writeValueAsString);
   }
@@ -38,11 +38,13 @@ public class BedResource implements RouteGroup {
 
       response.status(HttpStatus.CREATED_201);
       response.header(HttpHeader.LOCATION.asString(), BED_PATH + "/" + bedNumber);
-    } catch (JsonProcessingException e) {
-      response.status(HttpStatus.BAD_REQUEST_400);
+    } catch (JsonProcessingException exception) {
+      new JsonProcessingExceptionHandler().handle(exception, request, response);
+
+      return response.body();
     }
 
-    return "";
+    return ""; // TODO : BedResource.add should not return anything (request should have no body)
   }
 
   public Object getAll(Request request, Response response) {
