@@ -1,7 +1,14 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import java.math.BigDecimal;
+
 public class Package {
 
   private PackageNames name;
-  private double pricePerNight; // TODO : We might want a class for this, like 'Money'
+  private BigDecimal pricePerNight;
+
+  public Package(PackageNames name, BigDecimal pricePerNight) {
+    this.name = name;
+    this.pricePerNight = pricePerNight;
+  }
 }
