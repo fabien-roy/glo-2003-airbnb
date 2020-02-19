@@ -16,7 +16,7 @@ public class Router {
 
   // TODO : This is not correct dependency injection
   public static final BedRepository bedRepository = new InMemoryBedRepository();
-  public static final BedService bedService = new BedService(bedRepository);
+  public static final BedService bedService = new BedService(bedMapper, bedRepository);
 
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorResource());
