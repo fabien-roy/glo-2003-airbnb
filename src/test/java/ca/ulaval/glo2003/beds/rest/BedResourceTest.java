@@ -85,7 +85,8 @@ public class BedResourceTest {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
-    when(bedService.getAll()).thenReturn(Collections.singletonList(expectedBedResponse));
+    when(bedService.getAll(request.queryParams()))
+        .thenReturn(Collections.singletonList(expectedBedResponse));
 
     List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
 
@@ -99,7 +100,7 @@ public class BedResourceTest {
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
     BedResponse otherExpectedBedResponse = mock(BedResponse.class);
-    when(bedService.getAll())
+    when(bedService.getAll(request.queryParams()))
         .thenReturn(Arrays.asList(expectedBedResponse, otherExpectedBedResponse));
 
     List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);

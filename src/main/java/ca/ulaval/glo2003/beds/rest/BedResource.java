@@ -48,7 +48,7 @@ public class BedResource implements RouteGroup {
   }
 
   public Object getAll(Request request, Response response) {
-    List<BedResponse> bedResponses = bedService.getAll();
+    List<BedResponse> bedResponses = bedService.getAll(request.queryParams());
 
     response.status(HttpStatus.OK_200);
     return bedResponses;
