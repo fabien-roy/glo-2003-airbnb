@@ -23,6 +23,10 @@ public class Bed {
     return bedType;
   }
 
+  public void setBedType(BedTypes bedType) {
+    this.bedType = bedType;
+  }
+
   public CleaningFrequencies getCleaningFrequency() {
     return cleaningFrequency;
   }

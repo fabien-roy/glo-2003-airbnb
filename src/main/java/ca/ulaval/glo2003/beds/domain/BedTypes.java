@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public enum BedTypes {
   public static BedTypes get(String type) {
     BedTypes foundType = lookup.get(type);
 
-    if (foundType == null) throw new RuntimeException(); // TODO : Throw correct exception
+    if (foundType == null) throw new InvalidBedTypeException();
 
     return foundType;
   }
