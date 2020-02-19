@@ -35,7 +35,6 @@ public class BedBuilder {
   private List<Package> DEFAULT_PACKAGES = createPackages();
   private List<Package> packages = DEFAULT_PACKAGES;
 
-  // TODO : This is unused, remove if not needed. Serves as an example.
   public static BedBuilder aBed() {
     return new BedBuilder();
   }
