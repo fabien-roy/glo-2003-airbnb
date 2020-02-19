@@ -8,6 +8,7 @@ import static spark.Spark.path;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
+import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResource;
 import ca.ulaval.glo2003.interfaces.rest.RootResource;
@@ -15,8 +16,9 @@ import ca.ulaval.glo2003.interfaces.rest.RootResource;
 public class Router {
 
   // TODO : This is not correct dependency injection
-  public static final BedRepository bedRepository = new InMemoryBedRepository();
-  public static final BedService bedService = new BedService(bedMapper, bedRepository);
+  private static final BedRepository bedRepository = new InMemoryBedRepository();
+  private static final BedMapper bedMapper = new BedMapper();
+  private static final BedService bedService = new BedService(bedMapper, bedRepository);
 
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorResource());

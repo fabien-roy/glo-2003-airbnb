@@ -5,9 +5,7 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class BedService {
 
@@ -25,7 +23,7 @@ public class BedService {
     return "";
   }
 
-  public List<BedResponse> getAll(Set<String> params) {
+  public List<BedResponse> getAll(Map<String, String> params) {
     Bed requestedBed = bedMapper.fromRequestParams(params);
 
     List<Bed> beds = bedRepository.getAll();

@@ -23,7 +23,7 @@ public class CatchallExceptionHandler implements ExceptionHandler<Exception> {
   }
 
   private String badRequest() throws JsonProcessingException {
-    ErrorResponse response = new ErrorResponse("BAD_REQUEST", "Something went wrong");
+    ErrorResponse response = new ErrorResponse("BAD_REQUEST", "something went wrong");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

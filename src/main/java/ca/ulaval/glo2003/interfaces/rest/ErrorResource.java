@@ -2,6 +2,8 @@ package ca.ulaval.glo2003.interfaces.rest;
 
 import static spark.Spark.exception;
 
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.rest.handlers.InvalidBedTypeExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,5 +17,6 @@ public class ErrorResource implements RouteGroup {
   public void addRoutes() {
     exception(Exception.class, new CatchallExceptionHandler());
     exception(JsonProcessingException.class, new JsonProcessingExceptionHandler());
+    exception(InvalidBedTypeException.class, new InvalidBedTypeExceptionHandler());
   }
 }
