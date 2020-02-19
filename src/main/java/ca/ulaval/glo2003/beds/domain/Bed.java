@@ -18,4 +18,28 @@ public class Bed {
   public UUID getNumber() {
     return number;
   }
+
+  public BedTypes getBedType() {
+    return bedType;
+  }
+
+  public void setBedType(BedTypes bedType) {
+    this.bedType = bedType;
+  }
+
+  public CleaningFrequencies getCleaningFrequency() {
+    return cleaningFrequency;
+  }
+
+  public List<BloodTypes> getBloodTypes() {
+    return bloodTypes;
+  }
+
+  public int getCapacity() {
+    return capacity;
+  }
+
+  public List<Package> getPackages() {
+    return packages;
+  }
 }

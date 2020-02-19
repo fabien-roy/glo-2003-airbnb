@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.interfaces.rest.handlers;
+package ca.ulaval.glo2003.beds.rest.handlers;
 
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,10 +8,10 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class JsonProcessingExceptionHandler implements ExceptionHandler<JsonProcessingException> {
+public class InvalidBedTypeExceptionHandler implements ExceptionHandler<Exception> {
 
   @Override
-  public void handle(JsonProcessingException e, Request request, Response response) {
+  public void handle(Exception e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {
@@ -23,7 +23,9 @@ public class JsonProcessingExceptionHandler implements ExceptionHandler<JsonProc
   }
 
   private String badRequest() throws JsonProcessingException {
-    ErrorResponse response = new ErrorResponse("BAD_REQUEST", "could not parse JSON");
+    ErrorResponse response =
+        new ErrorResponse(
+            "INVALID_BED_TYPE", "bed type should be one of latex, memoryFoam or springs");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
