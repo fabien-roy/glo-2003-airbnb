@@ -6,6 +6,7 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BedService {
 
@@ -28,7 +29,8 @@ public class BedService {
 
     List<Bed> beds = bedRepository.getAll();
 
-    // TODO : Gets all Bed that match using BedMatcher.matches(requestBeds, allBedsFromRepository)
+    List<Bed> matchingBeds =
+        beds.stream().filter(bed -> bed.matches(requestedBed)).collect(Collectors.toList());
 
     // TODO : Return List<BedResponse> using BedMapper
 
