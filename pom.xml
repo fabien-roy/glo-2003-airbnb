@@ -24,6 +24,7 @@
         <junit-jupiter-engine.version>5.4.2</junit-jupiter-engine.version>
         <maven-surefire.version>2.22.1</maven-surefire.version>
         <mockito-junit-jupiter.version>2.23.0</mockito-junit-jupiter.version>
+        <javafaker.version>1.0.1</javafaker.version>
         <!-- code coverage -->
         <jacoco-maven.version>0.8.5</jacoco-maven.version>
         <!-- logging -->
@@ -67,6 +68,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito-junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- logging -->
