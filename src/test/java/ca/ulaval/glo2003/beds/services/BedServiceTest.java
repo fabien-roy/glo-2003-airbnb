@@ -30,7 +30,7 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withParams_shouldMatchBedWithCorrectAttributes() {
+  public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
     Map<String, String> params = new HashMap<>();
     Bed matchingBed = mock(Bed.class);
     Bed expectedBed = mock(Bed.class);
@@ -44,5 +44,20 @@ public class BedServiceTest {
 
     assertEquals(1, bedResponses.size());
     assertSame(expectedBedResponse, bedResponses.get(0));
+  }
+
+  @Test
+  public void getByNumber_withNumber_shouldGetBed() {
+    String requestedNumber = "requestedNumber";
+    UUID bedNumber = mock(UUID.class);
+    Bed expectedBed = mock(Bed.class);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedNumberMapper.fromString(requestedNumber)).thenReturn(bedNumber);
+    when(bedRepository.getByNumber(bedNumber)).thenReturn(expectedBed);
+    when(bedMapper.toResponse(expectedBed)).thenReturn(expectedBedResponse);
+
+    BedResponse bedResponse = bedService.getByNumber(requestedNumber);
+
+    assertEquals(expectedBedResponse, bedResponse);
   }
 }
