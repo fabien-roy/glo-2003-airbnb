@@ -32,7 +32,7 @@ public class BedService {
     List<Bed> matchingBeds =
         beds.stream().filter(bed -> bed.matches(requestedBed)).collect(Collectors.toList());
 
-    return matchingBeds.stream().map(bedMapper::toRequest).collect(Collectors.toList());
+    return matchingBeds.stream().map(bedMapper::toResponse).collect(Collectors.toList());
   }
 
   public BedResponse getByNumber(String number) {

@@ -25,7 +25,7 @@ public class BedMapper {
     return bed;
   }
 
-  public BedResponse toRequest(Bed bed) {
+  public BedResponse toResponse(Bed bed) {
     // TODO
     return new BedResponse();
   }
