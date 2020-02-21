@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,10 +9,10 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class InvalidBedTypeExceptionHandler implements ExceptionHandler<Exception> {
+public class InvalidBedTypeExceptionHandler implements ExceptionHandler<InvalidBedTypeException> {
 
   @Override
-  public void handle(Exception e, Request request, Response response) {
+  public void handle(InvalidBedTypeException e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {
