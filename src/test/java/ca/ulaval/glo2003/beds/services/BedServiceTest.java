@@ -24,5 +24,6 @@ public class BedServiceTest {
   public void getAll_withParams_shouldMatchBedWithCorrectAttributes() {
     // TODO : This test should test that the requestBed returned by mapper is correctly sent to
     // matcher
+
   }
 }
