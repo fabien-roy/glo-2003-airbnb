@@ -136,16 +136,15 @@
                 <groupId>com.cosium.code</groupId>
                 <artifactId>maven-git-code-format</artifactId>
                 <version>${maven-git-code-format.version}</version>
+                <!-- TODO : Re-add pre-commit code style check -->
+                <!--
                 <executions>
-                    <!-- On commit, format the modified java files -->
                     <execution>
                         <id>install-formatter-hook</id>
                         <goals>
                             <goal>install-hooks</goal>
                         </goals>
                     </execution>
-                    <!-- On Maven verify phase, fail if any file
-                    (including unmodified) is badly formatted -->
                     <execution>
                         <id>validate-code-format</id>
                         <goals>
@@ -153,6 +152,7 @@
                         </goals>
                     </execution>
                 </executions>
+                -->
             </plugin>
             <!-- deployment -->
             <plugin>
