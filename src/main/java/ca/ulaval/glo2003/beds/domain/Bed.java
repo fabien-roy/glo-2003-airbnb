@@ -57,6 +57,10 @@ public class Bed {
     return bloodTypes;
   }
 
+  public void setBloodTypes(List<BloodTypes> bloodTypes) {
+    this.bloodTypes = bloodTypes;
+  }
+
   public int getCapacity() {
     return capacity;
   }

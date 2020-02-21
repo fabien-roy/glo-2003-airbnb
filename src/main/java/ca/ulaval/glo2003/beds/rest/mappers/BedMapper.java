@@ -11,8 +11,12 @@ public class BedMapper {
   public static final String BED_TYPE_PARAM = "bedType";
 
   public Bed fromRequest(BedRequest request) {
-    // TODO
-    return new Bed();
+    Bed bed = new Bed();
+
+    BedTypes bedType = BedTypes.get(request.getBedType());
+    bed.setBedType(bedType);
+
+    return bed;
   }
 
   public Bed fromRequestParams(Map<String, String> params) {
