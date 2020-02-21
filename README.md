@@ -31,12 +31,8 @@ To run unit tests, use :
 
 `mvn surefire:test`
 
-For integrating test, use : 
-
-`mvn failsafe:integration-test`
-
 ## How to apply code style
 
 Code style is verified pre-commit. To apply [Google Java Code Style](https://google.github.io/styleguide/javaguide.html) throughout the source code, use : 
 
-`mvn git-code-format:format-code-DglobPattern=**/*`
+`mvn git-code-format:format-code -DglobPattern=**/*`
