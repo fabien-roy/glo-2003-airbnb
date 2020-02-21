@@ -9,6 +9,7 @@ import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,17 +18,19 @@ public class BedServiceTest {
 
   private BedService bedService;
   private BedMapper bedMapper;
+  private BedNumberMapper bedNumberMapper;
   private BedRepository bedRepository;
 
   @BeforeEach
   public void setUpService() {
     bedMapper = mock(BedMapper.class);
+    bedNumberMapper = mock(BedNumberMapper.class);
     bedRepository = mock(BedRepository.class);
-    bedService = new BedService(bedMapper, bedRepository);
+    bedService = new BedService(bedMapper, bedNumberMapper, bedRepository);
   }
 
   @Test
-  public void getAll_withParams_shouldMatchBedWithCorrectAttributes() {
+  public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
     Map<String, String> params = new HashMap<>();
     Bed matchingBed = mock(Bed.class);
     Bed expectedBed = mock(Bed.class);
@@ -41,5 +44,20 @@ public class BedServiceTest {
 
     assertEquals(1, bedResponses.size());
     assertSame(expectedBedResponse, bedResponses.get(0));
+  }
+
+  @Test
+  public void getByNumber_withNumber_shouldGetBed() {
+    String requestedNumber = "requestedNumber";
+    UUID bedNumber = mock(UUID.class);
+    Bed expectedBed = mock(Bed.class);
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedNumberMapper.fromString(requestedNumber)).thenReturn(bedNumber);
+    when(bedRepository.getByNumber(bedNumber)).thenReturn(expectedBed);
+    when(bedMapper.toResponse(expectedBed)).thenReturn(expectedBedResponse);
+
+    BedResponse bedResponse = bedService.getByNumber(requestedNumber);
+
+    assertEquals(expectedBedResponse, bedResponse);
   }
 }

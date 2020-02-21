@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypeException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public enum BloodTypes {
   public static BloodTypes get(String type) {
     BloodTypes foundType = lookup.get(type);
 
-    if (foundType == null) throw new InvalidBloodTypeException(); // TODO : Throw correct exception
+    if (foundType == null) throw new InvalidBloodTypesException();
 
     return foundType;
   }
