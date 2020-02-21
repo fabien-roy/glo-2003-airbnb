@@ -32,7 +32,7 @@ public enum CleaningFrequencies {
   public static CleaningFrequencies get(String frequency) {
     CleaningFrequencies foundFrequency = lookup.get(frequency);
 
-    if (foundFrequency == null) throw new InvalidCleaningFrequencyException(); // TODO : Throw correct exception
+    if (foundFrequency == null) throw new InvalidCleaningFrequencyException();
 
     return foundFrequency;
   }

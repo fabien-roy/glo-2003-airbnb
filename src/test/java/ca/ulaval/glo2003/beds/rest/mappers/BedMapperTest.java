@@ -1,15 +1,16 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMapper.BED_TYPE_PARAM;
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMapper.CLEANING_FREQUENCY;
+import static ca.ulaval.glo2003.beds.rest.mappers.BedMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import java.util.*;
 
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ class BedMapperTest {
   public void fromRequestParams_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
     Map<String, String> params = new HashMap<>();
-    params.put(CLEANING_FREQUENCY, expectedCleaningFrequency.toString());
+    params.put(CLEANING_FREQUENCY_PARAM, expectedCleaningFrequency.toString());
 
     Bed bed = bedMapper.fromRequestParams(params);
 
@@ -69,8 +70,29 @@ class BedMapperTest {
   @Test
   public void fromRequestParams_withInvalidCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
     Map<String, String> params = new HashMap<>();
-    params.put(CLEANING_FREQUENCY, "invalidCleaningFrequency");
+    params.put(CLEANING_FREQUENCY_PARAM, "invalidCleaningFrequency");
 
     assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withBloodType_shouldReturnBedWithBloodType() {
+
+    BloodTypes expectedBloodTypes = BloodTypes.O_MINUS;
+    Map<String, String> params = new HashMap<>();
+    params.put(BLOOD_TYPES_PARAM, expectedBloodTypes.toString());
+
+    Bed bed = bedMapper.fromRequestParams(params);
+
+    assertEquals(1, bed.getBloodTypes().size());
+    assertEquals(expectedBloodTypes, bed.getBloodTypes().get(0));
+  }
+
+  @Test
+  public void fromRequestParams_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
+    Map<String, String> params = new HashMap<>();
+    params.put(BLOOD_TYPES_PARAM, "invalidBloodTypes");
+
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequestParams(params));
   }
 }
