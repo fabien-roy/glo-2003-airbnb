@@ -35,4 +35,4 @@ To run unit tests, use :
 
 Code style is verified pre-commit. To apply [Google Java Code Style](https://google.github.io/styleguide/javaguide.html) throughout the source code, use : 
 
-`mvn git-code-format:format-code-DglobPattern=**/*`
+`mvn git-code-format:format-code -DglobPattern=**/*`
