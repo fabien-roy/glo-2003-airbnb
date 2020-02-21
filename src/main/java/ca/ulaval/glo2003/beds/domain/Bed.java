@@ -53,6 +53,10 @@ public class Bed {
     return cleaningFrequency;
   }
 
+  public void setCleaningFrequency(CleaningFrequencies cleaningFrequency) {
+    this.cleaningFrequency = cleaningFrequency;
+  }
+
   public List<BloodTypes> getBloodTypes() {
     return bloodTypes;
   }
