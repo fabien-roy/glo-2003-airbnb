@@ -43,7 +43,7 @@ public class BedService {
     return bed.getNumber().toString();
   }
 
-  public List<BedResponse> getAll(Map<String, String> params) {
+  public List<BedResponse> getAll(Map<String, String[]> params) {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     List<Bed> beds = bedRepository.getAll();

@@ -31,24 +31,28 @@ public class BedResource implements RouteGroup {
   }
 
   public Object add(Request request, Response response) {
+    BedRequest bedRequest;
+
     try {
-      BedRequest bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);
+      bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);
 
-      String bedNumber = bedService.add(bedRequest);
-
-      response.status(HttpStatus.CREATED_201);
-      response.header(HttpHeader.LOCATION.asString(), BED_PATH + "/" + bedNumber);
     } catch (JsonProcessingException exception) {
       new JsonProcessingExceptionHandler().handle(exception, request, response);
 
       return response.body();
     }
 
-    return ""; // TODO : BedResource.add should not return anything (request should have no body)
+    String bedNumber = bedService.add(bedRequest);
+    String bedPath = String.format("%s/%s", BED_PATH, bedNumber);
+
+    response.status(HttpStatus.CREATED_201);
+    response.header(HttpHeader.LOCATION.asString(), bedPath);
+
+    return bedPath;
   }
 
   public Object getAll(Request request, Response response) {
-    List<BedResponse> bedResponses = bedService.getAll(request.params());
+    List<BedResponse> bedResponses = bedService.getAll(request.queryMap().toMap());
 
     response.status(HttpStatus.OK_200);
     return bedResponses;

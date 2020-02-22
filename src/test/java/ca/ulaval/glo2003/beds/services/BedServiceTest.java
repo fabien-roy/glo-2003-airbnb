@@ -66,7 +66,7 @@ public class BedServiceTest {
 
   @Test
   public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
-    Map<String, String> params = new HashMap<>();
+    Map<String, String[]> params = new HashMap<>();
     BedMatcher bedMatcher = mock(BedMatcher.class);
     Bed expectedBed = mock(Bed.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);

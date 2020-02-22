@@ -13,6 +13,7 @@ import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 
@@ -85,8 +86,8 @@ public class BedResourceTest {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
-    when(bedService.getAll(request.params()))
-        .thenReturn(Collections.singletonList(expectedBedResponse));
+    when(request.queryMap()).thenReturn(mock(QueryParamsMap.class));
+    when(bedService.getAll(anyMap())).thenReturn(Collections.singletonList(expectedBedResponse));
 
     List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
 
@@ -100,7 +101,8 @@ public class BedResourceTest {
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
     BedResponse otherExpectedBedResponse = mock(BedResponse.class);
-    when(bedService.getAll(request.params()))
+    when(request.queryMap()).thenReturn(mock(QueryParamsMap.class));
+    when(bedService.getAll(anyMap()))
         .thenReturn(Arrays.asList(expectedBedResponse, otherExpectedBedResponse));
 
     List<BedResponse> bedResponses = (List<BedResponse>) bedResource.getAll(request, response);
@@ -114,6 +116,7 @@ public class BedResourceTest {
   public void getAll_shouldSetOKAsHttpStatus() {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
+    when(request.queryMap()).thenReturn(mock(QueryParamsMap.class));
 
     bedResource.getAll(request, response);
 
