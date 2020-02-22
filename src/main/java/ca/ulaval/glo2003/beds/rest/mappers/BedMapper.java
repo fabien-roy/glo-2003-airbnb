@@ -5,11 +5,7 @@ import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BedMapper {
@@ -21,41 +17,41 @@ public class BedMapper {
   public static final String PACKAGE_NAME_PARAM = "packages";
 
   public Bed fromRequest(BedRequest request) {
-    Bed bed = new Bed();
-
     BedTypes bedType = BedTypes.get(request.getBedType());
-    bed.setBedType(bedType);
 
-    return bed;
+    // TODO : Add other values in BedMapper.fromRequest
+    return new Bed(bedType, null, new ArrayList<>(), 0, new ArrayList<>());
   }
 
   public Bed fromRequestParams(Map<String, String> params) {
-    Bed bed = new Bed();
+    BedTypes bedType = null;
+    CleaningFrequencies cleaningFrequency = null;
+    List<BloodTypes> bloodTypes = null;
+    int capacity = 0;
+    List<Package> packages = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
-      bed.setBedType(BedTypes.get(params.get(BED_TYPE_PARAM)));
+      bedType = BedTypes.get(params.get(BED_TYPE_PARAM));
     }
 
     if (params.get(CLEANING_FREQUENCY_PARAM) != null) {
-      bed.setCleaningFrequency(CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)));
+      cleaningFrequency = CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM));
     }
 
     if (params.get(BLOOD_TYPES_PARAM) != null) {
-      List<BloodTypes> bloodTypes = parseBloodTypeString(params.get(BLOOD_TYPES_PARAM));
-      bed.setBloodTypes(bloodTypes);
+      bloodTypes = parseBloodTypeString(params.get(BLOOD_TYPES_PARAM));
     }
 
     if (params.get(CAPACITY_PARAM) != null) {
-      bed.setCapacity(parseCapacity(params.get(CAPACITY_PARAM)));
+      capacity = parseCapacity(params.get(CAPACITY_PARAM));
     }
 
     if (params.get(PACKAGE_NAME_PARAM) != null) {
       String packageName = params.get(PACKAGE_NAME_PARAM);
-      Package packages = new Package(PackageNames.get(packageName));
-      bed.setPackages(Collections.singletonList(packages));
+      packages = Collections.singletonList(new Package(PackageNames.get(packageName)));
     }
 
-    return bed;
+    return new Bed(bedType, cleaningFrequency, bloodTypes, capacity, packages);
   }
 
   public BedResponse toResponse(Bed bed) {
@@ -65,24 +61,19 @@ public class BedMapper {
 
   private List<BloodTypes> parseBloodTypeString(String bloodTypesInParams) {
     List<String> bloodTypeStrings = Arrays.asList(bloodTypesInParams.split(","));
-    List<BloodTypes> bloodTypes =
-        bloodTypeStrings.stream()
-            .map(bloodType -> BloodTypes.get(bloodType))
-            .collect(Collectors.toList());
-    return bloodTypes;
+    return bloodTypeStrings.stream().map(BloodTypes::get).collect(Collectors.toList());
   }
 
   private int parseCapacity(String capacity) {
     int parsedCapacity;
 
     try {
-
       parsedCapacity = Integer.parseInt(capacity);
     } catch (NumberFormatException e) {
-       throw new InvalidMinimalCapacityException();
+      throw new InvalidMinimalCapacityException();
     }
 
-    if (parsedCapacity < 0 ) {
+    if (parsedCapacity < 0) {
       throw new InvalidMinimalCapacityException();
     }
 

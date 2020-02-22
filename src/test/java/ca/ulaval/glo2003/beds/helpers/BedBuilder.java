@@ -77,6 +77,7 @@ public class BedBuilder {
   }
 
   public Bed build() {
+    // TODO : If this constructor is only used in tests, use another constructor
     return new Bed(
         number,
         ownerPublicKey,

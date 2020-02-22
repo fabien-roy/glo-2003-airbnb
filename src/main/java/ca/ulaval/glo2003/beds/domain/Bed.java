@@ -14,8 +14,17 @@ public class Bed {
   private int capacity;
   private List<Package> packages;
 
-  public Bed() {
-    // TODO : Delete Bed constructor without param
+  public Bed(
+      BedTypes bedType,
+      CleaningFrequencies cleaningFrequency,
+      List<BloodTypes> bloodTypes,
+      int capacity,
+      List<Package> packages) {
+    this.bedType = bedType;
+    this.cleaningFrequency = cleaningFrequency;
+    this.bloodTypes = bloodTypes;
+    this.capacity = capacity;
+    this.packages = packages;
   }
 
   public Bed(
@@ -45,40 +54,20 @@ public class Bed {
     return bedType;
   }
 
-  public void setBedType(BedTypes bedType) {
-    this.bedType = bedType;
-  }
-
   public CleaningFrequencies getCleaningFrequency() {
     return cleaningFrequency;
-  }
-
-  public void setCleaningFrequency(CleaningFrequencies cleaningFrequency) {
-    this.cleaningFrequency = cleaningFrequency;
   }
 
   public List<BloodTypes> getBloodTypes() {
     return bloodTypes;
   }
 
-  public void setBloodTypes(List<BloodTypes> bloodTypes) {
-    this.bloodTypes = bloodTypes;
-  }
-
   public int getCapacity() {
     return capacity;
   }
 
-  public void setCapacity(int capacity) {
-    this.capacity = capacity;
-  }
-
   public List<Package> getPackages() {
     return packages;
-  }
-
-  public void setPackages(List<Package> packages) {
-    this.packages = packages;
   }
 
   // This is different than equals : we check if beds match on specific non-null attributes rather
@@ -94,10 +83,9 @@ public class Bed {
 
     if (otherBed.getCapacity() > 0 && capacity != otherBed.getCapacity()) return false;
 
+    // TODO: Repair package matching so it only checks for same name
     if (otherBed.getPackages() != null && !packages.equals(otherBed.getPackages())) return false;
 
     return true;
-
-    //TODO: Repair package matching so it only checks for same name
   }
 }
