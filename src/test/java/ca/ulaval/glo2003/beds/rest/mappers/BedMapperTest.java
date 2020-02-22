@@ -14,6 +14,8 @@ import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import java.util.*;
+
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -141,5 +143,34 @@ class BedMapperTest {
     params.put(BLOOD_TYPES_PARAM, "invalidBloodTypes");
 
     assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withCapacity_shouldReturnBedWithCapacity() {
+    int expectedCapacity = 600;
+    Map<String, String> params = new HashMap<>();
+    params.put(CAPACITY, Integer.toString(expectedCapacity));
+
+    Bed bed = bedMapper.fromRequestParams(params);
+
+    assertEquals(expectedCapacity, bed.getCapacity());
+  }
+
+  @Test
+  public void
+  fromRequestParams_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+    Map<String, String> params = new HashMap<>();
+    params.put(CAPACITY, "a-ha");
+
+    assertThrows(
+            InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withNegativeCapacity_shouldThrowMinimalCapacityException() {
+    int expectedCapacity = -1;
+    Map<String, String> params = new HashMap<>();
+    params.put(CAPACITY, Integer.toString(expectedCapacity));
+    assertThrows(InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
   }
 }
