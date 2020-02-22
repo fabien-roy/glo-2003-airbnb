@@ -51,8 +51,7 @@ public class BedMatcher {
 
     if (bloodTypes != null && !bed.getBloodTypes().containsAll(bloodTypes)) return false;
 
-    // TODO : Change tests so it checks the bed has the MINIMUM of the requested capacity
-    if (capacity > 0 && capacity != bed.getCapacity()) return false;
+    if (capacity > bed.getCapacity()) return false;
 
     // TODO : Change test so it checks that the bed CONTAINS the package
     if (packages != null && !packages.equals(bed.getPackages())) return false;

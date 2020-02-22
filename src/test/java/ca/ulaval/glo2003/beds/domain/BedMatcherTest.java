@@ -143,11 +143,23 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withDifferentCapacity_shouldReturnFalse() {
+  public void matches_withHigherCapacity_shouldReturnTrue() {
     int capacity = 100;
-    int otherCapacity = 200;
+    int higherCapacity = 101;
     BedMatcher bedMatcher = aBedMatcher().withCapacity(capacity).build();
-    Bed bed = aBed().withCapacity(otherCapacity).build();
+    Bed bed = aBed().withCapacity(higherCapacity).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
+  public void matches_withLowerCapacity_shouldReturnFalse() {
+    int capacity = 100;
+    int lowerCapacity = 99;
+    BedMatcher bedMatcher = aBedMatcher().withCapacity(capacity).build();
+    Bed bed = aBed().withCapacity(lowerCapacity).build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -228,9 +240,10 @@ class BedMatcherTest {
   @Test
   public void matches_withAllSameAttributes_shouldReturnTrue() {
     BedTypes bedType = BedTypes.LATEX;
-    int capacity = 100;
-    BedMatcher bedMatcher = aBedMatcher().withBedType(bedType).withCapacity(capacity).build();
-    Bed bed = aBed().withBedType(bedType).withCapacity(capacity).build();
+    CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
+    BedMatcher bedMatcher =
+        aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
+    Bed bed = aBed().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -240,10 +253,11 @@ class BedMatcherTest {
   @Test
   public void matches_withASingleDifferentAttribute_shouldReturnFalse() {
     BedTypes bedType = BedTypes.LATEX;
-    int capacity = 100;
-    int otherCapacity = 200;
-    BedMatcher bedMatcher = aBedMatcher().withBedType(bedType).withCapacity(capacity).build();
-    Bed bed = aBed().withBedType(bedType).withCapacity(otherCapacity).build();
+    CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
+    CleaningFrequencies otherCleaningFrequency = CleaningFrequencies.MONTHLY;
+    BedMatcher bedMatcher =
+        aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
+    Bed bed = aBed().withBedType(bedType).withCleaningFrequency(otherCleaningFrequency).build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -254,10 +268,12 @@ class BedMatcherTest {
   public void matches_withAllDifferentAttributes_shouldReturnFalse() {
     BedTypes bedType = BedTypes.LATEX;
     BedTypes otherBedtype = BedTypes.MEMORY_FOAM;
-    int capacity = 100;
-    int otherCapacity = 200;
-    BedMatcher bedMatcher = aBedMatcher().withBedType(bedType).withCapacity(capacity).build();
-    Bed bed = aBed().withBedType(otherBedtype).withCapacity(otherCapacity).build();
+    CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
+    CleaningFrequencies otherCleaningFrequency = CleaningFrequencies.MONTHLY;
+    BedMatcher bedMatcher =
+        aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
+    Bed bed =
+        aBed().withBedType(otherBedtype).withCleaningFrequency(otherCleaningFrequency).build();
 
     boolean matches = bedMatcher.matches(bed);
 
