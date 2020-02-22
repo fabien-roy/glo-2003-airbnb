@@ -28,7 +28,6 @@ public class Bed {
   }
 
   public Bed(
-      UUID number,
       String ownerPublicKey,
       String zipCode,
       BedTypes bedType,
@@ -36,7 +35,6 @@ public class Bed {
       List<BloodTypes> bloodTypes,
       int capacity,
       List<Package> packages) {
-    this.number = number;
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
     this.bedType = bedType;
@@ -48,6 +46,10 @@ public class Bed {
 
   public UUID getNumber() {
     return number;
+  }
+
+  public void setNumber(UUID number) {
+    this.number = number;
   }
 
   public BedTypes getBedType() {
