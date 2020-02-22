@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 class PackageTest {
 
+  // TODO : Check if still necessary (CLA)
+
   @Test
   public void equals_withSameNameAndPrice_shouldReturnTrue() {
     PackageNames packageName = PackageNames.BLOODTHIRSTY;

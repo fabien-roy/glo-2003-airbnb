@@ -24,13 +24,13 @@ public class BedMatcher {
   }
 
   public boolean matches(Bed bed) {
-    if (bedType != null && bedType.equals(bed.getBedType())) return false;
+    if (bedType != null && !bedType.equals(bed.getBedType())) return false;
 
-    if (cleaningFrequency != null && cleaningFrequency.equals(bed.getCleaningFrequency()))
+    if (cleaningFrequency != null && !cleaningFrequency.equals(bed.getCleaningFrequency()))
       return false;
 
     // TODO : Change test so it checks that the bed contains AT LEAST the blood types
-    if (bloodTypes != null && bloodTypes.equals(bed.getBloodTypes())) return false;
+    if (bloodTypes != null && !bloodTypes.equals(bed.getBloodTypes())) return false;
 
     // TODO : Change tests so it checks the bed has the MINIMUM of the requested capacity
     if (capacity > 0 && capacity != bed.getCapacity()) return false;
