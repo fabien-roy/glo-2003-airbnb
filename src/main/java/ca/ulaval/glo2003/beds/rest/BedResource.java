@@ -43,11 +43,12 @@ public class BedResource implements RouteGroup {
     }
 
     String bedNumber = bedService.add(bedRequest);
+    String bedPath = String.format("%s/%s", BED_PATH, bedNumber);
 
     response.status(HttpStatus.CREATED_201);
-    response.header(HttpHeader.LOCATION.asString(), BED_PATH + "/" + bedNumber);
+    response.header(HttpHeader.LOCATION.asString(), bedPath);
 
-    return null;
+    return bedPath;
   }
 
   public Object getAll(Request request, Response response) {
