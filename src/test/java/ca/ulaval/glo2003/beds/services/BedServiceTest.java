@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.BedFactory;
 import ca.ulaval.glo2003.beds.domain.BedMatcher;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 public class BedServiceTest {
 
   private BedService bedService;
+  private BedFactory bedFactory;
   private BedMapper bedMapper;
   private BedNumberMapper bedNumberMapper;
   private BedMatcherMapper bedMatcherMapper;
@@ -26,11 +28,13 @@ public class BedServiceTest {
 
   @BeforeEach
   public void setUpService() {
+    bedFactory = mock(BedFactory.class);
     bedMapper = mock(BedMapper.class);
     bedNumberMapper = mock(BedNumberMapper.class);
     bedMatcherMapper = mock(BedMatcherMapper.class);
     bedRepository = mock(BedRepository.class);
-    bedService = new BedService(bedMapper, bedNumberMapper, bedMatcherMapper, bedRepository);
+    bedService =
+        new BedService(bedFactory, bedMapper, bedNumberMapper, bedMatcherMapper, bedRepository);
   }
 
   @Test
