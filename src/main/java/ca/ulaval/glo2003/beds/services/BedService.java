@@ -53,7 +53,6 @@ public class BedService {
     return matchingBeds.stream().map(bedMapper::toResponse).collect(Collectors.toList());
   }
 
-  // TODO : Tests for bedService.getByNumber
   public BedResponse getByNumber(String number) {
     UUID bedNumber = bedNumberMapper.fromString(number);
 
