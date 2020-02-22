@@ -23,6 +23,26 @@ public class BedMatcher {
     this.packages = packages;
   }
 
+  public BedTypes getBedType() {
+    return bedType;
+  }
+
+  public CleaningFrequencies getCleaningFrequency() {
+    return cleaningFrequency;
+  }
+
+  public List<BloodTypes> getBloodTypes() {
+    return bloodTypes;
+  }
+
+  public int getCapacity() {
+    return capacity;
+  }
+
+  public List<Package> getPackages() {
+    return packages;
+  }
+
   public boolean matches(Bed bed) {
     if (bedType != null && !bedType.equals(bed.getBedType())) return false;
 
