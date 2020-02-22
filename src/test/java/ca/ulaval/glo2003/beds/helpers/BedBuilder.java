@@ -5,14 +5,10 @@ import static ca.ulaval.glo2003.beds.helpers.BedObjectMother.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import java.util.List;
-import java.util.UUID;
 
 public class BedBuilder {
 
   private BedBuilder() {}
-
-  private UUID DEFAULT_NUMBER = createBedNumber();
-  private UUID number = DEFAULT_NUMBER;
 
   private String DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
@@ -37,18 +33,6 @@ public class BedBuilder {
 
   public static BedBuilder aBed() {
     return new BedBuilder();
-  }
-
-  public BedBuilder withNullAttributes() {
-    this.number = null;
-    this.ownerPublicKey = null;
-    this.zipCode = null;
-    this.bedType = null;
-    this.cleaningFrequency = null;
-    this.bloodTypes = null;
-    this.capacity = 0;
-    this.packages = null;
-    return this;
   }
 
   public BedBuilder withBedType(BedTypes bedType) {
@@ -78,13 +62,6 @@ public class BedBuilder {
 
   public Bed build() {
     return new Bed(
-        number,
-        ownerPublicKey,
-        zipCode,
-        bedType,
-        cleaningFrequency,
-        bloodTypes,
-        capacity,
-        packages);
+        ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
   }
 }

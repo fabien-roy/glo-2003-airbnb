@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,10 +9,11 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class InvalidBedTypeExceptionHandler implements ExceptionHandler<InvalidBedTypeException> {
+public class InvalidBloodTypesExceptionHandler
+    implements ExceptionHandler<InvalidBloodTypesException> {
 
   @Override
-  public void handle(InvalidBedTypeException e, Request request, Response response) {
+  public void handle(InvalidBloodTypesException e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {
@@ -26,7 +27,8 @@ public class InvalidBedTypeExceptionHandler implements ExceptionHandler<InvalidB
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
         new ErrorResponse(
-            "INVALID_BED_TYPE", "bed type should be one of latex, memoryFoam or springs");
+            "INVALID_BLOOD_TYPES",
+            "blood types should be one or many of\n" + "    O-, O+, AB-, AB+, B-, B+, A- or A+");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public enum CleaningFrequencies {
   public static CleaningFrequencies get(String frequency) {
     CleaningFrequencies foundFrequency = lookup.get(frequency);
 
-    if (foundFrequency == null) throw new RuntimeException(); // TODO : Throw correct exception
+    if (foundFrequency == null) throw new InvalidCleaningFrequencyException();
 
     return foundFrequency;
   }

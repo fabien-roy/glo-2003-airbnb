@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,10 +9,10 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class InvalidBedTypeExceptionHandler implements ExceptionHandler<InvalidBedTypeException> {
+public class InvalidPackageExceptionHandler implements ExceptionHandler<InvalidPackageException> {
 
   @Override
-  public void handle(InvalidBedTypeException e, Request request, Response response) {
+  public void handle(InvalidPackageException e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {
@@ -26,7 +26,8 @@ public class InvalidBedTypeExceptionHandler implements ExceptionHandler<InvalidB
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
         new ErrorResponse(
-            "INVALID_BED_TYPE", "bed type should be one of latex, memoryFoam or springs");
+            "INVALID_PACKAGE",
+            "package should be one of\n" + "    bloodthirsty, allYouCanDrink, sweetTooth");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
