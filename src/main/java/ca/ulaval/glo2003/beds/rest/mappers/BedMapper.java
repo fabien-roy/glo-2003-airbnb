@@ -1,14 +1,13 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedTypes;
-import ca.ulaval.glo2003.beds.domain.BloodTypes;
-import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
+import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,6 +18,7 @@ public class BedMapper {
   public static final String CLEANING_FREQUENCY_PARAM = "cleaningFrequency";
   public static final String BLOOD_TYPES_PARAM = "bloodTypes";
   public static final String CAPACITY = "capacity";
+  public static final String PACKAGE_NAME_PARAM = "packages";
 
   public Bed fromRequest(BedRequest request) {
     Bed bed = new Bed();
@@ -49,6 +49,12 @@ public class BedMapper {
       bed.setCapacity(parseCapacity(params.get(CAPACITY)));
     }
 
+    if (params.get(PACKAGE_NAME_PARAM) != null) {
+      String packageName = params.get(PACKAGE_NAME_PARAM);
+      Package packages = new Package(PackageNames.get(packageName));
+      bed.setPackages(Collections.singletonList(packages));
+    }
+
     return bed;
   }
 
@@ -72,7 +78,6 @@ public class BedMapper {
     try {
 
       parsedCapacity = Integer.parseInt(capacity);
-      System.out.println(parsedCapacity);
     } catch (NumberFormatException e) {
        throw new InvalidMinimalCapacityException();
     }

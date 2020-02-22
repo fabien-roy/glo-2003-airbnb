@@ -24,5 +24,6 @@ public class ErrorResource implements RouteGroup {
         InvalidCleaningFrequencyException.class, new InvalidCleaningFrequencyExceptionHandler());
     exception(InvalidBloodTypesException.class, new InvalidBloodTypesExceptionHandler());
     exception(InvalidMinimalCapacityException.class, new InvalidMinimalCapacityExceptionHandler());
+    exception(InvalidPackageException.class, new InvalidPackageExceptionHandler());
   }
 }

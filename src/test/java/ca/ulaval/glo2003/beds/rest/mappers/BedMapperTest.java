@@ -5,17 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedTypes;
-import ca.ulaval.glo2003.beds.domain.BloodTypes;
-import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
+import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
+import ca.ulaval.glo2003.beds.rest.exceptions.*;
+
+
 import java.util.*;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -172,5 +169,27 @@ class BedMapperTest {
     Map<String, String> params = new HashMap<>();
     params.put(CAPACITY, Integer.toString(expectedCapacity));
     assertThrows(InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withPackage_shouldReturnBedWithPackage() {
+    PackageNames expectedPackageName = PackageNames.BLOODTHIRSTY;
+    Map<String, String> params = new HashMap<>();
+    params.put(PACKAGE_NAME_PARAM, expectedPackageName.toString());
+
+    Bed bed = bedMapper.fromRequestParams(params);
+
+    assertEquals(expectedPackageName, bed.getPackages().get(0).getName());
+  }
+
+  @Test
+  public void
+  fromRequestParams_withInvalidPackage_shouldThrowInvalidPackageException() {
+    Map<String, String> params = new HashMap<>();
+    params.put(PACKAGE_NAME_PARAM, "invalidPackageName");
+
+
+    assertThrows(
+            InvalidPackageException.class, () -> bedMapper.fromRequestParams(params));
   }
 }

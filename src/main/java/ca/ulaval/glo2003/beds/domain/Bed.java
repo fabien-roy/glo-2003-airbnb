@@ -77,6 +77,10 @@ public class Bed {
     return packages;
   }
 
+  public void setPackages(List<Package> packages) {
+    this.packages = packages;
+  }
+
   // This is different than equals : we check if beds match on specific non-null attributes rather
   // than all attributes
   public boolean matches(Bed otherBed) {
@@ -93,5 +97,7 @@ public class Bed {
     if (otherBed.getPackages() != null && !packages.equals(otherBed.getPackages())) return false;
 
     return true;
+
+    //TODO: Repair package matching so it only checks for same name
   }
 }
