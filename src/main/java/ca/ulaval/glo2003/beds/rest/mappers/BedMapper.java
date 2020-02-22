@@ -4,25 +4,15 @@ import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedTypes;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class BedMapper {
 
-  public static final String BED_TYPE_PARAM = "bedType";
-
   public Bed fromRequest(BedRequest request) {
-    // TODO
-    return new Bed();
-  }
+    BedTypes bedType = BedTypes.get(request.getBedType());
 
-  public Bed fromRequestParams(Map<String, String> params) {
-    Bed bed = new Bed();
-
-    if (params.get(BED_TYPE_PARAM) != null) {
-      bed.setBedType(BedTypes.get(params.get(BED_TYPE_PARAM)));
-    }
-
-    return bed;
+    // TODO : Add other values in BedMapper.fromRequest
+    return new Bed(bedType, null, new ArrayList<>(), 0, new ArrayList<>());
   }
 
   public BedResponse toResponse(Bed bed) {

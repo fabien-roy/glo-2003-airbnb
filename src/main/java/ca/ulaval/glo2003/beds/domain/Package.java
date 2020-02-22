@@ -13,6 +13,14 @@ public class Package {
     this.pricePerNight = pricePerNight;
   }
 
+  public Package(PackageNames name) {
+    this.name = name;
+  }
+
+  public PackageNames getName() {
+    return name;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

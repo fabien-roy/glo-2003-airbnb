@@ -39,18 +39,6 @@ public class BedBuilder {
     return new BedBuilder();
   }
 
-  public BedBuilder withNullAttributes() {
-    this.number = null;
-    this.ownerPublicKey = null;
-    this.zipCode = null;
-    this.bedType = null;
-    this.cleaningFrequency = null;
-    this.bloodTypes = null;
-    this.capacity = 0;
-    this.packages = null;
-    return this;
-  }
-
   public BedBuilder withBedType(BedTypes bedType) {
     this.bedType = bedType;
     return this;
@@ -77,6 +65,7 @@ public class BedBuilder {
   }
 
   public Bed build() {
+    // TODO : If this constructor is only used in tests, use another constructor
     return new Bed(
         number,
         ownerPublicKey,

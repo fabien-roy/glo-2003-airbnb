@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public enum PackageNames {
   public static PackageNames get(String name) {
     PackageNames foundName = lookup.get(name);
 
-    if (foundName == null) throw new RuntimeException(); // TODO : Throw correct exception
+    if (foundName == null) throw new InvalidPackageException();
 
     return foundName;
   }

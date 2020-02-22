@@ -2,10 +2,8 @@ package ca.ulaval.glo2003.interfaces.rest;
 
 import static spark.Spark.exception;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.BedNotFoundException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
-import ca.ulaval.glo2003.beds.rest.handlers.BedNotFoundExceptionHandler;
-import ca.ulaval.glo2003.beds.rest.handlers.InvalidBedTypeExceptionHandler;
+import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.rest.handlers.*;
 import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,5 +19,10 @@ public class ErrorResource implements RouteGroup {
     exception(JsonProcessingException.class, new JsonProcessingExceptionHandler());
     exception(InvalidBedTypeException.class, new InvalidBedTypeExceptionHandler());
     exception(BedNotFoundException.class, new BedNotFoundExceptionHandler());
+    exception(
+        InvalidCleaningFrequencyException.class, new InvalidCleaningFrequencyExceptionHandler());
+    exception(InvalidBloodTypesException.class, new InvalidBloodTypesExceptionHandler());
+    exception(InvalidMinimalCapacityException.class, new InvalidMinimalCapacityExceptionHandler());
+    exception(InvalidPackageException.class, new InvalidPackageExceptionHandler());
   }
 }
