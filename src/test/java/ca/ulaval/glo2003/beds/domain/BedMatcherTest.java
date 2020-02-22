@@ -69,20 +69,10 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withSameSingleBloodType_shouldReturnTrue() {
-    List<BloodTypes> bloodTypes = Collections.singletonList(BloodTypes.O_MINUS);
-    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(bloodTypes).build();
-    Bed bed = aBed().withBloodTypes(bloodTypes).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertTrue(matches);
-  }
-
-  @Test
-  public void matches_withSameMultipleBloodTypes_shouldReturnTrue() {
+  public void matches_withSinglePresentBloodType_shouldReturnTrue() {
+    List<BloodTypes> requestedBloodTypes = Collections.singletonList(BloodTypes.O_MINUS);
     List<BloodTypes> bloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
-    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(bloodTypes).build();
+    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(requestedBloodTypes).build();
     Bed bed = aBed().withBloodTypes(bloodTypes).build();
 
     boolean matches = bedMatcher.matches(bed);
@@ -91,11 +81,24 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withASingleDifferentBloodType_shouldReturnFalse() {
-    List<BloodTypes> bloodTypes = Collections.singletonList(BloodTypes.O_MINUS);
-    List<BloodTypes> otherBloodTypes = Collections.singletonList(BloodTypes.O_PLUS);
-    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(bloodTypes).build();
-    Bed bed = aBed().withBloodTypes(otherBloodTypes).build();
+  public void matches_withMultiplePresentBloodTypes_shouldReturnTrue() {
+    List<BloodTypes> requestedBloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
+    List<BloodTypes> bloodTypes =
+        Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS, BloodTypes.AB_MINUS);
+    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(requestedBloodTypes).build();
+    Bed bed = aBed().withBloodTypes(bloodTypes).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
+  public void matches_withSingleNotPresentBloodType_shouldReturnFalse() {
+    List<BloodTypes> requestedBloodTypes = Collections.singletonList(BloodTypes.AB_MINUS);
+    List<BloodTypes> bloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
+    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(requestedBloodTypes).build();
+    Bed bed = aBed().withBloodTypes(bloodTypes).build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -103,13 +106,12 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withMultipleDifferentBloodTypes_shouldReturnFalse() {
+  public void matches_withSingleNotPresentBloodTypeInMultipleBloodTypes_shouldReturnFalse() {
+    List<BloodTypes> requestedBloodTypes = Arrays.asList(BloodTypes.AB_MINUS, BloodTypes.A_MINUS);
     List<BloodTypes> bloodTypes =
-        Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS, BloodTypes.AB_MINUS);
-    List<BloodTypes> otherBloodTypes =
-        Arrays.asList(BloodTypes.O_MINUS, BloodTypes.A_MINUS, BloodTypes.B_MINUS);
-    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(bloodTypes).build();
-    Bed bed = aBed().withBloodTypes(otherBloodTypes).build();
+        Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS, BloodTypes.A_MINUS);
+    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(requestedBloodTypes).build();
+    Bed bed = aBed().withBloodTypes(bloodTypes).build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -117,12 +119,12 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withDifferentBloodTypesAmount_shouldReturnFalse() {
+  public void matches_withMultipleNotPresentBloodTypes_shouldReturnFalse() {
+    List<BloodTypes> requestedBloodTypes = Arrays.asList(BloodTypes.AB_MINUS, BloodTypes.A_MINUS);
     List<BloodTypes> bloodTypes =
-        Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS, BloodTypes.AB_MINUS);
-    List<BloodTypes> otherBloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
-    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(bloodTypes).build();
-    Bed bed = aBed().withBloodTypes(otherBloodTypes).build();
+        Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS, BloodTypes.B_PLUS);
+    BedMatcher bedMatcher = aBedMatcher().withBloodTypes(requestedBloodTypes).build();
+    Bed bed = aBed().withBloodTypes(bloodTypes).build();
 
     boolean matches = bedMatcher.matches(bed);
 
