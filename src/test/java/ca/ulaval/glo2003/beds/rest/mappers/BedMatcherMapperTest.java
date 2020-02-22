@@ -29,7 +29,7 @@ class BedMatcherMapperTest {
     assertNull(bedMatcher.getCleaningFrequency());
     assertNull(bedMatcher.getBloodTypes());
     assertEquals(0, bedMatcher.getCapacity());
-    assertNull(bedMatcher.getPackages());
+    assertNull(bedMatcher.getPackageName());
   }
 
   @Test
@@ -126,18 +126,18 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withPackage_shouldReturnBedMatcherWithPackage() {
+  public void fromRequestParams_withPackageName_shouldReturnBedMatcherWithPackage() {
     PackageNames expectedPackageName = PackageNames.BLOODTHIRSTY;
     Map<String, String> params = new HashMap<>();
     params.put(PACKAGE_NAME_PARAM, expectedPackageName.toString());
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedPackageName, bedMatcher.getPackages().get(0).getName());
+    assertEquals(expectedPackageName, bedMatcher.getPackageName());
   }
 
   @Test
-  public void fromRequestParams_withInvalidPackage_shouldThrowInvalidPackageException() {
+  public void fromRequestParams_withInvalidPackageName_shouldThrowInvalidPackageException() {
     Map<String, String> params = new HashMap<>();
     params.put(PACKAGE_NAME_PARAM, "invalidPackageName");
 

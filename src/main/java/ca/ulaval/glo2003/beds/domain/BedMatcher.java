@@ -8,19 +8,19 @@ public class BedMatcher {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private List<Package> packages;
+  private PackageNames packageName;
 
   public BedMatcher(
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      List<Package> packages) {
+      PackageNames packageName) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
-    this.packages = packages;
+    this.packageName = packageName;
   }
 
   public BedTypes getBedType() {
@@ -39,8 +39,8 @@ public class BedMatcher {
     return capacity;
   }
 
-  public List<Package> getPackages() {
-    return packages;
+  public PackageNames getPackageName() {
+    return packageName;
   }
 
   public boolean matches(Bed bed) {
@@ -53,9 +53,12 @@ public class BedMatcher {
 
     if (capacity > bed.getCapacity()) return false;
 
-    // TODO : Change test so it checks that the bed CONTAINS the package
-    if (packages != null && !packages.equals(bed.getPackages())) return false;
+    if (packageName != null && !packageMatches(bed.getPackages())) return false;
 
     return true;
+  }
+
+  private boolean packageMatches(List<Package> bedPackages) {
+    return bedPackages.stream().anyMatch(bedPackage -> bedPackage.getName().equals(packageName));
   }
 }

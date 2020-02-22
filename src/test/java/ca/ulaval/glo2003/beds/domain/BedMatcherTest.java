@@ -167,10 +167,12 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withSameSinglePackage_shouldReturnTrue() {
-    Package bedPackage = new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(100));
-    List<Package> packages = Collections.singletonList(bedPackage);
-    BedMatcher bedMatcher = aBedMatcher().withPackages(packages).build();
+  public void matches_withPresentPackageName_shouldReturnTrue() {
+    PackageNames packageName = PackageNames.BLOODTHIRSTY;
+    Package bedPackage = new Package(packageName, BigDecimal.valueOf(100));
+    Package otherBedPackage = new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(100));
+    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
+    BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
     Bed bed = aBed().withPackages(packages).build();
 
     boolean matches = bedMatcher.matches(bed);
@@ -179,58 +181,13 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withSameMultiplePackages_shouldReturnTrue() {
-    Package bedPackage = new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(200));
+  public void matches_withNotPresentPackageName_shouldReturnFalse() {
+    PackageNames packageName = PackageNames.BLOODTHIRSTY;
+    Package bedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(100));
+    Package otherBedPackage = new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(100));
     List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
-    BedMatcher bedMatcher = aBedMatcher().withPackages(packages).build();
+    BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
     Bed bed = aBed().withPackages(packages).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertTrue(matches);
-  }
-
-  @Test
-  public void matches_withASingleDifferentPackage_shouldReturnFalse() {
-    Package bedPackage = new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(200));
-    List<Package> packages = Collections.singletonList(bedPackage);
-    List<Package> otherPackages = Collections.singletonList(otherBedPackage);
-    BedMatcher bedMatcher = aBedMatcher().withPackages(packages).build();
-    Bed bed = aBed().withPackages(otherPackages).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertFalse(matches);
-  }
-
-  @Test
-  public void matches_withMultipleDifferentPackages_shouldReturnFalse() {
-    Package bedPackage = new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(200));
-    Package anotherBedPackage =
-        new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(300));
-    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
-    List<Package> otherPackages = Arrays.asList(otherBedPackage, anotherBedPackage);
-    BedMatcher bedMatcher = aBedMatcher().withPackages(packages).build();
-    Bed bed = aBed().withPackages(otherPackages).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertFalse(matches);
-  }
-
-  @Test
-  public void matches_withDifferentPackagesAmount_shouldReturnFalse() {
-    Package bedPackage = new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(200));
-    Package anotherBedPackage =
-        new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(300));
-    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage, anotherBedPackage);
-    List<Package> otherPackages = Arrays.asList(bedPackage, otherBedPackage);
-    BedMatcher bedMatcher = aBedMatcher().withPackages(packages).build();
-    Bed bed = aBed().withPackages(otherPackages).build();
 
     boolean matches = bedMatcher.matches(bed);
 

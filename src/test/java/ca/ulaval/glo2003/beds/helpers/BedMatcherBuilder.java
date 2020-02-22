@@ -1,9 +1,6 @@
 package ca.ulaval.glo2003.beds.helpers;
 
-import static ca.ulaval.glo2003.beds.helpers.BedObjectMother.*;
-
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
 import java.util.List;
 
 public class BedMatcherBuilder {
@@ -14,7 +11,7 @@ public class BedMatcherBuilder {
   private CleaningFrequencies cleaningFrequency = null;
   private List<BloodTypes> bloodTypes = null;
   private int capacity = 0;
-  private List<Package> packages = null;
+  private PackageNames packageName = null;
 
   public static BedMatcherBuilder aBedMatcher() {
     return new BedMatcherBuilder();
@@ -40,12 +37,12 @@ public class BedMatcherBuilder {
     return this;
   }
 
-  public BedMatcherBuilder withPackages(List<Package> packages) {
-    this.packages = packages;
+  public BedMatcherBuilder withPackageName(PackageNames packageName) {
+    this.packageName = packageName;
     return this;
   }
 
   public BedMatcher build() {
-    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packageName);
   }
 }

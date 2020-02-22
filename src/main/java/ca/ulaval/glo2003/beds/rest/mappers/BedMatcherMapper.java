@@ -1,10 +1,8 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +20,7 @@ public class BedMatcherMapper {
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
     int capacity = 0;
-    List<Package> packages = null;
+    PackageNames packageName = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
       bedType = BedTypes.get(params.get(BED_TYPE_PARAM));
@@ -41,10 +39,10 @@ public class BedMatcherMapper {
     }
 
     if (params.get(PACKAGE_NAME_PARAM) != null) {
-      packages = parsePackages(params.get(PACKAGE_NAME_PARAM));
+      packageName = PackageNames.get(params.get(PACKAGE_NAME_PARAM));
     }
 
-    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packageName);
   }
 
   private List<BloodTypes> parseBloodTypes(String bloodTypes) {
@@ -66,9 +64,5 @@ public class BedMatcherMapper {
     }
 
     return parsedCapacity;
-  }
-
-  private List<Package> parsePackages(String packageName) {
-    return Collections.singletonList(new Package(PackageNames.get(packageName)));
   }
 }
