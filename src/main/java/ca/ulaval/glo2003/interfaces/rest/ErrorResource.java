@@ -17,7 +17,6 @@ public class ErrorResource implements RouteGroup {
   public void addRoutes() {
     exception(Exception.class, new CatchallExceptionHandler());
     exception(JsonProcessingException.class, new JsonProcessingExceptionHandler());
-    exception(InvalidBloodTypeException.class, new InvalidBloodTypeExceptionHandler());
     exception(InvalidBedTypeException.class, new InvalidBedTypeExceptionHandler());
     exception(BedNotFoundException.class, new BedNotFoundExceptionHandler());
     exception(
