@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,7 +9,8 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class InvalidMinimalCapacityExceptionHandler implements ExceptionHandler<InvalidMinimalCapacityException> {
+public class InvalidMinimalCapacityExceptionHandler
+    implements ExceptionHandler<InvalidMinimalCapacityException> {
 
   @Override
   public void handle(InvalidMinimalCapacityException e, Request request, Response response) {

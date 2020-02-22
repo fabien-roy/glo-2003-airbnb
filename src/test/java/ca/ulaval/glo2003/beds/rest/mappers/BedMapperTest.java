@@ -6,13 +6,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
-
-
 import java.util.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -154,13 +150,11 @@ class BedMapperTest {
   }
 
   @Test
-  public void
-  fromRequestParams_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+  public void fromRequestParams_withInvalidCapacity_shouldThrowInvalidCapacityException() {
     Map<String, String> params = new HashMap<>();
     params.put(CAPACITY_PARAM, "invalidCapacity");
 
-    assertThrows(
-            InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
+    assertThrows(InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
   }
 
   @Test
@@ -168,6 +162,7 @@ class BedMapperTest {
     int invalidCapacity = -1;
     Map<String, String> params = new HashMap<>();
     params.put(CAPACITY_PARAM, Integer.toString(invalidCapacity));
+
     assertThrows(InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
   }
 
@@ -183,13 +178,10 @@ class BedMapperTest {
   }
 
   @Test
-  public void
-  fromRequestParams_withInvalidPackage_shouldThrowInvalidPackageException() {
+  public void fromRequestParams_withInvalidPackage_shouldThrowInvalidPackageException() {
     Map<String, String> params = new HashMap<>();
     params.put(PACKAGE_NAME_PARAM, "invalidPackageName");
 
-
-    assertThrows(
-            InvalidPackageException.class, () -> bedMapper.fromRequestParams(params));
+    assertThrows(InvalidPackageException.class, () -> bedMapper.fromRequestParams(params));
   }
 }

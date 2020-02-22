@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,8 +26,8 @@ public class InvalidPackageExceptionHandler implements ExceptionHandler<InvalidP
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
         new ErrorResponse(
-            "INVALID_PACKAGE", "package should be one of\n" +
-                "    bloodthirsty, allYouCanDrink, sweetTooth");
+            "INVALID_PACKAGE",
+            "package should be one of\n" + "    bloodthirsty, allYouCanDrink, sweetTooth");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
