@@ -52,7 +52,6 @@ public class BedResource implements RouteGroup {
 
     response.status(HttpStatus.OK_200);
     return bedResponses;
-    // test thomas
   }
 
   public Object getByNumber(Request request, Response response) {

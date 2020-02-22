@@ -146,7 +146,7 @@ class BedMapperTest {
   public void fromRequestParams_withCapacity_shouldReturnBedWithCapacity() {
     int expectedCapacity = 600;
     Map<String, String> params = new HashMap<>();
-    params.put(CAPACITY, Integer.toString(expectedCapacity));
+    params.put(CAPACITY_PARAM, Integer.toString(expectedCapacity));
 
     Bed bed = bedMapper.fromRequestParams(params);
 
@@ -157,7 +157,7 @@ class BedMapperTest {
   public void
   fromRequestParams_withInvalidCapacity_shouldThrowInvalidCapacityException() {
     Map<String, String> params = new HashMap<>();
-    params.put(CAPACITY, "a-ha");
+    params.put(CAPACITY_PARAM, "invalidCapacity");
 
     assertThrows(
             InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
@@ -165,9 +165,9 @@ class BedMapperTest {
 
   @Test
   public void fromRequestParams_withNegativeCapacity_shouldThrowMinimalCapacityException() {
-    int expectedCapacity = -1;
+    int invalidCapacity = -1;
     Map<String, String> params = new HashMap<>();
-    params.put(CAPACITY, Integer.toString(expectedCapacity));
+    params.put(CAPACITY_PARAM, Integer.toString(invalidCapacity));
     assertThrows(InvalidMinimalCapacityException.class, () -> bedMapper.fromRequestParams(params));
   }
 
