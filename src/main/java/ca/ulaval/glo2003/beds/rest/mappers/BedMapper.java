@@ -39,7 +39,7 @@ public class BedMapper {
     }
 
     if (params.get(BLOOD_TYPES_PARAM) != null) {
-      bloodTypes = parseBloodTypeString(params.get(BLOOD_TYPES_PARAM));
+      bloodTypes = parseBloodTypes(params.get(BLOOD_TYPES_PARAM));
     }
 
     if (params.get(CAPACITY_PARAM) != null) {
@@ -47,8 +47,7 @@ public class BedMapper {
     }
 
     if (params.get(PACKAGE_NAME_PARAM) != null) {
-      String packageName = params.get(PACKAGE_NAME_PARAM);
-      packages = Collections.singletonList(new Package(PackageNames.get(packageName)));
+      packages = parsePackages(params.get(PACKAGE_NAME_PARAM));
     }
 
     return new Bed(bedType, cleaningFrequency, bloodTypes, capacity, packages);
@@ -59,9 +58,9 @@ public class BedMapper {
     return new BedResponse();
   }
 
-  private List<BloodTypes> parseBloodTypeString(String bloodTypesInParams) {
-    List<String> bloodTypeStrings = Arrays.asList(bloodTypesInParams.split(","));
-    return bloodTypeStrings.stream().map(BloodTypes::get).collect(Collectors.toList());
+  private List<BloodTypes> parseBloodTypes(String bloodTypes) {
+    List<String> parsedBloodTypes = Arrays.asList(bloodTypes.split(","));
+    return parsedBloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
   }
 
   private int parseCapacity(String capacity) {
@@ -78,5 +77,9 @@ public class BedMapper {
     }
 
     return parsedCapacity;
+  }
+
+  private List<Package> parsePackages(String packageName) {
+    return Collections.singletonList(new Package(PackageNames.get(packageName)));
   }
 }
