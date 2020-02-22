@@ -15,7 +15,7 @@ public class BedMatcherMapper {
   public static final String MIN_CAPACITY_PARAM = "minCapacity";
   public static final String PACKAGE_NAME_PARAM = "packages";
 
-  public BedMatcher fromRequestParams(Map<String, String> params) {
+  public BedMatcher fromRequestParams(Map<String, String[]> params) {
     BedTypes bedType = null;
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
@@ -23,11 +23,11 @@ public class BedMatcherMapper {
     PackageNames packageName = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
-      bedType = BedTypes.get(params.get(BED_TYPE_PARAM));
+      bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
     }
 
     if (params.get(CLEANING_FREQUENCY_PARAM) != null) {
-      cleaningFrequency = CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM));
+      cleaningFrequency = CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]);
     }
 
     if (params.get(BLOOD_TYPES_PARAM) != null) {
@@ -35,19 +35,18 @@ public class BedMatcherMapper {
     }
 
     if (params.get(MIN_CAPACITY_PARAM) != null) {
-      capacity = parseCapacity(params.get(MIN_CAPACITY_PARAM));
+      capacity = parseCapacity(params.get(MIN_CAPACITY_PARAM)[0]);
     }
 
     if (params.get(PACKAGE_NAME_PARAM) != null) {
-      packageName = PackageNames.get(params.get(PACKAGE_NAME_PARAM));
+      packageName = PackageNames.get(params.get(PACKAGE_NAME_PARAM)[0]);
     }
 
     return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packageName);
   }
 
-  private List<BloodTypes> parseBloodTypes(String bloodTypes) {
-    List<String> parsedBloodTypes = Arrays.asList(bloodTypes.split(","));
-    return parsedBloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
+  private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
+    return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());
   }
 
   private int parseCapacity(String capacity) {
