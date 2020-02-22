@@ -69,23 +69,4 @@ public class Bed {
   public List<Package> getPackages() {
     return packages;
   }
-
-  // This is different than equals : we check if beds match on specific non-null attributes rather
-  // than all attributes
-  public boolean matches(Bed otherBed) {
-    if (otherBed.getBedType() != null && !bedType.equals(otherBed.getBedType())) return false;
-
-    if (otherBed.getCleaningFrequency() != null
-        && !cleaningFrequency.equals(otherBed.getCleaningFrequency())) return false;
-
-    if (otherBed.getBloodTypes() != null && !bloodTypes.equals(otherBed.getBloodTypes()))
-      return false;
-
-    if (otherBed.getCapacity() > 0 && capacity != otherBed.getCapacity()) return false;
-
-    // TODO: Repair package matching so it only checks for same name
-    if (otherBed.getPackages() != null && !packages.equals(otherBed.getPackages())) return false;
-
-    return true;
-  }
 }
