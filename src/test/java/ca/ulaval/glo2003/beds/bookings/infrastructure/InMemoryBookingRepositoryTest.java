@@ -1,12 +1,12 @@
-package ca.ulaval.glo2003.beds.booking.infrastructure;
+package ca.ulaval.glo2003.beds.bookings.infrastructure;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.booking.domain.Booking;
-import ca.ulaval.glo2003.beds.booking.domain.BookingRepository;
-import ca.ulaval.glo2003.beds.booking.rest.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingRepository;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;

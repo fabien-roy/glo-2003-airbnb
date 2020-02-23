@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.booking.domain;
+package ca.ulaval.glo2003.beds.bookings.domain;
 
 import java.util.List;
 import java.util.UUID;

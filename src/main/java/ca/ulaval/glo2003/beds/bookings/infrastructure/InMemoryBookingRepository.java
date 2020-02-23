@@ -1,8 +1,8 @@
-package ca.ulaval.glo2003.beds.booking.infrastructure;
+package ca.ulaval.glo2003.beds.bookings.infrastructure;
 
-import ca.ulaval.glo2003.beds.booking.domain.Booking;
-import ca.ulaval.glo2003.beds.booking.domain.BookingRepository;
-import ca.ulaval.glo2003.beds.booking.rest.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingRepository;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

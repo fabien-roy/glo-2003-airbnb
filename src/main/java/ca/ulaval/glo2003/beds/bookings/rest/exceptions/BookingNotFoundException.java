@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.booking.rest.exceptions;
+package ca.ulaval.glo2003.beds.bookings.rest.exceptions;
 
 public class BookingNotFoundException extends RuntimeException {
 

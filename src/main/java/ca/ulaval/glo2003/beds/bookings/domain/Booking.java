@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.booking.domain;
+package ca.ulaval.glo2003.beds.bookings.domain;
 
 import java.util.Base64;
 import java.util.Date;
