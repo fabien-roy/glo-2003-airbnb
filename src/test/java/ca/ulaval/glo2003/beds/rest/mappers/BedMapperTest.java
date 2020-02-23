@@ -44,19 +44,18 @@ class BedMapperTest {
     assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
+  @Test
+  public void fromRequest_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {
+    CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
+    BedRequest bedRequest = mock(BedRequest.class);
+    CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
+    when(bedRequest.getBedType()).thenReturn(String.valueOf(cleaningFrequency));
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedCleaningFrequency, bed.getCleaningFrequency());
+  }
   /*
-   @Test
-   public void fromRequest_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {
-     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
-     BedRequest bedRequest = mock(BedRequest.class);
-     CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
-     when(bedRequest.getBedType()).thenReturn(String.valueOf(cleaningFrequency));
-
-     Bed bed = bedMapper.fromRequest(bedRequest);
-
-     assertEquals(expectedCleaningFrequency, bed.getCleaningFrequency());
-   }
-
    @Test
    public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
      String invalidCleaningFrequency = "invalidCleaningFrequency";
