@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 class BedFactoryTest {
 
   BedFactory bedFactory;
-  BedStarsCalculator starsCalculator;
+  BedStarsCalculator bedStarsCalculator;
 
   @BeforeEach
   public void setUpFactory() {
-    starsCalculator = mock(BedStarsCalculator.class);
-    bedFactory = new BedFactory(starsCalculator);
+    bedStarsCalculator = mock(BedStarsCalculator.class);
+    bedFactory = new BedFactory(bedStarsCalculator);
   }
 
   @Test
@@ -43,7 +43,7 @@ class BedFactoryTest {
   public void create_shouldSetStars() {
     int expectedStars = 1;
     Bed bed = aBed().build();
-    when(starsCalculator.calculateStars(bed)).thenReturn(expectedStars);
+    when(bedStarsCalculator.calculateStars(bed)).thenReturn(expectedStars);
 
     bed = bedFactory.create(bed);
 
