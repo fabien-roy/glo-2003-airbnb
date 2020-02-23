@@ -2,7 +2,7 @@
 
 This document describes the flows for RUS. It is an overwrite for our original release 1 plan.
 
-Flow for `POST /bed/:bedNumber/bookings`
+## Flow for `POST /bed/:bedNumber/bookings`
 - `BedResource.addBooking(...)` sends bedNumber and `BookingRequest` to `BookingService.add(...)` (#44)
   - _(inside `BookingService.add(...)`)_
   - Make a valid `Booking` using `BookingMapper.fromRequest(...)` (#56, #57, #58, #59, #60)
@@ -17,7 +17,7 @@ Flow for `POST /bed/:bedNumber/bookings`
   - Returns the booking number (#54)
 - Setup header location and status code response (#46)
 
-Flow for `GET /beds/:bedNumber/bookings/:bookingNumber`
+## Flow for `GET /beds/:bedNumber/bookings/:bookingNumber`
 - `BedResource.getBooking(...)` sends bed and booking number to `BookingService.get(...)` (#45)
 - _(inside `BookingService.get(...)`)_
   - Make a valid UUID (#65)
@@ -27,7 +27,7 @@ Flow for `GET /beds/:bedNumber/bookings/:bookingNumber`
   - Return `BookingResponse` (#66)
 - Setup body and status code (#47)
 
-Flow for `GET /admin/transactions`
+## Flow for `GET /admin/transactions`
 - `TransactionResource.getAll(...)` asks `TransactionService.getAll(...)` (#69)
 - _(inside `TransactionService.getAll(...)`)_
   - Get all `Bed` with `BedRepository.getAll(...)` (#71)
