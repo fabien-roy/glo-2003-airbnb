@@ -4,6 +4,7 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionRequest;
 import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
+import java.time.LocalDateTime;
 
 public class TransactionMapper {
 
@@ -12,7 +13,8 @@ public class TransactionMapper {
     String from = request.getFrom();
     String to = request.getTo();
     double total = request.getTotal();
-    return new Transaction(reason, to, from, total);
+    LocalDateTime timestamp = request.getTimestamp();
+    return new Transaction(reason, to, from, total, timestamp);
   }
 
   public TransactionResponse toResponse(Transaction transaction) {
@@ -20,6 +22,7 @@ public class TransactionMapper {
     String from = transaction.getFrom();
     String to = transaction.getTo();
     double total = transaction.getTotal();
-    return new TransactionResponse(from, to, total, reason);
+    LocalDateTime timestamp = transaction.getTimestamp();
+    return new TransactionResponse(from, to, total, reason, timestamp);
   }
 }

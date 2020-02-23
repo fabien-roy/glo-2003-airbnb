@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.transactions.rest;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
+import java.time.LocalDateTime;
 
 public class TransactionResponse {
 
@@ -8,14 +9,15 @@ public class TransactionResponse {
   private String to;
   private double total;
   private TransactionReasons reason;
-  // private DateTime timestamp;
+  private LocalDateTime timestamp;
 
-  public TransactionResponse(String from, String to, double total, TransactionReasons reason) {
+  public TransactionResponse(
+      String from, String to, double total, TransactionReasons reason, LocalDateTime timestamp) {
     this.from = from;
     this.reason = reason;
     this.to = to;
     this.total = total;
-    // this.timestamp = timestamp;
+    this.timestamp = timestamp;
   }
 
   public String getFrom() {
@@ -33,7 +35,6 @@ public class TransactionResponse {
   public TransactionReasons getTransactionReasons() {
     return reason;
   }
-  // public DateTime getTimestamp() { return timestamp; }
 
   public void setFrom(String from) {
     this.from = from;
@@ -49,5 +50,13 @@ public class TransactionResponse {
 
   public void setReason(TransactionReasons reason) {
     this.reason = reason;
+  }
+
+  public LocalDateTime getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(LocalDateTime timestamp) {
+    this.timestamp = timestamp;
   }
 }
