@@ -7,6 +7,7 @@ import static spark.Spark.path;
 
 import ca.ulaval.glo2003.beds.domain.BedFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.BedStarsCalculator;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
@@ -20,7 +21,8 @@ public class Router {
 
   // TODO : This is not correct dependency injection
   private static final BedRepository bedRepository = new InMemoryBedRepository();
-  private static final BedFactory bedFactory = new BedFactory();
+  private static final BedStarsCalculator starsCalculator = new BedStarsCalculator();
+  private static final BedFactory bedFactory = new BedFactory(starsCalculator);
   private static final BedMapper bedMapper = new BedMapper();
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
