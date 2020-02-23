@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ class BedMapperTest {
 
     assertEquals(expectedBedType, bed.getBedType());
   }
-  /*
+
   @Test
   public void fromRequest_withInvalidBedType_shouldThrowInvalidFormatException() {
     String invalidBedType = "invalidBedType";
@@ -38,7 +39,7 @@ class BedMapperTest {
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
   }
-
+  /*
    @Test
    public void fromRequest_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {
      CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
