@@ -7,6 +7,8 @@ import java.util.Map;
 public class BedTypesBaseRates {
   private static final Map<BedTypes, Double> differentials;
 
+  private BedTypesBaseRates() {}
+
   static {
     Map<BedTypes, Double> modifiableDifferentials = new EnumMap<>(BedTypes.class);
     modifiableDifferentials.put(BedTypes.LATEX, 250.0);

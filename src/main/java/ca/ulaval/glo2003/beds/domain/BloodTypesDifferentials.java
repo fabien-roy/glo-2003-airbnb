@@ -7,6 +7,8 @@ import java.util.Map;
 public class BloodTypesDifferentials {
   private static final Map<BloodTypes, Double> differentials;
 
+  private BloodTypesDifferentials() {}
+
   static {
     Map<BloodTypes, Double> modifiableDifferentials = new EnumMap<>(BloodTypes.class);
     modifiableDifferentials.put(BloodTypes.O_MINUS, 1.5);

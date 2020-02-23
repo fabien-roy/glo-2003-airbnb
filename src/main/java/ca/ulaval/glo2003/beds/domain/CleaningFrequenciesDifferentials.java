@@ -7,6 +7,8 @@ import java.util.Map;
 public class CleaningFrequenciesDifferentials {
   private static final Map<CleaningFrequencies, Double> differentials;
 
+  private CleaningFrequenciesDifferentials() {}
+
   static {
     Map<CleaningFrequencies, Double> modifiableDifferentials =
         new EnumMap<>(CleaningFrequencies.class);
