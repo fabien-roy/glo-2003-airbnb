@@ -5,19 +5,19 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class BedTypesBaseRates {
-  private static final Map<BedTypes, Double> differentials;
+  private static final Map<BedTypes, Double> baseRates;
 
   private BedTypesBaseRates() {}
 
   static {
-    Map<BedTypes, Double> modifiableDifferentials = new EnumMap<>(BedTypes.class);
-    modifiableDifferentials.put(BedTypes.LATEX, 250.0);
-    modifiableDifferentials.put(BedTypes.MEMORY_FOAM, 500.0);
-    modifiableDifferentials.put(BedTypes.SPRINGS, 750.0);
-    differentials = Collections.unmodifiableMap(modifiableDifferentials);
+    Map<BedTypes, Double> modifiableBaseRates = new EnumMap<>(BedTypes.class);
+    modifiableBaseRates.put(BedTypes.LATEX, 250.0);
+    modifiableBaseRates.put(BedTypes.MEMORY_FOAM, 500.0);
+    modifiableBaseRates.put(BedTypes.SPRINGS, 750.0);
+    baseRates = Collections.unmodifiableMap(modifiableBaseRates);
   }
 
   public static Double get(BedTypes bedType) {
-    return differentials.get(bedType);
+    return baseRates.get(bedType);
   }
 }
