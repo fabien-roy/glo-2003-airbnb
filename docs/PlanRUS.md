@@ -18,7 +18,7 @@ This document describes the flows for RUS. It is an overwrite for our original r
 - Setup header location and status code response (#46)
 
 ## Flow for `GET /beds/:bedNumber/bookings/:bookingNumber`
-- `BedResource.getBooking(...)` sends bed and booking number to `BookingService.getByNumber(...)` (#45)
+- `BedResource.getBookingByNumber(...)` sends bed and booking number to `BookingService.getByNumber(...)` (#45)
 - _(inside `BookingService.getByNumber(...)`)_
   - Make a valid UUID (#65)
   - Get `Bed` with `BedRepository.getByNumber(...)` (#99)
