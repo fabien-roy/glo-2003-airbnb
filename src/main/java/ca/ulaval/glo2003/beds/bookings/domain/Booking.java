@@ -31,4 +31,14 @@ public class Booking {
   public int getNumberOfNights() {
     return numberOfNights;
   }
+
+  public boolean matches(Booking otherBooking) {
+    boolean result = true;
+    boolean number;
+    boolean tenantPublicKey;
+    boolean arrivalDate;
+    boolean numberOfNights;
+    boolean paquet; // package est un mot reserve
+    return result;
+  }
 }
