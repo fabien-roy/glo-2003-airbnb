@@ -1,14 +1,20 @@
-package ca.ulaval.glo2003.beds.helpers;
+package ca.ulaval.glo2003.beds.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class BedBuilder {
 
   private BedBuilder() {}
+
+  private UUID DEFAULT_BED_NUMBER = createBedNumber();
+  private UUID bedNumber = DEFAULT_BED_NUMBER;
 
   private String DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
@@ -31,8 +37,26 @@ public class BedBuilder {
   private List<Package> DEFAULT_PACKAGES = createPackages();
   private List<Package> packages = DEFAULT_PACKAGES;
 
+  private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
+  private List<Booking> bookings = DEFAULT_BOOKINGS;
+
   public static BedBuilder aBed() {
     return new BedBuilder();
+  }
+
+  public BedBuilder withBedNumber(UUID bedNumber) {
+    this.bedNumber = bedNumber;
+    return this;
+  }
+
+  public BedBuilder withOwnerPublicKey(String ownerPublicKey) {
+    this.ownerPublicKey = ownerPublicKey;
+    return this;
+  }
+
+  public BedBuilder withZipCode(String zipCode) {
+    this.zipCode = zipCode;
+    return this;
   }
 
   public BedBuilder withBedType(BedTypes bedType) {
@@ -61,8 +85,17 @@ public class BedBuilder {
     return this;
   }
 
+  public BedBuilder withBookings(List<Booking> bookings) {
+    this.bookings = bookings;
+    return this;
+  }
+
   public Bed build() {
-    return new Bed(
-        ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    Bed bed =
+        new Bed(
+            ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    bed.setNumber(bedNumber);
+    bookings.forEach(booking -> bed.book(booking, packages.get(0).getName()));
+    return bed;
   }
 }

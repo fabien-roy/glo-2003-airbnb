@@ -21,6 +21,10 @@ public class Package {
     return name;
   }
 
+  public BigDecimal getPricePerNight() {
+    return pricePerNight;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

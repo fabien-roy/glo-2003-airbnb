@@ -1,5 +1,6 @@
-package ca.ulaval.glo2003.beds.helpers;
+package ca.ulaval.glo2003.beds.domain.helpers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
@@ -9,7 +10,6 @@ import ca.ulaval.glo2003.beds.rest.mappers.CapacityMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import java.math.BigDecimal;
 import java.util.*;
 
 public class BedObjectMother {
@@ -19,6 +19,10 @@ public class BedObjectMother {
       new FakeValuesService(new Locale("en-US"), new RandomService());
 
   private BedObjectMother() {}
+
+  public static UUID createBedNumber() {
+    return UUID.randomUUID();
+  }
 
   public static String createOwnerPublicKey() {
     return fakeValuesService.regexify(BedMapper.OWNER_PUBLIC_KEY_PATTERN);
@@ -47,16 +51,6 @@ public class BedObjectMother {
   }
 
   public static List<Package> createPackages() {
-    return Collections.singletonList(
-        new Package(createPackageName(), createPackagePricePerNight()));
-  }
-
-  private static PackageNames createPackageName() {
-    return randomEnum(PackageNames.class);
-  }
-
-  private static BigDecimal createPackagePricePerNight() {
-    double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return BigDecimal.valueOf(randomDouble);
+    return Collections.singletonList(aPackage().build());
   }
 }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.helpers.BedMatcherBuilder.aBedMatcher;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatcher;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
