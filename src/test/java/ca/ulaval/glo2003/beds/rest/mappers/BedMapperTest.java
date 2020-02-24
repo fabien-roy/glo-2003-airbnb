@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,23 +85,22 @@ class BedMapperTest {
     assertEquals(1, bed.getBloodTypes().size());
     assertEquals(expectedBloodType, bed.getBloodTypes().get(0));
   }
+
+  @Test
+  public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
+    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
+    BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
+    List<String> bloodTypes =
+        Arrays.asList(expectedBloodType.toString(), otherExpectedBloodType.toString());
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(2, bed.getBloodTypes().size());
+    assertTrue(bed.getBloodTypes().contains(expectedBloodType));
+    assertTrue(bed.getBloodTypes().contains(otherExpectedBloodType));
+  }
   /*
-   @Test
-   public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
-     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-     BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
-     List<String> bloodTypes =
-         Arrays.asList(expectedBloodType.toString(), otherExpectedBloodType.toString());
-     BedRequest bedRequest = mock(BedRequest.class);
-     when(bedRequest.getBloodTypes()).thenReturn(bloodTypes);
-
-     Bed bed = bedMapper.fromRequest(bedRequest);
-
-     assertEquals(2, bed.getBloodTypes().size());
-     assertTrue(bed.getBloodTypes().contains(expectedBloodType));
-     assertTrue(bed.getBloodTypes().contains(otherExpectedBloodType));
-   }
-
    @Test
    public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
      BedRequest bedRequest = mock(BedRequest.class);
