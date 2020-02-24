@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
@@ -16,8 +15,10 @@ public class BedMapper {
     validateFormat(request);
 
     BedTypes bedType = BedTypes.get(request.getBedType());
+    CleaningFrequencies cleaningFrequencies =
+        CleaningFrequencies.get(request.getCleaningFrequency());
 
-    return new Bed(bedType, null, new ArrayList<>(), 0, new ArrayList<>());
+    return new Bed(bedType, cleaningFrequencies, new ArrayList<>(), 0, new ArrayList<>());
   }
 
   public BedResponse toResponse(Bed bed) {
