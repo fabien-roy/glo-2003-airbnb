@@ -33,8 +33,10 @@ public class BedMapper {
     int capacity = request.getCapacity();
     List<Package> packages =
         request.getPackages().stream().map(packageMapper::fromRequest).collect(Collectors.toList());
-
-    return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, packages);
+    String ownerPublicKey = request.getOwnerPublicKey();
+    String zipCode = request.getZipCode();
+    return new Bed(
+        ownerPublicKey, zipCode, bedType, cleaningFrequencies, bloodTypes, capacity, packages);
   }
 
   // TODO : toResponse should only set bedNumber for getAll, not for get
