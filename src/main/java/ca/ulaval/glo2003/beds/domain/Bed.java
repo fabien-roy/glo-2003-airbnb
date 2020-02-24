@@ -13,7 +13,7 @@ public class Bed {
 
   private UUID number;
   private String ownerPublicKey;
-  private String zipCode; // TODO : We might want to keep zipCode in a separated class
+  private String zipCode;
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;

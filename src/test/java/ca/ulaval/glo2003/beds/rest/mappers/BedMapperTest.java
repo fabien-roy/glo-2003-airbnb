@@ -194,6 +194,21 @@ class BedMapperTest {
   }
 
   @Test
+  public void fromRequest_withZipCode_shouldMapZipCode() {
+    String zipCode = "15679";
+    BedRequest bedRequest = aBedRequest().withZipCode(zipCode).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(zipCode, bed.getZipCode());
+  }
+
+  @Test
+  public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
+    BedRequest bedRequest = aBedRequest().build();
+  }
+
+  @Test
   public void toResponse_shouldMapBedNumber() {
     UUID expectedBedNumber = createBedNumber();
     Bed bed = aBed().withBedNumber(expectedBedNumber).build();
