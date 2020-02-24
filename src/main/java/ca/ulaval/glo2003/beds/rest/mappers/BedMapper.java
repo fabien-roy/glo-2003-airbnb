@@ -21,8 +21,9 @@ public class BedMapper {
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes().toArray(String[]::new));
+    int capacity = request.getCapacity();
 
-    return new Bed(bedType, cleaningFrequencies, bloodTypes, 0, new ArrayList<>());
+    return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, new ArrayList<>());
   }
 
   public BedResponse toResponse(Bed bed) {
