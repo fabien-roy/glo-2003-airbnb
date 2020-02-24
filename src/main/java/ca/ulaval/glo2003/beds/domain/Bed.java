@@ -14,7 +14,6 @@ public class Bed {
   private List<BloodTypes> bloodTypes;
   private int capacity;
   private List<Package> packages;
-  private int stars;
   private List<Booking> bookings;
 
   public Bed(
@@ -73,14 +72,6 @@ public class Bed {
 
   public List<Package> getPackages() {
     return packages;
-  }
-
-  public int getStars() {
-    return stars;
-  }
-
-  public void setStars(int stars) {
-    this.stars = stars;
   }
 
   public void book(Booking booking) {
