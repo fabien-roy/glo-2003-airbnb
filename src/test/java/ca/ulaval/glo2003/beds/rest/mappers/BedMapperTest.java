@@ -115,7 +115,7 @@ class BedMapperTest {
     List<String> bloodTypes = Collections.singletonList(invalidBloodType);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
   /*
    @Test
