@@ -40,12 +40,17 @@ class PackageMapperTest {
     PackageRequest packageRequest =
         PackageRequestBuilder.aPackageRequest().withName(invalidName).build();
 
-    assertThrows(InvalidPackageException, () -> packageMapper.fromRequest(packageRequest));
+    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequest(packageRequest));
   }
 
   @Test
   public void fromRequest_shouldMapPricePerNight() {
-    // TODO
+    double expectedPrice = PackageRequestObjectMother.createPricePerNight();
+    PackageRequest packageRequest =
+        PackageRequestBuilder.aPackageRequest().withPricePerNight(expectedPrice).build();
+    Package testPackage = packageMapper.fromRequest(packageRequest);
+
+    assertEquals(expectedPrice, testPackage.getPricePerNight().doubleValue());
   }
 
   @Test
