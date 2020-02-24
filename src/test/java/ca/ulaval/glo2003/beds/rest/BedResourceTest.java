@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -48,7 +47,7 @@ public class BedResourceTest {
   @Test
   public void add_shouldSetCreatedAsHttpStatus() throws JsonProcessingException {
     Request request = mock(Request.class);
-    BedRequest bedRequest = aBedRequest().build();
+    BedRequest bedRequest = mock(BedRequest.class);
     String requestBody = new ObjectMapper().writeValueAsString(bedRequest);
     when(request.body()).thenReturn(requestBody);
     Response response = mock(Response.class);
