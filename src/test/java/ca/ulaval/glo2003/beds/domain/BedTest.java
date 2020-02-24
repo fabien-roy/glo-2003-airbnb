@@ -1,17 +1,17 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -45,47 +45,11 @@ class BedTest {
   }
 
   @Test
-  public void book_withAlreadyBookedDate_shouldThrowBedAlreadyBookedException() {
-    LocalDate alreadyBookedDate = createArrivalDate();
-    Booking presentBooking = aBooking().withArrivalDate(alreadyBookedDate).build();
+  public void book_withOverlappingDates_shouldThrowBedAlreadyBookedException() {
+    Booking booking = aBooking().build();
+    Booking presentBooking = mock(Booking.class);
+    when(presentBooking.isOverlapping(booking)).thenReturn(true);
     List<Booking> presentBookings = Collections.singletonList(presentBooking);
-    Booking booking = aBooking().withArrivalDate(alreadyBookedDate).build();
-    Bed bed = aBed().withBookings(presentBookings).build();
-    PackageNames bookingPackage = bed.getPackages().get(0).getName();
-
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
-    assertFalse(bed.getBookings().contains(booking));
-  }
-
-  @Test
-  public void
-      book_withPrecedingArrivalDateAndOverlappingNumberOfDays_shouldThrowBedAlreadyBookedException() {
-    LocalDate alreadyBookedDate = createArrivalDate();
-    LocalDate bookingDate = alreadyBookedDate.minusDays(1);
-    int bookingNumberOfDays = 3;
-    Booking presentBooking = aBooking().withArrivalDate(alreadyBookedDate).build();
-    List<Booking> presentBookings = Collections.singletonList(presentBooking);
-    Booking booking =
-        aBooking().withArrivalDate(bookingDate).withNumberOfNights(bookingNumberOfDays).build();
-    Bed bed = aBed().withBookings(presentBookings).build();
-    PackageNames bookingPackage = bed.getPackages().get(0).getName();
-
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
-    assertFalse(bed.getBookings().contains(booking));
-  }
-
-  @Test
-  public void book_withArrivalDateWithinNumberOfDays_shouldThrowBedAlreadyBookedException() {
-    LocalDate alreadyBookedDate = createArrivalDate();
-    LocalDate bookingDate = alreadyBookedDate.plusDays(1);
-    int alreadyBookedNumberOfDays = 3;
-    Booking presentBooking =
-        aBooking()
-            .withArrivalDate(alreadyBookedDate)
-            .withNumberOfNights(alreadyBookedNumberOfDays)
-            .build();
-    List<Booking> presentBookings = Collections.singletonList(presentBooking);
-    Booking booking = aBooking().withArrivalDate(bookingDate).build();
     Bed bed = aBed().withBookings(presentBookings).build();
     PackageNames bookingPackage = bed.getPackages().get(0).getName();
 
