@@ -37,6 +37,7 @@ public class BedMapper {
     String ownerPublicKey = request.getOwnerPublicKey();
     String zipCode = request.getZipCode();
 
+    validatePublicKey(ownerPublicKey);
     validateZipCode(zipCode);
 
     return new Bed(
@@ -79,10 +80,11 @@ public class BedMapper {
     }
   }
 
+  private void validatePublicKey(String publicKey) {
+    if (!publicKey.matches(OWNER_PUBLIC_KEY_PATTERN)) throw new InvalidZipCodeException();
+  }
+
   private void validateZipCode(String zipCode) {
-    if (!zipCode.matches(ZIP_CODE_PATTERN)) {
-      throw new InvalidZipCodeException();
-    }
-    ;
+    if (!zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidPublicKey();
   }
 }
