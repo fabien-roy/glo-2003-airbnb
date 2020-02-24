@@ -1,13 +1,16 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder;
+import ca.ulaval.glo2003.beds.rest.helpers.PackageRequestObjectMother;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +26,21 @@ class PackageMapperTest {
 
   @Test
   public void fromRequest_shouldMapName() {
-    // TODO
+    String expectedName = PackageRequestObjectMother.createPackageName();
+    PackageRequest packageRequest =
+        PackageRequestBuilder.aPackageRequest().withName(expectedName).build();
+    Package testPackage = packageMapper.fromRequest(packageRequest);
+
+    assertEquals(expectedName, testPackage.getName().toString());
   }
 
   @Test
   public void fromRequest_withInvalidPackageName_shouldThrowInvalidPackageException() {
-    // TODO
+    String invalidName = "invalid Name";
+    PackageRequest packageRequest =
+        PackageRequestBuilder.aPackageRequest().withName(invalidName).build();
+
+    assertThrows(InvalidPackageException, () -> packageMapper.fromRequest(packageRequest));
   }
 
   @Test
@@ -38,7 +50,7 @@ class PackageMapperTest {
 
   @Test
   public void toResponse_shouldMapName() {
-    PackageNames expectedName = createPackageName();
+    PackageNames expectedName = PackageObjectMother.createPackageName();
     Package bedPackage = aPackage().withName(expectedName).build();
 
     PackageResponse packageResponse = packageMapper.toResponse(bedPackage);
@@ -48,7 +60,7 @@ class PackageMapperTest {
 
   @Test
   public void toResponse_shouldMapPricePerNight() {
-    BigDecimal expectedPricePerNight = createPricePerNight();
+    BigDecimal expectedPricePerNight = PackageObjectMother.createPricePerNight();
     Package bedPackage = aPackage().withPricePerNight(expectedPricePerNight).build();
 
     PackageResponse packageResponse = packageMapper.toResponse(bedPackage);

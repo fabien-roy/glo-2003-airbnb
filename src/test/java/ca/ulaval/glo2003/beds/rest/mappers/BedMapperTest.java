@@ -182,8 +182,8 @@ class BedMapperTest {
     List<PackageRequest> packageRequests = Arrays.asList(packageRequest, otherPackageRequest);
     BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
     Package expectedPackage = mock(Package.class);
-    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
     Package otherExpectedPackage = mock(Package.class);
+    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
     when(packageMapper.fromRequest(otherPackageRequest)).thenReturn(otherExpectedPackage);
 
     Bed bed = bedMapper.fromRequest(bedRequest);
