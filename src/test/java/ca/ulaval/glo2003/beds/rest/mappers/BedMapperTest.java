@@ -221,7 +221,7 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_withOwnerKey_shouldMapOwnerKey() {
-    String ownerKey = "AJDLF46T8JH788JLDE4RTGRE35GBNHY67UJMNG567JHGD356789JGTNMZVEF6GND3";
+    String ownerKey = "AJDLF46T8JH788JLDE4RTGRE35GBNHY67UJMNG567JHGD356789JGTNMZVEF6GND";
     BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
