@@ -142,11 +142,7 @@ class BedMapperTest {
   @Test
   public void fromRequest_withCapacity_shouldReturnBedWithCapacity() {
     int expectedCapacity = 1000;
-    BedRequest bedRequest =
-        aBedRequest()
-            .withBedType(BedTypes.SPRINGS.toString())
-            .withCapacity(expectedCapacity)
-            .build();
+    BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
