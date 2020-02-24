@@ -2,6 +2,8 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.helpers.BedBuilder.aBed;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,10 +11,12 @@ import org.junit.jupiter.api.Test;
 class BedFactoryTest {
 
   BedFactory bedFactory;
+  BedStarsCalculator bedStarsCalculator;
 
   @BeforeEach
   public void setUpFactory() {
-    bedFactory = new BedFactory();
+    bedStarsCalculator = mock(BedStarsCalculator.class);
+    bedFactory = new BedFactory(bedStarsCalculator);
   }
 
   @Test
@@ -33,5 +37,16 @@ class BedFactoryTest {
     otherBed = bedFactory.create(otherBed);
 
     assertNotEquals(bed.getNumber(), otherBed.getNumber());
+  }
+
+  @Test
+  public void create_shouldSetStars() {
+    int expectedStars = 1;
+    Bed bed = aBed().build();
+    when(bedStarsCalculator.calculateStars(bed)).thenReturn(expectedStars);
+
+    bed = bedFactory.create(bed);
+
+    assertEquals(expectedStars, bed.getStars());
   }
 }
