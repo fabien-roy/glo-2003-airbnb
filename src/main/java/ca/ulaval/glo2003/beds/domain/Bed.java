@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.domain;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -82,8 +83,11 @@ public class Bed {
     return bookings;
   }
 
-  public void book(Booking booking) {
+  public void book(Booking booking, PackageNames bookingPackage) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
+
+    if (packages.stream().noneMatch(bedPackage -> bookingPackage.equals(bedPackage.getName())))
+      throw new PackageNotAvailableException();
 
     bookings.forEach(presentBooking -> validateNotOverlapping(presentBooking, booking));
 

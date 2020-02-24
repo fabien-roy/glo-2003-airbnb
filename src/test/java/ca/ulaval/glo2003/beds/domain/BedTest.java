@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -21,8 +23,9 @@ class BedTest {
     Booking presentBooking = aBooking().build();
     Booking expectedBooking = aBooking().build();
     Bed bed = aBed().withBookings(Collections.singletonList(presentBooking)).build();
+    PackageNames bookingPackage = bed.getPackages().get(0).getName();
 
-    bed.book(expectedBooking);
+    bed.book(expectedBooking, bookingPackage);
     List<Booking> bookings = bed.getBookings();
 
     assertEquals(2, bookings.size());
@@ -35,8 +38,9 @@ class BedTest {
     String ownerPublicKey = createOwnerPublicKey();
     Booking booking = aBooking().withTenantPublicKey(ownerPublicKey).build();
     Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
+    PackageNames bookingPackage = bed.getPackages().get(0).getName();
 
-    assertThrows(BookingNotAllowedException.class, () -> bed.book(booking));
+    assertThrows(BookingNotAllowedException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
   }
 
@@ -47,8 +51,9 @@ class BedTest {
     List<Booking> presentBookings = Collections.singletonList(presentBooking);
     Booking booking = aBooking().withArrivalDate(alreadyBookedDate).build();
     Bed bed = aBed().withBookings(presentBookings).build();
+    PackageNames bookingPackage = bed.getPackages().get(0).getName();
 
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
   }
 
@@ -63,8 +68,9 @@ class BedTest {
     Booking booking =
         aBooking().withArrivalDate(bookingDate).withNumberOfNights(bookingNumberOfDays).build();
     Bed bed = aBed().withBookings(presentBookings).build();
+    PackageNames bookingPackage = bed.getPackages().get(0).getName();
 
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
   }
 
@@ -81,13 +87,21 @@ class BedTest {
     List<Booking> presentBookings = Collections.singletonList(presentBooking);
     Booking booking = aBooking().withArrivalDate(bookingDate).build();
     Bed bed = aBed().withBookings(presentBookings).build();
+    PackageNames bookingPackage = bed.getPackages().get(0).getName();
 
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
   }
 
   @Test
   public void book_withUnavailablePackage_shouldThrowPackageUnavailableException() {
-    // TODO
+    Booking booking = aBooking().build();
+    PackageNames bookingPackage = PackageNames.SWEET_TOOTH;
+    Package bedPackage = new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(100));
+    List<Package> packages = Collections.singletonList(bedPackage);
+    Bed bed = aBed().withPackages(packages).build();
+
+    assertThrows(PackageNotAvailableException.class, () -> bed.book(booking, bookingPackage));
+    assertFalse(bed.getBookings().contains(booking));
   }
 }

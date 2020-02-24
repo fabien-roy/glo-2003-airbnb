@@ -79,7 +79,7 @@ public class BedBuilder {
     Bed bed =
         new Bed(
             ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
-    bookings.forEach(bed::book);
+    bookings.forEach(booking -> bed.book(booking, packages.get(0).getName()));
     return bed;
   }
 }
