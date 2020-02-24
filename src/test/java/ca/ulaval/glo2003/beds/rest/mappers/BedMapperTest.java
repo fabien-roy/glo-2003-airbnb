@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNum
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
+import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -13,11 +14,11 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -116,8 +117,7 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
-    List<String> bloodTypes = new ArrayList<String>();
-    bloodTypes.add(null);
+    List<String> bloodTypes = Collections.singletonList(null);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
@@ -125,7 +125,7 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidFormatException() {
-    List bloodTypes = new ArrayList();
+    List<String> bloodTypes = Collections.emptyList();
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
     assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
@@ -174,28 +174,30 @@ class BedMapperTest {
 
     assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
-  /*
-     @Test
-     public void fromRequest_withPackageName_shouldReturnBedWithPackageName(){
-       List<PackageRequest> expectedPackage = new ArrayList<>();
-           expectedPackage.add(new PackageRequest(PackageNames.BLOODTHIRSTY.toString(), 100));
-           BedRequest bedRequest =
-           aBedRequest()
-               .withPackages(expectedPackage)
-               .build();
-       Bed bed = bedMapper.fromRequest(bedRequest);
-       assertTrue(bed.getPackages().contains(expectedPackage));
-     }
-  /*
-     @Test
-     public void fromRequest_withInvalidCapacity_shouldThrowInvalidFormatException(){
-       String invalidPackageName = "invalidPackageName";
-       BedRequest bedRequest = mock(BedRequest.class);
-       when(bedRequest.getPackagesName()).thenReturn(invalidPackageName);
 
-       assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
-     }
-    */
+  @Test
+  public void fromRequest_withSinglePackage_shouldMapPackage() {
+    PackageRequest packageRequest = aPackageRequest().build();
+    List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
+    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Package expectedPackage = mock(Package.class);
+    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
+
+    Bed bed = bedMapper.fromRequest(bedRequest, 1000);
+
+    assertEquals(1, bed.getPackages().size());
+    assertEquals(expectedPackage, bed.getPackages().get(0));
+  }
+
+  @Test
+  public void fromRequest_withMultiplePackages_shouldMapPackages() {
+    // TODO
+  }
+
+  @Test
+  public void fromRequest_withoutPackage_throwInvalidPackageException() {
+    // TODO
+  }
 
   @Test
   public void toResponse_shouldMapBedNumber() {
