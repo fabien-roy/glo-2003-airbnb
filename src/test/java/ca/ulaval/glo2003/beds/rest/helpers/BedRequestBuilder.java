@@ -36,6 +36,11 @@ public class BedRequestBuilder {
     return new BedRequestBuilder();
   }
 
+  public BedRequestBuilder withOwnerPublicKey(String ownerPublicKey) {
+    this.ownerPublicKey = ownerPublicKey;
+    return this;
+  }
+
   public BedRequestBuilder withZipCode(String zipCode) {
     this.zipCode = zipCode;
     return this;
