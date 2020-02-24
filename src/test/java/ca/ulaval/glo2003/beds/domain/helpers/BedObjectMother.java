@@ -28,7 +28,7 @@ public class BedObjectMother {
   }
 
   public static String createZipCode() {
-    return Faker.instance().address().zipCode();
+    return fakeValuesService.regexify(BedMapper.ZIP_CODE_PATTERN);
   }
 
   public static BedTypes createBedType() {
