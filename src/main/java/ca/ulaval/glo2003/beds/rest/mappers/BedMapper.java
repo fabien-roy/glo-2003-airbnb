@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,9 @@ public class BedMapper {
         request.getPackages().stream().map(packageMapper::fromRequest).collect(Collectors.toList());
     String ownerPublicKey = request.getOwnerPublicKey();
     String zipCode = request.getZipCode();
+
+    validateZipCode(zipCode);
+
     return new Bed(
         ownerPublicKey, zipCode, bedType, cleaningFrequencies, bloodTypes, capacity, packages);
   }
@@ -72,5 +76,12 @@ public class BedMapper {
     if (request.getCapacity() < 0) {
       throw new InvalidCapacityException();
     }
+  }
+
+  private void validateZipCode(String zipCode) {
+    if (!zipCode.matches(ZIP_CODE_PATTERN)) {
+      throw new InvalidZipCodeException();
+    }
+    ;
   }
 }
