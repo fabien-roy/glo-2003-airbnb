@@ -59,6 +59,10 @@ public class Bed {
     this.number = number;
   }
 
+  public String getZipCode() {
+    return zipCode;
+  }
+
   public BedTypes getBedType() {
     return bedType;
   }

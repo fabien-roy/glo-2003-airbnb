@@ -7,10 +7,14 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class BedBuilder {
 
   private BedBuilder() {}
+
+  private UUID DEFAULT_BED_NUMBER = createBedNumber();
+  private UUID bedNumber = DEFAULT_BED_NUMBER;
 
   private String DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
@@ -40,8 +44,18 @@ public class BedBuilder {
     return new BedBuilder();
   }
 
+  public BedBuilder withBedNumber(UUID bedNumber) {
+    this.bedNumber = bedNumber;
+    return this;
+  }
+
   public BedBuilder withOwnerPublicKey(String ownerPublicKey) {
     this.ownerPublicKey = ownerPublicKey;
+    return this;
+  }
+
+  public BedBuilder withZipCode(String zipCode) {
+    this.zipCode = zipCode;
     return this;
   }
 
@@ -79,6 +93,7 @@ public class BedBuilder {
     Bed bed =
         new Bed(
             ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    bed.setNumber(bedNumber);
     bookings.forEach(booking -> bed.book(booking, packages.get(0).getName()));
     return bed;
   }
