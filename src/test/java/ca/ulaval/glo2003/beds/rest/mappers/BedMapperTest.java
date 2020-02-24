@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
-import ca.ulaval.glo2003.beds.helpers.BedBuilder;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 
 import java.math.BigDecimal;
@@ -75,14 +75,11 @@ class BedMapperTest {
 
   @Test
   public void toResponse_shouldReturnTheRightBed_whenProvidedWithBedNumber() {
-
-    BedBuilder bedBuilder = BedBuilder.aBed();
-    Bed bed = bedBuilder.build();
+    Bed bed = aBed().build();
 
     BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
     assertEquals(bed.getNumber(), bedResponse.getBedNumber());
-
   }
 
   @Test

@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.helpers;
+package ca.ulaval.glo2003.beds.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
@@ -10,14 +10,7 @@ import java.util.*;
 
 public class BedObjectMother {
 
-  // TODO : This was built during testing for Bed.matches(...)
-  // TODO : Might turn out irrelevant
-
   private BedObjectMother() {}
-
-  public static UUID createBedNumber() {
-    return UUID.fromString(Faker.instance().internet().uuid());
-  }
 
   public static String createOwnerPublicKey() {
     return Faker.instance().chuckNorris().fact();

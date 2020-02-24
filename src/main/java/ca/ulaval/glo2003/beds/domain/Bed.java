@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class Bed {
   private List<BloodTypes> bloodTypes;
   private int capacity;
   private List<Package> packages;
-  private List<Booking> bookings;
+  private List<Booking> bookings = new ArrayList<>();
 
   public Bed(
       BedTypes bedType,
@@ -78,7 +79,11 @@ public class Bed {
     return packages;
   }
 
-  public void book (Booking booking){
-      // TODO
+  public List<Booking> getBookings() {
+    return bookings;
+  }
+
+  public void book(Booking booking) {
+    bookings.add(booking);
   }
 }
