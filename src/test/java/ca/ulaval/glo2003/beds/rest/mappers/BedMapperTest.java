@@ -3,13 +3,16 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +20,12 @@ import org.junit.jupiter.api.Test;
 class BedMapperTest {
 
   private BedMapper bedMapper;
+  private PackageMapper packageMapper;
 
   @BeforeEach
   public void setUpMapper() {
-    bedMapper = new BedMapper();
+    packageMapper = mock(PackageMapper.class);
+    bedMapper = new BedMapper(packageMapper);
   }
 
   // TODO : Complete BedMapper.fromRequest
@@ -150,12 +155,34 @@ class BedMapperTest {
 
   @Test
   public void toResponse_withSinglePackage_shouldMapPackage() {
-    // TODO
+    Package bedPackage = aPackage().build();
+    List<Package> packages = Collections.singletonList(bedPackage);
+    Bed bed = aBed().withPackages(packages).build();
+    PackageResponse expectedPackageResponse = mock(PackageResponse.class);
+    when(packageMapper.toResponse(bedPackage)).thenReturn(expectedPackageResponse);
+
+    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+
+    assertEquals(1, bedResponse.getPackages().size());
+    assertEquals(expectedPackageResponse, bedResponse.getPackages().get(0));
   }
 
   @Test
   public void toResponse_withMultiplePackages_shouldMapPackages() {
-    // TODO
+    Package bedPackage = aPackage().build();
+    Package otherBedPackage = aPackage().build();
+    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
+    Bed bed = aBed().withPackages(packages).build();
+    PackageResponse expectedPackageResponse = mock(PackageResponse.class);
+    PackageResponse otherExpectedPackageResponse = mock(PackageResponse.class);
+    when(packageMapper.toResponse(bedPackage)).thenReturn(expectedPackageResponse);
+    when(packageMapper.toResponse(otherBedPackage)).thenReturn(otherExpectedPackageResponse);
+
+    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+
+    assertEquals(2, bedResponse.getPackages().size());
+    assertTrue(bedResponse.getPackages().contains(expectedPackageResponse));
+    assertTrue(bedResponse.getPackages().contains(otherExpectedPackageResponse));
   }
 
   @Test

@@ -12,6 +12,12 @@ import java.util.stream.Collectors;
 
 public class BedMapper {
 
+  private final PackageMapper packageMapper;
+
+  public BedMapper(PackageMapper packageMapper) {
+    this.packageMapper = packageMapper;
+  }
+
   public Bed fromRequest(BedRequest request) {
     BedTypes bedType = BedTypes.get(request.getBedType());
 
@@ -25,13 +31,7 @@ public class BedMapper {
         bed.getBloodTypes().stream().map(BloodTypes::toString).collect(Collectors.toList());
 
     List<PackageResponse> packageResponses =
-        bed.getPackages().stream()
-            .map(
-                bedPackage ->
-                    new PackageResponse(
-                        bedPackage.getName().toString(),
-                        bedPackage.getPricePerNight().doubleValue()))
-            .collect(Collectors.toList());
+        bed.getPackages().stream().map(packageMapper::toResponse).collect(Collectors.toList());
 
     return new BedResponse(
         bed.getNumber(),

@@ -13,6 +13,7 @@ import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResource;
 import ca.ulaval.glo2003.interfaces.rest.RootResource;
@@ -23,7 +24,8 @@ public class Router {
   private static final BedRepository bedRepository = new InMemoryBedRepository();
   private static final BedStarsCalculator bedStarsCalculator = new BedStarsCalculator();
   private static final BedFactory bedFactory = new BedFactory();
-  private static final BedMapper bedMapper = new BedMapper();
+  private static final PackageMapper packageMapper = new PackageMapper();
+  private static final BedMapper bedMapper = new BedMapper(packageMapper);
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
   private static final BedService bedService =
