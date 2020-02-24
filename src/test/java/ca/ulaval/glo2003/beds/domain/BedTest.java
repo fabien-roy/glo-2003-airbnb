@@ -55,12 +55,35 @@ class BedTest {
   @Test
   public void
       book_withPrecedingArrivalDateAndOverlapingNumberOfDays_shouldThrowBedAlreadyBookedException() {
-    // TODO
+    LocalDate alreadyBookedDate = createArrivalDate();
+    LocalDate bookingDate = alreadyBookedDate.minusDays(1);
+    int bookingNumberOfDays = 3;
+    Booking presentBooking = aBooking().withArrivalDate(alreadyBookedDate).build();
+    List<Booking> presentBookings = Collections.singletonList(presentBooking);
+    Booking booking =
+        aBooking().withArrivalDate(bookingDate).withNumberOfNights(bookingNumberOfDays).build();
+    Bed bed = aBed().withBookings(presentBookings).build();
+
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
+    assertFalse(bed.getBookings().contains(booking));
   }
 
   @Test
   public void book_withArrivalDateWithinNumberOfDays_shouldThrowBedAlreadyBookedException() {
-    // TODO
+    LocalDate alreadyBookedDate = createArrivalDate();
+    LocalDate bookingDate = alreadyBookedDate.plusDays(1);
+    int alreadyBookedNumberOfDays = 3;
+    Booking presentBooking =
+        aBooking()
+            .withArrivalDate(alreadyBookedDate)
+            .withNumberOfNights(alreadyBookedNumberOfDays)
+            .build();
+    List<Booking> presentBookings = Collections.singletonList(presentBooking);
+    Booking booking = aBooking().withArrivalDate(bookingDate).build();
+    Bed bed = aBed().withBookings(presentBookings).build();
+
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
+    assertFalse(bed.getBookings().contains(booking));
   }
 
   @Test
