@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,16 +55,15 @@ class BedMapperTest {
 
     assertEquals(expectedCleaningFrequency, bed.getCleaningFrequency());
   }
+
+  @Test
+  public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
+    String invalidCleaningFrequency = "invalidCleaningFrequency";
+    BedRequest bedRequest = aBedRequest().withCleaningFrequency(invalidCleaningFrequency).build();
+
+    assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
   /*
-   @Test
-   public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
-     String invalidCleaningFrequency = "invalidCleaningFrequency";
-     BedRequest bedRequest = mock(BedRequest.class);
-     when(bedRequest.getCleaningFrequency()).thenReturn(invalidCleaningFrequency);
-
-     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
-   }
-
    @Test
    public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
      BloodTypes expectedBloodType = BloodTypes.O_MINUS;
