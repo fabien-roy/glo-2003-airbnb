@@ -148,7 +148,15 @@ class BedMapperTest {
     assertEquals(expectedCapacity, bedResponse.getCapacity());
   }
 
-  // TODO : Tests to map packages
+  @Test
+  public void toResponse_withSinglePackage_shouldMapPackage() {
+    // TODO
+  }
+
+  @Test
+  public void toResponse_withMultiplePackages_shouldMapPackages() {
+    // TODO
+  }
 
   @Test
   public void toResponse_shouldMapStars() {
