@@ -4,8 +4,10 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedTypes;
 import ca.ulaval.glo2003.beds.domain.BloodTypes;
+import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
@@ -34,8 +36,9 @@ public class BedMapper {
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
     int capacity = request.getCapacity();
+    List packages = addPackage(request.getPackages());
 
-    return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, new ArrayList<>());
+    return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, packages);
   }
 
   // TODO : toResponse should only set bedNumber for getAll, not for get
@@ -68,10 +71,18 @@ public class BedMapper {
       throw new InvalidFormatException();
     }
 
-    if (request.getCapacity() < 0) throw new InvalidCapacityException();
+    if (request.getCapacity() < 0) {
+      throw new InvalidCapacityException();
+    }
   }
 
   private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
     return bloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
+  }
+
+  private List<Package> addPackage(List<PackageRequest> packageRequests) {
+    List packages = new ArrayList<Package>();
+    packageRequests.stream().map(packages::add).collect(Collectors.toList());
+    return packages;
   }
 }
