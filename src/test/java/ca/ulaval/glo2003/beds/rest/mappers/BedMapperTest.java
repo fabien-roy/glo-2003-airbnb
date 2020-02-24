@@ -156,8 +156,7 @@ class BedMapperTest {
   @Test
   public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
     int capacity = -100;
-    BedRequest bedRequest =
-        aBedRequest().withBedType(BedTypes.LATEX.toString()).withCapacity(capacity).build();
+    BedRequest bedRequest = aBedRequest().withCapacity(capacity).build();
 
     assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
   }
@@ -192,11 +191,6 @@ class BedMapperTest {
     assertEquals(2, bed.getPackages().size());
     assertEquals(expectedPackage, bed.getPackages().get(0));
     assertEquals(otherExpectedPackage, bed.getPackages().get(1));
-  }
-
-  @Test
-  public void fromRequest_withoutPackage_throwInvalidPackageException() {
-    // TODO
   }
 
   @Test
