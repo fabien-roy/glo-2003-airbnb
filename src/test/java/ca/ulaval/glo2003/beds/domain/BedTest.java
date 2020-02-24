@@ -59,7 +59,7 @@ class BedTest {
 
   @Test
   public void
-      book_withPrecedingArrivalDateAndOverlapingNumberOfDays_shouldThrowBedAlreadyBookedException() {
+      book_withPrecedingArrivalDateAndOverlappingNumberOfDays_shouldThrowBedAlreadyBookedException() {
     LocalDate alreadyBookedDate = createArrivalDate();
     LocalDate bookingDate = alreadyBookedDate.minusDays(1);
     int bookingNumberOfDays = 3;

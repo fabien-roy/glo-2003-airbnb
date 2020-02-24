@@ -86,18 +86,18 @@ public class Bed {
   public void book(Booking booking, PackageNames bookingPackage) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
-    if (packages.stream().noneMatch(bedPackage -> bookingPackage.equals(bedPackage.getName())))
-      throw new PackageNotAvailableException();
+    if (!isPackageAvailable(bookingPackage)) throw new PackageNotAvailableException();
 
-    bookings.forEach(presentBooking -> validateNotOverlapping(presentBooking, booking));
+    if (isBedAlreadyBooked(booking)) throw new BedAlreadyBookedException();
 
     bookings.add(booking);
   }
 
-  // TODO : Move logic and tests into Booking
-  public void validateNotOverlapping(Booking presentBooking, Booking booking) {
-    if (!(presentBooking.getArrivalDate().isAfter(booking.getDepartureDate())
-        || presentBooking.getDepartureDate().isBefore(booking.getArrivalDate())))
-      throw new BedAlreadyBookedException();
+  private boolean isPackageAvailable(PackageNames bookingPackage) {
+    return packages.stream().anyMatch(bedPackage -> bedPackage.getName().equals(bookingPackage));
+  }
+
+  private boolean isBedAlreadyBooked(Booking booking) {
+    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
   }
 }

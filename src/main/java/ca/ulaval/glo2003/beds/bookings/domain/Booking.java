@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -35,5 +36,11 @@ public class Booking {
   // TODO : Test
   public LocalDate getDepartureDate() {
     return arrivalDate.plusDays(numberOfNights);
+  }
+
+  // TODO : Move tests into Booking
+  public boolean isOverlapping(Booking booking) {
+    return !(arrivalDate.isAfter(booking.getDepartureDate())
+        || getDepartureDate().isBefore(booking.getArrivalDate()));
   }
 }
