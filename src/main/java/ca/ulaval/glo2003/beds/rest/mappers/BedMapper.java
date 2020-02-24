@@ -18,6 +18,7 @@ public class BedMapper {
 
   public Bed fromRequest(BedRequest request) {
     validateFormat(request);
+    CapacityMapper.validateCapacity(request);
 
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
@@ -43,7 +44,9 @@ public class BedMapper {
   }
 
   private void validateFormat(BedRequest request) {
-    if (request.getBloodTypes().isEmpty()) throw new InvalidBloodTypesException();
+    if (request.getBloodTypes().isEmpty()) {
+      throw new InvalidBloodTypesException();
+    }
 
     if (request.getBedType() == null
         || request.getCleaningFrequency() == null
