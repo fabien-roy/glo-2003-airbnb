@@ -22,6 +22,21 @@ class PackageMapperTest {
   }
 
   @Test
+  public void fromRequest_shouldMapName() {
+    // TODO
+  }
+
+  @Test
+  public void fromRequest_withInvalidPackageName_shouldThrowInvalidPackageException() {
+    // TODO
+  }
+
+  @Test
+  public void fromRequest_shouldMapPricePerNight() {
+    // TODO
+  }
+
+  @Test
   public void toResponse_shouldMapName() {
     PackageNames expectedName = createPackageName();
     Package bedPackage = aPackage().withName(expectedName).build();
