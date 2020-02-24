@@ -19,6 +19,7 @@ public class BedMapper {
     return new Bed(bedType, null, new ArrayList<>(), 0, new ArrayList<>());
   }
 
+  // TODO : toResponse should only set bedNumber for getAll, not for get
   public BedResponse toResponse(Bed bed, int stars) {
     List<String> bloodTypes = new ArrayList<>();
     List<PackageResponse> packageResponses = new ArrayList<>();

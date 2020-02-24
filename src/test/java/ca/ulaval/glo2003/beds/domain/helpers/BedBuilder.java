@@ -54,6 +54,11 @@ public class BedBuilder {
     return this;
   }
 
+  public BedBuilder withZipCode(String zipCode) {
+    this.zipCode = zipCode;
+    return this;
+  }
+
   public BedBuilder withBedType(BedTypes bedType) {
     this.bedType = bedType;
     return this;
