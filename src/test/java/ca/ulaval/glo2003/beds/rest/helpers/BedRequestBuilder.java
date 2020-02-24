@@ -26,7 +26,7 @@ public class BedRequestBuilder {
   private List<String> DEFAULT_BLOOD_TYPES = createBloodTypes();
   private List<String> bloodTypes = DEFAULT_BLOOD_TYPES;
 
-  private int DEFAULT_CAPACITY = createCapacity();
+  private int DEFAULT_CAPACITY = createCapacity(BedTypes.get(bedType));
   private int capacity = DEFAULT_CAPACITY;
 
   private List<PackageRequest> DEFAULT_PACKAGES = createPackages();

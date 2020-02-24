@@ -37,6 +37,7 @@ public class BedBuilder {
 
   public BedBuilder withBedType(BedTypes bedType) {
     this.bedType = bedType;
+    this.capacity = createCapacity(bedType);
     return this;
   }
 
