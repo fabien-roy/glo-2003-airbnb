@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,10 +10,10 @@ import spark.Request;
 import spark.Response;
 
 public class InvalidPublicKeyExceptionHandler
-    implements ExceptionHandler<InvalidCapacityException> {
+    implements ExceptionHandler<InvalidPublicKeyException> {
 
   @Override
-  public void handle(InvalidCapacityException e, Request request, Response response) {
+  public void handle(InvalidPublicKeyException e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {

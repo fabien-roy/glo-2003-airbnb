@@ -28,6 +28,9 @@ public class ErrorResource implements RouteGroup {
     exception(
         ExceedingAccommodationCapacityException.class,
         new ExceedingAccommodationCapacityExceptionHandler());
+    exception(InvalidCapacityException.class, new InvalidCapacityExceptionHandler());
+    exception(InvalidZipCodeException.class, new InvalidZipCodeExceptionHandler());
+    exception(InvalidPublicKeyException.class, new InvalidPublicKeyExceptionHandler());
     exception(InvalidPackageException.class, new InvalidPackageExceptionHandler());
     exception(BedAlreadyBookedException.class, new BedAlreadyBookedExceptionHandler());
     exception(BookingNotAllowedException.class, new BookingNotAllowedExceptionHandler());

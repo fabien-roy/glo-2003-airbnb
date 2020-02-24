@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,10 +9,10 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class InvalidZipCodeExceptionHandler implements ExceptionHandler<InvalidCapacityException> {
+public class InvalidZipCodeExceptionHandler implements ExceptionHandler<InvalidZipCodeException> {
 
   @Override
-  public void handle(InvalidCapacityException e, Request request, Response response) {
+  public void handle(InvalidZipCodeException e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {
