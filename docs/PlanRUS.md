@@ -9,7 +9,7 @@ This document describes the flows for RUS. It is an overwrite for our original r
   - Gets `Bed` via `BedRepository` (#49)
   - `Bed.book(booking)` (#50)
   - Creates the actual `Booking` by adding it's number via `BookingFactory.create(...)` (#52)
-  - Creates _both_ `Transaction` via `TransactionFactory.create(...)` (#61)
+  - Creates **both** `Transaction` via `TransactionFactory.create(...)` (#61)
     - _(inside `TransactionFactory.create(...)`)
       - Create info for transaction (#62)
       - Calculates total for transaction (#74)
@@ -18,11 +18,11 @@ This document describes the flows for RUS. It is an overwrite for our original r
 - Setup header location and status code response (#46)
 
 ## Flow for `GET /beds/:bedNumber/bookings/:bookingNumber`
-- `BedResource.getBooking(...)` sends bed and booking number to `BookingService.get(...)` (#45)
-- _(inside `BookingService.get(...)`)_
+- `BedResource.getBookingByNumber(...)` sends bed and booking number to `BookingService.getByNumber(...)` (#45)
+- _(inside `BookingService.getByNumber(...)`)_
   - Make a valid UUID (#65)
-  - Get `Bed` with `BedRepository.getByNumber(...)` (#NEWISSUE)
-  - Get `Booking` from `Bed.getBookings().<get by number>` (#NEWISSUE)
+  - Get `Bed` with `BedRepository.getByNumber(...)` (#99)
+  - Get `Booking` from `Bed.getBookings().<get by number>` (#100)
   - Map `Booking` to `BookingResponse` via `BookingMapper.toResponse(...)` (#67)
   - Return `BookingResponse` (#66)
 - Setup body and status code (#47)
@@ -31,13 +31,7 @@ This document describes the flows for RUS. It is an overwrite for our original r
 - `TransactionResource.getAll(...)` asks `TransactionService.getAll(...)` (#69)
 - _(inside `TransactionService.getAll(...)`)_
   - Get all `Bed` with `BedRepository.getAll(...)` (#71)
-  - Get all `Transaction` in all `Booking` in all `Bed` (#NEWISSUE)
+  - Get all `Transaction` in all `Booking` in all `Bed` (#101)
   - Map all `Transaction` to `TransactionResponse` via `TransactionMapper.toResponse` (#73)
-  - Return that list (#NEWISSUE)
+  - Return that list (#102)
 - Setup body and status code (#70)
-
-The following lines will shortly be removed.
-
-REMOVE #53 #63
-
-RENDERED USELESS BUT WILL BE MERGED #72 #64

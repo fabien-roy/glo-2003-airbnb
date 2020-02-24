@@ -1,9 +1,6 @@
 package ca.ulaval.glo2003.beds.services;
 
-import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFactory;
-import ca.ulaval.glo2003.beds.domain.BedMatcher;
-import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
@@ -19,18 +16,21 @@ public class BedService {
   private final BedNumberMapper bedNumberMapper;
   private final BedMatcherMapper bedMatcherMapper;
   private final BedRepository bedRepository;
+  private final BedStarsCalculator bedStarsCalculator;
 
   public BedService(
       BedFactory bedFactory,
       BedMapper bedMapper,
       BedNumberMapper bedNumberMapper,
       BedMatcherMapper bedMatcherMapper,
-      BedRepository bedRepository) {
+      BedRepository bedRepository,
+      BedStarsCalculator bedStarsCalculator) {
     this.bedFactory = bedFactory;
     this.bedMapper = bedMapper;
     this.bedNumberMapper = bedNumberMapper;
     this.bedMatcherMapper = bedMatcherMapper;
     this.bedRepository = bedRepository;
+    this.bedStarsCalculator = bedStarsCalculator;
   }
 
   public String add(BedRequest request) {
@@ -50,7 +50,11 @@ public class BedService {
 
     List<Bed> matchingBeds = beds.stream().filter(bedMatcher::matches).collect(Collectors.toList());
 
-    return matchingBeds.stream().map(bedMapper::toResponse).collect(Collectors.toList());
+    return matchingBeds.stream()
+        .map(
+            matchingBed ->
+                bedMapper.toResponse(matchingBed, bedStarsCalculator.calculateStars(matchingBed)))
+        .collect(Collectors.toList());
   }
 
   public BedResponse getByNumber(String number) {
@@ -58,6 +62,6 @@ public class BedService {
 
     Bed bed = bedRepository.getByNumber(bedNumber);
 
-    return bedMapper.toResponse(bed);
+    return bedMapper.toResponse(bed, bedStarsCalculator.calculateStars(bed));
   }
 }
