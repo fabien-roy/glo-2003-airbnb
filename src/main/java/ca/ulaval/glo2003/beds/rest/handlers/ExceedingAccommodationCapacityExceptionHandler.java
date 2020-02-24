@@ -28,8 +28,9 @@ public class ExceedingAccommodationCapacityExceptionHandler
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
         new ErrorResponse(
-            "INVALID_MINIMAL_CAPACITY",
-            "maximal capacity of latex is 400, memory foam is 700 spring is 1000");
+            "EXCEEDING_ACCOMMODATION_CAPACITY",
+            "accommodation capacity exceeding maximum \n"
+                + "    viable capacity for the provided bed type");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

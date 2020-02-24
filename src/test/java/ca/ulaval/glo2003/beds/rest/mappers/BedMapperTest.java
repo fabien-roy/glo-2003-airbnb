@@ -155,7 +155,7 @@ class BedMapperTest {
 
   @Test
   public void
-      fromRequest_withExcedingCapacity_shouldThrowExceedingAccommodationCapacityException() {
+      fromRequest_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException() {
     int capacity = 1000;
     BedRequest bedRequest =
         aBedRequest().withBedType(BedTypes.LATEX.toString()).withCapacity(capacity).build();
@@ -172,11 +172,10 @@ class BedMapperTest {
 
     assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
   }
-
   /*
      @Test
      public void fromRequest_withPackageName_shouldReturnBedWithPackageName(){
-       Package expectedPackage = PackageNames.BLOODTHIRSTY;
+       Package expectedPackage =
 
        Bed bed = aBedRequest().withPackages();
 
