@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ public class Bed {
   private int capacity;
   private List<Package> packages;
   private int stars;
+  private List<Booking> bookings;
 
   public Bed(
       BedTypes bedType,
@@ -53,6 +55,10 @@ public class Bed {
     this.number = number;
   }
 
+  public String getZipCode() {
+    return zipCode;
+  }
+
   public BedTypes getBedType() {
     return bedType;
   }
@@ -81,7 +87,7 @@ public class Bed {
     this.stars = stars;
   }
 
-  public String getZipCode() {
-    return zipCode;
+  public void book (Booking booking){
+      // TODO
   }
 }
