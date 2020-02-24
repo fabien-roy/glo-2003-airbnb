@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
+import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,9 +22,7 @@ class BedMapperTest {
   @Test
   public void fromRequest_withBedType_shouldReturnBedWithBedType() {
     BedTypes expectedBedType = BedTypes.LATEX;
-    BedRequest bedRequest = mock(BedRequest.class);
-    BedTypes bedType = BedTypes.LATEX;
-    when(bedRequest.getBedType()).thenReturn(String.valueOf(bedType));
+    BedRequest bedRequest = aBedRequest().withBedType(expectedBedType.toString()).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
@@ -32,13 +30,20 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidBedType_shouldThrowInvalidFormatException() {
-    String invalidBedType = "invalidBedType";
-    BedRequest bedRequest = mock(BedRequest.class);
-    when(bedRequest.getBedType()).thenReturn(invalidBedType);
+  public void fromRequest_withoutBedType_shouldThrowInvalidFormatException() {
+    BedRequest bedRequest = aBedRequest().withBedType(null).build();
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
   }
+
+  @Test
+  public void fromRequest_withInvalidBedType_shouldThrowInvalidBedTypeException() {
+    String invalidBedType = "invalidBedType";
+    BedRequest bedRequest = aBedRequest().withBedType(invalidBedType).build();
+
+    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
   /*
    @Test
    public void fromRequest_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {

@@ -12,6 +12,27 @@ public class BedRequest {
   private int capacity;
   private List<PackageRequest> packages;
 
+  public BedRequest() {
+    // Empty constructor for parsing
+  }
+
+  public BedRequest(
+      String ownerPublicKey,
+      String zipCode,
+      String bedType,
+      String cleaningFrequency,
+      List<String> bloodTypes,
+      int capacity,
+      List<PackageRequest> packages) {
+    this.ownerPublicKey = ownerPublicKey;
+    this.zipCode = zipCode;
+    this.bedType = bedType;
+    this.cleaningFrequency = cleaningFrequency;
+    this.bloodTypes = bloodTypes;
+    this.capacity = capacity;
+    this.packages = packages;
+  }
+
   public String getOwnerPublicKey() {
     return ownerPublicKey;
   }

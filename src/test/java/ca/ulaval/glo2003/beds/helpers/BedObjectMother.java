@@ -4,23 +4,23 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
+import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import com.github.javafaker.Faker;
+import com.github.javafaker.service.FakeValuesService;
+import com.github.javafaker.service.RandomService;
 import java.math.BigDecimal;
 import java.util.*;
 
 public class BedObjectMother {
 
-  // TODO : This was built during testing for Bed.matches(...)
-  // TODO : Might turn out irrelevant
+  // TODO : This is also used in BedRequestObjectMother. Duplicated code is bad.
+  private static final FakeValuesService fakeValuesService =
+      new FakeValuesService(new Locale("en-US"), new RandomService());
 
   private BedObjectMother() {}
 
-  public static UUID createBedNumber() {
-    return UUID.fromString(Faker.instance().internet().uuid());
-  }
-
   public static String createOwnerPublicKey() {
-    return Faker.instance().chuckNorris().fact();
+    return fakeValuesService.regexify(BedMapper.OWNER_PUBLIC_KEY_PATTERN);
   }
 
   public static String createZipCode() {
@@ -44,14 +44,15 @@ public class BedObjectMother {
   }
 
   public static List<Package> createPackages() {
-    return Collections.singletonList(new Package(createPackageName(), createPackagePrice()));
+    return Collections.singletonList(
+        new Package(createPackageName(), createPackagePricePerNight()));
   }
 
   private static PackageNames createPackageName() {
     return randomEnum(PackageNames.class);
   }
 
-  private static BigDecimal createPackagePrice() {
+  private static BigDecimal createPackagePricePerNight() {
     double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
     return BigDecimal.valueOf(randomDouble);
   }
