@@ -40,6 +40,11 @@ public class BedBuilder {
     return new BedBuilder();
   }
 
+  public BedBuilder withOwnerPublicKey(String ownerPublicKey) {
+    this.ownerPublicKey = ownerPublicKey;
+    return this;
+  }
+
   public BedBuilder withBedType(BedTypes bedType) {
     this.bedType = bedType;
     return this;
