@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ public class Bed {
   private int capacity;
   private List<Package> packages;
   private int stars;
+  private List<Booking> bookings;
 
   public Bed(
       BedTypes bedType,
@@ -79,5 +81,9 @@ public class Bed {
 
   public void setStars(int stars) {
     this.stars = stars;
+  }
+
+  public void book(Booking booking) {
+    // TODO
   }
 }
