@@ -10,9 +10,10 @@ public class Booking {
   private Date arrivalDate;
   private int numberOfNights;
 
-  public double getTotal() {
-    // TODO
-    return 1;
+  public Booking(String tenantPublicKey, Date arrivalDate, int numberOfNights) {
+    this.tenantPublicKey = tenantPublicKey;
+    this.arrivalDate = arrivalDate;
+    this.numberOfNights = numberOfNights;
   }
 
   public UUID getNumber() {

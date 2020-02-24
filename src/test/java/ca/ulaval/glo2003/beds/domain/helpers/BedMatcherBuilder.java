@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.helpers;
+package ca.ulaval.glo2003.beds.domain.helpers;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import java.util.List;
