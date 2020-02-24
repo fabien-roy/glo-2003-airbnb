@@ -1,6 +1,6 @@
-package ca.ulaval.glo2003.beds.bookings.rest.handlers;
+package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

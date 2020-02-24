@@ -1,13 +1,16 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +40,24 @@ class BedTest {
   }
 
   @Test
-  void book_withAlreadyBookedDate_shouldThrowAlreadyBookedException() {
+  void book_withAlreadyBookedDate_shouldThrowBedAlreadyBookedException() {
+    Date alreadyBookedDate = createArrivalDate();
+    Booking presentBooking = aBooking().withArrivalDate(alreadyBookedDate).build();
+    List<Booking> presentBookings = Collections.singletonList(presentBooking);
+    Booking booking = aBooking().withArrivalDate(alreadyBookedDate).build();
+    Bed bed = aBed().withBookings(presentBookings).build();
+
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
+  }
+
+  @Test
+  void
+      book_withPrecedingArrivalDateAndOverlapingNumberOfDays_shouldThrowBedAlreadyBookedException() {
+    // TODO
+  }
+
+  @Test
+  void book_withArrivalDateWithinNumberOfDays_shouldThrowBedAlreadyBookedException() {
     // TODO
   }
 
