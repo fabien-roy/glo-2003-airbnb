@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.CapacityMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
@@ -39,8 +40,10 @@ public class BedObjectMother {
     return Collections.singletonList(randomEnum(BloodTypes.class));
   }
 
-  public static int createCapacity() {
-    return Faker.instance().number().numberBetween(1, 1000);
+  public static int createCapacity(BedTypes bedType) {
+    int maxCapacity;
+    maxCapacity = CapacityMapper.getMaxCapacity(bedType);
+    return Faker.instance().number().numberBetween(1, maxCapacity);
   }
 
   public static List<Package> createPackages() {

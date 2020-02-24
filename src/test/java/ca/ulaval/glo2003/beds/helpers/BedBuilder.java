@@ -25,7 +25,7 @@ public class BedBuilder {
   private List<BloodTypes> DEFAULT_BLOOD_TYPES = createBloodTypes();
   private List<BloodTypes> bloodTypes = DEFAULT_BLOOD_TYPES;
 
-  private int DEFAULT_CAPACITY = createCapacity();
+  private int DEFAULT_CAPACITY = createCapacity(DEFAULT_BED_TYPE);
   private int capacity = DEFAULT_CAPACITY;
 
   private List<Package> DEFAULT_PACKAGES = createPackages();
