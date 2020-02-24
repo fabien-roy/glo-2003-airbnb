@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
