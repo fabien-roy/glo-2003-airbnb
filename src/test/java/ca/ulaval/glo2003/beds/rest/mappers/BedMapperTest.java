@@ -205,7 +205,18 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = aBedRequest().build();
+    String invalidZipCode = "184938";
+    BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
+
+    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withNullZipCode_shouldThrowInvalidZipCodeException() {
+    String nullZipCode = null;
+    BedRequest bedRequest = aBedRequest().withZipCode(nullZipCode).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
