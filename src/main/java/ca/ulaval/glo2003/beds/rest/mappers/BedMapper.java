@@ -3,11 +3,14 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.UUID;
+
 
 public class BedMapper {
 
@@ -26,9 +29,18 @@ public class BedMapper {
     return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, new ArrayList<>());
   }
 
-  public BedResponse toResponse(Bed bed) {
+  public BedResponse toResponse(Bed bed, int stars) {
     // TODO
-    return new BedResponse();
+    UUID bedNumber = null;
+    String zipCode = null;
+    String bedType = null;
+    String cleaningFrequency = null;
+    List<String> bloodTypes = null;
+    int capacity = 0;
+    List<PackageResponse> packages = null;
+
+    return new BedResponse(
+        bedNumber, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages, stars);
   }
 
   private void validateFormat(BedRequest request) {
