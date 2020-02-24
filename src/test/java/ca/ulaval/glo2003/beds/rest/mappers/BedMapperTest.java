@@ -103,10 +103,19 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
-    List bloodTypes = new ArrayList();
+    List<String> bloodTypes = new ArrayList<String>();
+    bloodTypes.add(null);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidFormatException() {
+    List bloodTypes = new ArrayList();
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
