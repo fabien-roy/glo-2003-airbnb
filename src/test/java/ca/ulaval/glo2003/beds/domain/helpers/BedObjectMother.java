@@ -1,22 +1,19 @@
-package ca.ulaval.glo2003.beds.helpers;
+package ca.ulaval.glo2003.beds.domain.helpers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import com.github.javafaker.Faker;
-import java.math.BigDecimal;
 import java.util.*;
 
 public class BedObjectMother {
 
-  // TODO : This was built during testing for Bed.matches(...)
-  // TODO : Might turn out irrelevant
-
   private BedObjectMother() {}
 
   public static UUID createBedNumber() {
-    return UUID.fromString(Faker.instance().internet().uuid());
+    return UUID.randomUUID();
   }
 
   public static String createOwnerPublicKey() {
@@ -44,15 +41,6 @@ public class BedObjectMother {
   }
 
   public static List<Package> createPackages() {
-    return Collections.singletonList(new Package(createPackageName(), createPackagePrice()));
-  }
-
-  private static PackageNames createPackageName() {
-    return randomEnum(PackageNames.class);
-  }
-
-  private static BigDecimal createPackagePrice() {
-    double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return BigDecimal.valueOf(randomDouble);
+    return Collections.singletonList(aPackage().build());
   }
 }

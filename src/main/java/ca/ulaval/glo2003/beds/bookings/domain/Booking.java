@@ -1,18 +1,19 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Booking {
 
   private UUID number;
   private String tenantPublicKey;
-  private Date arrivalDate;
+  private LocalDate arrivalDate;
   private int numberOfNights;
 
-  public double getTotal() {
-    // TODO
-    return 1;
+  public Booking(String tenantPublicKey, LocalDate arrivalDate, int numberOfNights) {
+    this.tenantPublicKey = tenantPublicKey;
+    this.arrivalDate = arrivalDate;
+    this.numberOfNights = numberOfNights;
   }
 
   public UUID getNumber() {
@@ -23,11 +24,20 @@ public class Booking {
     return tenantPublicKey;
   }
 
-  public Date getArrivalDate() {
+  public LocalDate getArrivalDate() {
     return arrivalDate;
   }
 
   public int getNumberOfNights() {
     return numberOfNights;
+  }
+
+  public boolean isOverlapping(Booking otherBooking) {
+    return !(arrivalDate.isAfter(otherBooking.getDepartureDate())
+        || getDepartureDate().isBefore(otherBooking.getArrivalDate()));
+  }
+
+  public LocalDate getDepartureDate() {
+    return arrivalDate.plusDays(numberOfNights - 1);
   }
 }
