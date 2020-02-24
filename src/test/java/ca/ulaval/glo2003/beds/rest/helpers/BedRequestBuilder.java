@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import java.util.List;
 
 public class BedRequestBuilder {
@@ -38,6 +39,11 @@ public class BedRequestBuilder {
 
   public BedRequestBuilder withBedType(String bedType) {
     this.bedType = bedType;
+    try {
+      BedTypes.get(bedType);
+      this.capacity = createCapacity(BedTypes.get(bedType));
+    } catch (InvalidBedTypeException ignored) {
+    }
     return this;
   }
 

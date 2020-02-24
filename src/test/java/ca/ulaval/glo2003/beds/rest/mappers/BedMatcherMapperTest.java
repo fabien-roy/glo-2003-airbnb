@@ -123,8 +123,7 @@ class BedMatcherMapperTest {
     Map<String, String[]> params = new HashMap<>();
     params.put(MIN_CAPACITY_PARAM, new String[] {"invalidCapacity"});
 
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
+    assertThrows(InvalidCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
@@ -133,8 +132,7 @@ class BedMatcherMapperTest {
     Map<String, String[]> params = new HashMap<>();
     params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(invalidCapacity)});
 
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
+    assertThrows(InvalidCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test

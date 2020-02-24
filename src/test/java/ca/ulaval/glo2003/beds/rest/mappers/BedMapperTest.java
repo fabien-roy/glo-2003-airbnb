@@ -144,8 +144,8 @@ class BedMapperTest {
     int expectedCapacity = 1000;
     BedRequest bedRequest =
         aBedRequest()
-            .withCapacity(expectedCapacity)
             .withBedType(BedTypes.SPRINGS.toString())
+            .withCapacity(expectedCapacity)
             .build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
@@ -154,36 +154,44 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+  public void
+      fromRequest_withExcedingCapacity_shouldThrowExceedingAccommodationCapacityException() {
     int capacity = 1000;
     BedRequest bedRequest =
-        aBedRequest().withCapacity(capacity).withBedType(BedTypes.LATEX.toString()).build();
+        aBedRequest().withBedType(BedTypes.LATEX.toString()).withCapacity(capacity).build();
 
-    assertThrows(InvalidMaximalCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(
+        ExceedingAccommodationCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+    int capacity = -100;
+    BedRequest bedRequest =
+        aBedRequest().withBedType(BedTypes.LATEX.toString()).withCapacity(capacity).build();
+
+    assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   /*
-   @Test
-   public void fromRequest_withPackageName_shouldReturnBedWithPackageName(){
-     Package expectedPackage = Package;
-     BedRequest bedRequest = mock(BedRequest.class);
-     PackageNames packageNames = PackageNames;
-     when(bedRequest.getBedType()).thenReturn(String.valueOf(packageName));
+     @Test
+     public void fromRequest_withPackageName_shouldReturnBedWithPackageName(){
+       Package expectedPackage = PackageNames.BLOODTHIRSTY;
 
-     Bed bed = bedMapper.fromRequest(bedRequest);
+       Bed bed = aBedRequest().withPackages();
 
-     assertTrue(bed.getPackages().contains(expectedPackage));
-   }
+       assertTrue(bed.getPackages().contains(expectedPackage));
+     }
+  /*
+     @Test
+     public void fromRequest_withInvalidCapacity_shouldThrowInvalidFormatException(){
+       String invalidPackageName = "invalidPackageName";
+       BedRequest bedRequest = mock(BedRequest.class);
+       when(bedRequest.getPackagesName()).thenReturn(invalidPackageName);
 
-   @Test
-   public void fromRequest_withInvalidCapacity_shouldThrowInvalidFormatException(){
-     String invalidPackageName = "invalidPackageName";
-     BedRequest bedRequest = mock(BedRequest.class);
-     when(bedRequest.getPackagesName()).thenReturn(invalidPackageName);
-
-     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
-   }
-  */
+       assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+     }
+    */
 
   @Test
   public void toResponse_shouldMapBedNumber() {

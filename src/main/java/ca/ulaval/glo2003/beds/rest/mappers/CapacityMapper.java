@@ -2,15 +2,15 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.BedTypes;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
+import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMaximalCapacityException;
 
 public class CapacityMapper {
 
   public static void validateCapacity(BedRequest bedRequest) {
     BedTypes bedType = BedTypes.get(bedRequest.getBedType());
     if (bedRequest.getCapacity() > getMaxCapacity(bedType)) {
-      throw new InvalidMaximalCapacityException();
+      throw new ExceedingAccommodationCapacityException();
     }
   }
 

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMinimalCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -55,11 +55,11 @@ public class BedMatcherMapper {
     try {
       parsedCapacity = Integer.parseInt(capacity);
     } catch (NumberFormatException e) {
-      throw new InvalidMinimalCapacityException();
+      throw new InvalidCapacityException();
     }
 
     if (parsedCapacity < 0) {
-      throw new InvalidMinimalCapacityException();
+      throw new InvalidCapacityException();
     }
 
     return parsedCapacity;

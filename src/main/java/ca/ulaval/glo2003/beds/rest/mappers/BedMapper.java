@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class BedMapper {
         || request.getBloodTypes().get(0) == null) {
       throw new InvalidFormatException();
     }
+
+    if (request.getCapacity() < 0) throw new InvalidCapacityException();
   }
 
   private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
