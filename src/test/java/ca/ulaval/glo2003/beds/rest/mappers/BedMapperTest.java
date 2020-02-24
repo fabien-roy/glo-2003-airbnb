@@ -13,6 +13,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
@@ -175,10 +176,13 @@ class BedMapperTest {
   /*
      @Test
      public void fromRequest_withPackageName_shouldReturnBedWithPackageName(){
-       Package expectedPackage =
-
-       Bed bed = aBedRequest().withPackages();
-
+       List<PackageRequest> expectedPackage = new ArrayList<>();
+           expectedPackage.add(new PackageRequest(PackageNames.BLOODTHIRSTY.toString(), 100));
+           BedRequest bedRequest =
+           aBedRequest()
+               .withPackages(expectedPackage)
+               .build();
+       Bed bed = bedMapper.fromRequest(bedRequest);
        assertTrue(bed.getPackages().contains(expectedPackage));
      }
   /*
