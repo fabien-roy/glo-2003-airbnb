@@ -3,9 +3,9 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +20,7 @@ public class BedMapper {
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
-    List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes().toArray(String[]::new));
+    List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
     int capacity = request.getCapacity();
 
     return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, new ArrayList<>());
@@ -32,14 +32,16 @@ public class BedMapper {
   }
 
   private void validateFormat(BedRequest request) {
+    if (request.getBloodTypes().isEmpty()) throw new InvalidBloodTypesException();
+
     if (request.getBedType() == null
         || request.getCleaningFrequency() == null
-        || request.getBloodTypes().isEmpty()) {
+        || request.getBloodTypes().get(0) == null) {
       throw new InvalidFormatException();
     }
   }
 
-  private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
-    return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());
+  private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
+    return bloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
   }
 }
