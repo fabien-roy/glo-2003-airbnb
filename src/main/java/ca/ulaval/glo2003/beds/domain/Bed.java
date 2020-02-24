@@ -13,7 +13,6 @@ public class Bed {
   private List<BloodTypes> bloodTypes;
   private int capacity;
   private List<Package> packages;
-  private int stars;
 
   public Bed(
       BedTypes bedType,
@@ -71,13 +70,5 @@ public class Bed {
 
   public List<Package> getPackages() {
     return packages;
-  }
-
-  public int getStars() {
-    return stars;
-  }
-
-  public void setStars(int stars) {
-    this.stars = stars;
   }
 }

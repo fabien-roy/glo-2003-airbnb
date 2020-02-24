@@ -22,12 +22,18 @@ public class Router {
   // TODO : This is not correct dependency injection
   private static final BedRepository bedRepository = new InMemoryBedRepository();
   private static final BedStarsCalculator bedStarsCalculator = new BedStarsCalculator();
-  private static final BedFactory bedFactory = new BedFactory(bedStarsCalculator);
+  private static final BedFactory bedFactory = new BedFactory();
   private static final BedMapper bedMapper = new BedMapper();
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
   private static final BedService bedService =
-      new BedService(bedFactory, bedMapper, bedNumberMapper, bedMatcherMapper, bedRepository);
+      new BedService(
+          bedFactory,
+          bedMapper,
+          bedNumberMapper,
+          bedMatcherMapper,
+          bedRepository,
+          bedStarsCalculator);
 
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorResource());
