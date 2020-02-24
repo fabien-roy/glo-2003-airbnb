@@ -31,7 +31,9 @@ public class BedMapper {
   }
 
   private void validateFormat(BedRequest request) {
-    if (request.getBedType() == null || request.getCleaningFrequency() == null) {
+    if (request.getBedType() == null
+        || request.getCleaningFrequency() == null
+        || request.getBloodTypes().isEmpty()) {
       throw new InvalidFormatException();
     }
   }
