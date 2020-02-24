@@ -7,12 +7,11 @@ import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,16 +26,17 @@ public class BedMapper {
     this.packageMapper = packageMapper;
   }
 
-  public Bed fromRequest(BedRequest request) {
-    validateFormat(request);
-    CapacityMapper.validateCapacity(request);
+  public Bed fromRequest(BedRequest request, int maxCapacity) {
+    validateRequestFormat(request, maxCapacity);
 
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
-    List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
+    List<BloodTypes> bloodTypes =
+        request.getBloodTypes().stream().map(BloodTypes::get).collect(Collectors.toList());
     int capacity = request.getCapacity();
-    List packages = addPackage(request.getPackages());
+    List<Package> packages =
+        request.getPackages().stream().map(packageMapper::fromRequest).collect(Collectors.toList());
 
     return new Bed(bedType, cleaningFrequencies, bloodTypes, capacity, packages);
   }
@@ -60,7 +60,7 @@ public class BedMapper {
         stars);
   }
 
-  private void validateFormat(BedRequest request) {
+  private void validateRequestFormat(BedRequest request, int maxCapacity) {
     if (request.getBloodTypes().isEmpty()) {
       throw new InvalidBloodTypesException();
     }
@@ -73,16 +73,8 @@ public class BedMapper {
 
     if (request.getCapacity() < 0) {
       throw new InvalidCapacityException();
+    } else if (request.getCapacity() > maxCapacity) {
+      throw new ExceedingAccommodationCapacityException();
     }
-  }
-
-  private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
-    return bloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
-  }
-
-  private List<Package> addPackage(List<PackageRequest> packageRequests) {
-    List packages = new ArrayList<Package>();
-    packageRequests.stream().map(packages::add).collect(Collectors.toList());
-    return packages;
   }
 }

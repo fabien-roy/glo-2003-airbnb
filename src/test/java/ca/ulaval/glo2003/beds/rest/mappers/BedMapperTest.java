@@ -13,7 +13,6 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
@@ -41,7 +40,7 @@ class BedMapperTest {
     BedTypes expectedBedType = BedTypes.LATEX;
     BedRequest bedRequest = aBedRequest().withBedType(expectedBedType.toString()).build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    Bed bed = bedMapper.fromRequest(bedRequest, 1000);
 
     assertEquals(expectedBedType, bed.getBedType());
   }
@@ -50,7 +49,7 @@ class BedMapperTest {
   public void fromRequest_withoutBedType_shouldThrowInvalidFormatException() {
     BedRequest bedRequest = aBedRequest().withBedType(null).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -58,7 +57,7 @@ class BedMapperTest {
     String invalidBedType = "invalidBedType";
     BedRequest bedRequest = aBedRequest().withBedType(invalidBedType).build();
 
-    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -67,7 +66,7 @@ class BedMapperTest {
     BedRequest bedRequest =
         aBedRequest().withCleaningFrequency(expectedCleaningFrequency.toString()).build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    Bed bed = bedMapper.fromRequest(bedRequest, 1000);
 
     assertEquals(expectedCleaningFrequency, bed.getCleaningFrequency());
   }
@@ -77,14 +76,15 @@ class BedMapperTest {
     String invalidCleaningFrequency = "invalidCleaningFrequency";
     BedRequest bedRequest = aBedRequest().withCleaningFrequency(invalidCleaningFrequency).build();
 
-    assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(
+        InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
   public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidFormat() {
     BedRequest bedRequest = aBedRequest().withCleaningFrequency(null).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -93,7 +93,7 @@ class BedMapperTest {
     List<String> bloodTypes = Collections.singletonList(expectedBloodType.toString());
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    Bed bed = bedMapper.fromRequest(bedRequest, 1000);
 
     assertEquals(1, bed.getBloodTypes().size());
     assertEquals(expectedBloodType, bed.getBloodTypes().get(0));
@@ -107,7 +107,7 @@ class BedMapperTest {
         Arrays.asList(expectedBloodType.toString(), otherExpectedBloodType.toString());
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    Bed bed = bedMapper.fromRequest(bedRequest, 1000);
 
     assertEquals(2, bed.getBloodTypes().size());
     assertTrue(bed.getBloodTypes().contains(expectedBloodType));
@@ -120,7 +120,7 @@ class BedMapperTest {
     bloodTypes.add(null);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -128,7 +128,7 @@ class BedMapperTest {
     List bloodTypes = new ArrayList();
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -137,7 +137,7 @@ class BedMapperTest {
     List<String> bloodTypes = Collections.singletonList(invalidBloodType);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -149,7 +149,7 @@ class BedMapperTest {
             .withCapacity(expectedCapacity)
             .build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    Bed bed = bedMapper.fromRequest(bedRequest, 1000);
 
     assertEquals(expectedCapacity, bed.getCapacity());
   }
@@ -162,7 +162,8 @@ class BedMapperTest {
         aBedRequest().withBedType(BedTypes.LATEX.toString()).withCapacity(capacity).build();
 
     assertThrows(
-        ExceedingAccommodationCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
+        ExceedingAccommodationCapacityException.class,
+        () -> bedMapper.fromRequest(bedRequest, 1000));
   }
 
   @Test
@@ -171,7 +172,7 @@ class BedMapperTest {
     BedRequest bedRequest =
         aBedRequest().withBedType(BedTypes.LATEX.toString()).withCapacity(capacity).build();
 
-    assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest, 1000));
   }
   /*
      @Test
