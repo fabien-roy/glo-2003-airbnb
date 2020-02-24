@@ -47,9 +47,8 @@ class BedMapperTest {
   @Test
   public void fromRequest_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
-    BedRequest bedRequest = mock(BedRequest.class);
-    CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
-    when(bedRequest.getBedType()).thenReturn(String.valueOf(cleaningFrequency));
+    BedRequest bedRequest =
+        aBedRequest().withCleaningFrequency(expectedCleaningFrequency.toString()).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
