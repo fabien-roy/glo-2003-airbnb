@@ -117,19 +117,17 @@ class BedMapperTest {
 
     assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
+
+  @Test
+  public void fromRequest_withCapacity_shouldReturnBedWithCapacity() {
+    int expectedCapacity = 1000;
+    BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedCapacity, bed.getCapacity());
+  }
   /*
-   @Test
-   public void fromRequest_withCapacity_shouldReturnBedWithCapacity() {
-     int expectedCapacity = 1000;
-     BedRequest bedRequest = mock(BedRequest.class);
-     int capacity = 1000;
-     when(bedRequest.getBedType()).thenReturn(String.valueOf(1000));
-
-     Bed bed = bedMapper.fromRequest(bedRequest);
-
-     assertEquals(expectedCapacity, bed.getCapacity());
-   }
-
    @Test
    public void fromRequest_withPackageName_shouldReturnBedWithPackageName(){
      Package expectedPackage = Package;
