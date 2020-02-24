@@ -69,7 +69,8 @@ public class BedMapper {
 
     if (request.getBedType() == null
         || request.getCleaningFrequency() == null
-        || request.getBloodTypes().get(0) == null) {
+        || request.getBloodTypes().get(0) == null
+        || request.getZipCode() == null) {
       throw new InvalidFormatException();
     }
 
