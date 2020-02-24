@@ -5,6 +5,9 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BedMapper {
 
@@ -17,8 +20,9 @@ public class BedMapper {
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
+    List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes().toArray(String[]::new));
 
-    return new Bed(bedType, cleaningFrequencies, new ArrayList<>(), 0, new ArrayList<>());
+    return new Bed(bedType, cleaningFrequencies, bloodTypes, 0, new ArrayList<>());
   }
 
   public BedResponse toResponse(Bed bed) {
@@ -30,5 +34,9 @@ public class BedMapper {
     if (request.getBedType() == null || request.getCleaningFrequency() == null) {
       throw new InvalidFormatException();
     }
+  }
+
+  private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
+    return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());
   }
 }
