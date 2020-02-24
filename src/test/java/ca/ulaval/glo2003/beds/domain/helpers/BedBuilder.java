@@ -1,9 +1,11 @@
-package ca.ulaval.glo2003.beds.helpers;
+package ca.ulaval.glo2003.beds.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
+import java.util.Collections;
 import java.util.List;
 
 public class BedBuilder {
@@ -31,8 +33,16 @@ public class BedBuilder {
   private List<Package> DEFAULT_PACKAGES = createPackages();
   private List<Package> packages = DEFAULT_PACKAGES;
 
+  private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
+  private List<Booking> bookings = DEFAULT_BOOKINGS;
+
   public static BedBuilder aBed() {
     return new BedBuilder();
+  }
+
+  public BedBuilder withOwnerPublicKey(String ownerPublicKey) {
+    this.ownerPublicKey = ownerPublicKey;
+    return this;
   }
 
   public BedBuilder withBedType(BedTypes bedType) {
@@ -60,8 +70,16 @@ public class BedBuilder {
     return this;
   }
 
+  public BedBuilder withBookings(List<Booking> bookings) {
+    this.bookings = bookings;
+    return this;
+  }
+
   public Bed build() {
-    return new Bed(
-        ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    Bed bed =
+        new Bed(
+            ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+    bookings.forEach(booking -> bed.book(booking, packages.get(0).getName()));
+    return bed;
   }
 }
