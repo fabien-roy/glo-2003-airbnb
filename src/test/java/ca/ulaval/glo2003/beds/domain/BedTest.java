@@ -2,9 +2,11 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotAllowedException;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -27,7 +29,11 @@ class BedTest {
 
   @Test
   void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
-    // TODO
+    String ownerPublicKey = createOwnerPublicKey();
+    Booking booking = aBooking().withTenantPublicKey(ownerPublicKey).build();
+    Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
+
+    assertThrows(BookingNotAllowedException.class, () -> bed.book(booking));
   }
 
   @Test
