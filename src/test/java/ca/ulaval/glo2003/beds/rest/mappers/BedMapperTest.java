@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
+import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,17 +108,16 @@ class BedMapperTest {
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
   }
+
+  @Test
+  public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
+    String invalidBloodType = "invalidBloodType";
+    List<String> bloodTypes = Collections.singletonList(invalidBloodType);
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
   /*
-   @Test
-   public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
-     String invalidBloodType = "invalidBloodType";
-     List<String> bloodTypes = Collections.singletonList(invalidBloodType);
-     BedRequest bedRequest = mock(BedRequest.class);
-     when(bedRequest.getBloodTypes()).thenReturn(bloodTypes);
-
-     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
-   }
-
    @Test
    public void fromRequest_withCapacity_shouldReturnBedWithCapacity() {
      int expectedCapacity = 1000;
