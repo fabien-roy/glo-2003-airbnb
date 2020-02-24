@@ -63,6 +63,14 @@ class BedMapperTest {
 
     assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
+
+  @Test
+  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidFormat() {
+    BedRequest bedRequest = aBedRequest().withCleaningFrequency(null).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
   /*
    @Test
    public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
