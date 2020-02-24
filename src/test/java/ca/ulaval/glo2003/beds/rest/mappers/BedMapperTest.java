@@ -8,6 +8,8 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -71,20 +73,18 @@ class BedMapperTest {
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
+  @Test
+  public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
+    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
+    List<String> bloodTypes = Collections.singletonList(expectedBloodType.toString());
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(1, bed.getBloodTypes().size());
+    assertEquals(expectedBloodType, bed.getBloodTypes().get(0));
+  }
   /*
-   @Test
-   public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
-     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-     List<String> bloodTypes = Collections.singletonList(expectedBloodType.toString());
-     BedRequest bedRequest = mock(BedRequest.class);
-     when(bedRequest.getBloodTypes()).thenReturn(bloodTypes);
-
-     Bed bed = bedMapper.fromRequest(bedRequest);
-
-     assertEquals(1, bed.getBloodTypes().size());
-     assertEquals(expectedBloodType, bed.getBloodTypes().get(0));
-   }
-
    @Test
    public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
      BloodTypes expectedBloodType = BloodTypes.O_MINUS;
