@@ -46,7 +46,7 @@ public class BedServiceTest {
   public void add_withBedRequest_shouldAddBed() {
     BedRequest bedRequest = mock(BedRequest.class);
     Bed expectedBed = mock(Bed.class);
-    when(bedMapper.fromRequest(bedRequest, anyInt())).thenReturn(expectedBed);
+    when(bedMapper.fromRequest(bedRequest)).thenReturn(expectedBed);
     when(bedFactory.create(expectedBed)).thenReturn(expectedBed);
     when(expectedBed.getNumber()).thenReturn(mock(UUID.class));
 
@@ -60,7 +60,7 @@ public class BedServiceTest {
     UUID expectedBedNumber = mock(UUID.class);
     BedRequest bedRequest = mock(BedRequest.class);
     Bed bed = mock(Bed.class);
-    when(bedMapper.fromRequest(bedRequest, anyInt())).thenReturn(bed);
+    when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
     when(bedFactory.create(bed)).thenReturn(bed);
     when(bed.getNumber()).thenReturn(expectedBedNumber);
 

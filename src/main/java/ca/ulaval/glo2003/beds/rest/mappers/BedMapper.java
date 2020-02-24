@@ -1,14 +1,10 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedTypes;
-import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
@@ -26,8 +22,8 @@ public class BedMapper {
     this.packageMapper = packageMapper;
   }
 
-  public Bed fromRequest(BedRequest request, int maxCapacity) {
-    validateRequestFormat(request, maxCapacity);
+  public Bed fromRequest(BedRequest request) {
+    validateRequestFormat(request);
 
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
@@ -60,7 +56,7 @@ public class BedMapper {
         stars);
   }
 
-  private void validateRequestFormat(BedRequest request, int maxCapacity) {
+  private void validateRequestFormat(BedRequest request) {
     if (request.getBloodTypes().isEmpty()) {
       throw new InvalidBloodTypesException();
     }
@@ -73,8 +69,6 @@ public class BedMapper {
 
     if (request.getCapacity() < 0) {
       throw new InvalidCapacityException();
-    } else if (request.getCapacity() > maxCapacity) {
-      throw new ExceedingAccommodationCapacityException();
     }
   }
 }

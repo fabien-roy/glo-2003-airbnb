@@ -5,7 +5,6 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import java.util.List;
 
 public class BedRequestBuilder {
@@ -27,7 +26,7 @@ public class BedRequestBuilder {
   private List<String> DEFAULT_BLOOD_TYPES = createBloodTypes();
   private List<String> bloodTypes = DEFAULT_BLOOD_TYPES;
 
-  private int DEFAULT_CAPACITY = createCapacity(BedTypes.get(bedType));
+  private int DEFAULT_CAPACITY = createCapacity();
   private int capacity = DEFAULT_CAPACITY;
 
   private List<PackageRequest> DEFAULT_PACKAGES = createPackages();
@@ -39,11 +38,6 @@ public class BedRequestBuilder {
 
   public BedRequestBuilder withBedType(String bedType) {
     this.bedType = bedType;
-    try {
-      BedTypes.get(bedType);
-      this.capacity = createCapacity(BedTypes.get(bedType));
-    } catch (InvalidBedTypeException ignored) {
-    }
     return this;
   }
 

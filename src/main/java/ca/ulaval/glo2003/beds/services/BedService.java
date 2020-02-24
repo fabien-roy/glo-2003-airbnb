@@ -34,7 +34,7 @@ public class BedService {
   }
 
   public String add(BedRequest request) {
-    Bed bed = bedMapper.fromRequest(request, 1000);
+    Bed bed = bedMapper.fromRequest(request);
 
     bed = bedFactory.create(bed);
 

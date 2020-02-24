@@ -31,7 +31,7 @@ public class BedBuilder {
   private List<BloodTypes> DEFAULT_BLOOD_TYPES = createBloodTypes();
   private List<BloodTypes> bloodTypes = DEFAULT_BLOOD_TYPES;
 
-  private int DEFAULT_CAPACITY = createCapacity(DEFAULT_BED_TYPE);
+  private int DEFAULT_CAPACITY = createCapacity();
   private int capacity = DEFAULT_CAPACITY;
 
   private List<Package> DEFAULT_PACKAGES = createPackages();
@@ -61,7 +61,6 @@ public class BedBuilder {
 
   public BedBuilder withBedType(BedTypes bedType) {
     this.bedType = bedType;
-    this.capacity = createCapacity(bedType);
     return this;
   }
 
