@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.List;
@@ -81,10 +82,10 @@ public class BedMapper {
   }
 
   private void validatePublicKey(String publicKey) {
-    if (!publicKey.matches(OWNER_PUBLIC_KEY_PATTERN)) throw new InvalidZipCodeException();
+    if (!publicKey.matches(OWNER_PUBLIC_KEY_PATTERN)) throw new InvalidPublicKeyException();
   }
 
   private void validateZipCode(String zipCode) {
-    if (!zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidPublicKey();
+    if (!zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
   }
 }
