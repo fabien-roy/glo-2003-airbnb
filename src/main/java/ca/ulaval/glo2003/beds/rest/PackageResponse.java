@@ -5,6 +5,11 @@ public class PackageResponse {
   private String name;
   private double pricePerNight;
 
+  public PackageResponse(String name, double pricePerNight) {
+    this.name = name;
+    this.pricePerNight = pricePerNight;
+  }
+
   public String getName() {
     return name;
   }

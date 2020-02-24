@@ -80,4 +80,8 @@ public class Bed {
   public void setStars(int stars) {
     this.stars = stars;
   }
+
+  public String getZipCode() {
+    return zipCode;
+  }
 }
