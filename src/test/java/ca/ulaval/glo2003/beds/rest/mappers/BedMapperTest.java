@@ -205,7 +205,7 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    String invalidZipCode = "184938";
+    String invalidZipCode = "125469";
     BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
 
     assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
@@ -217,6 +217,24 @@ class BedMapperTest {
     BedRequest bedRequest = aBedRequest().withZipCode(nullZipCode).build();
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withOwnerKey_shouldMapOwnerKey() {
+    String ownerKey = "AJDLF46T8JH788JLDE4RTGRE35GBNHY67UJMNG567JHGD356789JGTNMZVEF6GND3";
+    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    // TODO trouver comment tester ownerKey
+  }
+
+  @Test
+  public void fromRequest_withInvalidOwnerKey_shouldThrowInvalidPublicKeyException() {
+    String ownerKey = "AA66JDLF46T8JH788JLDE4RTGRE35GBNHY67UJMNG567JHGD356789JGTNMZVEF6GND3";
+    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
+
+    assertThrows(InvalidPublicKeyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
