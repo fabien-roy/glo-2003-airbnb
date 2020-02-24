@@ -12,17 +12,16 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.BedNotFoundException;
-import ca.ulaval.glo2003.beds.services.BedService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BedMapperTest {
+
+  // TODO : Refactor BedMapper.fromRequest tests
 
   private BedMapper bedMapper;
 
@@ -80,7 +79,7 @@ class BedMapperTest {
     BedBuilder bedBuilder = BedBuilder.aBed();
     Bed bed = bedBuilder.build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed);
+    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
     assertEquals(bed.getNumber(), bedResponse.getBedNumber());
 
@@ -99,7 +98,7 @@ class BedMapperTest {
     Bed bed = new Bed("5A5832M7QP888887G4P45MP88888885A5832M7QP888887G4P45MP8888888",
             "11111", BedTypes.LATEX, CleaningFrequencies.ANNUAL, listBloodTypes, 122, listPackages);
 
-    BedResponse bedResponse = bedMapper.toResponse(bed);
+    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
     assertEquals(bed.getPackages().size(), bedResponse.getPackages().size());
 
@@ -119,7 +118,7 @@ class BedMapperTest {
     Bed bed = new Bed("5A5832M7QP888887G4P45MP88888885A5832M7QP888887G4P45MP8888888",
             "11111", BedTypes.LATEX, CleaningFrequencies.ANNUAL, listBloodTypes, 122, listPackages);
 
-    BedResponse bedResponse = bedMapper.toResponse(bed);
+    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
     assertEquals(bed.getBloodTypes().size(), bedResponse.getBloodTypes().size());
 

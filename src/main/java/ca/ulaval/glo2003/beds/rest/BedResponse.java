@@ -14,19 +14,19 @@ public class BedResponse {
   private List<PackageResponse> packages;
   private int stars;
 
-    public BedResponse(UUID bedNumber, String zipCode, String bedType, String cleaningFrequency,
-                       List<String> bloodTypes, int capacity, List<PackageResponse> packages, int stars) {
-        this.bedNumber = bedNumber;
-        this.zipCode = zipCode;
-        this.bedType = bedType;
-        this.cleaningFrequency = cleaningFrequency;
-        this.bloodTypes = bloodTypes;
-        this.capacity = capacity;
-        this.packages = packages;
-        this.stars = stars;
-    }
+  public BedResponse(UUID bedNumber, String zipCode, String bedType, String cleaningFrequency,
+                     List<String> bloodTypes, int capacity, List<PackageResponse> packages, int stars) {
+     this.bedNumber = bedNumber;
+     this.zipCode = zipCode;
+     this.bedType = bedType;
+     this.cleaningFrequency = cleaningFrequency;
+     this.bloodTypes = bloodTypes;
+     this.capacity = capacity;
+     this.packages = packages;
+     this.stars = stars;
+  }
 
-    public UUID getBedNumber() {
+  public UUID getBedNumber() {
     return bedNumber;
   }
 

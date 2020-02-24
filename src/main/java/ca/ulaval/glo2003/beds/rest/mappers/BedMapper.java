@@ -20,7 +20,7 @@ public class BedMapper {
     return new Bed(bedType, null, new ArrayList<>(), 0, new ArrayList<>());
   }
 
-  public BedResponse toResponse(Bed bed) {
+  public BedResponse toResponse(Bed bed, int stars) {
 
     List<String> bloodTypes = new ArrayList<>();
     List<PackageResponse> packageResponses = new ArrayList<>();
@@ -37,8 +37,7 @@ public class BedMapper {
       packageResponses.add(packageResponse);
     }
     BedResponse bedResponse = new BedResponse(bed.getNumber(), bed.getZipCode(), bed.getBedType().toString(), bed.getCleaningFrequency().toString(),
-            bloodTypes, bed.getCapacity(), packageResponses, bed.getStars());
+            bloodTypes, bed.getCapacity(), packageResponses, stars);
     return bedResponse;
-
   }
 }
