@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -100,15 +101,15 @@ class BedMapperTest {
     assertTrue(bed.getBloodTypes().contains(expectedBloodType));
     assertTrue(bed.getBloodTypes().contains(otherExpectedBloodType));
   }
+
+  @Test
+  public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
+    List bloodTypes = new ArrayList();
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
   /*
-   @Test
-   public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
-     BedRequest bedRequest = mock(BedRequest.class);
-     when(bedRequest.getBloodTypes()).thenReturn(null);
-
-     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
-   }
-
    @Test
    public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
      String invalidBloodType = "invalidBloodType";
