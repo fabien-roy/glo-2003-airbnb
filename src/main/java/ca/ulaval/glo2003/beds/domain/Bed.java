@@ -1,10 +1,12 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.swing.*;
 
 public class Bed {
 
@@ -83,6 +85,15 @@ public class Bed {
   public void book(Booking booking) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
+    bookings.forEach(presentBooking -> validateNotOverlapping(presentBooking, booking));
+
     bookings.add(booking);
+  }
+
+  // TODO : Move logic and tests into Booking
+  public void validateNotOverlapping(Booking presentBooking, Booking booking) {
+    if (!(presentBooking.getArrivalDate().isAfter(booking.getDepartureDate())
+        || presentBooking.getDepartureDate().isBefore(booking.getArrivalDate())))
+      throw new BedAlreadyBookedException();
   }
 }
