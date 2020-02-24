@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMaximalCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,11 +9,10 @@ import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class InvalidMaximalCapacityExceptionHandler
-    implements ExceptionHandler<InvalidMaximalCapacityException> {
+public class InvalidCapacityExceptionHandler implements ExceptionHandler<InvalidCapacityException> {
 
   @Override
-  public void handle(InvalidMaximalCapacityException e, Request request, Response response) {
+  public void handle(InvalidCapacityException e, Request request, Response response) {
     response.status(HttpStatus.BAD_REQUEST_400);
 
     try {
@@ -27,8 +26,7 @@ public class InvalidMaximalCapacityExceptionHandler
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
         new ErrorResponse(
-            "INVALID_MINIMAL_CAPACITY",
-            "maximal capacity of latex is 400, memory foam is 700 spring is 1000");
+            "INVALID_MINIMAL_CAPACITY", "minimal capacity should be a positive number");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
