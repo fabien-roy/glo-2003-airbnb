@@ -130,11 +130,24 @@ class BedMapperTest {
   @Test
   public void fromRequest_withCapacity_shouldReturnBedWithCapacity() {
     int expectedCapacity = 1000;
-    BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
+    BedRequest bedRequest =
+        aBedRequest()
+            .withCapacity(expectedCapacity)
+            .withBedType(BedTypes.SPRINGS.toString())
+            .build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(expectedCapacity, bed.getCapacity());
+  }
+
+  @Test
+  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+    int capacity = 1000;
+    BedRequest bedRequest =
+        aBedRequest().withCapacity(capacity).withBedType(BedTypes.LATEX.toString()).build();
+
+    assertThrows(InvalidMaximalCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
   }
   /*
    @Test
