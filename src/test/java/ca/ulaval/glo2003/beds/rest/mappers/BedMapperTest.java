@@ -1,27 +1,24 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
-
+import ca.ulaval.glo2003.beds.rest.BedResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import ca.ulaval.glo2003.beds.rest.BedResponse;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BedMapperTest {
-
-  // TODO : Refactor BedMapper.fromRequest tests
 
   private BedMapper bedMapper;
 
@@ -29,6 +26,8 @@ class BedMapperTest {
   public void setUpMapper() {
     bedMapper = new BedMapper();
   }
+
+  // TODO : Complete BedMapper.fromRequest
 
   @Test
   public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
@@ -74,12 +73,13 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponse_shouldReturnTheRightBed_whenProvidedWithBedNumber() {
-    Bed bed = aBed().build();
+  public void toResponse_shouldMapBedNumber() {
+    UUID expectedBedNumber = createBedNumber();
+    Bed bed = aBed().withBedNumber(expectedBedNumber).build();
 
     BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
-    assertEquals(bed.getNumber(), bedResponse.getBedNumber());
+    assertEquals(expectedBedNumber, bedResponse.getBedNumber());
   }
 
   @Test
@@ -92,13 +92,19 @@ class BedMapperTest {
     listPackages.add(new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(45.45)));
     listPackages.add(new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(78.78)));
 
-    Bed bed = new Bed("5A5832M7QP888887G4P45MP88888885A5832M7QP888887G4P45MP8888888",
-            "11111", BedTypes.LATEX, CleaningFrequencies.ANNUAL, listBloodTypes, 122, listPackages);
+    Bed bed =
+        new Bed(
+            "5A5832M7QP888887G4P45MP88888885A5832M7QP888887G4P45MP8888888",
+            "11111",
+            BedTypes.LATEX,
+            CleaningFrequencies.ANNUAL,
+            listBloodTypes,
+            122,
+            listPackages);
 
     BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
     assertEquals(bed.getPackages().size(), bedResponse.getPackages().size());
-
   }
 
   @Test
@@ -112,16 +118,18 @@ class BedMapperTest {
     List<Package> listPackages = new ArrayList<>();
     listPackages.add(new Package(PackageNames.BLOODTHIRSTY, BigDecimal.valueOf(45.45)));
 
-    Bed bed = new Bed("5A5832M7QP888887G4P45MP88888885A5832M7QP888887G4P45MP8888888",
-            "11111", BedTypes.LATEX, CleaningFrequencies.ANNUAL, listBloodTypes, 122, listPackages);
+    Bed bed =
+        new Bed(
+            "5A5832M7QP888887G4P45MP88888885A5832M7QP888887G4P45MP8888888",
+            "11111",
+            BedTypes.LATEX,
+            CleaningFrequencies.ANNUAL,
+            listBloodTypes,
+            122,
+            listPackages);
 
     BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
     assertEquals(bed.getBloodTypes().size(), bedResponse.getBloodTypes().size());
-
   }
-
-
-
-
 }

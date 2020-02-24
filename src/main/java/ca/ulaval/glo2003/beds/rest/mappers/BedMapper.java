@@ -7,7 +7,6 @@ import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,23 +20,27 @@ public class BedMapper {
   }
 
   public BedResponse toResponse(Bed bed, int stars) {
-
     List<String> bloodTypes = new ArrayList<>();
     List<PackageResponse> packageResponses = new ArrayList<>();
 
-
-    for(BloodTypes bloodType: bed.getBloodTypes())
-    {
+    for (BloodTypes bloodType : bed.getBloodTypes()) {
       bloodTypes.add(bloodType.toString());
     }
-    for (Package pack: bed.getPackages())
-    {
-      PackageResponse packageResponse = new PackageResponse(pack.getName().toString(),
-              pack.getPricePerNight().doubleValue());
+    for (Package pack : bed.getPackages()) {
+      PackageResponse packageResponse =
+          new PackageResponse(pack.getName().toString(), pack.getPricePerNight().doubleValue());
       packageResponses.add(packageResponse);
     }
-    BedResponse bedResponse = new BedResponse(bed.getNumber(), bed.getZipCode(), bed.getBedType().toString(), bed.getCleaningFrequency().toString(),
-            bloodTypes, bed.getCapacity(), packageResponses, stars);
+    BedResponse bedResponse =
+        new BedResponse(
+            bed.getNumber(),
+            bed.getZipCode(),
+            bed.getBedType().toString(),
+            bed.getCleaningFrequency().toString(),
+            bloodTypes,
+            bed.getCapacity(),
+            packageResponses,
+            stars);
     return bedResponse;
   }
 }

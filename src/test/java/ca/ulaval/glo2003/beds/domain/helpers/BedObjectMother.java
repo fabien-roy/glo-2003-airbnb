@@ -12,6 +12,10 @@ public class BedObjectMother {
 
   private BedObjectMother() {}
 
+  public static UUID createBedNumber() {
+    return UUID.randomUUID();
+  }
+
   public static String createOwnerPublicKey() {
     return Faker.instance().chuckNorris().fact();
   }
