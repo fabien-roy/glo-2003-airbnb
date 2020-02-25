@@ -101,6 +101,6 @@ If request is valid, returns "Headers `Location: /beds/:bedNumber/bookings/:book
 
 If bed number exists and booking number exists for that bed, returns formatted booking.
 
-### `GET /admin/transactions`
+### GET /admin/transactions
 
 Returns formatted transactions.
