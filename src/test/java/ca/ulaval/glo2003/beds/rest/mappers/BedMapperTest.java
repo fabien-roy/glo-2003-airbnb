@@ -1,9 +1,10 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
+import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
+import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,8 +13,14 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,49 +35,200 @@ class BedMapperTest {
     bedMapper = new BedMapper(packageMapper);
   }
 
-  // TODO : Complete BedMapper.fromRequest
+  @Test
+  public void fromRequest_shouldMapBedType() {
+    BedTypes expectedBedType = BedTypes.LATEX;
+    BedRequest bedRequest = aBedRequest().withBedType(expectedBedType.toString()).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedBedType, bed.getBedType());
+  }
+
+  @Test
+  public void fromRequest_withoutBedType_shouldThrowInvalidFormatException() {
+    BedRequest bedRequest = aBedRequest().withBedType(null).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withInvalidBedType_shouldThrowInvalidBedTypeException() {
+    String invalidBedType = "invalidBedType";
+    BedRequest bedRequest = aBedRequest().withBedType(invalidBedType).build();
+
+    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_shouldMapCleaningFrequency() {
+    CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
+    BedRequest bedRequest =
+        aBedRequest().withCleaningFrequency(expectedCleaningFrequency.toString()).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedCleaningFrequency, bed.getCleaningFrequency());
+  }
+
+  @Test
+  public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
+    String invalidCleaningFrequency = "invalidCleaningFrequency";
+    BedRequest bedRequest = aBedRequest().withCleaningFrequency(invalidCleaningFrequency).build();
+
+    assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidFormat() {
+    BedRequest bedRequest = aBedRequest().withCleaningFrequency(null).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
 
   @Test
   public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
-    /*
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     List<String> bloodTypes = Collections.singletonList(expectedBloodType.toString());
-    BedRequest bedRequest = mock(BedRequest.class);
-    when(bedRequest.getBloodTypes()).thenReturn(bloodTypes);
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(1, bed.getBloodTypes().size());
     assertEquals(expectedBloodType, bed.getBloodTypes().get(0));
-    */
   }
 
   @Test
   public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
-    /*
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
     List<String> bloodTypes =
         Arrays.asList(expectedBloodType.toString(), otherExpectedBloodType.toString());
-    BedRequest bedRequest = mock(BedRequest.class);
-    when(bedRequest.getBloodTypes()).thenReturn(bloodTypes);
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(2, bed.getBloodTypes().size());
     assertTrue(bed.getBloodTypes().contains(expectedBloodType));
     assertTrue(bed.getBloodTypes().contains(otherExpectedBloodType));
-    */
+  }
+
+  @Test
+  public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
+    List<String> bloodTypes = Collections.singletonList(null);
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidBloodTypesException() {
+    List<String> bloodTypes = Collections.emptyList();
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
     String invalidBloodType = "invalidBloodType";
     List<String> bloodTypes = Collections.singletonList(invalidBloodType);
-    BedRequest bedRequest = mock(BedRequest.class);
-    when(bedRequest.getBloodTypes()).thenReturn(bloodTypes);
+    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    // assertThrows(InvalidBloodTypeException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_shouldMapCapacity() {
+    int expectedCapacity = 1000;
+    BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedCapacity, bed.getCapacity());
+  }
+
+  @Test
+  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+    int capacity = -100;
+    BedRequest bedRequest = aBedRequest().withCapacity(capacity).build();
+
+    assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withSinglePackage_shouldMapPackage() {
+    PackageRequest packageRequest = aPackageRequest().build();
+    List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
+    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Package expectedPackage = mock(Package.class);
+    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(1, bed.getPackages().size());
+    assertEquals(expectedPackage, bed.getPackages().get(0));
+  }
+
+  @Test
+  public void fromRequest_withMultiplePackages_shouldMapPackages() {
+    PackageRequest packageRequest = aPackageRequest().build();
+    PackageRequest otherPackageRequest = aPackageRequest().build();
+    List<PackageRequest> packageRequests = Arrays.asList(packageRequest, otherPackageRequest);
+    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Package expectedPackage = mock(Package.class);
+    Package otherExpectedPackage = mock(Package.class);
+    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
+    when(packageMapper.fromRequest(otherPackageRequest)).thenReturn(otherExpectedPackage);
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(2, bed.getPackages().size());
+    assertEquals(expectedPackage, bed.getPackages().get(0));
+    assertEquals(otherExpectedPackage, bed.getPackages().get(1));
+  }
+
+  @Test
+  public void fromRequest_shouldMapZipCode() {
+    String expectedZipCode = createZipCode();
+    BedRequest bedRequest = aBedRequest().withZipCode(expectedZipCode).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedZipCode, bed.getZipCode());
+  }
+
+  @Test
+  public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
+    String invalidZipCode = "invalidZipCode";
+    BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
+
+    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withoutZipCode_shouldThrowInvalidZipCodeException() {
+    BedRequest bedRequest = aBedRequest().withZipCode(null).build();
+
+    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_shouldMapOwnerPublicKey() {
+    String expectedOwnerPublicKey = createOwnerPublicKey();
+    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(expectedOwnerPublicKey).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedOwnerPublicKey, bed.getOwnerPublicKey());
+  }
+
+  @Test
+  public void fromRequest_withInvalidOwnerPublicKey_shouldThrowInvalidPublicKeyException() {
+    String ownerKey = "invalidPublicKey";
+    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
+
+    assertThrows(InvalidPublicKeyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test

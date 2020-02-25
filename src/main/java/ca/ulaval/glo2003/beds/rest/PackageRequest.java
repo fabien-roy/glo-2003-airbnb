@@ -5,6 +5,15 @@ public class PackageRequest {
   private String name;
   private double pricePerNight;
 
+  public PackageRequest() {
+    // Empty constructor for parsing
+  }
+
+  public PackageRequest(String name, double pricePerNight) {
+    this.name = name;
+    this.pricePerNight = pricePerNight;
+  }
+
   public String getName() {
     return name;
   }
