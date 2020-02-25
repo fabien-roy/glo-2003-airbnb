@@ -1,24 +1,24 @@
 package ca.ulaval.glo2003.beds.bookings.transactions.rest;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
-import ca.ulaval.glo2003.beds.domain.Price;
-import java.time.LocalDateTime;
-
 public class TransactionResponse {
 
+  private String timestamp;
   private String from;
   private String to;
-  private Price total;
-  private TransactionReasons reason;
-  private LocalDateTime timestamp;
+  private double total;
+  private String reason;
 
   public TransactionResponse(
-      String from, String to, Price total, TransactionReasons reason, LocalDateTime timestamp) {
+      String timestamp, String from, String to, double total, String reason) {
+    this.timestamp = timestamp;
     this.from = from;
-    this.reason = reason;
     this.to = to;
     this.total = total;
-    this.timestamp = timestamp;
+    this.reason = reason;
+  }
+
+  public String getTimestamp() {
+    return timestamp;
   }
 
   public String getFrom() {
@@ -29,35 +29,11 @@ public class TransactionResponse {
     return to;
   }
 
-  public Price getTotal() {
+  public double getTotal() {
     return total;
   }
 
-  public TransactionReasons getTransactionReasons() {
+  public String getReason() {
     return reason;
-  }
-
-  public void setFrom(String from) {
-    this.from = from;
-  }
-
-  public void setTo(String to) {
-    this.to = to;
-  }
-
-  public void setTotal(Price total) {
-    this.total = total;
-  }
-
-  public void setReason(TransactionReasons reason) {
-    this.reason = reason;
-  }
-
-  public LocalDateTime getTimestamp() {
-    return timestamp;
-  }
-
-  public void setTimestamp(LocalDateTime timestamp) {
-    this.timestamp = timestamp;
   }
 }

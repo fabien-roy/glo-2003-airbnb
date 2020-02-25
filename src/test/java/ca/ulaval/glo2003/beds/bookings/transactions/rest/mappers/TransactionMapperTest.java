@@ -8,7 +8,6 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.beds.domain.Price;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,99 +22,14 @@ public class TransactionMapperTest {
   }
 
   @Test
-  public void getTransaction_shouldReturnTransactionResponseWithSameReason() {
-
-    BigDecimal value = BigDecimal.valueOf(100);
-    Price expectedTotal = new Price(value);
-    String expectedTo = "transactionrecipent";
-    String expectedFrom = "transactionsender";
-    LocalDateTime expectedTimestamp = LocalDateTime.now();
-    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
-
-    Transaction transactionToMap =
-        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
-    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
-
-    assertEquals(expectedReason, response.getTransactionReasons());
-  }
-
-  @Test
-  public void getTransaction_shouldReturnTransactionResponseWithSameTotal() {
-
-    BigDecimal value = BigDecimal.valueOf(100);
-    Price expectedTotal = new Price(value);
-    String expectedTo = "transactionrecipent";
-    String expectedFrom = "transactionsender";
-    LocalDateTime expectedTimestamp = LocalDateTime.now();
-    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
-
-    Transaction transactionToMap =
-        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
-    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
-
-    assertEquals(expectedTotal, response.getTotal());
-  }
-
-  @Test
-  public void getTransaction_shouldReturnTransactionResponseWithSameFrom() {
-
-    BigDecimal value = BigDecimal.valueOf(100);
-    Price expectedTotal = new Price(value);
-    String expectedTo = "transactionrecipent";
-    String expectedFrom = "transactionsender";
-    LocalDateTime expectedTimestamp = LocalDateTime.now();
-    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
-
-    Transaction transactionToMap =
-        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
-    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
-
-    assertEquals(expectedFrom, response.getFrom());
-  }
-
-  @Test
-  public void getTransaction_shouldReturnTransactionResponseWithSameTo() {
-
-    BigDecimal value = BigDecimal.valueOf(100);
-    Price expectedTotal = new Price(value);
-    String expectedTo = "transactionrecipent";
-    String expectedFrom = "transactionsender";
-    LocalDateTime expectedTimestamp = LocalDateTime.now();
-    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
-
-    Transaction transactionToMap =
-        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
-    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
-
-    assertEquals(expectedTo, response.getTo());
-  }
-
-  @Test
-  public void getTransaction_shouldReturnTransactionResponseWithSameTimestamp() {
-
-    BigDecimal value = BigDecimal.valueOf(100);
-    Price expectedTotal = new Price(value);
-    String expectedTo = "transactionrecipent";
-    String expectedFrom = "transactionsender";
-    LocalDateTime expectedTimestamp = LocalDateTime.now();
-    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
-
-    Transaction transactionToMap =
-        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
-    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
-
-    assertEquals(expectedTimestamp, response.getTimestamp());
-  }
-
-  @Test
-  public void toResponse_shouldMapTransactionReason() {
-    TransactionReasons expectedTransactionReason = TransactionReasons.STAY_BOOKED;
-    Transaction transaction =
-        aTransaction().withTransactionReason(expectedTransactionReason).build();
+  public void toResponse_shouldMapReason() {
+    TransactionReasons reason = TransactionReasons.STAY_BOOKED;
+    String expectedReason = reason.toString();
+    Transaction transaction = aTransaction().withTransactionReason(reason).build();
 
     TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
 
-    assertEquals(expectedTransactionReason, transactionResponse.getTransactionReasons());
+    assertEquals(expectedReason, transactionResponse.getReason());
   }
 
   @Test
@@ -140,8 +54,9 @@ public class TransactionMapperTest {
 
   @Test
   public void toResponse_shouldMapTotal() {
-    Price expectedTotal = createTotal();
-    Transaction transaction = aTransaction().withTotal(expectedTotal).build();
+    Price total = createTotal();
+    double expectedTotal = total.getValue().doubleValue();
+    Transaction transaction = aTransaction().withTotal(total).build();
 
     TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
 
@@ -150,8 +65,9 @@ public class TransactionMapperTest {
 
   @Test
   public void toResponse_shouldMapTimestamp() {
-    LocalDateTime expectedTimestamp = createTimestamp();
-    Transaction transaction = aTransaction().withTimestamp(expectedTimestamp).build();
+    LocalDateTime timestamp = createTimestamp();
+    String expectedTimestamp = timestamp.toString();
+    Transaction transaction = aTransaction().withTimestamp(timestamp).build();
 
     TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
 

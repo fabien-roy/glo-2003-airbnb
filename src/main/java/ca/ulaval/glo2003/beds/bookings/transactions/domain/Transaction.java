@@ -39,12 +39,4 @@ public class Transaction {
   public TransactionReasons getReason() {
     return reason;
   }
-
-  public void setFrom(String from) {
-    this.from = from;
-  }
-
-  public void setTo(String to) {
-    this.to = to;
-  }
 }
