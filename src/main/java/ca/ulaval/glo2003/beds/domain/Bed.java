@@ -78,6 +78,15 @@ public class Bed {
     return bookings;
   }
 
+  // TODO : Simplify, once enum map is used
+  public Price getPriceForPackage(PackageNames packageName) {
+    return packages.stream()
+        .filter(possiblePackage -> possiblePackage.getName().equals(packageName))
+        .findFirst()
+        .get()
+        .getPricePerNight();
+  }
+
   public void book(Booking booking, PackageNames bookingPackage) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
