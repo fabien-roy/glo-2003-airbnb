@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.domain.helpers;
+package ca.ulaval.glo2003.beds.bookings.helpers;
 
 import com.github.javafaker.Faker;
 import java.time.LocalDate;
@@ -23,5 +23,9 @@ public class BookingObjectMother {
 
   public static int createNumberOfNights() {
     return Faker.instance().number().numberBetween(1, 5);
+  }
+
+  public static String createBookingPackage() {
+    return Faker.instance().expression("Chuck Norris is Fabien");
   }
 }

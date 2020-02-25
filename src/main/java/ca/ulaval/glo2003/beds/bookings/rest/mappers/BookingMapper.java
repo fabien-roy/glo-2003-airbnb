@@ -1,25 +1,18 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.Booking;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidBookingKeyException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
-import ca.ulaval.glo2003.beds.rest.mappers.DateMapper;
-import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class BookingMapper {
 
   public Booking fromRequest(BookingRequest bookingRequest) {
     bookingRequestValidation(bookingRequest);
-    Date arrivalDate = null;
-    try {
-      arrivalDate = DateMapper.fromString(bookingRequest.getArrivalDate());
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
+    LocalDate arrivalDate = BookingDateMapper.fromString(bookingRequest.getArrivalDate());
     return new Booking(
         UUID.randomUUID(),
         bookingRequest.getTenantPublicKey(),
@@ -40,10 +33,10 @@ public class BookingMapper {
     if (bookingRequest.getTenantPublicKey() == null) {
       throw new InvalidBookingKeyException();
     }
-    if (DateMapper.isNotAValidDate(bookingRequest.getArrivalDate())) {
+    if (BookingDateMapper.isNotAValidDate(bookingRequest.getArrivalDate())) {
       throw new InvalidArrivalDateException();
     }
-    if (DateMapper.isBeforeToday(bookingRequest.getArrivalDate())) {
+    if (BookingDateMapper.isBeforeToday(bookingRequest.getArrivalDate())) {
       throw new ArrivalDateInThePastException();
     }
     if (bookingRequest.getNumberOfNights() < 1) {

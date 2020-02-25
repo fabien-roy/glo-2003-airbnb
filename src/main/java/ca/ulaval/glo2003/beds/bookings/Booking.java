@@ -1,20 +1,19 @@
-package ca.ulaval.glo2003.beds.bookings.domain;
+package ca.ulaval.glo2003.beds.bookings;
 
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.UUID;
 
 public class Booking {
 
   private UUID number;
-  private Base64 tenantPublicKey;
+  private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
   private String bookingPackage;
 
   public Booking(
       UUID number,
-      Base64 tenantPublicKey,
+      String tenantPublicKey,
       LocalDate arrivalDate,
       int numberOfNights,
       String bookingPackage) {
@@ -34,7 +33,7 @@ public class Booking {
     return number;
   }
 
-  public Base64 getTenantPublicKey() {
+  public String getTenantPublicKey() {
     return tenantPublicKey;
   }
 
