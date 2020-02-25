@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.rest.helpers.PackageRequestObjectMother;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +49,7 @@ class PackageMapperTest {
 
     Package testPackage = packageMapper.fromRequest(packageRequest);
 
-    assertEquals(expectedPrice, testPackage.getPricePerNight().doubleValue());
+    assertEquals(expectedPrice, testPackage.getPricePerNight().getValue().doubleValue());
   }
 
   @Test
@@ -64,11 +64,12 @@ class PackageMapperTest {
 
   @Test
   public void toResponse_shouldMapPricePerNight() {
-    BigDecimal expectedPricePerNight = PackageObjectMother.createPricePerNight();
+    Price expectedPricePerNight = PackageObjectMother.createPricePerNight();
     Package bedPackage = aPackage().withPricePerNight(expectedPricePerNight).build();
 
     PackageResponse packageResponse = packageMapper.toResponse(bedPackage);
 
-    assertEquals(expectedPricePerNight.doubleValue(), packageResponse.getPricePerNight());
+    assertEquals(
+        expectedPricePerNight.getValue().doubleValue(), packageResponse.getPricePerNight());
   }
 }
