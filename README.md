@@ -9,7 +9,72 @@ Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2
 
 ## Requests
 
-As of right now, there is a single request, `GET /hello`, which simply returns `"Hello World"`.
+### GET /hello
+
+Simply returns `"Hello World"`. This is used to test if the app is correctly deployed.
+
+### POST /beds
+
+
+```{json}
+{
+  "ownerPublicKey": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E"::string,
+  "zipCode": "12345"::string,
+  "bedType": "latex" | "memoryFoam" | "springs"::string,
+  "cleaningFrequency": "weekly" | "monthly" | "annual" | "never"::string,
+  "bloodTypes": [
+    "O-" | "O+" | "AB-" | "AB+" | "B-" | "B+" | "A-" | "A+"
+  ]::string[],
+  "capacity": 234::number,
+  "packages": [
+    { 
+      "name": "bloodthirsty" | "allYouCanDrink" | "sweetTooth"::string,
+      "pricePerNight": 0.00::number
+    }
+  ]::object[]
+}
+```
+
+If request is valid, returns "Headers `Location: /beds/:bedNumber`"
+
+### GET /beds/:bedNumber
+
+If bed number exists, returns formatted bed.
+
+### GET /beds
+
+Possible query parameters are : 
+
+- package
+- bedType
+- cleaningFreq
+- bloodTypes
+- minCapacity
+
+Returns filtered formatted beds.
+
+### POST /beds/:bedNumber/bookings
+
+```{json}
+{
+  "tenantPublicKey":
+    "72001343BA93508E74E3BFFA68593C
+     2016D0434CF0AA76CB3DF64F93170D60EC"::string,
+  "arrivalDate": "2020-05-21"::string,
+  "numberOfNights": 3::number,
+  "package": "allYouCanDrink"::string
+}
+```
+
+If request is valid, returns "Headers `Location: /beds/:bedNumber/bookings/:bookingNumber`"
+
+### GET /beds/:bedNumber/bookings/:bookingNumber
+
+If bed number exists and booking number exists for that bed, returns formatted booking.
+
+#### `GET /admin/transactions`
+
+Returns formatted transactions.
 
 ## How to compile
 
