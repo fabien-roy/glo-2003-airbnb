@@ -4,6 +4,7 @@ import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO : Rename Packages
 public enum PackageNames {
   BLOODTHIRSTY("bloodthirsty"),
   ALL_YOU_CAN_DRINK("allYouCanDrink"),

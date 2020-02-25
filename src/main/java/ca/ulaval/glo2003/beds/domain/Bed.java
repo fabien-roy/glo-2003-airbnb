@@ -4,9 +4,7 @@ import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import javax.swing.*;
 
 public class Bed {
@@ -18,7 +16,8 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private List<Package> packages; // TODO : Make this a EnumMap
+  private Map<PackageNames, Price> pricesPerNight;
+  private List<Package> packages; // TODO : Remove this
   private List<Booking> bookings = new ArrayList<>();
 
   public Bed(

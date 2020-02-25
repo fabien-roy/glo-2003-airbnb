@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+// TODO : Remove
 public class Package {
 
   private PackageNames name;
