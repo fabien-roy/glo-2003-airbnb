@@ -1,8 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings.transactions.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionBuilder.aTransaction;
+import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +17,90 @@ class TransactionFactoryTest {
   }
 
   @Test
-  public void create_shouldSetTimestamp() {
-    Transaction transaction = aTransaction().build();
-
-    transactionFactory.create(transaction);
+  public void createStayBooked_shouldSetTimestamp() {
+    Transaction transaction = transactionFactory.createStayBooked(createFrom(), createTotal());
 
     assertNotNull(transaction.getTimestamp());
+  }
+
+  @Test
+  public void createStayBooked_shouldSetFrom() {
+    String expectedFrom = createFrom();
+
+    Transaction transaction = transactionFactory.createStayBooked(expectedFrom, createTotal());
+
+    assertEquals(expectedFrom, transaction.getFrom());
+  }
+
+  @Test
+  public void createStayBooked_shouldSetToAsAirbnb() {
+    String expectedTo = TransactionFactory.AIRBNB;
+
+    Transaction transaction = transactionFactory.createStayBooked(createFrom(), createTotal());
+
+    assertEquals(expectedTo, transaction.getTo());
+  }
+
+  @Test
+  public void createStayBooked_shouldSetTotal() {
+    BigDecimal expectedTotal = createTotal();
+
+    Transaction transaction = transactionFactory.createStayBooked(createFrom(), expectedTotal);
+
+    assertEquals(expectedTotal, transaction.getTotal());
+  }
+
+  @Test
+  public void createStayBooked_shouldSetReasonAsStayBooked() {
+    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
+
+    Transaction transaction = transactionFactory.createStayBooked(createFrom(), createTotal());
+
+    assertEquals(expectedReason, transaction.getReason());
+  }
+
+  // TODO : Is there a way to test it's now + numberOfNights?
+  @Test
+  public void createStayCompleted_shouldSetTimestamp() {
+    Transaction transaction = transactionFactory.createStayCompleted(createTo(), createTotal(), 1);
+
+    assertNotNull(transaction.getTimestamp());
+  }
+
+  @Test
+  public void createStayCompleted_shouldSetFromAsAirbnb() {
+    String expectedFrom = TransactionFactory.AIRBNB;
+
+    Transaction transaction =
+        transactionFactory.createStayCompleted(expectedFrom, createTotal(), 1);
+
+    assertEquals(expectedFrom, transaction.getFrom());
+  }
+
+  @Test
+  public void createStayCompleted_shouldSetTo() {
+    String expectedTo = createTo();
+
+    Transaction transaction = transactionFactory.createStayCompleted(expectedTo, createTotal(), 1);
+
+    assertEquals(expectedTo, transaction.getTo());
+  }
+
+  @Test
+  public void createStayCompleted_shouldSetTotal() {
+    BigDecimal expectedTotal = createTotal();
+
+    Transaction transaction = transactionFactory.createStayCompleted(createTo(), expectedTotal, 1);
+
+    assertEquals(expectedTotal, transaction.getTotal());
+  }
+
+  @Test
+  public void createStayCompleted_shouldSetReasonAsStayCompleted() {
+    TransactionReasons expectedReason = TransactionReasons.STAY_COMPLETED;
+
+    Transaction transaction = transactionFactory.createStayCompleted(createTo(), createTotal(), 1);
+
+    assertEquals(expectedReason, transaction.getReason());
   }
 }

@@ -1,6 +1,8 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
+import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class Booking {
@@ -9,6 +11,7 @@ public class Booking {
   private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
+  private List<Transaction> transactions;
 
   public Booking(String tenantPublicKey, LocalDate arrivalDate, int numberOfNights) {
     this.tenantPublicKey = tenantPublicKey;

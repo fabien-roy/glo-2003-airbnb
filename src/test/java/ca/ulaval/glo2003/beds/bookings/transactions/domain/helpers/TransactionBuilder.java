@@ -5,10 +5,14 @@ import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.Transa
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class TransactionBuilder {
 
   private TransactionBuilder() {}
+
+  private LocalDate DEFAULT_TIMESTAMP = createTimestamp();
+  private LocalDate timestamp = DEFAULT_TIMESTAMP;
 
   private String DEFAULT_FROM = createFrom();
   private String from = DEFAULT_FROM;
@@ -27,6 +31,6 @@ public class TransactionBuilder {
   }
 
   public Transaction build() {
-    return new Transaction(from, to, total, reason);
+    return new Transaction(timestamp, from, to, total, reason);
   }
 }
