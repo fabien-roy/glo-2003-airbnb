@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class BookingTotalCalculator {
 
   public Price calculateTotal(Bed bed, Booking booking) {
-    Price pricePerNight = bed.getPriceForPackage(booking.getPackageName());
+    Price pricePerNight = bed.getPricePerNight(booking.getPackageName());
     Price total = pricePerNight.multiply(BigDecimal.valueOf(booking.getNumberOfNights()));
     return applyDiscount(total, booking.getNumberOfNights());
   }

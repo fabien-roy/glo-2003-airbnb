@@ -31,7 +31,7 @@ class PackageMapperTest {
 
     Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
-    assertEquals(1, pricesPerNight.size());
+    assertEquals(1, pricesPerNight.keySet().size());
   }
 
   @Test
@@ -42,7 +42,7 @@ class PackageMapperTest {
 
     Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
-    assertEquals(2, pricesPerNight.size());
+    assertEquals(2, pricesPerNight.keySet().size());
   }
 
   @Test

@@ -91,21 +91,16 @@ public class Bed {
     return pricesPerNight;
   }
 
+  public Price getPricePerNight(PackageNames packageName) {
+    return pricesPerNight.get(packageName);
+  }
+
   public List<Package> getPackages() {
     return packages;
   }
 
   public List<Booking> getBookings() {
     return bookings;
-  }
-
-  // TODO : Simplify, once enum map is used
-  public Price getPriceForPackage(PackageNames packageName) {
-    return packages.stream()
-        .filter(possiblePackage -> possiblePackage.getName().equals(packageName))
-        .findFirst()
-        .get()
-        .getPricePerNight();
   }
 
   public void book(Booking booking, PackageNames bookingPackage) {
@@ -118,8 +113,8 @@ public class Bed {
     bookings.add(booking);
   }
 
-  private boolean isPackageAvailable(PackageNames bookingPackage) {
-    return packages.stream().anyMatch(bedPackage -> bedPackage.getName().equals(bookingPackage));
+  public boolean isPackageAvailable(PackageNames bookingPackage) {
+    return pricesPerNight.containsKey(bookingPackage);
   }
 
   private boolean isBedAlreadyBooked(Booking booking) {

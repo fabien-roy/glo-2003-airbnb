@@ -50,8 +50,7 @@ public class BedMapper {
     List<String> bloodTypes =
         bed.getBloodTypes().stream().map(BloodTypes::toString).collect(Collectors.toList());
 
-    List<PackageResponse> packageResponses =
-        bed.getPackages().stream().map(packageMapper::toResponse).collect(Collectors.toList());
+    List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
         bed.getNumber(),

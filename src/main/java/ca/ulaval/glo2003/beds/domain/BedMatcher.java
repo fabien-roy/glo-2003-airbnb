@@ -53,12 +53,8 @@ public class BedMatcher {
 
     if (capacity > bed.getCapacity()) return false;
 
-    if (packageName != null && !packageMatches(bed.getPackages())) return false;
+    if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
     return true;
-  }
-
-  private boolean packageMatches(List<Package> bedPackages) {
-    return bedPackages.stream().anyMatch(bedPackage -> bedPackage.getName().equals(packageName));
   }
 }

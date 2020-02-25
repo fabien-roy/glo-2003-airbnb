@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -13,13 +12,6 @@ import java.util.Map;
 
 public class PackageMapper {
 
-  // TODO : Remove
-  public Package fromRequest(PackageRequest packageRequest) {
-    return new Package(
-        PackageNames.get(packageRequest.getName()),
-        new Price(BigDecimal.valueOf(packageRequest.getPricePerNight())));
-  }
-
   public Map<PackageNames, Price> fromRequests(List<PackageRequest> packageRequests) {
     Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
 
@@ -31,12 +23,6 @@ public class PackageMapper {
         });
 
     return pricesPerNight;
-  }
-
-  // TODO : Remove
-  public PackageResponse toResponse(Package bedPackage) {
-    return new PackageResponse(
-        bedPackage.getName().toString(), bedPackage.getPricePerNight().getValue().doubleValue());
   }
 
   public List<PackageResponse> toResponses(Map<PackageNames, Price> pricesPerNight) {

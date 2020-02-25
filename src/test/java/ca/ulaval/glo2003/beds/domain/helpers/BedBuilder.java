@@ -1,12 +1,15 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class BedBuilder {
@@ -33,6 +36,10 @@ public class BedBuilder {
 
   private int DEFAULT_CAPACITY = BedTypesCapacities.get(DEFAULT_BED_TYPE);
   private int capacity = DEFAULT_CAPACITY;
+
+  private Map<PackageNames, Price> DEFAULT_PRICES_PER_NIGHT =
+      Collections.singletonMap(createPackageName(), createPricePerNight());
+  private Map<PackageNames, Price> pricesPerNight = DEFAULT_PRICES_PER_NIGHT;
 
   private List<Package> DEFAULT_PACKAGES = createPackages();
   private List<Package> packages = DEFAULT_PACKAGES;
@@ -79,6 +86,12 @@ public class BedBuilder {
     return this;
   }
 
+  public BedBuilder withPricesPerNights(Map<PackageNames, Price> pricesPerNight) {
+    this.pricesPerNight = pricesPerNight;
+    return this;
+  }
+
+  // TODO : Remove this
   public BedBuilder withPackages(List<Package> packages) {
     this.packages = packages;
     return this;
@@ -92,9 +105,15 @@ public class BedBuilder {
   public Bed build() {
     Bed bed =
         new Bed(
-            ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+            ownerPublicKey,
+            zipCode,
+            bedType,
+            cleaningFrequency,
+            bloodTypes,
+            capacity,
+            pricesPerNight);
     bed.setNumber(bedNumber);
-    bookings.forEach(booking -> bed.book(booking, packages.get(0).getName()));
+    bookings.forEach(booking -> bed.book(booking, pricesPerNight.keySet().iterator().next()));
     return bed;
   }
 }

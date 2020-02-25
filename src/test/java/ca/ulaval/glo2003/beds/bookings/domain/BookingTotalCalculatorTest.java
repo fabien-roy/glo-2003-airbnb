@@ -2,17 +2,15 @@ package ca.ulaval.glo2003.beds.bookings.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
 import ca.ulaval.glo2003.beds.domain.Price;
 import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,9 +23,8 @@ class BookingTotalCalculatorTest {
   public void calculateTotal_shouldReturnCorrectTotal(
       Price pricePerNight, int numberOfNights, Price expectedTotal) {
     PackageNames packageName = createPackageName();
-    Package bedPackage = aPackage().withName(packageName).withPricePerNight(pricePerNight).build();
-    List<Package> packages = Collections.singletonList(bedPackage);
-    Bed bed = aBed().withPackages(packages).build();
+    Map<PackageNames, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
+    Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
     Booking booking =
         aBooking().withPackage(packageName).withNumberOfNights(numberOfNights).build();
     BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
