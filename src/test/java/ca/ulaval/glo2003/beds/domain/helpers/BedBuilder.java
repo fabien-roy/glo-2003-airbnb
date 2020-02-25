@@ -6,7 +6,6 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +39,6 @@ public class BedBuilder {
   private Map<PackageNames, Price> DEFAULT_PRICES_PER_NIGHT =
       Collections.singletonMap(createPackageName(), createPricePerNight());
   private Map<PackageNames, Price> pricesPerNight = DEFAULT_PRICES_PER_NIGHT;
-
-  private List<Package> DEFAULT_PACKAGES = createPackages();
-  private List<Package> packages = DEFAULT_PACKAGES;
 
   private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
   private List<Booking> bookings = DEFAULT_BOOKINGS;
@@ -88,12 +84,6 @@ public class BedBuilder {
 
   public BedBuilder withPricesPerNights(Map<PackageNames, Price> pricesPerNight) {
     this.pricesPerNight = pricesPerNight;
-    return this;
-  }
-
-  // TODO : Remove this
-  public BedBuilder withPackages(List<Package> packages) {
-    this.packages = packages;
     return this;
   }
 

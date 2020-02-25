@@ -17,26 +17,7 @@ public class Bed {
   private List<BloodTypes> bloodTypes;
   private int capacity;
   private Map<PackageNames, Price> pricesPerNight;
-  private List<Package> packages; // TODO : Remove this
   private List<Booking> bookings = new ArrayList<>();
-
-  // TODO : Remove
-  public Bed(
-      String ownerPublicKey,
-      String zipCode,
-      BedTypes bedType,
-      CleaningFrequencies cleaningFrequency,
-      List<BloodTypes> bloodTypes,
-      int capacity,
-      List<Package> packages) {
-    this.ownerPublicKey = ownerPublicKey;
-    this.zipCode = zipCode;
-    this.bedType = bedType;
-    this.cleaningFrequency = cleaningFrequency;
-    this.bloodTypes = bloodTypes;
-    this.capacity = capacity;
-    this.packages = packages;
-  }
 
   public Bed(
       String ownerPublicKey,
@@ -93,10 +74,6 @@ public class Bed {
 
   public Price getPricePerNight(PackageNames packageName) {
     return pricesPerNight.get(packageName);
-  }
-
-  public List<Package> getPackages() {
-    return packages;
   }
 
   public List<Booking> getBookings() {
