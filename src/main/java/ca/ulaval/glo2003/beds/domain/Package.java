@@ -10,10 +10,6 @@ public class Package {
     this.pricePerNight = pricePerNight;
   }
 
-  public Package(PackageNames name) {
-    this.name = name;
-  }
-
   public PackageNames getName() {
     return name;
   }

@@ -22,19 +22,6 @@ public class Bed {
   private List<Booking> bookings = new ArrayList<>();
 
   public Bed(
-      BedTypes bedType,
-      CleaningFrequencies cleaningFrequency,
-      List<BloodTypes> bloodTypes,
-      int capacity,
-      List<Package> packages) {
-    this.bedType = bedType;
-    this.cleaningFrequency = cleaningFrequency;
-    this.bloodTypes = bloodTypes;
-    this.capacity = capacity;
-    this.packages = packages;
-  }
-
-  public Bed(
       String ownerPublicKey,
       String zipCode,
       BedTypes bedType,
