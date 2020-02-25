@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 
+// TODO : Most likely, remove
 public class PackageBuilder {
 
   private PackageBuilder() {}

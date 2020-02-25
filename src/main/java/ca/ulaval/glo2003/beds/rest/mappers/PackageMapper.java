@@ -39,7 +39,7 @@ public class PackageMapper {
         bedPackage.getName().toString(), bedPackage.getPricePerNight().getValue().doubleValue());
   }
 
-  public List<PackageResponse> toResponses(EnumMap<PackageNames, Price> pricesPerNight) {
+  public List<PackageResponse> toResponses(Map<PackageNames, Price> pricesPerNight) {
     List<PackageResponse> packageResponses = new ArrayList<>();
 
     pricesPerNight.forEach(

@@ -1,21 +1,17 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
 import ca.ulaval.glo2003.beds.domain.Price;
-import ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -123,26 +119,87 @@ class PackageMapperTest {
     assertEquals(otherExpectedPrice, pricesPerNight.get(otherPackageName));
   }
 
-  // TODO : Update toResponse tests
-
   @Test
-  public void toResponse_shouldMapName() {
-    PackageNames expectedName = PackageObjectMother.createPackageName();
-    Package bedPackage = aPackage().withName(expectedName).build();
+  public void toResponses_withSinglePricePerNight_shouldMapASinglePackageResponse() {
+    Map<PackageNames, Price> pricesPerNight =
+        Collections.singletonMap(createPackageName(), createPricePerNight());
 
-    PackageResponse packageResponse = packageMapper.toResponse(bedPackage);
+    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
 
-    assertEquals(expectedName.toString(), packageResponse.getName());
+    assertEquals(1, responses.size());
   }
 
   @Test
-  public void toResponse_shouldMapPricePerNight() {
-    Price expectedPricePerNight = PackageObjectMother.createPricePerNight();
-    Package bedPackage = aPackage().withPricePerNight(expectedPricePerNight).build();
+  public void toResponses_withMultiplePricesPerNight_shouldMapMultiplePackageResponses() {
+    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    pricesPerNight.put(createPackageName(), createPricePerNight());
+    pricesPerNight.put(createPackageName(), createPricePerNight());
 
-    PackageResponse packageResponse = packageMapper.toResponse(bedPackage);
+    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
 
-    assertEquals(
-        expectedPricePerNight.getValue().doubleValue(), packageResponse.getPricePerNight());
+    assertEquals(2, responses.size());
+  }
+
+  @Test
+  public void toResponses_withSinglePricePerNight_shouldMapName() {
+    PackageNames packageName = createPackageName();
+    String expectedPackageName = packageName.toString();
+    Map<PackageNames, Price> pricesPerNight =
+        Collections.singletonMap(packageName, createPricePerNight());
+
+    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+
+    assertEquals(expectedPackageName, responses.get(0).getName());
+  }
+
+  @Test
+  public void toResponses_withMultiplePricesPerNight_shouldMapNames() {
+    PackageNames packageName = createPackageName();
+    PackageNames otherPackageName = createPackageName();
+    String expectedPackageName = packageName.toString();
+    String otherExpectedPackageName = otherPackageName.toString();
+    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    pricesPerNight.put(packageName, createPricePerNight());
+    pricesPerNight.put(otherPackageName, createPricePerNight());
+
+    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+
+    assertTrue(
+        responses.stream().anyMatch(response -> expectedPackageName.equals(response.getName())));
+    assertTrue(
+        responses.stream()
+            .anyMatch(response -> otherExpectedPackageName.equals(response.getName())));
+  }
+
+  @Test
+  public void toResponses_withSinglePricePerNight_shouldMapPricePerNight() {
+    Price pricePerNight = createPricePerNight();
+    double expectedPricePerNight = pricePerNight.getValue().doubleValue();
+    Map<PackageNames, Price> pricesPerNight =
+        Collections.singletonMap(createPackageName(), pricePerNight);
+
+    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+
+    assertEquals(expectedPricePerNight, responses.get(0).getPricePerNight());
+  }
+
+  @Test
+  public void toResponses_withMultiplePricesPerNight_shouldMapPricesPerNight() {
+    Price pricePerNight = createPricePerNight();
+    Price otherPricePerNight = createPricePerNight();
+    double expectedPricePerNight = pricePerNight.getValue().doubleValue();
+    double otherExpectedPricePerNight = otherPricePerNight.getValue().doubleValue();
+    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    pricesPerNight.put(createPackageName(), pricePerNight);
+    pricesPerNight.put(createPackageName(), otherPricePerNight);
+
+    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+
+    assertTrue(
+        responses.stream()
+            .anyMatch(response -> expectedPricePerNight == response.getPricePerNight()));
+    assertTrue(
+        responses.stream()
+            .anyMatch(response -> otherExpectedPricePerNight == response.getPricePerNight()));
   }
 }
