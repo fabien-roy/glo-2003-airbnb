@@ -23,7 +23,7 @@ public class TransactionMapperTest {
   }
 
   @Test
-  public void getTransaction_shouldReturnTransactionResponseWithSameParameters() {
+  public void getTransaction_shouldReturnTransactionResponseWithSameReason() {
 
     BigDecimal value = BigDecimal.valueOf(100);
     Price expectedTotal = new Price(value);
@@ -36,11 +36,75 @@ public class TransactionMapperTest {
         new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
     TransactionResponse response = transactionMapper.toResponse(transactionToMap);
 
-    assertEquals(response.getTimestamp(), expectedTimestamp);
-    assertEquals(response.getTransactionReasons(), expectedReason);
-    assertEquals(response.getFrom(), expectedFrom);
-    assertEquals(response.getTo(), expectedTo);
-    assertEquals(response.getTotal(), expectedTotal);
+    assertEquals(expectedReason, response.getTransactionReasons());
+  }
+
+  @Test
+  public void getTransaction_shouldReturnTransactionResponseWithSameTotal() {
+
+    BigDecimal value = BigDecimal.valueOf(100);
+    Price expectedTotal = new Price(value);
+    String expectedTo = "transactionrecipent";
+    String expectedFrom = "transactionsender";
+    LocalDateTime expectedTimestamp = LocalDateTime.now();
+    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
+
+    Transaction transactionToMap =
+        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
+    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
+
+    assertEquals(expectedTotal, response.getTotal());
+  }
+
+  @Test
+  public void getTransaction_shouldReturnTransactionResponseWithSameFrom() {
+
+    BigDecimal value = BigDecimal.valueOf(100);
+    Price expectedTotal = new Price(value);
+    String expectedTo = "transactionrecipent";
+    String expectedFrom = "transactionsender";
+    LocalDateTime expectedTimestamp = LocalDateTime.now();
+    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
+
+    Transaction transactionToMap =
+        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
+    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
+
+    assertEquals(expectedFrom, response.getFrom());
+  }
+
+  @Test
+  public void getTransaction_shouldReturnTransactionResponseWithSameTo() {
+
+    BigDecimal value = BigDecimal.valueOf(100);
+    Price expectedTotal = new Price(value);
+    String expectedTo = "transactionrecipent";
+    String expectedFrom = "transactionsender";
+    LocalDateTime expectedTimestamp = LocalDateTime.now();
+    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
+
+    Transaction transactionToMap =
+        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
+    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
+
+    assertEquals(expectedTo, response.getTo());
+  }
+
+  @Test
+  public void getTransaction_shouldReturnTransactionResponseWithSameTimestamp() {
+
+    BigDecimal value = BigDecimal.valueOf(100);
+    Price expectedTotal = new Price(value);
+    String expectedTo = "transactionrecipent";
+    String expectedFrom = "transactionsender";
+    LocalDateTime expectedTimestamp = LocalDateTime.now();
+    TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
+
+    Transaction transactionToMap =
+        new Transaction(expectedTimestamp, expectedFrom, expectedTo, expectedTotal, expectedReason);
+    TransactionResponse response = transactionMapper.toResponse(transactionToMap);
+
+    assertEquals(expectedTimestamp, response.getTimestamp());
   }
 
   @Test
