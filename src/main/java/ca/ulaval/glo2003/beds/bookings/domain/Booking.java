@@ -12,13 +12,22 @@ public class Booking {
   private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
-  private PackageNames packageNames; // TODO : Actually map this
+  private PackageNames packageName; // TODO : Actually map this
   private List<Transaction> transactions;
 
+  // TODO : Use other constructor
   public Booking(String tenantPublicKey, LocalDate arrivalDate, int numberOfNights) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
+  }
+
+  public Booking(
+      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, PackageNames packageName) {
+    this.tenantPublicKey = tenantPublicKey;
+    this.arrivalDate = arrivalDate;
+    this.numberOfNights = numberOfNights;
+    this.packageName = packageName;
   }
 
   public UUID getNumber() {
@@ -38,7 +47,7 @@ public class Booking {
   }
 
   public PackageNames getPackageName() {
-    return packageNames;
+    return packageName;
   }
 
   public boolean isOverlapping(Booking otherBooking) {
