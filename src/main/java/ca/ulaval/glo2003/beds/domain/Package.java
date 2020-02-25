@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.domain;
 
-
 public class Package {
 
   private PackageNames name;
