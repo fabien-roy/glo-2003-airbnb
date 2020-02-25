@@ -15,13 +15,6 @@ public class Booking {
   private Packages packageName; // TODO : Actually map this
   private List<Transaction> transactions;
 
-  // TODO : Use other constructor
-  public Booking(String tenantPublicKey, LocalDate arrivalDate, int numberOfNights) {
-    this.tenantPublicKey = tenantPublicKey;
-    this.arrivalDate = arrivalDate;
-    this.numberOfNights = numberOfNights;
-  }
-
   public Booking(
       String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
     this.tenantPublicKey = tenantPublicKey;

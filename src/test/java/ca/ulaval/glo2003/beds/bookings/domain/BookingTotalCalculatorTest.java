@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
