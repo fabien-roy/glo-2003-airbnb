@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
+import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.Package;
@@ -9,7 +10,6 @@ import ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
-import ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder;
 import ca.ulaval.glo2003.beds.rest.helpers.PackageRequestObjectMother;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +27,8 @@ class PackageMapperTest {
   @Test
   public void fromRequest_shouldMapName() {
     String expectedName = PackageRequestObjectMother.createPackageName();
-    PackageRequest packageRequest =
-        PackageRequestBuilder.aPackageRequest().withName(expectedName).build();
+    PackageRequest packageRequest = aPackageRequest().withName(expectedName).build();
+
     Package testPackage = packageMapper.fromRequest(packageRequest);
 
     assertEquals(expectedName, testPackage.getName().toString());
@@ -36,9 +36,8 @@ class PackageMapperTest {
 
   @Test
   public void fromRequest_withInvalidPackageName_shouldThrowInvalidPackageException() {
-    String invalidName = "invalid Name";
-    PackageRequest packageRequest =
-        PackageRequestBuilder.aPackageRequest().withName(invalidName).build();
+    String invalidName = "invalidName";
+    PackageRequest packageRequest = aPackageRequest().withName(invalidName).build();
 
     assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequest(packageRequest));
   }
@@ -46,8 +45,8 @@ class PackageMapperTest {
   @Test
   public void fromRequest_shouldMapPricePerNight() {
     double expectedPrice = PackageRequestObjectMother.createPricePerNight();
-    PackageRequest packageRequest =
-        PackageRequestBuilder.aPackageRequest().withPricePerNight(expectedPrice).build();
+    PackageRequest packageRequest = aPackageRequest().withPricePerNight(expectedPrice).build();
+
     Package testPackage = packageMapper.fromRequest(packageRequest);
 
     assertEquals(expectedPrice, testPackage.getPricePerNight().doubleValue());

@@ -59,6 +59,10 @@ public class Bed {
     this.number = number;
   }
 
+  public String getOwnerPublicKey() {
+    return ownerPublicKey;
+  }
+
   public String getZipCode() {
     return zipCode;
   }

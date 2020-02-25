@@ -4,6 +4,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 public class BedMapper {
 
   public static final String OWNER_PUBLIC_KEY_PATTERN = "([A-Z]|[0-9]){64}";
-  public static final String ZIP_CODE_PATTERN = "([0-9]){5}"; // TODO : Will be useful.
+  public static final String ZIP_CODE_PATTERN = "([0-9]){5}";
 
   private final PackageMapper packageMapper;
 
@@ -26,23 +27,23 @@ public class BedMapper {
 
   public Bed fromRequest(BedRequest request) {
     validateRequestFormat(request);
+    validatePublicKey(request.getOwnerPublicKey());
+    validateZipCode(request.getZipCode());
 
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
-    List<BloodTypes> bloodTypes =
-        request.getBloodTypes().stream().map(BloodTypes::get).collect(Collectors.toList());
-    int capacity = request.getCapacity();
-    List<Package> packages =
-        request.getPackages().stream().map(packageMapper::fromRequest).collect(Collectors.toList());
-    String ownerPublicKey = request.getOwnerPublicKey();
-    String zipCode = request.getZipCode();
-
-    validatePublicKey(ownerPublicKey);
-    validateZipCode(zipCode);
+    List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
+    List<Package> packages = parsePackages(request.getPackages());
 
     return new Bed(
-        ownerPublicKey, zipCode, bedType, cleaningFrequencies, bloodTypes, capacity, packages);
+        request.getOwnerPublicKey(),
+        request.getZipCode(),
+        bedType,
+        cleaningFrequencies,
+        bloodTypes,
+        request.getCapacity(),
+        packages);
   }
 
   // TODO : toResponse should only set bedNumber for getAll, not for get
@@ -87,5 +88,13 @@ public class BedMapper {
 
   private void validateZipCode(String zipCode) {
     if (!zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
+  }
+
+  private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
+    return bloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
+  }
+
+  private List<Package> parsePackages(List<PackageRequest> packageRequests) {
+    return packageRequests.stream().map(packageMapper::fromRequest).collect(Collectors.toList());
   }
 }

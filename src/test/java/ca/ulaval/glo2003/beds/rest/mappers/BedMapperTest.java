@@ -1,8 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
@@ -37,7 +36,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withBedType_shouldReturnBedWithBedType() {
+  public void fromRequest_shouldMapBedType() {
     BedTypes expectedBedType = BedTypes.LATEX;
     BedRequest bedRequest = aBedRequest().withBedType(expectedBedType.toString()).build();
 
@@ -62,7 +61,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withCleaningFrequency_shouldReturnBedWithCleaningFrequency() {
+  public void fromRequest_shouldMapCleaningFrequency() {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
     BedRequest bedRequest =
         aBedRequest().withCleaningFrequency(expectedCleaningFrequency.toString()).build();
@@ -140,7 +139,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withCapacity_shouldReturnBedWithCapacity() {
+  public void fromRequest_shouldMapCapacity() {
     int expectedCapacity = 1000;
     BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
 
@@ -190,44 +189,43 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withZipCode_shouldMapZipCode() {
-    String zipCode = "15679";
-    BedRequest bedRequest = aBedRequest().withZipCode(zipCode).build();
+  public void fromRequest_shouldMapZipCode() {
+    String expectedZipCode = createZipCode();
+    BedRequest bedRequest = aBedRequest().withZipCode(expectedZipCode).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
-    assertEquals(zipCode, bed.getZipCode());
+    assertEquals(expectedZipCode, bed.getZipCode());
   }
 
   @Test
   public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    String invalidZipCode = "125469";
+    String invalidZipCode = "invalidZipCode";
     BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
 
     assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
-  public void fromRequest_withNullZipCode_shouldThrowInvalidZipCodeException() {
-    String nullZipCode = null;
-    BedRequest bedRequest = aBedRequest().withZipCode(nullZipCode).build();
+  public void fromRequest_withoutZipCode_shouldThrowInvalidZipCodeException() {
+    BedRequest bedRequest = aBedRequest().withZipCode(null).build();
 
     assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
-  public void fromRequest_withOwnerKey_shouldMapOwnerKey() {
-    String ownerKey = "AJDLF46T8JH788JLDE4RTGRE35GBNHY67UJMNG567JHGD356789JGTNMZVEF6GND";
-    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
+  public void fromRequest_shouldMapOwnerPublicKey() {
+    String expectedOwnerPublicKey = createOwnerPublicKey();
+    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(expectedOwnerPublicKey).build();
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
-    // TODO trouver comment tester ownerKey
+    assertEquals(expectedOwnerPublicKey, bed.getOwnerPublicKey());
   }
 
   @Test
-  public void fromRequest_withInvalidOwnerKey_shouldThrowInvalidPublicKeyException() {
-    String ownerKey = "AA66JDLF46T8JH788JLDE4RTGRE35GBNHY67UJMNG567JHGD356789JGTNMZVEF6GND3";
+  public void fromRequest_withInvalidOwnerPublicKey_shouldThrowInvalidPublicKeyException() {
+    String ownerKey = "invalidPublicKey";
     BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
 
     assertThrows(InvalidPublicKeyException.class, () -> bedMapper.fromRequest(bedRequest));
