@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Price;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,7 @@ class BookingTotalCalculatorTest {
   @ParameterizedTest
   @MethodSource("provideConditionsForCalculateTotal")
   public void calculateTotal_shouldReturnCorrectTotal(
-      BigDecimal pricePerNight, int numberOfNights, BigDecimal expectedTotal) {
+      Price pricePerNight, int numberOfNights, Price expectedTotal) {
     PackageNames packageName = createPackageName();
     Package bedPackage = aPackage().withName(packageName).withPricePerNight(pricePerNight).build();
     List<Package> packages = Collections.singletonList(bedPackage);
@@ -31,16 +32,26 @@ class BookingTotalCalculatorTest {
         aBooking().withPackage(packageName).withNumberOfNights(numberOfNights).build();
     BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
 
-    BigDecimal total = bookingTotalCalculator.calculateTotal(bed, booking);
+    Price total = bookingTotalCalculator.calculateTotal(bed, booking);
 
     assertEquals(expectedTotal, total);
   }
 
   private static Stream<Arguments> provideConditionsForCalculateTotal() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(100), 1, BigDecimal.valueOf(100)), // 100 * 1
-        Arguments.of(BigDecimal.valueOf(100), 3, BigDecimal.valueOf(315)), // 100 * 3 * 0.95
-        Arguments.of(BigDecimal.valueOf(100), 10, BigDecimal.valueOf(1100)), // 100 * 10 * 0.9
-        Arguments.of(BigDecimal.valueOf(100), 30, BigDecimal.valueOf(3750))); // 100 * 30 * 0.75
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)), 1, new Price(BigDecimal.valueOf(100))), // 100 * 1
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            3,
+            new Price(BigDecimal.valueOf(315))), // 100 * 3 * 0.95
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            10,
+            new Price(BigDecimal.valueOf(1100))), // 100 * 10 * 0.9
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            30,
+            new Price(BigDecimal.valueOf(3750)))); // 100 * 30 * 0.75
   }
 }

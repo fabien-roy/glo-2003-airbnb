@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.Transa
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
-import java.math.BigDecimal;
+import ca.ulaval.glo2003.beds.domain.Price;
 import java.time.LocalDate;
 
 public class TransactionBuilder {
@@ -20,8 +20,8 @@ public class TransactionBuilder {
   private String DEFAULT_TO = createTo();
   private String to = DEFAULT_TO;
 
-  private BigDecimal DEFAULT_TOTAL = createTotal();
-  private BigDecimal total = DEFAULT_TOTAL;
+  private Price DEFAULT_TOTAL = createTotal();
+  private Price total = DEFAULT_TOTAL;
 
   private TransactionReasons DEFAULT_REASON = createReason();
   private TransactionReasons reason = DEFAULT_REASON;

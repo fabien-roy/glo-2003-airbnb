@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.bookings.transactions.domain;
 import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.math.BigDecimal;
+import ca.ulaval.glo2003.beds.domain.Price;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +43,7 @@ class TransactionFactoryTest {
 
   @Test
   public void createStayBooked_shouldSetTotal() {
-    BigDecimal expectedTotal = createTotal();
+    Price expectedTotal = createTotal();
 
     Transaction transaction = transactionFactory.createStayBooked(createFrom(), expectedTotal);
 
@@ -88,7 +88,7 @@ class TransactionFactoryTest {
 
   @Test
   public void createStayCompleted_shouldSetTotal() {
-    BigDecimal expectedTotal = createTotal();
+    Price expectedTotal = createTotal();
 
     Transaction transaction = transactionFactory.createStayCompleted(createTo(), expectedTotal, 1);
 

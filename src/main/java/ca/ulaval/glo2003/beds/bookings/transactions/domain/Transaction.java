@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.transactions.domain;
 
-import java.math.BigDecimal;
+import ca.ulaval.glo2003.beds.domain.Price;
 import java.time.LocalDate;
 
 public class Transaction {
@@ -8,11 +8,11 @@ public class Transaction {
   private LocalDate timestamp;
   private String from;
   private String to;
-  private BigDecimal total;
+  private Price total;
   private TransactionReasons reason;
 
   public Transaction(
-      LocalDate timestamp, String from, String to, BigDecimal total, TransactionReasons reason) {
+      LocalDate timestamp, String from, String to, Price total, TransactionReasons reason) {
     this.timestamp = timestamp;
     this.from = from;
     this.to = to;
@@ -32,7 +32,7 @@ public class Transaction {
     return to;
   }
 
-  public BigDecimal getTotal() {
+  public Price getTotal() {
     return total;
   }
 
