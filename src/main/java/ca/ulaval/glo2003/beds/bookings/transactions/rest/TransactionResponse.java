@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.transactions.rest;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.domain.Price;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TransactionResponse {
 
@@ -10,10 +10,10 @@ public class TransactionResponse {
   private String to;
   private Price total;
   private TransactionReasons reason;
-  private LocalDate timestamp;
+  private LocalDateTime timestamp;
 
   public TransactionResponse(
-      String from, String to, Price total, TransactionReasons reason, LocalDate timestamp) {
+      String from, String to, Price total, TransactionReasons reason, LocalDateTime timestamp) {
     this.from = from;
     this.reason = reason;
     this.to = to;
@@ -53,11 +53,11 @@ public class TransactionResponse {
     this.reason = reason;
   }
 
-  public LocalDate getTimestamp() {
+  public LocalDateTime getTimestamp() {
     return timestamp;
   }
 
-  public void setTimestamp(LocalDate timestamp) {
+  public void setTimestamp(LocalDateTime timestamp) {
     this.timestamp = timestamp;
   }
 }

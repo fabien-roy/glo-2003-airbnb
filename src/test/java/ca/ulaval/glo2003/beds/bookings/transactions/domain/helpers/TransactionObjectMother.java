@@ -6,20 +6,20 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.domain.Price;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class TransactionObjectMother {
 
   private TransactionObjectMother() {}
 
-  public static LocalDate createTimestamp() {
+  public static LocalDateTime createTimestamp() {
     return Faker.instance()
         .date()
         .birthday()
         .toInstant()
         .atZone(ZoneId.systemDefault())
-        .toLocalDate();
+        .toLocalDateTime();
   }
 
   public static String createFrom() {

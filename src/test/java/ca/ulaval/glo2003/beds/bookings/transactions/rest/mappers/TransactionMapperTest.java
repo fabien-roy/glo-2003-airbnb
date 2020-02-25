@@ -9,7 +9,7 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.beds.domain.Price;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +29,7 @@ public class TransactionMapperTest {
     Price expectedTotal = new Price(value);
     String expectedTo = "transactionrecipent";
     String expectedFrom = "transactionsender";
-    LocalDate expectedTimestamp = LocalDate.now();
+    LocalDateTime expectedTimestamp = LocalDateTime.now();
     TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
 
     Transaction transactionToMap =
@@ -86,7 +86,7 @@ public class TransactionMapperTest {
 
   @Test
   public void toResponse_shouldMapTimestamp() {
-    LocalDate expectedTimestamp = createTimestamp();
+    LocalDateTime expectedTimestamp = createTimestamp();
     Transaction transaction = aTransaction().withTimestamp(expectedTimestamp).build();
 
     TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
