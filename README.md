@@ -7,6 +7,35 @@ This is our project for course GLO-2003 at Laval University.
 
 Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2003-h2020-eq08.herokuapp.com).
 
+
+## How to compile
+
+Maven is used as a built automation tool, as well as a dependency manager. To build the application, use : 
+
+`mvn clean install`
+
+## How to execute
+
+To execute the application, use : 
+
+`mvn exec:java`
+
+The app will be running on [http://localhost:4567](http://localhost:4567).
+
+## How to run tests
+
+Tests are located in `src/test/java/ca/ulaval/glo2003`. They are all checked pre-commit and during the CI pipeline. Coverage report are generated using Jacoco during the report built phase.
+
+To run unit tests, use :
+
+`mvn surefire:test`
+
+## How to apply code style
+
+Code style is verified pre-commit. To apply [Google Java Code Style](https://google.github.io/styleguide/javaguide.html) throughout the source code, use : 
+
+`mvn git-code-format:format-code -DglobPattern=**/*`
+
 ## Requests
 
 ### GET /hello
@@ -72,32 +101,6 @@ If request is valid, returns "Headers `Location: /beds/:bedNumber/bookings/:book
 
 If bed number exists and booking number exists for that bed, returns formatted booking.
 
-#### `GET /admin/transactions`
+### `GET /admin/transactions`
 
 Returns formatted transactions.
-
-## How to compile
-
-Maven is used as a built automation tool, as well as a dependency manager. To build the application, use : 
-
-`mvn clean install`
-
-## How to execute
-
-To execute the application, use : 
-
-`mvn exec:java`
-
-## How to run tests
-
-Tests are located in `src/test/java/ca/ulaval/glo2003`. They are all checked pre-commit and during the CI pipeline. Coverage report are generated using Jacoco during the report built phase.
-
-To run unit tests, use :
-
-`mvn surefire:test`
-
-## How to apply code style
-
-Code style is verified pre-commit. To apply [Google Java Code Style](https://google.github.io/styleguide/javaguide.html) throughout the source code, use : 
-
-`mvn git-code-format:format-code -DglobPattern=**/*`
