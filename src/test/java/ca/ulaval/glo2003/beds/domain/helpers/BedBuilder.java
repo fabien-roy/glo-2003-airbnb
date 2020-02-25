@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 
-import ca.ulaval.glo2003.beds.bookings.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
 import java.util.Collections;

@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.helpers;
 
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
 
-import ca.ulaval.glo2003.beds.bookings.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.PackageNames;
 import java.time.LocalDate;
 

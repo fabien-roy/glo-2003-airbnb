@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings;
+package ca.ulaval.glo2003.beds.bookings.domain;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.domain.PackageNames;

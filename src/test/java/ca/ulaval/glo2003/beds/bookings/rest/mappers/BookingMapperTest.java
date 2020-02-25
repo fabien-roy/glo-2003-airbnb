@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.bookings.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidBookingKeyException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
+import ca.ulaval.glo2003.beds.domain.PackageNames;
 import java.time.LocalDate;
-import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,96 +20,124 @@ class BookingMapperTest {
 
   private BookingMapper bookingMapper;
 
-  private static int VALID_NUMBER_OF_NIGHTS = 69;
-  private static UUID BOOKING_ID = UUID.randomUUID();
-  private static LocalDate SOME_DATE = LocalDate.now();
-  private static String BOOKING_KEY = "This is the key to my heart";
-  private static String BOOKING_PACKAGE = "Very good package. You won't believe your eyes";
-
   @BeforeEach
   public void setUpMapper() {
     bookingMapper = new BookingMapper();
   }
 
   @Test
-  public void getBooking_shouldReturnBookingResponseWithSameParameters() {
-    Booking bookingToMap =
-        new Booking(BOOKING_ID, BOOKING_KEY, SOME_DATE, VALID_NUMBER_OF_NIGHTS, BOOKING_PACKAGE);
+  public void getBookingWithValidDate_shouldReturnBookingResponseWithSameDate() {
+    LocalDate expectedDate = LocalDate.now();
+    Booking bookingToMap = BookingBuilder.aBooking().withArrivalDate(expectedDate).build();
 
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
-    assertEquals(response.getArrivalDate(), SOME_DATE.toString());
-    assertEquals(response.getBookingPackage(), BOOKING_PACKAGE);
-    assertEquals(response.getNumberOfNights(), VALID_NUMBER_OF_NIGHTS);
+    assertEquals(response.getArrivalDate(), expectedDate.toString());
   }
 
   @Test
-  public void getValidBookingRequest_shouldReturnBookingWithSameParameters() {
-    BookingRequest bookingRequest = setUpBookingRequest();
+  public void getBookingWithBookingPackage_shouldReturnBookingResponseWithSameBookingPackage() {
+    PackageNames expectedPackageName = PackageNames.SWEET_TOOTH;
+    Booking bookingToMap = BookingBuilder.aBooking().withPackage(expectedPackageName).build();
 
-    Booking booking = bookingMapper.fromRequest(bookingRequest);
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
-    assertEquals(booking.getArrivalDate(), SOME_DATE);
-    assertEquals(booking.getDepartureDate(), (SOME_DATE.plusDays(VALID_NUMBER_OF_NIGHTS - 1)));
-    assertEquals(booking.getNumberOfNights(), VALID_NUMBER_OF_NIGHTS);
-    assertEquals(booking.getPackage(), BOOKING_PACKAGE);
-    assertEquals(booking.getTenantPublicKey(), BOOKING_KEY);
+    assertEquals(response.getBookingPackage(), expectedPackageName);
+  }
+
+  @Test
+  public void getBooking_shouldReturnBookingResponseWithSameParameters() {
+    int expectedNumberOfNights = 69;
+    Booking bookingToMap =
+        BookingBuilder.aBooking().withNumberOfNights(expectedNumberOfNights).build();
+
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
+
+    assertEquals(response.getNumberOfNights(), expectedNumberOfNights);
+  }
+
+  @Test
+  public void getValidBookingRequest_shouldReturnBookingWithSameArrivalDate() {
+    BookingRequest request = setUpBookingRequest();
+    LocalDate expectedDate = LocalDate.now();
+    when(request.getArrivalDate()).thenReturn(expectedDate.toString());
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(booking.getArrivalDate(), expectedDate);
+  }
+
+  @Test
+  public void getValidBookingRequest_shouldReturnBookingWithSamePackage() {
+    BookingRequest request = setUpBookingRequest();
+    PackageNames expectedPackageName = PackageNames.SWEET_TOOTH;
+    when(request.getBookingPackage()).thenReturn(expectedPackageName.toString());
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(booking.getPackageName(), expectedPackageName);
+  }
+
+  @Test
+  public void getValidBookingRequest_shouldReturnBookingWithSamePublicKey() {
+    BookingRequest request = setUpBookingRequest();
+    String expectedPublicKey = "this is a key";
+    when(request.getTenantPublicKey()).thenReturn(expectedPublicKey);
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(booking.getTenantPublicKey(), expectedPublicKey);
+  }
+
+  @Test
+  public void getValidBookingRequest_shouldReturnBookingWithSameNumberOfNights() {
+    BookingRequest request = setUpBookingRequest();
+    int expectedNumberOfNights = 1969;
+    when(request.getNumberOfNights()).thenReturn(expectedNumberOfNights);
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(booking.getNumberOfNights(), expectedNumberOfNights);
   }
 
   @Test
   public void getRequestWithInvalidNumberOfNights_shoudThrowException() {
+    BookingRequest bookingRequest = setUpBookingRequest();
+    when(bookingRequest.getNumberOfNights()).thenReturn(-1);
     Assertions.assertThrows(
-        InvalidNumberOfNights.class,
-        () -> {
-          BookingRequest bookingRequest = setUpBookingRequest();
-          when(bookingRequest.getNumberOfNights()).thenReturn(-1);
-
-          bookingMapper.fromRequest(bookingRequest);
-        });
+        InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void getRequestWithInvalidArrivalDate_shoudThrowException() {
+    BookingRequest bookingRequest = setUpBookingRequest();
+    when(bookingRequest.getArrivalDate()).thenReturn("This is wrong. No Really");
     Assertions.assertThrows(
-        InvalidArrivalDateException.class,
-        () -> {
-          BookingRequest bookingRequest = setUpBookingRequest();
-          when(bookingRequest.getArrivalDate()).thenReturn("This is wrong. No Really");
-
-          bookingMapper.fromRequest(bookingRequest);
-        });
+        InvalidArrivalDateException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void getRequestWithArrivalDateInThePast_shoudThrowException() {
+    BookingRequest bookingRequest = setUpBookingRequest();
+    when(bookingRequest.getArrivalDate()).thenReturn("2019-07-03");
     Assertions.assertThrows(
-        ArrivalDateInThePastException.class,
-        () -> {
-          BookingRequest bookingRequest = setUpBookingRequest();
-          when(bookingRequest.getArrivalDate()).thenReturn("2019-07-03");
-
-          bookingMapper.fromRequest(bookingRequest);
-        });
+        ArrivalDateInThePastException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void getRequestWithNoKey_shoudThrowException() {
+    BookingRequest bookingRequest = setUpBookingRequest();
+    when(bookingRequest.getTenantPublicKey()).thenReturn(null);
     Assertions.assertThrows(
-        InvalidBookingKeyException.class,
-        () -> {
-          BookingRequest bookingRequest = setUpBookingRequest();
-          when(bookingRequest.getTenantPublicKey()).thenReturn(null);
-
-          bookingMapper.fromRequest(bookingRequest);
-        });
+        InvalidPublicKeyException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   private BookingRequest setUpBookingRequest() {
     BookingRequest request = mock(BookingRequest.class);
-    when(request.getNumberOfNights()).thenReturn(VALID_NUMBER_OF_NIGHTS);
-    when(request.getArrivalDate()).thenReturn(SOME_DATE.toString());
-    when(request.getTenantPublicKey()).thenReturn(BOOKING_KEY);
-    when(request.getBookingPackage()).thenReturn(BOOKING_PACKAGE);
+    when(request.getNumberOfNights()).thenReturn(69);
+    when(request.getArrivalDate()).thenReturn(LocalDate.now().toString());
+    when(request.getTenantPublicKey()).thenReturn("a key");
+    when(request.getBookingPackage()).thenReturn(PackageNames.BLOODTHIRSTY.toString());
     return request;
   }
 }
