@@ -36,8 +36,9 @@ class PackageMapperTest {
 
   @Test
   public void fromRequests_withMultipleRequests_shouldMapMultiplePricesPerNight() {
-    PackageRequest request = aPackageRequest().build();
-    PackageRequest otherRequest = aPackageRequest().build();
+    PackageRequest request = aPackageRequest().withName(Packages.SWEET_TOOTH.toString()).build();
+    PackageRequest otherRequest =
+        aPackageRequest().withName(Packages.BLOODTHIRSTY.toString()).build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
@@ -132,8 +133,8 @@ class PackageMapperTest {
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapMultiplePackageResponses() {
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
-    pricesPerNight.put(createPackageName(), createPricePerNight());
-    pricesPerNight.put(createPackageName(), createPricePerNight());
+    pricesPerNight.put(Packages.SWEET_TOOTH, createPricePerNight());
+    pricesPerNight.put(Packages.BLOODTHIRSTY, createPricePerNight());
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
 
@@ -183,8 +184,6 @@ class PackageMapperTest {
     assertEquals(expectedPricePerNight, responses.get(0).getPricePerNight());
   }
 
-  // TODO : This test is weirdly unstable.
-  /*
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapPricesPerNight() {
     Price pricePerNight = createPricePerNight();
@@ -192,8 +191,8 @@ class PackageMapperTest {
     double expectedPricePerNight = pricePerNight.getValue().doubleValue();
     double otherExpectedPricePerNight = otherPricePerNight.getValue().doubleValue();
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
-    pricesPerNight.put(createPackageName(), pricePerNight);
-    pricesPerNight.put(createPackageName(), otherPricePerNight);
+    pricesPerNight.put(Packages.SWEET_TOOTH, pricePerNight);
+    pricesPerNight.put(Packages.BLOODTHIRSTY, otherPricePerNight);
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
 
@@ -204,5 +203,4 @@ class PackageMapperTest {
         responses.stream()
             .anyMatch(response -> otherExpectedPricePerNight == response.getPricePerNight()));
   }
-  */
 }
