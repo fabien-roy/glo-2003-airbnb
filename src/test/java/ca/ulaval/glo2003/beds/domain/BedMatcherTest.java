@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatcher;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -169,8 +169,8 @@ class BedMatcherTest {
   @Test
   public void matches_withPresentPackageName_shouldReturnTrue() {
     PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    Package bedPackage = new Package(packageName, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(100));
+    Package bedPackage = aPackage().withName(packageName).build();
+    Package otherBedPackage = aPackage().withName(PackageNames.ALL_YOU_CAN_DRINK).build();
     List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
     BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
     Bed bed = aBed().withPackages(packages).build();
@@ -183,8 +183,8 @@ class BedMatcherTest {
   @Test
   public void matches_withNotPresentPackageName_shouldReturnFalse() {
     PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    Package bedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(100));
+    Package bedPackage = aPackage().withName(PackageNames.SWEET_TOOTH).build();
+    Package otherBedPackage = aPackage().withName(PackageNames.ALL_YOU_CAN_DRINK).build();
     List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
     BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
     Bed bed = aBed().withPackages(packages).build();

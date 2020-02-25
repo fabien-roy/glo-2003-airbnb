@@ -14,8 +14,8 @@ public class PackageObjectMother {
     return randomEnum(PackageNames.class);
   }
 
-  public static BigDecimal createPricePerNight() {
+  public static Price createPricePerNight() {
     double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return BigDecimal.valueOf(randomDouble);
+    return new Price(BigDecimal.valueOf(randomDouble));
   }
 }

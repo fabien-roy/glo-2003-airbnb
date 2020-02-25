@@ -5,7 +5,6 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.Package;
-import java.math.BigDecimal;
 
 public class PackageBuilder {
 
@@ -14,8 +13,8 @@ public class PackageBuilder {
   private PackageNames DEFAULT_NAME = createPackageName();
   private PackageNames name = DEFAULT_NAME;
 
-  private BigDecimal DEFAULT_PRICE_PER_NIGHT = createPricePerNight();
-  private BigDecimal pricePerNight = DEFAULT_PRICE_PER_NIGHT;
+  private Price DEFAULT_PRICE_PER_NIGHT = createPricePerNight();
+  private Price pricePerNight = DEFAULT_PRICE_PER_NIGHT;
 
   public static PackageBuilder aPackage() {
     return new PackageBuilder();
@@ -26,7 +25,7 @@ public class PackageBuilder {
     return this;
   }
 
-  public PackageBuilder withPricePerNight(BigDecimal pricePerNight) {
+  public PackageBuilder withPricePerNight(Price pricePerNight) {
     this.pricePerNight = pricePerNight;
     return this;
   }

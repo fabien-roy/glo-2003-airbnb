@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum TransactionReasons {
-  STAYBOOKED("StayBooked"),
-  STAYCOMPLETED("StayCompleted");
+  STAY_BOOKED("STAY_BOOKED"),
+  STAY_COMPLETED("STAY_COMPLETED");
 
   private String reason;
+
   private static final Map<String, TransactionReasons> lookup = new HashMap<>();
 
   static {
