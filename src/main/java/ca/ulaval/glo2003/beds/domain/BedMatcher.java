@@ -8,14 +8,14 @@ public class BedMatcher {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private PackageNames packageName;
+  private Packages packageName;
 
   public BedMatcher(
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      PackageNames packageName) {
+      Packages packageName) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
@@ -39,7 +39,7 @@ public class BedMatcher {
     return capacity;
   }
 
-  public PackageNames getPackageName() {
+  public Packages getPackageName() {
     return packageName;
   }
 

@@ -166,10 +166,10 @@ class BedMatcherTest {
 
   @Test
   public void matches_withPresentPackageName_shouldReturnTrue() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    Packages packageName = Packages.BLOODTHIRSTY;
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     pricesPerNight.put(packageName, createPricePerNight());
-    pricesPerNight.put(PackageNames.ALL_YOU_CAN_DRINK, createPricePerNight());
+    pricesPerNight.put(Packages.ALL_YOU_CAN_DRINK, createPricePerNight());
     BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
 
@@ -180,10 +180,10 @@ class BedMatcherTest {
 
   @Test
   public void matches_withNotPresentPackageName_shouldReturnFalse() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
-    pricesPerNight.put(PackageNames.SWEET_TOOTH, createPricePerNight());
-    pricesPerNight.put(PackageNames.ALL_YOU_CAN_DRINK, createPricePerNight());
+    Packages packageName = Packages.BLOODTHIRSTY;
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
+    pricesPerNight.put(Packages.SWEET_TOOTH, createPricePerNight());
+    pricesPerNight.put(Packages.ALL_YOU_CAN_DRINK, createPricePerNight());
     BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
 

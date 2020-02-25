@@ -161,7 +161,7 @@ class BedMapperTest {
     PackageRequest packageRequest = aPackageRequest().build();
     List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
     BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
-    Map<PackageNames, Price> expectedPricesPerNight = new EnumMap<>(PackageNames.class);
+    Map<Packages, Price> expectedPricesPerNight = new EnumMap<>(Packages.class);
     when(packageMapper.fromRequests(packageRequests)).thenReturn(expectedPricesPerNight);
 
     Bed bed = bedMapper.fromRequest(bedRequest);
@@ -294,7 +294,7 @@ class BedMapperTest {
 
   @Test
   public void toResponse_shouldMapPricesPerNights() {
-    Map<PackageNames, Price> pricesPerNight =
+    Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
     PackageResponse expectedPackageResponse = mock(PackageResponse.class);

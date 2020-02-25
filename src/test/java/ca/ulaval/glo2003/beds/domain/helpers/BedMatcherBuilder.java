@@ -11,7 +11,7 @@ public class BedMatcherBuilder {
   private CleaningFrequencies cleaningFrequency = null;
   private List<BloodTypes> bloodTypes = null;
   private int capacity = 0;
-  private PackageNames packageName = null;
+  private Packages packageName = null;
 
   public static BedMatcherBuilder aBedMatcher() {
     return new BedMatcherBuilder();
@@ -37,7 +37,7 @@ public class BedMatcherBuilder {
     return this;
   }
 
-  public BedMatcherBuilder withPackageName(PackageNames packageName) {
+  public BedMatcherBuilder withPackageName(Packages packageName) {
     this.packageName = packageName;
     return this;
   }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
-import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +12,7 @@ public class Booking {
   private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
-  private PackageNames packageName; // TODO : Actually map this
+  private Packages packageName; // TODO : Actually map this
   private List<Transaction> transactions;
 
   // TODO : Use other constructor
@@ -23,7 +23,7 @@ public class Booking {
   }
 
   public Booking(
-      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, PackageNames packageName) {
+      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
@@ -46,7 +46,7 @@ public class Booking {
     return numberOfNights;
   }
 
-  public PackageNames getPackageName() {
+  public Packages getPackageName() {
     return packageName;
   }
 

@@ -5,7 +5,6 @@ import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
 import java.util.*;
-import javax.swing.*;
 
 public class Bed {
 
@@ -16,7 +15,7 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private Map<PackageNames, Price> pricesPerNight;
+  private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
 
   public Bed(
@@ -26,7 +25,7 @@ public class Bed {
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      Map<PackageNames, Price> pricesPerNight) {
+      Map<Packages, Price> pricesPerNight) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
     this.bedType = bedType;
@@ -68,11 +67,11 @@ public class Bed {
     return capacity;
   }
 
-  public Map<PackageNames, Price> getPricesPerNight() {
+  public Map<Packages, Price> getPricesPerNight() {
     return pricesPerNight;
   }
 
-  public Price getPricePerNight(PackageNames packageName) {
+  public Price getPricePerNight(Packages packageName) {
     return pricesPerNight.get(packageName);
   }
 
@@ -80,7 +79,7 @@ public class Bed {
     return bookings;
   }
 
-  public void book(Booking booking, PackageNames bookingPackage) {
+  public void book(Booking booking, Packages bookingPackage) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
     if (!isPackageAvailable(bookingPackage)) throw new PackageNotAvailableException();
@@ -90,7 +89,7 @@ public class Bed {
     bookings.add(booking);
   }
 
-  public boolean isPackageAvailable(PackageNames bookingPackage) {
+  public boolean isPackageAvailable(Packages bookingPackage) {
     return pricesPerNight.containsKey(bookingPackage);
   }
 

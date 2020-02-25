@@ -36,9 +36,9 @@ public class BedBuilder {
   private int DEFAULT_CAPACITY = BedTypesCapacities.get(DEFAULT_BED_TYPE);
   private int capacity = DEFAULT_CAPACITY;
 
-  private Map<PackageNames, Price> DEFAULT_PRICES_PER_NIGHT =
+  private Map<Packages, Price> DEFAULT_PRICES_PER_NIGHT =
       Collections.singletonMap(createPackageName(), createPricePerNight());
-  private Map<PackageNames, Price> pricesPerNight = DEFAULT_PRICES_PER_NIGHT;
+  private Map<Packages, Price> pricesPerNight = DEFAULT_PRICES_PER_NIGHT;
 
   private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
   private List<Booking> bookings = DEFAULT_BOOKINGS;
@@ -82,7 +82,7 @@ public class BedBuilder {
     return this;
   }
 
-  public BedBuilder withPricesPerNights(Map<PackageNames, Price> pricesPerNight) {
+  public BedBuilder withPricesPerNights(Map<Packages, Price> pricesPerNight) {
     this.pricesPerNight = pricesPerNight;
     return this;
   }

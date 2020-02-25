@@ -33,7 +33,7 @@ public class BedMapper {
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
 
     return new Bed(
         request.getOwnerPublicKey(),

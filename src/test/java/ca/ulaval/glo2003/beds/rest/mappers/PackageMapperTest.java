@@ -5,7 +5,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
@@ -29,7 +29,7 @@ class PackageMapperTest {
     PackageRequest request = aPackageRequest().build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
     assertEquals(1, pricesPerNight.keySet().size());
   }
@@ -40,34 +40,34 @@ class PackageMapperTest {
     PackageRequest otherRequest = aPackageRequest().build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
     assertEquals(2, pricesPerNight.keySet().size());
   }
 
   @Test
   public void fromRequests_withSingleRequest_shouldMapName() {
-    PackageNames expectedPackage = PackageNames.BLOODTHIRSTY;
+    Packages expectedPackage = Packages.BLOODTHIRSTY;
     String packageName = expectedPackage.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
     assertTrue(pricesPerNight.containsKey(expectedPackage));
   }
 
   @Test
   public void fromRequests_withMultipleRequests_shouldMapNames() {
-    PackageNames expectedPackage = PackageNames.BLOODTHIRSTY;
-    PackageNames otherExpectedPackage = PackageNames.SWEET_TOOTH;
+    Packages expectedPackage = Packages.BLOODTHIRSTY;
+    Packages otherExpectedPackage = Packages.SWEET_TOOTH;
     String packageName = expectedPackage.toString();
     String otherPackageName = otherExpectedPackage.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
     assertTrue(pricesPerNight.containsKey(expectedPackage));
     assertTrue(pricesPerNight.containsKey(otherExpectedPackage));
@@ -86,12 +86,12 @@ class PackageMapperTest {
   public void fromRequests_withSingleRequest_shouldMapPricePerNight() {
     double priceValue = 100.0;
     Price expectedPrice = new Price(BigDecimal.valueOf(priceValue));
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
+    Packages packageName = Packages.BLOODTHIRSTY;
     PackageRequest request =
         aPackageRequest().withName(packageName.toString()).withPricePerNight(priceValue).build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
     assertEquals(expectedPrice, pricesPerNight.get(packageName));
   }
@@ -102,8 +102,8 @@ class PackageMapperTest {
     double otherPriceValue = 200.0;
     Price expectedPrice = new Price(BigDecimal.valueOf(priceValue));
     Price otherExpectedPrice = new Price(BigDecimal.valueOf(otherPriceValue));
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    PackageNames otherPackageName = PackageNames.SWEET_TOOTH;
+    Packages packageName = Packages.BLOODTHIRSTY;
+    Packages otherPackageName = Packages.SWEET_TOOTH;
     PackageRequest request =
         aPackageRequest().withName(packageName.toString()).withPricePerNight(priceValue).build();
     PackageRequest otherRequest =
@@ -113,7 +113,7 @@ class PackageMapperTest {
             .build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
-    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
     assertEquals(expectedPrice, pricesPerNight.get(packageName));
     assertEquals(otherExpectedPrice, pricesPerNight.get(otherPackageName));
@@ -121,7 +121,7 @@ class PackageMapperTest {
 
   @Test
   public void toResponses_withSinglePricePerNight_shouldMapASinglePackageResponse() {
-    Map<PackageNames, Price> pricesPerNight =
+    Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
@@ -131,7 +131,7 @@ class PackageMapperTest {
 
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapMultiplePackageResponses() {
-    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     pricesPerNight.put(createPackageName(), createPricePerNight());
     pricesPerNight.put(createPackageName(), createPricePerNight());
 
@@ -142,9 +142,9 @@ class PackageMapperTest {
 
   @Test
   public void toResponses_withSinglePricePerNight_shouldMapName() {
-    PackageNames packageName = createPackageName();
+    Packages packageName = createPackageName();
     String expectedPackageName = packageName.toString();
-    Map<PackageNames, Price> pricesPerNight =
+    Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(packageName, createPricePerNight());
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
@@ -154,11 +154,11 @@ class PackageMapperTest {
 
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapNames() {
-    PackageNames packageName = createPackageName();
-    PackageNames otherPackageName = createPackageName();
+    Packages packageName = createPackageName();
+    Packages otherPackageName = createPackageName();
     String expectedPackageName = packageName.toString();
     String otherExpectedPackageName = otherPackageName.toString();
-    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     pricesPerNight.put(packageName, createPricePerNight());
     pricesPerNight.put(otherPackageName, createPricePerNight());
 
@@ -175,7 +175,7 @@ class PackageMapperTest {
   public void toResponses_withSinglePricePerNight_shouldMapPricePerNight() {
     Price pricePerNight = createPricePerNight();
     double expectedPricePerNight = pricePerNight.getValue().doubleValue();
-    Map<PackageNames, Price> pricesPerNight =
+    Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), pricePerNight);
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
@@ -189,7 +189,7 @@ class PackageMapperTest {
     Price otherPricePerNight = createPricePerNight();
     double expectedPricePerNight = pricePerNight.getValue().doubleValue();
     double otherExpectedPricePerNight = otherPricePerNight.getValue().doubleValue();
-    Map<PackageNames, Price> pricesPerNight = new EnumMap<>(PackageNames.class);
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     pricesPerNight.put(createPackageName(), pricePerNight);
     pricesPerNight.put(createPackageName(), otherPricePerNight);
 

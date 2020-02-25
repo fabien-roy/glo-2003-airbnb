@@ -6,7 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPa
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.Price;
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -22,8 +22,8 @@ class BookingTotalCalculatorTest {
   @MethodSource("provideConditionsForCalculateTotal")
   public void calculateTotal_shouldReturnCorrectTotal(
       Price pricePerNight, int numberOfNights, Price expectedTotal) {
-    PackageNames packageName = createPackageName();
-    Map<PackageNames, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
+    Packages packageName = createPackageName();
+    Map<Packages, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
     Booking booking =
         aBooking().withPackage(packageName).withNumberOfNights(numberOfNights).build();

@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
-import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import com.github.javafaker.Faker;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -28,7 +28,7 @@ public class BookingObjectMother {
     return Faker.instance().number().numberBetween(1, 5);
   }
 
-  public static PackageNames createPackageName() {
-    return randomEnum(PackageNames.class);
+  public static Packages createPackageName() {
+    return randomEnum(Packages.class);
   }
 }

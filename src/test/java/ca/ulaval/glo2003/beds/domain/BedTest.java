@@ -24,7 +24,7 @@ class BedTest {
     Booking presentBooking = aBooking().build();
     Booking expectedBooking = aBooking().build();
     Bed bed = aBed().withBookings(Collections.singletonList(presentBooking)).build();
-    PackageNames bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
+    Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
 
     bed.book(expectedBooking, bookingPackage);
     List<Booking> bookings = bed.getBookings();
@@ -39,7 +39,7 @@ class BedTest {
     String ownerPublicKey = createOwnerPublicKey();
     Booking booking = aBooking().withTenantPublicKey(ownerPublicKey).build();
     Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
-    PackageNames bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
+    Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
 
     assertThrows(BookingNotAllowedException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
@@ -52,7 +52,7 @@ class BedTest {
     when(presentBooking.isOverlapping(booking)).thenReturn(true);
     List<Booking> presentBookings = Collections.singletonList(presentBooking);
     Bed bed = aBed().withBookings(presentBookings).build();
-    PackageNames bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
+    Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
 
     assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
@@ -61,9 +61,9 @@ class BedTest {
   @Test
   public void book_withUnavailablePackage_shouldThrowPackageUnavailableException() {
     Booking booking = aBooking().build();
-    PackageNames bookingPackage = PackageNames.SWEET_TOOTH;
-    Map<PackageNames, Price> pricesPerNight =
-        Collections.singletonMap(PackageNames.BLOODTHIRSTY, createPricePerNight());
+    Packages bookingPackage = Packages.SWEET_TOOTH;
+    Map<Packages, Price> pricesPerNight =
+        Collections.singletonMap(Packages.BLOODTHIRSTY, createPricePerNight());
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
 
     assertThrows(PackageNotAvailableException.class, () -> bed.book(booking, bookingPackage));
