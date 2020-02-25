@@ -10,4 +10,19 @@ public class Transaction {
   private String to;
   private BigDecimal total;
   private TransactionReasons reason;
+
+  public Transaction(String from, String to, BigDecimal total, TransactionReasons reason) {
+    this.from = from;
+    this.to = to;
+    this.total = total;
+    this.reason = reason;
+  }
+
+  public Date getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(Date timestamp) {
+    this.timestamp = timestamp;
+  }
 }
