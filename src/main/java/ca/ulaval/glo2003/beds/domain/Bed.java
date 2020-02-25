@@ -20,6 +20,7 @@ public class Bed {
   private List<Package> packages; // TODO : Remove this
   private List<Booking> bookings = new ArrayList<>();
 
+  // TODO : Remove
   public Bed(
       String ownerPublicKey,
       String zipCode,
@@ -35,6 +36,23 @@ public class Bed {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.packages = packages;
+  }
+
+  public Bed(
+      String ownerPublicKey,
+      String zipCode,
+      BedTypes bedType,
+      CleaningFrequencies cleaningFrequency,
+      List<BloodTypes> bloodTypes,
+      int capacity,
+      Map<PackageNames, Price> pricesPerNight) {
+    this.ownerPublicKey = ownerPublicKey;
+    this.zipCode = zipCode;
+    this.bedType = bedType;
+    this.cleaningFrequency = cleaningFrequency;
+    this.bloodTypes = bloodTypes;
+    this.capacity = capacity;
+    this.pricesPerNight = pricesPerNight;
   }
 
   public UUID getNumber() {
@@ -67,6 +85,10 @@ public class Bed {
 
   public int getCapacity() {
     return capacity;
+  }
+
+  public Map<PackageNames, Price> getPricesPerNight() {
+    return pricesPerNight;
   }
 
   public List<Package> getPackages() {

@@ -1,10 +1,8 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
@@ -12,6 +10,7 @@ import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BedMapper {
@@ -34,7 +33,7 @@ public class BedMapper {
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
-    List<Package> packages = parsePackages(request.getPackages());
+    Map<PackageNames, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
 
     return new Bed(
         request.getOwnerPublicKey(),
@@ -43,7 +42,7 @@ public class BedMapper {
         cleaningFrequencies,
         bloodTypes,
         request.getCapacity(),
-        packages);
+        pricesPerNight);
   }
 
   // TODO : toResponse should only set bedNumber for getAll, not for get
@@ -92,9 +91,5 @@ public class BedMapper {
 
   private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
     return bloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
-  }
-
-  private List<Package> parsePackages(List<PackageRequest> packageRequests) {
-    return packageRequests.stream().map(packageMapper::fromRequest).collect(Collectors.toList());
   }
 }
