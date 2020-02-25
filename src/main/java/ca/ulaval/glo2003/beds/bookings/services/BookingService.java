@@ -17,6 +17,7 @@ public class BookingService {
     // TODO : get beds via BedRepository
     // TODO : Bed.book(booking)
     // TODO : add bookingNumber with BookingFactory.create(booking)
+    // TODO : Get total with BookingTotalCalculator
     // TODO : Create both transactions
     // TODO : Add transactions to booking
     // TODO : Save bed in repository (TEST)
