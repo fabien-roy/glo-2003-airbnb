@@ -17,7 +17,7 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private List<Package> packages;
+  private List<Package> packages; // TODO : Make this a EnumMap
   private List<Booking> bookings = new ArrayList<>();
 
   public Bed(

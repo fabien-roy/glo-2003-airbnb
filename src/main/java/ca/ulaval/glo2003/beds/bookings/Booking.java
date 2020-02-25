@@ -1,6 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings;
 
+import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
+import ca.ulaval.glo2003.beds.domain.PackageNames;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class Booking {
@@ -9,24 +12,15 @@ public class Booking {
   private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
-  private String bookingPackage;
+  private PackageNames packageName; // TODO : Actually map this
+  private List<Transaction> transactions;
 
   public Booking(
-      UUID number,
-      String tenantPublicKey,
-      LocalDate arrivalDate,
-      int numberOfNights,
-      String bookingPackage) {
-    this.number = number;
+      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, PackageNames packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
-    this.bookingPackage = bookingPackage;
-  }
-
-  public float getTotal() {
-    // TODO
-    return 1;
+    this.packageName = packageName;
   }
 
   public UUID getNumber() {
@@ -45,12 +39,8 @@ public class Booking {
     return numberOfNights;
   }
 
-  public void setNumber(UUID number) {
-    this.number = number;
-  }
-
-  public String getPackage() {
-    return bookingPackage;
+  public PackageNames getPackageName() {
+    return packageName;
   }
 
   public boolean isOverlapping(Booking otherBooking) {

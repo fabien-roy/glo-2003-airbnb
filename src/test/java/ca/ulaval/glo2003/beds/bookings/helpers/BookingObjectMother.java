@@ -1,5 +1,8 @@
 package ca.ulaval.glo2003.beds.bookings.helpers;
 
+import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
+
+import ca.ulaval.glo2003.beds.domain.PackageNames;
 import com.github.javafaker.Faker;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,7 +28,7 @@ public class BookingObjectMother {
     return Faker.instance().number().numberBetween(1, 5);
   }
 
-  public static String createBookingPackage() {
-    return Faker.instance().expression("Chuck Norris is Fabien");
+  public static PackageNames createPackageName() {
+    return randomEnum(PackageNames.class);
   }
 }

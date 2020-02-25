@@ -6,7 +6,7 @@ import java.util.Map;
 
 public enum PackageNames {
   BLOODTHIRSTY("bloodthirsty"),
-  ALL_YOU_CAN_DRINK("allYouCanEat"),
+  ALL_YOU_CAN_DRINK("allYouCanDrink"),
   SWEET_TOOTH("sweetTooth");
 
   private String name;

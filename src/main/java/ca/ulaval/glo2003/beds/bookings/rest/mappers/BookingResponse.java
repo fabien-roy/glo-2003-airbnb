@@ -1,18 +1,18 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
+import ca.ulaval.glo2003.beds.domain.PackageNames;
+
 public class BookingResponse {
 
   private String arrivalDate;
   private int numberOfNights;
-  private String bookingPackage;
+  private PackageNames bookingPackage;
   private float total;
 
-  public BookingResponse(
-      String arrivalDate, int numberOfNights, String bookingPackage, float total) {
+  public BookingResponse(String arrivalDate, int numberOfNights, PackageNames bookingPackage) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
     this.bookingPackage = bookingPackage;
-    this.total = total;
   }
 
   public String getArrivalDate() {
@@ -31,12 +31,8 @@ public class BookingResponse {
     this.numberOfNights = numberOfNights;
   }
 
-  public String getBookingPackage() {
+  public PackageNames getBookingPackage() {
     return bookingPackage;
-  }
-
-  public void setBookingPackage(String bookingPackage) {
-    this.bookingPackage = bookingPackage;
   }
 
   public float getTotal() {
