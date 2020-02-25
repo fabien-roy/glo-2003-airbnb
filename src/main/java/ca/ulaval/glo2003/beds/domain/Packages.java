@@ -4,21 +4,22 @@ import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum PackageNames {
+// TODO : Rename Packages
+public enum Packages {
   BLOODTHIRSTY("bloodthirsty"),
   ALL_YOU_CAN_DRINK("allYouCanDrink"),
   SWEET_TOOTH("sweetTooth");
 
   private String name;
-  private static final Map<String, PackageNames> lookup = new HashMap<>();
+  private static final Map<String, Packages> lookup = new HashMap<>();
 
   static {
-    for (PackageNames name : PackageNames.values()) {
+    for (Packages name : Packages.values()) {
       lookup.put(name.toString(), name);
     }
   }
 
-  PackageNames(String type) {
+  Packages(String type) {
     this.name = type;
   }
 
@@ -27,8 +28,8 @@ public enum PackageNames {
     return name;
   }
 
-  public static PackageNames get(String name) {
-    PackageNames foundName = lookup.get(name);
+  public static Packages get(String name) {
+    Packages foundName = lookup.get(name);
 
     if (foundName == null) throw new InvalidPackageException();
 

@@ -10,8 +10,8 @@ public class PackageObjectMother {
 
   private PackageObjectMother() {}
 
-  public static PackageNames createPackageName() {
-    return randomEnum(PackageNames.class);
+  public static Packages createPackageName() {
+    return randomEnum(Packages.class);
   }
 
   public static Price createPricePerNight() {

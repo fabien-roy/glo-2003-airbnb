@@ -20,7 +20,7 @@ public class BedMatcherMapper {
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
     int capacity = 0;
-    PackageNames packageName = null;
+    Packages packageName = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
       bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
@@ -39,7 +39,7 @@ public class BedMatcherMapper {
     }
 
     if (params.get(PACKAGE_NAME_PARAM) != null) {
-      packageName = PackageNames.get(params.get(PACKAGE_NAME_PARAM)[0]);
+      packageName = Packages.get(params.get(PACKAGE_NAME_PARAM)[0]);
     }
 
     return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packageName);

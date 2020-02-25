@@ -49,7 +49,7 @@ public class BedRequestObjectMother {
   }
 
   private static String createPackageName() {
-    return randomEnum(PackageNames.class).toString();
+    return randomEnum(Packages.class).toString();
   }
 
   private static double createPackagePricePerNight() {

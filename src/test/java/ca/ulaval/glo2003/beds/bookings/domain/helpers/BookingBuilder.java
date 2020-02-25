@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.bookings.domain.helpers;
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import java.time.LocalDate;
 
 public class BookingBuilder {
@@ -19,8 +19,8 @@ public class BookingBuilder {
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
 
-  private PackageNames DEFAULT_PACKAGE = createPackageName();
-  private PackageNames packageName = DEFAULT_PACKAGE;
+  private Packages DEFAULT_PACKAGE = createPackageName();
+  private Packages packageName = DEFAULT_PACKAGE;
 
   public static BookingBuilder aBooking() {
     return new BookingBuilder();
@@ -41,7 +41,7 @@ public class BookingBuilder {
     return this;
   }
 
-  public BookingBuilder withPackage(PackageNames packageName) {
+  public BookingBuilder withPackage(Packages packageName) {
     this.packageName = packageName;
     return this;
   }

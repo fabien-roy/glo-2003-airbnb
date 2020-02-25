@@ -137,7 +137,7 @@ class BedMatcherMapperTest {
 
   @Test
   public void fromRequestParams_withPackageName_shouldReturnBedMatcherWithPackage() {
-    PackageNames expectedPackageName = PackageNames.BLOODTHIRSTY;
+    Packages expectedPackageName = Packages.BLOODTHIRSTY;
     Map<String, String[]> params = new HashMap<>();
     params.put(PACKAGE_NAME_PARAM, new String[] {expectedPackageName.toString()});
 

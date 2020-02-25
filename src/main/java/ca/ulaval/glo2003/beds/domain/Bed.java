@@ -4,10 +4,7 @@ import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import javax.swing.*;
+import java.util.*;
 
 public class Bed {
 
@@ -18,7 +15,7 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private List<Package> packages; // TODO : Make this a EnumMap
+  private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
 
   public Bed(
@@ -28,14 +25,14 @@ public class Bed {
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      List<Package> packages) {
+      Map<Packages, Price> pricesPerNight) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
-    this.packages = packages;
+    this.pricesPerNight = pricesPerNight;
   }
 
   public UUID getNumber() {
@@ -70,15 +67,19 @@ public class Bed {
     return capacity;
   }
 
-  public List<Package> getPackages() {
-    return packages;
+  public Map<Packages, Price> getPricesPerNight() {
+    return pricesPerNight;
+  }
+
+  public Price getPricePerNight(Packages packageName) {
+    return pricesPerNight.get(packageName);
   }
 
   public List<Booking> getBookings() {
     return bookings;
   }
 
-  public void book(Booking booking, PackageNames bookingPackage) {
+  public void book(Booking booking, Packages bookingPackage) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
     if (!isPackageAvailable(bookingPackage)) throw new PackageNotAvailableException();
@@ -88,8 +89,8 @@ public class Bed {
     bookings.add(booking);
   }
 
-  private boolean isPackageAvailable(PackageNames bookingPackage) {
-    return packages.stream().anyMatch(bedPackage -> bedPackage.getName().equals(bookingPackage));
+  public boolean isPackageAvailable(Packages bookingPackage) {
+    return pricesPerNight.containsKey(bookingPackage);
   }
 
   private boolean isBedAlreadyBooked(Booking booking) {
