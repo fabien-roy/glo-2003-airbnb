@@ -3,10 +3,7 @@ package ca.ulaval.glo2003.beds.domain;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother;
 import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
-import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,38 +46,5 @@ class BedFactoryTest {
     Bed bed = aBed().withBedType(bedType).withCapacity(maxCapacity + 1).build();
 
     assertThrows(ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed));
-  }
-
-  @Test
-  public void create_withNoDependencies_shouldNoThrow() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    List<Package> testPackage =
-        Collections.singletonList(
-            new Package(packageName, PackageObjectMother.createPricePerNight()));
-    Bed bed = aBed().withPackages(testPackage).build();
-
-    assertDoesNotThrow(() -> bedFactory.create(bed));
-  }
-
-  @Test
-  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    List<Package> testPackage =
-        Collections.singletonList(
-            new Package(packageName, PackageObjectMother.createPricePerNight()));
-    Bed bed = aBed().withPackages(testPackage).build();
-
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed));
-  }
-
-  @Test
-  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    List<Package> testPackage =
-        Collections.singletonList(
-            new Package(packageName, PackageObjectMother.createPricePerNight()));
-    Bed bed = aBed().withPackages(testPackage).build();
-
-    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed));
   }
 }
