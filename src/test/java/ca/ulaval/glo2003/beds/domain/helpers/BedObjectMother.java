@@ -1,14 +1,17 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
-import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
+import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.BloodTypes;
+import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class BedObjectMother {
 
@@ -40,9 +43,5 @@ public class BedObjectMother {
 
   public static List<BloodTypes> createBloodTypes() {
     return Collections.singletonList(randomEnum(BloodTypes.class));
-  }
-
-  public static List<Package> createPackages() {
-    return Collections.singletonList(aPackage().build());
   }
 }

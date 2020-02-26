@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.rest.helpers;
 
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
-import ca.ulaval.glo2003.beds.domain.PackageNames;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import com.github.javafaker.Faker;
 
 public class PackageRequestObjectMother {
@@ -10,7 +10,7 @@ public class PackageRequestObjectMother {
   private PackageRequestObjectMother() {}
 
   public static String createPackageName() {
-    return randomEnum(PackageNames.class).toString();
+    return randomEnum(Packages.class).toString();
   }
 
   public static double createPricePerNight() {

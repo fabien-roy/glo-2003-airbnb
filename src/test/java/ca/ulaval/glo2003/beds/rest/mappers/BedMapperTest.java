@@ -2,7 +2,8 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageBuilder.aPackage;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +11,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.Package;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -157,35 +157,16 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withSinglePackage_shouldMapPackage() {
+  public void fromRequest_shouldMapPricesPerNight() {
     PackageRequest packageRequest = aPackageRequest().build();
     List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
     BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
-    Package expectedPackage = mock(Package.class);
-    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
+    Map<Packages, Price> expectedPricesPerNight = new EnumMap<>(Packages.class);
+    when(packageMapper.fromRequests(packageRequests)).thenReturn(expectedPricesPerNight);
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
-    assertEquals(1, bed.getPackages().size());
-    assertEquals(expectedPackage, bed.getPackages().get(0));
-  }
-
-  @Test
-  public void fromRequest_withMultiplePackages_shouldMapPackages() {
-    PackageRequest packageRequest = aPackageRequest().build();
-    PackageRequest otherPackageRequest = aPackageRequest().build();
-    List<PackageRequest> packageRequests = Arrays.asList(packageRequest, otherPackageRequest);
-    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
-    Package expectedPackage = mock(Package.class);
-    Package otherExpectedPackage = mock(Package.class);
-    when(packageMapper.fromRequest(packageRequest)).thenReturn(expectedPackage);
-    when(packageMapper.fromRequest(otherPackageRequest)).thenReturn(otherExpectedPackage);
-
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(2, bed.getPackages().size());
-    assertEquals(expectedPackage, bed.getPackages().get(0));
-    assertEquals(otherExpectedPackage, bed.getPackages().get(1));
+    assertEquals(expectedPricesPerNight, bed.getPricesPerNight());
   }
 
   @Test
@@ -312,35 +293,18 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponse_withSinglePackage_shouldMapPackage() {
-    Package bedPackage = aPackage().build();
-    List<Package> packages = Collections.singletonList(bedPackage);
-    Bed bed = aBed().withPackages(packages).build();
+  public void toResponse_shouldMapPricesPerNights() {
+    Map<Packages, Price> pricesPerNight =
+        Collections.singletonMap(createPackageName(), createPricePerNight());
+    Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
     PackageResponse expectedPackageResponse = mock(PackageResponse.class);
-    when(packageMapper.toResponse(bedPackage)).thenReturn(expectedPackageResponse);
+    List<PackageResponse> expectedPackageResponses =
+        Collections.singletonList(expectedPackageResponse);
+    when(packageMapper.toResponses(pricesPerNight)).thenReturn(expectedPackageResponses);
 
     BedResponse bedResponse = bedMapper.toResponse(bed, 0);
 
-    assertEquals(1, bedResponse.getPackages().size());
-    assertEquals(expectedPackageResponse, bedResponse.getPackages().get(0));
-  }
-
-  @Test
-  public void toResponse_withMultiplePackages_shouldMapPackages() {
-    Package bedPackage = aPackage().build();
-    Package otherBedPackage = aPackage().build();
-    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
-    Bed bed = aBed().withPackages(packages).build();
-    PackageResponse expectedPackageResponse = mock(PackageResponse.class);
-    PackageResponse otherExpectedPackageResponse = mock(PackageResponse.class);
-    when(packageMapper.toResponse(bedPackage)).thenReturn(expectedPackageResponse);
-    when(packageMapper.toResponse(otherBedPackage)).thenReturn(otherExpectedPackageResponse);
-
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
-
-    assertEquals(2, bedResponse.getPackages().size());
-    assertTrue(bedResponse.getPackages().contains(expectedPackageResponse));
-    assertTrue(bedResponse.getPackages().contains(otherExpectedPackageResponse));
+    assertEquals(expectedPackageResponses, bedResponse.getPackages());
   }
 
   @Test
