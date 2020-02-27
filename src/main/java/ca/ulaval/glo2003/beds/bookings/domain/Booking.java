@@ -16,10 +16,15 @@ public class Booking {
   private List<Transaction> transactions;
 
   // TODO : Use other constructor
-  public Booking(String tenantPublicKey, LocalDate arrivalDate, int numberOfNights) {
+  public Booking(
+      String tenantPublicKey,
+      LocalDate arrivalDate,
+      int numberOfNights,
+      List<Transaction> transactions) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
+    this.transactions = transactions;
   }
 
   public Booking(
@@ -48,6 +53,10 @@ public class Booking {
 
   public Packages getPackageName() {
     return packageName;
+  }
+
+  public List<Transaction> getTransactions() {
+    return transactions;
   }
 
   public boolean isOverlapping(Booking otherBooking) {
