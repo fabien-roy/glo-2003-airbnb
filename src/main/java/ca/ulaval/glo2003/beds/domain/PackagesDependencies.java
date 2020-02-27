@@ -1,27 +1,25 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public class PackagesDependencies {
-  private static final Map<PackageNames, List<PackageNames>> dependencies;
+  private static final Map<Packages, List<Packages>> dependencies;
 
   static {
-    Map<PackageNames, List<PackageNames>> modifiableBaseRates = new EnumMap<>(PackageNames.class);
-    modifiableBaseRates.put(PackageNames.BLOODTHIRSTY, new ArrayList<>());
+    Map<Packages, List<Packages>> modifiableBaseRates = new EnumMap<>(Packages.class);
+    modifiableBaseRates.put(Packages.BLOODTHIRSTY, new ArrayList<>());
     modifiableBaseRates.put(
-        PackageNames.ALL_YOU_CAN_DRINK, Collections.singletonList(PackageNames.BLOODTHIRSTY));
+        Packages.ALL_YOU_CAN_DRINK, Collections.singletonList(Packages.BLOODTHIRSTY));
     modifiableBaseRates.put(
-        PackageNames.SWEET_TOOTH,
-        Arrays.asList(PackageNames.ALL_YOU_CAN_DRINK, PackageNames.SWEET_TOOTH));
+        Packages.SWEET_TOOTH, Collections.singletonList(Packages.ALL_YOU_CAN_DRINK));
     dependencies = Collections.unmodifiableMap(modifiableBaseRates);
   }
 
-  public static List<PackageNames> get(PackageNames packageNames) {
-    return dependencies.get(packageNames);
+  public static List<Packages> get(Packages packages) {
+    return dependencies.get(packages);
   }
 }
