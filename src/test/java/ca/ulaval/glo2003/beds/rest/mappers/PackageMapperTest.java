@@ -210,27 +210,21 @@ class PackageMapperTest {
             .anyMatch(response -> otherExpectedPricePerNight == response.getPricePerNight()));
   }
 
-  @Test
-  public void create_withNoDependencies_shouldNoThrow() {
-    Packages expectedPackage = Packages.BLOODTHIRSTY;
-    String packageName = expectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    List<PackageRequest> requests = Collections.singletonList(request);
+  @ParameterizedTest
+  @EnumSource(Packages.class)
+  public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
+      Packages testPackage) {
+    List<String> requestPackagesNames = new ArrayList<String>();
+    do {
+      requestPackagesNames.add(testPackage.toString());
+      testPackage = PackagesDependency.getDependency(testPackage);
+    } while (testPackage != null);
+    List<PackageRequest> packageRequests =
+        requestPackagesNames.stream()
+            .map(s -> aPackageRequest().withName(s).build())
+            .collect(Collectors.toList());
 
-    assertDoesNotThrow(() -> packageMapper.fromRequests(requests));
-  }
-
-  @Test
-  public void create_withAllYouCanDrinkDependencies_shouldNoThrow() {
-    Packages expectedPackage = Packages.BLOODTHIRSTY;
-    Packages otherExpectedPackage = Packages.ALL_YOU_CAN_DRINK;
-    String packageName = expectedPackage.toString();
-    String otherPackageName = otherExpectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
-    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
-
-    assertDoesNotThrow(() -> packageMapper.fromRequests(requests));
+    assertDoesNotThrow(() -> packageMapper.fromRequests(packageRequests));
   }
 
   @Test
@@ -255,22 +249,5 @@ class PackageMapperTest {
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
     assertThrows(SweetToothDependencyException.class, () -> packageMapper.fromRequests(requests));
-  }
-
-  @ParameterizedTest
-  @EnumSource(Packages.class)
-  public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
-      Packages testPackage) {
-    List<String> requestPackagesNames = new ArrayList<String>();
-    do {
-      requestPackagesNames.add(testPackage.toString());
-      testPackage = PackagesDependency.getDependency(testPackage);
-    } while (testPackage != null);
-    List<PackageRequest> packageRequests =
-        requestPackagesNames.stream()
-            .map(s -> aPackageRequest().withName(s).build())
-            .collect(Collectors.toList());
-
-    assertDoesNotThrow(() -> packageMapper.fromRequests(packageRequests));
   }
 }
