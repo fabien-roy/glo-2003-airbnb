@@ -9,14 +9,14 @@ public class PackagesDependency {
 
   private static class DependencyObject {
     private Packages dependency;
-    private Exception exception;
+    private RuntimeException exception;
 
-    public DependencyObject(Packages dependency, Exception exception) {
+    public DependencyObject(Packages dependency, RuntimeException exception) {
       this.dependency = dependency;
       this.exception = exception;
     }
 
-    public Exception getException() {
+    public RuntimeException getException() {
       return exception;
     }
 
@@ -49,7 +49,7 @@ public class PackagesDependency {
     return dependencies.get(packages).getDependency();
   }
 
-  public static Exception getException(Packages packages) {
+  public static RuntimeException getException(Packages packages) {
     return dependencies.get(packages).getException();
   }
 }

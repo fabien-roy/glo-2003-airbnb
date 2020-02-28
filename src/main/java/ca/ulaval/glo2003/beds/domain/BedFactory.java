@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
+import java.util.Set;
 import java.util.UUID;
 
 public class BedFactory {
@@ -22,11 +23,15 @@ public class BedFactory {
   }
 
   private void validatePackageDependencies(Bed bed) {
-    for (Packages testPackage : Packages.values()) {
-      if (bed.isPackageAvailable(testPackage)
-          && !bed.isPackageAvailable(PackagesDependency.getDependency(testPackage))) {
-        throw PackagesDependency.getException(testPackage);
-      }
+    Set<Packages> packages = bed.getPackages();
+    packages.forEach(packageName -> validatePackageDependency(packageName, packages));
+  }
+
+  private void validatePackageDependency(Packages packageName, Set<Packages> packages) {
+    Packages dependency = PackagesDependency.getDependency(packageName);
+
+    if (dependency != null && !packages.contains(dependency)) {
+      throw PackagesDependency.getException(packageName);
     }
   }
 }
