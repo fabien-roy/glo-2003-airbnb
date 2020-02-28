@@ -7,6 +7,16 @@ public class BookingRequest {
   private int numberOfNights;
   private String bookingPackage;
 
+  public BookingRequest() {}
+
+  public BookingRequest(
+      String tenantPublicKey, String arrivalDate, int numberOfNights, String bookingPackage) {
+    this.tenantPublicKey = tenantPublicKey;
+    this.arrivalDate = arrivalDate;
+    this.numberOfNights = numberOfNights;
+    this.bookingPackage = bookingPackage;
+  }
+
   public String getTenantPublicKey() {
     return tenantPublicKey;
   }
@@ -21,21 +31,5 @@ public class BookingRequest {
 
   public String getBookingPackage() {
     return bookingPackage;
-  }
-
-  public void setTenantPublicKey(String tenantPublicKey) {
-    this.tenantPublicKey = tenantPublicKey;
-  }
-
-  public void setArrivalDate(String arrivalDate) {
-    this.arrivalDate = arrivalDate;
-  }
-
-  public void setNumberOfNights(int numberOfNights) {
-    this.numberOfNights = numberOfNights;
-  }
-
-  public void setBookingPackage(String bookingPackage) {
-    this.bookingPackage = bookingPackage;
   }
 }

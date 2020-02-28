@@ -5,38 +5,52 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastExcep
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
-import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.time.LocalDate;
 
 public class BookingMapper {
 
+  public static final String OWNER_PUBLIC_KEY_PATTERN = "([A-Z]|[0-9]){64}";
+  public static final String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
+
   public Booking fromRequest(BookingRequest bookingRequest) {
-    bookingRequestValidation(bookingRequest);
-    LocalDate arrivalDate = BookingDateMapper.fromString(bookingRequest.getArrivalDate());
+    validateBookingRequest(bookingRequest);
+    validateDate(bookingRequest.getArrivalDate());
+    validateNumberOfNights(bookingRequest.getNumberOfNights());
+    validatePublicKey(bookingRequest.getTenantPublicKey());
     return new Booking(
         bookingRequest.getTenantPublicKey(),
-        arrivalDate,
+        LocalDate.parse(bookingRequest.getArrivalDate()),
         bookingRequest.getNumberOfNights(),
-        Packages.get(bookingRequest.getBookingPackage()));
+        bookingRequest.getBookingPackage());
   }
 
   public BookingResponse toResponse(Booking booking) {
     return new BookingResponse(
-        booking.getArrivalDate().toString(), booking.getNumberOfNights(), booking.getPackageName());
+        booking.getArrivalDate().toString(), booking.getNumberOfNights(), booking.getPackage());
   }
 
-  private void bookingRequestValidation(BookingRequest bookingRequest) {
-    if (bookingRequest.getTenantPublicKey() == null) {
-      throw new InvalidPublicKeyException();
+  private void validateBookingRequest(BookingRequest request) {
+    if (request.getArrivalDate() == null
+        || request.getTenantPublicKey() == null
+        || request.getBookingPackage() == null) {
+      throw new InvalidFormatException();
     }
-    if (BookingDateMapper.isNotAValidDate(bookingRequest.getArrivalDate())) {
-      throw new InvalidArrivalDateException();
-    }
-    if (BookingDateMapper.isBeforeToday(bookingRequest.getArrivalDate())) {
+  }
+
+  private void validateDate(String dateToMatch) {
+    if (!dateToMatch.matches(DATE_PATTERN)) throw new InvalidArrivalDateException();
+    if (LocalDate.parse(dateToMatch).isBefore(LocalDate.now()))
       throw new ArrivalDateInThePastException();
-    }
-    if (bookingRequest.getNumberOfNights() < 1) {
+  }
+
+  private void validateNumberOfNights(int numberOfNights) {
+    if (numberOfNights < 1 || numberOfNights > 90) {
       throw new InvalidNumberOfNights();
     }
+  }
+
+  private void validatePublicKey(String publicKey) {
+    if (!publicKey.matches(OWNER_PUBLIC_KEY_PATTERN)) throw new InvalidPublicKeyException();
   }
 }

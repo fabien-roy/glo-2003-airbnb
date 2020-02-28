@@ -12,15 +12,15 @@ public class Booking {
   private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
-  private Packages packageName; // TODO : Actually map this
+  private Packages packageName;
   private List<Transaction> transactions;
 
   public Booking(
-      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
+      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, String packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
-    this.packageName = packageName;
+    this.packageName = Packages.get(packageName);
   }
 
   public UUID getNumber() {
@@ -39,7 +39,7 @@ public class Booking {
     return numberOfNights;
   }
 
-  public Packages getPackageName() {
+  public Packages getPackage() {
     return packageName;
   }
 
