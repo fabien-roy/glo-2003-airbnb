@@ -1,30 +1,37 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import java.util.Base64;
-import java.util.Date;
+import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
+import ca.ulaval.glo2003.beds.domain.Packages;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class Booking {
 
   private UUID number;
-  private Base64 tenantPublicKey;
-  private Date arrivalDate;
+  private String tenantPublicKey;
+  private LocalDate arrivalDate;
   private int numberOfNights;
+  private Packages packageName;
+  private List<Transaction> transactions;
 
-  public double getTotal() {
-    // TODO
-    return 1;
+  public Booking(
+      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
+    this.tenantPublicKey = tenantPublicKey;
+    this.arrivalDate = arrivalDate;
+    this.numberOfNights = numberOfNights;
+    this.packageName = packageName;
   }
 
   public UUID getNumber() {
     return number;
   }
 
-  public Base64 getTenantPublicKey() {
+  public String getTenantPublicKey() {
     return tenantPublicKey;
   }
 
-  public Date getArrivalDate() {
+  public LocalDate getArrivalDate() {
     return arrivalDate;
   }
 
@@ -32,13 +39,20 @@ public class Booking {
     return numberOfNights;
   }
 
-  public boolean matches(Booking otherBooking) {
-    boolean result = true;
-    boolean number;
-    boolean tenantPublicKey;
-    boolean arrivalDate;
-    boolean numberOfNights;
-    boolean paquet; // package est un mot reserve
-    return result;
+  public Packages getPackage() {
+    return packageName;
+  }
+
+  public List<Transaction> getTransactions() {
+    return transactions;
+  }
+
+  public boolean isOverlapping(Booking otherBooking) {
+    return !(arrivalDate.isAfter(otherBooking.getDepartureDate())
+        || getDepartureDate().isBefore(otherBooking.getArrivalDate()));
+  }
+
+  public LocalDate getDepartureDate() {
+    return arrivalDate.plusDays(numberOfNights - 1);
   }
 }

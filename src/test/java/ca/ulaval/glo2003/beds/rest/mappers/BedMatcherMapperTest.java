@@ -123,8 +123,7 @@ class BedMatcherMapperTest {
     Map<String, String[]> params = new HashMap<>();
     params.put(MIN_CAPACITY_PARAM, new String[] {"invalidCapacity"});
 
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
+    assertThrows(InvalidCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
@@ -133,13 +132,12 @@ class BedMatcherMapperTest {
     Map<String, String[]> params = new HashMap<>();
     params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(invalidCapacity)});
 
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
+    assertThrows(InvalidCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
   public void fromRequestParams_withPackageName_shouldReturnBedMatcherWithPackage() {
-    PackageNames expectedPackageName = PackageNames.BLOODTHIRSTY;
+    Packages expectedPackageName = Packages.BLOODTHIRSTY;
     Map<String, String[]> params = new HashMap<>();
     params.put(PACKAGE_NAME_PARAM, new String[] {expectedPackageName.toString()});
 

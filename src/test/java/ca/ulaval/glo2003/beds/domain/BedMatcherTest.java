@@ -1,13 +1,11 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.helpers.BedMatcherBuilder.aBedMatcher;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatcher;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import org.junit.jupiter.api.Test;
 
 class BedMatcherTest {
@@ -168,12 +166,12 @@ class BedMatcherTest {
 
   @Test
   public void matches_withPresentPackageName_shouldReturnTrue() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    Package bedPackage = new Package(packageName, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(100));
-    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
+    Packages packageName = Packages.BLOODTHIRSTY;
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
+    pricesPerNight.put(packageName, createPricePerNight());
+    pricesPerNight.put(Packages.ALL_YOU_CAN_DRINK, createPricePerNight());
     BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
-    Bed bed = aBed().withPackages(packages).build();
+    Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -182,12 +180,12 @@ class BedMatcherTest {
 
   @Test
   public void matches_withNotPresentPackageName_shouldReturnFalse() {
-    PackageNames packageName = PackageNames.BLOODTHIRSTY;
-    Package bedPackage = new Package(PackageNames.SWEET_TOOTH, BigDecimal.valueOf(100));
-    Package otherBedPackage = new Package(PackageNames.ALL_YOU_CAN_DRINK, BigDecimal.valueOf(100));
-    List<Package> packages = Arrays.asList(bedPackage, otherBedPackage);
+    Packages packageName = Packages.BLOODTHIRSTY;
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
+    pricesPerNight.put(Packages.SWEET_TOOTH, createPricePerNight());
+    pricesPerNight.put(Packages.ALL_YOU_CAN_DRINK, createPricePerNight());
     BedMatcher bedMatcher = aBedMatcher().withPackageName(packageName).build();
-    Bed bed = aBed().withPackages(packages).build();
+    Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
 
     boolean matches = bedMatcher.matches(bed);
 

@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFactory;
-import ca.ulaval.glo2003.beds.domain.BedMatcher;
-import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
@@ -25,6 +22,7 @@ public class BedServiceTest {
   private BedNumberMapper bedNumberMapper;
   private BedMatcherMapper bedMatcherMapper;
   private BedRepository bedRepository;
+  private BedStarsCalculator bedStarsCalculator;
 
   @BeforeEach
   public void setUpService() {
@@ -33,8 +31,15 @@ public class BedServiceTest {
     bedNumberMapper = mock(BedNumberMapper.class);
     bedMatcherMapper = mock(BedMatcherMapper.class);
     bedRepository = mock(BedRepository.class);
+    bedStarsCalculator = mock(BedStarsCalculator.class);
     bedService =
-        new BedService(bedFactory, bedMapper, bedNumberMapper, bedMatcherMapper, bedRepository);
+        new BedService(
+            bedFactory,
+            bedMapper,
+            bedNumberMapper,
+            bedMatcherMapper,
+            bedRepository,
+            bedStarsCalculator);
   }
 
   @Test
@@ -69,11 +74,13 @@ public class BedServiceTest {
     Map<String, String[]> params = new HashMap<>();
     BedMatcher bedMatcher = mock(BedMatcher.class);
     Bed expectedBed = mock(Bed.class);
+    int expectedStars = 1;
     BedResponse expectedBedResponse = mock(BedResponse.class);
     when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
     when(bedRepository.getAll()).thenReturn(Collections.singletonList(expectedBed));
     when(bedMatcher.matches(expectedBed)).thenReturn(true);
-    when(bedMapper.toResponse(expectedBed)).thenReturn(expectedBedResponse);
+    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
+    when(bedMapper.toResponse(expectedBed, expectedStars)).thenReturn(expectedBedResponse);
 
     List<BedResponse> bedResponses = bedService.getAll(params);
 
@@ -86,10 +93,12 @@ public class BedServiceTest {
     String requestedNumber = "requestedNumber";
     UUID bedNumber = mock(UUID.class);
     Bed expectedBed = mock(Bed.class);
+    int expectedStars = 1;
     BedResponse expectedBedResponse = mock(BedResponse.class);
     when(bedNumberMapper.fromString(requestedNumber)).thenReturn(bedNumber);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(expectedBed);
-    when(bedMapper.toResponse(expectedBed)).thenReturn(expectedBedResponse);
+    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
+    when(bedMapper.toResponse(expectedBed, expectedStars)).thenReturn(expectedBedResponse);
 
     BedResponse bedResponse = bedService.getByNumber(requestedNumber);
 
