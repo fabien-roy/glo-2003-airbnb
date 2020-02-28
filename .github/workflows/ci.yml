@@ -1,4 +1,4 @@
-name: Project Eq08 CI
+name: Airbnb CI
 on:
   push:
     branches:
