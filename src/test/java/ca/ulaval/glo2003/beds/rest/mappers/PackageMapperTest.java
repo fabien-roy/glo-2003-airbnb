@@ -121,6 +121,16 @@ class PackageMapperTest {
   }
 
   @Test
+  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackage() {
+    Packages packageName = Packages.BLOODTHIRSTY;
+    PackageRequest request1 = aPackageRequest().withName(packageName.toString()).build();
+    PackageRequest request2 = aPackageRequest().withName(packageName.toString()).build();
+    List<PackageRequest> requests = Arrays.asList(request1, request2);
+
+    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+  }
+
+  @Test
   public void toResponses_withSinglePricePerNight_shouldMapASinglePackageResponse() {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
