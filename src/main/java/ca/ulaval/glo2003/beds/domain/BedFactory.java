@@ -7,6 +7,7 @@ public class BedFactory {
 
   public Bed create(Bed bed) {
     validateCapacity(bed);
+    validatePackageDependencies(bed);
     UUID bedNumber = UUID.randomUUID();
     bed.setNumber(bedNumber);
     return bed;
@@ -16,5 +17,14 @@ public class BedFactory {
     int maxCapacity = BedTypesCapacities.get(bed.getBedType());
 
     if (bed.getCapacity() > maxCapacity) throw new ExceedingAccommodationCapacityException();
+  }
+
+  private void validatePackageDependencies(Bed bed) {
+    for (Packages testPackage : Packages.values()) {
+      if (bed.isPackageAvailable(testPackage)) {
+        Packages dependency = PackagesDependency.getDependency(testPackage);
+        if (!bed.isPackageAvailable(dependency)) throw PackagesDependency.getException(testPackage);
+      }
+    }
   }
 }

@@ -6,20 +6,14 @@ import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackage
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.PackagesDependency;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
-import ca.ulaval.glo2003.beds.rest.exceptions.SweetToothDependencyException;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class PackageMapperTest {
 
@@ -208,71 +202,5 @@ class PackageMapperTest {
     assertTrue(
         responses.stream()
             .anyMatch(response -> otherExpectedPricePerNight == response.getPricePerNight()));
-  }
-
-  @ParameterizedTest
-  @EnumSource(Packages.class)
-  public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
-      Packages testPackage) {
-    List<String> requestPackagesNames = new ArrayList<String>();
-    do {
-      requestPackagesNames.add(testPackage.toString());
-      testPackage = PackagesDependency.getDependency(testPackage);
-    } while (testPackage != null);
-    List<PackageRequest> packageRequests =
-        requestPackagesNames.stream()
-            .map(s -> aPackageRequest().withName(s).build())
-            .collect(Collectors.toList());
-
-    assertDoesNotThrow(() -> packageMapper.fromRequests(packageRequests));
-  }
-
-  @Test
-  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
-    Packages expectedPackage = Packages.ALL_YOU_CAN_DRINK;
-    String packageName = expectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    List<PackageRequest> requests = Collections.singletonList(request);
-
-    assertThrows(
-        AllYouCanDrinkDependencyException.class, () -> packageMapper.fromRequests(requests));
-  }
-
-  @Test
-  public void create_withoutSweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
-    Packages expectedPackage = Packages.BLOODTHIRSTY;
-    Packages otherExpectedPackage = Packages.SWEET_TOOTH;
-    String packageName = expectedPackage.toString();
-    String otherPackageName = otherExpectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
-    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
-
-    assertThrows(SweetToothDependencyException.class, () -> packageMapper.fromRequests(requests));
-  }
-
-  @Test
-  public void
-      create_withSWAmdAYCNWithoutAYCDDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
-    Packages expectedPackage = Packages.ALL_YOU_CAN_DRINK;
-    Packages otherExpectedPackage = Packages.SWEET_TOOTH;
-    String packageName = expectedPackage.toString();
-    String otherPackageName = otherExpectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
-    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
-
-    assertThrows(
-        AllYouCanDrinkDependencyException.class, () -> packageMapper.fromRequests(requests));
-  }
-
-  @Test
-  public void create_withOnlySweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
-    Packages expectedPackage = Packages.SWEET_TOOTH;
-    String packageName = expectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    List<PackageRequest> requests = Collections.singletonList(request);
-
-    assertThrows(SweetToothDependencyException.class, () -> packageMapper.fromRequests(requests));
   }
 }
