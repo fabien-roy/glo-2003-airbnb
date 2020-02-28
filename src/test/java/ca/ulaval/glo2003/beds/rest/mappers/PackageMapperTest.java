@@ -241,12 +241,37 @@ class PackageMapperTest {
   @Test
   public void create_withoutSweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
     Packages expectedPackage = Packages.BLOODTHIRSTY;
-    Packages otherExpectedPackage = Packages.ALL_YOU_CAN_DRINK;
+    Packages otherExpectedPackage = Packages.SWEET_TOOTH;
     String packageName = expectedPackage.toString();
     String otherPackageName = otherExpectedPackage.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
+
+    assertThrows(SweetToothDependencyException.class, () -> packageMapper.fromRequests(requests));
+  }
+
+  @Test
+  public void
+      create_withSWAmdAYCNWithoutAYCDDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
+    Packages expectedPackage = Packages.ALL_YOU_CAN_DRINK;
+    Packages otherExpectedPackage = Packages.SWEET_TOOTH;
+    String packageName = expectedPackage.toString();
+    String otherPackageName = otherExpectedPackage.toString();
+    PackageRequest request = aPackageRequest().withName(packageName).build();
+    PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
+    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
+
+    assertThrows(
+        AllYouCanDrinkDependencyException.class, () -> packageMapper.fromRequests(requests));
+  }
+
+  @Test
+  public void create_withOnlySweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
+    Packages expectedPackage = Packages.SWEET_TOOTH;
+    String packageName = expectedPackage.toString();
+    PackageRequest request = aPackageRequest().withName(packageName).build();
+    List<PackageRequest> requests = Collections.singletonList(request);
 
     assertThrows(SweetToothDependencyException.class, () -> packageMapper.fromRequests(requests));
   }
