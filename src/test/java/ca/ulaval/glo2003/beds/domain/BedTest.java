@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;

@@ -12,20 +12,8 @@ public class Booking {
   private String tenantPublicKey;
   private LocalDate arrivalDate;
   private int numberOfNights;
-  private Packages packageName; // TODO : Actually map this
+  private Packages packageName;
   private List<Transaction> transactions;
-
-  // TODO : Use other constructor
-  public Booking(
-      String tenantPublicKey,
-      LocalDate arrivalDate,
-      int numberOfNights,
-      List<Transaction> transactions) {
-    this.tenantPublicKey = tenantPublicKey;
-    this.arrivalDate = arrivalDate;
-    this.numberOfNights = numberOfNights;
-    this.transactions = transactions;
-  }
 
   public Booking(
       String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
@@ -51,7 +39,7 @@ public class Booking {
     return numberOfNights;
   }
 
-  public Packages getPackageName() {
+  public Packages getPackage() {
     return packageName;
   }
 
