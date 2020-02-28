@@ -35,5 +35,8 @@ public class ErrorResource implements RouteGroup {
     exception(BedAlreadyBookedException.class, new BedAlreadyBookedExceptionHandler());
     exception(BookingNotAllowedException.class, new BookingNotAllowedExceptionHandler());
     exception(PackageNotAvailableException.class, new PackageNotAvailableExceptionHandler());
+    exception(
+        AllYouCanDrinkDependencyException.class, new AllYouCanDrinkDependencyExceptionHandler());
+    exception(SweetToothDependencyException.class, new SweetToothDependencyExceptionHandler());
   }
 }
