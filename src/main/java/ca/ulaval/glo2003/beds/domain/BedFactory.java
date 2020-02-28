@@ -16,14 +16,16 @@ public class BedFactory {
   private void validateCapacity(Bed bed) {
     int maxCapacity = BedTypesCapacities.get(bed.getBedType());
 
-    if (bed.getCapacity() > maxCapacity) throw new ExceedingAccommodationCapacityException();
+    if (bed.getCapacity() > maxCapacity) {
+      throw new ExceedingAccommodationCapacityException();
+    }
   }
 
   private void validatePackageDependencies(Bed bed) {
     for (Packages testPackage : Packages.values()) {
-      if (bed.isPackageAvailable(testPackage)) {
-        Packages dependency = PackagesDependency.getDependency(testPackage);
-        if (!bed.isPackageAvailable(dependency)) throw PackagesDependency.getException(testPackage);
+      if (bed.isPackageAvailable(testPackage)
+          && !bed.isPackageAvailable(PackagesDependency.getDependency(testPackage))) {
+        throw PackagesDependency.getException(testPackage);
       }
     }
   }
