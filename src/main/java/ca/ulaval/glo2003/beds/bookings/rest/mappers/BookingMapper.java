@@ -5,6 +5,7 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastExcep
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
+import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.time.LocalDate;
 
@@ -18,11 +19,14 @@ public class BookingMapper {
     validateDate(bookingRequest.getArrivalDate());
     validateNumberOfNights(bookingRequest.getNumberOfNights());
     validatePublicKey(bookingRequest.getTenantPublicKey());
+
+    Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
+
     return new Booking(
         bookingRequest.getTenantPublicKey(),
         LocalDate.parse(bookingRequest.getArrivalDate()),
         bookingRequest.getNumberOfNights(),
-        bookingRequest.getBookingPackage());
+        bookingPackage);
   }
 
   public BookingResponse toResponse(Booking booking) {

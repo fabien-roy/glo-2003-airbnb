@@ -47,6 +47,6 @@ public class BookingBuilder {
   }
 
   public Booking build() {
-    return new Booking(tenantPublicKey, arrivalDate, numberOfNights, packageName.toString());
+    return new Booking(tenantPublicKey, arrivalDate, numberOfNights, packageName);
   }
 }

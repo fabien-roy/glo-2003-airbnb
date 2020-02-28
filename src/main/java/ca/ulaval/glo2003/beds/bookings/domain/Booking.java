@@ -16,11 +16,11 @@ public class Booking {
   private List<Transaction> transactions;
 
   public Booking(
-      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, String packageName) {
+      String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
-    this.packageName = Packages.get(packageName);
+    this.packageName = packageName;
   }
 
   public UUID getNumber() {
@@ -41,6 +41,10 @@ public class Booking {
 
   public Packages getPackage() {
     return packageName;
+  }
+
+  public List<Transaction> getTransactions() {
+    return transactions;
   }
 
   public boolean isOverlapping(Booking otherBooking) {
