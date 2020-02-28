@@ -10,12 +10,12 @@ import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.rest.exceptions.SweetToothDependencyException;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 class BedFactoryTest {
 
   BedFactory bedFactory;
-  BedMapper bedMapper;
+  PackageMapper packageMapper;
 
   @BeforeEach
   public void setUpFactory() {
     bedFactory = new BedFactory();
-    bedMapper = new BedMapper(new PackageMapper());
+    packageMapper = new PackageMapper();
   }
 
   @Test
@@ -75,9 +75,11 @@ class BedFactoryTest {
         requestPackagesNames.stream()
             .map(s -> aPackageRequest().withName(s).build())
             .collect(Collectors.toList());
-    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Map<Packages, Price> packagesMap = packageMapper.fromRequests(packageRequests);
 
-    assertDoesNotThrow(() -> bedMapper.fromRequest(bedRequest));
+    Bed bed = aBed().withPricesPerNights(packagesMap).build();
+
+    assertDoesNotThrow(() -> bedFactory.create(bed));
   }
 
   @Test
@@ -87,8 +89,11 @@ class BedFactoryTest {
     PackageRequest request = aPackageRequest().withName(packageName).build();
     List<PackageRequest> packageRequests = Collections.singletonList(request);
     BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Map<Packages, Price> packagesMap = packageMapper.fromRequests(packageRequests);
 
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedMapper.fromRequest(bedRequest));
+    Bed bed = aBed().withPricesPerNights(packagesMap).build();
+
+    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed));
   }
 
   @Test
@@ -100,9 +105,11 @@ class BedFactoryTest {
     PackageRequest request = aPackageRequest().withName(packageName).build();
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     List<PackageRequest> packageRequests = Arrays.asList(request, otherRequest);
-    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Map<Packages, Price> packagesMap = packageMapper.fromRequests(packageRequests);
 
-    assertThrows(SweetToothDependencyException.class, () -> bedMapper.fromRequest(bedRequest));
+    Bed bed = aBed().withPricesPerNights(packagesMap).build();
+
+    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed));
   }
 
   @Test
@@ -115,9 +122,11 @@ class BedFactoryTest {
     PackageRequest request = aPackageRequest().withName(packageName).build();
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     List<PackageRequest> packageRequests = Arrays.asList(request, otherRequest);
-    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Map<Packages, Price> packagesMap = packageMapper.fromRequests(packageRequests);
 
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedMapper.fromRequest(bedRequest));
+    Bed bed = aBed().withPricesPerNights(packagesMap).build();
+
+    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed));
   }
 
   @Test
@@ -126,8 +135,10 @@ class BedFactoryTest {
     String packageName = expectedPackage.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     List<PackageRequest> packageRequests = Collections.singletonList(request);
-    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
+    Map<Packages, Price> packagesMap = packageMapper.fromRequests(packageRequests);
 
-    assertThrows(SweetToothDependencyException.class, () -> bedMapper.fromRequest(bedRequest));
+    Bed bed = aBed().withPricesPerNights(packagesMap).build();
+
+    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed));
   }
 }
