@@ -11,6 +11,8 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateExcepti
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,6 +59,34 @@ class BookingMapperTest {
   }
 
   @Test
+  public void fromRequest_shouldMapTenantPublicKey() {
+    String expectedPublicKey = createTenantPublicKey();
+    BookingRequest request = aBookingRequest().withTenantPublicKey(expectedPublicKey).build();
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(expectedPublicKey, booking.getTenantPublicKey());
+  }
+
+  @Test
+  public void fromRequest_withInvalidTenantPublicKey_shouldThrowInvalidPublicKeyException() {
+    String invalidTenantPublicKey = "invalidTenantPublicKey";
+    BookingRequest bookingRequest =
+        aBookingRequest().withTenantPublicKey(invalidTenantPublicKey).build();
+
+    Assertions.assertThrows(
+        InvalidPublicKeyException.class, () -> bookingMapper.fromRequest(bookingRequest));
+  }
+
+  @Test
+  public void fromRequest_withoutTenantPublicKey_shouldThrowInvalidFormatException() {
+    BookingRequest bookingRequest = aBookingRequest().withTenantPublicKey(null).build();
+
+    Assertions.assertThrows(
+        InvalidFormatException.class, () -> bookingMapper.fromRequest(bookingRequest));
+  }
+
+  @Test
   public void fromRequest_shouldMapArrivalDate() {
     LocalDate expectedDate = LocalDate.now();
     BookingRequest request = aBookingRequest().withArrivalDate(expectedDate.toString()).build();
@@ -67,23 +97,29 @@ class BookingMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapPackage() {
-    Packages expectedPackageName = Packages.SWEET_TOOTH;
-    BookingRequest request = aBookingRequest().withPackage(expectedPackageName.toString()).build();
+  public void fromRequest_withInvalidArrivalDate_shouldThrowInvalidArrivalDateException() {
+    String invalidArrivalDate = "invalidArrivalDate";
+    BookingRequest bookingRequest = aBookingRequest().withArrivalDate(invalidArrivalDate).build();
 
-    Booking booking = bookingMapper.fromRequest(request);
-
-    assertEquals(expectedPackageName, booking.getPackage());
+    Assertions.assertThrows(
+        InvalidArrivalDateException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
-  public void fromRequest_shouldMapPublicKey() {
-    String expectedPublicKey = createTenantPublicKey();
-    BookingRequest request = aBookingRequest().withTenantPublicKey(expectedPublicKey).build();
+  public void fromRequest_withArrivalDateInThePast_shouldThrowArrivalDateInThePastException() {
+    String arrivalDateInThePast = LocalDate.now().minusDays(1).toString();
+    BookingRequest bookingRequest = aBookingRequest().withArrivalDate(arrivalDateInThePast).build();
 
-    Booking booking = bookingMapper.fromRequest(request);
+    Assertions.assertThrows(
+        ArrivalDateInThePastException.class, () -> bookingMapper.fromRequest(bookingRequest));
+  }
 
-    assertEquals(expectedPublicKey, booking.getTenantPublicKey());
+  @Test
+  public void fromRequest_withoutArrivalDate_shouldThrowInvalidFormatException() {
+    BookingRequest bookingRequest = aBookingRequest().withArrivalDate(null).build();
+
+    Assertions.assertThrows(
+        InvalidFormatException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
@@ -97,32 +133,45 @@ class BookingMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidNumberOfNights_shoudThrowInvalidNumberOfNights() {
-    BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(95).build();
+  public void fromRequest_withTooLowNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
+    BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(0).build();
+
     Assertions.assertThrows(
         InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
-  public void fromRequest_withInvalidArrivalDate_shoudThrowInvalidArrivalDate() {
-    BookingRequest bookingRequest =
-        aBookingRequest().withArrivalDate("This is wrong. No Really").build();
+  public void fromRequest_withTooHighNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
+    BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(95).build();
+
     Assertions.assertThrows(
-        InvalidArrivalDateException.class, () -> bookingMapper.fromRequest(bookingRequest));
+        InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
-  public void fromRequest_withArrivalDateInThePast_shoudThrowArrivalDateInThePast() {
-    BookingRequest bookingRequest = aBookingRequest().withArrivalDate("2019-07-03").build();
-    Assertions.assertThrows(
-        ArrivalDateInThePastException.class, () -> bookingMapper.fromRequest(bookingRequest));
+  public void fromRequest_shouldMapPackage() {
+    Packages expectedPackageName = Packages.SWEET_TOOTH;
+    BookingRequest request = aBookingRequest().withPackage(expectedPackageName.toString()).build();
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(expectedPackageName, booking.getPackage());
   }
 
   @Test
-  public void fromRequest_withoutTenantPublicKey_shoudThrowInvalidPublicKeyException() {
-    BookingRequest bookingRequest =
-        aBookingRequest().withTenantPublicKey("key that is too short").build();
+  public void fromRequest_withInvalidPackage_shouldThrowInvalidPackageException() {
+    String invalidPackage = "invalidPackage";
+    BookingRequest bookingRequest = aBookingRequest().withPackage(invalidPackage).build();
+
     Assertions.assertThrows(
-        InvalidPublicKeyException.class, () -> bookingMapper.fromRequest(bookingRequest));
+        InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
+  }
+
+  @Test
+  public void fromRequest_withoutPackage_shouldThrowInvalidFormatException() {
+    BookingRequest bookingRequest = aBookingRequest().withPackage(null).build();
+
+    Assertions.assertThrows(
+        InvalidFormatException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 }

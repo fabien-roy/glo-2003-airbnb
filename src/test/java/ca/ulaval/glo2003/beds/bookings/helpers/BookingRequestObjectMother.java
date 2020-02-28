@@ -20,7 +20,7 @@ public class BookingRequestObjectMother {
   }
 
   public static String createTenantPublicKey() {
-    return fakeValuesService.regexify(BookingMapper.OWNER_PUBLIC_KEY_PATTERN);
+    return fakeValuesService.regexify(BookingMapper.TENANT_PUBLIC_KEY_PATTERN);
   }
 
   public static String createArrivalDate() {

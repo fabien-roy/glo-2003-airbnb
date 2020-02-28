@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 public class BookingMapper {
 
-  public static final String OWNER_PUBLIC_KEY_PATTERN = "([A-Z]|[0-9]){64}";
+  public static final String TENANT_PUBLIC_KEY_PATTERN =
+      "([A-Z]|[0-9]){64}"; // TODO : Same as Bed.ownerPublicKey. Move to object?
   public static final String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
 
   public Booking fromRequest(BookingRequest bookingRequest) {
@@ -55,6 +56,6 @@ public class BookingMapper {
   }
 
   private void validatePublicKey(String publicKey) {
-    if (!publicKey.matches(OWNER_PUBLIC_KEY_PATTERN)) throw new InvalidPublicKeyException();
+    if (!publicKey.matches(TENANT_PUBLIC_KEY_PATTERN)) throw new InvalidPublicKeyException();
   }
 }
