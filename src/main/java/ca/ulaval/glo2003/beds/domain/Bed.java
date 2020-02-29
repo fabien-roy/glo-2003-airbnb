@@ -82,6 +82,10 @@ public class Bed {
     return bookings;
   }
 
+  public Set<Packages> getPackages() {
+    return pricesPerNight.keySet();
+  }
+
   public void book(Booking booking, Packages bookingPackage) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
