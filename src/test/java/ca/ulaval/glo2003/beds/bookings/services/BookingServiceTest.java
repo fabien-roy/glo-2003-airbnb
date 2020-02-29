@@ -5,11 +5,14 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
+import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.Price;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +24,10 @@ public class BookingServiceTest {
   private BookingMapper bookingMapper;
   private BedRepository bedRepository;
   private BookingFactory bookingFactory;
+  private BookingTotalCalculator bookingTotalCalculator;
+
+  private static final String TENANT = "a tenant";
+  private static final String OWNER = "an owner";
 
   @BeforeEach
   public void setUpService() {
@@ -28,67 +35,33 @@ public class BookingServiceTest {
     bookingMapper = mock(BookingMapper.class);
     bedRepository = mock(BedRepository.class);
     bookingFactory = mock(BookingFactory.class);
+    bookingTotalCalculator = mock(BookingTotalCalculator.class);
     bookingService =
-        new BookingService(transactionFactory, bookingMapper, bedRepository, bookingFactory);
+        new BookingService(
+            transactionFactory,
+            bookingMapper,
+            bedRepository,
+            bookingFactory,
+            bookingTotalCalculator);
   }
 
   @Test
-  public void add_withBookingRequest_shouldMapRequest() {
+  public void add_shouldSaveBedToBedRepository() {
     UUID bedNumber = mock(UUID.class);
     BookingRequest bookingRequest = mock(BookingRequest.class);
     Bed bedOfBooking = mock(Bed.class);
     Booking expectedBooking = mock(Booking.class);
+    Price priceOfBooking = mock(Price.class);
+    Transaction transaction = mock(Transaction.class);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(expectedBooking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bedOfBooking);
     when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
-    when(expectedBooking.getNumber()).thenReturn(bedNumber);
-
-    bookingService.add(bedNumber, bookingRequest);
-
-    verify(bookingMapper).fromRequest(bookingRequest);
-  }
-
-  @Test
-  public void add_withBookingRequest_shouldGetBedFromBedRepository() {
-    UUID bedNumber = mock(UUID.class);
-    BookingRequest bookingRequest = mock(BookingRequest.class);
-    Bed bedOfBooking = mock(Bed.class);
-    Booking expectedBooking = mock(Booking.class);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(expectedBooking);
-    when(bedRepository.getByNumber(bedNumber)).thenReturn(bedOfBooking);
-    when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
-    when(expectedBooking.getNumber()).thenReturn(bedNumber);
-
-    bookingService.add(bedNumber, bookingRequest);
-
-    verify(bedRepository).getByNumber(bedNumber);
-  }
-
-  @Test
-  public void add_withBookingRequest_shouldCreateBookingWithBookingFactory() {
-    UUID bedNumber = mock(UUID.class);
-    BookingRequest bookingRequest = mock(BookingRequest.class);
-    Bed bedOfBooking = mock(Bed.class);
-    Booking expectedBooking = mock(Booking.class);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(expectedBooking);
-    when(bedRepository.getByNumber(bedNumber)).thenReturn(bedOfBooking);
-    when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
-    when(expectedBooking.getNumber()).thenReturn(bedNumber);
-
-    bookingService.add(bedNumber, bookingRequest);
-
-    verify(bookingFactory).create(expectedBooking);
-  }
-
-  @Test
-  public void add_withBookingRequest_shouldSaveBedToBedRepository() {
-    UUID bedNumber = mock(UUID.class);
-    BookingRequest bookingRequest = mock(BookingRequest.class);
-    Bed bedOfBooking = mock(Bed.class);
-    Booking expectedBooking = mock(Booking.class);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(expectedBooking);
-    when(bedRepository.getByNumber(bedNumber)).thenReturn(bedOfBooking);
-    when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
+    when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
+        .thenReturn(priceOfBooking);
+    when(transactionFactory.createStayBooked(TENANT, priceOfBooking)).thenReturn(transaction);
+    when(transactionFactory.createStayCompleted(
+            OWNER, priceOfBooking, expectedBooking.getNumberOfNights()))
+        .thenReturn(transaction);
     when(expectedBooking.getNumber()).thenReturn(bedNumber);
 
     bookingService.add(bedNumber, bookingRequest);
@@ -97,14 +70,22 @@ public class BookingServiceTest {
   }
 
   @Test
-  public void add_withBookingRequest_shouldReturnBookingNumber() {
+  public void add_shouldReturnBookingNumber() {
     UUID bedNumber = mock(UUID.class);
     BookingRequest bookingRequest = mock(BookingRequest.class);
     Bed bedOfBooking = mock(Bed.class);
     Booking expectedBooking = mock(Booking.class);
+    Price priceOfBooking = mock(Price.class);
+    Transaction transaction = mock(Transaction.class);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(expectedBooking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bedOfBooking);
     when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
+    when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
+        .thenReturn(priceOfBooking);
+    when(transactionFactory.createStayBooked(TENANT, priceOfBooking)).thenReturn(transaction);
+    when(transactionFactory.createStayCompleted(
+            OWNER, priceOfBooking, expectedBooking.getNumberOfNights()))
+        .thenReturn(transaction);
     when(expectedBooking.getNumber()).thenReturn(bedNumber);
 
     String bookingNumber = bookingService.add(bedNumber, bookingRequest);

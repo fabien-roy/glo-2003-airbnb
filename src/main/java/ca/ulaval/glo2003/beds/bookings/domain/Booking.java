@@ -27,6 +27,10 @@ public class Booking {
     return number;
   }
 
+  public void setNumber(UUID number) {
+    this.number = number;
+  }
+
   public String getTenantPublicKey() {
     return tenantPublicKey;
   }
@@ -54,9 +58,5 @@ public class Booking {
 
   public LocalDate getDepartureDate() {
     return arrivalDate.plusDays(numberOfNights - 1);
-  }
-
-  public void setNumber(UUID number) {
-    this.number = number;
   }
 }
