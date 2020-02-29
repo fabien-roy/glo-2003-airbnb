@@ -42,7 +42,7 @@ public class BookingService {
     // TODO : Create both transactions using TransactionFactory
     // TODO : Add transactions to booking
     // TODO : Save bed in repository (TEST)
-    return "tryyyy"; // null; // TODO : Return new booking number (TEST)
+    return null; // TODO : Return new booking number (TEST)
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
