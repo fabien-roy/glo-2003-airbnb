@@ -55,4 +55,8 @@ public class Booking {
   public LocalDate getDepartureDate() {
     return arrivalDate.plusDays(numberOfNights - 1);
   }
+
+  public void setNumber(UUID number) {
+    this.number = number;
+  }
 }
