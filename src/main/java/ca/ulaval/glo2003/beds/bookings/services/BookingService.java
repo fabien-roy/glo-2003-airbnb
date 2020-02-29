@@ -3,12 +3,12 @@ package ca.ulaval.glo2003.beds.bookings.services;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
+import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-
 import java.util.UUID;
 
 public class BookingService {
@@ -19,7 +19,12 @@ public class BookingService {
   private final BookingNumberMapper bookingNumberMapper;
   private final BedNumberMapper bedNumberMapper;
 
-  public BookingService(TransactionFactory transactionFactory, BedRepository bedRepository, BookingMapper bookingMapper, BedNumberMapper bedNumberMapper, BookingNumberMapper bookingNumberMapper) {
+  public BookingService(
+      TransactionFactory transactionFactory,
+      BedRepository bedRepository,
+      BookingMapper bookingMapper,
+      BedNumberMapper bedNumberMapper,
+      BookingNumberMapper bookingNumberMapper) {
     this.transactionFactory = transactionFactory;
     this.bedRepository = bedRepository;
     this.bookingMapper = bookingMapper;
@@ -28,7 +33,7 @@ public class BookingService {
   }
 
   // TODO : Add BookingRequest to parameters
-  public String add(UUID bedNumber) {
+  public String add(String bedNumber, BookingRequest bookingRequest) {
     // TODO : map booking via bookingMapper
     // TODO : get beds via BedRepository
     // TODO : Bed.book(booking)

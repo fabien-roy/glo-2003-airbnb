@@ -29,7 +29,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void add_shouldBedNumberAsHeaderLocation() throws JsonProcessingException {
+  public void add_shouldReturnCorrectHeaderLocation() throws JsonProcessingException {
     String expectedBedNumber = "expectedBedNumber";
     String expectedHeaderLocation = "/beds/" + expectedBedNumber;
     Request request = mock(Request.class);

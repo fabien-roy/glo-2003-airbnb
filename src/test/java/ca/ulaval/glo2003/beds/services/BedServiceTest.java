@@ -89,6 +89,35 @@ public class BedServiceTest {
   }
 
   @Test
+  public void getAll_withParams_shouldGetMatchingBedsInDecreasingOrderOfStars() {
+    Map<String, String[]> params = new HashMap<>();
+    BedMatcher bedMatcher = mock(BedMatcher.class);
+    int firstExpectedStars = 5;
+    int secondExpectedStars = 3;
+    Bed firstExpectedBed = mock(Bed.class);
+    Bed secondExpectedBed = mock(Bed.class);
+    BedResponse firstExpectedBedResponse = mock(BedResponse.class);
+    BedResponse secondExpectedBedResponse = mock(BedResponse.class);
+    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
+    when(bedRepository.getAll()).thenReturn(Arrays.asList(secondExpectedBed, firstExpectedBed));
+    when(bedMatcher.matches(any(Bed.class))).thenReturn(true);
+    when(bedStarsCalculator.calculateStars(firstExpectedBed)).thenReturn(firstExpectedStars);
+    when(bedStarsCalculator.calculateStars(secondExpectedBed)).thenReturn(secondExpectedStars);
+    when(bedMapper.toResponse(firstExpectedBed, firstExpectedStars))
+        .thenReturn(firstExpectedBedResponse);
+    when(bedMapper.toResponse(secondExpectedBed, secondExpectedStars))
+        .thenReturn(secondExpectedBedResponse);
+    when(firstExpectedBedResponse.getStars()).thenReturn(firstExpectedStars);
+    when(secondExpectedBedResponse.getStars()).thenReturn(secondExpectedStars);
+
+    List<BedResponse> bedResponses = bedService.getAll(params);
+
+    assertEquals(2, bedResponses.size());
+    assertSame(firstExpectedBedResponse, bedResponses.get(0));
+    assertSame(secondExpectedBedResponse, bedResponses.get(1));
+  }
+
+  @Test
   public void getByNumber_withNumber_shouldGetBed() {
     String requestedNumber = "requestedNumber";
     UUID bedNumber = mock(UUID.class);
