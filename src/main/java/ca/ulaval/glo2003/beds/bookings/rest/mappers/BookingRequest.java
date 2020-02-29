@@ -1,10 +1,14 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class BookingRequest {
 
   private String tenantPublicKey;
   private String arrivalDate;
   private int numberOfNights;
+
+  @JsonProperty("package")
   private String bookingPackage;
 
   public BookingRequest() {}
