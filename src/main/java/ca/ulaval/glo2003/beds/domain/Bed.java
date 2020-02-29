@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
@@ -84,6 +85,18 @@ public class Bed {
 
   public Set<Packages> getPackages() {
     return pricesPerNight.keySet();
+  }
+
+  // TODO tests inspirés de bedropository.getbynumber
+  public Booking getBookingByNumber(UUID number) {
+    Optional<Booking> foundBooking =
+        bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
+
+    if (!foundBooking.isPresent()) {
+      throw new BookingNotFoundException(number.toString());
+    }
+
+    return foundBooking.get();
   }
 
   public void book(Booking booking, Packages bookingPackage) {
