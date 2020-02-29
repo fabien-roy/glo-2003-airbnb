@@ -9,12 +9,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.junit.jupiter.api.Test;
 
 class BedTest {
@@ -68,5 +67,54 @@ class BedTest {
 
     assertThrows(PackageNotAvailableException.class, () -> bed.book(booking, bookingPackage));
     assertFalse(bed.getBookings().contains(booking));
+  }
+
+  @Test
+  public void getBookingByNumber_withNoBooking_shouldThrowBookingNotFoundException() {
+    UUID bookingNumber = mock(UUID.class);
+    Bed bed = aBed().withBookings(Collections.emptyList()).build();
+
+    assertThrows(BookingNotFoundException.class, () -> bed.getBookingByNumber(bookingNumber));
+  }
+
+  @Test
+  public void
+      getBookingByNumber_withNonExistentBookingNumber_shouldThrowBookingNotFoundException() {
+    UUID existentBookingNumber = mock(UUID.class);
+    UUID nonExistentBookingNumber = mock(UUID.class);
+    Booking existentBooking = mock(Booking.class);
+    Bed bed = aBed().withBookings(Collections.singletonList(existentBooking)).build();
+    when(existentBooking.getNumber()).thenReturn(existentBookingNumber);
+
+    assertThrows(
+        BookingNotFoundException.class, () -> bed.getBookingByNumber(nonExistentBookingNumber));
+  }
+
+  @Test
+  public void getBookingByNumber_withOneBooking_shouldGetBooking() {
+    UUID bookingNumber = mock(UUID.class);
+    Bed bed = mock(Bed.class);
+    Booking expectedBooking = mock(Booking.class);
+    when(bed.getBookingByNumber(bookingNumber)).thenReturn(expectedBooking);
+
+    Booking actualBooking = bed.getBookingByNumber(bookingNumber);
+
+    assertSame(expectedBooking, actualBooking);
+  }
+
+  @Test
+  public void getBookingByNumber_withMultipleBookings_shouldGetBooking() {
+    UUID bookingNumber = mock(UUID.class);
+    UUID otherBookingNumber = mock(UUID.class);
+    Bed bed = mock(Bed.class);
+    Booking expectedBooking = mock(Booking.class);
+    when(bed.getBookingByNumber(bookingNumber)).thenReturn(expectedBooking);
+    Bed otherBed = mock(Bed.class);
+    Booking otherExpectedBooking = mock(Booking.class);
+    when(otherBed.getBookingByNumber(otherBookingNumber)).thenReturn(otherExpectedBooking);
+
+    Booking actualBooking = bed.getBookingByNumber(bookingNumber);
+
+    assertSame(expectedBooking, actualBooking);
   }
 }
