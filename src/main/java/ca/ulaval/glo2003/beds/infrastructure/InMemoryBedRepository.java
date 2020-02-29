@@ -29,7 +29,7 @@ public class InMemoryBedRepository implements BedRepository {
   @Override
   public Bed getByNumber(UUID number) {
     Optional<Bed> foundBed =
-        beds.stream().filter(order -> order.getNumber().equals(number)).findAny();
+        beds.stream().filter(bed -> bed.getNumber().equals(number)).findAny();
 
     if (!foundBed.isPresent()) {
       throw new BedNotFoundException(number.toString());
