@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.domain;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
+import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.rest.BedRequest;
@@ -35,7 +36,9 @@ class BedFactoryTest {
 
   @Test
   public void create_shouldSetBedNumber() {
-    Bed bed = aBed().build();
+    List<PackageRequest> packageRequests = getPackageRequest();
+    Map<Packages, Price> packages = packageMapper.fromRequests(packageRequests);
+    Bed bed = aBed().withPricesPerNights(packages).build();
 
     bed = bedFactory.create(bed);
 
@@ -44,8 +47,12 @@ class BedFactoryTest {
 
   @Test
   public void create_shouldSetDifferentBedNumbers() {
-    Bed bed = aBed().build();
-    Bed otherBed = aBed().build();
+    List<PackageRequest> packageRequests = getPackageRequest();
+    List<PackageRequest> otherPackageRequests = getPackageRequest();
+    Map<Packages, Price> packages = packageMapper.fromRequests(packageRequests);
+    Map<Packages, Price> otherPackages = packageMapper.fromRequests(otherPackageRequests);
+    Bed bed = aBed().withPricesPerNights(packages).build();
+    Bed otherBed = aBed().withPricesPerNights(packages).build();
 
     bed = bedFactory.create(bed);
     otherBed = bedFactory.create(otherBed);
@@ -58,7 +65,14 @@ class BedFactoryTest {
   public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
       BedTypes bedType) {
     int maxCapacity = BedTypesCapacities.get(bedType);
-    Bed bed = aBed().withBedType(bedType).withCapacity(maxCapacity + 1).build();
+    List<PackageRequest> packageRequests = getPackageRequest();
+    Map<Packages, Price> packages = packageMapper.fromRequests(packageRequests);
+    Bed bed =
+        aBed()
+            .withBedType(bedType)
+            .withCapacity(maxCapacity + 1)
+            .withPricesPerNights(packages)
+            .build();
 
     assertThrows(ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed));
   }
@@ -140,5 +154,19 @@ class BedFactoryTest {
     Bed bed = aBed().withPricesPerNights(packagesMap).build();
 
     assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed));
+  }
+
+  private List<PackageRequest> getPackageRequest() {
+    Packages randPackage = randomEnum(Packages.class);
+    List<String> requestPackagesNames = new ArrayList<String>();
+    do {
+      requestPackagesNames.add(randPackage.toString());
+      randPackage = PackagesDependency.getDependency(randPackage);
+    } while (randPackage != null);
+    List<PackageRequest> packageRequests =
+        requestPackagesNames.stream()
+            .map(s -> aPackageRequest().withName(s).build())
+            .collect(Collectors.toList());
+    return packageRequests;
   }
 }
