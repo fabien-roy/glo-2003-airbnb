@@ -1,10 +1,14 @@
 package ca.ulaval.glo2003;
 
+import static ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResource.TRANSACTION_PATH;
 import static ca.ulaval.glo2003.beds.rest.BedResource.BED_PATH;
 import static ca.ulaval.glo2003.interfaces.rest.ErrorResource.ERROR_PATH;
 import static ca.ulaval.glo2003.interfaces.rest.RootResource.ROOT_PATH;
 import static spark.Spark.path;
 
+import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResource;
+import ca.ulaval.glo2003.beds.bookings.transactions.rest.mappers.TransactionMapper;
+import ca.ulaval.glo2003.beds.bookings.transactions.services.TransactionService;
 import ca.ulaval.glo2003.beds.domain.BedFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.BedStarsCalculator;
@@ -28,6 +32,7 @@ public class Router {
   private static final BedMapper bedMapper = new BedMapper(packageMapper);
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
+  private static final TransactionMapper transactionMapper = new TransactionMapper();
   private static final BedService bedService =
       new BedService(
           bedFactory,
@@ -36,10 +41,13 @@ public class Router {
           bedMatcherMapper,
           bedRepository,
           bedStarsCalculator);
+  private static final TransactionService transactionService =
+      new TransactionService(bedRepository, transactionMapper);
 
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorResource());
     path(ROOT_PATH, new RootResource());
     path(BED_PATH, new BedResource(bedService));
+    path(TRANSACTION_PATH, new TransactionResource(transactionService));
   }
 }

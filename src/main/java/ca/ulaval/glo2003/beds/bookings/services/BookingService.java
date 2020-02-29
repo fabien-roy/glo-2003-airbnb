@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class BookingService {
   }
 
   // TODO : Add BookingRequest to parameters
-  public String add(UUID bedNumber) {
+  public String add(UUID bedNumber, BedRequest bedRequest) {
     // TODO : map booking via bookingMapper
     // TODO : get beds via BedRepository
     // TODO : Bed.book(booking)

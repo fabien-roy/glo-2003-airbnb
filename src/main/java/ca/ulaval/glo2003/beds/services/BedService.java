@@ -54,6 +54,7 @@ public class BedService {
         .map(
             matchingBed ->
                 bedMapper.toResponse(matchingBed, bedStarsCalculator.calculateStars(matchingBed)))
+        .sorted(Comparator.comparingInt(BedResponse::getStars).reversed())
         .collect(Collectors.toList());
   }
 
