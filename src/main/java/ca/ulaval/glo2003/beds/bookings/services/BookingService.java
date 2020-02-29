@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.services;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
+import ca.ulaval.glo2003.beds.rest.BedRequest;
 import java.util.UUID;
 
 public class BookingService {
@@ -12,7 +13,7 @@ public class BookingService {
   }
 
   // TODO : Add BookingRequest to parameters
-  public String add(UUID bedNumber) {
+  public String add(UUID bedNumber, BedRequest bedRequest) {
     // TODO : map booking via bookingMapper
     // TODO : get beds via BedRepository
     // TODO : Bed.book(booking)
