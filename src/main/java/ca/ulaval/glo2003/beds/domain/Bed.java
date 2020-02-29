@@ -36,6 +36,7 @@ public class Bed {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.pricesPerNight = pricesPerNight;
+    this.bookings = new ArrayList<>();
   }
 
   public UUID getNumber() {
@@ -82,7 +83,6 @@ public class Bed {
     return bookings;
   }
 
-  //TODO tests inspirés de bedropository.getbynumber
   public Booking getBookingByNumber(UUID number) {
     Optional<Booking> foundBooking =
             bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
