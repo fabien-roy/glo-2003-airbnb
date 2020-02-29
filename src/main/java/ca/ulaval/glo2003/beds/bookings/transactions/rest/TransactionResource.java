@@ -13,7 +13,7 @@ import spark.RouteGroup;
 public class TransactionResource implements RouteGroup {
   private final TransactionService transactionService;
 
-  public static final String TRANSACTIONS_PATH = "/admin/transactions";
+  public static final String TRANSACTION_PATH = "/admin/transactions";
 
   public TransactionResource(TransactionService transactionService) {
     this.transactionService = transactionService;
