@@ -5,9 +5,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.services.TransactionService;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import spark.QueryParamsMap;
+import spark.Request;
+import spark.Response;
 
 class TransactionResourceTest {
 
@@ -21,10 +25,35 @@ class TransactionResourceTest {
   }
 
   @Test
-  public void getAll_shouldBeTheSameAsGetAllTransactionService() {
-    ;
-    TransactionResponse transactionResponse = mock(TransactionResponse.class);
-    when(transactionService.getAll()).thenReturn(Collections.singletonList(transactionResponse));
-    assertSame(transactionResource.getAll(), transactionService.getAll());
+  public void getAll_withOneBed_shouldReturnOnlyOneBeds() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    TransactionResponse expectedTransactionResponse = mock(TransactionResponse.class);
+    when(request.queryMap()).thenReturn(mock(QueryParamsMap.class));
+    when(transactionService.getAll()).thenReturn(Arrays.asList(expectedTransactionResponse));
+
+    List<TransactionResponse> transactionResponses =
+        (List<TransactionResponse>) transactionResource.getAll(request, response);
+
+    assertEquals(1, transactionResponses.size());
+    assertTrue(transactionResponses.contains(expectedTransactionResponse));
+  }
+
+  @Test
+  public void getAll_withMultipleBeds_shouldReturnAllBeds() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    TransactionResponse expectedTransactionResponse = mock(TransactionResponse.class);
+    TransactionResponse otherExpectedTransactionResponse = mock(TransactionResponse.class);
+    when(request.queryMap()).thenReturn(mock(QueryParamsMap.class));
+    when(transactionService.getAll())
+        .thenReturn(Arrays.asList(expectedTransactionResponse, otherExpectedTransactionResponse));
+
+    List<TransactionResponse> transactionResponses =
+        (List<TransactionResponse>) transactionResource.getAll(request, response);
+
+    assertEquals(2, transactionResponses.size());
+    assertTrue(transactionResponses.contains(expectedTransactionResponse));
+    assertTrue(transactionResponses.contains(otherExpectedTransactionResponse));
   }
 }
