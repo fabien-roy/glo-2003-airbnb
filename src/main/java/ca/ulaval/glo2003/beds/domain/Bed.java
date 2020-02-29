@@ -2,11 +2,10 @@ package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class Bed {
 
