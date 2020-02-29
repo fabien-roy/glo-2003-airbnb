@@ -8,7 +8,6 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-
 import java.util.UUID;
 
 public class BookingService {
@@ -19,7 +18,12 @@ public class BookingService {
   private final BookingNumberMapper bookingNumberMapper;
   private final BedNumberMapper bedNumberMapper;
 
-  public BookingService(TransactionFactory transactionFactory, BedRepository bedRepository, BookingMapper bookingMapper, BedNumberMapper bedNumberMapper, BookingNumberMapper bookingNumberMapper) {
+  public BookingService(
+      TransactionFactory transactionFactory,
+      BedRepository bedRepository,
+      BookingMapper bookingMapper,
+      BedNumberMapper bedNumberMapper,
+      BookingNumberMapper bookingNumberMapper) {
     this.transactionFactory = transactionFactory;
     this.bedRepository = bedRepository;
     this.bookingMapper = bookingMapper;

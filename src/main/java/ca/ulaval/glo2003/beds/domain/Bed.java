@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.beds.domain;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
-
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,10 +81,10 @@ public class Bed {
     return bookings;
   }
 
-  //TODO tests inspirés de bedropository.getbynumber
+  // TODO tests inspirés de bedropository.getbynumber
   public Booking getBookingByNumber(UUID number) {
     Optional<Booking> foundBooking =
-            bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
+        bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
 
     if (!foundBooking.isPresent()) {
       throw new BookingNotFoundException(number.toString());

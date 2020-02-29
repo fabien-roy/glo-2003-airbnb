@@ -25,7 +25,8 @@ public class BookingNotFoundExceptionHandler implements ExceptionHandler<Booking
 
   private String badRequest(String number) throws JsonProcessingException {
     ErrorResponse response =
-        new ErrorResponse("BOOKING_NOT_FOUND", "booking with number " + number + " could not be found");
+        new ErrorResponse(
+            "BOOKING_NOT_FOUND", "booking with number " + number + " could not be found");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
