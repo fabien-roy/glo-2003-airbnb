@@ -132,7 +132,7 @@ class BedMatcherTest {
   @Test
   public void matches_withSameCapacity_shouldReturnTrue() {
     int capacity = 100;
-    BedMatcher bedMatcher = aBedMatcher().withCapacity(capacity).build();
+    BedMatcher bedMatcher = aBedMatcher().withMinCapacity(capacity).build();
     Bed bed = aBed().withCapacity(capacity).build();
 
     boolean matches = bedMatcher.matches(bed);
@@ -144,7 +144,7 @@ class BedMatcherTest {
   public void matches_withHigherCapacity_shouldReturnTrue() {
     int capacity = 100;
     int higherCapacity = 101;
-    BedMatcher bedMatcher = aBedMatcher().withCapacity(capacity).build();
+    BedMatcher bedMatcher = aBedMatcher().withMinCapacity(capacity).build();
     Bed bed = aBed().withCapacity(higherCapacity).build();
 
     boolean matches = bedMatcher.matches(bed);
@@ -156,7 +156,7 @@ class BedMatcherTest {
   public void matches_withLowerCapacity_shouldReturnFalse() {
     int capacity = 100;
     int lowerCapacity = 99;
-    BedMatcher bedMatcher = aBedMatcher().withCapacity(capacity).build();
+    BedMatcher bedMatcher = aBedMatcher().withMinCapacity(capacity).build();
     Bed bed = aBed().withCapacity(lowerCapacity).build();
 
     boolean matches = bedMatcher.matches(bed);

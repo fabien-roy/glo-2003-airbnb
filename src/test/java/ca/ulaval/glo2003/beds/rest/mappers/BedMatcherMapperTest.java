@@ -27,7 +27,7 @@ class BedMatcherMapperTest {
     assertNull(bedMatcher.getBedType());
     assertNull(bedMatcher.getCleaningFrequency());
     assertNull(bedMatcher.getBloodTypes());
-    assertEquals(0, bedMatcher.getCapacity());
+    assertEquals(0, bedMatcher.getMinCapacity());
     assertNull(bedMatcher.getPackageName());
   }
 
@@ -115,7 +115,7 @@ class BedMatcherMapperTest {
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedCapacity, bedMatcher.getCapacity());
+    assertEquals(expectedCapacity, bedMatcher.getMinCapacity());
   }
 
   @Test

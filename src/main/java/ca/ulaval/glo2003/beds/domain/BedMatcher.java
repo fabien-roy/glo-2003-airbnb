@@ -7,19 +7,19 @@ public class BedMatcher {
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
-  private int capacity; // TODO : Rename minCapacity
+  private int minCapacity;
   private Packages packageName;
 
   public BedMatcher(
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
-      int capacity,
+      int minCapacity,
       Packages packageName) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
-    this.capacity = capacity;
+    this.minCapacity = minCapacity;
     this.packageName = packageName;
   }
 
@@ -35,8 +35,8 @@ public class BedMatcher {
     return bloodTypes;
   }
 
-  public int getCapacity() {
-    return capacity;
+  public int getMinCapacity() {
+    return minCapacity;
   }
 
   public Packages getPackageName() {
@@ -51,7 +51,7 @@ public class BedMatcher {
 
     if (bloodTypes != null && !bed.getBloodTypes().containsAll(bloodTypes)) return false;
 
-    if (capacity > bed.getCapacity()) return false;
+    if (minCapacity > bed.getCapacity()) return false;
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
