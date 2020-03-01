@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.domain;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.domain.Price;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Booking {
   private LocalDate arrivalDate;
   private int numberOfNights;
   private Packages packageName;
+  private Price total;
   private List<Transaction> transactions = new ArrayList<>();
 
   public Booking(
@@ -51,6 +53,14 @@ public class Booking {
   // TODO : Only used by tests
   public void setPackage(Packages packageName) {
     this.packageName = packageName;
+  }
+
+  public Price getTotal() {
+    return total;
+  }
+
+  public void setTotal(Price total) {
+    this.total = total;
   }
 
   public List<Transaction> getTransactions() {

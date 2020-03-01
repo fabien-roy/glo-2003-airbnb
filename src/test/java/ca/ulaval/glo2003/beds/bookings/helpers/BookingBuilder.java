@@ -4,6 +4,7 @@ import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.domain.Price;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -22,6 +23,9 @@ public class BookingBuilder {
 
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
+
+  private Price DEFAULT_TOTAL = createTotal();
+  private Price total = DEFAULT_TOTAL;
 
   private Packages DEFAULT_PACKAGE = createPackageName();
   private Packages packageName = DEFAULT_PACKAGE;
@@ -55,9 +59,15 @@ public class BookingBuilder {
     return this;
   }
 
+  public BookingBuilder withTotal(Price total) {
+    this.total = total;
+    return this;
+  }
+
   public Booking build() {
     Booking booking = new Booking(tenantPublicKey, arrivalDate, numberOfNights, packageName);
     booking.setNumber(bookingNumber);
+    booking.setTotal(total);
     return booking;
   }
 }

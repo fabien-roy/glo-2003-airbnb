@@ -6,13 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +32,7 @@ class BookingMapperTest {
   }
 
   @Test
-  public void toResponse_shouldReturnBookingResponseWithSameDate() {
+  public void toResponse_shouldMapArrivalDate() {
     LocalDate expectedDate = LocalDate.now();
     Booking bookingToMap = BookingBuilder.aBooking().withArrivalDate(expectedDate).build();
 
@@ -38,7 +42,7 @@ class BookingMapperTest {
   }
 
   @Test
-  public void toResponse_shouldReturnBookingResponseWithSameBookingPackage() {
+  public void toResponse_shouldMapPackage() {
     Packages expectedPackageName = Packages.SWEET_TOOTH;
     Booking bookingToMap = BookingBuilder.aBooking().withPackage(expectedPackageName).build();
 
@@ -48,7 +52,7 @@ class BookingMapperTest {
   }
 
   @Test
-  public void toResponse_shouldReturnBookingResponseWithSameParameters() {
+  public void toResponse_shouldMapNumberOfNights() {
     int expectedNumberOfNights = 69;
     Booking bookingToMap =
         BookingBuilder.aBooking().withNumberOfNights(expectedNumberOfNights).build();
@@ -56,6 +60,16 @@ class BookingMapperTest {
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
     assertEquals(expectedNumberOfNights, response.getNumberOfNights());
+  }
+
+  @Test
+  public void toResponse_shouldMapTotal() {
+    Price expectedTotal = new Price(BigDecimal.TEN);
+    Booking bookingToMap = BookingBuilder.aBooking().withTotal(expectedTotal).build();
+
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
+
+    assertEquals(expectedTotal.getValue().floatValue(), response.getTotal());
   }
 
   @Test
