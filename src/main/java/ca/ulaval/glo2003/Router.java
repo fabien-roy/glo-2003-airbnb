@@ -35,17 +35,18 @@ public class Router {
   // TODO : This is not correct dependency injection
   private static final BedRepository bedRepository = new InMemoryBedRepository();
 
-  private static final BedStarsCalculator bedStarsCalculator = new BedStarsCalculator();
   private static final BedFactory bedFactory = new BedFactory();
+  private static final BookingFactory bookingFactory = new BookingFactory();
   private static final TransactionFactory transactionFactory = new TransactionFactory();
+
+  private static final BedStarsCalculator bedStarsCalculator = new BedStarsCalculator();
+  private static final BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
 
   private static final PackageMapper packageMapper = new PackageMapper();
   private static final BedMapper bedMapper = new BedMapper(packageMapper);
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
   private static final TransactionMapper transactionMapper = new TransactionMapper();
-  private static final BookingFactory bookingFactory = new BookingFactory();
-  private static final BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
   private static final BookingMapper bookingMapper = new BookingMapper();
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
