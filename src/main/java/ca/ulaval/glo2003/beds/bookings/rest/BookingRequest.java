@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.rest.mappers;
+package ca.ulaval.glo2003.beds.bookings.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

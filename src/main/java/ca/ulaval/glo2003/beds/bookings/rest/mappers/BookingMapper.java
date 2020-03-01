@@ -1,6 +1,8 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
@@ -32,7 +34,10 @@ public class BookingMapper {
 
   public BookingResponse toResponse(Booking booking) {
     return new BookingResponse(
-        booking.getArrivalDate().toString(), booking.getNumberOfNights(), booking.getPackage());
+        booking.getArrivalDate().toString(),
+        booking.getNumberOfNights(),
+        booking.getPackage(),
+        booking.getTotal().getValue().floatValue());
   }
 
   private void validateBookingRequest(BookingRequest request) {

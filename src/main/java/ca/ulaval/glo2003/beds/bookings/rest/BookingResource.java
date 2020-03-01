@@ -4,8 +4,6 @@ import static ca.ulaval.glo2003.beds.rest.BedResource.BED_PATH;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.services.BookingService;
 import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;

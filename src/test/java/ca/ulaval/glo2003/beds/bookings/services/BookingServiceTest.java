@@ -13,10 +13,10 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
@@ -66,11 +66,12 @@ public class BookingServiceTest {
     Bed bed = aBed().build();
     Booking booking =
         aBooking().withPackage(bed.getPricesPerNight().keySet().iterator().next()).build();
+    Price total = createTotal();
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
-    when(bookingFactory.create(booking)).thenReturn(booking);
-    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(mock(Price.class));
+    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
+    when(bookingFactory.create(booking, total)).thenReturn(booking);
 
     bookingService.add(bedNumber.toString(), bookingRequest);
 
@@ -88,11 +89,12 @@ public class BookingServiceTest {
             .withBookingNumber(expectedBookingNumber)
             .withPackage(bed.getPricesPerNight().keySet().iterator().next())
             .build();
+    Price total = createTotal();
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
-    when(bookingFactory.create(booking)).thenReturn(booking);
-    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(mock(Price.class));
+    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
+    when(bookingFactory.create(booking, total)).thenReturn(booking);
 
     String bookingNumber = bookingService.add(bedNumber.toString(), bookingRequest);
 
@@ -104,7 +106,7 @@ public class BookingServiceTest {
     UUID bedNumber = createBedNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
     String tenantPublicKey = createTenantPublicKey();
-    Price total = mock(Price.class);
+    Price total = createTotal();
     Booking booking = mock(Booking.class);
     Bed bed = aBed().build();
     Transaction stayBookedTransaction = mock(Transaction.class);
@@ -114,8 +116,8 @@ public class BookingServiceTest {
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
-    when(bookingFactory.create(booking)).thenReturn(booking);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
+    when(bookingFactory.create(booking, total)).thenReturn(booking);
     when(transactionFactory.createStayBooked(tenantPublicKey, total))
         .thenReturn(stayBookedTransaction);
 
@@ -130,7 +132,7 @@ public class BookingServiceTest {
     BookingRequest bookingRequest = mock(BookingRequest.class);
     String ownerPublicKey = createOwnerPublicKey();
     int numberOfNights = createNumberOfNights();
-    Price total = mock(Price.class);
+    Price total = createTotal();
     Booking booking = mock(Booking.class);
     Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
     Transaction stayCompletedTransaction = mock(Transaction.class);
@@ -140,8 +142,8 @@ public class BookingServiceTest {
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
-    when(bookingFactory.create(booking)).thenReturn(booking);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
+    when(bookingFactory.create(booking, total)).thenReturn(booking);
     when(transactionFactory.createStayCompleted(ownerPublicKey, total, numberOfNights))
         .thenReturn(stayCompletedTransaction);
 
@@ -159,11 +161,12 @@ public class BookingServiceTest {
         .thenReturn(Collections.singletonMap(createPackageName(), createPricePerNight()));
     Booking booking =
         aBooking().withPackage(bed.getPricesPerNight().keySet().iterator().next()).build();
+    Price total = createTotal();
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
-    when(bookingFactory.create(booking)).thenReturn(booking);
-    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(mock(Price.class));
+    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
+    when(bookingFactory.create(booking, total)).thenReturn(booking);
 
     bookingService.add(bedNumber.toString(), bookingRequest);
 
