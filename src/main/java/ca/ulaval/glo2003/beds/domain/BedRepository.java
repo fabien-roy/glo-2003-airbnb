@@ -7,6 +7,8 @@ public interface BedRepository {
 
   void add(Bed bed);
 
+  void update(Bed bed);
+
   List<Bed> getAll();
 
   Bed getByNumber(UUID number);

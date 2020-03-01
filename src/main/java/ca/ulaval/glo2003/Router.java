@@ -7,6 +7,8 @@ import static ca.ulaval.glo2003.interfaces.rest.ErrorResource.ERROR_PATH;
 import static ca.ulaval.glo2003.interfaces.rest.RootResource.ROOT_PATH;
 import static spark.Spark.path;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResource;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
@@ -42,6 +44,8 @@ public class Router {
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
   private static final TransactionMapper transactionMapper = new TransactionMapper();
+  private static final BookingFactory bookingFactory = new BookingFactory();
+  private static final BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
   private static final BookingMapper bookingMapper = new BookingMapper();
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
@@ -55,7 +59,13 @@ public class Router {
           bedStarsCalculator);
   private static final BookingService bookingService =
       new BookingService(
-          transactionFactory, bedRepository, bookingMapper, bedNumberMapper, bookingNumberMapper);
+          transactionFactory,
+          bookingMapper,
+          bedRepository,
+          bookingFactory,
+          bookingTotalCalculator,
+          bedNumberMapper,
+          bookingNumberMapper);
   private static final TransactionService transactionService =
       new TransactionService(bedRepository, transactionMapper);
 

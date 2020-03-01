@@ -1,48 +1,63 @@
 package ca.ulaval.glo2003.beds.bookings.services;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingResponse;
+import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import java.util.UUID;
 
 public class BookingService {
 
   private final TransactionFactory transactionFactory;
-  private final BedRepository bedRepository;
   private final BookingMapper bookingMapper;
+  private final BedRepository bedRepository;
+  private final BookingFactory bookingFactory;
+  private final BookingTotalCalculator bookingTotalCalculator;
   private final BookingNumberMapper bookingNumberMapper;
   private final BedNumberMapper bedNumberMapper;
 
   public BookingService(
       TransactionFactory transactionFactory,
-      BedRepository bedRepository,
       BookingMapper bookingMapper,
+      BedRepository bedRepository,
+      BookingFactory bookingFactory,
+      BookingTotalCalculator bookingTotalCalculator,
       BedNumberMapper bedNumberMapper,
       BookingNumberMapper bookingNumberMapper) {
     this.transactionFactory = transactionFactory;
-    this.bedRepository = bedRepository;
     this.bookingMapper = bookingMapper;
+    this.bedRepository = bedRepository;
+    this.bookingFactory = bookingFactory;
+    this.bookingTotalCalculator = bookingTotalCalculator;
     this.bedNumberMapper = bedNumberMapper;
     this.bookingNumberMapper = bookingNumberMapper;
   }
 
-  // TODO : Add BookingRequest to parameters
   public String add(String bedNumber, BookingRequest bookingRequest) {
-    // TODO : map booking via bookingMapper
-    // TODO : get beds via BedRepository
-    // TODO : Bed.book(booking)
-    // TODO : add bookingNumber with BookingFactory.create(booking)
-    // TODO : Get total with BookingTotalCalculator
-    // TODO : Create both transactions using TransactionFactory
-    // TODO : Add transactions to booking
-    // TODO : Save bed in repository (TEST)
-    return null; // TODO : Return new booking number (TEST)
+    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
+    Booking booking = bookingMapper.fromRequest(bookingRequest);
+    Bed bed = bedRepository.getByNumber(parsedBedNumber);
+    booking = bookingFactory.create(booking);
+    Price total = bookingTotalCalculator.calculateTotal(bed, booking);
+    Transaction transactionBooked =
+        transactionFactory.createStayBooked(booking.getTenantPublicKey(), total);
+    Transaction transactionCompleted =
+        transactionFactory.createStayCompleted(
+            bed.getOwnerPublicKey(), total, booking.getNumberOfNights());
+    booking.addTransaction(transactionBooked);
+    booking.addTransaction(transactionCompleted);
+    bed.book(booking);
+    bedRepository.update(bed);
+    return booking.getNumber().toString();
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
