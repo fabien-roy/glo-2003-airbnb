@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.bookings.domain;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class Booking {
   private LocalDate arrivalDate;
   private int numberOfNights;
   private Packages packageName;
-  private List<Transaction> transactions;
+  private List<Transaction> transactions = new ArrayList<>();
 
   public Booking(
       String tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
@@ -49,6 +50,10 @@ public class Booking {
 
   public List<Transaction> getTransactions() {
     return transactions;
+  }
+
+  public void addTransaction(Transaction transaction) {
+    transactions.add(transaction);
   }
 
   public boolean isOverlapping(Booking otherBooking) {

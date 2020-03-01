@@ -7,7 +7,7 @@ public class BedMatcher {
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
-  private int capacity;
+  private int capacity; // TODO : Rename minCapacity
   private Packages packageName;
 
   public BedMatcher(

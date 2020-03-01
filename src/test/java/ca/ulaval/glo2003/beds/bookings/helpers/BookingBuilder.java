@@ -5,10 +5,14 @@ import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class BookingBuilder {
 
   private BookingBuilder() {}
+
+  private UUID DEFAULT_BOOKING_NUMBER = createBookingNumber();
+  private UUID bookingNumber = DEFAULT_BOOKING_NUMBER;
 
   private String DEFAULT_TENANT_PUBLIC_KEY = createTenantPublicKey();
   private String tenantPublicKey = DEFAULT_TENANT_PUBLIC_KEY;
@@ -24,6 +28,11 @@ public class BookingBuilder {
 
   public static BookingBuilder aBooking() {
     return new BookingBuilder();
+  }
+
+  public BookingBuilder withBookingNumber(UUID bookingNumber) {
+    this.bookingNumber = bookingNumber;
+    return this;
   }
 
   public BookingBuilder withTenantPublicKey(String tenantPublicKey) {
@@ -47,6 +56,8 @@ public class BookingBuilder {
   }
 
   public Booking build() {
-    return new Booking(tenantPublicKey, arrivalDate, numberOfNights, packageName);
+    Booking booking = new Booking(tenantPublicKey, arrivalDate, numberOfNights, packageName);
+    booking.setNumber(bookingNumber);
+    return booking;
   }
 }

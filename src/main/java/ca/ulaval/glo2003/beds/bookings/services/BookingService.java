@@ -52,8 +52,8 @@ public class BookingService {
     Transaction transactionCompleted =
         transactionFactory.createStayCompleted(
             bed.getOwnerPublicKey(), total, booking.getNumberOfNights());
-    booking.getTransactions().add(transactionBooked);
-    booking.getTransactions().add(transactionCompleted);
+    booking.addTransaction(transactionBooked);
+    booking.addTransaction(transactionCompleted);
     bedRepository.add(bed); // TODO : Modify bed, not add
     return booking.getNumber().toString();
   }

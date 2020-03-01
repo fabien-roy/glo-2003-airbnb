@@ -1,5 +1,8 @@
 package ca.ulaval.glo2003.beds.bookings.services;
 
+import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -55,28 +58,18 @@ public class BookingServiceTest {
 
   @Test
   public void add_shouldSaveBedToRepository() {
-    String bedNumber = UUID.randomUUID().toString();
-    UUID bedNumberId = mock(UUID.class);
+    UUID bedNumber = createBedNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
-    Bed bedOfBooking = mock(Bed.class);
-    Booking expectedBooking = mock(Booking.class);
-    Price priceOfBooking = mock(Price.class);
-    Transaction transaction = mock(Transaction.class);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(expectedBooking);
-    when(bedRepository.getByNumber(UUID.fromString(bedNumber))).thenReturn(bedOfBooking);
-    when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
-    when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
-        .thenReturn(priceOfBooking);
-    when(transactionFactory.createStayBooked(expectedBooking.getTenantPublicKey(), priceOfBooking))
-        .thenReturn(transaction);
-    when(transactionFactory.createStayCompleted(
-            bedOfBooking.getOwnerPublicKey(), priceOfBooking, expectedBooking.getNumberOfNights()))
-        .thenReturn(transaction);
-    when(expectedBooking.getNumber()).thenReturn(bedNumberId);
+    Booking booking = aBooking().build();
+    Bed bed = aBed().build();
+    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
+    when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
+    when(bookingFactory.create(booking)).thenReturn(booking);
+    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(mock(Price.class));
 
-    bookingService.add(bedNumber, bookingRequest);
+    bookingService.add(bedNumber.toString(), bookingRequest);
 
-    verify(bedRepository).add(bedOfBooking);
+    verify(bedRepository).add(bed);
   }
 
   @Test
