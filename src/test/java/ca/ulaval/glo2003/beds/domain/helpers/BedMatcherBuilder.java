@@ -10,7 +10,7 @@ public class BedMatcherBuilder {
   private BedTypes bedType = null;
   private CleaningFrequencies cleaningFrequency = null;
   private List<BloodTypes> bloodTypes = null;
-  private int capacity = 0;
+  private int minCapacity = 0;
   private Packages packageName = null;
 
   public static BedMatcherBuilder aBedMatcher() {
@@ -32,8 +32,8 @@ public class BedMatcherBuilder {
     return this;
   }
 
-  public BedMatcherBuilder withCapacity(int capacity) {
-    this.capacity = capacity;
+  public BedMatcherBuilder withMinCapacity(int capacity) {
+    this.minCapacity = capacity;
     return this;
   }
 
@@ -43,6 +43,6 @@ public class BedMatcherBuilder {
   }
 
   public BedMatcher build() {
-    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packageName);
+    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, minCapacity, packageName);
   }
 }
