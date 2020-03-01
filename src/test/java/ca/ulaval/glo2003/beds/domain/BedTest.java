@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.domain;
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -20,12 +21,16 @@ class BedTest {
 
   @Test
   public void book_withBookings_shouldAddBooking() {
-    Booking presentBooking = aBooking().build();
-    Booking expectedBooking = aBooking().build();
-    Bed bed = aBed().withBookings(Collections.singletonList(presentBooking)).build();
-    Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
+    Packages bookingPackage = createPackageName();
+    Booking presentBooking = aBooking().withPackage(bookingPackage).build();
+    Bed bed =
+        aBed()
+            .withBookings(Collections.singletonList(presentBooking))
+            .withPricesPerNights(Collections.singletonMap(bookingPackage, createPricePerNight()))
+            .build();
+    Booking expectedBooking = aBooking().withPackage(bookingPackage).build();
 
-    bed.book(expectedBooking, bookingPackage);
+    bed.book(expectedBooking);
     List<Booking> bookings = bed.getBookings();
 
     assertEquals(2, bookings.size());
@@ -36,36 +41,42 @@ class BedTest {
   @Test
   public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
     String ownerPublicKey = createOwnerPublicKey();
-    Booking booking = aBooking().withTenantPublicKey(ownerPublicKey).build();
     Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
     Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
+    Booking booking =
+        aBooking().withTenantPublicKey(ownerPublicKey).withPackage(bookingPackage).build();
 
-    assertThrows(BookingNotAllowedException.class, () -> bed.book(booking, bookingPackage));
+    assertThrows(BookingNotAllowedException.class, () -> bed.book(booking));
     assertFalse(bed.getBookings().contains(booking));
   }
 
   @Test
   public void book_withOverlappingDates_shouldThrowBedAlreadyBookedException() {
-    Booking booking = aBooking().build();
+    Packages bookingPackage = createPackageName();
     Booking presentBooking = mock(Booking.class);
-    when(presentBooking.isOverlapping(booking)).thenReturn(true);
+    when(presentBooking.getPackage()).thenReturn(bookingPackage);
     List<Booking> presentBookings = Collections.singletonList(presentBooking);
-    Bed bed = aBed().withBookings(presentBookings).build();
-    Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
+    Bed bed =
+        aBed()
+            .withBookings(presentBookings)
+            .withPricesPerNights(Collections.singletonMap(bookingPackage, createPricePerNight()))
+            .build();
+    Booking booking = aBooking().withPackage(bookingPackage).build();
+    when(presentBooking.isOverlapping(booking)).thenReturn(true);
 
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking, bookingPackage));
+    assertThrows(BedAlreadyBookedException.class, () -> bed.book(booking));
     assertFalse(bed.getBookings().contains(booking));
   }
 
   @Test
   public void book_withUnavailablePackage_shouldThrowPackageUnavailableException() {
-    Booking booking = aBooking().build();
     Packages bookingPackage = Packages.SWEET_TOOTH;
+    Booking booking = aBooking().withPackage(bookingPackage).build();
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(Packages.BLOODTHIRSTY, createPricePerNight());
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
 
-    assertThrows(PackageNotAvailableException.class, () -> bed.book(booking, bookingPackage));
+    assertThrows(PackageNotAvailableException.class, () -> bed.book(booking));
     assertFalse(bed.getBookings().contains(booking));
   }
 
@@ -80,11 +91,17 @@ class BedTest {
   @Test
   public void
       getBookingByNumber_withNonExistentBookingNumber_shouldThrowBookingNotFoundException() {
+    Packages bookingPackage = createPackageName();
     UUID existentBookingNumber = mock(UUID.class);
     UUID nonExistentBookingNumber = mock(UUID.class);
     Booking existentBooking = mock(Booking.class);
-    Bed bed = aBed().withBookings(Collections.singletonList(existentBooking)).build();
     when(existentBooking.getNumber()).thenReturn(existentBookingNumber);
+    when(existentBooking.getPackage()).thenReturn(bookingPackage);
+    Bed bed =
+        aBed()
+            .withBookings(Collections.singletonList(existentBooking))
+            .withPricesPerNights(Collections.singletonMap(bookingPackage, createPricePerNight()))
+            .build();
 
     assertThrows(
         BookingNotFoundException.class, () -> bed.getBookingByNumber(nonExistentBookingNumber));

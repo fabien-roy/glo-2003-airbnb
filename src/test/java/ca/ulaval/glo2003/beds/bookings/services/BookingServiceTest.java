@@ -5,6 +5,8 @@ import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -21,6 +23,7 @@ import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import java.util.Collections;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,8 +63,9 @@ public class BookingServiceTest {
   public void add_shouldUpdateBedInRepository() {
     UUID bedNumber = createBedNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
-    Booking booking = aBooking().build();
     Bed bed = aBed().build();
+    Booking booking =
+        aBooking().withPackage(bed.getPricesPerNight().keySet().iterator().next()).build();
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
@@ -78,8 +82,12 @@ public class BookingServiceTest {
     UUID bedNumber = createBedNumber();
     UUID expectedBookingNumber = createBookingNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
-    Booking booking = aBooking().withBookingNumber(expectedBookingNumber).build();
     Bed bed = aBed().build();
+    Booking booking =
+        aBooking()
+            .withBookingNumber(expectedBookingNumber)
+            .withPackage(bed.getPricesPerNight().keySet().iterator().next())
+            .build();
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
@@ -102,6 +110,7 @@ public class BookingServiceTest {
     Transaction stayBookedTransaction = mock(Transaction.class);
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
     when(booking.getNumber()).thenReturn(createBookingNumber());
+    when(booking.getPackage()).thenReturn(bed.getPricesPerNight().keySet().iterator().next());
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
@@ -127,6 +136,7 @@ public class BookingServiceTest {
     Transaction stayCompletedTransaction = mock(Transaction.class);
     when(booking.getNumberOfNights()).thenReturn(numberOfNights);
     when(booking.getNumber()).thenReturn(createBookingNumber());
+    when(booking.getPackage()).thenReturn(bed.getPricesPerNight().keySet().iterator().next());
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
@@ -138,6 +148,26 @@ public class BookingServiceTest {
     bookingService.add(bedNumber.toString(), bookingRequest);
 
     verify(booking).addTransaction(stayCompletedTransaction);
+  }
+
+  @Test
+  public void add_shouldBookToBed() {
+    UUID bedNumber = createBedNumber();
+    BookingRequest bookingRequest = mock(BookingRequest.class);
+    Bed bed = mock(Bed.class);
+    when(bed.getPricesPerNight())
+        .thenReturn(Collections.singletonMap(createPackageName(), createPricePerNight()));
+    Booking booking =
+        aBooking().withPackage(bed.getPricesPerNight().keySet().iterator().next()).build();
+    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
+    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
+    when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
+    when(bookingFactory.create(booking)).thenReturn(booking);
+    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(mock(Price.class));
+
+    bookingService.add(bedNumber.toString(), bookingRequest);
+
+    verify(bed).book(booking);
   }
 
   @Test

@@ -96,10 +96,10 @@ public class Bed {
     return pricesPerNight.keySet();
   }
 
-  public void book(Booking booking, Packages bookingPackage) {
+  public void book(Booking booking) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
-    if (!isPackageAvailable(bookingPackage)) throw new PackageNotAvailableException();
+    if (!isPackageAvailable(booking.getPackage())) throw new PackageNotAvailableException();
 
     if (isBedAlreadyBooked(booking)) throw new BedAlreadyBookedException();
 

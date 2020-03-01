@@ -103,7 +103,7 @@ public class BedBuilder {
             capacity,
             pricesPerNight);
     bed.setNumber(bedNumber);
-    bookings.forEach(booking -> bed.book(booking, pricesPerNight.keySet().iterator().next()));
+    bookings.forEach(bed::book);
     return bed;
   }
 }
