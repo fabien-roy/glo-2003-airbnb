@@ -57,7 +57,7 @@ public class BookingServiceTest {
   }
 
   @Test
-  public void add_shouldSaveBedToRepository() {
+  public void add_shouldUpdateBedInRepository() {
     UUID bedNumber = createBedNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
     Booking booking = aBooking().build();
@@ -70,7 +70,7 @@ public class BookingServiceTest {
 
     bookingService.add(bedNumber.toString(), bookingRequest);
 
-    verify(bedRepository).add(bed);
+    verify(bedRepository).update(bed);
   }
 
   @Test

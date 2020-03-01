@@ -55,7 +55,7 @@ public class BookingService {
             bed.getOwnerPublicKey(), total, booking.getNumberOfNights());
     booking.addTransaction(transactionBooked);
     booking.addTransaction(transactionCompleted);
-    bedRepository.add(bed); // TODO : Modify bed, not add
+    bedRepository.update(bed);
     return booking.getNumber().toString();
   }
 
