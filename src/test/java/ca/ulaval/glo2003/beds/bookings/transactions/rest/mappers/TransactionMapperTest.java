@@ -9,6 +9,7 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.beds.domain.Price;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -66,7 +67,7 @@ public class TransactionMapperTest {
   @Test
   public void toResponse_shouldMapTimestamp() {
     LocalDateTime timestamp = createTimestamp();
-    String expectedTimestamp = timestamp.toString();
+    String expectedTimestamp = timestamp.format(DateTimeFormatter.ISO_DATE_TIME) + "Z";
     Transaction transaction = aTransaction().withTimestamp(timestamp).build();
 
     TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
