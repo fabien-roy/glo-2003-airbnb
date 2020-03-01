@@ -1,9 +1,11 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.createTotal;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
+import ca.ulaval.glo2003.beds.domain.Price;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +22,7 @@ public class BookingFactoryTest {
   public void create_shouldSetBookingNumber() {
     Booking booking = aBooking().build();
 
-    booking = bookingFactory.create(booking);
+    booking = bookingFactory.create(booking, mock(Price.class));
 
     assertNotNull(booking.getNumber());
   }
@@ -30,9 +32,19 @@ public class BookingFactoryTest {
     Booking booking = aBooking().build();
     Booking otherBooking = aBooking().build();
 
-    booking = bookingFactory.create(booking);
-    otherBooking = bookingFactory.create(otherBooking);
+    booking = bookingFactory.create(booking, mock(Price.class));
+    otherBooking = bookingFactory.create(otherBooking, mock(Price.class));
 
     assertNotEquals(booking.getNumber(), otherBooking.getNumber());
+  }
+
+  @Test
+  public void create_shouldSetTotal() {
+    Price expectedTotal = createTotal();
+    Booking booking = aBooking().build();
+
+    booking = bookingFactory.create(booking, expectedTotal);
+
+    assertEquals(expectedTotal, booking.getTotal());
   }
 }

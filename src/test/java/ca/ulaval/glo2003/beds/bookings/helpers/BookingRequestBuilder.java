@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.helpers;
 
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestObjectMother.*;
 
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 
 public class BookingRequestBuilder {
 

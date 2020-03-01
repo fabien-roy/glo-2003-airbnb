@@ -1,34 +1,32 @@
-package ca.ulaval.glo2003.beds.bookings.rest.mappers;
+package ca.ulaval.glo2003.beds.bookings.rest;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BookingResponse {
 
   private String arrivalDate;
   private int numberOfNights;
+
+  @JsonProperty("package")
   private Packages bookingPackage;
+
   private float total;
 
-  public BookingResponse(String arrivalDate, int numberOfNights, Packages bookingPackage) {
+  public BookingResponse(
+      String arrivalDate, int numberOfNights, Packages bookingPackage, float total) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
     this.bookingPackage = bookingPackage;
+    this.total = total;
   }
 
   public String getArrivalDate() {
     return arrivalDate;
   }
 
-  public void setArrivalDate(String arrivalDate) {
-    this.arrivalDate = arrivalDate;
-  }
-
   public int getNumberOfNights() {
     return numberOfNights;
-  }
-
-  public void setNumberOfNights(int numberOfNights) {
-    this.numberOfNights = numberOfNights;
   }
 
   public Packages getBookingPackage() {
@@ -37,9 +35,5 @@ public class BookingResponse {
 
   public float getTotal() {
     return total;
-  }
-
-  public void setTotal(float total) {
-    this.total = total;
   }
 }

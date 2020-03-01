@@ -3,10 +3,12 @@ package ca.ulaval.glo2003.beds.bookings.helpers;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Locale;
@@ -25,6 +27,11 @@ public class BookingObjectMother {
 
   public static String createTenantPublicKey() {
     return fakeValuesService.regexify(BedMapper.OWNER_PUBLIC_KEY_PATTERN);
+  }
+
+  public static Price createTotal() {
+    double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
+    return new Price(BigDecimal.valueOf(randomDouble));
   }
 
   public static LocalDate createArrivalDate() {

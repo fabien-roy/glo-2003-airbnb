@@ -3,10 +3,10 @@ package ca.ulaval.glo2003.beds.bookings.services;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
+import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingRequest;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
@@ -46,8 +46,8 @@ public class BookingService {
     UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
     Booking booking = bookingMapper.fromRequest(bookingRequest);
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
-    booking = bookingFactory.create(booking);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
+    booking = bookingFactory.create(booking, total);
     Transaction transactionBooked =
         transactionFactory.createStayBooked(booking.getTenantPublicKey(), total);
     Transaction transactionCompleted =
