@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,6 +31,30 @@ public class InMemoryBedRepositoryTest {
     Bed actualBed = bedRepository.getAll().get(0);
 
     assertSame(expectedBed, actualBed);
+  }
+
+  @Test
+  public void update_shouldUpdateBed() {
+    UUID bedNumber = createBedNumber();
+    Bed originalBed = aBed().withBedNumber(bedNumber).build();
+    Bed updatedBed = aBed().withBedNumber(bedNumber).build();
+    bedRepository.add(originalBed);
+
+    bedRepository.update(updatedBed);
+    Bed newBed = bedRepository.getByNumber(bedNumber);
+
+    assertSame(updatedBed, newBed);
+  }
+
+  @Test
+  public void update_withNonExistentBedNumber_shouldThrowBedNotFoundException() {
+    UUID bedNumber = createBedNumber();
+    UUID nonExistentBedNumber = createBedNumber();
+    Bed originalBed = aBed().withBedNumber(bedNumber).build();
+    Bed updatedBed = aBed().withBedNumber(nonExistentBedNumber).build();
+    bedRepository.add(originalBed);
+
+    assertThrows(BedNotFoundException.class, () -> bedRepository.update(updatedBed));
   }
 
   @Test

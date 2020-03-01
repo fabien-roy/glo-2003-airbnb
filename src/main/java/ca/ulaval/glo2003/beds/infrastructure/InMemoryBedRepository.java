@@ -22,6 +22,12 @@ public class InMemoryBedRepository implements BedRepository {
   }
 
   @Override
+  public void update(Bed updatedBed) {
+    Bed bed = getByNumber(updatedBed.getNumber());
+    beds.set(beds.indexOf(bed), updatedBed);
+  }
+
+  @Override
   public List<Bed> getAll() {
     return beds;
   }
