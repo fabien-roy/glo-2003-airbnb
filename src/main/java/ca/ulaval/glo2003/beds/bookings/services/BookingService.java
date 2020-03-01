@@ -43,8 +43,9 @@ public class BookingService {
   }
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
+    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
     Booking booking = bookingMapper.fromRequest(bookingRequest);
-    Bed bed = bedRepository.getByNumber(UUID.fromString(bedNumber));
+    Bed bed = bedRepository.getByNumber(parsedBedNumber);
     booking = bookingFactory.create(booking);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     Transaction transactionBooked =
