@@ -33,9 +33,6 @@ public class BookingServiceTest {
   private BedNumberMapper bedNumberMapper;
   private BookingNumberMapper bookingNumberMapper;
 
-  private static final String TENANT = "Fabien";
-  private static final String OWNER = "Samuel CC";
-
   @BeforeEach
   public void setUpService() {
     transactionFactory = mock(TransactionFactory.class);
@@ -57,7 +54,7 @@ public class BookingServiceTest {
   }
 
   @Test
-  public void add_shouldSaveBedToBedRepository() {
+  public void add_shouldSaveBedToRepository() {
     String bedNumber = UUID.randomUUID().toString();
     UUID bedNumberId = mock(UUID.class);
     BookingRequest bookingRequest = mock(BookingRequest.class);
@@ -70,9 +67,10 @@ public class BookingServiceTest {
     when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
     when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
         .thenReturn(priceOfBooking);
-    when(transactionFactory.createStayBooked(TENANT, priceOfBooking)).thenReturn(transaction);
+    when(transactionFactory.createStayBooked(expectedBooking.getTenantPublicKey(), priceOfBooking))
+        .thenReturn(transaction);
     when(transactionFactory.createStayCompleted(
-            OWNER, priceOfBooking, expectedBooking.getNumberOfNights()))
+            bedOfBooking.getOwnerPublicKey(), priceOfBooking, expectedBooking.getNumberOfNights()))
         .thenReturn(transaction);
     when(expectedBooking.getNumber()).thenReturn(bedNumberId);
 
@@ -95,9 +93,10 @@ public class BookingServiceTest {
     when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
     when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
         .thenReturn(priceOfBooking);
-    when(transactionFactory.createStayBooked(TENANT, priceOfBooking)).thenReturn(transaction);
+    when(transactionFactory.createStayBooked(expectedBooking.getTenantPublicKey(), priceOfBooking))
+        .thenReturn(transaction);
     when(transactionFactory.createStayCompleted(
-            OWNER, priceOfBooking, expectedBooking.getNumberOfNights()))
+            bedOfBooking.getOwnerPublicKey(), priceOfBooking, expectedBooking.getNumberOfNights()))
         .thenReturn(transaction);
     when(expectedBooking.getNumber()).thenReturn(bedNumberId);
 
@@ -122,17 +121,18 @@ public class BookingServiceTest {
     when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
     when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
         .thenReturn(priceOfBooking);
-    when(transactionFactory.createStayBooked(TENANT, priceOfBooking)).thenReturn(transaction);
+    when(transactionFactory.createStayBooked(expectedBooking.getTenantPublicKey(), priceOfBooking))
+        .thenReturn(transaction);
     when(transactionFactory.createStayCompleted(
-            OWNER, priceOfBooking, expectedBooking.getNumberOfNights()))
+            bedOfBooking.getOwnerPublicKey(), priceOfBooking, expectedBooking.getNumberOfNights()))
         .thenReturn(otherTransaction);
     when(expectedBooking.getTransactions()).thenReturn(transactions);
     when(expectedBooking.getNumber()).thenReturn(bedNumberId);
 
     bookingService.add(bedNumber, bookingRequest);
 
-    assertEquals(2, transactions.size());
-    verify(transactionFactory).createStayBooked(TENANT, priceOfBooking);
+    verify(transactionFactory)
+        .createStayBooked(expectedBooking.getTenantPublicKey(), priceOfBooking);
   }
 
   @Test
@@ -151,18 +151,19 @@ public class BookingServiceTest {
     when(bookingFactory.create(expectedBooking)).thenReturn(expectedBooking);
     when(bookingTotalCalculator.calculateTotal(bedOfBooking, expectedBooking))
         .thenReturn(priceOfBooking);
-    when(transactionFactory.createStayBooked(TENANT, priceOfBooking)).thenReturn(transaction);
+    when(transactionFactory.createStayBooked(expectedBooking.getTenantPublicKey(), priceOfBooking))
+        .thenReturn(transaction);
     when(transactionFactory.createStayCompleted(
-            OWNER, priceOfBooking, expectedBooking.getNumberOfNights()))
+            bedOfBooking.getOwnerPublicKey(), priceOfBooking, expectedBooking.getNumberOfNights()))
         .thenReturn(otherTransaction);
     when(expectedBooking.getTransactions()).thenReturn(transactions);
     when(expectedBooking.getNumber()).thenReturn(bedNumberId);
 
     bookingService.add(bedNumber, bookingRequest);
 
-    assertEquals(2, transactions.size());
     verify(transactionFactory)
-        .createStayCompleted(OWNER, priceOfBooking, expectedBooking.getNumberOfNights());
+        .createStayCompleted(
+            bedOfBooking.getOwnerPublicKey(), priceOfBooking, expectedBooking.getNumberOfNights());
   }
 
   @Test

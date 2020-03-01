@@ -25,10 +25,6 @@ public class BookingService {
   private final BookingNumberMapper bookingNumberMapper;
   private final BedNumberMapper bedNumberMapper;
 
-  private static final String temporaryUser = "Fabien";
-  private static final String temporaryOwner = "Samuel CC";
-  // TODO replace this with real users when the object exists
-
   public BookingService(
       TransactionFactory transactionFactory,
       BookingMapper bookingMapper,
@@ -51,12 +47,14 @@ public class BookingService {
     Bed bed = bedRepository.getByNumber(UUID.fromString(bedNumber));
     booking = bookingFactory.create(booking);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
-    Transaction transactionBooked = transactionFactory.createStayBooked(temporaryUser, total);
+    Transaction transactionBooked =
+        transactionFactory.createStayBooked(booking.getTenantPublicKey(), total);
     Transaction transactionCompleted =
-        transactionFactory.createStayCompleted(temporaryOwner, total, booking.getNumberOfNights());
+        transactionFactory.createStayCompleted(
+            bed.getOwnerPublicKey(), total, booking.getNumberOfNights());
     booking.getTransactions().add(transactionBooked);
     booking.getTransactions().add(transactionCompleted);
-    bedRepository.add(bed);
+    bedRepository.add(bed); // TODO : Modify bed, not add
     return booking.getNumber().toString();
   }
 
