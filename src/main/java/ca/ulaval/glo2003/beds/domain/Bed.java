@@ -34,7 +34,6 @@ public class Bed {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.pricesPerNight = pricesPerNight;
-    this.bookings = new ArrayList<>();
   }
 
   public UUID getNumber() {

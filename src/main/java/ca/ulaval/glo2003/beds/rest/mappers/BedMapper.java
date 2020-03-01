@@ -75,7 +75,7 @@ public class BedMapper {
       throw new InvalidFormatException();
     }
 
-    if (request.getCapacity() < 0) {
+    if (request.getCapacity() <= 0) {
       throw new InvalidCapacityException();
     }
   }
