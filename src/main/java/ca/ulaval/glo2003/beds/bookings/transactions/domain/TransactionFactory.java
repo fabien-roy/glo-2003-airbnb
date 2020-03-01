@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings.transactions.domain;
 
 import ca.ulaval.glo2003.beds.domain.Price;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class TransactionFactory {
 
@@ -13,7 +15,7 @@ public class TransactionFactory {
   }
 
   public Transaction createStayCompleted(String owner, Price total, int numberOfNights) {
-    LocalDateTime timestamp = LocalDateTime.now().plusDays(numberOfNights);
+    LocalDateTime timestamp = LocalDate.now().plusDays(numberOfNights).atTime(LocalTime.MAX);
     return new Transaction(timestamp, AIRBNB, owner, total, TransactionReasons.STAY_COMPLETED);
   }
 }
