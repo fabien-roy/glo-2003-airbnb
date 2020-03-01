@@ -2,6 +2,8 @@ package ca.ulaval.glo2003.interfaces.rest;
 
 import static spark.Spark.exception;
 
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingNotFoundExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.handlers.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
@@ -35,6 +37,7 @@ public class ErrorResource implements RouteGroup {
     exception(BedAlreadyBookedException.class, new BedAlreadyBookedExceptionHandler());
     exception(BookingNotAllowedException.class, new BookingNotAllowedExceptionHandler());
     exception(PackageNotAvailableException.class, new PackageNotAvailableExceptionHandler());
+    exception(BookingNotFoundException.class, new BookingNotFoundExceptionHandler());
     exception(
         AllYouCanDrinkDependencyException.class, new AllYouCanDrinkDependencyExceptionHandler());
     exception(SweetToothDependencyException.class, new SweetToothDependencyExceptionHandler());

@@ -6,9 +6,6 @@ import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class Bed {
 
@@ -37,6 +34,7 @@ public class Bed {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.pricesPerNight = pricesPerNight;
+    this.bookings = new ArrayList<>();
   }
 
   public UUID getNumber() {
@@ -83,11 +81,6 @@ public class Bed {
     return bookings;
   }
 
-  public Set<Packages> getPackages() {
-    return pricesPerNight.keySet();
-  }
-
-  // TODO tests inspirés de bedropository.getbynumber
   public Booking getBookingByNumber(UUID number) {
     Optional<Booking> foundBooking =
         bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
@@ -97,6 +90,10 @@ public class Bed {
     }
 
     return foundBooking.get();
+  }
+
+  public Set<Packages> getPackages() {
+    return pricesPerNight.keySet();
   }
 
   public void book(Booking booking, Packages bookingPackage) {
