@@ -1,4 +1,4 @@
-# Plan for release 1
+# Software architecture for release 1
 
 Release 1 has one epic, `Book a stay`. This epic has three user stories : 
 
@@ -6,7 +6,7 @@ Release 1 has one epic, `Book a stay`. This epic has three user stories :
  - [CLA : Display all beds](user-stories/e1s2.md)
  - [RUS : Book a stay](user-stories/e1s3.md)
  
-**Concerning RUS, we have overwritten a part of the original plan. Here are the [flows for RUS](PlanRUS.md).**
+**Concerning RUS, we have overwritten a part of the original plan. Here are the [flows for RUS](flows-rus.md).**
 
 The most important part of this first release is to establish a correct software architecture that will be kept throughout the project. For this, we will use the following type of architecture : 
 

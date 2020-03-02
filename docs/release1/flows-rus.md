@@ -1,4 +1,4 @@
-# Plan for RUS
+# Flows for RUS
 
 This document describes the flows for RUS. It is an overwrite for our original release 1 plan.
 
