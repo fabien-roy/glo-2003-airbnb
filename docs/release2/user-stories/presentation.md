@@ -25,7 +25,7 @@ Elle est bien loin l'époque où seuls les humains avaient accès à la technolo
 - [E1R1 - Afficher Un Lit (AUL)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/epic1/e1s1.md)
 - [E1R2 - Consulter les Lits Affichés (CLA)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/e1s2.md)
 - [E1R3 - Réserver Un Séjour (RUS)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/epic1/e1s3.md)
-- [E1R4 - Filtrer les Lits affichés par Géolocalisation (FLG)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/epic1/e1s4.md)
+- [E1R4 - Filtrer les Lits affichés par Géolocalisation (FLG)](https://github.com/glo2003/glo2003-h2020-eq08/blob/master/docs/release2/user-stories/e1s4.md)
 - [E1R5 - Filtrer les Lits affichés selon leur Capacité d'accueil (FLC)](https://github.com/glo2003/glo2003-h2020-project/blob/master/docs/stories/epic1/e1s5.md)
 
 
