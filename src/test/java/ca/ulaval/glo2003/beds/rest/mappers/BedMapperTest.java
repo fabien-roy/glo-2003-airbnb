@@ -213,65 +213,64 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponse_shouldMapBedNumber() {
-    UUID expectedBedNumber = createBedNumber();
-    Bed bed = aBed().withBedNumber(expectedBedNumber).build();
+  public void toResponseWithoutNumber_shouldNotMapBedNumber() {
+    Bed bed = aBed().build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
-    assertEquals(expectedBedNumber, bedResponse.getBedNumber());
+    assertNull(bedResponse.getBedNumber());
   }
 
   @Test
-  public void toResponse_shouldMapZipCode() {
+  public void toResponseWithoutNumber_shouldMapZipCode() {
     String expectedZipCode = createZipCode();
     Bed bed = aBed().withZipCode(expectedZipCode).build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(expectedZipCode, bedResponse.getZipCode());
   }
 
   @Test
-  public void toResponse_shouldMapBedType() {
+  public void toResponseWithoutNumber_shouldMapBedType() {
     BedTypes expectedBedType = BedTypes.LATEX;
     Bed bed = aBed().withBedType(expectedBedType).build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(expectedBedType.toString(), bedResponse.getBedType());
   }
 
   @Test
-  public void toResponse_shouldMapCleaningFrequency() {
+  public void toResponseWithoutNumber_shouldMapCleaningFrequency() {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
     Bed bed = aBed().withCleaningFrequency(expectedCleaningFrequency).build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(expectedCleaningFrequency.toString(), bedResponse.getCleaningFrequency());
   }
 
   @Test
-  public void toResponse_withSingleBloodType_shouldMapBloodType() {
+  public void toResponseWithoutNumber_withSingleBloodType_shouldMapBloodType() {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     List<BloodTypes> bloodTypes = Collections.singletonList(expectedBloodType);
     Bed bed = aBed().withBloodTypes(bloodTypes).build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(1, bedResponse.getBloodTypes().size());
     assertEquals(expectedBloodType.toString(), bedResponse.getBloodTypes().get(0));
   }
 
   @Test
-  public void toResponse_withMultipleBloodTypes_shouldMapBloodTypes() {
+  public void toResponseWithoutNumber_withMultipleBloodTypes_shouldMapBloodTypes() {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
     List<BloodTypes> bloodTypes = Arrays.asList(expectedBloodType, otherExpectedBloodType);
     Bed bed = aBed().withBloodTypes(bloodTypes).build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(2, bedResponse.getBloodTypes().size());
     assertTrue(
@@ -283,17 +282,17 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponse_shouldMapCapacity() {
+  public void toResponseWithoutNumber_shouldMapCapacity() {
     int expectedCapacity = 100;
     Bed bed = aBed().withCapacity(expectedCapacity).build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(expectedCapacity, bedResponse.getCapacity());
   }
 
   @Test
-  public void toResponse_shouldMapPricesPerNights() {
+  public void toResponseWithoutNumber_shouldMapPricesPerNights() {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
@@ -302,18 +301,28 @@ class BedMapperTest {
         Collections.singletonList(expectedPackageResponse);
     when(packageMapper.toResponses(pricesPerNight)).thenReturn(expectedPackageResponses);
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
     assertEquals(expectedPackageResponses, bedResponse.getPackages());
   }
 
   @Test
-  public void toResponse_shouldMapStars() {
+  public void toResponseWithoutNumber_shouldMapStars() {
     int expectedStars = 3;
     Bed bed = aBed().build();
 
-    BedResponse bedResponse = bedMapper.toResponse(bed, expectedStars);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, expectedStars);
 
     assertEquals(expectedStars, bedResponse.getStars());
+  }
+
+  @Test
+  public void toResponseWithNumber_shouldMapBedNumber() {
+    UUID expectedBedNumber = createBedNumber();
+    Bed bed = aBed().withBedNumber(expectedBedNumber).build();
+
+    BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, 0);
+
+    assertEquals(expectedBedNumber, bedResponse.getBedNumber());
   }
 }

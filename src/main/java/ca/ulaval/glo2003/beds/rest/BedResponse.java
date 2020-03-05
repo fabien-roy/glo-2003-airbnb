@@ -1,11 +1,14 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.UUID;
 
 public class BedResponse {
 
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private UUID bedNumber;
+
   private String zipCode;
   private String bedType;
   private String cleaningFrequency;
@@ -13,6 +16,23 @@ public class BedResponse {
   private int capacity;
   private List<PackageResponse> packages;
   private int stars;
+
+  public BedResponse(
+      String zipCode,
+      String bedType,
+      String cleaningFrequency,
+      List<String> bloodTypes,
+      int capacity,
+      List<PackageResponse> packages,
+      int stars) {
+    this.zipCode = zipCode;
+    this.bedType = bedType;
+    this.cleaningFrequency = cleaningFrequency;
+    this.bloodTypes = bloodTypes;
+    this.capacity = capacity;
+    this.packages = packages;
+    this.stars = stars;
+  }
 
   public BedResponse(
       UUID bedNumber,

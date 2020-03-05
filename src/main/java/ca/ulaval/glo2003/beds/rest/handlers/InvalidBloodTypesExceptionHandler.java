@@ -28,7 +28,7 @@ public class InvalidBloodTypesExceptionHandler
     ErrorResponse response =
         new ErrorResponse(
             "INVALID_BLOOD_TYPES",
-            "blood types should be one or many of\n" + "    O-, O+, AB-, AB+, B-, B+, A- or A+");
+            "blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

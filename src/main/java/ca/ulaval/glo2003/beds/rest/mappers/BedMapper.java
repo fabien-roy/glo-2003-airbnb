@@ -45,15 +45,13 @@ public class BedMapper {
         pricesPerNight);
   }
 
-  // TODO : toResponse should only set bedNumber for getAll, not for get
-  public BedResponse toResponse(Bed bed, int stars) {
+  public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
     List<String> bloodTypes =
         bed.getBloodTypes().stream().map(BloodTypes::toString).collect(Collectors.toList());
 
     List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
-        bed.getNumber(),
         bed.getZipCode(),
         bed.getBedType().toString(),
         bed.getCleaningFrequency().toString(),
@@ -61,6 +59,12 @@ public class BedMapper {
         bed.getCapacity(),
         packageResponses,
         stars);
+  }
+
+  public BedResponse toResponseWithNumber(Bed bed, int stars) {
+    BedResponse bedResponse = toResponseWithoutNumber(bed, stars);
+    bedResponse.setBedNumber(bed.getNumber());
+    return bedResponse;
   }
 
   private void validateRequestFormat(BedRequest request) {

@@ -80,7 +80,8 @@ public class BedServiceTest {
     when(bedRepository.getAll()).thenReturn(Collections.singletonList(expectedBed));
     when(bedMatcher.matches(expectedBed)).thenReturn(true);
     when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
-    when(bedMapper.toResponse(expectedBed, expectedStars)).thenReturn(expectedBedResponse);
+    when(bedMapper.toResponseWithNumber(expectedBed, expectedStars))
+        .thenReturn(expectedBedResponse);
 
     List<BedResponse> bedResponses = bedService.getAll(params);
 
@@ -103,9 +104,9 @@ public class BedServiceTest {
     when(bedMatcher.matches(any(Bed.class))).thenReturn(true);
     when(bedStarsCalculator.calculateStars(firstExpectedBed)).thenReturn(firstExpectedStars);
     when(bedStarsCalculator.calculateStars(secondExpectedBed)).thenReturn(secondExpectedStars);
-    when(bedMapper.toResponse(firstExpectedBed, firstExpectedStars))
+    when(bedMapper.toResponseWithNumber(firstExpectedBed, firstExpectedStars))
         .thenReturn(firstExpectedBedResponse);
-    when(bedMapper.toResponse(secondExpectedBed, secondExpectedStars))
+    when(bedMapper.toResponseWithNumber(secondExpectedBed, secondExpectedStars))
         .thenReturn(secondExpectedBedResponse);
     when(firstExpectedBedResponse.getStars()).thenReturn(firstExpectedStars);
     when(secondExpectedBedResponse.getStars()).thenReturn(secondExpectedStars);
@@ -127,7 +128,8 @@ public class BedServiceTest {
     when(bedNumberMapper.fromString(requestedNumber)).thenReturn(bedNumber);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(expectedBed);
     when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
-    when(bedMapper.toResponse(expectedBed, expectedStars)).thenReturn(expectedBedResponse);
+    when(bedMapper.toResponseWithoutNumber(expectedBed, expectedStars))
+        .thenReturn(expectedBedResponse);
 
     BedResponse bedResponse = bedService.getByNumber(requestedNumber);
 
