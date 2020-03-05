@@ -11,10 +11,10 @@ public class BookingResponse {
   @JsonProperty("package")
   private Packages bookingPackage;
 
-  private float total;
+  private double total;
 
   public BookingResponse(
-      String arrivalDate, int numberOfNights, Packages bookingPackage, float total) {
+      String arrivalDate, int numberOfNights, Packages bookingPackage, double total) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
     this.bookingPackage = bookingPackage;
@@ -33,7 +33,7 @@ public class BookingResponse {
     return bookingPackage;
   }
 
-  public float getTotal() {
+  public double getTotal() {
     return total;
   }
 }

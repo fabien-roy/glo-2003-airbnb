@@ -22,10 +22,7 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.BedStarsCalculator;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResource;
 import ca.ulaval.glo2003.interfaces.rest.RootResource;
@@ -42,12 +39,13 @@ public class Router {
   private static final BedStarsCalculator bedStarsCalculator = new BedStarsCalculator();
   private static final BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
 
-  private static final PackageMapper packageMapper = new PackageMapper();
+  private static final PriceMapper priceMapper = new PriceMapper();
+  private static final PackageMapper packageMapper = new PackageMapper(priceMapper);
   private static final BedMapper bedMapper = new BedMapper(packageMapper);
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
-  private static final TransactionMapper transactionMapper = new TransactionMapper();
-  private static final BookingMapper bookingMapper = new BookingMapper();
+  private static final TransactionMapper transactionMapper = new TransactionMapper(priceMapper);
+  private static final BookingMapper bookingMapper = new BookingMapper(priceMapper);
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
   private static final BedService bedService =

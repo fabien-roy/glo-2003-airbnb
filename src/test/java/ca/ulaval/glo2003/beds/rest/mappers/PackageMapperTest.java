@@ -4,6 +4,8 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPa
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.Price;
@@ -18,10 +20,12 @@ import org.junit.jupiter.api.Test;
 class PackageMapperTest {
 
   private PackageMapper packageMapper;
+  private PriceMapper priceMapper;
 
   @BeforeEach
   public void setUpMapper() {
-    packageMapper = new PackageMapper();
+    priceMapper = mock(PriceMapper.class);
+    packageMapper = new PackageMapper(priceMapper);
   }
 
   @Test
@@ -91,6 +95,7 @@ class PackageMapperTest {
     PackageRequest request =
         aPackageRequest().withName(packageName.toString()).withPricePerNight(priceValue).build();
     List<PackageRequest> requests = Collections.singletonList(request);
+    when(priceMapper.fromDouble(priceValue)).thenReturn(expectedPrice);
 
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
@@ -113,6 +118,8 @@ class PackageMapperTest {
             .withPricePerNight(otherPriceValue)
             .build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
+    when(priceMapper.fromDouble(priceValue)).thenReturn(expectedPrice);
+    when(priceMapper.fromDouble(otherPriceValue)).thenReturn(otherExpectedPrice);
 
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
 
@@ -188,6 +195,7 @@ class PackageMapperTest {
     double expectedPricePerNight = pricePerNight.getValue().doubleValue();
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), pricePerNight);
+    when(priceMapper.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
 
@@ -203,6 +211,8 @@ class PackageMapperTest {
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     pricesPerNight.put(Packages.SWEET_TOOTH, pricePerNight);
     pricesPerNight.put(Packages.BLOODTHIRSTY, otherPricePerNight);
+    when(priceMapper.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
+    when(priceMapper.toDouble(otherPricePerNight)).thenReturn(otherExpectedPricePerNight);
 
     List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
 

@@ -3,6 +3,8 @@ package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestBuilder.aBookingRequest;
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestObjectMother.createTenantPublicKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder;
@@ -15,6 +17,7 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,10 +28,12 @@ import org.junit.jupiter.api.Test;
 class BookingMapperTest {
 
   private BookingMapper bookingMapper;
+  private PriceMapper priceMapper;
 
   @BeforeEach
   public void setUpMapper() {
-    bookingMapper = new BookingMapper();
+    priceMapper = mock(PriceMapper.class);
+    bookingMapper = new BookingMapper(priceMapper);
   }
 
   @Test
@@ -64,12 +69,14 @@ class BookingMapperTest {
 
   @Test
   public void toResponse_shouldMapTotal() {
-    Price expectedTotal = new Price(BigDecimal.TEN);
+    double expectedTotalValue = 100.00;
+    Price expectedTotal = new Price(BigDecimal.valueOf(expectedTotalValue));
     Booking bookingToMap = BookingBuilder.aBooking().withTotal(expectedTotal).build();
+    when(priceMapper.toDouble(expectedTotal)).thenReturn(expectedTotalValue);
 
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
-    assertEquals(expectedTotal.getValue().floatValue(), response.getTotal());
+    assertEquals(expectedTotalValue, response.getTotal());
   }
 
   @Test

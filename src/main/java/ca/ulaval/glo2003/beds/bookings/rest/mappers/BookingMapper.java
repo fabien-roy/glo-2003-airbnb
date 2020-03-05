@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateExcepti
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.time.LocalDate;
 
@@ -16,6 +17,11 @@ public class BookingMapper {
   public static final String TENANT_PUBLIC_KEY_PATTERN =
       "([A-Z]|[0-9]){64}"; // TODO : Same as Bed.ownerPublicKey. Move to object?
   public static final String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
+  private PriceMapper priceMapper;
+
+  public BookingMapper(PriceMapper priceMapper) {
+    this.priceMapper = priceMapper;
+  }
 
   public Booking fromRequest(BookingRequest bookingRequest) {
     validateBookingRequest(bookingRequest);
@@ -33,11 +39,13 @@ public class BookingMapper {
   }
 
   public BookingResponse toResponse(Booking booking) {
+    double total = priceMapper.toDouble(booking.getTotal());
+
     return new BookingResponse(
         booking.getArrivalDate().toString(),
         booking.getNumberOfNights(),
         booking.getPackage(),
-        booking.getTotal().getValue().floatValue());
+        total);
   }
 
   private void validateBookingRequest(BookingRequest request) {
