@@ -28,8 +28,7 @@ public class InvalidPublicKeyExceptionHandler
     ErrorResponse response =
         new ErrorResponse(
             "INVALID_PUBLIC_KEY",
-            "BiteCoins account public key should contain only\n"
-                + "    alphanumeric characters and have a 256-bits length");
+            "BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
