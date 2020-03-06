@@ -23,6 +23,6 @@ public class PriceJsonSerializer extends JsonSerializer<Double> {
   public void serialize(
       Double value, JsonGenerator generator, SerializerProvider serializerProvider)
       throws IOException {
-    generator.writeString(decimalFormat.format(value));
+    generator.writeRawValue(decimalFormat.format(value));
   }
 }
