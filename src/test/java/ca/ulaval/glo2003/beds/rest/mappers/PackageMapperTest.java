@@ -29,6 +29,20 @@ class PackageMapperTest {
   }
 
   @Test
+  public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
+    List<PackageRequest> requests = Collections.emptyList();
+
+    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+  }
+
+  @Test
+  public void fromRequests_withNullRequest_shouldThrowInvalidPackageException() {
+    List<PackageRequest> requests = null;
+
+    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+  }
+
+  @Test
   public void fromRequests_withSingleRequest_shouldMapASinglePricePerNight() {
     PackageRequest request = aPackageRequest().build();
     List<PackageRequest> requests = Collections.singletonList(request);

@@ -16,6 +16,7 @@ public class PackageMapper {
   }
 
   public Map<Packages, Price> fromRequests(List<PackageRequest> packageRequests) {
+    validateRequests(packageRequests);
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     packageRequests.forEach(
         packageRequest -> {
@@ -37,6 +38,10 @@ public class PackageMapper {
         });
 
     return packageResponses;
+  }
+
+  private void validateRequests(List<PackageRequest> packageRequests) {
+    if (packageRequests == null || packageRequests.isEmpty()) throw new InvalidPackageException();
   }
 
   private void validatePackageOnce(
