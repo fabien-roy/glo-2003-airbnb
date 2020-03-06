@@ -9,7 +9,6 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.time.LocalDate;
 
 public class BookingMapper {
@@ -25,9 +24,6 @@ public class BookingMapper {
 
   public Booking fromRequest(BookingRequest bookingRequest) {
     validateBookingRequest(bookingRequest);
-    validateDate(bookingRequest.getArrivalDate());
-    validateNumberOfNights(bookingRequest.getNumberOfNights());
-    validatePublicKey(bookingRequest.getTenantPublicKey());
 
     Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
 
@@ -49,16 +45,17 @@ public class BookingMapper {
   }
 
   private void validateBookingRequest(BookingRequest request) {
-    if (request.getArrivalDate() == null
-        || request.getTenantPublicKey() == null
-        || request.getBookingPackage() == null) {
-      throw new InvalidFormatException();
-    }
+    validateArrivalDate(request.getArrivalDate());
+    validateNumberOfNights(request.getNumberOfNights());
+    validatePublicKey(request.getTenantPublicKey());
   }
 
-  private void validateDate(String dateToMatch) {
-    if (!dateToMatch.matches(DATE_PATTERN)) throw new InvalidArrivalDateException();
-    if (LocalDate.parse(dateToMatch).isBefore(LocalDate.now()))
+  private void validateArrivalDate(String arrivalDate) {
+    // TODO : Check that date pattern is actually good.
+    if (arrivalDate == null || !arrivalDate.matches(DATE_PATTERN))
+      throw new InvalidArrivalDateException();
+
+    if (LocalDate.parse(arrivalDate).isBefore(LocalDate.now()))
       throw new ArrivalDateInThePastException();
   }
 
@@ -69,6 +66,7 @@ public class BookingMapper {
   }
 
   private void validatePublicKey(String publicKey) {
-    if (!publicKey.matches(TENANT_PUBLIC_KEY_PATTERN)) throw new InvalidPublicKeyException();
+    if (publicKey == null || !publicKey.matches(TENANT_PUBLIC_KEY_PATTERN))
+      throw new InvalidPublicKeyException();
   }
 }

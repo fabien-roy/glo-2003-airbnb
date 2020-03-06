@@ -18,7 +18,6 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
@@ -100,11 +99,11 @@ class BookingMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutTenantPublicKey_shouldThrowInvalidFormatException() {
+  public void fromRequest_withoutTenantPublicKey_shouldThrowInvalidPublicKeyException() {
     BookingRequest bookingRequest = aBookingRequest().withTenantPublicKey(null).build();
 
     Assertions.assertThrows(
-        InvalidFormatException.class, () -> bookingMapper.fromRequest(bookingRequest));
+        InvalidPublicKeyException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
@@ -136,11 +135,11 @@ class BookingMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutArrivalDate_shouldThrowInvalidFormatException() {
+  public void fromRequest_withoutArrivalDate_shouldThrowInvalidArrivalDateException() {
     BookingRequest bookingRequest = aBookingRequest().withArrivalDate(null).build();
 
     Assertions.assertThrows(
-        InvalidFormatException.class, () -> bookingMapper.fromRequest(bookingRequest));
+        InvalidArrivalDateException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
@@ -189,10 +188,10 @@ class BookingMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutPackage_shouldThrowInvalidFormatException() {
+  public void fromRequest_withoutPackage_shouldThrowInvalidPackageException() {
     BookingRequest bookingRequest = aBookingRequest().withPackage(null).build();
 
     Assertions.assertThrows(
-        InvalidFormatException.class, () -> bookingMapper.fromRequest(bookingRequest));
+        InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 }
