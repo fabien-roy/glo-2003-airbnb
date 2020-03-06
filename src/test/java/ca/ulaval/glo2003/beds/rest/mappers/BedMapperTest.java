@@ -16,7 +16,6 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,10 +45,10 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutBedType_shouldThrowInvalidFormatException() {
+  public void fromRequest_withoutBedType_shouldThrowInvalidBedTypeException() {
     BedRequest bedRequest = aBedRequest().withBedType(null).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
@@ -80,10 +79,10 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidFormat() {
+  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
     BedRequest bedRequest = aBedRequest().withCleaningFrequency(null).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
@@ -114,11 +113,11 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutBloodTypes_shouldThrowInvalidFormatException() {
+  public void fromRequest_withoutBloodTypes_shouldThrowInvalidBloodTypesException() {
     List<String> bloodTypes = Collections.singletonList(null);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
@@ -191,7 +190,7 @@ class BedMapperTest {
   public void fromRequest_withoutZipCode_shouldThrowInvalidZipCodeException() {
     BedRequest bedRequest = aBedRequest().withZipCode(null).build();
 
-    assertThrows(InvalidFormatException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
@@ -202,6 +201,13 @@ class BedMapperTest {
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(expectedOwnerPublicKey, bed.getOwnerPublicKey());
+  }
+
+  @Test
+  public void fromRequest_withoutOwnerPublicKey_shouldThrowInvalidPublicKeyException() {
+    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(null).build();
+
+    assertThrows(InvalidPublicKeyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test

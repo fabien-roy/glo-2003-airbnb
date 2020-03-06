@@ -4,11 +4,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPublicKeyException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,9 +21,7 @@ public class BedMapper {
   }
 
   public Bed fromRequest(BedRequest request) {
-    validateRequestFormat(request);
-    validatePublicKey(request.getOwnerPublicKey());
-    validateZipCode(request.getZipCode());
+    validateRequest(request);
 
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
@@ -67,29 +61,25 @@ public class BedMapper {
     return bedResponse;
   }
 
-  private void validateRequestFormat(BedRequest request) {
-    if (request.getBloodTypes().isEmpty()) {
-      throw new InvalidBloodTypesException();
-    }
+  private void validateRequest(BedRequest request) {
+    if (request.getBloodTypes().isEmpty()) throw new InvalidBloodTypesException();
 
-    if (request.getBedType() == null
-        || request.getCleaningFrequency() == null
-        || request.getBloodTypes().get(0) == null
-        || request.getZipCode() == null) {
-      throw new InvalidFormatException();
-    }
+    if (request.getCapacity() <= 0) throw new InvalidCapacityException();
 
-    if (request.getCapacity() <= 0) {
-      throw new InvalidCapacityException();
-    }
+    validateOwnerPublicKey(request.getOwnerPublicKey());
+
+    validateZipCode(request.getZipCode());
   }
 
-  private void validatePublicKey(String publicKey) {
-    if (!publicKey.matches(OWNER_PUBLIC_KEY_PATTERN)) throw new InvalidPublicKeyException();
+  // TODO : If PublicKeyMapper only was a thing
+  private void validateOwnerPublicKey(String ownerPublicKey) {
+    if (ownerPublicKey == null || !ownerPublicKey.matches(OWNER_PUBLIC_KEY_PATTERN))
+      throw new InvalidPublicKeyException();
   }
 
+  // TODO : FLG : Only validate not null
   private void validateZipCode(String zipCode) {
-    if (!zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
+    if (zipCode == null || !zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
   }
 
   private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
