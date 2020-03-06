@@ -1,23 +1,24 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestBuilder.aBookingRequest;
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestObjectMother.createTenantPublicKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder;
+import ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
@@ -27,12 +28,14 @@ import org.junit.jupiter.api.Test;
 class BookingMapperTest {
 
   private BookingMapper bookingMapper;
+  private PublicKeyMapper publicKeyMapper;
   private PriceMapper priceMapper;
 
   @BeforeEach
   public void setUpMapper() {
+    publicKeyMapper = mock(PublicKeyMapper.class);
     priceMapper = mock(PriceMapper.class);
-    bookingMapper = new BookingMapper(priceMapper);
+    bookingMapper = new BookingMapper(publicKeyMapper, priceMapper);
   }
 
   @Test
@@ -80,30 +83,14 @@ class BookingMapperTest {
 
   @Test
   public void fromRequest_shouldMapTenantPublicKey() {
-    String expectedPublicKey = createTenantPublicKey();
-    BookingRequest request = aBookingRequest().withTenantPublicKey(expectedPublicKey).build();
+    PublicKey expectedPublicKey = BookingObjectMother.createTenantPublicKey();
+    BookingRequest request =
+        aBookingRequest().withTenantPublicKey(expectedPublicKey.getValue()).build();
+    when(publicKeyMapper.fromString(expectedPublicKey.getValue())).thenReturn(expectedPublicKey);
 
     Booking booking = bookingMapper.fromRequest(request);
 
     assertEquals(expectedPublicKey, booking.getTenantPublicKey());
-  }
-
-  @Test
-  public void fromRequest_withInvalidTenantPublicKey_shouldThrowInvalidPublicKeyException() {
-    String invalidTenantPublicKey = "invalidTenantPublicKey";
-    BookingRequest bookingRequest =
-        aBookingRequest().withTenantPublicKey(invalidTenantPublicKey).build();
-
-    Assertions.assertThrows(
-        InvalidPublicKeyException.class, () -> bookingMapper.fromRequest(bookingRequest));
-  }
-
-  @Test
-  public void fromRequest_withoutTenantPublicKey_shouldThrowInvalidPublicKeyException() {
-    BookingRequest bookingRequest = aBookingRequest().withTenantPublicKey(null).build();
-
-    Assertions.assertThrows(
-        InvalidPublicKeyException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test

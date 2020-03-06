@@ -40,12 +40,14 @@ public class Router {
   private static final BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
 
   private static final PriceMapper priceMapper = new PriceMapper();
+  private static final PublicKeyMapper publicKeyMapper = new PublicKeyMapper();
   private static final PackageMapper packageMapper = new PackageMapper(priceMapper);
-  private static final BedMapper bedMapper = new BedMapper(packageMapper);
+  private static final BedMapper bedMapper = new BedMapper(publicKeyMapper, packageMapper);
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
   private static final TransactionMapper transactionMapper = new TransactionMapper(priceMapper);
-  private static final BookingMapper bookingMapper = new BookingMapper(priceMapper);
+  private static final BookingMapper bookingMapper =
+      new BookingMapper(publicKeyMapper, priceMapper);
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
   private static final BedService bedService =

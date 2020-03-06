@@ -1,17 +1,12 @@
 package ca.ulaval.glo2003.beds.bookings.helpers;
 
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+
 import ca.ulaval.glo2003.beds.domain.Packages;
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class BookingRequestObjectMother {
-
-  private static final FakeValuesService fakeValuesService =
-      new FakeValuesService(new Locale("en-US"), new RandomService());
 
   public BookingRequestObjectMother() {}
 
@@ -20,7 +15,7 @@ public class BookingRequestObjectMother {
   }
 
   public static String createTenantPublicKey() {
-    return fakeValuesService.regexify(BookingMapper.TENANT_PUBLIC_KEY_PATTERN);
+    return createPublicKey().getValue();
   }
 
   public static String createArrivalDate() {

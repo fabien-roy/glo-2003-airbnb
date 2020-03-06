@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -26,12 +27,14 @@ import org.junit.jupiter.api.Test;
 class BedMapperTest {
 
   private BedMapper bedMapper;
+  private PublicKeyMapper publicKeyMapper;
   private PackageMapper packageMapper;
 
   @BeforeEach
   public void setUpMapper() {
+    publicKeyMapper = mock(PublicKeyMapper.class);
     packageMapper = mock(PackageMapper.class);
-    bedMapper = new BedMapper(packageMapper);
+    bedMapper = new BedMapper(publicKeyMapper, packageMapper);
   }
 
   @Test
@@ -195,27 +198,15 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_shouldMapOwnerPublicKey() {
-    String expectedOwnerPublicKey = createOwnerPublicKey();
-    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(expectedOwnerPublicKey).build();
+    PublicKey expectedOwnerPublicKey = BedObjectMother.createOwnerPublicKey();
+    BedRequest bedRequest =
+        aBedRequest().withOwnerPublicKey(expectedOwnerPublicKey.getValue()).build();
+    when(publicKeyMapper.fromString(expectedOwnerPublicKey.getValue()))
+        .thenReturn(expectedOwnerPublicKey);
 
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(expectedOwnerPublicKey, bed.getOwnerPublicKey());
-  }
-
-  @Test
-  public void fromRequest_withoutOwnerPublicKey_shouldThrowInvalidPublicKeyException() {
-    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(null).build();
-
-    assertThrows(InvalidPublicKeyException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  @Test
-  public void fromRequest_withInvalidOwnerPublicKey_shouldThrowInvalidPublicKeyException() {
-    String ownerKey = "invalidPublicKey";
-    BedRequest bedRequest = aBedRequest().withOwnerPublicKey(ownerKey).build();
-
-    assertThrows(InvalidPublicKeyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test

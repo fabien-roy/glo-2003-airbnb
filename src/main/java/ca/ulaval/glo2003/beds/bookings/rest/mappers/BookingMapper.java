@@ -6,29 +6,31 @@ import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidPublicKeyException;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
 import java.time.LocalDate;
 
 public class BookingMapper {
 
-  public static final String TENANT_PUBLIC_KEY_PATTERN =
-      "([A-Z]|[0-9]){64}"; // TODO : Same as Bed.ownerPublicKey. Move to object?
   public static final String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
+  private PublicKeyMapper publicKeyMapper;
   private PriceMapper priceMapper;
 
-  public BookingMapper(PriceMapper priceMapper) {
+  public BookingMapper(PublicKeyMapper publicKeyMapper, PriceMapper priceMapper) {
+    this.publicKeyMapper = publicKeyMapper;
     this.priceMapper = priceMapper;
   }
 
   public Booking fromRequest(BookingRequest bookingRequest) {
-    validateBookingRequest(bookingRequest);
+    validateRequest(bookingRequest);
 
+    PublicKey tenantPublicKey = publicKeyMapper.fromString(bookingRequest.getTenantPublicKey());
     Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
 
     return new Booking(
-        bookingRequest.getTenantPublicKey(),
+        tenantPublicKey,
         LocalDate.parse(bookingRequest.getArrivalDate()),
         bookingRequest.getNumberOfNights(),
         bookingPackage);
@@ -44,10 +46,9 @@ public class BookingMapper {
         total);
   }
 
-  private void validateBookingRequest(BookingRequest request) {
+  private void validateRequest(BookingRequest request) {
     validateArrivalDate(request.getArrivalDate());
     validateNumberOfNights(request.getNumberOfNights());
-    validatePublicKey(request.getTenantPublicKey());
   }
 
   private void validateArrivalDate(String arrivalDate) {
@@ -63,10 +64,5 @@ public class BookingMapper {
     if (numberOfNights < 1 || numberOfNights > 90) {
       throw new InvalidNumberOfNights();
     }
-  }
-
-  private void validatePublicKey(String publicKey) {
-    if (publicKey == null || !publicKey.matches(TENANT_PUBLIC_KEY_PATTERN))
-      throw new InvalidPublicKeyException();
   }
 }

@@ -11,18 +11,20 @@ import java.util.stream.Collectors;
 
 public class BedMapper {
 
-  public static final String OWNER_PUBLIC_KEY_PATTERN = "([A-Z]|[0-9]){64}";
   public static final String ZIP_CODE_PATTERN = "([0-9]){5}";
 
+  private final PublicKeyMapper publicKeyMapper;
   private final PackageMapper packageMapper;
 
-  public BedMapper(PackageMapper packageMapper) {
+  public BedMapper(PublicKeyMapper publicKeyMapper, PackageMapper packageMapper) {
+    this.publicKeyMapper = publicKeyMapper;
     this.packageMapper = packageMapper;
   }
 
   public Bed fromRequest(BedRequest request) {
     validateRequest(request);
 
+    PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
@@ -30,7 +32,7 @@ public class BedMapper {
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
 
     return new Bed(
-        request.getOwnerPublicKey(),
+        ownerPublicKey,
         request.getZipCode(),
         bedType,
         cleaningFrequencies,
@@ -66,15 +68,7 @@ public class BedMapper {
 
     if (request.getCapacity() <= 0) throw new InvalidCapacityException();
 
-    validateOwnerPublicKey(request.getOwnerPublicKey());
-
     validateZipCode(request.getZipCode());
-  }
-
-  // TODO : If PublicKeyMapper only was a thing
-  private void validateOwnerPublicKey(String ownerPublicKey) {
-    if (ownerPublicKey == null || !ownerPublicKey.matches(OWNER_PUBLIC_KEY_PATTERN))
-      throw new InvalidPublicKeyException();
   }
 
   // TODO : FLG : Only validate not null
