@@ -32,7 +32,7 @@ public class PackageMapper {
 
     pricesPerNight.forEach(
         (packageName, price) -> {
-          double priceValue = priceMapper.toDouble(price);
+          Double priceValue = priceMapper.toDouble(price);
           packageResponses.add(new PackageResponse(packageName.toString(), priceValue));
         });
 

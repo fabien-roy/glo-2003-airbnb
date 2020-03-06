@@ -16,7 +16,7 @@ public class TransactionMapper {
 
   public TransactionResponse toResponse(Transaction transaction) {
     String timestamp = transaction.getTimestamp().format(DATE_TIME_FORMATTER) + "Z";
-    double total = priceMapper.toDouble(transaction.getTotal());
+    Double total = priceMapper.toDouble(transaction.getTotal());
     return new TransactionResponse(
         timestamp,
         transaction.getFrom(),

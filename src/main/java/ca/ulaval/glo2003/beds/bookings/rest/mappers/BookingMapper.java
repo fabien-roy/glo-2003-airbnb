@@ -39,7 +39,7 @@ public class BookingMapper {
   }
 
   public BookingResponse toResponse(Booking booking) {
-    double total = priceMapper.toDouble(booking.getTotal());
+    Double total = priceMapper.toDouble(booking.getTotal());
 
     return new BookingResponse(
         booking.getArrivalDate().toString(),

@@ -7,6 +7,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+// TODO : Remove this class if rendered useless
 public class PriceMapper {
 
   private NumberFormat decimalFormat;
@@ -17,11 +18,11 @@ public class PriceMapper {
     decimalFormat = new DecimalFormat("#.00", otherSymbols);
   }
 
-  public Price fromDouble(double priceValue) {
+  public Price fromDouble(Double priceValue) {
     return new Price(BigDecimal.valueOf(priceValue));
   }
 
-  public double toDouble(Price price) {
+  public Double toDouble(Price price) {
     String formattedDouble = decimalFormat.format(price.getValue().doubleValue());
     return Double.parseDouble(formattedDouble);
   }
