@@ -10,7 +10,7 @@ import java.util.*;
 public class Bed {
 
   private UUID number;
-  private String ownerPublicKey;
+  private PublicKey ownerPublicKey;
   private String zipCode;
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
@@ -20,7 +20,7 @@ public class Bed {
   private List<Booking> bookings = new ArrayList<>();
 
   public Bed(
-      String ownerPublicKey,
+      PublicKey ownerPublicKey,
       String zipCode,
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
@@ -44,7 +44,7 @@ public class Bed {
     this.number = number;
   }
 
-  public String getOwnerPublicKey() {
+  public PublicKey getOwnerPublicKey() {
     return ownerPublicKey;
   }
 

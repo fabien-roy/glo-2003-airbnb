@@ -28,8 +28,7 @@ public class SweetToothDependencyExceptionHandler
     ErrorResponse response =
         new ErrorResponse(
             "CANT_OFFER_SWEET_TOOTH_PACKAGE",
-            "in order to offer sweetTooth package, you must also \n"
-                + "    offer the bloodthirsty and allYouCanDrink packages");
+            "in order to offer sweetTooth package, you must also offer the bloodthirsty and allYouCanDrink packages");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

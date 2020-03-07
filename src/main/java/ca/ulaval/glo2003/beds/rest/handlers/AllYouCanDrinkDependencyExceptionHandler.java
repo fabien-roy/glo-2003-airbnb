@@ -28,8 +28,7 @@ public class AllYouCanDrinkDependencyExceptionHandler
     ErrorResponse response =
         new ErrorResponse(
             "CANT_OFFER_ALL_YOU_CAN_DRINK_PACKAGE",
-            "in order to offer allYouCanDrink package, you must also \n"
-                + "    offer the bloodthirsty package");
+            "in order to offer allYouCanDrink package, you must also offer the bloodthirsty package");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

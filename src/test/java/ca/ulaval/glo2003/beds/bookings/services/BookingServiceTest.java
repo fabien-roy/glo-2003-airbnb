@@ -22,6 +22,7 @@ import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import java.util.Collections;
 import java.util.UUID;
@@ -105,7 +106,7 @@ public class BookingServiceTest {
   public void add_shouldAddStayBookedTransactionToBooking() {
     UUID bedNumber = createBedNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
-    String tenantPublicKey = createTenantPublicKey();
+    PublicKey tenantPublicKey = createTenantPublicKey();
     Price total = createTotal();
     Booking booking = mock(Booking.class);
     Bed bed = aBed().build();
@@ -118,7 +119,7 @@ public class BookingServiceTest {
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
-    when(transactionFactory.createStayBooked(tenantPublicKey, total))
+    when(transactionFactory.createStayBooked(tenantPublicKey.getValue(), total))
         .thenReturn(stayBookedTransaction);
 
     bookingService.add(bedNumber.toString(), bookingRequest);
@@ -130,7 +131,7 @@ public class BookingServiceTest {
   public void add_shouldAddStayCompletedTransactionToBooking() {
     UUID bedNumber = createBedNumber();
     BookingRequest bookingRequest = mock(BookingRequest.class);
-    String ownerPublicKey = createOwnerPublicKey();
+    PublicKey ownerPublicKey = createOwnerPublicKey();
     int numberOfNights = createNumberOfNights();
     Price total = createTotal();
     Booking booking = mock(Booking.class);
@@ -139,12 +140,13 @@ public class BookingServiceTest {
     when(booking.getNumberOfNights()).thenReturn(numberOfNights);
     when(booking.getNumber()).thenReturn(createBookingNumber());
     when(booking.getPackage()).thenReturn(bed.getPricesPerNight().keySet().iterator().next());
+    when(booking.getTenantPublicKey()).thenReturn(createTenantPublicKey());
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
-    when(transactionFactory.createStayCompleted(ownerPublicKey, total, numberOfNights))
+    when(transactionFactory.createStayCompleted(ownerPublicKey.getValue(), total, numberOfNights))
         .thenReturn(stayCompletedTransaction);
 
     bookingService.add(bedNumber.toString(), bookingRequest);
@@ -159,6 +161,7 @@ public class BookingServiceTest {
     Bed bed = mock(Bed.class);
     when(bed.getPricesPerNight())
         .thenReturn(Collections.singletonMap(createPackageName(), createPricePerNight()));
+    when(bed.getOwnerPublicKey()).thenReturn(mock(PublicKey.class));
     Booking booking =
         aBooking().withPackage(bed.getPricesPerNight().keySet().iterator().next()).build();
     Price total = createTotal();

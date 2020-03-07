@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.helpers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
@@ -20,7 +21,7 @@ public class BedRequestObjectMother {
   private BedRequestObjectMother() {}
 
   public static String createOwnerPublicKey() {
-    return fakeValuesService.regexify(BedMapper.OWNER_PUBLIC_KEY_PATTERN);
+    return createPublicKey().getValue();
   }
 
   public static String createZipCode() {

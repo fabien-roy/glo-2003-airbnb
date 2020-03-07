@@ -40,7 +40,7 @@ class BedTest {
 
   @Test
   public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
-    String ownerPublicKey = createOwnerPublicKey();
+    PublicKey ownerPublicKey = createOwnerPublicKey();
     Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
     Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
     Booking booking =

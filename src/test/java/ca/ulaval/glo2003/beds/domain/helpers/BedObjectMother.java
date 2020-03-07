@@ -1,10 +1,12 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.BedTypes;
 import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
+import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
@@ -26,8 +28,8 @@ public class BedObjectMother {
     return UUID.randomUUID();
   }
 
-  public static String createOwnerPublicKey() {
-    return fakeValuesService.regexify(BedMapper.OWNER_PUBLIC_KEY_PATTERN);
+  public static PublicKey createOwnerPublicKey() {
+    return createPublicKey();
   }
 
   public static String createZipCode() {

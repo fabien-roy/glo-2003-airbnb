@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings.rest;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.rest.mappers.PriceJsonSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class BookingResponse {
 
@@ -11,10 +13,11 @@ public class BookingResponse {
   @JsonProperty("package")
   private Packages bookingPackage;
 
-  private float total;
+  @JsonSerialize(using = PriceJsonSerializer.class)
+  private Double total;
 
   public BookingResponse(
-      String arrivalDate, int numberOfNights, Packages bookingPackage, float total) {
+      String arrivalDate, int numberOfNights, Packages bookingPackage, Double total) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
     this.bookingPackage = bookingPackage;
@@ -33,7 +36,7 @@ public class BookingResponse {
     return bookingPackage;
   }
 
-  public float getTotal() {
+  public Double getTotal() {
     return total;
   }
 }

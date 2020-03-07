@@ -6,16 +6,16 @@ Legend :
 - R1 : Release 1 (already done)
 - \#x : Associated task number
 
-`MapQuestClient` will be placed in `interfaces.infrastructure`. It must not know about beds.
+`ZippopotamusClient` will be placed in `interfaces.clients`. It must not know about beds.
 
 ## `POST /beds`
 - `BedResource.add(...)` sends `BedRequest` to `BedService.add(...)` (R1)
   - `BedService.add(...)` maps valid bed using `BedMapper.fromRequest(...)` (R1)
-    - **`BedMapper.fromRequest(...)` validates everything like in R1, but without zip code validation (#153)**
-    - **`BedMapper.fromRequest(...)` validates lodgingMode if present (#154)**
-    - **`BedMapper.fromRequest(...)` sets lodgingMode to "private" if not present (#154)**
-  - **`BedService.add(...)` validates zip code using `MapQuestClient.validateZipCode(...)` (#155)**
-    - **`MapQuestClient.validateZipCode(...)` validates zip code as string using external service (#156)**
+    - **`BedMapper.fromRequest(...)` validates everything like in R1, but removes zip code validation (#?)**
+    - **`BedMapper.fromRequest(...)` validates lodgingMode if present (#?)**
+    - **`BedMapper.fromRequest(...)` sets lodgingMode to "private" if not present (#?)**
+  - **`BedService.add(...)` validates zip code using `ZippopotamususClient.validateZipCode(...)` (#?)**
+    - **`ZippopotamusClient.validateZipCode(...)` validates zip code as string using external service (#?)**
   - `BedService.add(...)` has the same logic as in R1 after that (R1)
 - `BedResource.add(...)` sets 201 as http status (R1)
 - `BedResource.add(...)` sets new bed path as header location (R1)
@@ -42,10 +42,10 @@ Legend :
     - **`BedMatcherMapper.fromRequestParams(...)` sets `numberOfNights` to 3 if `minCapacity` is present and not `numberOfNights` (#159)**
     - **`BedMatcherMapper.fromRequestParams(...)` validates `lodgingMode` is valid (#160)**
     - _NOTE : `origin` and `maxDistance` are attributes of `BedMatcher`, but aren't used in `BedMatcher.matches(...)`_
-  - **`BedService.getAll(...)` validates zip code using `MapQuestClient.validateZipCode(...)` (#161)**
+  - **`BedService.getAll(...)` validates zip code using `ZippopotamusClient.validateZipCode(...)` (#?)**
   - `BedService.getAll(...)` gets all beds using `BedRepository.getAll()` (R1)
-  - **If origin is not null, use `MapQuestClient.isWithinRadius(String zipCode, String origin, double maxDistance)` on each bed to have a `List<Bed>` within radius. (#162)**
-    - **`MapQuestClient.isWithinRadius(String zipCode, String origin, double maxDistance)` returns true or false using external service (#163)**
+  - **If origin is not null, use `DistanceCalculator.isWithinRadius(String zipCode, String origin, double maxDistance)` on each bed to have a `List<Bed>` within radius. (#?)**
+    - **`DistanceCalculator.isWithinRadius(...)` returns true or false algorithm provided in e1s4 (#?)**
   - _NOTE : `BedMatcher` must be applied to list of beds after that, null origin or not._
   - `BedService.getAll(...)` uses `BedMatcher.matches(...)` to filter beds (R1)
     - **`BedMatcher.matches(...)` if `minCapacity` is set, use `Bed.isAvailable(...)` and work out some magic (#164)**

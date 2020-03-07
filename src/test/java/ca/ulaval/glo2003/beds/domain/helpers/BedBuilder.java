@@ -18,8 +18,8 @@ public class BedBuilder {
   private UUID DEFAULT_BED_NUMBER = createBedNumber();
   private UUID bedNumber = DEFAULT_BED_NUMBER;
 
-  private String DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
-  private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
+  private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
+  private PublicKey ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
   private String DEFAULT_ZIP_CODE = createZipCode();
   private String zipCode = DEFAULT_ZIP_CODE;
@@ -52,7 +52,7 @@ public class BedBuilder {
     return this;
   }
 
-  public BedBuilder withOwnerPublicKey(String ownerPublicKey) {
+  public BedBuilder withOwnerPublicKey(PublicKey ownerPublicKey) {
     this.ownerPublicKey = ownerPublicKey;
     return this;
   }

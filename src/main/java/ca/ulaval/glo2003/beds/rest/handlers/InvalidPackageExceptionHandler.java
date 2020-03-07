@@ -26,8 +26,7 @@ public class InvalidPackageExceptionHandler implements ExceptionHandler<InvalidP
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
         new ErrorResponse(
-            "INVALID_PACKAGE",
-            "package should be one of\n" + "    bloodthirsty, allYouCanDrink, sweetTooth");
+            "INVALID_PACKAGE", "package should be one of bloodthirsty, allYouCanDrink, sweetTooth");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
