@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -12,6 +13,7 @@ import ca.ulaval.glo2003.beds.rest.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.rest.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
+import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,12 +28,14 @@ import org.junit.jupiter.params.provider.EnumSource;
 class BedFactoryTest {
 
   BedFactory bedFactory;
+  PriceMapper priceMapper;
   PackageMapper packageMapper;
 
   @BeforeEach
   public void setUpFactory() {
     bedFactory = new BedFactory();
-    packageMapper = new PackageMapper();
+    priceMapper = mock(PriceMapper.class);
+    packageMapper = new PackageMapper(priceMapper);
   }
 
   @Test

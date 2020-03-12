@@ -29,8 +29,7 @@ public class ExceedingAccommodationCapacityExceptionHandler
     ErrorResponse response =
         new ErrorResponse(
             "EXCEEDING_ACCOMMODATION_CAPACITY",
-            "accommodation capacity exceeding maximum \n"
-                + "    viable capacity for the provided bed type");
+            "accommodation capacity exceeding maximum viable capacity for the provided bed type");
     return new ObjectMapper().writeValueAsString(response);
   }
 }

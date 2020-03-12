@@ -3,11 +3,14 @@ package ca.ulaval.glo2003.beds.bookings.transactions.rest.mappers;
 import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +19,12 @@ import org.junit.jupiter.api.Test;
 public class TransactionMapperTest {
 
   private TransactionMapper transactionMapper;
+  private PriceMapper priceMapper;
 
   @BeforeEach
   public void setUpMapper() {
-    transactionMapper = new TransactionMapper();
+    priceMapper = mock(PriceMapper.class);
+    transactionMapper = new TransactionMapper(priceMapper);
   }
 
   @Test
@@ -58,6 +63,7 @@ public class TransactionMapperTest {
     Price total = createTotal();
     double expectedTotal = total.getValue().doubleValue();
     Transaction transaction = aTransaction().withTotal(total).build();
+    when(priceMapper.toDouble(total)).thenReturn(expectedTotal);
 
     TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
 

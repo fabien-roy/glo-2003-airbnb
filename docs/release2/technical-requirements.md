@@ -5,12 +5,12 @@ This document lists all technical requirements for release 2.
 ## E1S4 (FLG)
 - When adding a bed (`POST /beds`)
   - Zip code must be an existing US postal code
-    - _This replaces our validation in `BedMapper`. Instead of checking if zipCode is 5 digits in the REST layer, we will ask `MapQuestClient.validateZipCode(String)` during `BedService.add(...)`._
+    - _This replaces our validation in `BedMapper`. Instead of checking if zipCode is 5 digits in the REST layer, we will ask `ZippotamusClient.validateZipCode(String)` during `BedService.add(...)`._
 - When getting all beds (`GET /beds`)
   - Beds can be filtered by origin
     - If max distance if not specified, default is 10km
     - Origin must be an existing US postal code
-    - _We will use `MapQuestClient` to filter beds by location. Maybe a method passing all current beds and returning the ones with a close enough zip code_
+    - _We will use `DistanceCalculator.isWithinRadius(String, String, double)` to filter beds by location. Maybe a method passing all current beds and returning the ones with a close enough zip code_
   - Beds can be filtered by maximum distance
     - Maximum distance must be more than 0
     - Origin must be specified

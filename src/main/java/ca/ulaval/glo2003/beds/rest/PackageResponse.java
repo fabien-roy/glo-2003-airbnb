@@ -1,11 +1,16 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import ca.ulaval.glo2003.beds.rest.mappers.PriceJsonSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class PackageResponse {
 
   private String name;
-  private double pricePerNight;
 
-  public PackageResponse(String name, double pricePerNight) {
+  @JsonSerialize(using = PriceJsonSerializer.class)
+  private Double pricePerNight;
+
+  public PackageResponse(String name, Double pricePerNight) {
     this.name = name;
     this.pricePerNight = pricePerNight;
   }
@@ -14,15 +19,7 @@ public class PackageResponse {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public double getPricePerNight() {
+  public Double getPricePerNight() {
     return pricePerNight;
-  }
-
-  public void setPricePerNight(double pricePerNight) {
-    this.pricePerNight = pricePerNight;
   }
 }

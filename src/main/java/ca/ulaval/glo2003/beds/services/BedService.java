@@ -53,7 +53,8 @@ public class BedService {
     return matchingBeds.stream()
         .map(
             matchingBed ->
-                bedMapper.toResponse(matchingBed, bedStarsCalculator.calculateStars(matchingBed)))
+                bedMapper.toResponseWithNumber(
+                    matchingBed, bedStarsCalculator.calculateStars(matchingBed)))
         .sorted(Comparator.comparingInt(BedResponse::getStars).reversed())
         .collect(Collectors.toList());
   }
@@ -63,6 +64,6 @@ public class BedService {
 
     Bed bed = bedRepository.getByNumber(bedNumber);
 
-    return bedMapper.toResponse(bed, bedStarsCalculator.calculateStars(bed));
+    return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
   }
 }

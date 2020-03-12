@@ -13,7 +13,7 @@ public class BookingNotFoundExceptionHandler implements ExceptionHandler<Booking
 
   @Override
   public void handle(BookingNotFoundException e, Request request, Response response) {
-    response.status(HttpStatus.BAD_REQUEST_400);
+    response.status(HttpStatus.NOT_FOUND_404);
 
     try {
       response.body(badRequest(e.getBookingNumber()));

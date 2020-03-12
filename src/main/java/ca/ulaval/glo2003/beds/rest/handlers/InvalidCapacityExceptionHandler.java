@@ -25,8 +25,7 @@ public class InvalidCapacityExceptionHandler implements ExceptionHandler<Invalid
 
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
-        new ErrorResponse(
-            "INVALID_MINIMAL_CAPACITY", "minimal capacity should be a positive number");
+        new ErrorResponse("INVALID_CAPACITY", "minimal capacity should be a positive number");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
