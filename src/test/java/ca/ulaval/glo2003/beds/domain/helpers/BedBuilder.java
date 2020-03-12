@@ -43,6 +43,9 @@ public class BedBuilder {
   private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
   private List<Booking> bookings = DEFAULT_BOOKINGS;
 
+  private LodgingModes DEFAULT_BED_LODGING_MODE = createLodgingMode();
+  private LodgingModes lodgingMode = DEFAULT_BED_LODGING_MODE;
+
   public static BedBuilder aBed() {
     return new BedBuilder();
   }
@@ -101,7 +104,8 @@ public class BedBuilder {
             cleaningFrequency,
             bloodTypes,
             capacity,
-            pricesPerNight);
+            pricesPerNight,
+            lodgingMode);
     bed.setNumber(bedNumber);
     bookings.forEach(bed::book);
     return bed;

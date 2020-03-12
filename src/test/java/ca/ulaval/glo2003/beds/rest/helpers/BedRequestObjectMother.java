@@ -56,4 +56,8 @@ public class BedRequestObjectMother {
   private static double createPackagePricePerNight() {
     return Faker.instance().number().randomDouble(2, 100, 1000);
   }
+
+  public static String createLodgingMode() {
+    return randomEnum(LodgingModes.class).toString();
+  }
 }

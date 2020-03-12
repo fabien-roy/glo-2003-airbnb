@@ -22,6 +22,7 @@ public class BedMapper {
   }
 
   public Bed fromRequest(BedRequest request) {
+
     validateRequest(request);
 
     PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
@@ -30,6 +31,13 @@ public class BedMapper {
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
+    LodgingModes mode = LodgingModes.PRIVATE;
+
+    if (request.getLodgingMode() == null) request.setLodgingMode("PRIVATE");
+    else if (request.getLodgingMode().equals(LodgingModes.COHABITATION.toString()))
+      mode = LodgingModes.COHABITATION;
+    else if (request.getLodgingMode().equals(LodgingModes.PRIVATE.toString()))
+      mode = LodgingModes.PRIVATE;
 
     return new Bed(
         ownerPublicKey,
@@ -38,7 +46,8 @@ public class BedMapper {
         cleaningFrequencies,
         bloodTypes,
         request.getCapacity(),
-        pricesPerNight);
+        pricesPerNight,
+        mode);
   }
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
@@ -68,12 +77,21 @@ public class BedMapper {
 
     if (request.getCapacity() <= 0) throw new InvalidCapacityException();
 
+    if (request.getLodgingMode() != null) validateLodgingMode(request.getLodgingMode());
+
     validateZipCode(request.getZipCode());
   }
 
   // TODO : FLG : Only validate not null
   private void validateZipCode(String zipCode) {
     if (zipCode == null || !zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
+  }
+
+  private void validateLodgingMode(String lodgingMode) {
+
+    if ((!lodgingMode.equals(LodgingModes.PRIVATE.toString()))
+        && (!lodgingMode.equals(LodgingModes.COHABITATION.toString())))
+      throw new InvalidLodgingModeException();
   }
 
   private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {

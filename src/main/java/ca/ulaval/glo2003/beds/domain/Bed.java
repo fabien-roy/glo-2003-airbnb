@@ -18,6 +18,7 @@ public class Bed {
   private int capacity;
   private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
+  private LodgingModes lodgingMode;
 
   public Bed(
       PublicKey ownerPublicKey,
@@ -26,7 +27,8 @@ public class Bed {
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      Map<Packages, Price> pricesPerNight) {
+      Map<Packages, Price> pricesPerNight,
+      LodgingModes lodgingMode) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
     this.bedType = bedType;
@@ -34,6 +36,7 @@ public class Bed {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.pricesPerNight = pricesPerNight;
+    this.lodgingMode = lodgingMode;
   }
 
   public UUID getNumber() {
@@ -42,6 +45,10 @@ public class Bed {
 
   public void setNumber(UUID number) {
     this.number = number;
+  }
+
+  public void setLodgingMode(LodgingModes mode) {
+    this.lodgingMode = mode;
   }
 
   public PublicKey getOwnerPublicKey() {
@@ -89,6 +96,10 @@ public class Bed {
     }
 
     return foundBooking.get();
+  }
+
+  public LodgingModes getLodgingMode() {
+    return lodgingMode;
   }
 
   public Set<Packages> getPackages() {

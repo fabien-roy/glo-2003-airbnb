@@ -11,6 +11,7 @@ public class BedRequest {
   private List<String> bloodTypes;
   private int capacity;
   private List<PackageRequest> packages;
+  private String lodgingMode;
 
   public BedRequest() {
     // Empty constructor for parsing
@@ -23,7 +24,8 @@ public class BedRequest {
       String cleaningFrequency,
       List<String> bloodTypes,
       int capacity,
-      List<PackageRequest> packages) {
+      List<PackageRequest> packages,
+      String lodgingMode) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
     this.bedType = bedType;
@@ -31,6 +33,7 @@ public class BedRequest {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.packages = packages;
+    this.lodgingMode = lodgingMode;
   }
 
   public String getOwnerPublicKey() {
@@ -87,5 +90,13 @@ public class BedRequest {
 
   public void setPackages(List<PackageRequest> packages) {
     this.packages = packages;
+  }
+
+  public String getLodgingMode() {
+    return lodgingMode;
+  }
+
+  public void setLodgingMode(String lodgingMode) {
+    this.lodgingMode = lodgingMode;
   }
 }
