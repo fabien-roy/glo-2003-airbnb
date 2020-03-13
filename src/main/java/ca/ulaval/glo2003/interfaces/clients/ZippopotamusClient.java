@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.interfaces.clients;
 
+import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -10,6 +11,7 @@ public class ZippopotamusClient {
   public ZippopotamusClient() {}
 
   public static void validateZipCode(String zipCode) {
+    validateZipCodeFormat(zipCode);
     String host = "http://api.zippopotam.us/us/";
     try {
       URL urlForGetRequest = new URL(host + zipCode);
@@ -22,6 +24,12 @@ public class ZippopotamusClient {
       }
     } catch (IOException ex) {
       // TODO
+    }
+  }
+
+  private static void validateZipCodeFormat(String zipCode) {
+    if (zipCode.length() != 5) {
+      throw new InvalidZipCodeException();
     }
   }
 }

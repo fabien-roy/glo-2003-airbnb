@@ -22,7 +22,7 @@ class ZippopotamusClientTest {
   }
 
   @Test
-  void validateZipCode_withInvalidZipCode_shouldThrowNonExistingZipCodeException() {
+  void validateZipCode_withInvalidZipCodeLength_shouldThrowNonExistingZipCodeException() {
     String zipCode = "0000";
     assertThrows(InvalidZipCodeException.class, () -> validateZipCode(zipCode));
   }
