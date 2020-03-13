@@ -18,7 +18,7 @@ public enum LodgingModes {
   }
 
   public static LodgingModes get(String mode) {
-    LodgingModes foundMode = LodgingModes.PRIVATE;
+    LodgingModes foundMode;
 
     if (mode.equals(LodgingModes.PRIVATE.toString())) foundMode = LodgingModes.PRIVATE;
     else if (mode.equals(LodgingModes.COHABITATION.toString()))
