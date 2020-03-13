@@ -26,4 +26,10 @@ class ZippopotamusClientTest {
     String zipCode = "0000";
     assertThrows(InvalidZipCodeException.class, () -> validateZipCode(zipCode));
   }
+
+  @Test
+  void validateZipCode_withNotAllNumericZipCode_shouldThrowNonExistingZipCodeException() {
+    String zipCode = "0R00A";
+    assertThrows(InvalidZipCodeException.class, () -> validateZipCode(zipCode));
+  }
 }
