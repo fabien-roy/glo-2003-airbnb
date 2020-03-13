@@ -28,6 +28,11 @@ public class ZippopotamusClient {
   }
 
   private static void validateZipCodeFormat(String zipCode) {
+    try {
+      Double.parseDouble(zipCode);
+    } catch (NumberFormatException e) {
+      throw new InvalidZipCodeException();
+    }
     if (zipCode.length() != 5) {
       throw new InvalidZipCodeException();
     }
