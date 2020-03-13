@@ -9,25 +9,26 @@ import java.net.URL;
 public class ZippopotamusClient {
 
   private String zipCode;
+  int responseStatusCode;
 
   public ZippopotamusClient(String zipCode) {
     this.zipCode = zipCode;
-  }
-
-  public void validateZipCode() {
-    validateZipCodeFormat(zipCode);
     String host = "http://api.zippopotam.us/us/";
     try {
       URL urlForGetRequest = new URL(host + zipCode);
       String readLine = null;
       HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
       conection.setRequestMethod("GET");
-      int responseCode = conection.getResponseCode();
-      if (responseCode != HttpURLConnection.HTTP_OK) {
-        throw new NonExistingZipCodeException();
-      }
+      this.responseStatusCode = conection.getResponseCode();
     } catch (IOException ex) {
       // TODO
+    }
+  }
+
+  public void validateZipCode() {
+    validateZipCodeFormat(zipCode);
+    if (this.responseStatusCode != HttpURLConnection.HTTP_OK) {
+      throw new NonExistingZipCodeException();
     }
   }
 
