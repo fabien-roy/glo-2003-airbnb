@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.rest.exceptions;
+package ca.ulaval.glo2003.interfaces.clients.exceptions;
 
 public class InvalidZipCodeException extends RuntimeException {
 

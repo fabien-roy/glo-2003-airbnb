@@ -17,6 +17,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;

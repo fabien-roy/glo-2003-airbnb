@@ -6,6 +6,8 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingNotFoundExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.handlers.*;
+import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.interfaces.clients.handler.InvalidZipCodeExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.InvalidFormatExceptionHandler;
