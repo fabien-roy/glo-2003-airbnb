@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.interfaces.clients;
 import static ca.ulaval.glo2003.interfaces.clients.ZippopotamusClient.validateZipCode;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
 import org.junit.jupiter.api.Test;
 
@@ -18,5 +19,11 @@ class ZippopotamusClientTest {
   void validateZipCode_withNonExistingZipCode_shouldThrowNonExistingZipCodeException() {
     String zipCode = "00000";
     assertThrows(NonExistingZipCodeException.class, () -> validateZipCode(zipCode));
+  }
+
+  @Test
+  void validateZipCode_withInvalidZipCode_shouldThrowNonExistingZipCodeException() {
+    String zipCode = "0000";
+    assertThrows(InvalidZipCodeException.class, () -> validateZipCode(zipCode));
   }
 }
