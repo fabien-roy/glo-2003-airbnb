@@ -8,9 +8,13 @@ import java.net.URL;
 
 public class ZippopotamusClient {
 
-  public ZippopotamusClient() {}
+  private String zipCode;
 
-  public static void validateZipCode(String zipCode) {
+  public ZippopotamusClient(String zipCode) {
+    this.zipCode = zipCode;
+  }
+
+  public void validateZipCode() {
     validateZipCodeFormat(zipCode);
     String host = "http://api.zippopotam.us/us/";
     try {
