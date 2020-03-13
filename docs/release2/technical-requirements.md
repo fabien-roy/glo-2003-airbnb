@@ -5,7 +5,7 @@ This document lists all technical requirements for release 2.
 ## E1S4 (FLG)
 - When adding a bed (`POST /beds`)
   - Zip code must be an existing US postal code
-    - _This replaces our validation in `BedMapper`. Instead of checking if zipCode is 5 digits in the REST layer, we will ask `ZippotamusClient.validateZipCode(String)` during `BedService.add(...)`._
+    - _This replaces our validation in `BedMapper`. Instead of checking if zipCode is 5 digits in the REST layer, we will ask `ZippopotamusClient.validateZipCode(String)` during `BedService.add(...)`._
 - When getting all beds (`GET /beds`)
   - Beds can be filtered by origin
     - If max distance if not specified, default is 10km
