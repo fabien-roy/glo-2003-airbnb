@@ -11,6 +11,8 @@ public class BedRequest {
   private List<String> bloodTypes;
   private int capacity;
   private List<PackageRequest> packages;
+  private String latitude;
+  private String longitude;
 
   public BedRequest() {
     // Empty constructor for parsing
@@ -31,6 +33,8 @@ public class BedRequest {
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.packages = packages;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 
   public String getOwnerPublicKey() {
@@ -47,6 +51,22 @@ public class BedRequest {
 
   public void setZipCode(String zipCode) {
     this.zipCode = zipCode;
+  }
+
+  public String getLongitude() {
+    return longitude;
+  }
+
+  public String getLatitude() {
+    return latitude;
+  }
+
+  public void setLongitude(String longitude) {
+    this.longitude = longitude;
+  }
+
+  public void setLatitude(String latitude) {
+    this.latitude = latitude;
   }
 
   public String getBedType() {
