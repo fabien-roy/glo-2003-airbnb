@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.interfaces.clients;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.interfaces.clients.exceptions.UnreachableZippopotamusServerException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
 import org.junit.jupiter.api.Test;
 
 class ZippopotamusClientTest {
