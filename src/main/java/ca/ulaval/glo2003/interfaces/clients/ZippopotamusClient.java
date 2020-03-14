@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.interfaces.clients;
 
 import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
+import ca.ulaval.glo2003.interfaces.clients.exceptions.UnreachableZippopotamusServerException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,12 +17,11 @@ public class ZippopotamusClient {
     String host = "http://api.zippopotam.us/us/";
     try {
       URL urlForGetRequest = new URL(host + zipCode);
-      String readLine = null;
       HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
       conection.setRequestMethod("GET");
       this.responseStatusCode = conection.getResponseCode();
     } catch (IOException ex) {
-      // TODO
+      throw new UnreachableZippopotamusServerException();
     }
   }
 
