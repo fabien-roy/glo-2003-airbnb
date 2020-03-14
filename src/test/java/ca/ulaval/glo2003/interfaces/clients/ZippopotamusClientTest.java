@@ -13,6 +13,7 @@ class ZippopotamusClientTest {
   void validateZipCode_withValidZipCode_shouldNotThrow() {
     String zipCode = "12345";
     ZippopotamusClient zippopotamusClient = new ZippopotamusClient(zipCode);
+
     assertDoesNotThrow(zippopotamusClient::validateZipCode);
   }
 
@@ -20,6 +21,7 @@ class ZippopotamusClientTest {
   void validateZipCode_withNonExistingZipCode_shouldThrowNonExistingZipCodeException() {
     String zipCode = "00000";
     ZippopotamusClient zippopotamusClient = new ZippopotamusClient(zipCode);
+
     assertThrows(NonExistingZipCodeException.class, zippopotamusClient::validateZipCode);
   }
 
@@ -27,6 +29,7 @@ class ZippopotamusClientTest {
   void validateZipCode_withInvalidZipCodeLength_shouldThrowNonExistingZipCodeException() {
     String zipCode = "0000";
     ZippopotamusClient zippopotamusClient = new ZippopotamusClient(zipCode);
+
     assertThrows(InvalidZipCodeException.class, zippopotamusClient::validateZipCode);
   }
 
@@ -34,6 +37,7 @@ class ZippopotamusClientTest {
   void validateZipCode_withNotAllNumericZipCode_shouldThrowNonExistingZipCodeException() {
     String zipCode = "0R00A";
     ZippopotamusClient zippopotamusClient = new ZippopotamusClient(zipCode);
+
     assertThrows(InvalidZipCodeException.class, zippopotamusClient::validateZipCode);
   }
 
@@ -42,6 +46,7 @@ class ZippopotamusClientTest {
       validateZipCode_withoutInternetConnection_shouldThrowUnreachableZippopotamusServerException() {
     // TODO Find a way to disconnect network
     String zipCode = "12345";
+
     assertThrows(
         UnreachableZippopotamusServerException.class, () -> new ZippopotamusClient(zipCode));
   }
