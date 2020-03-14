@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.interfaces.clients.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
+import ca.ulaval.glo2003.interfaces.clients.exceptions.UnreachableZippopotamusServerException;
 import org.junit.jupiter.api.Test;
 
 class ZippopotamusClientTest {
@@ -34,5 +35,14 @@ class ZippopotamusClientTest {
     String zipCode = "0R00A";
     ZippopotamusClient zippopotamusClient = new ZippopotamusClient(zipCode);
     assertThrows(InvalidZipCodeException.class, zippopotamusClient::validateZipCode);
+  }
+
+  @Test
+  void
+      validateZipCode_withoutInternetConnection_shouldThrowUnreachableZippopotamusServerException() {
+    // TODO Find a way to disconnect network
+    String zipCode = "12345";
+    assertThrows(
+        UnreachableZippopotamusServerException.class, () -> new ZippopotamusClient(zipCode));
   }
 }
