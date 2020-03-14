@@ -12,7 +12,9 @@ public class ZippopotamusClient {
   private String zipCode;
   int responseStatusCode;
 
-  public ZippopotamusClient(String zipCode) {
+  public ZippopotamusClient() {}
+
+  public void initiate(String zipCode) {
     this.zipCode = zipCode;
     String host = "http://api.zippopotam.us/us/";
     try {
