@@ -23,6 +23,7 @@ public class BedMapper {
   }
 
   public Bed fromRequest(BedRequest request) {
+
     validateRequest(request);
 
     PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
@@ -30,6 +31,10 @@ public class BedMapper {
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
+    LodgingModes mode =
+        request.getLodgingMode() == null
+            ? LodgingModes.PRIVATE
+            : LodgingModes.get(request.getLodgingMode());
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
 
     return new Bed(
@@ -39,6 +44,7 @@ public class BedMapper {
         cleaningFrequencies,
         bloodTypes,
         request.getCapacity(),
+        mode,
         pricesPerNight);
   }
 

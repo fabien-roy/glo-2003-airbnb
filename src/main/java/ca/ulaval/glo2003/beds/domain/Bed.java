@@ -16,6 +16,7 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
+  private LodgingModes lodgingMode;
   private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
 
@@ -26,6 +27,7 @@ public class Bed {
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
+      LodgingModes lodgingMode,
       Map<Packages, Price> pricesPerNight) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
@@ -33,6 +35,7 @@ public class Bed {
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
+    this.lodgingMode = lodgingMode;
     this.pricesPerNight = pricesPerNight;
   }
 
@@ -66,6 +69,10 @@ public class Bed {
 
   public int getCapacity() {
     return capacity;
+  }
+
+  public LodgingModes getLodgingMode() {
+    return lodgingMode;
   }
 
   public Map<Packages, Price> getPricesPerNight() {
