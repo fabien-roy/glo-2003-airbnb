@@ -159,6 +159,34 @@ class BedMapperTest {
   }
 
   @Test
+  public void fromRequest_shouldMapLodgingMode() {
+    LodgingModes expectedLodgingMode = BedObjectMother.createLodgingMode();
+    BedRequest bedRequest = aBedRequest().withLodgingMode(expectedLodgingMode.toString()).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedLodgingMode, bed.getLodgingMode());
+  }
+
+  @Test
+  public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
+    BedRequest bedRequest = aBedRequest().withLodgingMode(null).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedLodgingMode, bed.getLodgingMode());
+  }
+
+  @Test
+  public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
+    String invalidLodgingMode = "invalidLodgingMode";
+    BedRequest bedRequest = aBedRequest().withLodgingMode(invalidLodgingMode).build();
+
+    assertThrows(InvalidLodgingModeException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
   public void fromRequest_shouldMapPricesPerNight() {
     PackageRequest packageRequest = aPackageRequest().build();
     List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
