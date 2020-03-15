@@ -31,6 +31,8 @@ public class ZippopotamusClient {
     } catch (IOException ex) {
       throw new UnreachableZippopotamusServerException();
     }
+    // TODO le nouveau ZipCode devrait être créé avec les données en réponse
+    this.zipCode = new ZipCode(zipCodeValue);
   }
 
   public void validateZipCode() {
