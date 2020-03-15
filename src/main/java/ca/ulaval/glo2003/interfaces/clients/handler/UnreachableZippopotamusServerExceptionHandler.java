@@ -14,8 +14,7 @@ public class UnreachableZippopotamusServerExceptionHandler
 
   @Override
   public void handle(UnreachableZippopotamusServerException e, Request request, Response response) {
-    // TODO validate status number
-    response.status(HttpStatus.BAD_REQUEST_400);
+    response.status(HttpStatus.NOT_FOUND_404);
 
     try {
       response.body(badRequest());
