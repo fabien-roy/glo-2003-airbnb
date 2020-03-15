@@ -30,10 +30,11 @@ public class BedMapper {
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
+    LodgingModes mode =
+        request.getLodgingMode() == null
+            ? LodgingModes.PRIVATE
+            : LodgingModes.get(request.getLodgingMode());
     Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
-    LodgingModes mode = LodgingModes.PRIVATE;
-
-    if (request.getLodgingMode() != null) mode = LodgingModes.get(request.getLodgingMode());
 
     return new Bed(
         ownerPublicKey,
