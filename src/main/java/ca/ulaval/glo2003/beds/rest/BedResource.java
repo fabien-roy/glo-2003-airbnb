@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.beds.rest;
 
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.services.BedService;
-import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
@@ -33,17 +33,10 @@ public class BedResource implements RouteGroup {
     get("/:number", this::getByNumber, new ObjectMapper()::writeValueAsString);
   }
 
-  public Object add(Request request, Response response) {
+  public Object add(Request request, Response response) throws JsonProcessingException {
     BedRequest bedRequest;
 
-    try {
-      bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);
-
-    } catch (JsonProcessingException exception) {
-      new JsonProcessingExceptionHandler().handle(exception, request, response);
-
-      return response.body();
-    }
+    bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);
 
     String bedNumber = bedService.add(bedRequest);
     String bedPath = String.format("%s/%s", BED_PATH, bedNumber);
@@ -71,9 +64,6 @@ public class BedResource implements RouteGroup {
     return bedResponse;
   }
 
-  // TODO : This is both a hack and untested code. Spark seems to prefer "+" rather than "," as a
-  // delimiter for
-  // query params. Here is a disgusting fix. It works.
   private HashMap<String, String[]> buildQueryMap(Request request) {
     HashMap<String, String[]> queryMap = new HashMap<>();
 

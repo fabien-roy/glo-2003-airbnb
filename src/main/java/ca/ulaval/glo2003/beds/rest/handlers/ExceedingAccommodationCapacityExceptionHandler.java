@@ -21,7 +21,6 @@ public class ExceedingAccommodationCapacityExceptionHandler
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

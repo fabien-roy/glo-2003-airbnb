@@ -59,7 +59,6 @@ class TransactionFactoryTest {
     assertEquals(expectedReason, transaction.getReason());
   }
 
-  // TODO : Is there a way to test it's now + numberOfNights?
   @Test
   public void createStayCompleted_shouldSetTimestamp() {
     Transaction transaction = transactionFactory.createStayCompleted(createTo(), createTotal(), 1);

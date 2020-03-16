@@ -19,7 +19,6 @@ public class InvalidFormatExceptionHandler implements ExceptionHandler<InvalidFo
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

@@ -19,7 +19,6 @@ public class InvalidBedTypeExceptionHandler implements ExceptionHandler<InvalidB
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

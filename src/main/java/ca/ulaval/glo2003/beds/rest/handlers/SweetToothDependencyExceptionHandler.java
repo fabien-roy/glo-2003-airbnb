@@ -20,7 +20,6 @@ public class SweetToothDependencyExceptionHandler
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 
