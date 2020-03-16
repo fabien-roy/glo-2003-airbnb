@@ -1,12 +1,12 @@
 package ca.ulaval.glo2003.beds.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
@@ -67,6 +67,26 @@ public class BedServiceTest {
     String bedNumber = bedService.add(bedRequest);
 
     assertEquals(expectedBedNumber.toString(), bedNumber);
+  }
+
+  @Test
+  public void add_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
+    BedRequest bedRequest = mock(BedRequest.class);
+    bedRequest.setZipCode("146886486468");
+
+    bedService.add(bedRequest);
+
+    assertThrows(InvalidZipCodeException.class, () -> bedService.add(bedRequest));
+  }
+
+  @Test
+  public void add_withEmptyZipCode_shouldThrowInvalidZipCodeException() {
+    BedRequest bedRequest = mock(BedRequest.class);
+    bedRequest.setZipCode("");
+
+    bedService.add(bedRequest);
+
+    assertThrows(InvalidZipCodeException.class, () -> bedService.add(bedRequest));
   }
 
   @Test
