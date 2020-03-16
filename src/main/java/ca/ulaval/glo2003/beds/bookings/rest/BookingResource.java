@@ -5,7 +5,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.bookings.services.BookingService;
-import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.jetty.http.HttpHeader;
@@ -31,17 +30,10 @@ public class BookingResource implements RouteGroup {
     get("/:bookingNumber", this::getByNumber, new ObjectMapper()::writeValueAsString);
   }
 
-  public Object add(Request request, Response response) {
+  public Object add(Request request, Response response) throws JsonProcessingException {
     BookingRequest bookingRequest;
 
-    try {
-      bookingRequest = new ObjectMapper().readValue(request.body(), BookingRequest.class);
-
-    } catch (JsonProcessingException exception) {
-      new JsonProcessingExceptionHandler().handle(exception, request, response);
-
-      return response.body();
-    }
+    bookingRequest = new ObjectMapper().readValue(request.body(), BookingRequest.class);
 
     String bedNumber = request.params("bedNumber");
     String bookingNumber = bookingService.add(bedNumber, bookingRequest);
