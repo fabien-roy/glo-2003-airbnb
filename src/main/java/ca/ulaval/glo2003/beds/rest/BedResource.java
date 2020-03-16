@@ -71,9 +71,6 @@ public class BedResource implements RouteGroup {
     return bedResponse;
   }
 
-  // TODO : This is both a hack and untested code. Spark seems to prefer "+" rather than "," as a
-  // delimiter for
-  // query params. Here is a disgusting fix. It works.
   private HashMap<String, String[]> buildQueryMap(Request request) {
     HashMap<String, String[]> queryMap = new HashMap<>();
 

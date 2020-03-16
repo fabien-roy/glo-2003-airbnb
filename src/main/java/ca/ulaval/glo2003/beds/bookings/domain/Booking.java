@@ -51,11 +51,6 @@ public class Booking {
     return packageName;
   }
 
-  // TODO : Only used by tests
-  public void setPackage(Packages packageName) {
-    this.packageName = packageName;
-  }
-
   public Price getTotal() {
     return total;
   }

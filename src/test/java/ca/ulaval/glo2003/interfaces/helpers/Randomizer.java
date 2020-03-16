@@ -4,9 +4,6 @@ import java.util.Random;
 
 public class Randomizer {
 
-  // TODO : This was built during testing for Bed.matches(...)
-  // TODO : Might turn out irrelevant
-
   private static final Random RANDOM = new Random();
 
   private Randomizer() {}
