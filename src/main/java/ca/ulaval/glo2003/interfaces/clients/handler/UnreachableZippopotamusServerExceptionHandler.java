@@ -26,7 +26,7 @@ public class UnreachableZippopotamusServerExceptionHandler
 
   private String badRequest() throws JsonProcessingException {
     ErrorResponse response =
-        new ErrorResponse("ZPPOPOTAMUS_UNREACHABLE", "zippopotamus client unreachable");
+        new ErrorResponse("UNREACHABLE_ZIPPOPOTAMUS_SERVER", "zippopotamus server unreachable");
     return new ObjectMapper().writeValueAsString(response);
   }
 }
