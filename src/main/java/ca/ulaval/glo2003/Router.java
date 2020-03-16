@@ -29,9 +29,9 @@ import ca.ulaval.glo2003.transactions.services.TransactionService;
 
 public class Router {
 
-  private static final BedRepository bedRepository = new InMemoryBedRepository();
   private static final TransactionRepository transactionRepository =
       new InMemoryTransactionRepository();
+  private static final BedRepository bedRepository = new InMemoryBedRepository();
 
   private static final BedFactory bedFactory = new BedFactory();
   private static final BookingFactory bookingFactory = new BookingFactory();
@@ -51,6 +51,9 @@ public class Router {
       new BookingMapper(publicKeyMapper, priceMapper);
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
+  private static final TransactionService transactionService =
+      new TransactionService(
+          transactionFactory, transactionRepository, bedRepository, transactionMapper);
   private static final BedService bedService =
       new BedService(
           bedFactory,
@@ -61,16 +64,13 @@ public class Router {
           bedStarsCalculator);
   private static final BookingService bookingService =
       new BookingService(
-          transactionFactory,
+          transactionService,
           bookingMapper,
           bedRepository,
           bookingFactory,
           bookingTotalCalculator,
           bedNumberMapper,
           bookingNumberMapper);
-  private static final TransactionService transactionService =
-      new TransactionService(
-          transactionFactory, transactionRepository, bedRepository, transactionMapper);
 
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorMapper());
