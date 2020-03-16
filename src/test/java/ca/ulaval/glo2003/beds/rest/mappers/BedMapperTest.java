@@ -349,6 +349,6 @@ class BedMapperTest {
 
     BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, 0);
 
-    assertEquals(expectedBedNumber, bedResponse.getBedNumber());
+    assertEquals(expectedBedNumber.toString(), bedResponse.getBedNumber());
   }
 }

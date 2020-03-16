@@ -66,7 +66,7 @@ public class BedMapper {
 
   public BedResponse toResponseWithNumber(Bed bed, int stars) {
     BedResponse bedResponse = toResponseWithoutNumber(bed, stars);
-    bedResponse.setBedNumber(bed.getNumber());
+    bedResponse.setBedNumber(bed.getNumber().toString());
     return bedResponse;
   }
 
