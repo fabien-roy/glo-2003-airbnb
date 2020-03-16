@@ -18,7 +18,6 @@ public class JsonProcessingExceptionHandler implements ExceptionHandler<JsonProc
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

@@ -19,7 +19,6 @@ public class BookingNotFoundExceptionHandler implements ExceptionHandler<Booking
       response.body(badRequest(e.getBookingNumber()));
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 
