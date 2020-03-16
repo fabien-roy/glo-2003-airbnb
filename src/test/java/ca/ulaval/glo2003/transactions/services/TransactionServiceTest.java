@@ -1,13 +1,17 @@
 package ca.ulaval.glo2003.transactions.services;
 
+import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
+import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
+import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.transactions.rest.mappers.TransactionMapper;
 import java.util.Arrays;
@@ -19,14 +23,20 @@ import org.junit.jupiter.api.Test;
 class TransactionServiceTest {
 
   private TransactionService transactionService;
+  private TransactionFactory transactionFactory;
+  private TransactionRepository transactionRepository;
   private BedRepository bedRepository;
   private TransactionMapper transactionMapper;
 
   @BeforeEach
   public void setUpService() {
+    transactionFactory = mock(TransactionFactory.class);
+    transactionRepository = mock(TransactionRepository.class);
     bedRepository = mock(BedRepository.class);
     transactionMapper = mock(TransactionMapper.class);
-    transactionService = new TransactionService(bedRepository, transactionMapper);
+    transactionService =
+        new TransactionService(
+            transactionFactory, transactionRepository, bedRepository, transactionMapper);
   }
 
   @Test
@@ -110,5 +120,31 @@ class TransactionServiceTest {
 
     assertEquals(2, responses.size());
     assertTrue(responses.containsAll(Arrays.asList(expectedResponse, otherExpectedResponse)));
+  }
+
+  @Test
+  public void addStayBooked_shouldAddTransactionToRepository() {
+    String tenant = createFrom();
+    Price total = createTotal();
+    Transaction transaction = aTransaction().build();
+    when(transactionFactory.createStayBooked(tenant, total)).thenReturn(transaction);
+
+    transactionService.addStayBooked(tenant, total);
+
+    verify(transactionRepository).add(eq(transaction));
+  }
+
+  @Test
+  public void addStayCompleted_shouldAddTransactionToRepository() {
+    String owner = createTo();
+    Price total = createTotal();
+    int numberOfNights = 3;
+    Transaction transaction = aTransaction().build();
+    when(transactionFactory.createStayCompleted(owner, total, numberOfNights))
+        .thenReturn(transaction);
+
+    transactionService.addStayCompleted(owner, total, numberOfNights);
+
+    verify(transactionRepository).add(eq(transaction));
   }
 }

@@ -21,6 +21,8 @@ import ca.ulaval.glo2003.beds.rest.mappers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.interfaces.rest.mappers.ErrorMapper;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
+import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
+import ca.ulaval.glo2003.transactions.infrastructure.InMemoryTransactionRepository;
 import ca.ulaval.glo2003.transactions.rest.TransactionResource;
 import ca.ulaval.glo2003.transactions.rest.mappers.TransactionMapper;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
@@ -28,6 +30,8 @@ import ca.ulaval.glo2003.transactions.services.TransactionService;
 public class Router {
 
   private static final BedRepository bedRepository = new InMemoryBedRepository();
+  private static final TransactionRepository transactionRepository =
+      new InMemoryTransactionRepository();
 
   private static final BedFactory bedFactory = new BedFactory();
   private static final BookingFactory bookingFactory = new BookingFactory();
@@ -65,7 +69,8 @@ public class Router {
           bedNumberMapper,
           bookingNumberMapper);
   private static final TransactionService transactionService =
-      new TransactionService(bedRepository, transactionMapper);
+      new TransactionService(
+          transactionFactory, transactionRepository, bedRepository, transactionMapper);
 
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorMapper());
