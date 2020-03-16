@@ -17,6 +17,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;

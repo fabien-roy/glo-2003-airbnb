@@ -52,8 +52,7 @@ public class Router {
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
   private static final TransactionService transactionService =
-      new TransactionService(
-          transactionFactory, transactionRepository, bedRepository, transactionMapper);
+      new TransactionService(transactionFactory, transactionRepository, transactionMapper);
   private static final BedService bedService =
       new BedService(
           bedFactory,

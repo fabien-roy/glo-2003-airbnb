@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.transactions.domain;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.domain.Price;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

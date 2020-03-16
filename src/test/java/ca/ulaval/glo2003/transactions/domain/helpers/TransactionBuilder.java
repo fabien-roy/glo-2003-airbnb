@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.transactions.domain.helpers;
 
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 
-import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import java.time.LocalDateTime;
@@ -30,10 +30,6 @@ public class TransactionBuilder {
     return new TransactionBuilder();
   }
 
-  public Transaction build() {
-    return new Transaction(timestamp, from, to, total, reason);
-  }
-
   public TransactionBuilder withTransactionReason(TransactionReasons reason) {
     this.reason = reason;
     return this;
@@ -57,5 +53,9 @@ public class TransactionBuilder {
   public TransactionBuilder withTimestamp(LocalDateTime timestamp) {
     this.timestamp = timestamp;
     return this;
+  }
+
+  public Transaction build() {
+    return new Transaction(timestamp, from, to, total, reason);
   }
 }

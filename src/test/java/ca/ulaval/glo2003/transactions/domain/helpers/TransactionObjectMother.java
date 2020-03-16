@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.transactions.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
-import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
