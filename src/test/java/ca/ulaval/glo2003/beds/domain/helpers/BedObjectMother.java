@@ -18,8 +18,6 @@ import java.util.UUID;
 
 public class BedObjectMother {
 
-  // TODO : This is also used in BedRequestObjectMother and BookingObjectMother. Duplicated code is
-  // bad.
   private static final FakeValuesService fakeValuesService =
       new FakeValuesService(new Locale("en-US"), new RandomService());
 

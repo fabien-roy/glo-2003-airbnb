@@ -20,7 +20,6 @@ public class InvalidPublicKeyExceptionHandler
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

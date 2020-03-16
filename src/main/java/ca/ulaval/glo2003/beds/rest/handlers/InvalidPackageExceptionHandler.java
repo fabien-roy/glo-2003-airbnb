@@ -19,7 +19,6 @@ public class InvalidPackageExceptionHandler implements ExceptionHandler<InvalidP
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

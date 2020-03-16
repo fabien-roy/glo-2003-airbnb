@@ -19,7 +19,6 @@ public class InvalidZipCodeExceptionHandler implements ExceptionHandler<InvalidZ
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

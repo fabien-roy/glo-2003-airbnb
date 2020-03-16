@@ -78,7 +78,6 @@ public class BedMapper {
     validateZipCode(request.getZipCode());
   }
 
-  // TODO : FLG : Only validate not null
   private void validateZipCode(String zipCode) {
     if (zipCode == null || !zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
   }

@@ -27,7 +27,6 @@ import ca.ulaval.glo2003.interfaces.rest.mappers.ErrorMapper;
 
 public class Router {
 
-  // TODO : This is not correct dependency injection
   private static final BedRepository bedRepository = new InMemoryBedRepository();
 
   private static final BedFactory bedFactory = new BedFactory();

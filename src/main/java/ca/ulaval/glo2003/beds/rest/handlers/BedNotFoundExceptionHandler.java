@@ -19,7 +19,6 @@ public class BedNotFoundExceptionHandler implements ExceptionHandler<BedNotFound
       response.body(badRequest(e.getBedNumber()));
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

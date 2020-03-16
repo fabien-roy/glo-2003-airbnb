@@ -52,7 +52,6 @@ public class BookingMapper {
   }
 
   private void validateArrivalDate(String arrivalDate) {
-    // TODO : Check that date pattern is actually good.
     if (arrivalDate == null || !arrivalDate.matches(DATE_PATTERN))
       throw new InvalidArrivalDateException();
 

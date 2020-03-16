@@ -18,7 +18,6 @@ public class CatchallExceptionHandler implements ExceptionHandler<Exception> {
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 

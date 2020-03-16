@@ -19,7 +19,6 @@ public class InvalidCapacityExceptionHandler implements ExceptionHandler<Invalid
       response.body(badRequest());
     } catch (JsonProcessingException ex) {
       // Ain't happening
-      // TODO : False.
     }
   }
 
