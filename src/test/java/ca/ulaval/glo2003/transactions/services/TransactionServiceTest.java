@@ -44,13 +44,17 @@ class TransactionServiceTest {
   }
 
   @BeforeEach
-  public void setUpMocks() {
-    when(transactionFactory.createStayBooked(tenant, total)).thenReturn(transaction);
-    when(transactionFactory.createStayCompleted(owner, total, numberOfNights))
-        .thenReturn(transaction);
+  public void setUpMocksForGetAll() {
     when(transactionRepository.getAll()).thenReturn(Arrays.asList(transaction, otherTransaction));
     when(transactionMapper.toResponse(transaction)).thenReturn(transactionResponse);
     when(transactionMapper.toResponse(otherTransaction)).thenReturn(otherTransactionResponse);
+  }
+
+  @BeforeEach
+  public void setUpMocksForAdd() {
+    when(transactionFactory.createStayBooked(tenant, total)).thenReturn(transaction);
+    when(transactionFactory.createStayCompleted(owner, total, numberOfNights))
+        .thenReturn(transaction);
   }
 
   @Test

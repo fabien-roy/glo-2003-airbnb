@@ -70,13 +70,17 @@ public class BookingServiceTest {
   }
 
   @BeforeEach
-  public void setUpMocks() {
-    when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
-    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
+  public void setUpMocksForAdd() {
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
+  }
+
+  @BeforeEach
+  public void setUpMocksForGetByNumber() {
+    when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
+    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
+    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
   }
 
   @Test
