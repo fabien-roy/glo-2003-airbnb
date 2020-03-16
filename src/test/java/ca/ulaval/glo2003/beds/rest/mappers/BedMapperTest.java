@@ -317,6 +317,16 @@ class BedMapperTest {
   }
 
   @Test
+  public void toResponseWithoutNumber_shouldMapLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
+    Bed bed = aBed().withLodgingMode(expectedLodgingMode).build();
+
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
+
+    assertEquals(expectedLodgingMode.toString(), bedResponse.getLodgingMode());
+  }
+
+  @Test
   public void toResponseWithoutNumber_shouldMapPricesPerNights() {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());

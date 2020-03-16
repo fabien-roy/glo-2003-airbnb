@@ -59,6 +59,7 @@ public class BedMapper {
         bed.getCleaningFrequency().toString(),
         bloodTypes,
         bed.getCapacity(),
+        bed.getLodgingMode().toString(),
         packageResponses,
         stars);
   }
