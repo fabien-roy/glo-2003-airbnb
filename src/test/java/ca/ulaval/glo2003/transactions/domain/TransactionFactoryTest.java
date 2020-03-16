@@ -1,6 +1,6 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.domain;
+package ca.ulaval.glo2003.transactions.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionObjectMother.*;
+import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.Price;

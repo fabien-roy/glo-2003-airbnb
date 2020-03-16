@@ -1,16 +1,16 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.rest.mappers;
+package ca.ulaval.glo2003.transactions.rest.mappers;
 
-import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionBuilder.aTransaction;
-import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionObjectMother.*;
+import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
+import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
-import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
+import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;

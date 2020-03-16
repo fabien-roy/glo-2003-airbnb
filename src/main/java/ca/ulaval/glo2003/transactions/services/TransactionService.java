@@ -1,10 +1,10 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.services;
+package ca.ulaval.glo2003.transactions.services;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
-import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
-import ca.ulaval.glo2003.beds.bookings.transactions.rest.mappers.TransactionMapper;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
+import ca.ulaval.glo2003.transactions.rest.mappers.TransactionMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

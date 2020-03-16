@@ -1,9 +1,9 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers;
+package ca.ulaval.glo2003.transactions.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

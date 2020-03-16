@@ -1,10 +1,10 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers;
+package ca.ulaval.glo2003.transactions.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.bookings.transactions.domain.helpers.TransactionObjectMother.*;
+import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import java.time.LocalDateTime;
 
 public class TransactionBuilder {

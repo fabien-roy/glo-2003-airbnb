@@ -1,15 +1,15 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.services;
+package ca.ulaval.glo2003.transactions.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
-import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
-import ca.ulaval.glo2003.beds.bookings.transactions.rest.mappers.TransactionMapper;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
+import ca.ulaval.glo2003.transactions.rest.mappers.TransactionMapper;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
