@@ -25,9 +25,9 @@ public class ZippopotamusClient {
     String host = "http://api.zippopotam.us/us/";
     try {
       URL urlForGetRequest = new URL(host + zipCode);
-      HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
-      conection.setRequestMethod("GET");
-      this.responseStatusCode = conection.getResponseCode();
+      HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
+      connection.setRequestMethod("GET");
+      this.responseStatusCode = connection.getResponseCode();
     } catch (IOException ex) {
       throw new UnreachableZippopotamusServerException();
     }

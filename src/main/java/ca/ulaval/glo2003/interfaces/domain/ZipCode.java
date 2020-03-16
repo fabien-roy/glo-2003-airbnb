@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.interfaces.domain;
 
-
 public class ZipCode {
 
   private String value;
