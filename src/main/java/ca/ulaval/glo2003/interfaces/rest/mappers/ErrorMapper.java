@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.interfaces.rest;
+package ca.ulaval.glo2003.interfaces.rest.mappers;
 
 import static spark.Spark.exception;
 
@@ -15,7 +15,7 @@ import ca.ulaval.glo2003.interfaces.rest.handlers.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import spark.RouteGroup;
 
-public class ErrorResource implements RouteGroup {
+public class ErrorMapper implements RouteGroup {
 
   public static final String ERROR_PATH = "*";
 
