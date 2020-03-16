@@ -105,6 +105,21 @@ public class BookingServiceTest {
   }
 
   @Test
+  public void add_shouldAddStayBookedTransaction() {
+    bookingService.add(bedNumber.toString(), bookingRequest);
+
+    verify(transactionService).addStayBooked(booking.getTenantPublicKey().getValue(), total);
+  }
+
+  @Test
+  public void add_shouldAddStayCompletedTransaction() {
+    bookingService.add(bedNumber.toString(), bookingRequest);
+
+    verify(transactionService)
+        .addStayCompleted(bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
+  }
+
+  @Test
   public void getByNumber_shouldGetBooking() {
     bed.book(booking);
     BookingResponse expectedBookingResponse = mock(BookingResponse.class);
