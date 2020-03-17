@@ -6,10 +6,12 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingNotFoundExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.handlers.*;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
-import ca.ulaval.glo2003.interfaces.rest.handlers.InvalidFormatExceptionHandler;
-import ca.ulaval.glo2003.interfaces.rest.handlers.JsonProcessingExceptionHandler;
+import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
+import ca.ulaval.glo2003.interfaces.clients.exceptions.UnreachableZippopotamusServerException;
+import ca.ulaval.glo2003.interfaces.clients.handler.NonExistingZipCodeExceptionHandler;
+import ca.ulaval.glo2003.interfaces.clients.handler.UnreachableZippopotamusServerExceptionHandler;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.*;
+import ca.ulaval.glo2003.interfaces.rest.handlers.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import spark.RouteGroup;
 
@@ -22,6 +24,11 @@ public class ErrorMapper implements RouteGroup {
     exception(Exception.class, new CatchallExceptionHandler());
     exception(JsonProcessingException.class, new JsonProcessingExceptionHandler());
     exception(InvalidFormatException.class, new InvalidFormatExceptionHandler());
+    exception(InvalidZipCodeException.class, new InvalidZipCodeExceptionHandler());
+    exception(
+        UnreachableZippopotamusServerException.class,
+        new UnreachableZippopotamusServerExceptionHandler());
+    exception(NonExistingZipCodeException.class, new NonExistingZipCodeExceptionHandler());
     exception(InvalidBedTypeException.class, new InvalidBedTypeExceptionHandler());
     exception(BedNotFoundException.class, new BedNotFoundExceptionHandler());
     exception(
@@ -31,7 +38,6 @@ public class ErrorMapper implements RouteGroup {
         ExceedingAccommodationCapacityException.class,
         new ExceedingAccommodationCapacityExceptionHandler());
     exception(InvalidCapacityException.class, new InvalidCapacityExceptionHandler());
-    exception(InvalidZipCodeException.class, new InvalidZipCodeExceptionHandler());
     exception(InvalidPublicKeyException.class, new InvalidPublicKeyExceptionHandler());
     exception(InvalidPackageException.class, new InvalidPackageExceptionHandler());
     exception(BedAlreadyBookedException.class, new BedAlreadyBookedExceptionHandler());
