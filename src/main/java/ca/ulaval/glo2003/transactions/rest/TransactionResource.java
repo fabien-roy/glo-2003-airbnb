@@ -1,8 +1,8 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.rest;
+package ca.ulaval.glo2003.transactions.rest;
 
 import static spark.Spark.get;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.services.TransactionService;
+import ca.ulaval.glo2003.transactions.services.TransactionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.eclipse.jetty.http.HttpStatus;

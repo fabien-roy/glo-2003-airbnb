@@ -6,6 +6,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,13 +61,14 @@ public class BedMapper {
         bed.getCleaningFrequency().toString(),
         bloodTypes,
         bed.getCapacity(),
+        bed.getLodgingMode().toString(),
         packageResponses,
         stars);
   }
 
   public BedResponse toResponseWithNumber(Bed bed, int stars) {
     BedResponse bedResponse = toResponseWithoutNumber(bed, stars);
-    bedResponse.setBedNumber(bed.getNumber());
+    bedResponse.setBedNumber(bed.getNumber().toString());
     return bedResponse;
   }
 

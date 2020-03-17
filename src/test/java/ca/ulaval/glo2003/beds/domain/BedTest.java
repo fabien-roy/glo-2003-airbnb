@@ -14,6 +14,7 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 

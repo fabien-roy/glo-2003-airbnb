@@ -14,6 +14,7 @@ import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityExce
 import ca.ulaval.glo2003.beds.rest.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

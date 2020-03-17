@@ -18,6 +18,7 @@ import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -318,6 +319,16 @@ class BedMapperTest {
   }
 
   @Test
+  public void toResponseWithoutNumber_shouldMapLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
+    Bed bed = aBed().withLodgingMode(expectedLodgingMode).build();
+
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
+
+    assertEquals(expectedLodgingMode.toString(), bedResponse.getLodgingMode());
+  }
+
+  @Test
   public void toResponseWithoutNumber_shouldMapPricesPerNights() {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
@@ -349,6 +360,6 @@ class BedMapperTest {
 
     BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, 0);
 
-    assertEquals(expectedBedNumber, bedResponse.getBedNumber());
+    assertEquals(expectedBedNumber.toString(), bedResponse.getBedNumber());
   }
 }
