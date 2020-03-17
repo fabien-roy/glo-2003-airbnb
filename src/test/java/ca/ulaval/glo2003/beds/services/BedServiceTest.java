@@ -127,6 +127,28 @@ public class BedServiceTest {
   }
 
   @Test
+  public void getAll_withParams_shouldThrowInvalidZipCodeExceptionIfOneZipCodeIsInvalid() {
+    Map<String, String[]> params = new HashMap<>();
+    BedMatcher bedMatcher = mock(BedMatcher.class);
+    Bed expectedBed = mock(Bed.class);
+    expectedBed.setZipCode("1234567");
+    int expectedStars = 1;
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
+    when(bedRepository.getAll()).thenReturn(Collections.singletonList(expectedBed));
+    when(bedMatcher.matches(expectedBed)).thenReturn(true);
+    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
+    when(bedMapper.toResponseWithNumber(expectedBed, expectedStars))
+            .thenReturn(expectedBedResponse);
+
+    //List<BedResponse> bedResponses = bedService.getAll(params);
+
+    assertThrows(InvalidZipCodeException.class, () -> bedService.getAll(params));
+    //assertEquals(1, bedResponses.size());
+    //assertSame(expectedBedResponse, bedResponses.get(0));
+  }
+
+  @Test
   public void getByNumber_withNumber_shouldGetBed() {
     String requestedNumber = "requestedNumber";
     UUID bedNumber = mock(UUID.class);
