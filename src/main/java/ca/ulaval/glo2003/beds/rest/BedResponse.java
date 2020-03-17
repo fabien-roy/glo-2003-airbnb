@@ -13,6 +13,7 @@ public class BedResponse {
   private String cleaningFrequency;
   private List<String> bloodTypes;
   private int capacity;
+  private String lodgingMode;
   private List<PackageResponse> packages;
   private int stars;
 
@@ -22,6 +23,7 @@ public class BedResponse {
       String cleaningFrequency,
       List<String> bloodTypes,
       int capacity,
+      String lodgingMode,
       List<PackageResponse> packages,
       int stars) {
     this.zipCode = zipCode;
@@ -29,6 +31,7 @@ public class BedResponse {
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
+    this.lodgingMode = lodgingMode;
     this.packages = packages;
     this.stars = stars;
   }
@@ -40,6 +43,7 @@ public class BedResponse {
       String cleaningFrequency,
       List<String> bloodTypes,
       int capacity,
+      String lodgingMode,
       List<PackageResponse> packages,
       int stars) {
     this.bedNumber = bedNumber;
@@ -48,6 +52,7 @@ public class BedResponse {
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
+    this.lodgingMode = lodgingMode;
     this.packages = packages;
     this.stars = stars;
   }
@@ -78,6 +83,10 @@ public class BedResponse {
 
   public int getCapacity() {
     return capacity;
+  }
+
+  public String getLodgingMode() {
+    return lodgingMode;
   }
 
   public List<PackageResponse> getPackages() {

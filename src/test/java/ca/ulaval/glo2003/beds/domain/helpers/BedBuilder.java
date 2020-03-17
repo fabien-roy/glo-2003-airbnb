@@ -86,6 +86,11 @@ public class BedBuilder {
     return this;
   }
 
+  public BedBuilder withLodgingMode(LodgingModes lodgingMode) {
+    this.lodgingMode = lodgingMode;
+    return this;
+  }
+
   public BedBuilder withPricesPerNights(Map<Packages, Price> pricesPerNight) {
     this.pricesPerNight = pricesPerNight;
     return this;
