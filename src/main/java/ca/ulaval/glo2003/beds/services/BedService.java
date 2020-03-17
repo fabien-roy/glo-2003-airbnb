@@ -6,6 +6,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.interfaces.clients.ZippopotamusClient;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ public class BedService {
   private final BedMatcherMapper bedMatcherMapper;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
+  private final ZippopotamusClient zippopotamusClient = new ZippopotamusClient();
 
   public BedService(
       BedFactory bedFactory,
@@ -37,6 +39,9 @@ public class BedService {
     Bed bed = bedMapper.fromRequest(request);
 
     bed = bedFactory.create(bed);
+
+    zippopotamusClient.initiate(request.getZipCode());
+    zippopotamusClient.validateZipCode();
 
     bedRepository.add(bed);
 
@@ -65,5 +70,9 @@ public class BedService {
     Bed bed = bedRepository.getByNumber(bedNumber);
 
     return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
+  }
+
+  public ZippopotamusClient getZippopotamusClient() {
+    return zippopotamusClient;
   }
 }

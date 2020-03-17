@@ -6,10 +6,10 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,20 +71,8 @@ public class BedServiceTest {
 
   @Test
   public void add_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = mock(BedRequest.class);
+    BedRequest bedRequest = new BedRequest();
     bedRequest.setZipCode("146886486468");
-
-    bedService.add(bedRequest);
-
-    assertThrows(InvalidZipCodeException.class, () -> bedService.add(bedRequest));
-  }
-
-  @Test
-  public void add_withEmptyZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = mock(BedRequest.class);
-    bedRequest.setZipCode("");
-
-    bedService.add(bedRequest);
 
     assertThrows(InvalidZipCodeException.class, () -> bedService.add(bedRequest));
   }
