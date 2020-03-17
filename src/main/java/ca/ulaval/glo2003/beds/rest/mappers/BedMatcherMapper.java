@@ -1,7 +1,12 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMaxDistanceException;
+import ca.ulaval.glo2003.beds.rest.exceptions.MaxDistanceWithoutOriginException;
+import ca.ulaval.glo2003.interfaces.clients.ZippopotamusClient;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -10,6 +15,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BedMatcherMapper {
+
+  private ZippopotamusClient zippopotamusClient = new ZippopotamusClient();
 
   public static final String BED_TYPE_PARAM = "bedType";
   public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
@@ -26,8 +33,10 @@ public class BedMatcherMapper {
     BedTypes bedType = null;
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
-    int capacity = 0;
+    int minCapacity = 0;
     Packages packageName = null;
+    ZipCode origin = null;
+    int maxDistance = 10;
     LocalDate arrivalDate = LocalDate.now();
     int numberOfNights = 3;
     LodgingModes lodgingModes = null;
@@ -45,7 +54,7 @@ public class BedMatcherMapper {
     }
 
     if (params.get(MIN_CAPACITY_PARAM) != null) {
-      capacity = parseCapacity(params.get(MIN_CAPACITY_PARAM)[0]);
+      minCapacity = parseCapacity(params.get(MIN_CAPACITY_PARAM)[0]);
     }
 
     if (params.get(PACKAGE_NAME_PARAM) != null) {
@@ -58,14 +67,37 @@ public class BedMatcherMapper {
     }
 
     if (params.get(NUMBER_OF_NIGHTS_PARAM) != null) {
-      numberOfNights = parseCapacity(params.get(NUMBER_OF_NIGHTS_PARAM)[0]);
+      numberOfNights = parseNumberOfNights(params.get(NUMBER_OF_NIGHTS_PARAM)[0]);
     }
 
     if (params.get(LODGING_MODE_PARAM) != null) {
       lodgingModes = LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
     }
 
-    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, capacity, packageName);
+    if (params.get(ORIGIN_PARAM) != null) {
+      zippopotamusClient.initiate(params.get(ORIGIN_PARAM)[0]);
+      zippopotamusClient.validateZipCode();
+      origin = zippopotamusClient.getZipCode();
+    }
+
+    if (params.get(MAX_DISTANCE_PARAM) != null) {
+      if (params.get(ORIGIN_PARAM) == null) {
+        throw new MaxDistanceWithoutOriginException();
+      }
+      maxDistance = parseDistance(params.get(MAX_DISTANCE_PARAM)[0]);
+    }
+
+    return new BedMatcher(
+        bedType,
+        cleaningFrequency,
+        bloodTypes,
+        minCapacity,
+        packageName,
+        arrivalDate,
+        numberOfNights,
+        lodgingModes,
+        origin,
+        maxDistance);
   }
 
   private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
@@ -86,5 +118,37 @@ public class BedMatcherMapper {
     }
 
     return parsedCapacity;
+  }
+
+  private int parseNumberOfNights(String numberOfNights) {
+    int parsedNumberOfNights;
+
+    try {
+      parsedNumberOfNights = Integer.parseInt(numberOfNights);
+    } catch (NumberFormatException e) {
+      throw new InvalidNumberOfNights();
+    }
+
+    if (parsedNumberOfNights < 0) {
+      throw new InvalidNumberOfNights();
+    }
+
+    return parsedNumberOfNights;
+  }
+
+  private int parseDistance(String distance) {
+    int parsedDistance;
+
+    try {
+      parsedDistance = Integer.parseInt(distance);
+    } catch (NumberFormatException e) {
+      throw new InvalidMaxDistanceException();
+    }
+
+    if (parsedDistance < 0) {
+      throw new InvalidMaxDistanceException();
+    }
+
+    return parsedDistance;
   }
 }
