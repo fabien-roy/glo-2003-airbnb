@@ -3,8 +3,6 @@ package ca.ulaval.glo2003.beds.infrastructure;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
@@ -25,7 +23,7 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void add_shouldAddBed() {
-    Bed expectedBed = mock(Bed.class);
+    Bed expectedBed = aBed().build();
 
     bedRepository.add(expectedBed);
     Bed actualBed = bedRepository.getAll().get(0);
@@ -59,7 +57,7 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void getAll_withOneBed_shouldGetOneBed() {
-    Bed expectedBed = mock(Bed.class);
+    Bed expectedBed = aBed().build();
     bedRepository.add(expectedBed);
 
     List<Bed> actualBeds = bedRepository.getAll();
@@ -70,8 +68,8 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void getAll_withMultipleBeds_shouldGetMultipleBeds() {
-    Bed expectedBed = mock(Bed.class);
-    Bed otherExpectedBed = mock(Bed.class);
+    Bed expectedBed = aBed().build();
+    Bed otherExpectedBed = aBed().build();
     bedRepository.add(expectedBed);
     bedRepository.add(otherExpectedBed);
 
@@ -84,17 +82,16 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void getByNumber_withNoBed_shouldThrowBedNotFoundException() {
-    UUID bedNumber = mock(UUID.class);
+    UUID bedNumber = createBedNumber();
 
     assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(bedNumber));
   }
 
   @Test
   public void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException() {
-    UUID existentBedNumber = mock(UUID.class);
-    UUID nonExistentBedNumber = mock(UUID.class);
-    Bed existentBed = mock(Bed.class);
-    when(existentBed.getNumber()).thenReturn(existentBedNumber);
+    UUID existentBedNumber = createBedNumber();
+    UUID nonExistentBedNumber = createBedNumber();
+    Bed existentBed = aBed().withBedNumber(existentBedNumber).build();
     bedRepository.add(existentBed);
 
     assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(nonExistentBedNumber));
@@ -102,9 +99,8 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void getByNumber_withOneBed_shouldGetBed() {
-    UUID bedNumber = mock(UUID.class);
-    Bed expectedBed = mock(Bed.class);
-    when(expectedBed.getNumber()).thenReturn(bedNumber);
+    UUID bedNumber = createBedNumber();
+    Bed expectedBed = aBed().withBedNumber(bedNumber).build();
     bedRepository.add(expectedBed);
 
     Bed actualBed = bedRepository.getByNumber(bedNumber);
@@ -114,12 +110,10 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void getByNumber_withMultipleBeds_shouldGetBed() {
-    UUID bedNumber = mock(UUID.class);
-    UUID otherBedNumber = mock(UUID.class);
-    Bed expectedBed = mock(Bed.class);
-    when(expectedBed.getNumber()).thenReturn(bedNumber);
-    Bed otherBed = mock(Bed.class);
-    when(otherBed.getNumber()).thenReturn(otherBedNumber);
+    UUID bedNumber = createBedNumber();
+    UUID otherBedNumber = createBedNumber();
+    Bed expectedBed = aBed().withBedNumber(bedNumber).build();
+    Bed otherBed = aBed().withBedNumber(otherBedNumber).build();
     bedRepository.add(expectedBed);
     bedRepository.add(otherBed);
 

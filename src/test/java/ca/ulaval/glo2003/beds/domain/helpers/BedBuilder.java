@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

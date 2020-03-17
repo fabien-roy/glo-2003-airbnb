@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.domain;
+package ca.ulaval.glo2003.transactions.domain;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
