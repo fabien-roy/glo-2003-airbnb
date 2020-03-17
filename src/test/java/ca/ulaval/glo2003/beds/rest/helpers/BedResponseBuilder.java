@@ -51,6 +51,14 @@ public class BedResponseBuilder {
 
   public BedResponse build() {
     return new BedResponse(
-        bedNumber, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages, stars);
+        bedNumber,
+        zipCode,
+        bedType,
+        cleaningFrequency,
+        bloodTypes,
+        capacity,
+        lodgingMode,
+        packages,
+        stars);
   }
 }
