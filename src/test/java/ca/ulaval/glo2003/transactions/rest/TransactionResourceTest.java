@@ -1,10 +1,10 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.rest;
+package ca.ulaval.glo2003.transactions.rest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.services.TransactionService;
+import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

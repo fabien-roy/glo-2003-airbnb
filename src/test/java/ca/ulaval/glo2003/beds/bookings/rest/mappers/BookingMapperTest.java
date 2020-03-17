@@ -14,11 +14,11 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastExcep
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;

@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

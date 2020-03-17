@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

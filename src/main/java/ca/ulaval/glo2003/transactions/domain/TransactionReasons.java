@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.domain;
+package ca.ulaval.glo2003.transactions.domain;
 
 public enum TransactionReasons {
   STAY_BOOKED("STAY_BOOKED"),

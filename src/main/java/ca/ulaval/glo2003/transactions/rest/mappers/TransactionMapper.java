@@ -1,8 +1,8 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.rest.mappers;
+package ca.ulaval.glo2003.transactions.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.transactions.domain.Transaction;
-import ca.ulaval.glo2003.beds.bookings.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.time.format.DateTimeFormatter;
 
 public class TransactionMapper {

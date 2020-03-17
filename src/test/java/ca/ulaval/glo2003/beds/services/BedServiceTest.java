@@ -1,7 +1,10 @@
 package ca.ulaval.glo2003.beds.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
+import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
+import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseBuilder.aBedResponse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
@@ -11,21 +14,33 @@ import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class BedServiceTest {
 
-  private BedService bedService;
-  private BedFactory bedFactory;
-  private BedMapper bedMapper;
-  private BedNumberMapper bedNumberMapper;
-  private BedMatcherMapper bedMatcherMapper;
-  private BedRepository bedRepository;
-  private BedStarsCalculator bedStarsCalculator;
+  private static BedService bedService;
+  private static BedFactory bedFactory;
+  private static BedMapper bedMapper;
+  private static BedNumberMapper bedNumberMapper;
+  private static BedMatcherMapper bedMatcherMapper;
+  private static BedRepository bedRepository;
+  private static BedStarsCalculator bedStarsCalculator;
 
-  @BeforeEach
-  public void setUpService() {
+  private UUID bedNumber = createBedNumber();
+  private Bed bed = aBed().withBedNumber(bedNumber).build();
+  private Bed otherBed = aBed().build();
+  private BedMatcher bedMatcher = mock(BedMatcher.class);
+  private BedRequest bedRequest = aBedRequest().build();
+  private int stars = 4;
+  private int otherStars = 2;
+  private BedResponse bedResponse = aBedResponse().withStars(stars).build();
+  private BedResponse otherBedResponse = aBedResponse().withStars(otherStars).build();
+  private Map<String, String[]> params = new HashMap<>();
+
+  @BeforeAll
+  public static void setUpService() {
     bedFactory = mock(BedFactory.class);
     bedMapper = mock(BedMapper.class);
     bedNumberMapper = mock(BedNumberMapper.class);
@@ -42,97 +57,67 @@ public class BedServiceTest {
             bedStarsCalculator);
   }
 
+  @BeforeEach
+  public void setUpMocksForAdd() {
+    when(bedMatcher.matches(bed)).thenReturn(true);
+    when(bedMatcher.matches(otherBed)).thenReturn(true);
+    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
+    when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
+    when(bedFactory.create(bed)).thenReturn(bed);
+  }
+
+  @BeforeEach
+  public void setUpMocksForGetAll() {
+    when(bedRepository.getAll()).thenReturn(Arrays.asList(bed, otherBed));
+    when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
+    when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
+    when(bedMapper.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
+    when(bedMapper.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
+  }
+
+  @BeforeEach
+  public void setUpMocksForGetByNumber() {
+    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
+    when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
+    when(bedMapper.toResponseWithoutNumber(bed, stars)).thenReturn(bedResponse);
+  }
+
   @Test
   public void add_withBedRequest_shouldAddBed() {
-    BedRequest bedRequest = mock(BedRequest.class);
-    Bed expectedBed = mock(Bed.class);
-    when(bedMapper.fromRequest(bedRequest)).thenReturn(expectedBed);
-    when(bedFactory.create(expectedBed)).thenReturn(expectedBed);
-    when(expectedBed.getNumber()).thenReturn(mock(UUID.class));
-
     bedService.add(bedRequest);
 
-    verify(bedRepository).add(eq(expectedBed));
+    verify(bedRepository).add(eq(bed));
   }
 
   @Test
   public void add_withBedRequest_shouldReturnBedNumber() {
-    UUID expectedBedNumber = mock(UUID.class);
-    BedRequest bedRequest = mock(BedRequest.class);
-    Bed bed = mock(Bed.class);
-    when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(bedFactory.create(bed)).thenReturn(bed);
-    when(bed.getNumber()).thenReturn(expectedBedNumber);
+    String actualBedNumber = bedService.add(bedRequest);
 
-    String bedNumber = bedService.add(bedRequest);
-
-    assertEquals(expectedBedNumber.toString(), bedNumber);
+    assertEquals(bedNumber.toString(), actualBedNumber);
   }
 
   @Test
   public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
-    Map<String, String[]> params = new HashMap<>();
-    BedMatcher bedMatcher = mock(BedMatcher.class);
-    Bed expectedBed = mock(Bed.class);
-    int expectedStars = 1;
-    BedResponse expectedBedResponse = mock(BedResponse.class);
-    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
-    when(bedRepository.getAll()).thenReturn(Collections.singletonList(expectedBed));
-    when(bedMatcher.matches(expectedBed)).thenReturn(true);
-    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
-    when(bedMapper.toResponseWithNumber(expectedBed, expectedStars))
-        .thenReturn(expectedBedResponse);
+    when(bedMatcher.matches(otherBed)).thenReturn(false);
 
     List<BedResponse> bedResponses = bedService.getAll(params);
 
-    assertEquals(1, bedResponses.size());
-    assertSame(expectedBedResponse, bedResponses.get(0));
+    assertTrue(bedResponses.contains(bedResponse));
+    assertFalse(bedResponses.contains(otherBedResponse));
   }
 
   @Test
   public void getAll_withParams_shouldGetMatchingBedsInDecreasingOrderOfStars() {
-    Map<String, String[]> params = new HashMap<>();
-    BedMatcher bedMatcher = mock(BedMatcher.class);
-    int firstExpectedStars = 5;
-    int secondExpectedStars = 3;
-    Bed firstExpectedBed = mock(Bed.class);
-    Bed secondExpectedBed = mock(Bed.class);
-    BedResponse firstExpectedBedResponse = mock(BedResponse.class);
-    BedResponse secondExpectedBedResponse = mock(BedResponse.class);
-    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
-    when(bedRepository.getAll()).thenReturn(Arrays.asList(secondExpectedBed, firstExpectedBed));
-    when(bedMatcher.matches(any(Bed.class))).thenReturn(true);
-    when(bedStarsCalculator.calculateStars(firstExpectedBed)).thenReturn(firstExpectedStars);
-    when(bedStarsCalculator.calculateStars(secondExpectedBed)).thenReturn(secondExpectedStars);
-    when(bedMapper.toResponseWithNumber(firstExpectedBed, firstExpectedStars))
-        .thenReturn(firstExpectedBedResponse);
-    when(bedMapper.toResponseWithNumber(secondExpectedBed, secondExpectedStars))
-        .thenReturn(secondExpectedBedResponse);
-    when(firstExpectedBedResponse.getStars()).thenReturn(firstExpectedStars);
-    when(secondExpectedBedResponse.getStars()).thenReturn(secondExpectedStars);
-
     List<BedResponse> bedResponses = bedService.getAll(params);
 
-    assertEquals(2, bedResponses.size());
-    assertSame(firstExpectedBedResponse, bedResponses.get(0));
-    assertSame(secondExpectedBedResponse, bedResponses.get(1));
+    assertSame(bedResponse, bedResponses.get(0));
+    assertSame(otherBedResponse, bedResponses.get(1));
   }
 
   @Test
   public void getByNumber_withNumber_shouldGetBed() {
-    String requestedNumber = "requestedNumber";
-    UUID bedNumber = mock(UUID.class);
-    Bed expectedBed = mock(Bed.class);
-    int expectedStars = 1;
-    BedResponse expectedBedResponse = mock(BedResponse.class);
-    when(bedNumberMapper.fromString(requestedNumber)).thenReturn(bedNumber);
-    when(bedRepository.getByNumber(bedNumber)).thenReturn(expectedBed);
-    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
-    when(bedMapper.toResponseWithoutNumber(expectedBed, expectedStars))
-        .thenReturn(expectedBedResponse);
+    BedResponse actualBedResponse = bedService.getByNumber(bedNumber.toString());
 
-    BedResponse bedResponse = bedService.getByNumber(requestedNumber);
-
-    assertEquals(expectedBedResponse, bedResponse);
+    assertSame(bedResponse, actualBedResponse);
   }
 }

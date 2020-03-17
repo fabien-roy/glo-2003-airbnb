@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.transactions.rest;
+package ca.ulaval.glo2003.transactions.rest;
 
 import ca.ulaval.glo2003.beds.rest.mappers.PriceJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
