@@ -1,6 +1,6 @@
-package ca.ulaval.glo2003.beds.bookings.helpers;
+package ca.ulaval.glo2003.beds.bookings.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.Packages;

@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.createArrivalDate;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder;
+import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
