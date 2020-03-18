@@ -9,12 +9,10 @@ class PriceTest {
 
   @Test
   void multiply_shouldMultiplyValue() {
-    BigDecimal value = BigDecimal.valueOf(100);
-    BigDecimal factor = BigDecimal.valueOf(5);
-    Price price = new Price(value);
+    Price price = new Price(BigDecimal.valueOf(100));
     BigDecimal expectedMultipliedValue = BigDecimal.valueOf(500);
 
-    price = price.multiply(factor);
+    price = price.multiply(BigDecimal.valueOf(5));
 
     assertEquals(expectedMultipliedValue, price.getValue());
   }
@@ -31,10 +29,8 @@ class PriceTest {
 
   @Test
   void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    BigDecimal value = BigDecimal.ZERO;
-    BigDecimal otherValue = BigDecimal.ONE;
-    Price price = new Price(value);
-    Price otherPrice = new Price(otherValue);
+    Price price = new Price(BigDecimal.ZERO);
+    Price otherPrice = new Price(BigDecimal.ONE);
 
     boolean result = price.equals(otherPrice);
 
@@ -43,9 +39,8 @@ class PriceTest {
 
   @Test
   void equals_shouldReturnTrue_whenValuesAreEqual() {
-    BigDecimal value = BigDecimal.ZERO;
-    Price price = new Price(value);
-    Price otherPrice = new Price(value);
+    Price price = new Price(BigDecimal.ZERO);
+    Price otherPrice = new Price(BigDecimal.ZERO);
 
     boolean result = price.equals(otherPrice);
 
