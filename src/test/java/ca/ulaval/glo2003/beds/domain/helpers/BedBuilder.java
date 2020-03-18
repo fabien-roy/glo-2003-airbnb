@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +83,11 @@ public class BedBuilder {
 
   public BedBuilder withCapacity(int capacity) {
     this.capacity = capacity;
+    return this;
+  }
+
+  public BedBuilder withLodgingMode(LodgingModes lodgingMode) {
+    this.lodgingMode = lodgingMode;
     return this;
   }
 

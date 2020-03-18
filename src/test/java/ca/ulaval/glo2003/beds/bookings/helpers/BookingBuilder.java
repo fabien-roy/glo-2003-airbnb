@@ -4,8 +4,8 @@ import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.time.LocalDate;
 import java.util.UUID;
 

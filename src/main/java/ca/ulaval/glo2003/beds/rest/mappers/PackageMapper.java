@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 
 public class PackageMapper {

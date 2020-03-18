@@ -8,10 +8,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.Price;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
