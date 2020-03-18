@@ -23,22 +23,22 @@ public class BookingErrorResponseFactory extends BedErrorResponseFactory {
     }
   }
 
-  private String bookingNotFound(String number) {
+  static String bookingNotFound(String number) {
     return tryWriteValueAsString(
         "BOOKING_NOT_FOUND", "booking with number " + number + " could not be found");
   }
 
-  private String invalidArrivalDate() {
+  static String invalidArrivalDate() {
     return tryWriteValueAsString(
         "INVALID_ARRIVAL_DATE", "arrival date should be formatted as YYYY-MM-DD");
   }
 
-  private String invalidNumberOfNights() {
+  static String invalidNumberOfNights() {
     return tryWriteValueAsString(
         "INVALID_NUMBER_OF_NIGHTS", "number of nights should be a number between 1 and 90");
   }
 
-  private String arrivalDateInThePast() {
+  static String arrivalDateInThePast() {
     return tryWriteValueAsString("ARRIVAL_DATE_IN_THE_PAST", "cannot book a stay in the past");
   }
 }

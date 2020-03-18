@@ -17,7 +17,8 @@ public class CatchallErrorResponseFactory {
     }
   }
 
-  protected String tryWriteValueAsString(String error, String description) {
+  protected static String tryWriteValueAsString(
+      java.lang.String error, java.lang.String description) {
     try {
       ErrorResponse response = new ErrorResponse(error, description);
       return new ObjectMapper().writeValueAsString(response);
@@ -26,15 +27,15 @@ public class CatchallErrorResponseFactory {
     }
   }
 
-  protected String defaultResponse() {
+  protected static String defaultResponse() {
     return tryWriteValueAsString("BAD_REQUEST", "something went wrong");
   }
 
-  private String invalidFormat() {
+  static String invalidFormat() {
     return tryWriteValueAsString("INVALID_FORMAT", "invalid format");
   }
 
-  private String couldNotParseJson() {
+  static String couldNotParseJson() {
     return tryWriteValueAsString("BAD_REQUEST", "could not parse JSON");
   }
 }
