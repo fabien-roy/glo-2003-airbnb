@@ -20,4 +20,9 @@ public class ZipCode {
 
     return value.equals(zipCode.getValue());
   }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
 }
