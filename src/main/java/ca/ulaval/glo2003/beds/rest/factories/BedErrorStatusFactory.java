@@ -22,6 +22,10 @@ public class BedErrorStatusFactory extends CatchallErrorStatusFactory {
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof InvalidPackageException) {
       return HttpStatus.BAD_REQUEST_400;
+    } else if (exception instanceof InvalidMaxDistanceException) {
+      return HttpStatus.BAD_REQUEST_400;
+    } else if (exception instanceof MaxDistanceWithoutOriginException) {
+      return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof InvalidPublicKeyException) {
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof PackageNotAvailableException) {
