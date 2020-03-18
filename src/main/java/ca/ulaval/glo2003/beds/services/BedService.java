@@ -6,6 +6,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,9 +40,9 @@ public class BedService {
 
   public String add(BedRequest request) {
     Bed bed = bedMapper.fromRequest(request);
-    zippopotamusClient.validateZipCode(request.getZipCode());
+    ZipCode zipCode = zippopotamusClient.validateZipCode(request.getZipCode());
 
-    bed = bedFactory.create(bed);
+    bed = bedFactory.create(bed, zipCode);
 
     bedRepository.add(bed);
 

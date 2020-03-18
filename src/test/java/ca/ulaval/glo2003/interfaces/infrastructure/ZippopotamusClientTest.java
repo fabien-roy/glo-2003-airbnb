@@ -33,10 +33,10 @@ class ZippopotamusClientTest {
   }
 
   @Test
-  public void setCenter_withValidZipCode_setCenter() {
-    zippopotamusClient.setCenter(zipCode.getValue());
+  public void validateZipCode_withValidZipCode_shouldReturnZipCode() {
+    ZipCode actualZipCode = zippopotamusClient.validateZipCode(zipCode.getValue());
 
-    assertEquals(zipCode, zippopotamusClient.getCenter());
+    assertEquals(zipCode, actualZipCode);
   }
 
   @Test

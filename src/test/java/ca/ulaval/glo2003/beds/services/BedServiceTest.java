@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.services;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseBuilder.aBedResponse;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +14,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,6 +33,7 @@ public class BedServiceTest {
   private static ZippopotamusClient zippopotamusClient;
 
   private UUID bedNumber = createBedNumber();
+  private ZipCode zipCode = createZipCode();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
   private Bed otherBed = aBed().build();
   private BedMatcher bedMatcher = mock(BedMatcher.class);
@@ -67,7 +70,8 @@ public class BedServiceTest {
     when(bedMatcher.matches(otherBed)).thenReturn(true);
     when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(bedFactory.create(bed)).thenReturn(bed);
+    when(zippopotamusClient.validateZipCode(bedRequest.getZipCode())).thenReturn(zipCode);
+    when(bedFactory.create(bed, zipCode)).thenReturn(bed);
   }
 
   @BeforeEach

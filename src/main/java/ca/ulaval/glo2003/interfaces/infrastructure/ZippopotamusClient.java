@@ -12,20 +12,10 @@ public class ZippopotamusClient {
 
   private static final String ZIPPOPOTAMUS_URL = "http://api.zippopotam.us/us/";
 
-  private ZipCode center;
-
-  public ZipCode getCenter() {
-    return center;
-  }
-
-  public void setCenter(String zipCode) {
-    validateZipCode(zipCode);
-    this.center = new ZipCode(zipCode);
-  }
-
-  public void validateZipCode(String zipCode) {
+  public ZipCode validateZipCode(String zipCode) {
     validateZipCodeFormat(zipCode);
     validateZipCodeExistence(zipCode);
+    return new ZipCode(zipCode);
   }
 
   private void validateZipCodeFormat(String zipCode) {
