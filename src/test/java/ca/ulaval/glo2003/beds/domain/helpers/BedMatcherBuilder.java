@@ -12,6 +12,9 @@ public class BedMatcherBuilder {
   private List<BloodTypes> bloodTypes = null;
   private int minCapacity = 0;
   private Packages packageName = null;
+  private int maxDistance = 0;
+  private String origin = null;
+  private LodgingModes lodgingMode = null;
 
   public static BedMatcherBuilder aBedMatcher() {
     return new BedMatcherBuilder();
@@ -43,6 +46,6 @@ public class BedMatcherBuilder {
   }
 
   public BedMatcher build() {
-    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, minCapacity, packageName);
+    return new BedMatcher(bedType, cleaningFrequency, bloodTypes, minCapacity, packageName, maxDistance, origin, lodgingMode);
   }
 }

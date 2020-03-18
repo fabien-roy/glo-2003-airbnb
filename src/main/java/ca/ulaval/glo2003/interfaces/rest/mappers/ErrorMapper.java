@@ -41,5 +41,7 @@ public class ErrorMapper implements RouteGroup {
     exception(
         AllYouCanDrinkDependencyException.class, new AllYouCanDrinkDependencyExceptionHandler());
     exception(SweetToothDependencyException.class, new SweetToothDependencyExceptionHandler());
+    exception(InvalidDistanceException.class, new InvalidDistanceExceptionHandler());
+    exception(InvalidDistanceWithoutOriginException.class, new InvalidDistanceWithoutOriginExceptionHandler());
   }
 }
