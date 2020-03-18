@@ -4,15 +4,14 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
+import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BedMapper {
-
-  public static final String ZIP_CODE_PATTERN = "([0-9]){5}";
 
   private final PublicKeyMapper publicKeyMapper;
   private final PackageMapper packageMapper;
@@ -23,7 +22,6 @@ public class BedMapper {
   }
 
   public Bed fromRequest(BedRequest request) {
-
     validateRequest(request);
 
     PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
@@ -39,7 +37,6 @@ public class BedMapper {
 
     return new Bed(
         ownerPublicKey,
-        request.getZipCode(),
         bedType,
         cleaningFrequencies,
         bloodTypes,
@@ -55,7 +52,7 @@ public class BedMapper {
     List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
-        bed.getZipCode(),
+        bed.getZipCode().getValue(),
         bed.getBedType().toString(),
         bed.getCleaningFrequency().toString(),
         bloodTypes,
@@ -75,12 +72,6 @@ public class BedMapper {
     if (request.getBloodTypes().isEmpty()) throw new InvalidBloodTypesException();
 
     if (request.getCapacity() <= 0) throw new InvalidCapacityException();
-
-    validateZipCode(request.getZipCode());
-  }
-
-  private void validateZipCode(String zipCode) {
-    if (zipCode == null || !zipCode.matches(ZIP_CODE_PATTERN)) throw new InvalidZipCodeException();
   }
 
   private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {

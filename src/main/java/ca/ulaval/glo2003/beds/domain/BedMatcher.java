@@ -9,6 +9,7 @@ public class BedMatcher {
   private List<BloodTypes> bloodTypes;
   private int minCapacity;
   private Packages packageName;
+  private String origin;
 
   public BedMatcher(
       BedTypes bedType,
@@ -41,6 +42,10 @@ public class BedMatcher {
 
   public Packages getPackageName() {
     return packageName;
+  }
+
+  public String getOrigin() {
+    return origin;
   }
 
   public boolean matches(Bed bed) {
