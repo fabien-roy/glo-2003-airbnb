@@ -8,19 +8,20 @@ import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
 
 public class BookingErrorResponseFactory extends BedErrorResponseFactory {
 
-  @Override
-  public String create(Exception exception) {
-    if (exception instanceof BookingNotFoundException) {
-      return bookingNotFound(((BookingNotFoundException) exception).getBookingNumber());
-    } else if (exception instanceof InvalidArrivalDateException) {
-      return invalidArrivalDate();
-    } else if (exception instanceof InvalidNumberOfNights) {
-      return invalidNumberOfNights();
-    } else if (exception instanceof ArrivalDateInThePastException) {
-      return arrivalDateInThePast();
-    } else {
-      return defaultResponse();
-    }
+  public String create(BookingNotFoundException exception) {
+    return bookingNotFound(exception.getBookingNumber());
+  }
+
+  public String create(InvalidArrivalDateException exception) {
+    return invalidArrivalDate();
+  }
+
+  public String create(InvalidNumberOfNights exception) {
+    return invalidNumberOfNights();
+  }
+
+  public String create(ArrivalDateInThePastException exception) {
+    return arrivalDateInThePast();
   }
 
   static String bookingNotFound(String number) {
