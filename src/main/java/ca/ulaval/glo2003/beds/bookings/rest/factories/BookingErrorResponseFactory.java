@@ -19,7 +19,7 @@ public class BookingErrorResponseFactory extends BedErrorResponseFactory {
     } else if (exception instanceof ArrivalDateInThePastException) {
       return arrivalDateInThePast();
     } else {
-      return super.defaultResponse();
+      return defaultResponse();
     }
   }
 

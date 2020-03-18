@@ -17,7 +17,7 @@ public class BookingErrorStatusFactory extends BedErrorStatusFactory {
     } else if (exception instanceof ArrivalDateInThePastException) {
       return HttpStatus.BAD_REQUEST_400;
     } else {
-      return super.defaultStatus();
+      return defaultStatus();
     }
   }
 }

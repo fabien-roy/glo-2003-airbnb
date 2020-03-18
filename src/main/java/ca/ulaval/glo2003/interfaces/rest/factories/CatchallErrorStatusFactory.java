@@ -16,7 +16,7 @@ public class CatchallErrorStatusFactory {
     }
   }
 
-  protected int defaultStatus() {
+  protected static int defaultStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

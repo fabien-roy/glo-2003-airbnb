@@ -39,7 +39,7 @@ public class BedErrorStatusFactory extends CatchallErrorStatusFactory {
     } else if (exception instanceof BookingNotAllowedException) {
       return HttpStatus.BAD_REQUEST_400;
     } else {
-      return super.defaultStatus();
+      return defaultStatus();
     }
   }
 }

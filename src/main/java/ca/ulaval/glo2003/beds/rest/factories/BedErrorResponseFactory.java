@@ -38,7 +38,7 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
     } else if (exception instanceof BookingNotAllowedException) {
       return bookingNotAllowed();
     } else {
-      return super.defaultResponse();
+      return defaultResponse();
     }
   }
 
