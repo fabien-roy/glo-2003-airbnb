@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.helpers;
+package ca.ulaval.glo2003.beds.bookings.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;

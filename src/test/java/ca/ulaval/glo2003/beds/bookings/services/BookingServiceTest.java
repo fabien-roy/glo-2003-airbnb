@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.beds.bookings.services;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.*;
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.beds.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.assertEquals;

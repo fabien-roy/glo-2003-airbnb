@@ -1,13 +1,13 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.beds.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder;
-import ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother;
+import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
+import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;

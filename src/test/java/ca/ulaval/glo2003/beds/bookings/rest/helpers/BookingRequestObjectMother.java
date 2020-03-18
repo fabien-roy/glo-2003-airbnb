@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.helpers;
+package ca.ulaval.glo2003.beds.bookings.rest.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 
