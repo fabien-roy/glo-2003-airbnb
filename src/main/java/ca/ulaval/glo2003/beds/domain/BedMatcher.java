@@ -92,15 +92,18 @@ public class BedMatcher {
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
-    if (arrivalDate != null) return false;
+    if (arrivalDate != null) {
+      if (bed.getBookings().stream()
+          .anyMatch(booking -> booking.getDepartureDate().isAfter(arrivalDate))) return false;
+    }
 
-    if (numberOfNights < 0) return false;
+    // TODO validate bed availability
 
     if (lodgingModes != null && !lodgingModes.equals(bed.getLodgingMode())) return false;
 
     if (origin != null && !origin.getValue().contains(bed.getZipCode())) return false;
 
-    if (maxDistance > 10000) return false;
+    // TODO validate distance between two zipcodes is under max distance
 
     return true;
   }

@@ -1,13 +1,11 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.services.BedService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.eclipse.jetty.http.HttpHeader;
@@ -22,8 +20,12 @@ public class BedResource implements RouteGroup {
 
   private final BedService bedService;
 
-  public BedResource(BedService bedService) {
+  private final BedQueryMapBuilder bedQueryMapBuilder;
+
+  public BedResource(BedService bedService, BedQueryMapBuilder bedQueryMapBuilder) {
+
     this.bedService = bedService;
+    this.bedQueryMapBuilder = bedQueryMapBuilder;
   }
 
   @Override
@@ -48,7 +50,7 @@ public class BedResource implements RouteGroup {
   }
 
   public Object getAll(Request request, Response response) {
-    Map<String, String[]> queryMap = buildQueryMap(request);
+    Map<String, String[]> queryMap = bedQueryMapBuilder.buildQueryMap(request);
 
     List<BedResponse> bedResponses = bedService.getAll(queryMap);
 
@@ -62,25 +64,5 @@ public class BedResource implements RouteGroup {
 
     response.status(HttpStatus.OK_200);
     return bedResponse;
-  }
-
-  private HashMap<String, String[]> buildQueryMap(Request request) {
-    HashMap<String, String[]> queryMap = new HashMap<>();
-
-    addToQueryMap(request, BED_TYPE_PARAM, queryMap);
-    addToQueryMap(request, CLEANING_FREQUENCY_PARAM, queryMap);
-    addToQueryMap(request, MIN_CAPACITY_PARAM, queryMap);
-    addToQueryMap(request, PACKAGE_NAME_PARAM, queryMap);
-
-    if (request.queryParams(BLOOD_TYPES_PARAM) != null)
-      queryMap.put(
-          BLOOD_TYPES_PARAM, request.queryParams(BLOOD_TYPES_PARAM).replace(" ", "+").split(","));
-
-    return queryMap;
-  }
-
-  private void addToQueryMap(Request request, String param, Map<String, String[]> queryMap) {
-    if (request.queryParams(param) != null)
-      queryMap.put(param, new String[] {request.queryParams(param)});
   }
 }

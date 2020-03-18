@@ -20,6 +20,7 @@ import ca.ulaval.glo2003.beds.domain.BedFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.BedStarsCalculator;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
+import ca.ulaval.glo2003.beds.rest.BedQueryMapBuilder;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.mappers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
@@ -67,9 +68,11 @@ public class Router {
   private static final TransactionService transactionService =
       new TransactionService(bedRepository, transactionMapper);
 
+  private static final BedQueryMapBuilder bedQueryMapBuilder = new BedQueryMapBuilder();
+
   public static void setUpRoutes() {
     path(ERROR_PATH, new ErrorMapper());
-    path(BED_PATH, new BedResource(bedService));
+    path(BED_PATH, new BedResource(bedService, bedQueryMapBuilder));
     path(BOOKING_PATH, new BookingResource(bookingService));
     path(TRANSACTION_PATH, new TransactionResource(transactionService));
   }
