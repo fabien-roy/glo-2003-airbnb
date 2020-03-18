@@ -5,9 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.interfaces.domain.ZipCode;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.NonExistingZipCodeException;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.UnreachableZippopotamusServerException;
+import ca.ulaval.glo2003.interfaces.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.interfaces.exceptions.NonExistingZipCodeException;
+import ca.ulaval.glo2003.interfaces.exceptions.UnreachableZippopotamusServerException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import org.junit.jupiter.api.BeforeAll;

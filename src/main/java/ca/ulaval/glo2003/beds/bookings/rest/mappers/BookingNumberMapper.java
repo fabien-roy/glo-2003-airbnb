@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingNotFoundException;
 import java.util.UUID;
 
 public class BookingNumberMapper {

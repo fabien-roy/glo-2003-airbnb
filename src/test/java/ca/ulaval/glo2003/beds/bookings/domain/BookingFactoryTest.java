@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingObjectMother.createTotal;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createTotal;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 

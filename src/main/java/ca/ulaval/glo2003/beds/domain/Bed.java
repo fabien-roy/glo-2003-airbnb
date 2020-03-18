@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
-import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
-import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
+import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;

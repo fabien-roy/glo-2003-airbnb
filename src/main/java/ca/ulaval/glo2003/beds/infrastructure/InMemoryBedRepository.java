@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.infrastructure;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.rest.exceptions.BedNotFoundException;
+import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

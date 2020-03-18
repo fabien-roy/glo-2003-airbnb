@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCleaningFrequencyException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
 import java.util.HashMap;
 import java.util.Map;
 

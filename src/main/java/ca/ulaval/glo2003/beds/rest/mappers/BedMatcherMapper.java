@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

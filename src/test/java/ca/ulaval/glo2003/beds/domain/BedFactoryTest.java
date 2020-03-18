@@ -7,10 +7,10 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.beds.rest.exceptions.AllYouCanDrinkDependencyException;
-import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
-import ca.ulaval.glo2003.beds.rest.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.interfaces.domain.ZipCode;

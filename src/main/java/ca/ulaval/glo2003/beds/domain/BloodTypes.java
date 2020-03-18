@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidBloodTypesException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException;
 import java.util.HashMap;
 import java.util.Map;
 
