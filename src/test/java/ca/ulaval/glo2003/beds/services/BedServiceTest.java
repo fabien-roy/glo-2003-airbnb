@@ -13,6 +13,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,6 +98,14 @@ public class BedServiceTest {
   }
 
   @Test
+  public void add_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
+    BedRequest bedRequest = new BedRequest();
+    bedRequest.setZipCode("146886486468");
+
+    assertThrows(InvalidZipCodeException.class, () -> bedService.add(bedRequest));
+  }
+
+  @Test
   public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
     when(bedMatcher.matches(otherBed)).thenReturn(false);
 
@@ -112,6 +121,24 @@ public class BedServiceTest {
 
     assertSame(bedResponse, bedResponses.get(0));
     assertSame(otherBedResponse, bedResponses.get(1));
+  }
+
+  @Test
+  public void getAll_withParams_shouldThrowInvalidZipCodeExceptionIfOneZipCodeIsInvalid() {
+    Map<String, String[]> params = new HashMap<>();
+    BedMatcher bedMatcher = mock(BedMatcher.class);
+    Bed expectedBed = mock(Bed.class);
+    int expectedStars = 1;
+    BedResponse expectedBedResponse = mock(BedResponse.class);
+    when(expectedBed.getZipCode()).thenReturn("1234567");
+    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
+    when(bedRepository.getAll()).thenReturn(Collections.singletonList(expectedBed));
+    when(bedMatcher.matches(expectedBed)).thenReturn(true);
+    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
+    when(bedMapper.toResponseWithNumber(expectedBed, expectedStars))
+        .thenReturn(expectedBedResponse);
+
+    assertThrows(InvalidZipCodeException.class, () -> bedService.getAll(params));
   }
 
   @Test

@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.beds.rest.handlers;
+package ca.ulaval.glo2003.interfaces.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.jetty.http.HttpStatus;
