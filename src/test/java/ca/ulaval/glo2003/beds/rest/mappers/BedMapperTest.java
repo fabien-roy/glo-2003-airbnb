@@ -17,7 +17,6 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.Arrays;
@@ -209,21 +208,6 @@ class BedMapperTest {
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(expectedZipCode, bed.getZipCode());
-  }
-
-  @Test
-  public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    String invalidZipCode = "invalidZipCode";
-    BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
-
-    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  @Test
-  public void fromRequest_withoutZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = aBedRequest().withZipCode(null).build();
-
-    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
