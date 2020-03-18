@@ -11,8 +11,6 @@ import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
@@ -108,32 +106,6 @@ class BookingMapperTest {
     Booking booking = bookingMapper.fromRequest(request);
 
     assertEquals(expectedDate, booking.getArrivalDate());
-  }
-
-  @Test
-  public void fromRequest_withInvalidArrivalDate_shouldThrowInvalidArrivalDateException() {
-    String invalidArrivalDate = "invalidArrivalDate";
-    BookingRequest bookingRequest = aBookingRequest().withArrivalDate(invalidArrivalDate).build();
-
-    Assertions.assertThrows(
-        InvalidArrivalDateException.class, () -> bookingMapper.fromRequest(bookingRequest));
-  }
-
-  @Test
-  public void fromRequest_withArrivalDateInThePast_shouldThrowArrivalDateInThePastException() {
-    String arrivalDateInThePast = LocalDate.now().minusDays(1).toString();
-    BookingRequest bookingRequest = aBookingRequest().withArrivalDate(arrivalDateInThePast).build();
-
-    Assertions.assertThrows(
-        ArrivalDateInThePastException.class, () -> bookingMapper.fromRequest(bookingRequest));
-  }
-
-  @Test
-  public void fromRequest_withoutArrivalDate_shouldThrowInvalidArrivalDateException() {
-    BookingRequest bookingRequest = aBookingRequest().withArrivalDate(null).build();
-
-    Assertions.assertThrows(
-        InvalidArrivalDateException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test

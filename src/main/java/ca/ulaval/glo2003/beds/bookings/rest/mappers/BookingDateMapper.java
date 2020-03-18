@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 
 public class BookingDateMapper {
 
-  public static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
 
   public BookingDate fromString(String bookingDate) {
     if (bookingDate == null) throw new InvalidArrivalDateException();
@@ -17,7 +17,7 @@ public class BookingDateMapper {
     LocalDate value;
 
     try {
-      value = LocalDate.parse(bookingDate, formatter);
+      value = LocalDate.parse(bookingDate, FORMATTER);
     } catch (DateTimeParseException e) {
       throw new InvalidArrivalDateException();
     }
