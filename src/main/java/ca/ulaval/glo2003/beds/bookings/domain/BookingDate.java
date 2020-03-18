@@ -18,9 +18,9 @@ public class BookingDate {
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    BookingDate money = (BookingDate) object;
+    BookingDate bookingDate = (BookingDate) object;
 
-    return value.equals(money.getValue());
+    return value.equals(bookingDate.getValue());
   }
 
   @Override
