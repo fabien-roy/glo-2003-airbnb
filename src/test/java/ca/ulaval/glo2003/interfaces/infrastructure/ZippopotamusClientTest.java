@@ -1,10 +1,10 @@
-package ca.ulaval.glo2003.interfaces.clients;
+package ca.ulaval.glo2003.interfaces.infrastructure;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.NonExistingZipCodeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

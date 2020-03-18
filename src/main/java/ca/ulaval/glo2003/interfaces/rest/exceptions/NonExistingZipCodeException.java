@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.interfaces.clients.exceptions;
+package ca.ulaval.glo2003.interfaces.rest.exceptions;
 
 public class NonExistingZipCodeException extends RuntimeException {
   public NonExistingZipCodeException() {

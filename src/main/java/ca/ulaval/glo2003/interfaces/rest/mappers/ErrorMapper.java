@@ -6,12 +6,12 @@ import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingNotFoundExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.handlers.*;
-import ca.ulaval.glo2003.interfaces.clients.exceptions.NonExistingZipCodeException;
-import ca.ulaval.glo2003.interfaces.clients.exceptions.UnreachableZippopotamusServerException;
-import ca.ulaval.glo2003.interfaces.clients.handler.NonExistingZipCodeExceptionHandler;
-import ca.ulaval.glo2003.interfaces.clients.handler.UnreachableZippopotamusServerExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.exceptions.*;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.NonExistingZipCodeException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.UnreachableZippopotamusServerException;
 import ca.ulaval.glo2003.interfaces.rest.handlers.*;
+import ca.ulaval.glo2003.interfaces.rest.handlers.NonExistingZipCodeExceptionHandler;
+import ca.ulaval.glo2003.interfaces.rest.handlers.UnreachableZippopotamusServerExceptionHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import spark.RouteGroup;
 
