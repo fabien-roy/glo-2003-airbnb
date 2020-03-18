@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorResponseFactory;
 
 public class BedErrorResponseFactory extends CatchallErrorResponseFactory {

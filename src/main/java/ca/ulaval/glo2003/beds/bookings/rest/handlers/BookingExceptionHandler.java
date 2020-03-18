@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.rest.handlers;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.beds.bookings.rest.factories.BookingErrorResponseFactory;
 import ca.ulaval.glo2003.beds.bookings.rest.factories.BookingErrorStatusFactory;
 import spark.ExceptionHandler;

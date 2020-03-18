@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.rest.factories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.bookings.exceptions.*;
 import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorStatusFactory;
 import java.util.stream.Stream;
 import org.eclipse.jetty.http.HttpStatus;

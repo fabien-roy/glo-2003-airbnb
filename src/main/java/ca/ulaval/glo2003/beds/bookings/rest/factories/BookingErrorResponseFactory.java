@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.beds.bookings.rest.factories;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.exceptions.ArrivalDateInThePastException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidArrivalDateException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
 
 public class BookingErrorResponseFactory extends BedErrorResponseFactory {

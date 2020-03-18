@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.interfaces.rest.factories;
 
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo2003.interfaces.exceptions.InvalidFormatException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.eclipse.jetty.http.HttpStatus;
 

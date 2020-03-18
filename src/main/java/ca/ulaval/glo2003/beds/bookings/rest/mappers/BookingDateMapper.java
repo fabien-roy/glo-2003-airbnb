@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.ArrivalDateInThePastException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidArrivalDateException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

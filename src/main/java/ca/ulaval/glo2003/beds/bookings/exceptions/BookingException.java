@@ -1,6 +1,6 @@
-package ca.ulaval.glo2003.beds.bookings.rest.exceptions;
+package ca.ulaval.glo2003.beds.bookings.exceptions;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.BedException;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 
 public abstract class BookingException extends BedException {
 

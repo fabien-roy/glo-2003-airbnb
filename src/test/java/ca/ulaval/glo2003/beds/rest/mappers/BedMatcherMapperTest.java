@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.exceptions.*;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidLodgingModeException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorResponseF
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo2003.interfaces.exceptions.InvalidFormatException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;

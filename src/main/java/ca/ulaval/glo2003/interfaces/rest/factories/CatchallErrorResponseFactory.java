@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.interfaces.rest.factories;
 
+import ca.ulaval.glo2003.interfaces.exceptions.InvalidFormatException;
 import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

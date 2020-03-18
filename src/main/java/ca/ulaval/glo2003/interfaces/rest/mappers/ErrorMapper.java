@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.interfaces.rest.mappers;
 
 import static spark.Spark.exception;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingExceptionHandler;
-import ca.ulaval.glo2003.beds.rest.exceptions.BedException;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
 import spark.RouteGroup;

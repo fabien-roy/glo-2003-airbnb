@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.rest.factories;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.bookings.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.factories.BedErrorStatusFactory;
 import org.eclipse.jetty.http.HttpStatus;
 

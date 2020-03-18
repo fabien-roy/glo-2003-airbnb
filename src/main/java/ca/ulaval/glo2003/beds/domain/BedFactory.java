@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.ExceedingAccommodationCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import java.util.Set;
 import java.util.UUID;
 

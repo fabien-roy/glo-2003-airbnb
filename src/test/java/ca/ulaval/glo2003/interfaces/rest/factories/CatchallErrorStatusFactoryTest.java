@@ -3,8 +3,7 @@ package ca.ulaval.glo2003.interfaces.rest.factories;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo2003.interfaces.exceptions.InvalidFormatException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.stream.Stream;
 import org.eclipse.jetty.http.HttpStatus;

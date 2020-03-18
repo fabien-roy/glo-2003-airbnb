@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.BedNotFoundException;
+import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

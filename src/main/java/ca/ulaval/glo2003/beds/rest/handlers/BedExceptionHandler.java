@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.handlers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.BedException;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
 import ca.ulaval.glo2003.beds.rest.factories.BedErrorStatusFactory;
 import spark.ExceptionHandler;

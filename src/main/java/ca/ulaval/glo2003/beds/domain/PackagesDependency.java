@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.AllYouCanDrinkDependencyException;
-import ca.ulaval.glo2003.beds.rest.exceptions.SweetToothDependencyException;
+import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
+import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import java.util.HashMap;
 import java.util.Map;
 

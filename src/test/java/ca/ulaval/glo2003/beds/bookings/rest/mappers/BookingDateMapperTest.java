@@ -3,8 +3,8 @@ package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.ArrivalDateInThePastException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidArrivalDateException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
