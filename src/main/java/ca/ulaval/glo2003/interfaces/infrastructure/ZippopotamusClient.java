@@ -10,39 +10,25 @@ import java.net.URL;
 
 public class ZippopotamusClient {
 
-  private String zipCodeValue;
-  private ZipCode zipCode;
-  int responseStatusCode;
+  private static final String ZIPPOPOTAMUS_URL = "http://api.zippopotam.us/us/";
 
-  public ZippopotamusClient() {}
+  private ZipCode center;
 
-  public ZipCode getZipCode() {
-    return zipCode;
+  public ZipCode getCenter() {
+    return center;
   }
 
-  public void initiate(String zipCode) {
-    this.zipCodeValue = zipCode;
-    String host = "http://api.zippopotam.us/us/";
-    try {
-      URL urlForGetRequest = new URL(host + zipCode);
-      HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
-      connection.setRequestMethod("GET");
-      this.responseStatusCode = connection.getResponseCode();
-    } catch (IOException ex) {
-      throw new UnreachableZippopotamusServerException();
-    }
-    // TODO le nouveau ZipCode devrait être créé avec les données en réponse
-    this.zipCode = new ZipCode(zipCodeValue);
+  public void setCenter(String zipCode) {
+    validateZipCode(zipCode);
+    this.center = new ZipCode(zipCode);
   }
 
-  public void validateZipCode() {
-    validateZipCodeFormat(zipCodeValue);
-    if (this.responseStatusCode != HttpURLConnection.HTTP_OK) {
-      throw new NonExistingZipCodeException();
-    }
+  public void validateZipCode(String zipCode) {
+    validateZipCodeFormat(zipCode);
+    validateZipCodeExistence(zipCode);
   }
 
-  private static void validateZipCodeFormat(String zipCode) {
+  private void validateZipCodeFormat(String zipCode) {
     if (zipCode.length() != 5) {
       throw new InvalidZipCodeException();
     }
@@ -51,5 +37,28 @@ public class ZippopotamusClient {
     } catch (NumberFormatException e) {
       throw new InvalidZipCodeException();
     }
+  }
+
+  private void validateZipCodeExistence(String zipCode) {
+    int response;
+
+    try {
+      response = getResponseForZipCode(zipCode);
+    } catch (IOException ex) {
+      throw new UnreachableZippopotamusServerException();
+    }
+
+    if (response != HttpURLConnection.HTTP_OK) throw new NonExistingZipCodeException();
+  }
+
+  private int getResponseForZipCode(String zipCode) throws IOException {
+    HttpURLConnection connection = buildUrlConnection(zipCode);
+    connection.setRequestMethod("GET");
+    return connection.getResponseCode();
+  }
+
+  protected HttpURLConnection buildUrlConnection(String zipCode) throws IOException {
+    URL url = new URL(ZIPPOPOTAMUS_URL + zipCode);
+    return (HttpURLConnection) url.openConnection();
   }
 }
