@@ -52,7 +52,6 @@ class BedErrorResponseFactoryTest {
         Arguments.of(new InvalidLodgingModeException(), invalidLodgingMode()),
         Arguments.of(new InvalidPackageException(), invalidPackage()),
         Arguments.of(new InvalidPublicKeyException(), invalidPublicKey()),
-        Arguments.of(new InvalidZipCodeException(), invalidZipCode()),
         Arguments.of(new PackageNotAvailableException(), packageNotAvailable()),
         Arguments.of(new AllYouCanDrinkDependencyException(), cantOfferAllYouCanDrinkPackage()),
         Arguments.of(new SweetToothDependencyException(), cantOfferSweetToothPackage()),

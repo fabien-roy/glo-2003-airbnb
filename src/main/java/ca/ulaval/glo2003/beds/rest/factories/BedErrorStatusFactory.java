@@ -24,8 +24,6 @@ public class BedErrorStatusFactory extends CatchallErrorStatusFactory {
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof InvalidPublicKeyException) {
       return HttpStatus.BAD_REQUEST_400;
-    } else if (exception instanceof InvalidZipCodeException) {
-      return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof PackageNotAvailableException) {
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof AllYouCanDrinkDependencyException) {

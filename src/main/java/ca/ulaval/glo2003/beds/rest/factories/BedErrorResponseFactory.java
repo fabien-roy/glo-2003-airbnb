@@ -23,8 +23,6 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
       return invalidPackage();
     } else if (exception instanceof InvalidPublicKeyException) {
       return invalidPublicKey();
-    } else if (exception instanceof InvalidZipCodeException) {
-      return invalidZipCode();
     } else if (exception instanceof PackageNotAvailableException) {
       return packageNotAvailable();
     } else if (exception instanceof AllYouCanDrinkDependencyException) {
@@ -83,10 +81,6 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
     return tryWriteValueAsString(
         "INVALID_PUBLIC_KEY",
         "BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length");
-  }
-
-  static String invalidZipCode() {
-    return tryWriteValueAsString("INVALID_ZIP_CODE", "zip code should be a 5 digits number");
   }
 
   static String packageNotAvailable() {
