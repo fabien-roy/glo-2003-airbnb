@@ -3,10 +3,10 @@ package ca.ulaval.glo2003.beds.bookings.domain.helpers;
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class BookingBuilder {
@@ -19,8 +19,8 @@ public class BookingBuilder {
   private PublicKey DEFAULT_TENANT_PUBLIC_KEY = createTenantPublicKey();
   private PublicKey tenantPublicKey = DEFAULT_TENANT_PUBLIC_KEY;
 
-  private LocalDate DEFAULT_ARRIVAL_DATE = createArrivalDate();
-  private LocalDate arrivalDate = DEFAULT_ARRIVAL_DATE;
+  private BookingDate DEFAULT_ARRIVAL_DATE = createArrivalDate();
+  private BookingDate arrivalDate = DEFAULT_ARRIVAL_DATE;
 
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
@@ -45,7 +45,7 @@ public class BookingBuilder {
     return this;
   }
 
-  public BookingBuilder withArrivalDate(LocalDate arrivalDate) {
+  public BookingBuilder withArrivalDate(BookingDate arrivalDate) {
     this.arrivalDate = arrivalDate;
     return this;
   }

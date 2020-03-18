@@ -3,12 +3,12 @@ package ca.ulaval.glo2003.beds.bookings.domain.helpers;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.UUID;
 
@@ -29,13 +29,14 @@ public class BookingObjectMother {
     return new Price(BigDecimal.valueOf(randomDouble));
   }
 
-  public static LocalDate createArrivalDate() {
-    return Faker.instance()
-        .date()
-        .birthday()
-        .toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate();
+  public static BookingDate createArrivalDate() {
+    return new BookingDate(
+        Faker.instance()
+            .date()
+            .birthday()
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate());
   }
 
   public static int createNumberOfNights() {
