@@ -56,10 +56,6 @@ public class Bed {
     return zipCode;
   }
 
-  public void setZipCode(String zipCode) {
-    this.zipCode = zipCode;
-  }
-
   public BedTypes getBedType() {
     return bedType;
   }
