@@ -26,9 +26,13 @@ import ca.ulaval.glo2003.beds.rest.factories.BedErrorStatusFactory;
 import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.mappers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
 import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorResponseFactory;
 import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorStatusFactory;
+import ca.ulaval.glo2003.interfaces.rest.factories.ExternalServiceErrorResponseFactory;
+import ca.ulaval.glo2003.interfaces.rest.factories.ExternalServiceErrorStatusFactory;
 import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
+import ca.ulaval.glo2003.interfaces.rest.handlers.ExternalServiceExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.mappers.ErrorMapper;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
@@ -42,6 +46,8 @@ public class Router {
   private static final TransactionRepository transactionRepository =
       new InMemoryTransactionRepository();
   private static final BedRepository bedRepository = new InMemoryBedRepository();
+
+  private static final ZippopotamusClient zippopotamusClient = new ZippopotamusClient();
 
   private static final BedFactory bedFactory = new BedFactory();
   private static final BookingFactory bookingFactory = new BookingFactory();
@@ -66,6 +72,10 @@ public class Router {
       new CatchallErrorStatusFactory();
   private static final CatchallErrorResponseFactory catchallErrorResponseFactory =
       new CatchallErrorResponseFactory();
+  private static final ExternalServiceErrorStatusFactory externalServiceErrorStatusFactory =
+      new ExternalServiceErrorStatusFactory();
+  private static final ExternalServiceErrorResponseFactory externalServiceErrorResponseFactory =
+      new ExternalServiceErrorResponseFactory();
   private static final BedErrorStatusFactory bedErrorStatusFactory = new BedErrorStatusFactory();
   private static final BedErrorResponseFactory bedErrorResponseFactory =
       new BedErrorResponseFactory();
@@ -74,11 +84,14 @@ public class Router {
   private static final BookingErrorResponseFactory bookingErrorResponseFactory =
       new BookingErrorResponseFactory();
 
-  private static CatchallExceptionHandler catchallExceptionHandler =
+  private static final CatchallExceptionHandler catchallExceptionHandler =
       new CatchallExceptionHandler(catchallErrorStatusFactory, catchallErrorResponseFactory);
-  private static BedExceptionHandler bedExceptionHandler =
+  private static final ExternalServiceExceptionHandler externalServiceExceptionHandler =
+      new ExternalServiceExceptionHandler(
+          externalServiceErrorStatusFactory, externalServiceErrorResponseFactory);
+  private static final BedExceptionHandler bedExceptionHandler =
       new BedExceptionHandler(bedErrorStatusFactory, bedErrorResponseFactory);
-  private static BookingExceptionHandler bookingExceptionHandler =
+  private static final BookingExceptionHandler bookingExceptionHandler =
       new BookingExceptionHandler(bookingErrorStatusFactory, bookingErrorResponseFactory);
 
   private static final TransactionService transactionService =
@@ -90,7 +103,8 @@ public class Router {
           bedNumberMapper,
           bedMatcherMapper,
           bedRepository,
-          bedStarsCalculator);
+          bedStarsCalculator,
+          zippopotamusClient);
   private static final BookingService bookingService =
       new BookingService(
           transactionService,
@@ -104,7 +118,11 @@ public class Router {
   public static void setUpRoutes() {
     path(
         ERROR_PATH,
-        new ErrorMapper(catchallExceptionHandler, bedExceptionHandler, bookingExceptionHandler));
+        new ErrorMapper(
+            catchallExceptionHandler,
+            externalServiceExceptionHandler,
+            bedExceptionHandler,
+            bookingExceptionHandler));
     path(BED_PATH, new BedResource(bedService));
     path(BOOKING_PATH, new BookingResource(bookingService));
     path(TRANSACTION_PATH, new TransactionResource(transactionService));
