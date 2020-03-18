@@ -13,7 +13,7 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +28,7 @@ public class BedServiceTest {
   private static BedMatcherMapper bedMatcherMapper;
   private static BedRepository bedRepository;
   private static BedStarsCalculator bedStarsCalculator;
+  private static ZippopotamusClient zippopotamusClient;
 
   private UUID bedNumber = createBedNumber();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
@@ -48,6 +49,7 @@ public class BedServiceTest {
     bedMatcherMapper = mock(BedMatcherMapper.class);
     bedRepository = mock(BedRepository.class);
     bedStarsCalculator = mock(BedStarsCalculator.class);
+    zippopotamusClient = mock(ZippopotamusClient.class);
     bedService =
         new BedService(
             bedFactory,
@@ -55,7 +57,8 @@ public class BedServiceTest {
             bedNumberMapper,
             bedMatcherMapper,
             bedRepository,
-            bedStarsCalculator);
+            bedStarsCalculator,
+            zippopotamusClient);
   }
 
   @BeforeEach
@@ -98,11 +101,10 @@ public class BedServiceTest {
   }
 
   @Test
-  public void add_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = new BedRequest();
-    bedRequest.setZipCode("146886486468");
+  public void add_shouldValidateZipCode() {
+    bedService.add(bedRequest);
 
-    assertThrows(InvalidZipCodeException.class, () -> bedService.add(bedRequest));
+    verify(zippopotamusClient).validateZipCode(eq(bedRequest.getZipCode()));
   }
 
   @Test
@@ -124,21 +126,21 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withParams_shouldThrowInvalidZipCodeExceptionIfOneZipCodeIsInvalid() {
-    Map<String, String[]> params = new HashMap<>();
-    BedMatcher bedMatcher = mock(BedMatcher.class);
-    Bed expectedBed = mock(Bed.class);
-    int expectedStars = 1;
-    BedResponse expectedBedResponse = mock(BedResponse.class);
-    when(expectedBed.getZipCode()).thenReturn("1234567");
-    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
-    when(bedRepository.getAll()).thenReturn(Collections.singletonList(expectedBed));
-    when(bedMatcher.matches(expectedBed)).thenReturn(true);
-    when(bedStarsCalculator.calculateStars(expectedBed)).thenReturn(expectedStars);
-    when(bedMapper.toResponseWithNumber(expectedBed, expectedStars))
-        .thenReturn(expectedBedResponse);
+  public void getAll_withOrigin_shouldValidateZipCode() {
+    when(bedMatcher.getOrigin()).thenReturn("origin");
 
-    assertThrows(InvalidZipCodeException.class, () -> bedService.getAll(params));
+    bedService.getAll(params);
+
+    verify(zippopotamusClient).validateZipCode(eq(bedMatcher.getOrigin()));
+  }
+
+  @Test
+  public void getAll_withoutOrigin_shouldNotValidateZipCode() {
+    when(bedMatcher.getOrigin()).thenReturn(null);
+
+    bedService.getAll(params);
+
+    verify(zippopotamusClient, never()).validateZipCode(eq(bedMatcher.getOrigin()));
   }
 
   @Test
