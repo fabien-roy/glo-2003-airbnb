@@ -7,6 +7,7 @@ public class BookingRequest {
   private String tenantPublicKey;
   private String arrivalDate;
   private int numberOfNights;
+  private int colonySize;
 
   @JsonProperty("package")
   private String bookingPackage;
@@ -14,10 +15,15 @@ public class BookingRequest {
   public BookingRequest() {}
 
   public BookingRequest(
-      String tenantPublicKey, String arrivalDate, int numberOfNights, String bookingPackage) {
+      String tenantPublicKey,
+      String arrivalDate,
+      int numberOfNights,
+      int colonySize,
+      String bookingPackage) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
+    this.colonySize = colonySize;
     this.bookingPackage = bookingPackage;
   }
 
@@ -31,6 +37,10 @@ public class BookingRequest {
 
   public int getNumberOfNights() {
     return numberOfNights;
+  }
+
+  public int getColonySize() {
+    return colonySize;
   }
 
   public String getBookingPackage() {
