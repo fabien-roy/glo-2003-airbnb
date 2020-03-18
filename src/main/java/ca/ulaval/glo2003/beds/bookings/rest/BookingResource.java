@@ -1,8 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.rest;
 
 import static ca.ulaval.glo2003.beds.rest.BedResource.BED_PATH;
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 import ca.ulaval.glo2003.beds.bookings.services.BookingService;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.rest.exceptions;
 
-public class BookingNotFoundException extends RuntimeException {
+public class BookingNotFoundException extends BookingException {
 
   private final String bookingNumber;
 

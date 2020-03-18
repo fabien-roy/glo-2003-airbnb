@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.AirbnbException;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 
@@ -93,7 +93,7 @@ public class Bed {
         bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
 
     if (!foundBooking.isPresent()) {
-      throw new BookingNotFoundException(number.toString());
+      throw new AirbnbException(number.toString());
     }
 
     return foundBooking.get();

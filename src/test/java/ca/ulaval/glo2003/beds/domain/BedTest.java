@@ -10,10 +10,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.AirbnbException;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.Test;
@@ -86,7 +86,7 @@ class BedTest {
     UUID bookingNumber = mock(UUID.class);
     Bed bed = aBed().withBookings(Collections.emptyList()).build();
 
-    assertThrows(BookingNotFoundException.class, () -> bed.getBookingByNumber(bookingNumber));
+    assertThrows(AirbnbException.class, () -> bed.getBookingByNumber(bookingNumber));
   }
 
   @Test
@@ -104,8 +104,7 @@ class BedTest {
             .withPricesPerNights(Collections.singletonMap(bookingPackage, createPricePerNight()))
             .build();
 
-    assertThrows(
-        BookingNotFoundException.class, () -> bed.getBookingByNumber(nonExistentBookingNumber));
+    assertThrows(AirbnbException.class, () -> bed.getBookingByNumber(nonExistentBookingNumber));
   }
 
   @Test

@@ -9,6 +9,9 @@ import static spark.Spark.path;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResource;
+import ca.ulaval.glo2003.beds.bookings.rest.factories.BookingErrorResponseFactory;
+import ca.ulaval.glo2003.beds.bookings.rest.factories.BookingErrorStatusFactory;
+import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
@@ -18,8 +21,14 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.BedStarsCalculator;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
+import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
+import ca.ulaval.glo2003.beds.rest.factories.BedErrorStatusFactory;
+import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.mappers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorResponseFactory;
+import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorStatusFactory;
+import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.mappers.ErrorMapper;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
@@ -53,6 +62,25 @@ public class Router {
       new BookingMapper(publicKeyMapper, bookingDateMapper, priceMapper);
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
+  private static final CatchallErrorStatusFactory catchallErrorStatusFactory =
+      new CatchallErrorStatusFactory();
+  private static final CatchallErrorResponseFactory catchallErrorResponseFactory =
+      new CatchallErrorResponseFactory();
+  private static final BedErrorStatusFactory bedErrorStatusFactory = new BedErrorStatusFactory();
+  private static final BedErrorResponseFactory bedErrorResponseFactory =
+      new BedErrorResponseFactory();
+  private static final BookingErrorStatusFactory bookingErrorStatusFactory =
+      new BookingErrorStatusFactory();
+  private static final BookingErrorResponseFactory bookingErrorResponseFactory =
+      new BookingErrorResponseFactory();
+
+  private static CatchallExceptionHandler catchallExceptionHandler =
+      new CatchallExceptionHandler(catchallErrorStatusFactory, catchallErrorResponseFactory);
+  private static BedExceptionHandler bedExceptionHandler =
+      new BedExceptionHandler(bedErrorStatusFactory, bedErrorResponseFactory);
+  private static BookingExceptionHandler bookingExceptionHandler =
+      new BookingExceptionHandler(bookingErrorStatusFactory, bookingErrorResponseFactory);
+
   private static final TransactionService transactionService =
       new TransactionService(transactionFactory, transactionRepository, transactionMapper);
   private static final BedService bedService =
@@ -74,7 +102,9 @@ public class Router {
           bookingNumberMapper);
 
   public static void setUpRoutes() {
-    path(ERROR_PATH, new ErrorMapper());
+    path(
+        ERROR_PATH,
+        new ErrorMapper(catchallExceptionHandler, bedExceptionHandler, bookingExceptionHandler));
     path(BED_PATH, new BedResource(bedService));
     path(BOOKING_PATH, new BookingResource(bookingService));
     path(TRANSACTION_PATH, new TransactionResource(transactionService));

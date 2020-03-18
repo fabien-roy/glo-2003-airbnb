@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.interfaces.rest.exceptions.AirbnbException;
 import java.util.UUID;
 
 public class BookingNumberMapper {
@@ -9,7 +9,7 @@ public class BookingNumberMapper {
     try {
       return UUID.fromString(number);
     } catch (IllegalArgumentException exception) {
-      throw new BookingNotFoundException(number);
+      throw new AirbnbException(number);
     }
   }
 }

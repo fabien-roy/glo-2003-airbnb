@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.exceptions;
 
-public class BedNotFoundException extends RuntimeException {
+public class BedNotFoundException extends BedException {
 
   private final String bedNumber;
 

@@ -1,0 +1,44 @@
+package ca.ulaval.glo2003.beds.bookings.rest.factories;
+
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidArrivalDateException;
+import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
+
+public class BookingErrorResponseFactory extends BedErrorResponseFactory {
+
+  @Override
+  public String create(Exception exception) {
+    if (exception instanceof BookingNotFoundException) {
+      return bookingNotFound(((BookingNotFoundException) exception).getBookingNumber());
+    } else if (exception instanceof InvalidArrivalDateException) {
+      return invalidArrivalDate();
+    } else if (exception instanceof InvalidNumberOfNights) {
+      return invalidNumberOfNights();
+    } else if (exception instanceof ArrivalDateInThePastException) {
+      return arrivalDateInThePast();
+    } else {
+      return super.defaultResponse();
+    }
+  }
+
+  private String bookingNotFound(String number) {
+    return tryWriteValueAsString(
+        "BOOKING_NOT_FOUND", "booking with number " + number + " could not be found");
+  }
+
+  private String invalidArrivalDate() {
+    return tryWriteValueAsString(
+        "INVALID_ARRIVAL_DATE", "arrival date should be formatted as YYYY-MM-DD");
+  }
+
+  private String invalidNumberOfNights() {
+    return tryWriteValueAsString(
+        "INVALID_NUMBER_OF_NIGHTS", "number of nights should be a number between 1 and 90");
+  }
+
+  private String arrivalDateInThePast() {
+    return tryWriteValueAsString("ARRIVAL_DATE_IN_THE_PAST", "cannot book a stay in the past");
+  }
+}
