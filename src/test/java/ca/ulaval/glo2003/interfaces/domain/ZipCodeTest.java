@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class ZipCodeTest {
 
   @Test
-  void equals_shouldReturnFalse_whenObjectIsNotPrice() {
+  void equals_shouldReturnFalse_whenObjectIsNotZipCode() {
     String zipValue = "12345";
     ZipCode zipCode = new ZipCode(zipValue);
 
