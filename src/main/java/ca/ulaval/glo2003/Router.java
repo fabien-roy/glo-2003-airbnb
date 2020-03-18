@@ -19,6 +19,7 @@ import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.mappers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
 import ca.ulaval.glo2003.interfaces.rest.mappers.ErrorMapper;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
@@ -32,6 +33,8 @@ public class Router {
   private static final TransactionRepository transactionRepository =
       new InMemoryTransactionRepository();
   private static final BedRepository bedRepository = new InMemoryBedRepository();
+
+  private static final ZippopotamusClient zippopotamusClient = new ZippopotamusClient();
 
   private static final BedFactory bedFactory = new BedFactory();
   private static final BookingFactory bookingFactory = new BookingFactory();
@@ -60,7 +63,8 @@ public class Router {
           bedNumberMapper,
           bedMatcherMapper,
           bedRepository,
-          bedStarsCalculator);
+          bedStarsCalculator,
+          zippopotamusClient);
   private static final BookingService bookingService =
       new BookingService(
           transactionService,
