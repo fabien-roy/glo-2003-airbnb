@@ -9,6 +9,7 @@ import static spark.Spark.path;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResource;
+import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.beds.bookings.services.BookingService;
@@ -47,8 +48,9 @@ public class Router {
   private static final BedNumberMapper bedNumberMapper = new BedNumberMapper();
   private static final BedMatcherMapper bedMatcherMapper = new BedMatcherMapper();
   private static final TransactionMapper transactionMapper = new TransactionMapper(priceMapper);
+  private static final BookingDateMapper bookingDateMapper = new BookingDateMapper();
   private static final BookingMapper bookingMapper =
-      new BookingMapper(publicKeyMapper, priceMapper);
+      new BookingMapper(publicKeyMapper, bookingDateMapper, priceMapper);
   private static final BookingNumberMapper bookingNumberMapper = new BookingNumberMapper();
 
   private static final TransactionService transactionService =

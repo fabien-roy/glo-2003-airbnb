@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
@@ -22,30 +23,34 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class BookingMapperTest {
 
-  private BookingMapper bookingMapper;
-  private PublicKeyMapper publicKeyMapper;
-  private PriceMapper priceMapper;
+  private static BookingMapper bookingMapper;
+  private static BookingDateMapper bookingDateMapper;
+  private static PublicKeyMapper publicKeyMapper;
+  private static PriceMapper priceMapper;
 
-  @BeforeEach
-  public void setUpMapper() {
+  @BeforeAll
+  public static void setUpMapper() {
+    bookingDateMapper = mock(BookingDateMapper.class);
     publicKeyMapper = mock(PublicKeyMapper.class);
     priceMapper = mock(PriceMapper.class);
-    bookingMapper = new BookingMapper(publicKeyMapper, priceMapper);
+    bookingMapper = new BookingMapper(publicKeyMapper, bookingDateMapper, priceMapper);
   }
 
   @Test
   public void toResponse_shouldMapArrivalDate() {
-    LocalDate expectedDate = LocalDate.now();
+    BookingDate expectedDate = new BookingDate(LocalDate.now());
+    String expectedDateValue = expectedDate.getValue().toString();
     Booking bookingToMap = BookingBuilder.aBooking().withArrivalDate(expectedDate).build();
+    when(bookingDateMapper.toString(expectedDate)).thenReturn(expectedDateValue);
 
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
-    assertEquals(expectedDate.toString(), response.getArrivalDate());
+    assertEquals(expectedDateValue, response.getArrivalDate());
   }
 
   @Test
@@ -95,8 +100,10 @@ class BookingMapperTest {
 
   @Test
   public void fromRequest_shouldMapArrivalDate() {
-    LocalDate expectedDate = LocalDate.now();
-    BookingRequest request = aBookingRequest().withArrivalDate(expectedDate.toString()).build();
+    BookingDate expectedDate = new BookingDate(LocalDate.now());
+    String expectedDateValue = expectedDate.getValue().toString();
+    BookingRequest request = aBookingRequest().withArrivalDate(expectedDateValue).build();
+    when(bookingDateMapper.fromString(expectedDateValue)).thenReturn(expectedDate);
 
     Booking booking = bookingMapper.fromRequest(request);
 

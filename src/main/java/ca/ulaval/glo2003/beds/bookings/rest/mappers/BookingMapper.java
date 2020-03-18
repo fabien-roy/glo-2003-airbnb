@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.exceptions.ArrivalDateInThePastException;
@@ -15,11 +16,16 @@ import java.time.LocalDate;
 public class BookingMapper {
 
   public static final String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
-  private PublicKeyMapper publicKeyMapper;
-  private PriceMapper priceMapper;
+  private final PublicKeyMapper publicKeyMapper;
+  private final BookingDateMapper bookingDateMapper;
+  private final PriceMapper priceMapper;
 
-  public BookingMapper(PublicKeyMapper publicKeyMapper, PriceMapper priceMapper) {
+  public BookingMapper(
+      PublicKeyMapper publicKeyMapper,
+      BookingDateMapper bookingDateMapper,
+      PriceMapper priceMapper) {
     this.publicKeyMapper = publicKeyMapper;
+    this.bookingDateMapper = bookingDateMapper;
     this.priceMapper = priceMapper;
   }
 
@@ -27,23 +33,19 @@ public class BookingMapper {
     validateRequest(bookingRequest);
 
     PublicKey tenantPublicKey = publicKeyMapper.fromString(bookingRequest.getTenantPublicKey());
+    BookingDate arrivalDate = bookingDateMapper.fromString(bookingRequest.getArrivalDate());
     Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
 
     return new Booking(
-        tenantPublicKey,
-        LocalDate.parse(bookingRequest.getArrivalDate()),
-        bookingRequest.getNumberOfNights(),
-        bookingPackage);
+        tenantPublicKey, arrivalDate, bookingRequest.getNumberOfNights(), bookingPackage);
   }
 
   public BookingResponse toResponse(Booking booking) {
+    String arrivalDate = bookingDateMapper.toString(booking.getArrivalDate());
     Double total = priceMapper.toDouble(booking.getTotal());
 
     return new BookingResponse(
-        booking.getArrivalDate().toString(),
-        booking.getNumberOfNights(),
-        booking.getPackage(),
-        total);
+        arrivalDate, booking.getNumberOfNights(), booking.getPackage(), total);
   }
 
   private void validateRequest(BookingRequest request) {
