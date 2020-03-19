@@ -91,7 +91,7 @@ public class BedMatcherMapper {
         origin,
         lodgingMode,
         arrivalDate);
-      }
+  }
 
   private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
     return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());

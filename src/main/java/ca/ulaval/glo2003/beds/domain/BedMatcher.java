@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
-
 import java.util.List;
 
 public class BedMatcher {
@@ -69,7 +68,9 @@ public class BedMatcher {
     return lodgingMode;
   }
 
-  public BookingDate getArrivalDate() { return arrivalDate; }
+  public BookingDate getArrivalDate() {
+    return arrivalDate;
+  }
 
   public boolean matches(Bed bed) {
     if (bedType != null && !bedType.equals(bed.getBedType())) return false;
