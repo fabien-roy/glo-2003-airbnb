@@ -16,6 +16,8 @@ public class BookingErrorStatusFactory extends BedErrorStatusFactory {
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof InvalidColonySizeException) {
       return HttpStatus.BAD_REQUEST_400;
+    } else if (exception instanceof ExceedingResidualCapacityException) {
+      return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof ArrivalDateInThePastException) {
       return HttpStatus.BAD_REQUEST_400;
     } else {
