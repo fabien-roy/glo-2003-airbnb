@@ -33,7 +33,11 @@ public class BookingMapper {
     Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
 
     return new Booking(
-        tenantPublicKey, arrivalDate, bookingRequest.getNumberOfNights(), bookingPackage);
+        tenantPublicKey,
+        arrivalDate,
+        bookingRequest.getNumberOfNights(),
+        bookingRequest.getColonySize(),
+        bookingPackage);
   }
 
   public BookingResponse toResponse(Booking booking) {

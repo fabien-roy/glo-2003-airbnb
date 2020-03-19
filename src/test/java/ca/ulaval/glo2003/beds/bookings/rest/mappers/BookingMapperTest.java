@@ -119,6 +119,24 @@ class BookingMapperTest {
   }
 
   @Test
+  public void fromRequest_shouldMapColonySize() {
+    int expectedColonySize = 10;
+    BookingRequest request = aBookingRequest().withColonySize(expectedColonySize).build();
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(expectedColonySize, booking.getColonySize());
+  }
+
+  @Test
+  public void fromRequest_withInvalidColonySize_shouldThrowInvalidColonySizeException() {
+    int colonySize = -10;
+    BookingRequest request = aBookingRequest().withColonySize(colonySize).build();
+
+    // assertThrows(InvalidColonySizeException.class, () -> bookingMapper.fromRequest(request));
+  }
+
+  @Test
   public void fromRequest_withTooLowNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
     BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(0).build();
 

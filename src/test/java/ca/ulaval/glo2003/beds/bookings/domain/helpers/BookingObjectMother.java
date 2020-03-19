@@ -43,6 +43,10 @@ public class BookingObjectMother {
     return Faker.instance().number().numberBetween(1, 5);
   }
 
+  public static int createColonySize() {
+    return Faker.instance().number().numberBetween(1, 100);
+  }
+
   public static Packages createPackageName() {
     return randomEnum(Packages.class);
   }
