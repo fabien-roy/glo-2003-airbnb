@@ -9,6 +9,7 @@ import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
@@ -132,7 +133,7 @@ class BookingMapperTest {
     int colonySize = -10;
     BookingRequest request = aBookingRequest().withColonySize(colonySize).build();
 
-    // assertThrows(InvalidColonySizeException.class, () -> bookingMapper.fromRequest(request));
+    assertThrows(InvalidColonySizeException.class, () -> bookingMapper.fromRequest(request));
   }
 
   @Test

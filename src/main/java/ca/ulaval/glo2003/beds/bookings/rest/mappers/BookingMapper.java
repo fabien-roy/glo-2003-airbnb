@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
@@ -27,6 +28,7 @@ public class BookingMapper {
 
   public Booking fromRequest(BookingRequest bookingRequest) {
     validateNumberOfNights(bookingRequest.getNumberOfNights());
+    validateColonySize(bookingRequest.getColonySize());
 
     PublicKey tenantPublicKey = publicKeyMapper.fromString(bookingRequest.getTenantPublicKey());
     BookingDate arrivalDate = bookingDateMapper.fromString(bookingRequest.getArrivalDate());
@@ -51,6 +53,12 @@ public class BookingMapper {
   private void validateNumberOfNights(int numberOfNights) {
     if (numberOfNights < 1 || numberOfNights > 90) {
       throw new InvalidNumberOfNights();
+    }
+  }
+
+  private void validateColonySize(int colonySize) {
+    if (colonySize < 0) {
+      throw new InvalidColonySizeException();
     }
   }
 }
