@@ -9,19 +9,27 @@ public class BedMatcher {
   private List<BloodTypes> bloodTypes;
   private int minCapacity;
   private Packages packageName;
+  private int maxDistance;
   private String origin;
+  private LodgingModes lodgingMode;
 
   public BedMatcher(
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int minCapacity,
-      Packages packageName) {
+      Packages packageName,
+      int maxDistance,
+      String origin,
+      LodgingModes lodgingMode) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.minCapacity = minCapacity;
     this.packageName = packageName;
+    this.maxDistance = maxDistance;
+    this.origin = origin;
+    this.lodgingMode = lodgingMode;
   }
 
   public BedTypes getBedType() {
@@ -44,8 +52,16 @@ public class BedMatcher {
     return packageName;
   }
 
+  public int getMaxDistance() {
+    return maxDistance;
+  }
+
   public String getOrigin() {
     return origin;
+  }
+
+  public LodgingModes getLodgingMode() {
+    return lodgingMode;
   }
 
   public boolean matches(Bed bed) {

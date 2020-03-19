@@ -21,6 +21,10 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
       return invalidLodgingMode();
     } else if (exception instanceof InvalidPackageException) {
       return invalidPackage();
+    } else if (exception instanceof InvalidMaxDistanceException) {
+      return invalidMaxDistance();
+    } else if (exception instanceof MaxDistanceWithoutOriginException) {
+      return maxDistanceWithoutOrigin();
     } else if (exception instanceof InvalidPublicKeyException) {
       return invalidPublicKey();
     } else if (exception instanceof PackageNotAvailableException) {
@@ -75,6 +79,17 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
   static String invalidPackage() {
     return tryWriteValueAsString(
         "INVALID_PACKAGE", "package should be one of bloodthirsty, allYouCanDrink, sweetTooth");
+  }
+
+  static String invalidMaxDistance() {
+    return tryWriteValueAsString(
+        "INVALID_MAX_DISTANCE", "distance should be a number greater than 0");
+  }
+
+  static String maxDistanceWithoutOrigin() {
+    return tryWriteValueAsString(
+        "MAX_DISTANCE_WITHOUT_ORIGIN",
+        "an origin point should be provided along with the maximum distance");
   }
 
   static String invalidPublicKey() {
