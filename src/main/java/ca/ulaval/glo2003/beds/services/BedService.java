@@ -52,7 +52,8 @@ public class BedService {
   public List<BedResponse> getAll(Map<String, String[]> params) {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    if (bedMatcher.getOrigin() != null) zippopotamusClient.validateZipCode(bedMatcher.getOrigin());
+    if (bedMatcher.getOrigin() != null)
+      zippopotamusClient.validateZipCode(bedMatcher.getOrigin().getValue());
 
     List<Bed> beds = bedRepository.getAll();
     List<Bed> matchingBeds = beds.stream().filter(bedMatcher::matches).collect(Collectors.toList());
