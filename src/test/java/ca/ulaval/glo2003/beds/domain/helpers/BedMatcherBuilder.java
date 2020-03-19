@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.domain.*;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class BedMatcherBuilder {
   private int maxDistance = 0;
   private String origin = null;
   private LodgingModes lodgingMode = null;
+  private BookingDate arrivalDate = null;
 
   public static BedMatcherBuilder aBedMatcher() {
     return new BedMatcherBuilder();
@@ -54,6 +56,7 @@ public class BedMatcherBuilder {
         packageName,
         maxDistance,
         origin,
-        lodgingMode);
+        lodgingMode,
+        arrivalDate);
   }
 }

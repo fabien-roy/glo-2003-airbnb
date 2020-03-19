@@ -2,7 +2,11 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.*;
 import java.util.*;
@@ -12,11 +16,12 @@ import org.junit.jupiter.api.Test;
 class BedMatcherMapperTest {
 
   private BedMatcherMapper bedMatcherMapper;
+  private BookingDateMapper bookingDateMapper;
 
   @BeforeEach
   public void setUpMapper() {
-    bedMatcherMapper = new BedMatcherMapper();
-  }
+    bedMatcherMapper = new BedMatcherMapper(bookingDateMapper);
+   }
 
   @Test
   public void fromRequestParams_withNoParams_shouldReturnBedMatcherWithNullAttributes() {
@@ -214,5 +219,18 @@ class BedMatcherMapperTest {
 
     assertThrows(
         InvalidLodgingModeException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withArrivalDate_shouldReturnBedMatcherWithArrivalDate() {
+    //Map<String, String[]> params = new HashMap<>();
+    //String arrivalDate = "2020-05-21";
+    //BookingDate expectedArrivalDate = ;
+    //BookingDateMapper bookingDateMapper = mock(BookingDateMapper.class);
+    //when(bookingDateMapper.fromString(arrivalDate)).thenReturn(expectedArrivalDate);
+    //params.put(ARRIVAL_DATE_PARAM, new String[] {arrivalDate});
+    //BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    //assertEquals(expectedArrivalDate, bedMatcher.getArrivalDate());
   }
 }

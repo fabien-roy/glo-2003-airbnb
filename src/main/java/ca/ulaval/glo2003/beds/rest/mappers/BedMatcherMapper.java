@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
@@ -19,6 +21,13 @@ public class BedMatcherMapper {
   public static final String MAX_DISTANCE_PARAM = "maxDistance";
   public static final String ORIGIN_PARAM = "origin";
   public static final String LODGING_MODE_PARAM = "lodgingMode";
+  public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
+
+  private final BookingDateMapper bookingDateMapper;
+
+  public BedMatcherMapper(BookingDateMapper bookingDateMapper) {
+    this.bookingDateMapper = bookingDateMapper;
+  }
 
   public BedMatcher fromRequestParams(Map<String, String[]> params) {
     BedTypes bedType = null;
@@ -29,6 +38,7 @@ public class BedMatcherMapper {
     int maxDistance = 0;
     String origin = null;
     LodgingModes lodgingMode = null;
+    BookingDate arrivalDate = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
       bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
@@ -67,6 +77,10 @@ public class BedMatcherMapper {
       lodgingMode = LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
     }
 
+    if (params.get(ARRIVAL_DATE_PARAM) != null) {
+      arrivalDate = bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]);
+    }
+
     return new BedMatcher(
         bedType,
         cleaningFrequency,
@@ -75,8 +89,9 @@ public class BedMatcherMapper {
         packageName,
         maxDistance,
         origin,
-        lodgingMode);
-  }
+        lodgingMode,
+        arrivalDate);
+      }
 
   private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
     return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());

@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+
 import java.util.List;
 
 public class BedMatcher {
@@ -12,6 +14,7 @@ public class BedMatcher {
   private int maxDistance;
   private String origin;
   private LodgingModes lodgingMode;
+  private BookingDate arrivalDate;
 
   public BedMatcher(
       BedTypes bedType,
@@ -21,7 +24,8 @@ public class BedMatcher {
       Packages packageName,
       int maxDistance,
       String origin,
-      LodgingModes lodgingMode) {
+      LodgingModes lodgingMode,
+      BookingDate arrivalDate) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
@@ -30,6 +34,7 @@ public class BedMatcher {
     this.maxDistance = maxDistance;
     this.origin = origin;
     this.lodgingMode = lodgingMode;
+    this.arrivalDate = arrivalDate;
   }
 
   public BedTypes getBedType() {
@@ -63,6 +68,8 @@ public class BedMatcher {
   public LodgingModes getLodgingMode() {
     return lodgingMode;
   }
+
+  public BookingDate getArrivalDate() { return arrivalDate; }
 
   public boolean matches(Bed bed) {
     if (bedType != null && !bedType.equals(bed.getBedType())) return false;
