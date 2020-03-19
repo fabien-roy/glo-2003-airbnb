@@ -15,6 +15,7 @@ public class Booking {
   private PublicKey tenantPublicKey;
   private BookingDate arrivalDate;
   private int numberOfNights;
+  private int colonySize;
   private Packages packageName;
   private Price total;
   private List<Transaction> transactions = new ArrayList<>();
@@ -23,10 +24,12 @@ public class Booking {
       PublicKey tenantPublicKey,
       BookingDate arrivalDate,
       int numberOfNights,
+      int colonySize,
       Packages packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
+    this.colonySize = colonySize;
     this.packageName = packageName;
   }
 
@@ -48,6 +51,10 @@ public class Booking {
 
   public int getNumberOfNights() {
     return numberOfNights;
+  }
+
+  public int getColonySize() {
+    return colonySize;
   }
 
   public Packages getPackage() {

@@ -45,6 +45,8 @@ class BookingErrorStatusFactoryTest {
         Arguments.of(new BookingNotFoundException("bookingNumber"), HttpStatus.NOT_FOUND_404),
         Arguments.of(new InvalidArrivalDateException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new InvalidNumberOfNights(), HttpStatus.BAD_REQUEST_400),
+        Arguments.of(new InvalidColonySizeException(), HttpStatus.BAD_REQUEST_400),
+        Arguments.of(new ExceedingResidualCapacityException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new ArrivalDateInThePastException(), HttpStatus.BAD_REQUEST_400));
   }
 }
