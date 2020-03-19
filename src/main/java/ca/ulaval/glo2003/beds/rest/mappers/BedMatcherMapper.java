@@ -4,6 +4,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class BedMatcherMapper {
     int capacity = 0;
     Packages packageName = null;
     int maxDistance = 0;
-    String origin = null;
+    ZipCode origin = null;
     LodgingModes lodgingMode = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
@@ -51,7 +52,7 @@ public class BedMatcherMapper {
     }
 
     if (params.get(ORIGIN_PARAM) != null) {
-      origin = params.get(ORIGIN_PARAM)[0];
+      origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
       if (params.get(MAX_DISTANCE_PARAM) != null) {
         maxDistance = parsePositiveInteger(params.get(MAX_DISTANCE_PARAM)[0]);
       } else {
