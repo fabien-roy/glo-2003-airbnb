@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.interfaces.rest.handlers;
 
 import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorResponseFactory;
 import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorStatusFactory;
+import javax.inject.Inject;
 import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
@@ -11,6 +12,7 @@ public class CatchallExceptionHandler implements ExceptionHandler<Exception> {
   private final CatchallErrorStatusFactory catchallErrorStatusFactory;
   private final CatchallErrorResponseFactory catchallErrorResponseFactory;
 
+  @Inject
   public CatchallExceptionHandler(
       CatchallErrorStatusFactory catchallErrorStatusFactory,
       CatchallErrorResponseFactory catchallErrorResponseFactory) {

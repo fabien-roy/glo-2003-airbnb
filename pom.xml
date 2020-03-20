@@ -16,6 +16,8 @@
         <maven-compiler.version>3.5</maven-compiler.version>
         <exec-maven.version>1.2.1</exec-maven.version>
         <main-class>ca.ulaval.glo2003.Main</main-class>
+        <!-- injection -->
+        <guice.version>3.0</guice.version>
         <!-- rest -->
         <spark-core.version>2.9.1</spark-core.version>
         <jackson-databind.version>2.10.1</jackson-databind.version>
@@ -41,6 +43,12 @@
     </properties>
 
     <dependencies>
+        <!-- injection -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
         <!-- rest -->
         <dependency>
             <groupId>com.sparkjava</groupId>
