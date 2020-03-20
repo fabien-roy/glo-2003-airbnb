@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
@@ -64,7 +65,7 @@ public class BedMatcherMapper {
     if (params.get(ORIGIN_PARAM) != null) {
       origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
       if (params.get(MAX_DISTANCE_PARAM) != null) {
-        maxDistance = parsePositiveInteger(params.get(MAX_DISTANCE_PARAM)[0]);
+        maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
       } else {
         maxDistance = 10;
       }
@@ -99,34 +100,26 @@ public class BedMatcherMapper {
   }
 
   private int parseCapacity(String capacity) {
-    int parsedCapacity;
-
-    try {
-      parsedCapacity = Integer.parseInt(capacity);
-    } catch (NumberFormatException e) {
-      throw new InvalidCapacityException();
-    }
-
-    if (parsedCapacity < 0) {
-      throw new InvalidCapacityException();
-    }
-
-    return parsedCapacity;
+    return parsePositiveInteger(capacity, new InvalidCapacityException());
   }
 
-  private int parsePositiveInteger(String integer) {
-    int parsedDistance;
+  private int parseMaxDistance(String maxDistance) {
+    return parsePositiveInteger(maxDistance, new InvalidMaxDistanceException());
+  }
+
+  private int parsePositiveInteger(String integer, BedException exception) {
+    int parsedInteger;
 
     try {
-      parsedDistance = Integer.parseInt(integer);
+      parsedInteger = Integer.parseInt(integer);
     } catch (NumberFormatException e) {
-      throw new InvalidMaxDistanceException();
+      throw exception;
     }
 
-    if (parsedDistance < 0) {
-      throw new InvalidMaxDistanceException();
+    if (parsedInteger < 0) {
+      throw exception;
     }
 
-    return parsedDistance;
+    return parsedInteger;
   }
 }
