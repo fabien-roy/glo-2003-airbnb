@@ -12,28 +12,28 @@ public class ZippopotamusClient {
 
   private static final String ZIPPOPOTAMUS_URL = "http://api.zippopotam.us/us/";
 
-  public ZipCode validateZipCode(String zipCode) {
-    validateZipCodeFormat(zipCode);
-    validateZipCodeExistence(zipCode);
-    return new ZipCode(zipCode);
+  public ZipCode validateZipCode(String zipCodeValue) {
+    validateZipCodeFormat(zipCodeValue);
+    validateZipCodeExistence(zipCodeValue);
+    return new ZipCode(zipCodeValue);
   }
 
-  private void validateZipCodeFormat(String zipCode) {
-    if (zipCode.length() != 5) {
+  private void validateZipCodeFormat(String zipCodeValue) {
+    if (zipCodeValue.length() != 5) {
       throw new InvalidZipCodeException();
     }
     try {
-      Double.parseDouble(zipCode);
+      Double.parseDouble(zipCodeValue);
     } catch (NumberFormatException e) {
       throw new InvalidZipCodeException();
     }
   }
 
-  private void validateZipCodeExistence(String zipCode) {
+  private void validateZipCodeExistence(String zipCodeValue) {
     int response;
 
     try {
-      response = getResponseForZipCode(zipCode);
+      response = getResponseForZipCode(zipCodeValue);
     } catch (IOException ex) {
       throw new UnreachableZippopotamusServerException();
     }
@@ -41,14 +41,14 @@ public class ZippopotamusClient {
     if (response != HttpURLConnection.HTTP_OK) throw new NonExistingZipCodeException();
   }
 
-  private int getResponseForZipCode(String zipCode) throws IOException {
-    HttpURLConnection connection = buildUrlConnection(zipCode);
+  private int getResponseForZipCode(String zipCodeValue) throws IOException {
+    HttpURLConnection connection = buildUrlConnection(zipCodeValue);
     connection.setRequestMethod("GET");
     return connection.getResponseCode();
   }
 
-  protected HttpURLConnection buildUrlConnection(String zipCode) throws IOException {
-    URL url = new URL(ZIPPOPOTAMUS_URL + zipCode);
+  protected HttpURLConnection buildUrlConnection(String zipCodeValue) throws IOException {
+    URL url = new URL(ZIPPOPOTAMUS_URL + zipCodeValue);
     return (HttpURLConnection) url.openConnection();
   }
 }

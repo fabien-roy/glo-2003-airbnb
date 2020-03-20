@@ -11,7 +11,7 @@ public class FakeZippopotamusClient extends ZippopotamusClient {
   }
 
   @Override
-  protected HttpURLConnection buildUrlConnection(String zipCode) {
+  protected HttpURLConnection buildUrlConnection(String zipCodeValue) {
     return fakeUrlConnection;
   }
 }

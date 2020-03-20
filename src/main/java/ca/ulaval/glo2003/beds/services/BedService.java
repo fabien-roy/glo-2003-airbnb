@@ -40,7 +40,7 @@ public class BedService {
 
   public String add(BedRequest request) {
     Bed bed = bedMapper.fromRequest(request);
-    ZipCode zipCode = zippopotamusClient.validateZipCode(request.getZipCode());
+    ZipCode zipCode = zippopotamusClient.validateZipCode(request.getZipCode().getValue());
 
     bed = bedFactory.create(bed, zipCode);
 

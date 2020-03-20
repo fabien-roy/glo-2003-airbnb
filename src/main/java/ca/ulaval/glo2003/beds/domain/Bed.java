@@ -21,8 +21,6 @@ public class Bed {
   private LodgingModes lodgingMode;
   private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
-  private String latitude;
-  private String longitude;
 
   public Bed(
       PublicKey ownerPublicKey,
@@ -39,8 +37,6 @@ public class Bed {
     this.capacity = capacity;
     this.lodgingMode = lodgingMode;
     this.pricesPerNight = pricesPerNight;
-    this.latitude = latitude;
-    this.longitude = longitude;
   }
 
   public UUID getNumber() {
@@ -126,13 +122,5 @@ public class Bed {
 
   private boolean isBedAlreadyBooked(Booking booking) {
     return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
-  }
-
-  public String getLongitude() {
-    return longitude;
-  }
-
-  public String getLatitude() {
-    return latitude;
   }
 }
