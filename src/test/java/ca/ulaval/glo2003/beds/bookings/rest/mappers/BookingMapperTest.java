@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,6 +9,7 @@ import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
@@ -20,7 +21,6 @@ import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -119,19 +119,35 @@ class BookingMapperTest {
   }
 
   @Test
+  public void fromRequest_shouldMapColonySize() {
+    int expectedColonySize = 10;
+    BookingRequest request = aBookingRequest().withColonySize(expectedColonySize).build();
+
+    Booking booking = bookingMapper.fromRequest(request);
+
+    assertEquals(expectedColonySize, booking.getColonySize());
+  }
+
+  @Test
+  public void fromRequest_withInvalidColonySize_shouldThrowInvalidColonySizeException() {
+    int colonySize = -10;
+    BookingRequest request = aBookingRequest().withColonySize(colonySize).build();
+
+    assertThrows(InvalidColonySizeException.class, () -> bookingMapper.fromRequest(request));
+  }
+
+  @Test
   public void fromRequest_withTooLowNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
     BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(0).build();
 
-    Assertions.assertThrows(
-        InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void fromRequest_withTooHighNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
     BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(95).build();
 
-    Assertions.assertThrows(
-        InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
@@ -149,15 +165,13 @@ class BookingMapperTest {
     String invalidPackage = "invalidPackage";
     BookingRequest bookingRequest = aBookingRequest().withPackage(invalidPackage).build();
 
-    Assertions.assertThrows(
-        InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void fromRequest_withoutPackage_shouldThrowInvalidPackageException() {
     BookingRequest bookingRequest = aBookingRequest().withPackage(null).build();
 
-    Assertions.assertThrows(
-        InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 }

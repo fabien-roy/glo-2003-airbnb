@@ -40,7 +40,7 @@ public class BedService {
 
   public String add(BedRequest request) {
     Bed bed = bedMapper.fromRequest(request);
-    ZipCode zipCode = zippopotamusClient.validateZipCode(request.getZipCode());
+    ZipCode zipCode = getValidatedZipCode(request.getZipCode());
 
     bed = bedFactory.create(bed, zipCode);
 
@@ -52,7 +52,10 @@ public class BedService {
   public List<BedResponse> getAll(Map<String, String[]> params) {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    if (bedMatcher.getOrigin() != null) zippopotamusClient.validateZipCode(bedMatcher.getOrigin());
+    if (bedMatcher.getOrigin() != null) {
+      ZipCode zipCode = getValidatedZipCode(bedMatcher.getOrigin().getValue());
+      bedMatcher.setOrigin(zipCode);
+    }
 
     List<Bed> beds = bedRepository.getAll();
     List<Bed> matchingBeds = beds.stream().filter(bedMatcher::matches).collect(Collectors.toList());
@@ -72,5 +75,9 @@ public class BedService {
     Bed bed = bedRepository.getByNumber(bedNumber);
 
     return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
+  }
+
+  private ZipCode getValidatedZipCode(String zipCodeValue) {
+    return zippopotamusClient.validateZipCode(zipCodeValue);
   }
 }

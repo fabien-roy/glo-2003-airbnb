@@ -14,6 +14,10 @@ public class BookingRequestObjectMother {
     return Faker.instance().number().numberBetween(1, 89);
   }
 
+  public static int createColonySize() {
+    return Faker.instance().number().numberBetween(1, 100);
+  }
+
   public static String createTenantPublicKey() {
     return createPublicKey().getValue();
   }

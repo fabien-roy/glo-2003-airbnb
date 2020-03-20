@@ -47,6 +47,9 @@ class BookingErrorResponseFactoryTest {
         Arguments.of(new BookingNotFoundException(bookingNumber), bookingNotFound(bookingNumber)),
         Arguments.of(new InvalidArrivalDateException(), invalidArrivalDate()),
         Arguments.of(new InvalidNumberOfNights(), invalidNumberOfNights()),
+        Arguments.of(new InvalidColonySizeException(), invalidColonySize()),
+        Arguments.of(
+            new ExceedingResidualCapacityException(), exceedingResidualCapacityException()),
         Arguments.of(new ArrivalDateInThePastException(), arrivalDateInThePast()));
   }
 }
