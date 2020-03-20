@@ -139,15 +139,6 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withoutOrigin_shouldNotValidateZipCode() {
-    when(bedMatcher.getOrigin()).thenReturn(null);
-
-    bedService.getAll(params);
-
-    verify(zippopotamusClient, never()).validateZipCode(eq(bedMatcher.getOrigin()));
-  }
-
-  @Test
   public void getByNumber_withNumber_shouldGetBed() {
     BedResponse actualBedResponse = bedService.getByNumber(bedNumber.toString());
 
