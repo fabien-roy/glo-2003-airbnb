@@ -2,19 +2,19 @@ package ca.ulaval.glo2003.interfaces.rest;
 
 public class ErrorResponse {
 
-  private String error;
-  private String description;
+  private java.lang.String error;
+  private java.lang.String description;
 
-  public ErrorResponse(String error, String description) {
+  public ErrorResponse(java.lang.String error, java.lang.String description) {
     this.error = error;
     this.description = description;
   }
 
-  public String getError() {
+  public java.lang.String getError() {
     return error;
   }
 
-  public String getDescription() {
+  public java.lang.String getDescription() {
     return description;
   }
 }

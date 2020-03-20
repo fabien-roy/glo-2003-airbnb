@@ -29,6 +29,9 @@ public class BedRequestBuilder {
   private int DEFAULT_CAPACITY = createCapacity();
   private int capacity = DEFAULT_CAPACITY;
 
+  private String DEFAULT_LODGING_MODE = createLodgingMode();
+  private String lodgingMode = DEFAULT_LODGING_MODE;
+
   private List<PackageRequest> DEFAULT_PACKAGES = createPackages();
   private List<PackageRequest> packages = DEFAULT_PACKAGES;
 
@@ -66,6 +69,11 @@ public class BedRequestBuilder {
     return this;
   }
 
+  public BedRequestBuilder withLodgingMode(String lodgingMode) {
+    this.lodgingMode = lodgingMode;
+    return this;
+  }
+
   public BedRequestBuilder withPackages(List<PackageRequest> packages) {
     this.packages = packages;
     return this;
@@ -73,6 +81,13 @@ public class BedRequestBuilder {
 
   public BedRequest build() {
     return new BedRequest(
-        ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+        ownerPublicKey,
+        zipCode,
+        bedType,
+        cleaningFrequency,
+        bloodTypes,
+        capacity,
+        lodgingMode,
+        packages);
   }
 }

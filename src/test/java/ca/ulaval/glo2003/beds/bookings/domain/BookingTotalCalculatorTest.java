@@ -1,13 +1,13 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;

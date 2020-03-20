@@ -10,6 +10,7 @@ public class BedRequest {
   private String cleaningFrequency;
   private List<String> bloodTypes;
   private int capacity;
+  private String lodgingMode;
   private List<PackageRequest> packages;
   private String latitude;
   private String longitude;
@@ -25,6 +26,7 @@ public class BedRequest {
       String cleaningFrequency,
       List<String> bloodTypes,
       int capacity,
+      String lodgingMode,
       List<PackageRequest> packages) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
@@ -32,6 +34,7 @@ public class BedRequest {
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
+    this.lodgingMode = lodgingMode;
     this.packages = packages;
     this.latitude = latitude;
     this.longitude = longitude;
@@ -99,6 +102,10 @@ public class BedRequest {
 
   public void setCapacity(int capacity) {
     this.capacity = capacity;
+  }
+
+  public String getLodgingMode() {
+    return lodgingMode;
   }
 
   public List<PackageRequest> getPackages() {

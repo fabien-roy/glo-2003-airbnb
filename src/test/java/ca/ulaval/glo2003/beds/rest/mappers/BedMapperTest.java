@@ -12,11 +12,13 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother;
+import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -159,6 +161,34 @@ class BedMapperTest {
   }
 
   @Test
+  public void fromRequest_shouldMapLodgingMode() {
+    LodgingModes expectedLodgingMode = BedObjectMother.createLodgingMode();
+    BedRequest bedRequest = aBedRequest().withLodgingMode(expectedLodgingMode.toString()).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedLodgingMode, bed.getLodgingMode());
+  }
+
+  @Test
+  public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
+    BedRequest bedRequest = aBedRequest().withLodgingMode(null).build();
+
+    Bed bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(expectedLodgingMode, bed.getLodgingMode());
+  }
+
+  @Test
+  public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
+    String invalidLodgingMode = "invalidLodgingMode";
+    BedRequest bedRequest = aBedRequest().withLodgingMode(invalidLodgingMode).build();
+
+    assertThrows(InvalidLodgingModeException.class, () -> bedMapper.fromRequest(bedRequest));
+  }
+
+  @Test
   public void fromRequest_shouldMapPricesPerNight() {
     PackageRequest packageRequest = aPackageRequest().build();
     List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
@@ -169,31 +199,6 @@ class BedMapperTest {
     Bed bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(expectedPricesPerNight, bed.getPricesPerNight());
-  }
-
-  @Test
-  public void fromRequest_shouldMapZipCode() {
-    String expectedZipCode = createZipCode();
-    BedRequest bedRequest = aBedRequest().withZipCode(expectedZipCode).build();
-
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedZipCode, bed.getZipCode());
-  }
-
-  @Test
-  public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    String invalidZipCode = "invalidZipCode";
-    BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
-
-    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  @Test
-  public void fromRequest_withoutZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = aBedRequest().withZipCode(null).build();
-
-    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
@@ -220,12 +225,12 @@ class BedMapperTest {
 
   @Test
   public void toResponseWithoutNumber_shouldMapZipCode() {
-    String expectedZipCode = createZipCode();
+    ZipCode expectedZipCode = createZipCode();
     Bed bed = aBed().withZipCode(expectedZipCode).build();
 
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
-    assertEquals(expectedZipCode, bedResponse.getZipCode());
+    assertEquals(expectedZipCode.getValue(), bedResponse.getZipCode());
   }
 
   @Test
@@ -289,6 +294,16 @@ class BedMapperTest {
   }
 
   @Test
+  public void toResponseWithoutNumber_shouldMapLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
+    Bed bed = aBed().withLodgingMode(expectedLodgingMode).build();
+
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
+
+    assertEquals(expectedLodgingMode.toString(), bedResponse.getLodgingMode());
+  }
+
+  @Test
   public void toResponseWithoutNumber_shouldMapPricesPerNights() {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
@@ -320,6 +335,6 @@ class BedMapperTest {
 
     BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, 0);
 
-    assertEquals(expectedBedNumber, bedResponse.getBedNumber());
+    assertEquals(expectedBedNumber.toString(), bedResponse.getBedNumber());
   }
 }

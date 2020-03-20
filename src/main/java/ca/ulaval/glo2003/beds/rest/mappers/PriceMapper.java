@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 
 public class PriceMapper {

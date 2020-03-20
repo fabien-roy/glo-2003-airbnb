@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPublicKeyException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException;
 
 public class PublicKeyMapper {
 

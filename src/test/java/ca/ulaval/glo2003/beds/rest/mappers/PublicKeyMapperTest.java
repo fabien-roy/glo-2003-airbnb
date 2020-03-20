@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.createO
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidPublicKeyException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

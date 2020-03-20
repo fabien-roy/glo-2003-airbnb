@@ -1,21 +1,24 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
-import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
-import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
+import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 
 public class Bed {
 
   private UUID number;
   private PublicKey ownerPublicKey;
-  private String zipCode;
+  private ZipCode zipCode;
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
+  private LodgingModes lodgingMode;
   private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
   private String latitude;
@@ -23,20 +26,18 @@ public class Bed {
 
   public Bed(
       PublicKey ownerPublicKey,
-      String zipCode,
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      Map<Packages, Price> pricesPerNight,
-      String longitude,
-      String latitude) {
+      LodgingModes lodgingMode,
+      Map<Packages, Price> pricesPerNight) {
     this.ownerPublicKey = ownerPublicKey;
-    this.zipCode = zipCode;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.capacity = capacity;
+    this.lodgingMode = lodgingMode;
     this.pricesPerNight = pricesPerNight;
     this.latitude = latitude;
     this.longitude = longitude;
@@ -54,8 +55,12 @@ public class Bed {
     return ownerPublicKey;
   }
 
-  public String getZipCode() {
+  public ZipCode getZipCode() {
     return zipCode;
+  }
+
+  public void setZipCode(ZipCode zipCode) {
+    this.zipCode = zipCode;
   }
 
   public BedTypes getBedType() {
@@ -72,6 +77,10 @@ public class Bed {
 
   public int getCapacity() {
     return capacity;
+  }
+
+  public LodgingModes getLodgingMode() {
+    return lodgingMode;
   }
 
   public Map<Packages, Price> getPricesPerNight() {

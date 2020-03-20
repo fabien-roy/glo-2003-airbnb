@@ -5,18 +5,11 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class BedRequestObjectMother {
-
-  private static final FakeValuesService fakeValuesService =
-      new FakeValuesService(new Locale("en-US"), new RandomService());
 
   private BedRequestObjectMother() {}
 
@@ -25,7 +18,7 @@ public class BedRequestObjectMother {
   }
 
   public static String createZipCode() {
-    return fakeValuesService.regexify(BedMapper.ZIP_CODE_PATTERN);
+    return Faker.instance().address().zipCode();
   }
 
   public static String createBedType() {
@@ -55,5 +48,9 @@ public class BedRequestObjectMother {
 
   private static double createPackagePricePerNight() {
     return Faker.instance().number().randomDouble(2, 100, 1000);
+  }
+
+  public static String createLodgingMode() {
+    return randomEnum(LodgingModes.class).toString();
   }
 }

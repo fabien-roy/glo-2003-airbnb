@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.bookings.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
@@ -10,10 +10,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.beds.rest.exceptions.BedAlreadyBookedException;
-import ca.ulaval.glo2003.beds.rest.exceptions.BookingNotAllowedException;
-import ca.ulaval.glo2003.beds.rest.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.beds.bookings.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
+import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 

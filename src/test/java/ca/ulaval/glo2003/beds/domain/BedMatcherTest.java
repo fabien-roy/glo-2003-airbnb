@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatche
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
