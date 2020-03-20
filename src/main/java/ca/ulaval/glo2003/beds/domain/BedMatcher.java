@@ -79,4 +79,8 @@ public class BedMatcher {
 
     return true;
   }
+
+  public void setOrigin(ZipCode validZipCode) {
+    origin = validZipCode;
+  }
 }
