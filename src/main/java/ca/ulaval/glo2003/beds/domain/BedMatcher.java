@@ -66,6 +66,10 @@ public class BedMatcher {
     return arrivalDate;
   }
 
+  public void setArrivalDate(BookingDate arrivalDate) {
+    this.arrivalDate = arrivalDate;
+  }
+
   public LodgingModes getLodgingMode() {
     return lodgingMode;
   }
@@ -74,12 +78,24 @@ public class BedMatcher {
     return numberOfNights;
   }
 
+  public void setNumberOfNights(int numberOfNights) {
+    this.numberOfNights = numberOfNights;
+  }
+
   public ZipCode getOrigin() {
     return origin;
   }
 
+  public void setOrigin(ZipCode validZipCode) {
+    origin = validZipCode;
+  }
+
   public int getMaxDistance() {
     return maxDistance;
+  }
+
+  public void setMaxDistance(int maxDistance) {
+    this.maxDistance = maxDistance;
   }
 
   public boolean matches(Bed bed) {
@@ -103,14 +119,8 @@ public class BedMatcher {
 
     if (lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
 
-    if (origin != null && !origin.getValue().contains(bed.getZipCode().getValue())) return false;
-
     // TODO validate distance between two zipcodes is under max distance
 
     return true;
-  }
-
-  public void setOrigin(ZipCode validZipCode) {
-    origin = validZipCode;
   }
 }
