@@ -20,12 +20,14 @@ import spark.Response;
 public class BedResourceTest {
 
   private BedResource bedResource;
+  private BedQueryMapBuilder bedQueryMapBuilder;
   private BedService bedService;
 
   @BeforeEach
   public void setUpResource() {
     bedService = mock(BedService.class);
-    bedResource = new BedResource(bedService);
+    bedQueryMapBuilder = mock(BedQueryMapBuilder.class);
+    bedResource = new BedResource(bedService, bedQueryMapBuilder);
   }
 
   @Test

@@ -19,11 +19,11 @@ public class BedMatcherMapper {
   public static final String BLOOD_TYPES_PARAM = "bloodTypes";
   public static final String MIN_CAPACITY_PARAM = "minCapacity";
   public static final String PACKAGE_NAME_PARAM = "packages";
-  public static final String ORIGIN_PARAM = "origin";
-  public static final String MAX_DISTANCE_PARAM = "maxDistance";
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
   public static final String LODGING_MODE_PARAM = "lodgingMode";
+  public static final String ORIGIN_PARAM = "origin";
+  public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
   public BedMatcher fromRequestParams(Map<String, String[]> params) {
     BedTypes bedType = null;
@@ -31,11 +31,11 @@ public class BedMatcherMapper {
     List<BloodTypes> bloodTypes = null;
     int minCapacity = 0;
     Packages packageName = null;
-    String origin = null;
-    int maxDistance = 10;
     LocalDate arrivalDate = LocalDate.now();
     int numberOfNights = 3;
     LodgingModes lodgingModes = null;
+    String origin = null;
+    int maxDistance = 10;
 
     if (params.get(BED_TYPE_PARAM) != null) {
       bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);

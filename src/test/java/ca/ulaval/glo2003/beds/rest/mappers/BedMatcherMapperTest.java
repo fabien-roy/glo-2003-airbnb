@@ -3,8 +3,11 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -155,6 +158,75 @@ class BedMatcherMapperTest {
   }
 
   @Test
+  public void fromRequestParams_withInvalidDate_shouldThrowDateTimeParseException() {
+    Map<String, String[]> params = new HashMap<>();
+    params.put(ARRIVAL_DATE_PARAM, new String[] {"invalidArrivalDateFormat"});
+
+    assertThrows(DateTimeParseException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withValidDate_shouldReturnBedMatcherWithArrivalDate() {
+    String expectedDateAsString = "2020-07-07";
+    LocalDate expectedDate = LocalDate.parse(expectedDateAsString);
+    Map<String, String[]> params = new HashMap<>();
+    params.put(ARRIVAL_DATE_PARAM, new String[] {expectedDateAsString});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(expectedDate, bedMatcher.getArrivalDate());
+  }
+
+  @Test
+  public void
+      fromRequestParams_withInvalidNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
+    Map<String, String[]> params = new HashMap<>();
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {"invalidNumberOfNights"});
+
+    assertThrows(InvalidNumberOfNights.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withNegativeNumberOfNights_shouldThrowInvalidNumberOfNights() {
+    int invalidNumberOfNights = -420;
+    Map<String, String[]> params = new HashMap<>();
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(invalidNumberOfNights)});
+
+    assertThrows(InvalidNumberOfNights.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withNumberOfNights_shouldReturnBedMatcherWithNumberOfNights() {
+    int expectedNumberOfNights = 14;
+    Map<String, String[]> params = new HashMap<>();
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(expectedNumberOfNights)});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(expectedNumberOfNights, bedMatcher.getNumberOfNights());
+  }
+
+  @Test
+  public void fromRequestParams_withLodgingMode_shouldReturnBedMatcherWithLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.COHABITATION;
+    Map<String, String[]> params = new HashMap<>();
+    params.put(LODGING_MODE_PARAM, new String[] {expectedLodgingMode.toString()});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(expectedLodgingMode, bedMatcher.getLodgingModes());
+  }
+
+  @Test
+  public void fromRequestParams_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
+    Map<String, String[]> params = new HashMap<>();
+    params.put(LODGING_MODE_PARAM, new String[] {"invalidLodgingMode"});
+
+    assertThrows(
+        InvalidLodgingModeException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
   public void fromRequestParams_withInvalidMaxDistance_shouldThrowInvalidDistanceException() {
     Map<String, String[]> params = new HashMap<>();
     params.put(MAX_DISTANCE_PARAM, new String[] {"invalidDistance"});
@@ -194,25 +266,5 @@ class BedMatcherMapperTest {
 
     assertThrows(
         MaxDistanceWithoutOriginException.class, () -> bedMatcherMapper.fromRequestParams(params));
-  }
-
-  @Test
-  public void fromRequestParams_withLodgingMode_shouldReturnBedMatcherWithLodgingMode() {
-    LodgingModes expectedLodgingMode = LodgingModes.COHABITATION;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(LODGING_MODE_PARAM, new String[] {expectedLodgingMode.toString()});
-
-    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
-
-    assertEquals(expectedLodgingMode, bedMatcher.getLodgingMode());
-  }
-
-  @Test
-  public void fromRequestParams_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
-    Map<String, String[]> params = new HashMap<>();
-    params.put(LODGING_MODE_PARAM, new String[] {"invalidLodgingMode"});
-
-    assertThrows(
-        InvalidLodgingModeException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 }
