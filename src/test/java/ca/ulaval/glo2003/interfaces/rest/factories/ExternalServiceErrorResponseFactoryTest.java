@@ -4,7 +4,9 @@ import static ca.ulaval.glo2003.interfaces.rest.factories.ExternalServiceErrorRe
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.interfaces.exceptions.ExternalServiceException;
+import ca.ulaval.glo2003.interfaces.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.interfaces.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.interfaces.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.interfaces.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.interfaces.exceptions.UnreachableZippopotamusServerException;
 import java.util.stream.Stream;
@@ -46,7 +48,8 @@ class ExternalServiceErrorResponseFactoryTest {
     return Stream.of(
         Arguments.of(new InvalidZipCodeException(), invalidZipCode()),
         Arguments.of(new NonExistingZipCodeException(), nonExistingZipCode()),
-        Arguments.of(
-            new UnreachableZippopotamusServerException(), unreachableZippopotamusServer()));
+        Arguments.of(new UnreachableZippopotamusServerException(), unreachableZippopotamusServer()),
+        Arguments.of(new InvalidMaxDistanceException(), invalidMaxDistance()),
+        Arguments.of(new MaxDistanceWithoutOriginException(), maxDistanceWithoutOrigin()));
   }
 }

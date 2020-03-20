@@ -32,4 +32,15 @@ public class ExternalServiceErrorResponseFactory extends CatchallErrorResponseFa
     return tryWriteValueAsString(
         "UNREACHABLE_ZIPPOPOTAMUS_SERVER", "zippopotamus server unreachable");
   }
+
+  static String invalidMaxDistance() {
+    return tryWriteValueAsString(
+        "INVALID_MAX_DISTANCE", "distance should be a number greater than 0");
+  }
+
+  static String maxDistanceWithoutOrigin() {
+    return tryWriteValueAsString(
+        "MAX_DISTANCE_WITHOUT_ORIGIN",
+        "an origin point should be provided along with the maximum distance");
+  }
 }
