@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.ExceedingResidualCapacityException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
-import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
 
 public class BookingErrorResponseFactory extends BedErrorResponseFactory {
@@ -16,7 +16,7 @@ public class BookingErrorResponseFactory extends BedErrorResponseFactory {
       return bookingNotFound(((BookingNotFoundException) exception).getBookingNumber());
     } else if (exception instanceof InvalidArrivalDateException) {
       return invalidArrivalDate();
-    } else if (exception instanceof InvalidNumberOfNights) {
+    } else if (exception instanceof InvalidNumberOfNightsException) {
       return invalidNumberOfNights();
     } else if (exception instanceof InvalidColonySizeException) {
       return invalidColonySize();

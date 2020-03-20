@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
-import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.domain.Packages;
@@ -52,7 +52,7 @@ public class BookingMapper {
 
   private void validateNumberOfNights(int numberOfNights) {
     if (numberOfNights < 1 || numberOfNights > 90) {
-      throw new InvalidNumberOfNights();
+      throw new InvalidNumberOfNightsException();
     }
   }
 

@@ -46,7 +46,7 @@ class BookingErrorResponseFactoryTest {
     return Stream.of(
         Arguments.of(new BookingNotFoundException(bookingNumber), bookingNotFound(bookingNumber)),
         Arguments.of(new InvalidArrivalDateException(), invalidArrivalDate()),
-        Arguments.of(new InvalidNumberOfNights(), invalidNumberOfNights()),
+        Arguments.of(new InvalidNumberOfNightsException(), invalidNumberOfNights()),
         Arguments.of(new InvalidColonySizeException(), invalidColonySize()),
         Arguments.of(
             new ExceedingResidualCapacityException(), exceedingResidualCapacityException()),

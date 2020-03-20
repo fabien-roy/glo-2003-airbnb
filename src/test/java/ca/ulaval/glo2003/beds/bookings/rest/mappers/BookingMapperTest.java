@@ -10,7 +10,7 @@ import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
-import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.beds.domain.Packages;
@@ -140,14 +140,16 @@ class BookingMapperTest {
   public void fromRequest_withTooLowNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
     BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(0).build();
 
-    assertThrows(InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(
+        InvalidNumberOfNightsException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void fromRequest_withTooHighNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
     BookingRequest bookingRequest = aBookingRequest().withNumberOfNights(95).build();
 
-    assertThrows(InvalidNumberOfNights.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(
+        InvalidNumberOfNightsException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test

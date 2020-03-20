@@ -1,74 +1,95 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
+import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.*;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BedMatcherMapperTest {
 
-  private BedMatcherMapper bedMatcherMapper;
+  private static BedMatcherMapper bedMatcherMapper;
+  private static BookingDateMapper bookingDateMapper;
+
+  private Map<String, String[]> params = new HashMap<>();
+  private BedTypes bedType = createBedType();
+  private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
+  private int minCapacity = 100;
+  private Packages packageName = createPackageName();
+  private BookingDate arrivalDate = new BookingDate(LocalDate.now());
+  private int numberOfNights = 1;
+  private LodgingModes lodgingMode = createLodgingMode();
+  private ZipCode origin = createZipCode();
+  private int maxDistance = 10;
+
+  @BeforeAll
+  public static void setUpMapper() {
+    bookingDateMapper = mock(BookingDateMapper.class);
+    bedMatcherMapper = new BedMatcherMapper(bookingDateMapper);
+  }
 
   @BeforeEach
-  public void setUpMapper() {
-    bedMatcherMapper = new BedMatcherMapper();
+  public void setUpMocks() {
+    when(bookingDateMapper.fromString(arrivalDate.getValue().toString())).thenReturn(arrivalDate);
   }
 
   @Test
   public void fromRequestParams_withNoParams_shouldReturnBedMatcherWithNullAttributes() {
-    Map<String, String[]> params = new HashMap<>();
-
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     assertNull(bedMatcher.getBedType());
     assertNull(bedMatcher.getCleaningFrequency());
     assertNull(bedMatcher.getBloodTypes());
-    assertEquals(0, bedMatcher.getMinCapacity());
-    assertNull(bedMatcher.getPackageName());
+    assertEquals(BedMatcher.UNSET_INT, bedMatcher.getMinCapacity());
+    assertNull(bedMatcher.getPackage());
+    assertNull(bedMatcher.getArrivalDate());
+    assertEquals(BedMatcher.UNSET_INT, bedMatcher.getNumberOfNights());
+    assertNull(bedMatcher.getLodgingMode());
+    assertNull(bedMatcher.getOrigin());
+    assertEquals(BedMatcher.UNSET_INT, bedMatcher.getMaxDistance());
   }
 
   @Test
-  public void fromRequestParams_withBedType_shouldReturnBedMatcherWithBedType() {
-    BedTypes expectedBedType = BedTypes.LATEX;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(BED_TYPE_PARAM, new String[] {expectedBedType.toString()});
+  public void fromRequestParams_withBedType_shouldMapBedType() {
+    params.put(BED_TYPE_PARAM, new String[] {bedType.toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedBedType, bedMatcher.getBedType());
+    assertEquals(bedType, bedMatcher.getBedType());
   }
 
   @Test
   public void fromRequestParams_withInvalidBedType_shouldThrowInvalidBedTypeException() {
-    Map<String, String[]> params = new HashMap<>();
     params.put(BED_TYPE_PARAM, new String[] {"invalidBedType"});
 
     assertThrows(InvalidBedTypeException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
-  public void
-      fromRequestParams_withCleaningFrequency_shouldReturnBedMatcherWithCleaningFrequency() {
-    CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(CLEANING_FREQUENCY_PARAM, new String[] {expectedCleaningFrequency.toString()});
+  public void fromRequestParams_withCleaningFrequency_shouldMapCleaningFrequency() {
+    params.put(CLEANING_FREQUENCY_PARAM, new String[] {cleaningFrequency.toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedCleaningFrequency, bedMatcher.getCleaningFrequency());
+    assertEquals(cleaningFrequency, bedMatcher.getCleaningFrequency());
   }
 
   @Test
   public void
       fromRequestParams_withInvalidCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
-    Map<String, String[]> params = new HashMap<>();
     params.put(CLEANING_FREQUENCY_PARAM, new String[] {"invalidCleaningFrequency"});
 
     assertThrows(
@@ -76,54 +97,48 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withSingleBloodType_shouldReturnBedMatcherWithBloodType() {
-    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(BLOOD_TYPES_PARAM, new String[] {expectedBloodType.toString()});
+  public void fromRequestParams_withSingleBloodType_shouldMapBloodType() {
+    BloodTypes bloodType = BloodTypes.O_MINUS;
+    params.put(BLOOD_TYPES_PARAM, new String[] {bloodType.toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     assertEquals(1, bedMatcher.getBloodTypes().size());
-    assertEquals(expectedBloodType, bedMatcher.getBloodTypes().get(0));
+    assertEquals(bloodType, bedMatcher.getBloodTypes().get(0));
   }
 
   @Test
-  public void fromRequestParams_withMultipleBloodTypes_shouldReturnBedMatcherWithBloodTypes() {
-    List<BloodTypes> expectedBloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
-    String[] expectedBloodTypeStrings =
-        new String[] {expectedBloodTypes.get(0).toString(), expectedBloodTypes.get(1).toString()};
-    Map<String, String[]> params = new HashMap<>();
-    params.put(BLOOD_TYPES_PARAM, expectedBloodTypeStrings);
+  public void fromRequestParams_withMultipleBloodTypes_shouldMapBloodTypes() {
+    List<BloodTypes> bloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
+    String[] bloodTypeStrings =
+        new String[] {bloodTypes.get(0).toString(), bloodTypes.get(1).toString()};
+    params.put(BLOOD_TYPES_PARAM, bloodTypeStrings);
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     assertEquals(2, bedMatcher.getBloodTypes().size());
-    assertEquals(expectedBloodTypes, bedMatcher.getBloodTypes());
+    assertEquals(bloodTypes, bedMatcher.getBloodTypes());
   }
 
   @Test
   public void fromRequestParams_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
-    Map<String, String[]> params = new HashMap<>();
-    params.put(BLOOD_TYPES_PARAM, new String[] {"invalidBloodTypes"});
+    params.put(BLOOD_TYPES_PARAM, new String[] {"invalidBloodType"});
 
     assertThrows(
         InvalidBloodTypesException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
-  public void fromRequestParams_withCapacity_shouldReturnBedMatcherWithCapacity() {
-    int expectedCapacity = 600;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(expectedCapacity)});
+  public void fromRequestParams_withCapacity_shouldMapMinCapacity() {
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedCapacity, bedMatcher.getMinCapacity());
+    assertEquals(minCapacity, bedMatcher.getMinCapacity());
   }
 
   @Test
   public void fromRequestParams_withInvalidCapacity_shouldThrowInvalidCapacityException() {
-    Map<String, String[]> params = new HashMap<>();
     params.put(MIN_CAPACITY_PARAM, new String[] {"invalidCapacity"});
 
     assertThrows(InvalidCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
@@ -131,95 +146,93 @@ class BedMatcherMapperTest {
 
   @Test
   public void fromRequestParams_withNegativeCapacity_shouldThrowMinimalCapacityException() {
-    int invalidCapacity = -1;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(invalidCapacity)});
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(-1)});
 
     assertThrows(InvalidCapacityException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
-  public void fromRequestParams_withPackageName_shouldReturnBedMatcherWithPackage() {
-    Packages expectedPackageName = Packages.BLOODTHIRSTY;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(PACKAGE_NAME_PARAM, new String[] {expectedPackageName.toString()});
+  public void fromRequestParams_withPackageName_shouldMapPackage() {
+    params.put(PACKAGE_NAME_PARAM, new String[] {packageName.toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedPackageName, bedMatcher.getPackageName());
+    assertEquals(packageName, bedMatcher.getPackage());
   }
 
   @Test
   public void fromRequestParams_withInvalidPackageName_shouldThrowInvalidPackageException() {
-    Map<String, String[]> params = new HashMap<>();
     params.put(PACKAGE_NAME_PARAM, new String[] {"invalidPackageName"});
 
     assertThrows(InvalidPackageException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
-  public void fromRequestParams_withInvalidDate_shouldThrowDateTimeParseException() {
-    Map<String, String[]> params = new HashMap<>();
-    params.put(ARRIVAL_DATE_PARAM, new String[] {"invalidArrivalDateFormat"});
-
-    assertThrows(DateTimeParseException.class, () -> bedMatcherMapper.fromRequestParams(params));
-  }
-
-  @Test
-  public void fromRequestParams_withValidDate_shouldReturnBedMatcherWithArrivalDate() {
-    String expectedDateAsString = "2020-07-07";
-    LocalDate expectedDate = LocalDate.parse(expectedDateAsString);
-    Map<String, String[]> params = new HashMap<>();
-    params.put(ARRIVAL_DATE_PARAM, new String[] {expectedDateAsString});
+  public void fromRequestParams_withMinCapacityAndArrivalDate_shouldMapArrivalDate() {
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
+    params.put(ARRIVAL_DATE_PARAM, new String[] {arrivalDate.getValue().toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedDate, bedMatcher.getArrivalDate());
+    assertEquals(arrivalDate, bedMatcher.getArrivalDate());
+  }
+
+  @Test
+  public void fromRequestParams_withoutArrivalDate_shouldMapDefaultArrivalDate() {
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(DEFAULT_ARRIVAL_DATE, bedMatcher.getArrivalDate());
+  }
+
+  @Test
+  public void fromRequestParams_withMinCapacityAndNumberOfNights_shouldMapNumberOfNights() {
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(numberOfNights)});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(numberOfNights, bedMatcher.getNumberOfNights());
+  }
+
+  @Test
+  public void fromRequestParams_withoutNumberOfNights_shouldMapDefaultNumberOfNights() {
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(DEFAULT_NUMBER_OF_NIGHTS, bedMatcher.getNumberOfNights());
   }
 
   @Test
   public void
       fromRequestParams_withInvalidNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    Map<String, String[]> params = new HashMap<>();
     params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {"invalidNumberOfNights"});
 
-    assertThrows(InvalidNumberOfNights.class, () -> bedMatcherMapper.fromRequestParams(params));
+    assertThrows(
+        InvalidNumberOfNightsException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
   public void fromRequestParams_withNegativeNumberOfNights_shouldThrowInvalidNumberOfNights() {
-    int invalidNumberOfNights = -420;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(invalidNumberOfNights)});
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(-1)});
 
-    assertThrows(InvalidNumberOfNights.class, () -> bedMatcherMapper.fromRequestParams(params));
-  }
-
-  @Test
-  public void fromRequestParams_withNumberOfNights_shouldReturnBedMatcherWithNumberOfNights() {
-    int expectedNumberOfNights = 14;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(expectedNumberOfNights)});
-
-    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
-
-    assertEquals(expectedNumberOfNights, bedMatcher.getNumberOfNights());
+    assertThrows(
+        InvalidNumberOfNightsException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
   public void fromRequestParams_withLodgingMode_shouldReturnBedMatcherWithLodgingMode() {
-    LodgingModes expectedLodgingMode = LodgingModes.COHABITATION;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(LODGING_MODE_PARAM, new String[] {expectedLodgingMode.toString()});
+    params.put(LODGING_MODE_PARAM, new String[] {lodgingMode.toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedLodgingMode, bedMatcher.getLodgingModes());
+    assertEquals(lodgingMode, bedMatcher.getLodgingMode());
   }
 
   @Test
   public void fromRequestParams_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
-    Map<String, String[]> params = new HashMap<>();
     params.put(LODGING_MODE_PARAM, new String[] {"invalidLodgingMode"});
 
     assertThrows(
@@ -227,42 +240,73 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withInvalidMaxDistance_shouldThrowInvalidDistanceException() {
-    Map<String, String[]> params = new HashMap<>();
-    params.put(MAX_DISTANCE_PARAM, new String[] {"invalidDistance"});
-    params.put(ORIGIN_PARAM, new String[] {"12345"});
+  public void fromRequestParams_withOrigin_shouldMapOrigin() {
+    params.put(ORIGIN_PARAM, new String[] {origin.getValue()});
 
-    assertThrows(
-        InvalidMaxDistanceException.class, () -> bedMatcherMapper.fromRequestParams(params));
-  }
-
-  @Test
-  public void fromRequestParams_withNegativeMaxDistance_shouldThrowInvalidDistanceException() {
-    int invalidMaxDistance = -1;
-    Map<String, String[]> params = new HashMap<>();
-    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(invalidMaxDistance)});
-    params.put(ORIGIN_PARAM, new String[] {"12345"});
-
-    assertThrows(
-        InvalidMaxDistanceException.class, () -> bedMatcherMapper.fromRequestParams(params));
-  }
-
-  @Test
-  public void fromRequestParams_withNoMaxDistance_shouldBeSetToDefaultMaxDistance() {
-    Map<String, String[]> params = new HashMap<>();
-    params.put(ORIGIN_PARAM, new String[] {"12345"});
-    int expectedMaxDistance = 10;
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    assertEquals(expectedMaxDistance, bedMatcher.getMaxDistance());
+    assertEquals(origin, bedMatcher.getOrigin());
+  }
+
+  @Test
+  public void fromRequestParams_withOriginAndMaxDistance_shouldMapMaxDistance() {
+    params.put(ORIGIN_PARAM, new String[] {origin.getValue()});
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(maxDistance)});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(maxDistance, bedMatcher.getMaxDistance());
+  }
+
+  @Test
+  public void fromRequestParams_withoutMaxDistance_shouldMapDefaultMaxDistance() {
+    params.put(ORIGIN_PARAM, new String[] {origin.getValue()});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(DEFAULT_MAX_DISTANCE, bedMatcher.getMaxDistance());
+  }
+
+  @Test
+  public void fromRequestParams_withInvalidMaxDistance_shouldThrowInvalidMaxDistanceException() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {"invalidMaxDistance"});
+
+    assertThrows(
+        InvalidMaxDistanceException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withNegativeMaxDistance_shouldThrowInvalidMaxDistance() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(-1)});
+
+    assertThrows(
+        InvalidMaxDistanceException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 
   @Test
   public void
-      fromRequestParams_withMaxDistanceAndWithNoOrigin_shouldThrowInvalidDistanceWithoutOriginException() {
-    Map<String, String[]> params = new HashMap<>();
-    String maxDistance = "10";
-    params.put(MAX_DISTANCE_PARAM, new String[] {maxDistance});
+      fromRequestParams_withoutMinCapacityAndWithArrivalDate_shouldThrowArrivalDateWithoutMinimalCapacityException() {
+    params.put(ARRIVAL_DATE_PARAM, new String[] {arrivalDate.getValue().toString()});
+
+    assertThrows(
+        ArrivalDateWithoutMinimalCapacityException.class,
+        () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void
+      fromRequestParams_withoutMinCapacityAndWithNumberOfNights_shouldThrowNumberOfNightsWithoutMinimalCapacityException() {
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(numberOfNights)});
+
+    assertThrows(
+        NumberOfNightsWithoutMinimalCapacityException.class,
+        () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void
+      fromRequestParams_withoutOriginAndWithMaxDistance_shouldThrowMaxDistanceWithoutOriginException() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(maxDistance)});
 
     assertThrows(
         MaxDistanceWithoutOriginException.class, () -> bedMatcherMapper.fromRequestParams(params));

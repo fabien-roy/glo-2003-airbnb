@@ -1,19 +1,22 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import java.time.LocalDate;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.util.List;
 
 public class BedMatcher {
+
+  public static final int UNSET_INT = 0;
 
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int minCapacity;
   private Packages packageName;
-  private LocalDate arrivalDate;
+  private BookingDate arrivalDate;
   private int numberOfNights;
-  private LodgingModes lodgingModes;
-  private String origin;
+  private LodgingModes lodgingMode;
+  private ZipCode origin;
   private int maxDistance;
 
   public BedMatcher(
@@ -22,10 +25,10 @@ public class BedMatcher {
       List<BloodTypes> bloodTypes,
       int minCapacity,
       Packages packageName,
-      LocalDate arrivalDate,
+      BookingDate arrivalDate,
       int numberOfNights,
-      LodgingModes lodgingModes,
-      String origin,
+      LodgingModes lodgingMode,
+      ZipCode origin,
       int maxDistance) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
@@ -34,7 +37,7 @@ public class BedMatcher {
     this.packageName = packageName;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
-    this.lodgingModes = lodgingModes;
+    this.lodgingMode = lodgingMode;
     this.origin = origin;
     this.maxDistance = maxDistance;
   }
@@ -55,23 +58,23 @@ public class BedMatcher {
     return minCapacity;
   }
 
-  public Packages getPackageName() {
+  public Packages getPackage() {
     return packageName;
   }
 
-  public LocalDate getArrivalDate() {
+  public BookingDate getArrivalDate() {
     return arrivalDate;
+  }
+
+  public LodgingModes getLodgingMode() {
+    return lodgingMode;
   }
 
   public int getNumberOfNights() {
     return numberOfNights;
   }
 
-  public LodgingModes getLodgingModes() {
-    return lodgingModes;
-  }
-
-  public String getOrigin() {
+  public ZipCode getOrigin() {
     return origin;
   }
 
@@ -91,19 +94,23 @@ public class BedMatcher {
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
-    if (arrivalDate != null) {
-      if (bed.getBookings().stream()
-          .anyMatch(booking -> booking.getDepartureDate().isAfter(arrivalDate))) return false;
-    }
+    if (arrivalDate != null
+        && bed.getBookings().stream()
+            .anyMatch(booking -> booking.getDepartureDate().isAfter(arrivalDate.getValue())))
+      return false;
 
     // TODO validate bed availability
 
-    if (lodgingModes != null && !lodgingModes.equals(bed.getLodgingMode())) return false;
+    if (lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
 
-    if (origin != null && !origin.contains(bed.getZipCode().getValue())) return false;
+    if (origin != null && !origin.getValue().contains(bed.getZipCode().getValue())) return false;
 
     // TODO validate distance between two zipcodes is under max distance
 
     return true;
+  }
+
+  public void setOrigin(ZipCode validZipCode) {
+    origin = validZipCode;
   }
 }

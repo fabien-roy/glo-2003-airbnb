@@ -1,7 +1,10 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
+import static ca.ulaval.glo2003.beds.domain.BedMatcher.UNSET_INT;
+
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.domain.*;
-import java.time.LocalDate;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.util.List;
 
 public class BedMatcherBuilder {
@@ -11,12 +14,12 @@ public class BedMatcherBuilder {
   private BedTypes bedType = null;
   private CleaningFrequencies cleaningFrequency = null;
   private List<BloodTypes> bloodTypes = null;
-  private int minCapacity = 0;
+  private int minCapacity = UNSET_INT;
   private Packages packageName = null;
-  private LocalDate arrivalDate = null;
-  private int maxDistance = 0;
-  private int numberOfNights = 0;
-  private String origin = null;
+  private BookingDate arrivalDate = null;
+  private int maxDistance = UNSET_INT;
+  private int numberOfNights = UNSET_INT;
+  private ZipCode origin = null;
   private LodgingModes lodgingMode = null;
 
   public static BedMatcherBuilder aBedMatcher() {
@@ -48,7 +51,7 @@ public class BedMatcherBuilder {
     return this;
   }
 
-  public BedMatcherBuilder withArrivalDate(LocalDate arrivalDate) {
+  public BedMatcherBuilder withArrivalDate(BookingDate arrivalDate) {
     this.arrivalDate = arrivalDate;
     return this;
   }
@@ -63,7 +66,7 @@ public class BedMatcherBuilder {
     return this;
   }
 
-  public BedMatcherBuilder withOrigin(String origin) {
+  public BedMatcherBuilder withOrigin(ZipCode origin) {
     this.origin = origin;
     return this;
   }

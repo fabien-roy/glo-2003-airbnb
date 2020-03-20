@@ -1,12 +1,13 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
+import static ca.ulaval.glo2003.beds.domain.BedMatcher.UNSET_INT;
+
+import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
+import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
-import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
-import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import ca.ulaval.glo2003.beds.exceptions.*;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,63 +26,67 @@ public class BedMatcherMapper {
   public static final String ORIGIN_PARAM = "origin";
   public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
+  static final BookingDate DEFAULT_ARRIVAL_DATE = new BookingDate();
+  static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
+  static final int DEFAULT_MAX_DISTANCE = 10;
+
+  private final BookingDateMapper bookingDateMapper;
+
+  public BedMatcherMapper(BookingDateMapper bookingDateMapper) {
+    this.bookingDateMapper = bookingDateMapper;
+  }
+
   public BedMatcher fromRequestParams(Map<String, String[]> params) {
     BedTypes bedType = null;
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
-    int minCapacity = 0;
+    int minCapacity = UNSET_INT;
     Packages packageName = null;
-    LocalDate arrivalDate = LocalDate.now();
-    int numberOfNights = 3;
-    LodgingModes lodgingModes = null;
-    String origin = null;
-    int maxDistance = 10;
+    BookingDate arrivalDate = null;
+    int numberOfNights = UNSET_INT;
+    LodgingModes lodgingMode = null;
+    ZipCode origin = null;
+    int maxDistance = UNSET_INT;
 
-    if (params.get(BED_TYPE_PARAM) != null) {
-      bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
-    }
+    if (params.get(BED_TYPE_PARAM) != null) bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
 
-    if (params.get(CLEANING_FREQUENCY_PARAM) != null) {
+    if (params.get(CLEANING_FREQUENCY_PARAM) != null)
       cleaningFrequency = CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]);
-    }
 
-    if (params.get(BLOOD_TYPES_PARAM) != null) {
+    if (params.get(BLOOD_TYPES_PARAM) != null)
       bloodTypes = parseBloodTypes(params.get(BLOOD_TYPES_PARAM));
-    }
 
-    if (params.get(MIN_CAPACITY_PARAM) != null) {
+    if (params.get(MIN_CAPACITY_PARAM) != null)
       minCapacity = parseCapacity(params.get(MIN_CAPACITY_PARAM)[0]);
-    }
 
-    if (params.get(PACKAGE_NAME_PARAM) != null) {
+    if (params.get(PACKAGE_NAME_PARAM) != null)
       packageName = Packages.get(params.get(PACKAGE_NAME_PARAM)[0]);
-    }
 
-    if (params.get(ARRIVAL_DATE_PARAM) != null) {
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-      arrivalDate = LocalDate.parse(params.get(ARRIVAL_DATE_PARAM)[0], formatter);
-    }
+    if (params.get(ARRIVAL_DATE_PARAM) != null)
+      arrivalDate = bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]);
 
-    if (params.get(NUMBER_OF_NIGHTS_PARAM) != null) {
+    if (params.get(NUMBER_OF_NIGHTS_PARAM) != null)
       numberOfNights = parseNumberOfNights(params.get(NUMBER_OF_NIGHTS_PARAM)[0]);
-    }
 
-    if (params.get(LODGING_MODE_PARAM) != null) {
-      lodgingModes = LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
-    }
+    if (params.get(LODGING_MODE_PARAM) != null)
+      lodgingMode = LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
 
-    if (params.get(ORIGIN_PARAM) != null) {
-      origin = params.get(ORIGIN_PARAM)[0];
-      if (params.get(MAX_DISTANCE_PARAM) != null) {
-        maxDistance = parseDistance(params.get(MAX_DISTANCE_PARAM)[0]);
-      } else {
-        maxDistance = 10;
-      }
+    if (params.get(ORIGIN_PARAM) != null) origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
+
+    if (params.get(MAX_DISTANCE_PARAM) != null)
+      maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
+
+    if (minCapacity != UNSET_INT) {
+      arrivalDate = arrivalDate == null ? DEFAULT_ARRIVAL_DATE : arrivalDate;
+      numberOfNights = numberOfNights == UNSET_INT ? DEFAULT_NUMBER_OF_NIGHTS : numberOfNights;
     } else {
-      if (params.get(MAX_DISTANCE_PARAM) != null) {
-        throw new MaxDistanceWithoutOriginException();
-      }
+      if (arrivalDate != null) throw new ArrivalDateWithoutMinimalCapacityException();
+
+      if (numberOfNights != UNSET_INT) throw new NumberOfNightsWithoutMinimalCapacityException();
     }
+
+    if (origin != null) maxDistance = maxDistance == UNSET_INT ? DEFAULT_MAX_DISTANCE : maxDistance;
+    else if (maxDistance != UNSET_INT) throw new MaxDistanceWithoutOriginException();
 
     return new BedMatcher(
         bedType,
@@ -91,7 +96,7 @@ public class BedMatcherMapper {
         packageName,
         arrivalDate,
         numberOfNights,
-        lodgingModes,
+        lodgingMode,
         origin,
         maxDistance);
   }
@@ -101,50 +106,30 @@ public class BedMatcherMapper {
   }
 
   private int parseCapacity(String capacity) {
-    int parsedCapacity;
+    return parsePositiveInteger(capacity, new InvalidCapacityException());
+  }
 
-    try {
-      parsedCapacity = Integer.parseInt(capacity);
-    } catch (NumberFormatException e) {
-      throw new InvalidCapacityException();
-    }
-
-    if (parsedCapacity < 0) {
-      throw new InvalidCapacityException();
-    }
-
-    return parsedCapacity;
+  private int parseMaxDistance(String maxDistance) {
+    return parsePositiveInteger(maxDistance, new InvalidMaxDistanceException());
   }
 
   private int parseNumberOfNights(String numberOfNights) {
-    int parsedNumberOfNights;
-
-    try {
-      parsedNumberOfNights = Integer.parseInt(numberOfNights);
-    } catch (NumberFormatException e) {
-      throw new InvalidNumberOfNights();
-    }
-
-    if (parsedNumberOfNights < 0) {
-      throw new InvalidNumberOfNights();
-    }
-
-    return parsedNumberOfNights;
+    return parsePositiveInteger(numberOfNights, new InvalidNumberOfNightsException());
   }
 
-  private int parseDistance(String distance) {
-    int parsedDistance;
+  private int parsePositiveInteger(String integer, BedException exception) {
+    int parsedInteger;
 
     try {
-      parsedDistance = Integer.parseInt(distance);
+      parsedInteger = Integer.parseInt(integer);
     } catch (NumberFormatException e) {
-      throw new InvalidMaxDistanceException();
+      throw exception;
     }
 
-    if (parsedDistance < 0) {
-      throw new InvalidMaxDistanceException();
+    if (parsedInteger < 0) {
+      throw exception;
     }
 
-    return parsedDistance;
+    return parsedInteger;
   }
 }

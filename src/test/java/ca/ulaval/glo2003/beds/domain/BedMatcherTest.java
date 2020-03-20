@@ -5,7 +5,6 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatche
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.Test;
@@ -211,30 +210,6 @@ class BedMatcherTest {
     LodgingModes lodgingModes = LodgingModes.PRIVATE;
     BedMatcher bedMatcher = aBedMatcher().withLodging(lodgingModes).build();
     Bed bed = aBed().withLodgingMode(lodgingModes).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertTrue(matches);
-  }
-
-  @Test
-  public void matches_withDifferentZipCodes_shouldReturnFalse() {
-    String zipCode = "G1Q C2Q";
-    ZipCode otherZipCode = new ZipCode("invalidZipCode");
-    BedMatcher bedMatcher = aBedMatcher().withOrigin(zipCode).build();
-    Bed bed = aBed().withZipCode(otherZipCode).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertFalse(matches);
-  }
-
-  @Test
-  public void matches_withSameZipCodes_shouldReturnTrue() {
-    String zipCodeString = "I2U I4M";
-    ZipCode zipCode = new ZipCode(zipCodeString);
-    BedMatcher bedMatcher = aBedMatcher().withOrigin(zipCodeString).build();
-    Bed bed = aBed().withZipCode(zipCode).build();
 
     boolean matches = bedMatcher.matches(bed);
 

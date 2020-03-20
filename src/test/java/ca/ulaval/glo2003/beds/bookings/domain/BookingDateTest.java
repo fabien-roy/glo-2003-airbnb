@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,16 @@ class BookingDateTest {
   private LocalDate otherDate = date.plusDays(1);
 
   @Test
-  void equals_shouldReturnFalse_whenObjectIsNotBookingDate() {
+  public void construct_withoutParameter_shouldSetValueToNow() {
+    LocalDate now = LocalDate.now();
+
+    BookingDate bookingDate = new BookingDate();
+
+    assertEquals(now, bookingDate.getValue());
+  }
+
+  @Test
+  public void equals_shouldReturnFalse_whenObjectIsNotBookingDate() {
     BookingDate bookingDate = new BookingDate(date);
     Object object = new Object();
 
@@ -22,7 +30,7 @@ class BookingDateTest {
   }
 
   @Test
-  void equals_shouldReturnFalse_whenValuesAreNotEqual() {
+  public void equals_shouldReturnFalse_whenValuesAreNotEqual() {
     BookingDate bookingDate = new BookingDate(date);
     BookingDate otherBookingDate = new BookingDate(otherDate);
 
@@ -32,7 +40,7 @@ class BookingDateTest {
   }
 
   @Test
-  void equals_shouldReturnTrue_whenValuesAreEqual() {
+  public void equals_shouldReturnTrue_whenValuesAreEqual() {
     BookingDate bookingDate = new BookingDate(date);
     BookingDate otherBookingDate = new BookingDate(date);
 

@@ -12,7 +12,7 @@ public class BookingErrorStatusFactory extends BedErrorStatusFactory {
       return HttpStatus.NOT_FOUND_404;
     } else if (exception instanceof InvalidArrivalDateException) {
       return HttpStatus.BAD_REQUEST_400;
-    } else if (exception instanceof InvalidNumberOfNights) {
+    } else if (exception instanceof InvalidNumberOfNightsException) {
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof InvalidColonySizeException) {
       return HttpStatus.BAD_REQUEST_400;
