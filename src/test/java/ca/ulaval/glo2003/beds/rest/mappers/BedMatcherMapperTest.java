@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.rest.BedQueryMapBuilder.*;
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

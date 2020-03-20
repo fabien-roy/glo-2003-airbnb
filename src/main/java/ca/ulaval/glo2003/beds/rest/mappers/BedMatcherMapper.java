@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.BedMatcher.UNSET_INT;
+import static ca.ulaval.glo2003.beds.rest.BedQueryMapBuilder.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
@@ -14,17 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BedMatcherMapper {
-
-  public static final String BED_TYPE_PARAM = "bedType";
-  public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
-  public static final String BLOOD_TYPES_PARAM = "bloodTypes";
-  public static final String MIN_CAPACITY_PARAM = "minCapacity";
-  public static final String PACKAGE_NAME_PARAM = "packages";
-  public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
-  public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
-  public static final String LODGING_MODE_PARAM = "lodgingMode";
-  public static final String ORIGIN_PARAM = "origin";
-  public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
   static final BookingDate DEFAULT_ARRIVAL_DATE = new BookingDate();
   static final int DEFAULT_NUMBER_OF_NIGHTS = 3;

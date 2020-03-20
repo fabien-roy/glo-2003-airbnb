@@ -1,15 +1,24 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import spark.Request;
 
 public class BedQueryMapBuilder {
 
-  public HashMap<String, String[]> buildQueryMap(Request request) {
-    HashMap<String, String[]> queryMap = new HashMap<>();
+  public static final String BED_TYPE_PARAM = "bedType";
+  public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
+  public static final String BLOOD_TYPES_PARAM = "bloodTypes";
+  public static final String MIN_CAPACITY_PARAM = "minCapacity";
+  public static final String PACKAGE_NAME_PARAM = "packages";
+  public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
+  public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
+  public static final String LODGING_MODE_PARAM = "lodgingMode";
+  public static final String ORIGIN_PARAM = "origin";
+  public static final String MAX_DISTANCE_PARAM = "maxDistance";
+
+  public Map<String, String[]> buildQueryMap(Request request) {
+    Map<String, String[]> queryMap = new HashMap<>();
 
     addToQueryMap(request, BED_TYPE_PARAM, queryMap);
     addToQueryMap(request, CLEANING_FREQUENCY_PARAM, queryMap);
