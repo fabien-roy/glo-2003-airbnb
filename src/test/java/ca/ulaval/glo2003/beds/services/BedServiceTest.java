@@ -131,11 +131,13 @@ public class BedServiceTest {
 
   @Test
   public void getAll_withOrigin_shouldValidateZipCode() {
-    when(bedMatcher.getOrigin()).thenReturn(new ZipCode("origin"));
+    ZipCode expectedZipCode = new ZipCode("origin");
+    when(bedMatcher.getOrigin()).thenReturn(expectedZipCode);
 
     bedService.getAll(params);
 
     verify(zippopotamusClient).validateZipCode(eq(bedMatcher.getOrigin().getValue()));
+    assertEquals(expectedZipCode, bedMatcher.getOrigin());
   }
 
   @Test
