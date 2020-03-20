@@ -79,16 +79,18 @@ public class Router {
           bookingNumberMapper);
 
   private final ErrorMapper errorMapper;
+  private final TransactionResource transactionResource;
 
   @Inject
-  public Router(ErrorMapper errorMapper) {
+  public Router(ErrorMapper errorMapper, TransactionResource transactionResource) {
     this.errorMapper = errorMapper;
+    this.transactionResource = transactionResource;
   }
 
   public void setUpRoutes() {
     path(ERROR_PATH, errorMapper);
     path(BED_PATH, new BedResource(bedService));
     path(BOOKING_PATH, new BookingResource(bookingService));
-    path(TRANSACTION_PATH, new TransactionResource(transactionService));
+    path(TRANSACTION_PATH, transactionResource);
   }
 }

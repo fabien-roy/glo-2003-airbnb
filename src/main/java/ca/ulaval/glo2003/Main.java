@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003;
 
 import ca.ulaval.glo2003.interfaces.ErrorModule;
+import ca.ulaval.glo2003.transactions.TransactionModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.util.Optional;
@@ -15,7 +16,8 @@ public class Main {
           + "\nINFO: Using the default one (%d).";
 
   public static void main(String[] args) {
-    Injector injector = Guice.createInjector(new RoutingModule(), new ErrorModule());
+    Injector injector =
+        Guice.createInjector(new RoutingModule(), new ErrorModule(), new TransactionModule());
     injector.getInstance(Server.class).start(retrievePortNumber());
   }
 
