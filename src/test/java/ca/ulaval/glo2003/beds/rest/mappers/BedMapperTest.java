@@ -12,12 +12,12 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother;
+import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
-import ca.ulaval.glo2003.interfaces.rest.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.Arrays;
@@ -202,31 +202,6 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapZipCode() {
-    String expectedZipCode = createZipCode();
-    BedRequest bedRequest = aBedRequest().withZipCode(expectedZipCode).build();
-
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedZipCode, bed.getZipCode());
-  }
-
-  @Test
-  public void fromRequest_withInvalidZipCode_shouldThrowInvalidZipCodeException() {
-    String invalidZipCode = "invalidZipCode";
-    BedRequest bedRequest = aBedRequest().withZipCode(invalidZipCode).build();
-
-    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  @Test
-  public void fromRequest_withoutZipCode_shouldThrowInvalidZipCodeException() {
-    BedRequest bedRequest = aBedRequest().withZipCode(null).build();
-
-    assertThrows(InvalidZipCodeException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  @Test
   public void fromRequest_shouldMapOwnerPublicKey() {
     PublicKey expectedOwnerPublicKey = BedObjectMother.createOwnerPublicKey();
     BedRequest bedRequest =
@@ -250,12 +225,12 @@ class BedMapperTest {
 
   @Test
   public void toResponseWithoutNumber_shouldMapZipCode() {
-    String expectedZipCode = createZipCode();
+    ZipCode expectedZipCode = createZipCode();
     Bed bed = aBed().withZipCode(expectedZipCode).build();
 
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
-    assertEquals(expectedZipCode, bedResponse.getZipCode());
+    assertEquals(expectedZipCode.getValue(), bedResponse.getZipCode());
   }
 
   @Test

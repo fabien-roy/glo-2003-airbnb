@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.rest.exceptions.BedNotFoundException;
+import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.UUID;
 
 public class BedNumberMapper {

@@ -5,19 +5,12 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 public class BedResponseObjectMother {
-
-  private static final FakeValuesService fakeValuesService =
-      new FakeValuesService(new Locale("en-US"), new RandomService());
 
   private BedResponseObjectMother() {}
 
@@ -30,7 +23,7 @@ public class BedResponseObjectMother {
   }
 
   public static String createZipCode() {
-    return fakeValuesService.regexify(BedMapper.ZIP_CODE_PATTERN);
+    return Faker.instance().address().zipCode();
   }
 
   public static String createBedType() {

@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;
@@ -22,8 +23,8 @@ public class BedBuilder {
   private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private PublicKey ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
-  private String DEFAULT_ZIP_CODE = createZipCode();
-  private String zipCode = DEFAULT_ZIP_CODE;
+  private ZipCode DEFAULT_ZIP_CODE = createZipCode();
+  private ZipCode zipCode = DEFAULT_ZIP_CODE;
 
   private BedTypes DEFAULT_BED_TYPE = createBedType();
   private BedTypes bedType = DEFAULT_BED_TYPE;
@@ -61,7 +62,7 @@ public class BedBuilder {
     return this;
   }
 
-  public BedBuilder withZipCode(String zipCode) {
+  public BedBuilder withZipCode(ZipCode zipCode) {
     this.zipCode = zipCode;
     return this;
   }
@@ -105,7 +106,6 @@ public class BedBuilder {
     Bed bed =
         new Bed(
             ownerPublicKey,
-            zipCode,
             bedType,
             cleaningFrequency,
             bloodTypes,
@@ -113,6 +113,7 @@ public class BedBuilder {
             lodgingMode,
             pricesPerNight);
     bed.setNumber(bedNumber);
+    bed.setZipCode(zipCode);
     bookings.forEach(bed::book);
     return bed;
   }

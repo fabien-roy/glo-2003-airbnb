@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
 import com.fasterxml.jackson.core.JsonProcessingException;

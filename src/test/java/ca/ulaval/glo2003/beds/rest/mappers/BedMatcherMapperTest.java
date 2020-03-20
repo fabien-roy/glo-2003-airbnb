@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.rest.exceptions.*;
+import ca.ulaval.glo2003.beds.exceptions.*;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -152,5 +152,67 @@ class BedMatcherMapperTest {
     params.put(PACKAGE_NAME_PARAM, new String[] {"invalidPackageName"});
 
     assertThrows(InvalidPackageException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withInvalidMaxDistance_shouldThrowInvalidDistanceException() {
+    Map<String, String[]> params = new HashMap<>();
+    params.put(MAX_DISTANCE_PARAM, new String[] {"invalidDistance"});
+    params.put(ORIGIN_PARAM, new String[] {"12345"});
+
+    assertThrows(
+        InvalidMaxDistanceException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withNegativeMaxDistance_shouldThrowInvalidDistanceException() {
+    int invalidMaxDistance = -1;
+    Map<String, String[]> params = new HashMap<>();
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(invalidMaxDistance)});
+    params.put(ORIGIN_PARAM, new String[] {"12345"});
+
+    assertThrows(
+        InvalidMaxDistanceException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withNoMaxDistance_shouldBeSetToDefaultMaxDistance() {
+    Map<String, String[]> params = new HashMap<>();
+    params.put(ORIGIN_PARAM, new String[] {"12345"});
+    int expectedMaxDistance = 10;
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(expectedMaxDistance, bedMatcher.getMaxDistance());
+  }
+
+  @Test
+  public void
+      fromRequestParams_withMaxDistanceAndWithNoOrigin_shouldThrowInvalidDistanceWithoutOriginException() {
+    Map<String, String[]> params = new HashMap<>();
+    String maxDistance = "10";
+    params.put(MAX_DISTANCE_PARAM, new String[] {maxDistance});
+
+    assertThrows(
+        MaxDistanceWithoutOriginException.class, () -> bedMatcherMapper.fromRequestParams(params));
+  }
+
+  @Test
+  public void fromRequestParams_withLodgingMode_shouldReturnBedMatcherWithLodgingMode() {
+    LodgingModes expectedLodgingMode = LodgingModes.COHABITATION;
+    Map<String, String[]> params = new HashMap<>();
+    params.put(LODGING_MODE_PARAM, new String[] {expectedLodgingMode.toString()});
+
+    BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
+
+    assertEquals(expectedLodgingMode, bedMatcher.getLodgingMode());
+  }
+
+  @Test
+  public void fromRequestParams_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
+    Map<String, String[]> params = new HashMap<>();
+    params.put(LODGING_MODE_PARAM, new String[] {"invalidLodgingMode"});
+
+    assertThrows(
+        InvalidLodgingModeException.class, () -> bedMatcherMapper.fromRequestParams(params));
   }
 }

@@ -11,9 +11,10 @@ import spark.Response;
 import spark.RouteGroup;
 
 public class TransactionResource implements RouteGroup {
-  private final TransactionService transactionService;
 
   public static final String TRANSACTION_PATH = "/admin/transactions";
+
+  private final TransactionService transactionService;
 
   public TransactionResource(TransactionService transactionService) {
     this.transactionService = transactionService;

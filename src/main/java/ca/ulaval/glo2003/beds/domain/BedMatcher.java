@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class BedMatcher {
   private LocalDate arrivalDate;
   private int numberOfNights;
   private LodgingModes lodgingModes;
-  private ZipCode origin;
+  private String origin;
   private int maxDistance;
 
   public BedMatcher(
@@ -26,7 +25,7 @@ public class BedMatcher {
       LocalDate arrivalDate,
       int numberOfNights,
       LodgingModes lodgingModes,
-      ZipCode origin,
+      String origin,
       int maxDistance) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
@@ -72,7 +71,7 @@ public class BedMatcher {
     return lodgingModes;
   }
 
-  public ZipCode getOrigin() {
+  public String getOrigin() {
     return origin;
   }
 
@@ -101,7 +100,7 @@ public class BedMatcher {
 
     if (lodgingModes != null && !lodgingModes.equals(bed.getLodgingMode())) return false;
 
-    if (origin != null && !origin.getValue().contains(bed.getZipCode())) return false;
+    if (origin != null && !origin.contains(bed.getZipCode().getValue())) return false;
 
     // TODO validate distance between two zipcodes is under max distance
 

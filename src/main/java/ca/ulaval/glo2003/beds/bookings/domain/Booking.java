@@ -13,17 +13,23 @@ public class Booking {
 
   private UUID number;
   private PublicKey tenantPublicKey;
-  private LocalDate arrivalDate;
+  private BookingDate arrivalDate;
   private int numberOfNights;
+  private int colonySize;
   private Packages packageName;
   private Price total;
   private List<Transaction> transactions = new ArrayList<>();
 
   public Booking(
-      PublicKey tenantPublicKey, LocalDate arrivalDate, int numberOfNights, Packages packageName) {
+      PublicKey tenantPublicKey,
+      BookingDate arrivalDate,
+      int numberOfNights,
+      int colonySize,
+      Packages packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
+    this.colonySize = colonySize;
     this.packageName = packageName;
   }
 
@@ -39,12 +45,16 @@ public class Booking {
     return tenantPublicKey;
   }
 
-  public LocalDate getArrivalDate() {
+  public BookingDate getArrivalDate() {
     return arrivalDate;
   }
 
   public int getNumberOfNights() {
     return numberOfNights;
+  }
+
+  public int getColonySize() {
+    return colonySize;
   }
 
   public Packages getPackage() {
@@ -63,16 +73,12 @@ public class Booking {
     return transactions;
   }
 
-  public void addTransaction(Transaction transaction) {
-    transactions.add(transaction);
-  }
-
   public boolean isOverlapping(Booking otherBooking) {
-    return !(arrivalDate.isAfter(otherBooking.getDepartureDate())
-        || getDepartureDate().isBefore(otherBooking.getArrivalDate()));
+    return !(arrivalDate.getValue().isAfter(otherBooking.getDepartureDate())
+        || getDepartureDate().isBefore(otherBooking.getArrivalDate().getValue()));
   }
 
   public LocalDate getDepartureDate() {
-    return arrivalDate.plusDays(numberOfNights - 1);
+    return arrivalDate.getValue().plusDays(numberOfNights - 1);
   }
 }

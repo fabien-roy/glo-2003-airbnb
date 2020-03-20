@@ -1,28 +1,26 @@
 package ca.ulaval.glo2003.interfaces.rest.handlers;
 
-import ca.ulaval.glo2003.interfaces.rest.ErrorResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.eclipse.jetty.http.HttpStatus;
+import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorResponseFactory;
+import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorStatusFactory;
 import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
 public class CatchallExceptionHandler implements ExceptionHandler<Exception> {
 
-  @Override
-  public void handle(Exception e, Request request, Response response) {
-    response.status(HttpStatus.BAD_REQUEST_400);
+  private final CatchallErrorStatusFactory catchallErrorStatusFactory;
+  private final CatchallErrorResponseFactory catchallErrorResponseFactory;
 
-    try {
-      response.body(badRequest());
-    } catch (JsonProcessingException ex) {
-      // Ain't happening
-    }
+  public CatchallExceptionHandler(
+      CatchallErrorStatusFactory catchallErrorStatusFactory,
+      CatchallErrorResponseFactory catchallErrorResponseFactory) {
+    this.catchallErrorStatusFactory = catchallErrorStatusFactory;
+    this.catchallErrorResponseFactory = catchallErrorResponseFactory;
   }
 
-  private String badRequest() throws JsonProcessingException {
-    ErrorResponse response = new ErrorResponse("BAD_REQUEST", "something went wrong");
-    return new ObjectMapper().writeValueAsString(response);
+  @Override
+  public void handle(Exception e, Request request, Response response) {
+    response.status(catchallErrorStatusFactory.create(e));
+    response.body(catchallErrorResponseFactory.create(e));
   }
 }

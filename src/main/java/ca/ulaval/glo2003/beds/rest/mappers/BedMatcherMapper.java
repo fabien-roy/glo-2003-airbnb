@@ -1,12 +1,10 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.rest.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidCapacityException;
-import ca.ulaval.glo2003.beds.rest.exceptions.InvalidMaxDistanceException;
-import ca.ulaval.glo2003.beds.rest.exceptions.MaxDistanceWithoutOriginException;
-import ca.ulaval.glo2003.interfaces.clients.ZippopotamusClient;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
+import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -15,8 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BedMatcherMapper {
-
-  private ZippopotamusClient zippopotamusClient = new ZippopotamusClient();
 
   public static final String BED_TYPE_PARAM = "bedType";
   public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
@@ -35,7 +31,7 @@ public class BedMatcherMapper {
     List<BloodTypes> bloodTypes = null;
     int minCapacity = 0;
     Packages packageName = null;
-    ZipCode origin = null;
+    String origin = null;
     int maxDistance = 10;
     LocalDate arrivalDate = LocalDate.now();
     int numberOfNights = 3;
@@ -75,16 +71,16 @@ public class BedMatcherMapper {
     }
 
     if (params.get(ORIGIN_PARAM) != null) {
-      zippopotamusClient.initiate(params.get(ORIGIN_PARAM)[0]);
-      zippopotamusClient.validateZipCode();
-      origin = zippopotamusClient.getZipCode();
-    }
-
-    if (params.get(MAX_DISTANCE_PARAM) != null) {
-      if (params.get(ORIGIN_PARAM) == null) {
+      origin = params.get(ORIGIN_PARAM)[0];
+      if (params.get(MAX_DISTANCE_PARAM) != null) {
+        maxDistance = parseDistance(params.get(MAX_DISTANCE_PARAM)[0]);
+      } else {
+        maxDistance = 10;
+      }
+    } else {
+      if (params.get(MAX_DISTANCE_PARAM) != null) {
         throw new MaxDistanceWithoutOriginException();
       }
-      maxDistance = parseDistance(params.get(MAX_DISTANCE_PARAM)[0]);
     }
 
     return new BedMatcher(
