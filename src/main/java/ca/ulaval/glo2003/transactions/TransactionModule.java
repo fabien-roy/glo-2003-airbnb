@@ -14,7 +14,7 @@ public class TransactionModule extends AbstractModule {
   protected void configure() {
     bind(TransactionRepository.class).to(InMemoryTransactionRepository.class).in(Singleton.class);
     bind(TransactionService.class);
-    bind(TransactionResource.class);
     bind(TransactionMapper.class);
+    bind(TransactionResource.class);
   }
 }

@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 public class BedMatcherMapper {
 
@@ -27,6 +28,7 @@ public class BedMatcherMapper {
 
   private final BookingDateMapper bookingDateMapper;
 
+  @Inject
   public BedMatcherMapper(BookingDateMapper bookingDateMapper) {
     this.bookingDateMapper = bookingDateMapper;
   }

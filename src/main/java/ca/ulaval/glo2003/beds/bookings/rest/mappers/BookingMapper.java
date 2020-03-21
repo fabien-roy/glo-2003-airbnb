@@ -10,6 +10,7 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
+import javax.inject.Inject;
 
 public class BookingMapper {
 
@@ -17,6 +18,7 @@ public class BookingMapper {
   private final BookingDateMapper bookingDateMapper;
   private final PriceMapper priceMapper;
 
+  @Inject
   public BookingMapper(
       PublicKeyMapper publicKeyMapper,
       BookingDateMapper bookingDateMapper,

@@ -6,6 +6,7 @@ import static spark.Spark.*;
 import ca.ulaval.glo2003.beds.bookings.services.BookingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
@@ -19,6 +20,7 @@ public class BookingResource implements RouteGroup {
 
   private final BookingService bookingService;
 
+  @Inject
   public BookingResource(BookingService bookingService) {
     this.bookingService = bookingService;
   }

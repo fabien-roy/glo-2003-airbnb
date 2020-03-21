@@ -13,6 +13,7 @@ import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.util.UUID;
+import javax.inject.Inject;
 
 public class BookingService {
 
@@ -24,6 +25,7 @@ public class BookingService {
   private final BookingNumberMapper bookingNumberMapper;
   private final BedNumberMapper bedNumberMapper;
 
+  @Inject
   public BookingService(
       TransactionService transactionService,
       BookingMapper bookingMapper,

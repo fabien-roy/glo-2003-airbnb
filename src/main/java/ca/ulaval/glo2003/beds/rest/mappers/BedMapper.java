@@ -9,12 +9,14 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 public class BedMapper {
 
   private final PublicKeyMapper publicKeyMapper;
   private final PackageMapper packageMapper;
 
+  @Inject
   public BedMapper(PublicKeyMapper publicKeyMapper, PackageMapper packageMapper) {
     this.publicKeyMapper = publicKeyMapper;
     this.packageMapper = packageMapper;

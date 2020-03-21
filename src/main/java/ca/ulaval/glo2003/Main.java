@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003;
 
+import ca.ulaval.glo2003.beds.BedModule;
+import ca.ulaval.glo2003.beds.bookings.BookingModule;
 import ca.ulaval.glo2003.interfaces.ErrorModule;
 import ca.ulaval.glo2003.transactions.TransactionModule;
 import com.google.inject.Guice;
@@ -17,7 +19,12 @@ public class Main {
 
   public static void main(String[] args) {
     Injector injector =
-        Guice.createInjector(new RoutingModule(), new ErrorModule(), new TransactionModule());
+        Guice.createInjector(
+            new RoutingModule(),
+            new ErrorModule(),
+            new TransactionModule(),
+            new BedModule(),
+            new BookingModule());
     injector.getInstance(Server.class).start(retrievePortNumber());
   }
 
