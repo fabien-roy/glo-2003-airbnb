@@ -5,6 +5,7 @@ import static spark.Spark.get;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
@@ -16,6 +17,7 @@ public class TransactionResource implements RouteGroup {
 
   private final TransactionService transactionService;
 
+  @Inject
   public TransactionResource(TransactionService transactionService) {
     this.transactionService = transactionService;
   }

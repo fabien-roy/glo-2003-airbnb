@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNightsException;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.*;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
+import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.time.LocalDate;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;

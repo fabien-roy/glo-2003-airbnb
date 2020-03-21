@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
@@ -18,11 +19,10 @@ public class BedResource implements RouteGroup {
   public static final String BED_PATH = "/beds";
 
   private final BedService bedService;
-
   private final BedQueryMapBuilder bedQueryMapBuilder;
 
+  @Inject
   public BedResource(BedService bedService, BedQueryMapBuilder bedQueryMapBuilder) {
-
     this.bedService = bedService;
     this.bedQueryMapBuilder = bedQueryMapBuilder;
   }

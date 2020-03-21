@@ -6,8 +6,9 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
-import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
+import com.google.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class BedService {
   private final BedStarsCalculator bedStarsCalculator;
   private final ZippopotamusClient zippopotamusClient;
 
+  @Inject
   public BedService(
       BedFactory bedFactory,
       BedMapper bedMapper,

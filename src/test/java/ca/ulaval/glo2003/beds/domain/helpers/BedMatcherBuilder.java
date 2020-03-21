@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.beds.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.BedMatcher.UNSET_INT;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.List;
 
 public class BedMatcherBuilder {
@@ -48,26 +48,6 @@ public class BedMatcherBuilder {
 
   public BedMatcherBuilder withPackageName(Packages packageName) {
     this.packageName = packageName;
-    return this;
-  }
-
-  public BedMatcherBuilder withArrivalDate(BookingDate arrivalDate) {
-    this.arrivalDate = arrivalDate;
-    return this;
-  }
-
-  public BedMatcherBuilder withMaxDistance(int maxDistance) {
-    this.maxDistance = maxDistance;
-    return this;
-  }
-
-  public BedMatcherBuilder withNumberOfNights(int numberOfNights) {
-    this.numberOfNights = numberOfNights;
-    return this;
-  }
-
-  public BedMatcherBuilder withOrigin(ZipCode origin) {
-    this.origin = origin;
     return this;
   }
 
