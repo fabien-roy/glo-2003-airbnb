@@ -54,6 +54,11 @@ public class BedMatcherBuilder {
     return this;
   }
 
+  public BedMatcherBuilder withLodgingMode(LodgingModes lodgingMode) {
+    this.lodgingMode = lodgingMode;
+    return this;
+  }
+
   public BedMatcher build() {
     return new BedMatcher(
         bedType,

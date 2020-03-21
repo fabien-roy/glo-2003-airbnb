@@ -260,4 +260,26 @@ class BedMatcherTest {
 
     assertFalse(matches);
   }
+
+  @Test
+  public void matches_withSameLodgingMode_shouldReturnTrue() {
+    BedMatcher bedMatcher = aBedMatcher().withLodgingMode(LodgingModes.PRIVATE).build();
+    Bed bed = aBed().withLodgingMode(LodgingModes.PRIVATE).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
+  public void matches_withDifferentLodgingMode_shouldReturnFalse() {
+    BedMatcher bedMatcher = aBedMatcher().withLodgingMode(LodgingModes.PRIVATE).build();
+    Bed bed = aBed().withLodgingMode(LodgingModes.COHABITATION).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+
+    assertFalse(matches);
+  }
 }
