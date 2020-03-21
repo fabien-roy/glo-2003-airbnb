@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.bookings.rest.mappers;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidNumberOfNights;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
@@ -47,7 +48,7 @@ public class BookingMapper {
     Double total = priceMapper.toDouble(booking.getTotal());
 
     return new BookingResponse(
-        arrivalDate, booking.getNumberOfNights(), booking.getPackage(), total);
+        arrivalDate, booking.getNumberOfNights(), booking.getPackage(), total, booking.getStatus().toString());
   }
 
   private void validateNumberOfNights(int numberOfNights) {
