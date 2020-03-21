@@ -13,7 +13,7 @@ import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.Set;
 import java.util.UUID;
 
