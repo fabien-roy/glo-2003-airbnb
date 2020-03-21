@@ -3,10 +3,15 @@ package ca.ulaval.glo2003.beds.infrastructure;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.queries.BedQueryList;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,27 +21,47 @@ public class InMemoryBedRepositoryTest {
 
   private BedRepository bedRepository;
 
+  private List<Bed> filteredBeds;
+  private Bed bed;
+  private Bed otherBed;
+  private Bed nonExistentBed;
+  private UUID bedNumber;
+  private UUID nonExistentBedNumber;
+  private BedQueryList bedQuery;
+
   @BeforeEach
   public void setUpRepository() {
     bedRepository = new InMemoryBedRepository();
   }
 
+  @BeforeEach
+  public void setUpBeds() {
+    bedNumber = createBedNumber();
+    nonExistentBedNumber = createBedNumber();
+    bed = aBed().withBedNumber(bedNumber).build();
+    otherBed = aBed().build();
+    nonExistentBed = aBed().withBedNumber(nonExistentBedNumber).build();
+  }
+
+  @BeforeEach
+  public void setUpQuery() {
+    filteredBeds = Collections.singletonList(aBed().build());
+    bedQuery = mock(BedQueryList.class);
+    when(bedQuery.filter(any())).thenReturn(filteredBeds);
+  }
+
   @Test
   public void add_shouldAddBed() {
-    Bed expectedBed = aBed().build();
-
-    bedRepository.add(expectedBed);
+    bedRepository.add(bed);
     Bed actualBed = bedRepository.getAll().get(0);
 
-    assertSame(expectedBed, actualBed);
+    assertSame(bed, actualBed);
   }
 
   @Test
   public void update_shouldUpdateBed() {
-    UUID bedNumber = createBedNumber();
-    Bed originalBed = aBed().withBedNumber(bedNumber).build();
+    bedRepository.add(bed);
     Bed updatedBed = aBed().withBedNumber(bedNumber).build();
-    bedRepository.add(originalBed);
 
     bedRepository.update(updatedBed);
     Bed newBed = bedRepository.getByNumber(bedNumber);
@@ -46,79 +71,70 @@ public class InMemoryBedRepositoryTest {
 
   @Test
   public void update_withNonExistentBedNumber_shouldThrowBedNotFoundException() {
-    UUID bedNumber = createBedNumber();
-    UUID nonExistentBedNumber = createBedNumber();
-    Bed originalBed = aBed().withBedNumber(bedNumber).build();
-    Bed updatedBed = aBed().withBedNumber(nonExistentBedNumber).build();
-    bedRepository.add(originalBed);
+    bedRepository.add(bed);
 
-    assertThrows(BedNotFoundException.class, () -> bedRepository.update(updatedBed));
+    assertThrows(BedNotFoundException.class, () -> bedRepository.update(nonExistentBed));
   }
 
   @Test
   public void getAll_withOneBed_shouldGetOneBed() {
-    Bed expectedBed = aBed().build();
-    bedRepository.add(expectedBed);
+    bedRepository.add(bed);
 
     List<Bed> actualBeds = bedRepository.getAll();
 
     assertEquals(1, actualBeds.size());
-    assertSame(expectedBed, actualBeds.get(0));
+    assertSame(bed, actualBeds.get(0));
   }
 
   @Test
   public void getAll_withMultipleBeds_shouldGetMultipleBeds() {
-    Bed expectedBed = aBed().build();
-    Bed otherExpectedBed = aBed().build();
-    bedRepository.add(expectedBed);
-    bedRepository.add(otherExpectedBed);
+    bedRepository.add(bed);
+    bedRepository.add(otherBed);
 
     List<Bed> actualBeds = bedRepository.getAll();
 
     assertEquals(2, actualBeds.size());
-    assertTrue(actualBeds.contains(expectedBed));
-    assertTrue(actualBeds.contains(otherExpectedBed));
+    assertTrue(actualBeds.contains(bed));
+    assertTrue(actualBeds.contains(otherBed));
+  }
+
+  @Test
+  public void getAll_withQuery_shouldUseQuery() {
+    bedRepository.add(bed);
+
+    List<Bed> actualBeds = bedRepository.getAll(bedQuery);
+
+    assertSame(filteredBeds, actualBeds);
   }
 
   @Test
   public void getByNumber_withNoBed_shouldThrowBedNotFoundException() {
-    UUID bedNumber = createBedNumber();
-
     assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(bedNumber));
   }
 
   @Test
   public void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException() {
-    UUID existentBedNumber = createBedNumber();
-    UUID nonExistentBedNumber = createBedNumber();
-    Bed existentBed = aBed().withBedNumber(existentBedNumber).build();
-    bedRepository.add(existentBed);
+    bedRepository.add(bed);
 
     assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(nonExistentBedNumber));
   }
 
   @Test
   public void getByNumber_withOneBed_shouldGetBed() {
-    UUID bedNumber = createBedNumber();
-    Bed expectedBed = aBed().withBedNumber(bedNumber).build();
-    bedRepository.add(expectedBed);
+    bedRepository.add(bed);
 
     Bed actualBed = bedRepository.getByNumber(bedNumber);
 
-    assertSame(expectedBed, actualBed);
+    assertSame(bed, actualBed);
   }
 
   @Test
   public void getByNumber_withMultipleBeds_shouldGetBed() {
-    UUID bedNumber = createBedNumber();
-    UUID otherBedNumber = createBedNumber();
-    Bed expectedBed = aBed().withBedNumber(bedNumber).build();
-    Bed otherBed = aBed().withBedNumber(otherBedNumber).build();
-    bedRepository.add(expectedBed);
+    bedRepository.add(bed);
     bedRepository.add(otherBed);
 
     Bed actualBed = bedRepository.getByNumber(bedNumber);
 
-    assertSame(expectedBed, actualBed);
+    assertSame(bed, actualBed);
   }
 }
