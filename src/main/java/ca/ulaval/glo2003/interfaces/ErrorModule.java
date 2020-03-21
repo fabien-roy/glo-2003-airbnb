@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.interfaces;
 
-import ca.ulaval.glo2003.beds.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
+import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.handlers.ExternalServiceExceptionHandler;
 import ca.ulaval.glo2003.interfaces.rest.mappers.ErrorMapper;

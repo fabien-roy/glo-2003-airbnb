@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import java.util.List;
 
