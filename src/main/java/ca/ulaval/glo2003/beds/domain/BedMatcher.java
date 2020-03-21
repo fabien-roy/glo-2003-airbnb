@@ -85,6 +85,10 @@ public class BedMatcher {
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
+    if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
+
+    if(origin != null && !origin.isWithinRadius(bed.getZipCode())) return false;
+
     return true;
   }
 

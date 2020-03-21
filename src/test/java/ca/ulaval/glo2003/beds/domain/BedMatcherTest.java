@@ -238,7 +238,7 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withSameZipCodeWithinRadius_shouldReturnTrue() {
+  public void matches_withZipCodeWithinRadius_shouldReturnTrue() {
     ZipCode zipCodeToTest = new ZipCode("02108");
     BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(zipCodeToTest, 10).build();
     ZipCode zipCodeOfBed = new ZipCode("02110");
@@ -250,7 +250,7 @@ class BedMatcherTest {
   }
 
   @Test
-  public void matches_withSameZipCodeOutOfRadius_shouldReturnFalse() {
+  public void matches_withZipCodeOutOfRadius_shouldReturnFalse() {
     ZipCode zipCodeToTest = new ZipCode("46204");
     BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(zipCodeToTest, 10).build();
     ZipCode zipCodeOfBed = new ZipCode("02110");
