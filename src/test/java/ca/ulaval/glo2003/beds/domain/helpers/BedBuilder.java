@@ -4,9 +4,9 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 
-import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;

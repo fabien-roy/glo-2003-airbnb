@@ -4,12 +4,15 @@ import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.time.format.DateTimeFormatter;
+import javax.inject.Inject;
 
 public class TransactionMapper {
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
-  private PriceMapper priceMapper;
 
+  private final PriceMapper priceMapper;
+
+  @Inject
   public TransactionMapper(PriceMapper priceMapper) {
     this.priceMapper = priceMapper;
   }

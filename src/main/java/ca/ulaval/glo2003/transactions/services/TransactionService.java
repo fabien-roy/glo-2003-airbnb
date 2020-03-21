@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import ca.ulaval.glo2003.transactions.rest.mappers.TransactionMapper;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 public class TransactionService {
 
@@ -15,6 +16,7 @@ public class TransactionService {
   private final TransactionRepository transactionRepository;
   private final TransactionMapper transactionMapper;
 
+  @Inject
   public TransactionService(
       TransactionFactory transactionFactory,
       TransactionRepository transactionRepository,

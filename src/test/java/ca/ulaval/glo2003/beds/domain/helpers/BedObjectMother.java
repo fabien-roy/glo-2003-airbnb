@@ -8,7 +8,7 @@ import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import com.github.javafaker.Faker;
 import java.util.Collections;
 import java.util.List;
