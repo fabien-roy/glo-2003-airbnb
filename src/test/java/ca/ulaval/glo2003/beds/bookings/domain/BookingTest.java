@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
+import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createBookingStatus;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
@@ -143,5 +144,19 @@ class BookingTest {
     boolean isOverlapping = booking.isOverlapping(otherBooking);
 
     assertTrue(isOverlapping);
+  }
+
+  @Test
+  public void getBookingStatus_shouldReturnBookingStatusAsBooked() {
+    BookingStatuses expectedBookingStatuses = createBookingStatus();
+
+    Booking booking = BookingBuilder.aBooking()
+            .withStatus(expectedBookingStatuses)
+            .build();
+
+    BookingStatuses BookingStatuses = booking.getStatus();
+
+    assertEquals(expectedBookingStatuses, BookingStatuses);
+
   }
 }

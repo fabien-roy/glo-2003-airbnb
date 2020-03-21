@@ -4,9 +4,12 @@ import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import org.junit.platform.engine.TestExecutionResult;
+
 import java.util.UUID;
 
 public class BookingBuilder {
@@ -33,6 +36,9 @@ public class BookingBuilder {
 
   private Packages DEFAULT_PACKAGE = createPackageName();
   private Packages packageName = DEFAULT_PACKAGE;
+
+  private BookingStatuses DEFAULT_STATUS = createBookingStatus();
+  private BookingStatuses statuses =DEFAULT_STATUS;
 
   public static BookingBuilder aBooking() {
     return new BookingBuilder();
@@ -70,6 +76,11 @@ public class BookingBuilder {
 
   public BookingBuilder withTotal(Price total) {
     this.total = total;
+    return this;
+  }
+
+  public BookingBuilder withStatus(BookingStatuses status) {
+    this.statuses = status;
     return this;
   }
 
