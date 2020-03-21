@@ -4,6 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatcher;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -239,9 +240,13 @@ class BedMatcherTest {
 
   @Test
   public void matches_withZipCodeWithinRadius_shouldReturnTrue() {
-    ZipCode zipCodeToTest = new ZipCode("02108");
-    BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(zipCodeToTest, 10).build();
+
     ZipCode zipCodeOfBed = new ZipCode("02110");
+
+    ZipCode origin = mock(ZipCode.class);
+    when(origin.isWithinRadius(zipCodeOfBed)).thenReturn(true);
+
+    BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(origin, 10).build();
     Bed bed = aBed().withZipCode(zipCodeOfBed).build();
 
     boolean matches = bedMatcher.matches(bed);
@@ -249,17 +254,6 @@ class BedMatcherTest {
     assertTrue(matches);
   }
 
-  @Test
-  public void matches_withZipCodeOutOfRadius_shouldReturnFalse() {
-    ZipCode zipCodeToTest = new ZipCode("46204");
-    BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(zipCodeToTest, 10).build();
-    ZipCode zipCodeOfBed = new ZipCode("02110");
-    Bed bed = aBed().withZipCode(zipCodeOfBed).build();
-
-    boolean matches = bedMatcher.matches(bed);
-
-    assertFalse(matches);
-  }
 
   @Test
   public void matches_withSameLodgingMode_shouldReturnTrue() {

@@ -87,9 +87,9 @@ public class BedMatcher {
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
-    if(origin != null && !origin.isWithinRadius(bed.getZipCode())) return false;
+    if (origin != null && !origin.isWithinRadius(bed.getZipCode())) return false;
 
-    if(lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
+    if (lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
 
     return true;
   }
