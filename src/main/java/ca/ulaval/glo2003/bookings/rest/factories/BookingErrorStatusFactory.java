@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
-import ca.ulaval.glo2003.beds.rest.factories.BedErrorStatusFactory;
 import ca.ulaval.glo2003.bookings.exceptions.*;
+import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorStatusFactory;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class BookingErrorStatusFactory extends BedErrorStatusFactory {
+public class BookingErrorStatusFactory extends CatchallErrorStatusFactory {
 
   @Override
   public int create(Exception exception) {

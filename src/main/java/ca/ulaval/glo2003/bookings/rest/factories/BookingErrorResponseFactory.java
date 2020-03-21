@@ -1,14 +1,9 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
-import ca.ulaval.glo2003.beds.rest.factories.BedErrorResponseFactory;
-import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
-import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.bookings.exceptions.ExceedingResidualCapacityException;
-import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
-import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
-import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNights;
+import ca.ulaval.glo2003.bookings.exceptions.*;
+import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorResponseFactory;
 
-public class BookingErrorResponseFactory extends BedErrorResponseFactory {
+public class BookingErrorResponseFactory extends CatchallErrorResponseFactory {
 
   @Override
   public String create(Exception exception) {
