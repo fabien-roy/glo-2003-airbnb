@@ -278,8 +278,6 @@ class BedMatcherTest {
 
     boolean matches = bedMatcher.matches(bed);
 
-    assertTrue(matches);
-
     assertFalse(matches);
   }
 }
