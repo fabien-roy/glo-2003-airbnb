@@ -79,11 +79,6 @@ public class BookingBuilder {
     return this;
   }
 
-  public BookingBuilder withStatus(BookingStatuses status) {
-    this.statuses = status;
-    return this;
-  }
-
   public Booking build() {
     Booking booking =
         new Booking(tenantPublicKey, arrivalDate, numberOfNights, colonySize, packageName);

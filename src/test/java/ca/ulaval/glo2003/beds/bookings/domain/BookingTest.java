@@ -147,16 +147,15 @@ class BookingTest {
   }
 
   @Test
-  public void getBookingStatus_shouldReturnBookingStatusAsBooked() {
-    BookingStatuses expectedBookingStatuses = createBookingStatus();
+  public void construct_shouldSetStatusToBooked() {
+    BookingStatuses expectedBookingStatus = BookingStatuses.BOOKED;
 
     Booking booking = BookingBuilder.aBooking()
-            .withStatus(expectedBookingStatuses)
             .build();
 
-    BookingStatuses BookingStatuses = booking.getStatus();
+    BookingStatuses BookingStatus = booking.getStatus();
 
-    assertEquals(expectedBookingStatuses, BookingStatuses);
+    assertEquals(expectedBookingStatus, BookingStatus);
 
   }
 }

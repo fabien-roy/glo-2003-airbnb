@@ -52,5 +52,4 @@ public class BookingObjectMother {
     return randomEnum(Packages.class);
   }
 
-  public static BookingStatuses createBookingStatus() { return randomEnum(BookingStatuses.class); }
 }

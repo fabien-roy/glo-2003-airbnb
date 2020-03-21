@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.beds.bookings.exceptions.InvalidColonySizeException;
@@ -82,6 +83,17 @@ class BookingMapperTest {
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
     assertEquals(expectedTotalValue, response.getTotal());
+  }
+
+  @Test
+  public void toResponse_shouldMapStatus() {
+    BookingStatuses bookingStatus = BookingStatuses.BOOKED;
+    String expectedBookingStatus = bookingStatus.toString();
+    Booking bookingToMap = BookingBuilder.aBooking().build();
+
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
+
+    assertEquals(expectedBookingStatus, response.getStatus());
   }
 
   @Test
