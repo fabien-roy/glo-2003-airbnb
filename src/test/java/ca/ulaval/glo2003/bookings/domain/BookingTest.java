@@ -1,13 +1,23 @@
 package ca.ulaval.glo2003.bookings.domain;
 
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder;
+import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class BookingTest {
+
+  @Test
+  public void construct_shouldSetStatusToBooked() {
+    BookingStatuses expectedBookingStatus = BookingStatuses.BOOKED;
+
+    Booking booking = aBooking().build();
+
+    assertEquals(expectedBookingStatus, booking.getStatus());
+  }
 
   @Test
   public void getDepartureDate_shouldReturnArrivalDatePlusNumberOfNights() {
@@ -15,10 +25,7 @@ class BookingTest {
     int numberOfNights = 3;
     LocalDate expectedDepartureDate = arrivalDate.getValue().plusDays(numberOfNights - 1);
     Booking booking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(arrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
 
     LocalDate departureDate = booking.getDepartureDate();
 
@@ -30,9 +37,9 @@ class BookingTest {
     BookingDate arrivalDate = createArrivalDate();
     BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().minusDays(3));
     int otherNumberOfNights = 2;
-    Booking booking = BookingBuilder.aBooking().withArrivalDate(arrivalDate).build();
+    Booking booking = aBooking().withArrivalDate(arrivalDate).build();
     Booking otherBooking =
-        BookingBuilder.aBooking()
+        aBooking()
             .withArrivalDate(otherArrivalDate)
             .withNumberOfNights(otherNumberOfNights)
             .build();
@@ -48,11 +55,8 @@ class BookingTest {
     BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().plusDays(3));
     int numberOfNights = 2;
     Booking booking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(arrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
-    Booking otherBooking = BookingBuilder.aBooking().withArrivalDate(otherArrivalDate).build();
+        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
+    Booking otherBooking = aBooking().withArrivalDate(otherArrivalDate).build();
 
     boolean isOverlapping = booking.isOverlapping(otherBooking);
 
@@ -65,15 +69,9 @@ class BookingTest {
     int numberOfNights = 3;
     BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().minusDays(1));
     Booking booking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(arrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
     Booking otherBooking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(otherArrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(otherArrivalDate).withNumberOfNights(numberOfNights).build();
 
     boolean isOverlapping = booking.isOverlapping(otherBooking);
 
@@ -86,15 +84,9 @@ class BookingTest {
     int numberOfNights = 3;
     BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().plusDays(1));
     Booking booking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(arrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
     Booking otherBooking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(otherArrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(otherArrivalDate).withNumberOfNights(numberOfNights).build();
 
     boolean isOverlapping = booking.isOverlapping(otherBooking);
 
@@ -108,12 +100,9 @@ class BookingTest {
     BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().plusDays(1));
     int otherNumberOfNights = 2;
     Booking booking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(arrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
     Booking otherBooking =
-        BookingBuilder.aBooking()
+        aBooking()
             .withArrivalDate(otherArrivalDate)
             .withNumberOfNights(otherNumberOfNights)
             .build();
@@ -130,12 +119,9 @@ class BookingTest {
     BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().minusDays(1));
     int otherNumberOfNights = 6;
     Booking booking =
-        BookingBuilder.aBooking()
-            .withArrivalDate(arrivalDate)
-            .withNumberOfNights(numberOfNights)
-            .build();
+        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
     Booking otherBooking =
-        BookingBuilder.aBooking()
+        aBooking()
             .withArrivalDate(otherArrivalDate)
             .withNumberOfNights(otherNumberOfNights)
             .build();

@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.bookings.domain;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -19,6 +20,7 @@ public class Booking {
   private Packages packageName;
   private Price total;
   private List<Transaction> transactions = new ArrayList<>();
+  private BookingStatuses status;
 
   public Booking(
       PublicKey tenantPublicKey,
@@ -31,6 +33,7 @@ public class Booking {
     this.numberOfNights = numberOfNights;
     this.colonySize = colonySize;
     this.packageName = packageName;
+    this.status = BookingStatuses.BOOKED;
   }
 
   public UUID getNumber() {
@@ -80,5 +83,9 @@ public class Booking {
 
   public LocalDate getDepartureDate() {
     return arrivalDate.getValue().plusDays(numberOfNights - 1);
+  }
+
+  public BookingStatuses getStatus() {
+    return status;
   }
 }

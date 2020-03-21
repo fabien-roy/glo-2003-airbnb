@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
@@ -82,6 +83,16 @@ class BookingMapperTest {
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
     assertEquals(expectedTotalValue, response.getTotal());
+  }
+
+  @Test
+  public void toResponse_shouldMapStatus() {
+    String expectedBookingStatus = BookingStatuses.BOOKED.toString();
+    Booking bookingToMap = BookingBuilder.aBooking().build();
+
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
+
+    assertEquals(expectedBookingStatus, response.getStatus());
   }
 
   @Test

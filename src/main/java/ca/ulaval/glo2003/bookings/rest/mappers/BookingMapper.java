@@ -49,7 +49,11 @@ public class BookingMapper {
     Double total = priceMapper.toDouble(booking.getTotal());
 
     return new BookingResponse(
-        arrivalDate, booking.getNumberOfNights(), booking.getPackage(), total);
+        arrivalDate,
+        booking.getNumberOfNights(),
+        booking.getPackage(),
+        total,
+        booking.getStatus().toString());
   }
 
   private void validateNumberOfNights(int numberOfNights) {
