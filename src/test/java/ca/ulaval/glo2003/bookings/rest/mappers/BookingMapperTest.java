@@ -59,7 +59,7 @@ class BookingMapperTest {
 
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
-    assertEquals(expectedPackageName, response.getBookingPackage());
+    assertEquals(expectedPackageName.toString(), response.getBookingPackage());
   }
 
   @Test
