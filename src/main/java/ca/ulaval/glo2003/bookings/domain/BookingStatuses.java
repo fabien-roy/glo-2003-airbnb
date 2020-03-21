@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.bookings.domain;
+package ca.ulaval.glo2003.bookings.domain;
 
 public enum BookingStatuses {
   BOOKED("booked"),

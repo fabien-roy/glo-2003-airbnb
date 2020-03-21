@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.bookings.domain;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -74,6 +73,10 @@ public class Booking {
 
   public List<Transaction> getTransactions() {
     return transactions;
+  }
+
+  public void cancel() {
+    status = BookingStatuses.CANCELED;
   }
 
   public boolean isOverlapping(Booking otherBooking) {

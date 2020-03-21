@@ -4,7 +4,6 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +14,16 @@ class BookingTest {
     BookingStatuses expectedBookingStatus = BookingStatuses.BOOKED;
 
     Booking booking = aBooking().build();
+
+    assertEquals(expectedBookingStatus, booking.getStatus());
+  }
+
+  @Test
+  public void cancel_shouldSetStatusToCanceled() {
+    BookingStatuses expectedBookingStatus = BookingStatuses.CANCELED;
+    Booking booking = aBooking().build();
+
+    booking.cancel();
 
     assertEquals(expectedBookingStatus, booking.getStatus());
   }

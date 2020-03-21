@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
@@ -13,6 +12,7 @@ import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
