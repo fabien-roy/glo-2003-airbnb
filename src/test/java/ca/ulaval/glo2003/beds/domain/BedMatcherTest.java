@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatche
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.interfaces.domain.ZipCode;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.Test;
@@ -230,6 +231,30 @@ class BedMatcherTest {
         aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
     Bed bed =
         aBed().withBedType(otherBedtype).withCleaningFrequency(otherCleaningFrequency).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertFalse(matches);
+  }
+
+  @Test
+  public void matches_withSameZipCodeWithinRadius_shouldReturnTrue() {
+    ZipCode zipCodeToTest = new ZipCode("02108");
+    BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(zipCodeToTest, 10).build();
+    ZipCode zipCodeOfBed = new ZipCode("02110");
+    Bed bed = aBed().withZipCode(zipCodeOfBed).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
+  public void matches_withSameZipCodeOutOfRadius_shouldReturnFalse() {
+    ZipCode zipCodeToTest = new ZipCode("46204");
+    BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(zipCodeToTest, 10).build();
+    ZipCode zipCodeOfBed = new ZipCode("02110");
+    Bed bed = aBed().withZipCode(zipCodeOfBed).build();
 
     boolean matches = bedMatcher.matches(bed);
 

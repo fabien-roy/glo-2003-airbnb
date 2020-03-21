@@ -48,6 +48,12 @@ public class BedMatcherBuilder {
     return this;
   }
 
+  public BedMatcherBuilder withOriginAndMaxDistance(ZipCode origin, int maxDistance) {
+    this.origin = origin;
+    this.maxDistance = maxDistance;
+    return this;
+  }
+
   public BedMatcher build() {
     return new BedMatcher(
         bedType,
