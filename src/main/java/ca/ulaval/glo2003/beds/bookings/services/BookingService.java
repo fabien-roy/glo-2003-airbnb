@@ -5,6 +5,7 @@ import ca.ulaval.glo2003.beds.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.beds.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.beds.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.beds.bookings.rest.CancelResponse;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.beds.domain.Bed;
@@ -12,6 +13,8 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
+
+import java.awt.*;
 import java.util.UUID;
 
 public class BookingService {
@@ -64,5 +67,11 @@ public class BookingService {
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
     return bookingMapper.toResponse(booking);
+  }
+
+  public CancelResponse cancel(String bedNumber, String bookingNumber) {
+    CancelResponse cancelResponse = new CancelResponse();
+
+    return cancelResponse;
   }
 }

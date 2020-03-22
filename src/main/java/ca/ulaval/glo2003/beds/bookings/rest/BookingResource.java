@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.bookings.rest;
 import static ca.ulaval.glo2003.beds.rest.BedResource.BED_PATH;
 import static spark.Spark.*;
 
+import ca.ulaval.glo2003.beds.bookings.domain.Booking;
 import ca.ulaval.glo2003.beds.bookings.services.BookingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,8 @@ import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 import spark.RouteGroup;
+
+import java.util.UUID;
 
 public class BookingResource implements RouteGroup {
 
@@ -27,6 +30,7 @@ public class BookingResource implements RouteGroup {
   public void addRoutes() {
     post("", this::add);
     get("/:bookingNumber", this::getByNumber, new ObjectMapper()::writeValueAsString);
+    post("/:bookingNumber/cancel", this::cancel, new ObjectMapper()::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws JsonProcessingException {
@@ -53,4 +57,17 @@ public class BookingResource implements RouteGroup {
     response.status(HttpStatus.OK_200);
     return bookingResponse;
   }
+
+  public Object cancel(Request request, Response response){
+    String bedNumber = request.params("bedNumber");
+    String bookingNumber = request.params("bookingNumber");
+
+    CancelResponse cancelResponse = bookingService.cancel(bedNumber, bookingNumber);
+
+    response.status(HttpStatus.OK_200);
+
+    return cancelResponse;
+
+  }
+
 }

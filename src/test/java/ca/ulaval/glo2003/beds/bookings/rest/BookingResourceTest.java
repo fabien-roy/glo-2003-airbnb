@@ -82,4 +82,32 @@ class BookingResourceTest {
 
     verify(response).status(HttpStatus.OK_200);
   }
+
+  @Test
+  public void cancel_shouldReturnCancelResponse() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+    String bedNumber = "bedNumber";
+    String bookingNumber = "bookingNumber";
+    when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
+    when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
+    CancelResponse expectedCancelResponse = mock(CancelResponse.class);
+    when(bookingService.cancel(bedNumber, bookingNumber)).thenReturn(expectedCancelResponse);
+
+    CancelResponse cancelResponse =
+            (CancelResponse) bookingResource.cancel(request,response);
+
+    assertSame(expectedCancelResponse, cancelResponse);
+  }
+
+  @Test
+  public void cancel_shouldSetOkAsHttpStatus() {
+    Request request = mock(Request.class);
+    Response response = mock(Response.class);
+
+    bookingResource.cancel(request,response);
+
+    verify(response).status(HttpStatus.OK_200);
+
+  }
 }
