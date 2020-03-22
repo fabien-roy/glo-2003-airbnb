@@ -36,7 +36,6 @@ public class BedServiceTest {
   private ZipCode validatedZipCode = createZipCode();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
   private Bed otherBed = aBed().build();
-  private BedMatcher bedMatcher = mock(BedMatcher.class);
   private BedRequest bedRequest = aBedRequest().build();
   private int stars = 4;
   private int otherStars = 2;
@@ -59,8 +58,6 @@ public class BedServiceTest {
 
   @BeforeEach
   public void setUpMocksForAdd() {
-    when(bedMatcher.matches(bed)).thenReturn(true);
-    when(bedMatcher.matches(otherBed)).thenReturn(true);
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
     when(zippopotamusClient.validateZipCode(bedRequest.getZipCode())).thenReturn(validatedZipCode);
     when(bedFactory.create(bed, validatedZipCode)).thenReturn(bed);

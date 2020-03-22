@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
+import static ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler.LODGING_MODE_PARAM;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLodgingMode;
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.LODGING_MODE_PARAM;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
+import static ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler.BED_TYPE_PARAM;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedType;
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.BED_TYPE_PARAM;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

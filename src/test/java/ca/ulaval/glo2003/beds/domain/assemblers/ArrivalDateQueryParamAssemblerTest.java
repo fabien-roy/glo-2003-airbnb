@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.ARRIVAL_DATE_PARAM;
+import static ca.ulaval.glo2003.beds.domain.assemblers.ArrivalDateQueryParamAssembler.ARRIVAL_DATE_PARAM;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

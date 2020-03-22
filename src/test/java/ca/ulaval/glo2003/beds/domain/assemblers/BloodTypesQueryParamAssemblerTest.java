@@ -10,6 +10,7 @@ import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -59,6 +60,8 @@ class BloodTypesQueryParamAssemblerTest {
   }
 
   private String[] toParam(List<BloodTypes> bloodTypes) {
-    return bloodTypes.stream().map(BloodTypes::toString).toArray(String[]::new);
+    String unrepairedBloodTypes =
+        bloodTypes.stream().map(BloodTypes::toString).collect(Collectors.joining(","));
+    return new String[] {unrepairedBloodTypes};
   }
 }

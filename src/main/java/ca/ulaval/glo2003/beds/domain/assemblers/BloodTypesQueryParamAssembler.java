@@ -18,6 +18,12 @@ public class BloodTypesQueryParamAssembler implements BedQueryParamAssembler {
   }
 
   private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
-    return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());
+    String[] repairedBloodTypes = repairArray(bloodTypes[0]);
+    return Arrays.stream(repairedBloodTypes).map(BloodTypes::get).collect(Collectors.toList());
+  }
+
+  // TODO : Solve this horrid fix
+  private String[] repairArray(String bloodTypes) {
+    return bloodTypes.replace(" ", "+").split(",");
   }
 }
