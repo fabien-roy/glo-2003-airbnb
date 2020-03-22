@@ -1,6 +1,9 @@
 package ca.ulaval.glo2003.beds;
 
+import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
+import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
@@ -15,6 +18,8 @@ public class BedModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
+    bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
+    bind(BedQueryFactory.class);
     bind(BedService.class);
     bind(BedMapper.class);
     bind(BedMatcherMapper.class);

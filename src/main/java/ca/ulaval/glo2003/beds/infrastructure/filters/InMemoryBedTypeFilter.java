@@ -14,6 +14,10 @@ public class InMemoryBedTypeFilter implements BedFilter {
     this.bedType = bedType;
   }
 
+  public BedTypes getBedType() {
+    return bedType;
+  }
+
   @Override
   public List<Bed> filter(List<Bed> beds) {
     return beds.stream()

@@ -11,6 +11,10 @@ public class BedQuery {
     this.filters = filters;
   }
 
+  public List<BedFilter> getFilters() {
+    return filters;
+  }
+
   public List<Bed> filter(List<Bed> beds) {
     List<Bed> filteredBeds = new ArrayList<>(beds);
 
