@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.domain.queries;
+package ca.ulaval.glo2003.beds.infrastructure;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,18 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
-import ca.ulaval.glo2003.beds.domain.BedQuery;
+import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BedQueryTest {
+class InMemoryBedQueryTest {
 
-  private BedFilter filter = mock(BedFilter.class);
-  private BedFilter otherFilter = mock(BedFilter.class);
+  private InMemoryBedFilter filter = mock(InMemoryBedFilter.class);
+  private InMemoryBedFilter otherFilter = mock(InMemoryBedFilter.class);
   private List<Bed> beds;
   private List<Bed> filteredBeds;
   private List<Bed> otherFilteredBeds;
@@ -36,9 +35,10 @@ class BedQueryTest {
 
   @Test
   public void filter_withQuery_shouldFilterWithQuery() {
-    BedQuery query = new BedQuery(Collections.singletonList(filter));
+    InMemoryBedQuery query = new InMemoryBedQuery(Collections.singletonList(filter));
+    query.setBeds(beds);
 
-    List<Bed> actualBeds = query.filter(beds);
+    List<Bed> actualBeds = query.execute();
 
     assertEquals(filteredBeds.size(), actualBeds.size());
     assertTrue(filteredBeds.containsAll(actualBeds));
@@ -46,9 +46,10 @@ class BedQueryTest {
 
   @Test
   public void filter_withMultipleQueries_shouldFilterWithQueries() {
-    BedQuery query = new BedQuery(Arrays.asList(filter, otherFilter));
+    InMemoryBedQuery query = new InMemoryBedQuery(Arrays.asList(filter, otherFilter));
+    query.setBeds(beds);
 
-    List<Bed> actualBeds = query.filter(beds);
+    List<Bed> actualBeds = query.execute();
 
     assertEquals(otherFilteredBeds.size(), actualBeds.size());
     assertTrue(otherFilteredBeds.containsAll(actualBeds));

@@ -1,12 +1,11 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InMemoryLodgingModeFilter implements BedFilter {
+public class InMemoryLodgingModeFilter implements InMemoryBedFilter {
 
   private final LodgingModes lodgingMode;
 

@@ -3,12 +3,9 @@ package ca.ulaval.glo2003.beds.infrastructure;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedQuery;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.Collections;
@@ -27,7 +24,7 @@ public class InMemoryBedRepositoryTest {
   private Bed nonExistentBed;
   private UUID bedNumber;
   private UUID nonExistentBedNumber;
-  private BedQuery bedQuery;
+  private InMemoryBedQuery bedQuery;
 
   @BeforeEach
   public void setUpRepository() {
@@ -46,14 +43,14 @@ public class InMemoryBedRepositoryTest {
   @BeforeEach
   public void setUpQuery() {
     filteredBeds = Collections.singletonList(aBed().build());
-    bedQuery = mock(BedQuery.class);
-    when(bedQuery.filter(any())).thenReturn(filteredBeds);
+    bedQuery = mock(InMemoryBedQuery.class);
+    when(bedQuery.execute()).thenReturn(filteredBeds);
   }
 
   @Test
   public void add_shouldAddBed() {
     bedRepository.add(bed);
-    Bed actualBed = bedRepository.getAll().get(0);
+    Bed actualBed = bedRepository.getByNumber(bedNumber);
 
     assertSame(bed, actualBed);
   }
@@ -77,34 +74,21 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void getAll_withOneBed_shouldGetOneBed() {
+  public void getAll_withQuery_shouldReturnFilteredBeds() {
     bedRepository.add(bed);
 
-    List<Bed> actualBeds = bedRepository.getAll();
+    List<Bed> actualBeds = bedRepository.getAll(bedQuery);
 
-    assertEquals(1, actualBeds.size());
-    assertSame(bed, actualBeds.get(0));
-  }
-
-  @Test
-  public void getAll_withMultipleBeds_shouldGetMultipleBeds() {
-    bedRepository.add(bed);
-    bedRepository.add(otherBed);
-
-    List<Bed> actualBeds = bedRepository.getAll();
-
-    assertEquals(2, actualBeds.size());
-    assertTrue(actualBeds.contains(bed));
-    assertTrue(actualBeds.contains(otherBed));
+    assertSame(filteredBeds, actualBeds);
   }
 
   @Test
   public void getAll_withQuery_shouldUseQuery() {
     bedRepository.add(bed);
 
-    List<Bed> actualBeds = bedRepository.getAll(bedQuery);
+    bedRepository.getAll(bedQuery);
 
-    assertSame(filteredBeds, actualBeds);
+    verify(bedQuery).setBeds(eq(Collections.singletonList(bed)));
   }
 
   @Test

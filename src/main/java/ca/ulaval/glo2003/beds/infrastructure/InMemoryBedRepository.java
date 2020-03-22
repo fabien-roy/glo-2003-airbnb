@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedQuery;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryBedRepository implements BedRepository {
+public class InMemoryBedRepository implements BedRepository<InMemoryBedQuery> {
 
   private List<Bed> beds;
 
@@ -29,13 +28,9 @@ public class InMemoryBedRepository implements BedRepository {
   }
 
   @Override
-  public List<Bed> getAll() {
-    return beds;
-  }
-
-  @Override
-  public List<Bed> getAll(BedQuery query) {
-    return query.filter(beds);
+  public List<Bed> getAll(InMemoryBedQuery query) {
+    query.setBeds(beds);
+    return query.execute();
   }
 
   @Override

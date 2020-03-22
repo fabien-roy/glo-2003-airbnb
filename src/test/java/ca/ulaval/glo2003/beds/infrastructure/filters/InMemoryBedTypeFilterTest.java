@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.beds.domain.BedTypes;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class InMemoryBedTypeFilterTest {
 
-  private static BedFilter filter;
+  private static InMemoryBedFilter filter;
   private static BedTypes bedType = BedTypes.LATEX;
   private static BedTypes otherBedType = BedTypes.SPRINGS;
 

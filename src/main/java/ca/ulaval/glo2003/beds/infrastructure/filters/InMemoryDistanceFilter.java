@@ -1,11 +1,10 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.List;
 
-public class InMemoryDistanceFilter implements BedFilter {
+public class InMemoryDistanceFilter implements InMemoryBedFilter {
 
   private final ZipCode origin;
   private final int maxDistance;

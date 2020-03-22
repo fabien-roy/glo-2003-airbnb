@@ -26,21 +26,21 @@ class InMemoryBedQueryBuilderTest {
 
   @Test
   public void build_shouldBuildQuery() {
-    BedQuery bedQuery = bedQueryBuilder.build();
+    InMemoryBedQuery bedQuery = bedQueryBuilder.build();
 
     assertEquals(0, bedQuery.getFilters().size());
   }
 
   @Test
   public void withBedType_shouldAddBedTypeFilter() {
-    BedQuery bedQuery = bedQueryBuilder.aBedQuery().withBedType(bedType).build();
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withBedType(bedType).build();
 
     assertEquals(bedType, ((InMemoryBedTypeFilter) bedQuery.getFilters().get(0)).getBedType());
   }
 
   @Test
   public void withCleaningFrequency_shouldAddCleaningFrequencyFilter() {
-    BedQuery bedQuery =
+    InMemoryBedQuery bedQuery =
         bedQueryBuilder.aBedQuery().withCleaningFrequency(cleaningFrequency).build();
 
     assertEquals(
@@ -50,7 +50,7 @@ class InMemoryBedQueryBuilderTest {
 
   @Test
   public void withBloodTypes_shouldAddBloodTypesFilter() {
-    BedQuery bedQuery = bedQueryBuilder.aBedQuery().withBloodTypes(bloodTypes).build();
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withBloodTypes(bloodTypes).build();
 
     assertEquals(
         bloodTypes, ((InMemoryBloodTypesFilter) bedQuery.getFilters().get(0)).getBloodTypes());
@@ -58,7 +58,7 @@ class InMemoryBedQueryBuilderTest {
 
   @Test
   public void withPackage_shouldAddPackageFilter() {
-    BedQuery bedQuery = bedQueryBuilder.aBedQuery().withPackage(packageName).build();
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withPackage(packageName).build();
 
     assertEquals(packageName, ((InMemoryPackageFilter) bedQuery.getFilters().get(0)).getPackage());
   }
@@ -67,7 +67,7 @@ class InMemoryBedQueryBuilderTest {
 
   @Test
   public void withLodgingMode_shouldAddLodgingModeFilter() {
-    BedQuery bedQuery = bedQueryBuilder.aBedQuery().withLodgingMode(lodgingMode).build();
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withLodgingMode(lodgingMode).build();
 
     assertEquals(
         lodgingMode, ((InMemoryLodgingModeFilter) bedQuery.getFilters().get(0)).getLodgingMode());

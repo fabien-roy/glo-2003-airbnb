@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.List;
@@ -28,5 +29,5 @@ public interface BedQueryBuilder {
 
   BedQueryBuilder withMaxDistance(int maxDistance);
 
-  BedQuery build();
+  InMemoryBedQuery build();
 }

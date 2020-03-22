@@ -1,12 +1,11 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InMemoryBloodTypesFilter implements BedFilter {
+public class InMemoryBloodTypesFilter implements InMemoryBedFilter {
 
   private final List<BloodTypes> bloodTypes;
 

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 class InMemoryPackageFilterTest {
 
-  private static BedFilter filter;
+  private static InMemoryBedFilter filter;
   private static Packages packageName = Packages.BLOODTHIRSTY;
 
   private Bed bedWithPackage;

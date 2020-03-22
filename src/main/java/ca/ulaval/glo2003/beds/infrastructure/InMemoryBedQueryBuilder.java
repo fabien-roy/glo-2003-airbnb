@@ -10,7 +10,7 @@ import java.util.List;
 
 public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
-  private List<BedFilter> filters = new ArrayList<>();
+  private List<InMemoryBedFilter> filters = new ArrayList<>();
 
   private static final int UNSET_INT = 0;
   private static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
@@ -88,10 +88,10 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   @Override
-  public BedQuery build() {
+  public InMemoryBedQuery build() {
     addAvailabilityFilter();
     addDistanceFilter();
-    return new BedQuery(filters);
+    return new InMemoryBedQuery(filters);
   }
 
   private void addAvailabilityFilter() {

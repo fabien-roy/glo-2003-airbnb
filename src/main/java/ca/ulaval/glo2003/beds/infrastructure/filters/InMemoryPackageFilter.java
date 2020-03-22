@@ -1,12 +1,11 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InMemoryPackageFilter implements BedFilter {
+public class InMemoryPackageFilter implements InMemoryBedFilter {
 
   private final Packages packageName;
 

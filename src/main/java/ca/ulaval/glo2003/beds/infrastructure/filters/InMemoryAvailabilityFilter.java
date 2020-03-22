@@ -1,11 +1,10 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedFilter;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import java.util.List;
 
-public class InMemoryAvailabilityFilter implements BedFilter {
+public class InMemoryAvailabilityFilter implements InMemoryBedFilter {
 
   private final int minCapacity;
   private final BookingDate arrivalDate;

@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.services;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
@@ -51,7 +52,7 @@ public class BedService {
   }
 
   public List<BedResponse> getAll(Map<String, String[]> params) {
-    BedQuery bedQuery = bedQueryFactory.create(params);
+    InMemoryBedQuery bedQuery = bedQueryFactory.create(params);
 
     List<Bed> beds = bedRepository.getAll(bedQuery);
 

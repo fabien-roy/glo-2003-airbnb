@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
+import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ public class BedQueryFactory {
     this.queryParamAssemblers = queryParamAssemblers;
   }
 
-  public BedQuery create(Map<String, String[]> params) {
+  public InMemoryBedQuery create(Map<String, String[]> params) {
     BedQueryBuilder builder = bedQueryBuilder.aBedQuery();
 
     for (BedQueryParamAssembler queryParamAssembler : queryParamAssemblers)
