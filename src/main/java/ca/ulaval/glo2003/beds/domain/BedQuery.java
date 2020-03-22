@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BedQuery {
@@ -10,7 +11,13 @@ public class BedQuery {
     this.filters = filters;
   }
 
-  public void filter(List<Bed> beds) {
-    filters.forEach(bedQuery -> bedQuery.filter(beds));
+  public List<Bed> filter(List<Bed> beds) {
+    List<Bed> filteredBeds = new ArrayList<>(beds);
+
+    for (BedFilter filter : filters) {
+      filteredBeds = filter.filter(filteredBeds);
+    }
+
+    return filteredBeds;
   }
 }

@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface BedFilter {
 
-  void filter(List<Bed> beds);
+  List<Bed> filter(List<Bed> beds);
 }
