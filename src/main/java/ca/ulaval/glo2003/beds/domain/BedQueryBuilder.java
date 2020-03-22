@@ -21,5 +21,7 @@ public interface BedQueryBuilder {
 
   BedQueryBuilder withNumberOfNights(int numberOfNights);
 
+  BedQueryBuilder withLodgingMode(LodgingModes lodgingMode);
+
   BedQuery build();
 }

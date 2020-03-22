@@ -12,15 +12,11 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   private List<BedFilter> filters = new ArrayList<>();
 
   private static final int UNSET_INT = 0;
-
-  private static final int UNSET_MIN_CAPACITY = UNSET_INT;
-  private int minCapacity = UNSET_MIN_CAPACITY;
-
-  private static final BookingDate UNSET_BOOKING_DATE = null;
-  private BookingDate arrivalDate = UNSET_BOOKING_DATE;
-
   private static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
-  private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
+
+  private int minCapacity = UNSET_INT;
+  private BookingDate arrivalDate = null;
+  private int numberOfNights = UNSET_INT;
 
   @Override
   public BedQueryBuilder aBedQuery() {
@@ -66,6 +62,12 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   @Override
   public InMemoryBedQueryBuilder withNumberOfNights(int numberOfNights) {
     this.numberOfNights = numberOfNights;
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withLodgingMode(LodgingModes lodgingMode) {
+    this.filters.add(new InMemoryLodgingModeFilter(lodgingMode));
     return this;
   }
 

@@ -4,10 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter;
+import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +17,7 @@ class InMemoryBedQueryBuilderTest {
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
   private List<BloodTypes> bloodTypes = createBloodTypes();
   private Packages packageName = Packages.BLOODTHIRSTY;
+  private LodgingModes lodgingMode = createLodgingMode();
 
   @BeforeEach
   public void setUpBuilder() {
@@ -66,4 +64,12 @@ class InMemoryBedQueryBuilderTest {
   }
 
   // TODO : Tests for availability
+
+  @Test
+  public void withLodgingMode_shouldAddLodgingModeFilter() {
+    BedQuery bedQuery = bedQueryBuilder.aBedQuery().withLodgingMode(lodgingMode).build();
+
+    assertEquals(
+        lodgingMode, ((InMemoryLodgingModeFilter) bedQuery.getFilters().get(0)).getLodgingMode());
+  }
 }

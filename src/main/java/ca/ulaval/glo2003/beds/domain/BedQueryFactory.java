@@ -19,6 +19,7 @@ public class BedQueryFactory {
   public static final String MIN_CAPACITY_PARAM = "minCapacity";
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
+  public static final String LODGING_MODE_PARAM = "lodgingMode";
 
   private final BedQueryBuilder bedQueryBuilder;
   private final BookingDateMapper bookingDateMapper;
@@ -56,6 +57,9 @@ public class BedQueryFactory {
 
     if (params.get(BLOOD_TYPES_PARAM) != null)
       builder = builder.withBloodTypes(parseBloodTypes(params.get(BLOOD_TYPES_PARAM)));
+
+    if (params.get(LODGING_MODE_PARAM) != null)
+      builder = builder.withLodgingMode(LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]));
 
     return builder.build();
   }
