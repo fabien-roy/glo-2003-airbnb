@@ -115,11 +115,7 @@ public class BedMatcher {
             .anyMatch(booking -> booking.getDepartureDate().isAfter(arrivalDate.getValue())))
       return false;
 
-    // TODO validate bed availability
-
     if (lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
-
-    // TODO validate distance between two zipcodes is under max distance
 
     return true;
   }
