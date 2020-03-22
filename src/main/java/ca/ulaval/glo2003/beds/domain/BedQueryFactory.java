@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.beds.domain;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
-import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import javax.inject.Inject;
 
 public class BedQueryFactory {
 
-  public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
   public static final String LODGING_MODE_PARAM = "lodgingMode";
   public static final String ORIGIN_PARAM = "origin";
@@ -19,7 +17,6 @@ public class BedQueryFactory {
 
   private final BedQueryBuilder bedQueryBuilder;
   private final List<BedQueryParamAssembler> queryParamAssemblers;
-  private final BookingDateMapper bookingDateMapper;
   private final ZippopotamusClient
       zippopotamusClient; // TODO : Use an interface, like ZipCodeClient
 
@@ -27,11 +24,9 @@ public class BedQueryFactory {
   public BedQueryFactory(
       BedQueryBuilder bedQueryBuilder,
       List<BedQueryParamAssembler> queryParamAssemblers,
-      BookingDateMapper bookingDateMapper,
       ZippopotamusClient zippopotamusClient) {
     this.bedQueryBuilder = bedQueryBuilder;
     this.queryParamAssemblers = queryParamAssemblers;
-    this.bookingDateMapper = bookingDateMapper;
     this.zippopotamusClient = zippopotamusClient;
   }
 
@@ -40,10 +35,6 @@ public class BedQueryFactory {
 
     for (BedQueryParamAssembler queryParamAssembler : queryParamAssemblers)
       builder = queryParamAssembler.assemble(builder, params);
-
-    if (params.get(ARRIVAL_DATE_PARAM) != null)
-      builder =
-          builder.withArrivalDate(bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]));
 
     if (params.get(NUMBER_OF_NIGHTS_PARAM) != null)
       builder =

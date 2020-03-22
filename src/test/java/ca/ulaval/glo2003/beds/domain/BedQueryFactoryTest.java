@@ -8,11 +8,8 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
 import ca.ulaval.glo2003.beds.exceptions.*;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
-import java.time.LocalDate;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,13 +21,10 @@ class BedQueryFactoryTest {
   private static BedQueryBuilder bedQueryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder filteredBedQueryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder otherFilteredBedQueryBuilder = mock(BedQueryBuilder.class);
-  private static BookingDateMapper bookingDateMapper;
   private static ZippopotamusClient zippopotamusClient;
 
   private BedTypeQueryParamAssembler queryAssembler = mock(BedTypeQueryParamAssembler.class);
   private BedTypeQueryParamAssembler otherQueryAssembler = mock(BedTypeQueryParamAssembler.class);
-  private BookingDate arrivalDate =
-      new BookingDate(LocalDate.now()); // TODO : Use default constructor
   private int numberOfNights = 2;
   private ZipCode origin = createZipCode();
   private int maxDistance = 30;
@@ -47,11 +41,9 @@ class BedQueryFactoryTest {
   // TODO : Remove once every param is dispatched
   @BeforeAll
   public static void setUpFactory() {
-    bookingDateMapper = mock(BookingDateMapper.class);
     zippopotamusClient = mock(ZippopotamusClient.class);
     bedQueryFactory =
-        new BedQueryFactory(
-            bedQueryBuilder, Collections.emptyList(), bookingDateMapper, zippopotamusClient);
+        new BedQueryFactory(bedQueryBuilder, Collections.emptyList(), zippopotamusClient);
   }
 
   @BeforeEach
@@ -60,7 +52,6 @@ class BedQueryFactoryTest {
     when(bedQueryBuilder.build()).thenReturn(query);
     when(filteredBedQueryBuilder.build()).thenReturn(filteredQuery);
     when(otherFilteredBedQueryBuilder.build()).thenReturn(otherFilteredQuery);
-    when(bookingDateMapper.fromString(arrivalDate.getValue().toString())).thenReturn(arrivalDate);
     when(queryAssembler.assemble(bedQueryBuilder, params)).thenReturn(filteredBedQueryBuilder);
     when(otherQueryAssembler.assemble(filteredBedQueryBuilder, params))
         .thenReturn(otherFilteredBedQueryBuilder);
@@ -69,8 +60,7 @@ class BedQueryFactoryTest {
   @Test
   public void create_withoutAssembler_shouldCreateQuery() {
     bedQueryFactory =
-        new BedQueryFactory(
-            bedQueryBuilder, Collections.emptyList(), bookingDateMapper, zippopotamusClient);
+        new BedQueryFactory(bedQueryBuilder, Collections.emptyList(), zippopotamusClient);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
@@ -80,8 +70,7 @@ class BedQueryFactoryTest {
   @Test
   public void create_withSingleAssembler_shouldCreateQuery() {
     bedQueryFactory =
-        new BedQueryFactory(
-            bedQueryBuilder, queryParamAssemblers, bookingDateMapper, zippopotamusClient);
+        new BedQueryFactory(bedQueryBuilder, queryParamAssemblers, zippopotamusClient);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
@@ -91,8 +80,7 @@ class BedQueryFactoryTest {
   @Test
   public void create_withMultipleAssemblers_shouldCreateQuery() {
     bedQueryFactory =
-        new BedQueryFactory(
-            bedQueryBuilder, otherQueryParamAssemblers, bookingDateMapper, zippopotamusClient);
+        new BedQueryFactory(bedQueryBuilder, otherQueryParamAssemblers, zippopotamusClient);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
