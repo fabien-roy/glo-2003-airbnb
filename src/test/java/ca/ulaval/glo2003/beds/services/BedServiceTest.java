@@ -12,7 +12,6 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
@@ -24,13 +23,13 @@ import org.junit.jupiter.api.Test;
 public class BedServiceTest {
 
   private static BedService bedService;
-  private static BedFactory bedFactory;
-  private static BedMapper bedMapper;
-  private static BedNumberMapper bedNumberMapper;
-  private static BedMatcherMapper bedMatcherMapper;
-  private static BedRepository bedRepository;
-  private static BedStarsCalculator bedStarsCalculator;
-  private static ZippopotamusClient zippopotamusClient;
+  private static BedFactory bedFactory = mock(BedFactory.class);
+  private static BedQueryFactory bedQueryFactory = mock(BedQueryFactory.class);
+  private static BedMapper bedMapper = mock(BedMapper.class);
+  private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
+  private static BedRepository bedRepository = mock(BedRepository.class);
+  private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
+  private static ZippopotamusClient zippopotamusClient = mock(ZippopotamusClient.class);
 
   private UUID bedNumber = createBedNumber();
   private ZipCode origin = createZipCode();
@@ -47,19 +46,12 @@ public class BedServiceTest {
 
   @BeforeAll
   public static void setUpService() {
-    bedFactory = mock(BedFactory.class);
-    bedMapper = mock(BedMapper.class);
-    bedNumberMapper = mock(BedNumberMapper.class);
-    bedMatcherMapper = mock(BedMatcherMapper.class);
-    bedRepository = mock(BedRepository.class);
-    bedStarsCalculator = mock(BedStarsCalculator.class);
-    zippopotamusClient = mock(ZippopotamusClient.class);
     bedService =
         new BedService(
             bedFactory,
+            bedQueryFactory,
             bedMapper,
             bedNumberMapper,
-            bedMatcherMapper,
             bedRepository,
             bedStarsCalculator,
             zippopotamusClient);
@@ -69,7 +61,6 @@ public class BedServiceTest {
   public void setUpMocksForAdd() {
     when(bedMatcher.matches(bed)).thenReturn(true);
     when(bedMatcher.matches(otherBed)).thenReturn(true);
-    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
     when(zippopotamusClient.validateZipCode(bedRequest.getZipCode())).thenReturn(validatedZipCode);
     when(bedFactory.create(bed, validatedZipCode)).thenReturn(bed);
@@ -77,7 +68,9 @@ public class BedServiceTest {
 
   @BeforeEach
   public void setUpMocksForGetAll() {
-    when(bedRepository.getAll()).thenReturn(Arrays.asList(bed, otherBed));
+    BedQuery bedQuery = mock(BedQuery.class);
+    when(bedQueryFactory.create(params)).thenReturn(bedQuery);
+    when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
     when(zippopotamusClient.validateZipCode(origin.getValue())).thenReturn(validatedZipCode);
@@ -114,37 +107,19 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
-    when(bedMatcher.matches(otherBed)).thenReturn(false);
-
+  public void getAll_shouldGetBedsWithQuery() {
     List<BedResponse> bedResponses = bedService.getAll(params);
 
     assertTrue(bedResponses.contains(bedResponse));
-    assertFalse(bedResponses.contains(otherBedResponse));
+    assertTrue(bedResponses.contains(otherBedResponse));
   }
 
   @Test
-  public void getAll_withParams_shouldGetMatchingBedsInDecreasingOrderOfStars() {
+  public void getAll_shouldOrderInDecreasingOrderOfStars() {
     List<BedResponse> bedResponses = bedService.getAll(params);
 
     assertSame(bedResponse, bedResponses.get(0));
     assertSame(otherBedResponse, bedResponses.get(1));
-  }
-
-  @Test
-  public void getAll_withoutOrigin_shouldNotMatchWithZipCode() {
-    bedService.getAll(params);
-
-    verify(bedMatcher, never()).setOrigin(any());
-  }
-
-  @Test
-  public void getAll_withOrigin_shouldMatchWithValidateZipCode() {
-    when(bedMatcher.getOrigin()).thenReturn(origin);
-
-    bedService.getAll(params);
-
-    verify(bedMatcher).setOrigin(eq(validatedZipCode));
   }
 
   @Test
