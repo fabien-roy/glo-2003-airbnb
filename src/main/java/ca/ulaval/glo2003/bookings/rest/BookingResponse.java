@@ -8,6 +8,7 @@ public class BookingResponse {
 
   private String arrivalDate;
   private int numberOfNights;
+  private int colonySize;
   private String status;
 
   @JsonProperty("package")
@@ -17,9 +18,15 @@ public class BookingResponse {
   private Double total;
 
   public BookingResponse(
-      String arrivalDate, int numberOfNights, String bookingPackage, Double total, String status) {
+      String arrivalDate,
+      int numberOfNights,
+      int colonySize,
+      String bookingPackage,
+      Double total,
+      String status) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
+    this.colonySize = colonySize;
     this.bookingPackage = bookingPackage;
     this.total = total;
     this.status = status;
@@ -31,6 +38,10 @@ public class BookingResponse {
 
   public int getNumberOfNights() {
     return numberOfNights;
+  }
+
+  public int getColonySize() {
+    return colonySize;
   }
 
   public String getBookingPackage() {
