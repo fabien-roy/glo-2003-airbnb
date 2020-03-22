@@ -1,18 +1,18 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.inject.Inject;
 
 public class BedQueryFactory {
 
   private final BedQueryBuilder bedQueryBuilder;
-  private final List<BedQueryParamAssembler> queryParamAssemblers;
+  private final Set<BedQueryParamAssembler> queryParamAssemblers;
 
   @Inject
   public BedQueryFactory(
-      BedQueryBuilder bedQueryBuilder, List<BedQueryParamAssembler> queryParamAssemblers) {
+      BedQueryBuilder bedQueryBuilder, Set<BedQueryParamAssembler> queryParamAssemblers) {
     this.bedQueryBuilder = bedQueryBuilder;
     this.queryParamAssemblers = queryParamAssemblers;
   }

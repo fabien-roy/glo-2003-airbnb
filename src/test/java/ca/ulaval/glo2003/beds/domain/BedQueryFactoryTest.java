@@ -26,10 +26,10 @@ class BedQueryFactoryTest {
   private BedQuery otherFilteredQuery = mock(BedQuery.class);
   private Map<String, String[]> params = new HashMap<>();
 
-  private List<BedQueryParamAssembler> queryParamAssemblers =
-      Collections.singletonList(queryAssembler);
-  private List<BedQueryParamAssembler> otherQueryParamAssemblers =
-      Arrays.asList(queryAssembler, otherQueryAssembler);
+  private Set<BedQueryParamAssembler> queryParamAssemblers =
+      new HashSet<>(Collections.singletonList(queryAssembler));
+  private Set<BedQueryParamAssembler> otherQueryParamAssemblers =
+      new HashSet<>(Arrays.asList(queryAssembler, otherQueryAssembler));
 
   @BeforeEach
   public void setUpMocks() {
@@ -44,7 +44,7 @@ class BedQueryFactoryTest {
 
   @Test
   public void create_withoutAssembler_shouldCreateQuery() {
-    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, Collections.emptyList());
+    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, Collections.emptySet());
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
