@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.rest.factories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.beds.exceptions.*;
-import ca.ulaval.glo2003.interfaces.rest.factories.CatchallErrorStatusFactory;
+import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorStatusFactory;
 import java.util.stream.Stream;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
