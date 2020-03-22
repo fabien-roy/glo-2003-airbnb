@@ -3,10 +3,7 @@ package ca.ulaval.glo2003.beds;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
-import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
-import ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler;
-import ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler;
+import ca.ulaval.glo2003.beds.domain.assemblers.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
@@ -41,5 +38,6 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(BedTypeQueryParamAssembler.class);
     multibinder.addBinding().to(CleaningFrequencyQueryParamAssembler.class);
     multibinder.addBinding().to(PackageQueryParamAssembler.class);
+    multibinder.addBinding().to(BloodTypesQueryParamAssembler.class);
   }
 }

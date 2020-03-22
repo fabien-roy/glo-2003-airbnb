@@ -6,15 +6,12 @@ import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class BedQueryFactory {
 
-  public static final String BLOOD_TYPES_PARAM = "bloodTypes";
   public static final String MIN_CAPACITY_PARAM = "minCapacity";
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
@@ -57,9 +54,6 @@ public class BedQueryFactory {
       builder =
           builder.withNumberOfNights(parseNumberOfNights(params.get(NUMBER_OF_NIGHTS_PARAM)[0]));
 
-    if (params.get(BLOOD_TYPES_PARAM) != null)
-      builder = builder.withBloodTypes(parseBloodTypes(params.get(BLOOD_TYPES_PARAM)));
-
     if (params.get(LODGING_MODE_PARAM) != null)
       builder = builder.withLodgingMode(LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]));
 
@@ -70,10 +64,6 @@ public class BedQueryFactory {
       builder = builder.withMaxDistance(parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]));
 
     return builder.build();
-  }
-
-  private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
-    return Arrays.stream(bloodTypes).map(BloodTypes::get).collect(Collectors.toList());
   }
 
   private int parseMinCapacity(String minCapacity) {

@@ -106,35 +106,6 @@ class BedQueryFactoryTest {
   /*
 
   @Test
-  public void create_withSingleBloodType_shouldCreateFilteredQuery() {
-    List<BloodTypes> bloodTypes = Collections.singletonList(bloodType);
-    params.put(BLOOD_TYPES_PARAM, new String[] {bloodType.toString()});
-    when(bedQueryBuilder.withBloodTypes(bloodTypes)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withMultipleBloodTypes_shouldCreateFilteredQuery() {
-    List<BloodTypes> bloodTypes = Arrays.asList(bloodType, otherBloodType);
-    params.put(BLOOD_TYPES_PARAM, new String[] {bloodType.toString(), otherBloodType.toString()});
-    when(bedQueryBuilder.withBloodTypes(bloodTypes)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withInvalidBloodTypes_shouldThrowInvalidBloodTypeException() {
-    params.put(BLOOD_TYPES_PARAM, new String[] {"invalidBloodTypes"});
-
-    assertThrows(InvalidBloodTypesException.class, () -> bedQueryFactory.create(params));
-  }
-
-  @Test
   public void create_withMinCapacity_shouldCreateFilteredQuery() {
     params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(capacity)});
     when(bedQueryBuilder.withMinCapacity(capacity)).thenReturn(bedQueryBuilder);
