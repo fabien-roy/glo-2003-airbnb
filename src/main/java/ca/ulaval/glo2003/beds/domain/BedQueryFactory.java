@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
-import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
@@ -12,7 +11,6 @@ import javax.inject.Inject;
 
 public class BedQueryFactory {
 
-  public static final String MIN_CAPACITY_PARAM = "minCapacity";
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
   public static final String LODGING_MODE_PARAM = "lodgingMode";
@@ -43,9 +41,6 @@ public class BedQueryFactory {
     for (BedQueryParamAssembler queryParamAssembler : queryParamAssemblers)
       builder = queryParamAssembler.assemble(builder, params);
 
-    if (params.get(MIN_CAPACITY_PARAM) != null)
-      builder = builder.withMinCapacity(parseMinCapacity(params.get(MIN_CAPACITY_PARAM)[0]));
-
     if (params.get(ARRIVAL_DATE_PARAM) != null)
       builder =
           builder.withArrivalDate(bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]));
@@ -66,10 +61,6 @@ public class BedQueryFactory {
     return builder.build();
   }
 
-  private int parseMinCapacity(String minCapacity) {
-    return parsePositiveInteger(minCapacity, new InvalidCapacityException());
-  }
-
   private int parseNumberOfNights(String numberOfNights) {
     return parsePositiveInteger(numberOfNights, new InvalidNumberOfNightsException());
   }
@@ -78,7 +69,6 @@ public class BedQueryFactory {
     return parsePositiveInteger(maxDistance, new InvalidMaxDistanceException());
   }
 
-  // TODO : Check if the exception thrown fit user stories
   private int parsePositiveInteger(String integer, RuntimeException exception) {
     int parsedInteger;
 

@@ -29,10 +29,6 @@ class BedQueryFactoryTest {
 
   private BedTypeQueryParamAssembler queryAssembler = mock(BedTypeQueryParamAssembler.class);
   private BedTypeQueryParamAssembler otherQueryAssembler = mock(BedTypeQueryParamAssembler.class);
-  private BedTypes bedType = createBedType();
-  private BloodTypes bloodType = BloodTypes.O_MINUS;
-  private BloodTypes otherBloodType = BloodTypes.AB_MINUS;
-  private int capacity = BedTypesCapacities.get(bedType);
   private BookingDate arrivalDate =
       new BookingDate(LocalDate.now()); // TODO : Use default constructor
   private int numberOfNights = 2;
@@ -104,31 +100,6 @@ class BedQueryFactoryTest {
   }
 
   /*
-
-  @Test
-  public void create_withMinCapacity_shouldCreateFilteredQuery() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(capacity)});
-    when(bedQueryBuilder.withMinCapacity(capacity)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withNegativeMinCapacity_shouldThrowInvalidCapacityException() {
-    int invalidCapacity = -1;
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(invalidCapacity)});
-
-    assertThrows(InvalidCapacityException.class, () -> bedQueryFactory.create(params));
-  }
-
-  @Test
-  public void create_withInvalidMinCapacity_shouldThrowInvalidCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {"invalidCapacity"});
-
-    assertThrows(InvalidCapacityException.class, () -> bedQueryFactory.create(params));
-  }
 
   @Test
   public void create_withArrivalDate_shouldCreateFilteredQuery() {
