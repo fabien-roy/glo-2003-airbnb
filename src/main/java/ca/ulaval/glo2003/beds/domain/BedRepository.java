@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.domain.queries.BedQueryList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +11,7 @@ public interface BedRepository {
 
   List<Bed> getAll();
 
-  List<Bed> getAll(BedQueryList query);
+  List<Bed> getAll(BedQuery query);
 
   Bed getByNumber(UUID number);
 }

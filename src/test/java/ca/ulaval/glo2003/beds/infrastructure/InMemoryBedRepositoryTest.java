@@ -8,8 +8,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.BedQuery;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.domain.queries.BedQueryList;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +27,7 @@ public class InMemoryBedRepositoryTest {
   private Bed nonExistentBed;
   private UUID bedNumber;
   private UUID nonExistentBedNumber;
-  private BedQueryList bedQuery;
+  private BedQuery bedQuery;
 
   @BeforeEach
   public void setUpRepository() {
@@ -46,7 +46,7 @@ public class InMemoryBedRepositoryTest {
   @BeforeEach
   public void setUpQuery() {
     filteredBeds = Collections.singletonList(aBed().build());
-    bedQuery = mock(BedQueryList.class);
+    bedQuery = mock(BedQuery.class);
     when(bedQuery.filter(any())).thenReturn(filteredBeds);
   }
 
