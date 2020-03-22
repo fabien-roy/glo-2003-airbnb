@@ -1,17 +1,15 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedType;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCleaningFrequency;
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.BED_TYPE_PARAM;
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.CLEANING_FREQUENCY_PARAM;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
+import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.BLOOD_TYPES_PARAM;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +21,8 @@ class BedQueryFactoryTest {
 
   private BedTypes bedType = createBedType();
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
+  private BloodTypes bloodType = BloodTypes.O_MINUS;
+  private BloodTypes otherBloodType = BloodTypes.AB_MINUS;
   private BedQuery query;
   private Map<String, String[]> params = new HashMap<>();
 
@@ -77,5 +77,34 @@ class BedQueryFactoryTest {
     params.put(CLEANING_FREQUENCY_PARAM, new String[] {"invalidCleaningFrequency"});
 
     assertThrows(InvalidCleaningFrequencyException.class, () -> bedQueryFactory.create(params));
+  }
+
+  @Test
+  public void create_withSingleBloodType_shouldCreateFilteredQuery() {
+    List<BloodTypes> bloodTypes = Collections.singletonList(bloodType);
+    params.put(BLOOD_TYPES_PARAM, new String[] {bloodType.toString()});
+    when(bedQueryBuilder.withBloodTypes(bloodTypes)).thenReturn(bedQueryBuilder);
+
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(query, actualQuery);
+  }
+
+  @Test
+  public void create_withMultipleBloodTypes_shouldCreateFilteredQuery() {
+    List<BloodTypes> bloodTypes = Arrays.asList(bloodType, otherBloodType);
+    params.put(BLOOD_TYPES_PARAM, new String[] {bloodType.toString(), otherBloodType.toString()});
+    when(bedQueryBuilder.withBloodTypes(bloodTypes)).thenReturn(bedQueryBuilder);
+
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(query, actualQuery);
+  }
+
+  @Test
+  public void create_withInvalidBloodTypes_shouldThrowInvalidBloodTypeException() {
+    params.put(BLOOD_TYPES_PARAM, new String[] {"invalidBloodTypes"});
+
+    assertThrows(InvalidBloodTypesException.class, () -> bedQueryFactory.create(params));
   }
 }
