@@ -12,6 +12,7 @@ import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder;
 import ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
@@ -58,7 +59,7 @@ class BookingMapperTest {
 
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
-    assertEquals(expectedPackageName, response.getBookingPackage());
+    assertEquals(expectedPackageName.toString(), response.getBookingPackage());
   }
 
   @Test
@@ -82,6 +83,16 @@ class BookingMapperTest {
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 
     assertEquals(expectedTotalValue, response.getTotal());
+  }
+
+  @Test
+  public void toResponse_shouldMapStatus() {
+    String expectedBookingStatus = BookingStatuses.BOOKED.toString();
+    Booking bookingToMap = BookingBuilder.aBooking().build();
+
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
+
+    assertEquals(expectedBookingStatus, response.getStatus());
   }
 
   @Test
