@@ -8,8 +8,6 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
 import ca.ulaval.glo2003.beds.exceptions.*;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
-import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +18,9 @@ class BedQueryFactoryTest {
   private static BedQueryBuilder bedQueryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder filteredBedQueryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder otherFilteredBedQueryBuilder = mock(BedQueryBuilder.class);
-  private static ZippopotamusClient zippopotamusClient;
 
   private BedTypeQueryParamAssembler queryAssembler = mock(BedTypeQueryParamAssembler.class);
   private BedTypeQueryParamAssembler otherQueryAssembler = mock(BedTypeQueryParamAssembler.class);
-  private ZipCode origin = createZipCode();
-  private int maxDistance = 30;
   private BedQuery query = mock(BedQuery.class);
   private BedQuery filteredQuery = mock(BedQuery.class);
   private BedQuery otherFilteredQuery = mock(BedQuery.class);
@@ -49,8 +44,7 @@ class BedQueryFactoryTest {
 
   @Test
   public void create_withoutAssembler_shouldCreateQuery() {
-    bedQueryFactory =
-        new BedQueryFactory(bedQueryBuilder, Collections.emptyList(), zippopotamusClient);
+    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, Collections.emptyList());
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
@@ -59,8 +53,7 @@ class BedQueryFactoryTest {
 
   @Test
   public void create_withSingleAssembler_shouldCreateQuery() {
-    bedQueryFactory =
-        new BedQueryFactory(bedQueryBuilder, queryParamAssemblers, zippopotamusClient);
+    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, queryParamAssemblers);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
@@ -69,48 +62,10 @@ class BedQueryFactoryTest {
 
   @Test
   public void create_withMultipleAssemblers_shouldCreateQuery() {
-    bedQueryFactory =
-        new BedQueryFactory(bedQueryBuilder, otherQueryParamAssemblers, zippopotamusClient);
+    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, otherQueryParamAssemblers);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
     assertSame(otherFilteredQuery, actualQuery);
   }
-
-  /*
-  @Test
-  public void create_withOrigin_shouldCreateFilteredQuery() {
-    params.put(ORIGIN_PARAM, new String[] {origin.getValue()});
-    when(bedQueryBuilder.withOrigin(origin)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withMaxDistance_shouldCreateFilteredQuery() {
-    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(maxDistance)});
-    when(bedQueryBuilder.withMaxDistance(maxDistance)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withNegativeMaxDistance_shouldThrowInvalidMaxDistanceException() {
-    int invalidMaxDistance = -1;
-    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(invalidMaxDistance)});
-
-    assertThrows(InvalidMaxDistanceException.class, () -> bedQueryFactory.create(params));
-  }
-
-  @Test
-  public void create_withInvalidMaxDistance_shouldThrowInvalidMaxDistanceException() {
-    params.put(MAX_DISTANCE_PARAM, new String[] {"invalidMaxDistance"});
-
-    assertThrows(InvalidMaxDistanceException.class, () -> bedQueryFactory.create(params));
-  }
-  */
 }

@@ -44,8 +44,7 @@ class NumberOfNightsQueryParamAssemblerTest {
 
   @Test
   public void create_withNegativeNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    int invalidNumberOfNights = -1;
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(invalidNumberOfNights)});
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(-1)});
 
     assertThrows(
         InvalidNumberOfNightsException.class, () -> queryAssembler.assemble(queryBuilder, params));

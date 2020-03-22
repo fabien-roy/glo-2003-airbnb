@@ -33,8 +33,6 @@ public class BedModule extends AbstractModule {
   }
 
   private void configureQueryParamAssemblers() {
-    bind(ArrivalDateQueryParamAssembler.class);
-
     Multibinder<BedQueryParamAssembler> multibinder =
         Multibinder.newSetBinder(binder(), new TypeLiteral<BedQueryParamAssembler>() {});
     multibinder.addBinding().to(BedTypeQueryParamAssembler.class);
@@ -45,5 +43,7 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(ArrivalDateQueryParamAssembler.class);
     multibinder.addBinding().to(NumberOfNightsQueryParamAssembler.class);
     multibinder.addBinding().to(LodgingModeQueryParamAssembler.class);
+    multibinder.addBinding().to(OriginQueryParamAssembler.class);
+    multibinder.addBinding().to(MaximumDistanceQueryParamAssembler.class);
   }
 }

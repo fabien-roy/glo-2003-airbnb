@@ -1,41 +1,41 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
-import static ca.ulaval.glo2003.beds.domain.assemblers.MinimalCapacityQueryParamAssembler.MIN_CAPACITY_PARAM;
+import static ca.ulaval.glo2003.beds.domain.assemblers.MaximumDistanceQueryParamAssembler.MAX_DISTANCE_PARAM;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MinimalCapacityQueryParamAssemblerTest {
+class MaximumDistanceQueryParamAssemblerTest {
 
   private static BedQueryParamAssembler queryAssembler;
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private int minCapacity = 100;
+  private int maxDistance = 30;
   private Map<String, String[]> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
-    queryAssembler = new MinimalCapacityQueryParamAssembler();
+    queryAssembler = new MaximumDistanceQueryParamAssembler();
   }
 
   @BeforeEach
   public void setUpMocks() {
-    when(queryBuilder.withMinCapacity(minCapacity)).thenReturn(assembledQueryBuilder);
+    when(queryBuilder.withMaxDistance(maxDistance)).thenReturn(assembledQueryBuilder);
   }
 
   @Test
-  public void assemble_withMinCapacity_shouldAssembleBuilder() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
+  public void assemble_withMaxDistance_shouldAssembleBuilder() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(maxDistance)});
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
@@ -43,18 +43,18 @@ class MinimalCapacityQueryParamAssemblerTest {
   }
 
   @Test
-  public void create_withNegativeMinCapacity_shouldThrowInvalidCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(-1)});
+  public void create_withNegativeMaxDistance_shouldThrowInvalidMaxDistanceException() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(-1)});
 
     assertThrows(
-        InvalidCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
+        InvalidMaxDistanceException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 
   @Test
-  public void create_withInvalidMinCapacity_shouldThrowInvalidCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {"invalidMinCapacity"});
+  public void create_withInvalidMaxDistance_shouldThrowInvalidMaxDistanceException() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {"invalidMaxDistance"});
 
     assertThrows(
-        InvalidCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
+        InvalidMaxDistanceException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 }
