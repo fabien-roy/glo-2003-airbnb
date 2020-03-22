@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 public class BedQueryFactory {
 
-  public static final String LODGING_MODE_PARAM = "lodgingMode";
   public static final String ORIGIN_PARAM = "origin";
   public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
@@ -33,9 +32,6 @@ public class BedQueryFactory {
 
     for (BedQueryParamAssembler queryParamAssembler : queryParamAssemblers)
       builder = queryParamAssembler.assemble(builder, params);
-
-    if (params.get(LODGING_MODE_PARAM) != null)
-      builder = builder.withLodgingMode(LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]));
 
     if (params.get(ORIGIN_PARAM) != null)
       builder = builder.withOrigin(zippopotamusClient.validateZipCode(params.get(ORIGIN_PARAM)[0]));

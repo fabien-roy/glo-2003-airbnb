@@ -43,5 +43,7 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(BloodTypesQueryParamAssembler.class);
     multibinder.addBinding().to(MinimalCapacityQueryParamAssembler.class);
     multibinder.addBinding().to(ArrivalDateQueryParamAssembler.class);
+    multibinder.addBinding().to(NumberOfNightsQueryParamAssembler.class);
+    multibinder.addBinding().to(LodgingModeQueryParamAssembler.class);
   }
 }

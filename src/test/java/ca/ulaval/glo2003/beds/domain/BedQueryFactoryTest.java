@@ -11,7 +11,6 @@ import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import java.util.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +24,6 @@ class BedQueryFactoryTest {
 
   private BedTypeQueryParamAssembler queryAssembler = mock(BedTypeQueryParamAssembler.class);
   private BedTypeQueryParamAssembler otherQueryAssembler = mock(BedTypeQueryParamAssembler.class);
-  private int numberOfNights = 2;
   private ZipCode origin = createZipCode();
   private int maxDistance = 30;
   private BedQuery query = mock(BedQuery.class);
@@ -37,14 +35,6 @@ class BedQueryFactoryTest {
       Collections.singletonList(queryAssembler);
   private List<BedQueryParamAssembler> otherQueryParamAssemblers =
       Arrays.asList(queryAssembler, otherQueryAssembler);
-
-  // TODO : Remove once every param is dispatched
-  @BeforeAll
-  public static void setUpFactory() {
-    zippopotamusClient = mock(ZippopotamusClient.class);
-    bedQueryFactory =
-        new BedQueryFactory(bedQueryBuilder, Collections.emptyList(), zippopotamusClient);
-  }
 
   @BeforeEach
   public void setUpMocks() {
