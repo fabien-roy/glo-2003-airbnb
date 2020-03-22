@@ -17,6 +17,18 @@ public class InMemoryAvailabilityFilter implements BedFilter {
     this.numberOfNights = numberOfNights;
   }
 
+  public int getMinCapacity() {
+    return minCapacity;
+  }
+
+  public BookingDate getArrivalDate() {
+    return arrivalDate;
+  }
+
+  public int getNumberOfNights() {
+    return numberOfNights;
+  }
+
   @Override
   public List<Bed> filter(List<Bed> beds) {
     return beds; // TODO

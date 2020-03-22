@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.infrastructure;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,13 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
   private static final int UNSET_INT = 0;
   private static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
+  private static final int DEFAULT_MAX_DISTANCE = 10;
 
   private int minCapacity = UNSET_INT;
   private BookingDate arrivalDate = null;
   private int numberOfNights = UNSET_INT;
+  private ZipCode origin = null;
+  private int maxDistance = UNSET_INT;
 
   @Override
   public BedQueryBuilder aBedQuery() {
@@ -72,8 +76,21 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   @Override
+  public InMemoryBedQueryBuilder withOrigin(ZipCode origin) {
+    this.origin = origin;
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withMaxDistance(int maxDistance) {
+    this.maxDistance = maxDistance;
+    return this;
+  }
+
+  @Override
   public BedQuery build() {
     addAvailabilityFilter();
+    addDistanceFilter();
     return new BedQuery(filters);
   }
 
@@ -89,6 +106,14 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
     }
   }
 
+  private void addDistanceFilter() {
+    if (origin != null) {
+      filters.add(new InMemoryDistanceFilter(origin, getMaxDistance()));
+    } else {
+      if (maxDistance != UNSET_INT) throw new RuntimeException(); // TODO : Throw correct exception
+    }
+  }
+
   // TODO : Use default constructor
   private BookingDate getArrivalDate() {
     return arrivalDate == null ? new BookingDate(LocalDate.now()) : arrivalDate;
@@ -96,5 +121,9 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
   private int getNumberOfNights() {
     return numberOfNights == UNSET_INT ? DEFAULT_NUMBER_OF_NIGHTS : numberOfNights;
+  }
+
+  private int getMaxDistance() {
+    return maxDistance == UNSET_INT ? DEFAULT_MAX_DISTANCE : maxDistance;
   }
 }

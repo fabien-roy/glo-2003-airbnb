@@ -1,8 +1,10 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
+import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +22,22 @@ public class BedQueryFactory {
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
   public static final String LODGING_MODE_PARAM = "lodgingMode";
+  public static final String ORIGIN_PARAM = "origin";
+  public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
   private final BedQueryBuilder bedQueryBuilder;
   private final BookingDateMapper bookingDateMapper;
+  private final ZippopotamusClient
+      zippopotamusClient; // TODO : Use an interface, like ZipCodeClient
 
   @Inject
-  public BedQueryFactory(BedQueryBuilder bedQueryBuilder, BookingDateMapper bookingDateMapper) {
+  public BedQueryFactory(
+      BedQueryBuilder bedQueryBuilder,
+      BookingDateMapper bookingDateMapper,
+      ZippopotamusClient zippopotamusClient) {
     this.bedQueryBuilder = bedQueryBuilder;
     this.bookingDateMapper = bookingDateMapper;
+    this.zippopotamusClient = zippopotamusClient;
   }
 
   public BedQuery create(Map<String, String[]> params) {
@@ -61,6 +71,12 @@ public class BedQueryFactory {
     if (params.get(LODGING_MODE_PARAM) != null)
       builder = builder.withLodgingMode(LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]));
 
+    if (params.get(ORIGIN_PARAM) != null)
+      builder = builder.withOrigin(zippopotamusClient.validateZipCode(params.get(ORIGIN_PARAM)[0]));
+
+    if (params.get(MAX_DISTANCE_PARAM) != null)
+      builder = builder.withMaxDistance(parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]));
+
     return builder.build();
   }
 
@@ -74,6 +90,10 @@ public class BedQueryFactory {
 
   private int parseNumberOfNights(String numberOfNights) {
     return parsePositiveInteger(numberOfNights, new InvalidNumberOfNightsException());
+  }
+
+  private int parseMaxDistance(String maxDistance) {
+    return parsePositiveInteger(maxDistance, new InvalidMaxDistanceException());
   }
 
   // TODO : Check if the exception thrown fit user stories

@@ -72,4 +72,6 @@ class InMemoryBedQueryBuilderTest {
     assertEquals(
         lodgingMode, ((InMemoryLodgingModeFilter) bedQuery.getFilters().get(0)).getLodgingMode());
   }
+
+  // TODO : Tests for distance
 }

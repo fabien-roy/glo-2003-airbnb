@@ -11,6 +11,8 @@ import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import java.time.LocalDate;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,6 +24,7 @@ class BedQueryFactoryTest {
   private static BedQueryFactory bedQueryFactory;
   private static BedQueryBuilder bedQueryBuilder;
   private static BookingDateMapper bookingDateMapper;
+  private static ZippopotamusClient zippopotamusClient;
 
   private BedTypes bedType = createBedType();
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
@@ -32,6 +35,8 @@ class BedQueryFactoryTest {
   private BookingDate arrivalDate =
       new BookingDate(LocalDate.now()); // TODO : Use default constructor
   private int numberOfNights = 2;
+  private ZipCode origin = createZipCode();
+  private int maxDistance = 30;
   private BedQuery query;
   private Map<String, String[]> params = new HashMap<>();
 
@@ -39,7 +44,8 @@ class BedQueryFactoryTest {
   public static void setUpFactory() {
     bedQueryBuilder = mock(BedQueryBuilder.class);
     bookingDateMapper = mock(BookingDateMapper.class);
-    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, bookingDateMapper);
+    zippopotamusClient = mock(ZippopotamusClient.class);
+    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, bookingDateMapper, zippopotamusClient);
   }
 
   @BeforeEach
@@ -138,6 +144,7 @@ class BedQueryFactoryTest {
 
   @Test
   public void create_withMinCapacity_shouldCreateFilteredQuery() {
+    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(capacity)});
     when(bedQueryBuilder.withMinCapacity(capacity)).thenReturn(bedQueryBuilder);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
@@ -172,6 +179,7 @@ class BedQueryFactoryTest {
 
   @Test
   public void create_withNumberOfNights_shouldCreateFilteredQuery() {
+    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(numberOfNights)});
     when(bedQueryBuilder.withNumberOfNights(numberOfNights)).thenReturn(bedQueryBuilder);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
@@ -192,5 +200,40 @@ class BedQueryFactoryTest {
     params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {"invalidNumberOfNights"});
 
     assertThrows(InvalidNumberOfNightsException.class, () -> bedQueryFactory.create(params));
+  }
+
+  @Test
+  public void create_withOrigin_shouldCreateFilteredQuery() {
+    params.put(ORIGIN_PARAM, new String[] {origin.getValue()});
+    when(bedQueryBuilder.withOrigin(origin)).thenReturn(bedQueryBuilder);
+
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(query, actualQuery);
+  }
+
+  @Test
+  public void create_withMaxDistance_shouldCreateFilteredQuery() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(maxDistance)});
+    when(bedQueryBuilder.withMaxDistance(maxDistance)).thenReturn(bedQueryBuilder);
+
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(query, actualQuery);
+  }
+
+  @Test
+  public void create_withNegativeMaxDistance_shouldThrowInvalidMaxDistanceException() {
+    int invalidMaxDistance = -1;
+    params.put(MAX_DISTANCE_PARAM, new String[] {Integer.toString(invalidMaxDistance)});
+
+    assertThrows(InvalidMaxDistanceException.class, () -> bedQueryFactory.create(params));
+  }
+
+  @Test
+  public void create_withInvalidMaxDistance_shouldThrowInvalidMaxDistanceException() {
+    params.put(MAX_DISTANCE_PARAM, new String[] {"invalidMaxDistance"});
+
+    assertThrows(InvalidMaxDistanceException.class, () -> bedQueryFactory.create(params));
   }
 }

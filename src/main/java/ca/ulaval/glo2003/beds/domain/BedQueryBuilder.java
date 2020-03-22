@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.List;
 
 public interface BedQueryBuilder {
@@ -22,6 +23,10 @@ public interface BedQueryBuilder {
   BedQueryBuilder withNumberOfNights(int numberOfNights);
 
   BedQueryBuilder withLodgingMode(LodgingModes lodgingMode);
+
+  BedQueryBuilder withOrigin(ZipCode origin);
+
+  BedQueryBuilder withMaxDistance(int maxDistance);
 
   BedQuery build();
 }
