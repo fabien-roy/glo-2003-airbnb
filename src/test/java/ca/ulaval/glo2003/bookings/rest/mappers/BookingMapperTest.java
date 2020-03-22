@@ -74,6 +74,16 @@ class BookingMapperTest {
   }
 
   @Test
+  public void toResponse_shouldMapColonySize() {
+    int expectedColonySize = 10;
+    Booking bookingToMap = BookingBuilder.aBooking().withColonySize(expectedColonySize).build();
+
+    BookingResponse response = bookingMapper.toResponse(bookingToMap);
+
+    assertEquals(expectedColonySize, response.getColonySize());
+  }
+
+  @Test
   public void toResponse_shouldMapTotal() {
     double expectedTotalValue = 100.00;
     Price expectedTotal = new Price(BigDecimal.valueOf(expectedTotalValue));
