@@ -1,17 +1,26 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter;
-import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter;
+import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
-  List<BedFilter> filters = new ArrayList<>();
+  private List<BedFilter> filters = new ArrayList<>();
+
+  private static final int UNSET_INT = 0;
+
+  private static final int UNSET_MIN_CAPACITY = UNSET_INT;
+  private int minCapacity = UNSET_MIN_CAPACITY;
+
+  private static final BookingDate UNSET_BOOKING_DATE = null;
+  private BookingDate arrivalDate = UNSET_BOOKING_DATE;
+
+  private static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
+  private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
 
   @Override
   public BedQueryBuilder aBedQuery() {
@@ -44,24 +53,46 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
   @Override
   public InMemoryBedQueryBuilder withMinCapacity(int minCapacity) {
-    // TODO
+    this.minCapacity = minCapacity;
     return this;
   }
 
   @Override
   public InMemoryBedQueryBuilder withArrivalDate(BookingDate arrivalDate) {
-    // TODO
+    this.arrivalDate = arrivalDate;
     return this;
   }
 
   @Override
   public InMemoryBedQueryBuilder withNumberOfNights(int numberOfNights) {
-    // TODO
+    this.numberOfNights = numberOfNights;
     return this;
   }
 
   @Override
   public BedQuery build() {
+    addAvailabilityFilter();
     return new BedQuery(filters);
+  }
+
+  private void addAvailabilityFilter() {
+    if (minCapacity != UNSET_INT) {
+      filters.add(
+          new InMemoryAvailabilityFilter(minCapacity, getArrivalDate(), getNumberOfNights()));
+    } else {
+      if (arrivalDate != null) throw new RuntimeException(); // TODO : Throw correct exception
+
+      if (numberOfNights != UNSET_INT)
+        throw new RuntimeException(); // TODO : Throw correct exception
+    }
+  }
+
+  // TODO : Use default constructor
+  private BookingDate getArrivalDate() {
+    return arrivalDate == null ? new BookingDate(LocalDate.now()) : arrivalDate;
+  }
+
+  private int getNumberOfNights() {
+    return numberOfNights == UNSET_INT ? DEFAULT_NUMBER_OF_NIGHTS : numberOfNights;
   }
 }

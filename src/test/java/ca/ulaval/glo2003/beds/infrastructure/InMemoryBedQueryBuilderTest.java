@@ -64,4 +64,6 @@ class InMemoryBedQueryBuilderTest {
 
     assertEquals(packageName, ((InMemoryPackageFilter) bedQuery.getFilters().get(0)).getPackage());
   }
+
+  // TODO : Tests for availability
 }
