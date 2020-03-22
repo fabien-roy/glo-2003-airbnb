@@ -9,10 +9,10 @@ public class BedTypeQueryParamAssembler implements BedQueryParamAssembler {
   public static final String BED_TYPE_PARAM = "bedType";
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
-    return params.get(BED_TYPE_PARAM) != null ? builder.withBedType(getBedType(params)) : builder;
+    return params.get(BED_TYPE_PARAM) != null ? builder.withBedType(parseBedType(params)) : builder;
   }
 
-  private BedTypes getBedType(Map<String, String[]> params) {
+  private BedTypes parseBedType(Map<String, String[]> params) {
     return BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
   }
 }

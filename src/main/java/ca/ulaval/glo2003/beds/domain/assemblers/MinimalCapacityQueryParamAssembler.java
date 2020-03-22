@@ -10,11 +10,11 @@ public class MinimalCapacityQueryParamAssembler extends PositiveIntegerQueryPara
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
     return params.get(MIN_CAPACITY_PARAM) != null
-        ? builder.withMinCapacity(parseMinCapacity(params.get(MIN_CAPACITY_PARAM)[0]))
+        ? builder.withMinCapacity(parseMinCapacity(params))
         : builder;
   }
 
-  private int parseMinCapacity(String minCapacity) {
-    return parsePositiveInteger(minCapacity, new InvalidCapacityException());
+  private int parseMinCapacity(Map<String, String[]> params) {
+    return parsePositiveInteger(params.get(MIN_CAPACITY_PARAM)[0], new InvalidCapacityException());
   }
 }

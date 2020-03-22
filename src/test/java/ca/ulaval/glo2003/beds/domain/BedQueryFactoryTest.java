@@ -88,42 +88,6 @@ class BedQueryFactoryTest {
   }
 
   /*
-
-  @Test
-  public void create_withArrivalDate_shouldCreateFilteredQuery() {
-    params.put(ARRIVAL_DATE_PARAM, new String[] {arrivalDate.getValue().toString()});
-    when(bedQueryBuilder.withArrivalDate(arrivalDate)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withNumberOfNights_shouldCreateFilteredQuery() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(numberOfNights)});
-    when(bedQueryBuilder.withNumberOfNights(numberOfNights)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withNegativeNumberOfNights_shouldThrowNumberOfNightsException() {
-    int invalidNumberOfNights = -1;
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(invalidNumberOfNights)});
-
-    assertThrows(InvalidNumberOfNightsException.class, () -> bedQueryFactory.create(params));
-  }
-
-  @Test
-  public void create_withInvalidNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {"invalidNumberOfNights"});
-
-    assertThrows(InvalidNumberOfNightsException.class, () -> bedQueryFactory.create(params));
-  }
-
   @Test
   public void create_withOrigin_shouldCreateFilteredQuery() {
     params.put(ORIGIN_PARAM, new String[] {origin.getValue()});

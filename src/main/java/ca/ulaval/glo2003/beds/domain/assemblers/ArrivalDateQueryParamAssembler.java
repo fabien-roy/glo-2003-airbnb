@@ -19,11 +19,11 @@ public class ArrivalDateQueryParamAssembler implements BedQueryParamAssembler {
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
     return params.get(ARRIVAL_DATE_PARAM) != null
-        ? builder.withArrivalDate(getArrivalDate(params))
+        ? builder.withArrivalDate(parseArrivalDate(params))
         : builder;
   }
 
-  private BookingDate getArrivalDate(Map<String, String[]> params) {
+  private BookingDate parseArrivalDate(Map<String, String[]> params) {
     return bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]);
   }
 }

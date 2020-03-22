@@ -10,11 +10,11 @@ public class CleaningFrequencyQueryParamAssembler implements BedQueryParamAssemb
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
     return params.get(CLEANING_FREQUENCY_PARAM) != null
-        ? builder.withCleaningFrequency(getCleaningFrequency(params))
+        ? builder.withCleaningFrequency(parseCleaningFrequency(params))
         : builder;
   }
 
-  private CleaningFrequencies getCleaningFrequency(Map<String, String[]> params) {
+  private CleaningFrequencies parseCleaningFrequency(Map<String, String[]> params) {
     return CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]);
   }
 }

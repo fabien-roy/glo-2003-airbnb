@@ -10,11 +10,11 @@ public class PackageQueryParamAssembler implements BedQueryParamAssembler {
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
     return params.get(PACKAGE_NAME_PARAM) != null
-        ? builder.withPackage(getPackage(params))
+        ? builder.withPackage(parsePackage(params))
         : builder;
   }
 
-  private Packages getPackage(Map<String, String[]> params) {
+  private Packages parsePackage(Map<String, String[]> params) {
     return Packages.get(params.get(PACKAGE_NAME_PARAM)[0]);
   }
 }
