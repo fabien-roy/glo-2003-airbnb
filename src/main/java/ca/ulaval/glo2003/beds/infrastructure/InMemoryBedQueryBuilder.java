@@ -1,10 +1,8 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
-import ca.ulaval.glo2003.beds.domain.BedFilter;
-import ca.ulaval.glo2003.beds.domain.BedQuery;
-import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter;
+import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +18,12 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   @Override
   public InMemoryBedQueryBuilder withBedType(BedTypes bedType) {
     this.filters.add(new InMemoryBedTypeFilter(bedType));
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withCleaningFrequency(CleaningFrequencies cleaningFrequency) {
+    this.filters.add(new InMemoryCleaningFrequencyFilter(cleaningFrequency));
     return this;
   }
 

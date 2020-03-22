@@ -7,6 +7,7 @@ public class BedQueryFactory {
 
   // TODO : With BedQueryMapBuilder, we will have the correct params
   public static final String BED_TYPE_PARAM = "bedType";
+  public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
 
   private final BedQueryBuilder bedQueryBuilder;
 
@@ -20,6 +21,11 @@ public class BedQueryFactory {
 
     if (params.get(BED_TYPE_PARAM) != null)
       builder = builder.withBedType(BedTypes.get(params.get(BED_TYPE_PARAM)[0]));
+
+    if (params.get(CLEANING_FREQUENCY_PARAM) != null)
+      builder =
+          builder.withCleaningFrequency(
+              CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]));
 
     return builder.build();
   }

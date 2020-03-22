@@ -6,5 +6,7 @@ public interface BedQueryBuilder {
 
   BedQueryBuilder withBedType(BedTypes bedType);
 
+  BedQueryBuilder withCleaningFrequency(CleaningFrequencies cleaningFrequency);
+
   BedQuery build();
 }

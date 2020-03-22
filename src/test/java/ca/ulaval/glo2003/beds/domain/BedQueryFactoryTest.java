@@ -1,12 +1,15 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedType;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCleaningFrequency;
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.BED_TYPE_PARAM;
+import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.CLEANING_FREQUENCY_PARAM;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,6 +22,7 @@ class BedQueryFactoryTest {
   private static BedQueryBuilder bedQueryBuilder;
 
   private BedTypes bedType = createBedType();
+  private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
   private BedQuery query;
   private Map<String, String[]> params = new HashMap<>();
 
@@ -52,9 +56,26 @@ class BedQueryFactoryTest {
   }
 
   @Test
-  public void create_withInvalidBedType_shouldCreateFilteredQuery() {
+  public void create_withInvalidBedType_shouldThrowInvalidBedTypeException() {
     params.put(BED_TYPE_PARAM, new String[] {"invalidBedType"});
 
     assertThrows(InvalidBedTypeException.class, () -> bedQueryFactory.create(params));
+  }
+
+  @Test
+  public void create_withCleaningFrequency_shouldCreateFilteredQuery() {
+    params.put(CLEANING_FREQUENCY_PARAM, new String[] {cleaningFrequency.toString()});
+    when(bedQueryBuilder.withCleaningFrequency(cleaningFrequency)).thenReturn(bedQueryBuilder);
+
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(query, actualQuery);
+  }
+
+  @Test
+  public void create_withInvalidCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
+    params.put(CLEANING_FREQUENCY_PARAM, new String[] {"invalidCleaningFrequency"});
+
+    assertThrows(InvalidCleaningFrequencyException.class, () -> bedQueryFactory.create(params));
   }
 }
