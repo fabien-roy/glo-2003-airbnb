@@ -94,8 +94,7 @@ class BookingResourceTest {
     CancelResponse expectedCancelResponse = mock(CancelResponse.class);
     when(bookingService.cancel(bedNumber, bookingNumber)).thenReturn(expectedCancelResponse);
 
-    CancelResponse cancelResponse =
-            (CancelResponse) bookingResource.cancel(request,response);
+    CancelResponse cancelResponse = (CancelResponse) bookingResource.cancel(request, response);
 
     assertSame(expectedCancelResponse, cancelResponse);
   }
@@ -105,9 +104,8 @@ class BookingResourceTest {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
 
-    bookingResource.cancel(request,response);
+    bookingResource.cancel(request, response);
 
     verify(response).status(HttpStatus.OK_200);
-
   }
 }

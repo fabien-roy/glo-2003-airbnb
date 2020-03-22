@@ -8,8 +8,6 @@ import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import org.junit.platform.engine.TestExecutionResult;
-
 import java.util.UUID;
 
 public class BookingBuilder {
@@ -38,7 +36,7 @@ public class BookingBuilder {
   private Packages packageName = DEFAULT_PACKAGE;
 
   private BookingStatuses DEFAULT_STATUS = createBookingStatus();
-  private BookingStatuses statuses =DEFAULT_STATUS;
+  private BookingStatuses statuses = DEFAULT_STATUS;
 
   public static BookingBuilder aBooking() {
     return new BookingBuilder();

@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.bookings.domain;
 
 import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
-import static ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingObjectMother.createBookingStatus;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.bookings.domain.helpers.BookingBuilder;
@@ -150,12 +149,10 @@ class BookingTest {
   public void construct_shouldSetStatusToBooked() {
     BookingStatuses expectedBookingStatus = BookingStatuses.BOOKED;
 
-    Booking booking = BookingBuilder.aBooking()
-            .build();
+    Booking booking = BookingBuilder.aBooking().build();
 
     BookingStatuses BookingStatus = booking.getStatus();
 
     assertEquals(expectedBookingStatus, BookingStatus);
-
   }
 }

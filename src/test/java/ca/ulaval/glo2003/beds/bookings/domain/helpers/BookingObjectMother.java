@@ -4,7 +4,6 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.create
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.beds.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -51,5 +50,4 @@ public class BookingObjectMother {
   public static Packages createPackageName() {
     return randomEnum(Packages.class);
   }
-
 }

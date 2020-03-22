@@ -21,7 +21,6 @@ public class Booking {
   private List<Transaction> transactions = new ArrayList<>();
   private BookingStatuses status;
 
-
   public Booking(
       PublicKey tenantPublicKey,
       BookingDate arrivalDate,
@@ -85,5 +84,7 @@ public class Booking {
     return arrivalDate.getValue().plusDays(numberOfNights - 1);
   }
 
-  public BookingStatuses getStatus() {return status;}
+  public BookingStatuses getStatus() {
+    return status;
+  }
 }

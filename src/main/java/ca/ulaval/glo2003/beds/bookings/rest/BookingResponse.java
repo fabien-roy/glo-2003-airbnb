@@ -18,7 +18,11 @@ public class BookingResponse {
   private Double total;
 
   public BookingResponse(
-      String arrivalDate, int numberOfNights, Packages bookingPackage, Double total, String status) {
+      String arrivalDate,
+      int numberOfNights,
+      Packages bookingPackage,
+      Double total,
+      String status) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
     this.bookingPackage = bookingPackage;
@@ -38,7 +42,11 @@ public class BookingResponse {
     return bookingPackage;
   }
 
-  public Double getTotal() { return total; }
+  public Double getTotal() {
+    return total;
+  }
 
-  public String getStatus() { return  status; }
+  public String getStatus() {
+    return status;
+  }
 }
