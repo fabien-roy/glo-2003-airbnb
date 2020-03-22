@@ -4,6 +4,8 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter;
+import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,30 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   @Override
   public InMemoryBedQueryBuilder withBloodTypes(List<BloodTypes> bloodTypes) {
     this.filters.add(new InMemoryBloodTypesFilter(bloodTypes));
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withPackage(Packages packageName) {
+    this.filters.add(new InMemoryPackageFilter(packageName));
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withMinCapacity(int minCapacity) {
+    // TODO
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withArrivalDate(BookingDate arrivalDate) {
+    // TODO
+    return this;
+  }
+
+  @Override
+  public InMemoryBedQueryBuilder withNumberOfNights(int numberOfNights) {
+    // TODO
     return this;
   }
 

@@ -11,7 +11,7 @@ public class BookingErrorResponseFactory extends CatchallErrorResponseFactory {
       return bookingNotFound(((BookingNotFoundException) exception).getBookingNumber());
     } else if (exception instanceof InvalidArrivalDateException) {
       return invalidArrivalDate();
-    } else if (exception instanceof InvalidNumberOfNights) {
+    } else if (exception instanceof InvalidNumberOfNightsException) {
       return invalidNumberOfNights();
     } else if (exception instanceof InvalidColonySizeException) {
       return invalidColonySize();

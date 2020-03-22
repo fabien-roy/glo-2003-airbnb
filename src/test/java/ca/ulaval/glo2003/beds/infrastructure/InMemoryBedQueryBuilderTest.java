@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter;
 import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter;
+import ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ class InMemoryBedQueryBuilderTest {
   private BedTypes bedType = createBedType();
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
   private List<BloodTypes> bloodTypes = createBloodTypes();
+  private Packages packageName = Packages.BLOODTHIRSTY;
 
   @BeforeEach
   public void setUpBuilder() {
@@ -54,5 +56,12 @@ class InMemoryBedQueryBuilderTest {
 
     assertEquals(
         bloodTypes, ((InMemoryBloodTypesFilter) bedQuery.getFilters().get(0)).getBloodTypes());
+  }
+
+  @Test
+  public void withPackage_shouldAddPackageFilter() {
+    BedQuery bedQuery = bedQueryBuilder.aBedQuery().withPackage(packageName).build();
+
+    assertEquals(packageName, ((InMemoryPackageFilter) bedQuery.getFilters().get(0)).getPackage());
   }
 }
