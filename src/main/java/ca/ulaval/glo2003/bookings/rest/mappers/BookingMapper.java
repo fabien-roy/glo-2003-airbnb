@@ -51,6 +51,7 @@ public class BookingMapper {
     return new BookingResponse(
         arrivalDate,
         booking.getNumberOfNights(),
+        booking.getColonySize(),
         booking.getPackage().toString(),
         total,
         booking.getStatus().toString());
