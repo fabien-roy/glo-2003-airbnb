@@ -15,6 +15,7 @@ public class BedQuery {
     return filters;
   }
 
+  // TODO : This assumes a in memory repository
   public List<Bed> filter(List<Bed> beds) {
     List<Bed> filteredBeds = new ArrayList<>(beds);
 

@@ -30,8 +30,6 @@ class BedQueryTest {
     beds = Arrays.asList(bed, filteredBed, otherFilteredBed);
     filteredBeds = Arrays.asList(filteredBed, otherFilteredBed);
     otherFilteredBeds = Collections.singletonList(otherFilteredBed);
-    filter = mock(BedFilter.class);
-    otherFilter = mock(BedFilter.class);
     when(filter.filter(beds)).thenReturn(filteredBeds);
     when(otherFilter.filter(filteredBeds)).thenReturn(otherFilteredBeds);
   }

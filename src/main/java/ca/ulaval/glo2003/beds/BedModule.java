@@ -3,6 +3,9 @@ package ca.ulaval.glo2003.beds;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
+import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
+import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
+import ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
@@ -12,11 +15,15 @@ import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.services.BedService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.Multibinder;
 
 public class BedModule extends AbstractModule {
 
   @Override
   protected void configure() {
+    configureAssemblers();
+
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
     bind(BedQueryFactory.class);
@@ -25,5 +32,12 @@ public class BedModule extends AbstractModule {
     bind(BedMatcherMapper.class);
     bind(PackageMapper.class);
     bind(BedResource.class);
+  }
+
+  private void configureAssemblers() {
+    Multibinder<BedQueryParamAssembler> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<BedQueryParamAssembler>() {});
+    multibinder.addBinding().to(BedTypeQueryParamAssembler.class);
+    multibinder.addBinding().to(CleaningFrequencyQueryParamAssembler.class);
   }
 }

@@ -1,15 +1,14 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.domain.BedQueryFactory.NUMBER_OF_NIGHTS_PARAM;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
-import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.BLOOD_TYPES_PARAM;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
+import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
 import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
@@ -22,12 +21,15 @@ import org.junit.jupiter.api.Test;
 class BedQueryFactoryTest {
 
   private static BedQueryFactory bedQueryFactory;
-  private static BedQueryBuilder bedQueryBuilder;
+  private static BedQueryBuilder bedQueryBuilder = mock(BedQueryBuilder.class);
+  private static BedQueryBuilder filteredBedQueryBuilder = mock(BedQueryBuilder.class);
+  private static BedQueryBuilder otherFilteredBedQueryBuilder = mock(BedQueryBuilder.class);
   private static BookingDateMapper bookingDateMapper;
   private static ZippopotamusClient zippopotamusClient;
 
+  private BedTypeQueryParamAssembler queryAssembler = mock(BedTypeQueryParamAssembler.class);
+  private BedTypeQueryParamAssembler otherQueryAssembler = mock(BedTypeQueryParamAssembler.class);
   private BedTypes bedType = createBedType();
-  private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
   private BloodTypes bloodType = BloodTypes.O_MINUS;
   private BloodTypes otherBloodType = BloodTypes.AB_MINUS;
   private Packages packageName = Packages.BLOODTHIRSTY;
@@ -37,52 +39,43 @@ class BedQueryFactoryTest {
   private int numberOfNights = 2;
   private ZipCode origin = createZipCode();
   private int maxDistance = 30;
-  private BedQuery query;
+  private BedQuery query = mock(BedQuery.class);
+  private BedQuery filteredQuery = mock(BedQuery.class);
+  private BedQuery otherFilteredQuery = mock(BedQuery.class);
   private Map<String, String[]> params = new HashMap<>();
 
+  private List<BedQueryParamAssembler> queryParamAssemblers =
+      Collections.singletonList(queryAssembler);
+  private List<BedQueryParamAssembler> otherQueryParamAssemblers =
+      Arrays.asList(queryAssembler, otherQueryAssembler);
+
+  // TODO : Remove once every param is dispatched
   @BeforeAll
   public static void setUpFactory() {
-    bedQueryBuilder = mock(BedQueryBuilder.class);
     bookingDateMapper = mock(BookingDateMapper.class);
     zippopotamusClient = mock(ZippopotamusClient.class);
-    bedQueryFactory = new BedQueryFactory(bedQueryBuilder, bookingDateMapper, zippopotamusClient);
+    bedQueryFactory =
+        new BedQueryFactory(
+            bedQueryBuilder, Collections.emptyList(), bookingDateMapper, zippopotamusClient);
   }
 
   @BeforeEach
   public void setUpMocks() {
     when(bedQueryBuilder.aBedQuery()).thenReturn(bedQueryBuilder);
     when(bedQueryBuilder.build()).thenReturn(query);
+    when(filteredBedQueryBuilder.build()).thenReturn(filteredQuery);
+    when(otherFilteredBedQueryBuilder.build()).thenReturn(otherFilteredQuery);
     when(bookingDateMapper.fromString(arrivalDate.getValue().toString())).thenReturn(arrivalDate);
+    when(queryAssembler.assemble(bedQueryBuilder, params)).thenReturn(filteredBedQueryBuilder);
+    when(otherQueryAssembler.assemble(filteredBedQueryBuilder, params))
+        .thenReturn(otherFilteredBedQueryBuilder);
   }
 
   @Test
-  public void create_shouldCreateQuery() {
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withBedType_shouldCreateFilteredQuery() {
-    params.put(BED_TYPE_PARAM, new String[] {bedType.toString()});
-    when(bedQueryBuilder.withBedType(bedType)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withInvalidBedType_shouldThrowInvalidBedTypeException() {
-    params.put(BED_TYPE_PARAM, new String[] {"invalidBedType"});
-
-    assertThrows(InvalidBedTypeException.class, () -> bedQueryFactory.create(params));
-  }
-
-  @Test
-  public void create_withCleaningFrequency_shouldCreateFilteredQuery() {
-    params.put(CLEANING_FREQUENCY_PARAM, new String[] {cleaningFrequency.toString()});
-    when(bedQueryBuilder.withCleaningFrequency(cleaningFrequency)).thenReturn(bedQueryBuilder);
+  public void create_withoutAssembler_shouldCreateQuery() {
+    bedQueryFactory =
+        new BedQueryFactory(
+            bedQueryBuilder, Collections.emptyList(), bookingDateMapper, zippopotamusClient);
 
     BedQuery actualQuery = bedQueryFactory.create(params);
 
@@ -90,11 +83,28 @@ class BedQueryFactoryTest {
   }
 
   @Test
-  public void create_withInvalidCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
-    params.put(CLEANING_FREQUENCY_PARAM, new String[] {"invalidCleaningFrequency"});
+  public void create_withSingleAssembler_shouldCreateQuery() {
+    bedQueryFactory =
+        new BedQueryFactory(
+            bedQueryBuilder, queryParamAssemblers, bookingDateMapper, zippopotamusClient);
 
-    assertThrows(InvalidCleaningFrequencyException.class, () -> bedQueryFactory.create(params));
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(filteredQuery, actualQuery);
   }
+
+  @Test
+  public void create_withMultipleAssemblers_shouldCreateQuery() {
+    bedQueryFactory =
+        new BedQueryFactory(
+            bedQueryBuilder, otherQueryParamAssemblers, bookingDateMapper, zippopotamusClient);
+
+    BedQuery actualQuery = bedQueryFactory.create(params);
+
+    assertSame(otherFilteredQuery, actualQuery);
+  }
+
+  /*
 
   @Test
   public void create_withSingleBloodType_shouldCreateFilteredQuery() {
@@ -236,4 +246,5 @@ class BedQueryFactoryTest {
 
     assertThrows(InvalidMaxDistanceException.class, () -> bedQueryFactory.create(params));
   }
+  */
 }

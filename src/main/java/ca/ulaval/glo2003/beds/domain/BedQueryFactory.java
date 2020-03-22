@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
@@ -13,9 +14,6 @@ import javax.inject.Inject;
 
 public class BedQueryFactory {
 
-  // TODO : With BedQueryMapBuilder, we will have the correct params
-  public static final String BED_TYPE_PARAM = "bedType";
-  public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
   public static final String BLOOD_TYPES_PARAM = "bloodTypes";
   public static final String PACKAGE_NAME_PARAM = "packages";
   public static final String MIN_CAPACITY_PARAM = "minCapacity";
@@ -26,6 +24,7 @@ public class BedQueryFactory {
   public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
   private final BedQueryBuilder bedQueryBuilder;
+  private final List<BedQueryParamAssembler> queryParamAssemblers;
   private final BookingDateMapper bookingDateMapper;
   private final ZippopotamusClient
       zippopotamusClient; // TODO : Use an interface, like ZipCodeClient
@@ -33,9 +32,11 @@ public class BedQueryFactory {
   @Inject
   public BedQueryFactory(
       BedQueryBuilder bedQueryBuilder,
+      List<BedQueryParamAssembler> queryParamAssemblers,
       BookingDateMapper bookingDateMapper,
       ZippopotamusClient zippopotamusClient) {
     this.bedQueryBuilder = bedQueryBuilder;
+    this.queryParamAssemblers = queryParamAssemblers;
     this.bookingDateMapper = bookingDateMapper;
     this.zippopotamusClient = zippopotamusClient;
   }
@@ -43,13 +44,8 @@ public class BedQueryFactory {
   public BedQuery create(Map<String, String[]> params) {
     BedQueryBuilder builder = bedQueryBuilder.aBedQuery();
 
-    if (params.get(BED_TYPE_PARAM) != null)
-      builder = builder.withBedType(BedTypes.get(params.get(BED_TYPE_PARAM)[0]));
-
-    if (params.get(CLEANING_FREQUENCY_PARAM) != null)
-      builder =
-          builder.withCleaningFrequency(
-              CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]));
+    for (BedQueryParamAssembler queryParamAssembler : queryParamAssemblers)
+      builder = queryParamAssembler.assemble(builder, params);
 
     if (params.get(PACKAGE_NAME_PARAM) != null)
       builder = builder.withPackage(Packages.get(params.get(PACKAGE_NAME_PARAM)[0]));
