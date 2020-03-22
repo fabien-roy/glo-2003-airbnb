@@ -32,7 +32,6 @@ class BedQueryFactoryTest {
   private BedTypes bedType = createBedType();
   private BloodTypes bloodType = BloodTypes.O_MINUS;
   private BloodTypes otherBloodType = BloodTypes.AB_MINUS;
-  private Packages packageName = Packages.BLOODTHIRSTY;
   private int capacity = BedTypesCapacities.get(bedType);
   private BookingDate arrivalDate =
       new BookingDate(LocalDate.now()); // TODO : Use default constructor
@@ -133,23 +132,6 @@ class BedQueryFactoryTest {
     params.put(BLOOD_TYPES_PARAM, new String[] {"invalidBloodTypes"});
 
     assertThrows(InvalidBloodTypesException.class, () -> bedQueryFactory.create(params));
-  }
-
-  @Test
-  public void create_withPackage_shouldCreateFilteredQuery() {
-    params.put(PACKAGE_NAME_PARAM, new String[] {packageName.toString()});
-    when(bedQueryBuilder.withPackage(packageName)).thenReturn(bedQueryBuilder);
-
-    BedQuery actualQuery = bedQueryFactory.create(params);
-
-    assertSame(query, actualQuery);
-  }
-
-  @Test
-  public void create_withInvalidPackage_shouldThrowInvalidPackageException() {
-    params.put(PACKAGE_NAME_PARAM, new String[] {"invalidPackage"});
-
-    assertThrows(InvalidPackageException.class, () -> bedQueryFactory.create(params));
   }
 
   @Test

@@ -6,6 +6,7 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
 import ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler;
+import ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedResource;
@@ -22,7 +23,7 @@ public class BedModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    configureAssemblers();
+    configureQueryParamAssemblers();
 
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
@@ -34,10 +35,11 @@ public class BedModule extends AbstractModule {
     bind(BedResource.class);
   }
 
-  private void configureAssemblers() {
+  private void configureQueryParamAssemblers() {
     Multibinder<BedQueryParamAssembler> multibinder =
         Multibinder.newSetBinder(binder(), new TypeLiteral<BedQueryParamAssembler>() {});
     multibinder.addBinding().to(BedTypeQueryParamAssembler.class);
     multibinder.addBinding().to(CleaningFrequencyQueryParamAssembler.class);
+    multibinder.addBinding().to(PackageQueryParamAssembler.class);
   }
 }

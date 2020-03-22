@@ -15,7 +15,6 @@ import javax.inject.Inject;
 public class BedQueryFactory {
 
   public static final String BLOOD_TYPES_PARAM = "bloodTypes";
-  public static final String PACKAGE_NAME_PARAM = "packages";
   public static final String MIN_CAPACITY_PARAM = "minCapacity";
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
   public static final String NUMBER_OF_NIGHTS_PARAM = "numberOfNights";
@@ -46,9 +45,6 @@ public class BedQueryFactory {
 
     for (BedQueryParamAssembler queryParamAssembler : queryParamAssemblers)
       builder = queryParamAssembler.assemble(builder, params);
-
-    if (params.get(PACKAGE_NAME_PARAM) != null)
-      builder = builder.withPackage(Packages.get(params.get(PACKAGE_NAME_PARAM)[0]));
 
     if (params.get(MIN_CAPACITY_PARAM) != null)
       builder = builder.withMinCapacity(parseMinCapacity(params.get(MIN_CAPACITY_PARAM)[0]));
