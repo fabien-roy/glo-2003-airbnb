@@ -14,13 +14,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LocationService {
+public class OutdatedLocationService {
+
+  // TODO : Use new location service
 
   private static final String ZIPPOPOTAMUS_URL = "http://api.zippopotam.us/us/";
   private final LocationMapper locationMapper;
 
   @Inject
-  public LocationService(LocationMapper locationMapper) {
+  public OutdatedLocationService(LocationMapper locationMapper) {
     this.locationMapper = locationMapper;
   }
 

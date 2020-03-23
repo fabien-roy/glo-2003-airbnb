@@ -15,7 +15,7 @@ import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.services.LocationService;
+import ca.ulaval.glo2003.locations.services.OutdatedLocationService;
 import java.io.IOException;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,7 +31,8 @@ public class BedServiceTest {
   private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
   private static BedRepository bedRepository = mock(BedRepository.class);
   private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
-  private static LocationService locationService = mock(LocationService.class);
+  private static OutdatedLocationService outdatedLocationService =
+      mock(OutdatedLocationService.class);
 
   private UUID bedNumber = createBedNumber();
   private Location origin = createLocation();
@@ -57,13 +58,14 @@ public class BedServiceTest {
             bedNumberMapper,
             bedRepository,
             bedStarsCalculator,
-            locationService);
+            outdatedLocationService);
   }
 
   @BeforeEach
   public void setUpMocksForAdd() {
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
+    when(outdatedLocationService.getLocation(bedRequest.getZipCode()))
+        .thenReturn(validatedLocation);
     when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
 
@@ -74,7 +76,7 @@ public class BedServiceTest {
     when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
-    when(locationService.getLocation(origin.getZipCode())).thenReturn(validatedLocation);
+    when(outdatedLocationService.getLocation(origin.getZipCode())).thenReturn(validatedLocation);
     when(bedMapper.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedMapper.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
   }
@@ -104,7 +106,7 @@ public class BedServiceTest {
   public void add_shouldGetLocation() throws IOException {
     bedService.add(bedRequest);
 
-    verify(locationService).getLocation(eq(bedRequest.getZipCode()));
+    verify(outdatedLocationService).getLocation(eq(bedRequest.getZipCode()));
   }
 
   @Test

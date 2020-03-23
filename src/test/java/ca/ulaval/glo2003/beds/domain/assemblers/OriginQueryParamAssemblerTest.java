@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.services.LocationService;
+import ca.ulaval.glo2003.locations.services.OutdatedLocationService;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,7 +18,8 @@ import org.junit.jupiter.api.Test;
 class OriginQueryParamAssemblerTest {
 
   private static BedQueryParamAssembler queryAssembler;
-  private static LocationService locationService = mock(LocationService.class);
+  private static OutdatedLocationService outdatedLocationService =
+      mock(OutdatedLocationService.class);
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
@@ -27,12 +28,12 @@ class OriginQueryParamAssemblerTest {
 
   @BeforeAll
   public static void setUpAssembler() {
-    queryAssembler = new OriginQueryParamAssembler(locationService);
+    queryAssembler = new OriginQueryParamAssembler(outdatedLocationService);
   }
 
   @BeforeEach
   public void setUpMocks() {
-    when(locationService.getLocation(origin.getZipCode())).thenReturn(origin);
+    when(outdatedLocationService.getLocation(origin.getZipCode())).thenReturn(origin);
     when(queryBuilder.withOrigin(origin)).thenReturn(assembledQueryBuilder);
   }
 

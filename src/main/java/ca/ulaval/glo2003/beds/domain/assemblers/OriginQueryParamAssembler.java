@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.services.LocationService;
+import ca.ulaval.glo2003.locations.services.OutdatedLocationService;
 import java.util.Map;
 import javax.inject.Inject;
 
@@ -10,11 +10,11 @@ public class OriginQueryParamAssembler implements BedQueryParamAssembler {
 
   public static final String ORIGIN_PARAM = "origin";
 
-  private final LocationService locationService;
+  private final OutdatedLocationService outdatedLocationService;
 
   @Inject
-  public OriginQueryParamAssembler(LocationService locationService) {
-    this.locationService = locationService;
+  public OriginQueryParamAssembler(OutdatedLocationService outdatedLocationService) {
+    this.outdatedLocationService = outdatedLocationService;
   }
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
@@ -22,6 +22,6 @@ public class OriginQueryParamAssembler implements BedQueryParamAssembler {
   }
 
   public Location parseOrigin(Map<String, String[]> params) {
-    return locationService.getLocation(params.get(ORIGIN_PARAM)[0]);
+    return outdatedLocationService.getLocation(params.get(ORIGIN_PARAM)[0]);
   }
 }
