@@ -1,10 +1,9 @@
 package ca.ulaval.glo2003.locations.domain;
 
+import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocation;
+import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createZipCode;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
-import ca.ulaval.glo2003.locations.rest.services.LocationService;
-import java.io.IOException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,151 +13,97 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class LocationTest {
 
-  private static LocationService locationService;
+  private static Location location;
+  private static String zipCode = createZipCode();
+
+  private static Location yotelNYCity;
+  private static Location grandCentralTerminal;
+  private static Location pfisterHotelMilhaukee;
+  private static Location beaconParkDetroit;
+  private static Location hotelRooseveltLA;
+  private static Location laInternationalAirport;
 
   @BeforeAll
-  public static void setUpService() {
-    locationService = mock(LocationService.class);
+  public static void setUpLocation() {
+    location = aLocation().withZipCode(zipCode).build();
+
+    yotelNYCity =
+        aLocation().withZipCode("10036").withLongitude(40.759341).withLatitude(-73.995611).build();
+    grandCentralTerminal =
+        aLocation().withZipCode("10017").withLongitude(46.753077).withLatitude(-73.977154).build();
+    pfisterHotelMilhaukee =
+        aLocation().withZipCode("53202").withLongitude(43.039643).withLatitude(-87.905641).build();
+    beaconParkDetroit =
+        aLocation().withZipCode("48226").withLongitude(42.334705).withLatitude(-83.055317).build();
+    hotelRooseveltLA =
+        aLocation().withZipCode("90028").withLongitude(34.101990).withLatitude(-118.341873).build();
+    laInternationalAirport =
+        aLocation().withZipCode("90045").withLongitude(33.946834).withLatitude(-118.408961).build();
   }
 
   @Test
-  void equals_shouldReturnFalse_whenObjectIsNotZipCode() throws IOException {
-    String zipCode = "12345";
-    Location location = locationService.getLocation(zipCode);
+  void equals_shouldReturnFalse_whenObjectIsNotZipCode() {
+    String other = "12345";
 
-    boolean result = location.equals(zipCode);
+    boolean result = location.equals(other);
 
     assertFalse(result);
   }
 
   @Test
-  void equals_shouldReturnFalse_whenZipCodesAreNotEqual() throws IOException {
-    String zipCode = "000000";
-    String otherZipCode = "12345";
-    Location location = locationService.getLocation(zipCode);
-    Location otherLocation = locationService.getLocation(otherZipCode);
+  void equals_shouldReturnFalse_whenZipCodesAreNotEqual() {
+    Location other = aLocation().withZipCode("other").build();
 
-    boolean result = location.equals(otherLocation);
+    boolean result = location.equals(other);
 
     assertFalse(result);
   }
 
   @Test
-  void equals_shouldReturnTrue_whenZipCodesAreEqual() throws IOException {
-    String zipCode = "12345";
-    Location location = locationService.getLocation(zipCode);
-    Location otherLocation = locationService.getLocation(zipCode);
+  void equals_shouldReturnTrue_whenZipCodesAreEqual() {
+    Location other = aLocation().withZipCode(zipCode).build();
 
-    boolean result = location.equals(otherLocation);
+    boolean result = location.equals(other);
 
     assertTrue(result);
   }
 
+  // TODO : Once Coordinate value object exist, move this logic
   @ParameterizedTest
   @MethodSource("provideDataForCalculateDistanceBetweenCoordinates")
   public void calculateDistanceBetweenCoordinates_shouldReturnCorrectDistance(
-      String latitude1,
-      String longitude1,
-      String latitude2,
-      String longitude2,
+      double latitude1,
+      double longitude1,
+      double latitude2,
+      double longitude2,
       double expectedDistance) {
     double distance =
         Location.calculateDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitude2);
     assertEquals(expectedDistance, distance);
   }
 
+  @ParameterizedTest
+  @MethodSource("provideDataForIsWithinRadius_withMaxDistance")
+  public void isWithinRadius_withMaxDistance_shouldReturnCorrectAnswer(
+      Location location, Location origin, double maxDistance, boolean expectedAnswer) {
+    boolean answer = location.isWithinRadius(origin, maxDistance);
+
+    assertEquals(expectedAnswer, answer);
+  }
+
   private static Stream<Arguments> provideDataForCalculateDistanceBetweenCoordinates() {
     return Stream.of(
-        Arguments.of(
-            "40.759341",
-            "-73.995611",
-            "46.753077",
-            "-73.977154",
-            892.0431709382362), // YOTEL NY City to Grand Central Terminal
-        Arguments.of(
-            "43.039643",
-            "-87.905641",
-            "42.334705",
-            "-83.055317",
-            326.934371636417), // The Pfister Hotel, Milhaukee to Beacon Park, Detroit
-        Arguments.of(
-            "34.101990",
-            "-118.341873",
-            "33.946834",
-            "-118.408961",
-            31.281231789505952), // Hotel Roosevelt LA to LA International Airport
-        Arguments.of(
-            "46.783506",
-            "-71.275291",
-            "46.783506",
-            "-71.275291",
-            0.0) // Laval University to Laval University (beware, not in the united states)
-        );
+        Arguments.of(40.759341, -73.995611, 46.753077, -73.977154, 892.0431709382362),
+        Arguments.of(43.039643, -87.905641, 42.334705, -83.055317, 326.934371636417),
+        Arguments.of(34.101990, -118.341873, 33.946834, -118.408961, 31.281231789505952),
+        Arguments.of(46.783506, -71.275291, 46.783506, -71.275291, 0.0));
   }
 
-  @ParameterizedTest
-  @MethodSource("provideDataForisWithinRadius_withMaxDistance")
-  public void isWithinRadius_withMaxDistance_shouldReturnCorrectAnswer(
-      Location location, Location origin, double maxDistance, double expectedAnswer) {
-    Boolean answer = location.isWithinRadius(origin, maxDistance);
-    assertEquals(expectedAnswer, answer);
-  }
-
-  private static Stream<Arguments> provideDataForisWithinRadius_withMaxDistance() {
-    Location yotelNYCity = new Location("10036", "40.759341", "-73.995611");
-    Location grandCentralTerminal = new Location("10017", "46.753077", "-73.977154");
-    Location pfisterHotelMilhaukee = new Location("53202", "43.039643", "-87.905641");
-    Location beaconParkDetroit = new Location("48226", "42.334705", "-83.055317");
-    Location hotelRooseveltLA = new Location("90028", "34.101990", "-118.341873");
-    Location laInternationalAirport = new Location("90045", "33.946834", "-118.408961");
-
+  private static Stream<Arguments> provideDataForIsWithinRadius_withMaxDistance() {
     return Stream.of(
-        Arguments.of(
-            yotelNYCity,
-            grandCentralTerminal,
-            900,
-            true), // YOTEL NY City to Grand Central Terminal
-        Arguments.of(
-            pfisterHotelMilhaukee,
-            beaconParkDetroit,
-            326.934371636417,
-            true), // The Pfister Hotel, Milhaukee to Beacon Park, Detroit
-        Arguments.of(
-            hotelRooseveltLA,
-            laInternationalAirport,
-            20,
-            false), // Hotel Roosevelt LA to LA International Airport
-        Arguments.of(
-            laInternationalAirport,
-            laInternationalAirport,
-            0.0,
-            true) // LA International Airport to LA International Airport
-        );
-  }
-
-  @ParameterizedTest
-  @MethodSource("provideDataForisWithinRadius_withoutMaxDistance")
-  public void isWithinRadius_withoutMaxDistance_shouldReturnCorrectAnswer(
-      Location location, Location origin, double expectedAnswer) {
-    Boolean answer = location.isWithinRadius(origin);
-    assertEquals(expectedAnswer, answer);
-  }
-
-  private static Stream<Arguments> provideDataForisWithinRadius_withoutMaxDistance() {
-    Location yotelNYCity = new Location("10036", "40.759341", "-73.995611");
-    Location grandCentralTerminal = new Location("10017", "46.753077", "-73.977154");
-    Location laInternationalAirport = new Location("90045", "33.946834", "-118.408961");
-    Location croationChurchNY = new Location("10036", "40.759203", "-73.9970572");
-
-    return Stream.of(
-        Arguments.of(
-            yotelNYCity, grandCentralTerminal, false), // YOTEL NY City to Grand Central Terminal
-        Arguments.of(
-            laInternationalAirport,
-            laInternationalAirport,
-            true), // LA International Airport to LA International Airport
-        Arguments.of(
-            yotelNYCity, croationChurchNY, true) //  YOTEL NY City to Croation Church New York
-        );
+        Arguments.of(yotelNYCity, grandCentralTerminal, 900, true),
+        Arguments.of(pfisterHotelMilhaukee, beaconParkDetroit, 326.934371636417, true),
+        Arguments.of(hotelRooseveltLA, laInternationalAirport, 20, false),
+        Arguments.of(laInternationalAirport, laInternationalAirport, 0.0, true));
   }
 }

@@ -1,11 +1,11 @@
-package ca.ulaval.glo2003.locations.rest.services;
+package ca.ulaval.glo2003.locations.services;
 
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
-import ca.ulaval.glo2003.locations.rest.LocationResponse;
-import ca.ulaval.glo2003.locations.rest.mappers.LocationMapper;
+import ca.ulaval.glo2003.locations.infrastructure.LocationResponse;
+import ca.ulaval.glo2003.locations.infrastructure.mappers.LocationMapper;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import java.io.IOException;

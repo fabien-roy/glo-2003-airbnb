@@ -85,6 +85,10 @@ public class BedMatcher {
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
+    if (origin != null && !origin.isWithinRadius(bed.getLocation(), maxDistance)) return false;
+
+    if (lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
+
     return true;
   }
 

@@ -1,12 +1,11 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 
 public class BedRequest {
 
   private String ownerPublicKey;
-  private Location location;
+  private String zipCode;
   private String bedType;
   private String cleaningFrequency;
   private List<String> bloodTypes;
@@ -20,7 +19,7 @@ public class BedRequest {
 
   public BedRequest(
       String ownerPublicKey,
-      Location location,
+      String zipCode,
       String bedType,
       String cleaningFrequency,
       List<String> bloodTypes,
@@ -28,7 +27,7 @@ public class BedRequest {
       String lodgingMode,
       List<PackageRequest> packages) {
     this.ownerPublicKey = ownerPublicKey;
-    this.location = location;
+    this.zipCode = zipCode;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
@@ -45,12 +44,12 @@ public class BedRequest {
     this.ownerPublicKey = ownerPublicKey;
   }
 
-  public Location getLocation() {
-    return location;
+  public String getZipCode() {
+    return zipCode;
   }
 
-  public void setLocation(Location location) {
-    this.location = location;
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
   }
 
   public String getBedType() {

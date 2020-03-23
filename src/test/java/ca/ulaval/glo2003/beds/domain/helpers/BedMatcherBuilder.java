@@ -48,6 +48,17 @@ public class BedMatcherBuilder {
     return this;
   }
 
+  public BedMatcherBuilder withOriginAndMaxDistance(Location origin, int maxDistance) {
+    this.origin = origin;
+    this.maxDistance = maxDistance;
+    return this;
+  }
+
+  public BedMatcherBuilder withLodgingMode(LodgingModes lodgingMode) {
+    this.lodgingMode = lodgingMode;
+    return this;
+  }
+
   public BedMatcher build() {
     return new BedMatcher(
         bedType,

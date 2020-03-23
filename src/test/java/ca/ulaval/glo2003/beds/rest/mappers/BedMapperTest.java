@@ -19,7 +19,6 @@ import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.io.IOException;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +27,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BedMapperTest {
+
+  // TODO : Simplify this test class
 
   private BedMapper bedMapper;
   private PublicKeyMapper publicKeyMapper;
@@ -41,7 +42,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapBedType() throws IOException {
+  public void fromRequest_shouldMapBedType() {
     BedTypes expectedBedType = BedTypes.LATEX;
     BedRequest bedRequest = aBedRequest().withBedType(expectedBedType.toString()).build();
 
@@ -51,15 +52,14 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutBedType_shouldThrowInvalidBedTypeException() throws IOException {
+  public void fromRequest_withoutBedType_shouldThrowInvalidBedTypeException() {
     BedRequest bedRequest = aBedRequest().withBedType(null).build();
 
     assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
-  public void fromRequest_withInvalidBedType_shouldThrowInvalidBedTypeException()
-      throws IOException {
+  public void fromRequest_withInvalidBedType_shouldThrowInvalidBedTypeException() {
     String invalidBedType = "invalidBedType";
     BedRequest bedRequest = aBedRequest().withBedType(invalidBedType).build();
 
@@ -67,7 +67,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapCleaningFrequency() throws IOException {
+  public void fromRequest_shouldMapCleaningFrequency() {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
     BedRequest bedRequest =
         aBedRequest().withCleaningFrequency(expectedCleaningFrequency.toString()).build();
@@ -78,8 +78,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException()
-      throws IOException {
+  public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
     String invalidCleaningFrequency = "invalidCleaningFrequency";
     BedRequest bedRequest = aBedRequest().withCleaningFrequency(invalidCleaningFrequency).build();
 
@@ -87,16 +86,14 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidCleaningFrequencyException()
-      throws IOException {
+  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
     BedRequest bedRequest = aBedRequest().withCleaningFrequency(null).build();
 
     assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
-  public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType()
-      throws IOException {
+  public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     List<String> bloodTypes = Collections.singletonList(expectedBloodType.toString());
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
@@ -108,8 +105,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes()
-      throws IOException {
+  public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
     List<String> bloodTypes =
@@ -124,8 +120,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutBloodTypes_shouldThrowInvalidBloodTypesException()
-      throws IOException {
+  public void fromRequest_withoutBloodTypes_shouldThrowInvalidBloodTypesException() {
     List<String> bloodTypes = Collections.singletonList(null);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
@@ -133,8 +128,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidBloodTypesException()
-      throws IOException {
+  public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidBloodTypesException() {
     List<String> bloodTypes = Collections.emptyList();
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
 
@@ -142,8 +136,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException()
-      throws IOException {
+  public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
     String invalidBloodType = "invalidBloodType";
     List<String> bloodTypes = Collections.singletonList(invalidBloodType);
     BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
@@ -152,7 +145,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapCapacity() throws IOException {
+  public void fromRequest_shouldMapCapacity() {
     int expectedCapacity = 1000;
     BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
 
@@ -162,8 +155,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException()
-      throws IOException {
+  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
     int capacity = -100;
     BedRequest bedRequest = aBedRequest().withCapacity(capacity).build();
 
@@ -171,7 +163,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapLodgingMode() throws IOException {
+  public void fromRequest_shouldMapLodgingMode() {
     LodgingModes expectedLodgingMode = BedObjectMother.createLodgingMode();
     BedRequest bedRequest = aBedRequest().withLodgingMode(expectedLodgingMode.toString()).build();
 
@@ -181,7 +173,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() throws IOException {
+  public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() {
     LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
     BedRequest bedRequest = aBedRequest().withLodgingMode(null).build();
 
@@ -191,8 +183,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException()
-      throws IOException {
+  public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
     String invalidLodgingMode = "invalidLodgingMode";
     BedRequest bedRequest = aBedRequest().withLodgingMode(invalidLodgingMode).build();
 
@@ -200,7 +191,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapPricesPerNight() throws IOException {
+  public void fromRequest_shouldMapPricesPerNight() {
     PackageRequest packageRequest = aPackageRequest().build();
     List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
     BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
@@ -213,7 +204,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_shouldMapOwnerPublicKey() throws IOException {
+  public void fromRequest_shouldMapOwnerPublicKey() {
     PublicKey expectedOwnerPublicKey = BedObjectMother.createOwnerPublicKey();
     BedRequest bedRequest =
         aBedRequest().withOwnerPublicKey(expectedOwnerPublicKey.getValue()).build();
@@ -226,7 +217,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldNotMapBedNumber() throws IOException {
+  public void toResponseWithoutNumber_shouldNotMapBedNumber() {
     Bed bed = aBed().build();
 
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
@@ -235,17 +226,17 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapLocation() throws IOException {
+  public void toResponseWithoutNumber_shouldMapLocation() {
     Location expectedLocation = createLocation();
     Bed bed = aBed().withLocation(expectedLocation).build();
 
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
-    assertEquals(expectedLocation.toString(), bedResponse.getLocation().toString());
+    assertEquals(expectedLocation.getZipCode(), bedResponse.getZipCode());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapBedType() throws IOException {
+  public void toResponseWithoutNumber_shouldMapBedType() {
     BedTypes expectedBedType = BedTypes.LATEX;
     Bed bed = aBed().withBedType(expectedBedType).build();
 
@@ -255,7 +246,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapCleaningFrequency() throws IOException {
+  public void toResponseWithoutNumber_shouldMapCleaningFrequency() {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
     Bed bed = aBed().withCleaningFrequency(expectedCleaningFrequency).build();
 
@@ -265,7 +256,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_withSingleBloodType_shouldMapBloodType() throws IOException {
+  public void toResponseWithoutNumber_withSingleBloodType_shouldMapBloodType() {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     List<BloodTypes> bloodTypes = Collections.singletonList(expectedBloodType);
     Bed bed = aBed().withBloodTypes(bloodTypes).build();
@@ -277,8 +268,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_withMultipleBloodTypes_shouldMapBloodTypes()
-      throws IOException {
+  public void toResponseWithoutNumber_withMultipleBloodTypes_shouldMapBloodTypes() {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
     List<BloodTypes> bloodTypes = Arrays.asList(expectedBloodType, otherExpectedBloodType);
@@ -296,7 +286,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapCapacity() throws IOException {
+  public void toResponseWithoutNumber_shouldMapCapacity() {
     int expectedCapacity = 100;
     Bed bed = aBed().withCapacity(expectedCapacity).build();
 
@@ -306,7 +296,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapLodgingMode() throws IOException {
+  public void toResponseWithoutNumber_shouldMapLodgingMode() {
     LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
     Bed bed = aBed().withLodgingMode(expectedLodgingMode).build();
 
@@ -316,7 +306,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapPricesPerNights() throws IOException {
+  public void toResponseWithoutNumber_shouldMapPricesPerNights() {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
@@ -331,7 +321,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapStars() throws IOException {
+  public void toResponseWithoutNumber_shouldMapStars() {
     int expectedStars = 3;
     Bed bed = aBed().build();
 
@@ -341,7 +331,7 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithNumber_shouldMapBedNumber() throws IOException {
+  public void toResponseWithNumber_shouldMapBedNumber() {
     UUID expectedBedNumber = createBedNumber();
     Bed bed = aBed().withBedNumber(expectedBedNumber).build();
 

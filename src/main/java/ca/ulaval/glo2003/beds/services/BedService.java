@@ -7,7 +7,7 @@ import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import com.google.inject.Inject;
 import java.io.IOException;
 import java.util.*;
@@ -43,7 +43,7 @@ public class BedService {
 
   public String add(BedRequest request) throws IOException {
     Bed bed = bedMapper.fromRequest(request);
-    Location location = locationService.getLocation(request.getLocation().getZipCode());
+    Location location = locationService.getLocation(request.getZipCode());
 
     bed = bedFactory.create(bed, location);
 

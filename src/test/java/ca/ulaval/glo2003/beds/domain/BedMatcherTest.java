@@ -2,9 +2,12 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedMatcherBuilder.aBedMatcher;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocation;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.io.IOException;
 import java.util.*;
@@ -232,6 +235,40 @@ class BedMatcherTest {
         aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
     Bed bed =
         aBed().withBedType(otherBedtype).withCleaningFrequency(otherCleaningFrequency).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertFalse(matches);
+  }
+
+  @Test
+  public void matches_withLocationWithinRadius_shouldReturnTrue() throws IOException {
+    int maxDistance = 10;
+    Location origin = mock(Location.class);
+    Location bedLocation = createLocation();
+    BedMatcher bedMatcher = aBedMatcher().withOriginAndMaxDistance(origin, maxDistance).build();
+    Bed bed = aBed().withLocation(bedLocation).build();
+    when(origin.isWithinRadius(bedLocation, maxDistance)).thenReturn(true);
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
+  public void matches_withSameLodgingMode_shouldReturnTrue() throws IOException {
+    BedMatcher bedMatcher = aBedMatcher().withLodgingMode(LodgingModes.PRIVATE).build();
+    Bed bed = aBed().withLodgingMode(LodgingModes.PRIVATE).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
+  public void matches_withDifferentLodgingMode_shouldReturnFalse() throws IOException {
+    BedMatcher bedMatcher = aBedMatcher().withLodgingMode(LodgingModes.PRIVATE).build();
+    Bed bed = aBed().withLodgingMode(LodgingModes.COHABITATION).build();
 
     boolean matches = bedMatcher.matches(bed);
 

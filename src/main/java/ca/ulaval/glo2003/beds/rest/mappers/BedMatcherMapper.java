@@ -8,7 +8,7 @@ import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;

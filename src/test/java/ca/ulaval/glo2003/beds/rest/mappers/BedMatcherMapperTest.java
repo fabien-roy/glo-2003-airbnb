@@ -9,7 +9,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
-import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;

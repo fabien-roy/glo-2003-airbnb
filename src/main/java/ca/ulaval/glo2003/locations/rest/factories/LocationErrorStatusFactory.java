@@ -1,14 +1,12 @@
 package ca.ulaval.glo2003.locations.rest.factories;
 
 import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorStatusFactory;
-import ca.ulaval.glo2003.locations.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
-import ca.ulaval.glo2003.locations.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class LocationServiceErrorStatusFactory extends CatchallErrorStatusFactory {
+public class LocationErrorStatusFactory extends CatchallErrorStatusFactory {
 
   @Override
   public int create(Exception exception) {
@@ -18,10 +16,6 @@ public class LocationServiceErrorStatusFactory extends CatchallErrorStatusFactor
       return HttpStatus.BAD_REQUEST_400;
     } else if (exception instanceof UnreachableZippopotamusServerException) {
       return HttpStatus.SERVICE_UNAVAILABLE_503;
-    } else if (exception instanceof InvalidMaxDistanceException) {
-      return HttpStatus.BAD_REQUEST_400;
-    } else if (exception instanceof MaxDistanceWithoutOriginException) {
-      return HttpStatus.BAD_REQUEST_400;
     } else {
       return defaultStatus();
     }

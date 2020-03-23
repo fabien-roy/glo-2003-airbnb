@@ -15,7 +15,7 @@ import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import java.io.IOException;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -74,8 +74,7 @@ public class BedServiceTest {
     when(bedMatcher.matches(otherBed)).thenReturn(true);
     when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(locationService.getLocation(bedRequest.getLocation().getZipCode()))
-        .thenReturn(validatedLocation);
+    when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
     when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
 
@@ -114,7 +113,7 @@ public class BedServiceTest {
   public void add_shouldGetLocation() throws IOException {
     bedService.add(bedRequest);
 
-    verify(locationService).getLocation(eq(bedRequest.getLocation().getZipCode()));
+    verify(locationService).getLocation(eq(bedRequest.getZipCode()));
   }
 
   @Test

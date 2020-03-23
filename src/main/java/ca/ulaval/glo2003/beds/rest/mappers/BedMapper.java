@@ -53,7 +53,7 @@ public class BedMapper {
     List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
-        bed.getLocation(),
+        bed.getLocation().getZipCode(),
         bed.getBedType().toString(),
         bed.getCleaningFrequency().toString(),
         bloodTypes,

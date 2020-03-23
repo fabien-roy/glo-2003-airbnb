@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.locations.rest;
+package ca.ulaval.glo2003.locations.infrastructure;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;

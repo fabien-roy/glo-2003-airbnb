@@ -8,7 +8,6 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.UUID;
 
 public class BedBuilder {
 
-  private BedBuilder() throws IOException {}
+  private BedBuilder() {}
 
   private UUID DEFAULT_BED_NUMBER = createBedNumber();
   private UUID bedNumber = DEFAULT_BED_NUMBER;
@@ -49,7 +48,7 @@ public class BedBuilder {
   private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
   private List<Booking> bookings = DEFAULT_BOOKINGS;
 
-  public static BedBuilder aBed() throws IOException {
+  public static BedBuilder aBed() {
     return new BedBuilder();
   }
 

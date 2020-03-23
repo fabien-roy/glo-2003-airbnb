@@ -1,13 +1,11 @@
 package ca.ulaval.glo2003.locations.rest.factories;
 
-import static ca.ulaval.glo2003.locations.rest.factories.LocationServiceErrorResponseFactory.*;
+import static ca.ulaval.glo2003.locations.rest.factories.LocationErrorResponseFactory.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorResponseFactory;
-import ca.ulaval.glo2003.locations.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
-import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
-import ca.ulaval.glo2003.locations.exceptions.MaxDistanceWithoutOriginException;
+import ca.ulaval.glo2003.locations.exceptions.LocationException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import java.util.stream.Stream;
@@ -17,20 +15,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class LocationServiceErrorResponseFactoryTest {
+class LocationErrorResponseFactoryTest {
 
-  private static LocationServiceErrorResponseFactory locationServiceErrorResponseFactory;
+  private static LocationErrorResponseFactory locationErrorResponseFactory;
 
   @BeforeAll
   public static void setUpFactory() {
-    locationServiceErrorResponseFactory = new LocationServiceErrorResponseFactory();
+    locationErrorResponseFactory = new LocationErrorResponseFactory();
   }
 
   @ParameterizedTest
   @MethodSource("provideResponseForExternalServiceException")
   public void create_withExternalServiceException_shouldCreateAssociatedResponse(
-      LocationServiceException exception, String expectedResponse) {
-    String response = locationServiceErrorResponseFactory.create(exception);
+      LocationException exception, String expectedResponse) {
+    String response = locationErrorResponseFactory.create(exception);
 
     assertEquals(expectedResponse, response);
   }
@@ -40,7 +38,7 @@ class LocationServiceErrorResponseFactoryTest {
     Exception exception = new Exception();
     String expectedResponse = new CatchallErrorResponseFactory().create(exception);
 
-    String response = locationServiceErrorResponseFactory.create(exception);
+    String response = locationErrorResponseFactory.create(exception);
 
     assertEquals(expectedResponse, response);
   }
@@ -49,8 +47,7 @@ class LocationServiceErrorResponseFactoryTest {
     return Stream.of(
         Arguments.of(new InvalidZipCodeException(), invalidZipCode()),
         Arguments.of(new NonExistingZipCodeException(), nonExistingZipCode()),
-        Arguments.of(new UnreachableZippopotamusServerException(), unreachableZippopotamusServer()),
-        Arguments.of(new InvalidMaxDistanceException(), invalidMaxDistance()),
-        Arguments.of(new MaxDistanceWithoutOriginException(), maxDistanceWithoutOrigin()));
+        Arguments.of(
+            new UnreachableZippopotamusServerException(), unreachableZippopotamusServer()));
   }
 }

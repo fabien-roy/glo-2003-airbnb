@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 
-public class LocationServiceErrorResponseFactory extends CatchallErrorResponseFactory {
+public class LocationErrorResponseFactory extends CatchallErrorResponseFactory {
 
   @Override
   public String create(Exception exception) {
@@ -32,16 +32,5 @@ public class LocationServiceErrorResponseFactory extends CatchallErrorResponseFa
   static String unreachableZippopotamusServer() {
     return tryWriteValueAsString(
         "UNREACHABLE_ZIPPOPOTAMUS_SERVER", "zippopotamus server unreachable");
-  }
-
-  static String invalidMaxDistance() {
-    return tryWriteValueAsString(
-        "INVALID_MAX_DISTANCE", "distance should be a number greater than 0");
-  }
-
-  static String maxDistanceWithoutOrigin() {
-    return tryWriteValueAsString(
-        "MAX_DISTANCE_WITHOUT_ORIGIN",
-        "an origin point should be provided along with the maximum distance");
   }
 }

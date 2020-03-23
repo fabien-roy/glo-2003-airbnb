@@ -1,19 +1,15 @@
 package ca.ulaval.glo2003.locations.domain;
 
-import ca.ulaval.glo2003.locations.exceptions.InvalidMaxDistanceException;
-import ca.ulaval.glo2003.locations.exceptions.MaxDistanceWithoutOriginException;
-
 public class Location {
 
   private String zipCode;
-  private String latitude;
-  private String longitude;
-  private double DEFAULT_MAX_DISTANCE = 10.0; // in kilometers
+  private double latitude; // TODO : How about Coordinate value object
+  private double longitude;
 
-  private static double DISTANCE_PER_DEGREE_OF_LATITUDE = 110.574; // in kilometers
-  private static double DISTANCE_PER_DEGREE_OF_LONGTITUDE = 111.320; // in kilometers
+  private static final double DISTANCE_PER_DEGREE_OF_LATITUDE = 110.574; // in kilometers
+  private static final double DISTANCE_PER_DEGREE_OF_LONGTITUDE = 111.320; // in kilometers
 
-  public Location(String zipCode, String latitude, String longitude) {
+  public Location(String zipCode, double latitude, double longitude) {
     this.zipCode = zipCode;
     this.latitude = latitude;
     this.longitude = longitude;
@@ -23,11 +19,11 @@ public class Location {
     return zipCode;
   }
 
-  public String getLatitude() {
+  public double getLatitude() {
     return latitude;
   }
 
-  public String getLongitude() {
+  public double getLongitude() {
     return longitude;
   }
 
@@ -39,43 +35,29 @@ public class Location {
    * aussi être inclus dans le résultat de la recherche.
    */
   public Boolean isWithinRadius(Location origin, double maxDistance) {
-    if (maxDistance < 1.0) {
-      throw new InvalidMaxDistanceException();
-    } else if (origin == null && maxDistance != 0.0) {
-      throw new MaxDistanceWithoutOriginException();
-    } else {
-      boolean result = false;
-      double distanceBetweenZipCodes =
-          calculateDistanceBetweenCoordinates(
-              this.getLatitude(), this.getLongitude(), origin.getLatitude(), origin.getLongitude());
-      if (distanceBetweenZipCodes <= maxDistance) {
-        result = true;
-      }
-      return result;
+    boolean result = false;
+    double distanceBetweenZipCodes =
+        calculateDistanceBetweenCoordinates(
+            this.getLatitude(), this.getLongitude(), origin.getLatitude(), origin.getLongitude());
+    if (distanceBetweenZipCodes <= maxDistance) {
+      result = true;
     }
-  }
-
-  public Boolean isWithinRadius(Location origin) {
-    return isWithinRadius(origin, DEFAULT_MAX_DISTANCE);
+    return result;
   }
 
   public static double calculateDistanceBetweenCoordinates(
-      String latitude1, String longitude1, String latitude2, String longitude2) {
-    double latitude_1 = Double.valueOf(latitude1) * DISTANCE_PER_DEGREE_OF_LATITUDE;
-    double flattened_longitude_1 =
-        Double.valueOf(longitude1)
-            * DISTANCE_PER_DEGREE_OF_LONGTITUDE
-            * Math.cos(Math.toRadians(Double.valueOf(latitude1)));
+      double latitude1, double longitude1, double latitude2, double longitude2) {
+    double distanceLatitude1 = latitude1 * DISTANCE_PER_DEGREE_OF_LATITUDE;
+    double flattenedLatitude1 =
+        longitude1 * DISTANCE_PER_DEGREE_OF_LONGTITUDE * Math.cos(Math.toRadians(latitude1));
 
-    double latitude_2 = Double.valueOf(latitude2) * DISTANCE_PER_DEGREE_OF_LATITUDE;
-    double flattened_longitude_2 =
-        Double.valueOf(longitude2)
-            * DISTANCE_PER_DEGREE_OF_LONGTITUDE
-            * Math.cos(Math.toRadians(Double.valueOf(latitude2)));
+    double distanceLatitude2 = latitude2 * DISTANCE_PER_DEGREE_OF_LATITUDE;
+    double flattenedLongitude2 =
+        longitude2 * DISTANCE_PER_DEGREE_OF_LONGTITUDE * Math.cos(Math.toRadians(latitude2));
 
     return Math.sqrt(
-        Math.pow(latitude_1 - latitude_2, 2)
-            + Math.pow(flattened_longitude_1 - flattened_longitude_2, 2));
+        Math.pow(distanceLatitude1 - distanceLatitude2, 2)
+            + Math.pow(flattenedLatitude1 - flattenedLongitude2, 2));
   }
 
   @Override
@@ -90,20 +72,5 @@ public class Location {
   @Override
   public int hashCode() {
     return zipCode.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return "Location{"
-        + "zipCode='"
-        + zipCode
-        + '\''
-        + ", latitude='"
-        + latitude
-        + '\''
-        + ", longitude='"
-        + longitude
-        + '\''
-        + '}';
   }
 }
