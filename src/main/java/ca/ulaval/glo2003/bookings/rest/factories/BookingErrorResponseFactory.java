@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
 import ca.ulaval.glo2003.bookings.exceptions.*;
+import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorResponseFactory;
 
 public class BookingErrorResponseFactory extends CatchallErrorResponseFactory {
