@@ -15,18 +15,18 @@ public class InMemoryDistanceFilter implements InMemoryBedFilter {
     this.maxDistance = maxDistance;
   }
 
-  @Override
-  public List<Bed> filter(List<Bed> beds) {
-    return beds.stream()
-        .filter(bed -> origin.isWithinRadius(bed.getLocation(), maxDistance))
-        .collect(Collectors.toList());
-  }
-
   public Location getOrigin() {
     return origin;
   }
 
   public int getMaxDistance() {
     return maxDistance;
+  }
+
+  @Override
+  public List<Bed> filter(List<Bed> beds) {
+    return beds.stream()
+        .filter(bed -> origin.isWithinRadius(bed.getLocation(), maxDistance))
+        .collect(Collectors.toList());
   }
 }

@@ -26,7 +26,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
   @Override
   public BedQueryBuilder aBedQuery() {
-    return this;
+    return new InMemoryBedQueryBuilder();
   }
 
   @Override
