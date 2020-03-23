@@ -19,6 +19,8 @@ import spark.Response;
 
 public class BedResourceTest {
 
+  // TODO : Refactor this test class
+
   private BedResource bedResource;
   private BedService bedService;
 

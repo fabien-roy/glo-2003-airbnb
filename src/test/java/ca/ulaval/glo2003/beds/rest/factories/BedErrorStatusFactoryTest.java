@@ -50,6 +50,9 @@ class BedErrorStatusFactoryTest {
         Arguments.of(new InvalidLodgingModeException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new InvalidPackageException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new InvalidMaxDistanceException(), HttpStatus.BAD_REQUEST_400),
+        Arguments.of(new ArrivalDateWithoutMinimalCapacityException(), HttpStatus.BAD_REQUEST_400),
+        Arguments.of(
+            new NumberOfNightsWithoutMinimalCapacityException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new MaxDistanceWithoutOriginException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new InvalidPublicKeyException(), HttpStatus.BAD_REQUEST_400),
         Arguments.of(new PackageNotAvailableException(), HttpStatus.BAD_REQUEST_400),
