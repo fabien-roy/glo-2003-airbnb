@@ -1,6 +1,6 @@
-package ca.ulaval.glo2003.transactions.rest.mappers;
+package ca.ulaval.glo2003.transactions.mappers;
 
-import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
+import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.time.format.DateTimeFormatter;

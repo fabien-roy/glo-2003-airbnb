@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.rest.mappers;
+package ca.ulaval.glo2003.beds.mappers;
 
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException;

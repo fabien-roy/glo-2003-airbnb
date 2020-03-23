@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.rest.mappers;
+package ca.ulaval.glo2003.bookings.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

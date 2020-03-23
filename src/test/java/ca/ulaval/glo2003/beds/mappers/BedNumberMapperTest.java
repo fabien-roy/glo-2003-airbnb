@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.rest.mappers;
+package ca.ulaval.glo2003.beds.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

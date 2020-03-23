@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.rest.mappers;
+package ca.ulaval.glo2003.beds.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;

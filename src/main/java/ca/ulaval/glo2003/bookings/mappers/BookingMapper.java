@@ -1,9 +1,9 @@
-package ca.ulaval.glo2003.bookings.rest.mappers;
+package ca.ulaval.glo2003.bookings.mappers;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.PublicKeyMapper;
+import ca.ulaval.glo2003.beds.mappers.PriceMapper;
+import ca.ulaval.glo2003.beds.mappers.PublicKeyMapper;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;

@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.rest.mappers;
+package ca.ulaval.glo2003.bookings.mappers;
 
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;

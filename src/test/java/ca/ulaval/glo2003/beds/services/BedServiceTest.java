@@ -10,10 +10,10 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
+import ca.ulaval.glo2003.beds.mappers.BedMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import java.util.*;
