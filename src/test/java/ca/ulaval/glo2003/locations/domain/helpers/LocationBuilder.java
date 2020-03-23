@@ -1,9 +1,11 @@
 package ca.ulaval.glo2003.locations.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesBuilder.someCoordinates;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Location;
 
 public class LocationBuilder {
@@ -13,11 +15,8 @@ public class LocationBuilder {
   private String DEFAULT_ZIP_CODE = createZipCode();
   private String zipCode = DEFAULT_ZIP_CODE;
 
-  private double DEFAULT_LONGITUDE = createLongitude();
-  private double longitude = DEFAULT_LONGITUDE;
-
-  private double DEFAULT_LATITUDE = createLatitude();
-  private double latitude = DEFAULT_LATITUDE;
+  private Coordinates DEFAULT_COORDINATES = someCoordinates().build();
+  private Coordinates coordinates = DEFAULT_COORDINATES;
 
   public static LocationBuilder aLocation() {
     return new LocationBuilder();
@@ -28,17 +27,12 @@ public class LocationBuilder {
     return this;
   }
 
-  public LocationBuilder withLongitude(double longitude) {
-    this.longitude = longitude;
-    return this;
-  }
-
-  public LocationBuilder withLatitude(double latitude) {
-    this.latitude = latitude;
+  public LocationBuilder withCoordinates(Coordinates coordinates) {
+    this.coordinates = coordinates;
     return this;
   }
 
   public Location build() {
-    return new Location(zipCode, longitude, latitude);
+    return new Location(zipCode, coordinates);
   }
 }

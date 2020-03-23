@@ -1,11 +1,14 @@
 package ca.ulaval.glo2003.locations.mappers;
 
-import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createLongitude;
+import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesBuilder.someCoordinates;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createZipCode;
 import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder.aLocationResponse;
 import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.infrastructure.LocationResponse;
 import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
@@ -18,27 +21,24 @@ import org.junit.jupiter.api.Test;
 class LocationMapperTest {
 
   private static LocationMapper locationMapper;
+  private static CoordinatesMapper coordinatesMapper = mock(CoordinatesMapper.class);
 
   private static final String zipCode = createZipCode();
-  private static final double longitude = createLongitude();
-  private static final double latitude = createLongitude();
+  private static final Coordinates coordinates = someCoordinates().build();
 
   private LocationResponse locationResponse;
 
   @BeforeAll
   public static void setUpMapper() {
-    locationMapper = new LocationMapper();
+    locationMapper = new LocationMapper(coordinatesMapper);
   }
 
   @BeforeEach
   public void setUpMocks() {
-    PlaceResponse placeResponse =
-        aPlaceResponse()
-            .withLongitude(Double.toString(longitude))
-            .withLatitude(Double.toString(latitude))
-            .build();
+    PlaceResponse placeResponse = aPlaceResponse().build();
     List<PlaceResponse> placeResponses = Collections.singletonList(placeResponse);
     locationResponse = aLocationResponse().withPostCode(zipCode).withPlaces(placeResponses).build();
+    when(coordinatesMapper.fromResponse(placeResponse)).thenReturn(coordinates);
   }
 
   @Test
@@ -49,16 +49,9 @@ class LocationMapperTest {
   }
 
   @Test
-  public void fromResponse_shouldMapLongitude() {
+  public void fromResponse_shouldMapCoordinates() {
     Location location = locationMapper.fromResponse(locationResponse);
 
-    assertEquals(longitude, location.getLongitude());
-  }
-
-  @Test
-  public void fromResponse_shouldMapLatitude() {
-    Location location = locationMapper.fromResponse(locationResponse);
-
-    assertEquals(latitude, location.getLatitude());
+    assertSame(coordinates, location.getCoordinates());
   }
 }

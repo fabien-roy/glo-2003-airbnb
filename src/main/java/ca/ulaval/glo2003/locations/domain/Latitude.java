@@ -17,4 +17,18 @@ public class Latitude {
   public double toKm() {
     return value * KM_PER_DEGREE;
   }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || getClass() != object.getClass()) return false;
+
+    Latitude latitude = (Latitude) object;
+
+    return value == latitude.getValue();
+  }
+
+  @Override
+  public int hashCode() {
+    return Double.hashCode(value);
+  }
 }

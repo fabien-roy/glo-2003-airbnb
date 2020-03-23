@@ -1,19 +1,22 @@
 package ca.ulaval.glo2003.locations.mappers;
 
+import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.infrastructure.LocationResponse;
+import javax.inject.Inject;
 
 public class LocationMapper {
 
-  public Location fromResponse(LocationResponse response) {
-    String zipCode = response.getPostCode();
-    double latitude = parseDouble(response.getPlaces().get(0).getLatitude());
-    double longitude = parseDouble(response.getPlaces().get(0).getLongitude());
+  private final CoordinatesMapper coordinatesMapper;
 
-    return new Location(zipCode, latitude, longitude);
+  @Inject
+  public LocationMapper(CoordinatesMapper coordinatesMapper) {
+    this.coordinatesMapper = coordinatesMapper;
   }
 
-  private double parseDouble(String value) {
-    return Double.parseDouble(value.replace(",", "."));
+  public Location fromResponse(LocationResponse location) {
+    Coordinates coordinates = coordinatesMapper.fromResponse(location.getPlaces().get(0));
+
+    return new Location(location.getPostCode(), coordinates);
   }
 }
