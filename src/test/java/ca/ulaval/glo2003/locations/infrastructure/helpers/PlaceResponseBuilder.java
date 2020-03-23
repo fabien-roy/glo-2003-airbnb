@@ -1,6 +1,6 @@
-package ca.ulaval.glo2003.locations.domain.infrastructure.helpers;
+package ca.ulaval.glo2003.locations.infrastructure.helpers;
 
-import static ca.ulaval.glo2003.locations.domain.infrastructure.helpers.PlaceResponseObjectMother.*;
+import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseObjectMother.*;
 
 import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
 

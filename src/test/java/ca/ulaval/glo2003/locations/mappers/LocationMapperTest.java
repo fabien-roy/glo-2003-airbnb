@@ -2,8 +2,8 @@ package ca.ulaval.glo2003.locations.mappers;
 
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createLongitude;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createZipCode;
-import static ca.ulaval.glo2003.locations.domain.infrastructure.helpers.LocationResponseBuilder.aLocationResponse;
-import static ca.ulaval.glo2003.locations.domain.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
+import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder.aLocationResponse;
+import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.locations.domain.Location;

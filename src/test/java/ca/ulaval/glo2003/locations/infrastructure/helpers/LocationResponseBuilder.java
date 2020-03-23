@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.locations.domain.infrastructure.helpers;
+package ca.ulaval.glo2003.locations.infrastructure.helpers;
 
-import static ca.ulaval.glo2003.locations.domain.infrastructure.helpers.LocationResponseObjectMother.*;
-import static ca.ulaval.glo2003.locations.domain.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
+import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseObjectMother.*;
+import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
 
 import ca.ulaval.glo2003.locations.infrastructure.LocationResponse;
 import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;

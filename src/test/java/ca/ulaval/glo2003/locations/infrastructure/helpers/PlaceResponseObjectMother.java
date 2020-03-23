@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.locations.domain.infrastructure.helpers;
+package ca.ulaval.glo2003.locations.infrastructure.helpers;
 
 import com.github.javafaker.Faker;
 
