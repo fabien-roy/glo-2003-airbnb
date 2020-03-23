@@ -6,8 +6,9 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
-import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
+import com.google.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class BedService {
   private final BedStarsCalculator bedStarsCalculator;
   private final ZippopotamusClient zippopotamusClient;
 
+  @Inject
   public BedService(
       BedFactory bedFactory,
       BedMapper bedMapper,
@@ -41,6 +43,7 @@ public class BedService {
   public String add(BedRequest request) {
     Bed bed = bedMapper.fromRequest(request);
     ZipCode zipCode = zippopotamusClient.validateZipCode(request.getZipCode().getValue());
+    //    ZipCode zipCode = getValidatedZipCode(request.getZipCode());
 
     bed = bedFactory.create(bed, zipCode);
 
@@ -52,7 +55,10 @@ public class BedService {
   public List<BedResponse> getAll(Map<String, String[]> params) {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
-    if (bedMatcher.getOrigin() != null) zippopotamusClient.validateZipCode(bedMatcher.getOrigin());
+    if (bedMatcher.getOrigin() != null) {
+      ZipCode zipCode = getValidatedZipCode(bedMatcher.getOrigin().getValue());
+      bedMatcher.setOrigin(zipCode);
+    }
 
     List<Bed> beds = bedRepository.getAll();
     List<Bed> matchingBeds = beds.stream().filter(bedMatcher::matches).collect(Collectors.toList());
@@ -72,5 +78,9 @@ public class BedService {
     Bed bed = bedRepository.getByNumber(bedNumber);
 
     return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
+  }
+
+  private ZipCode getValidatedZipCode(String zipCodeValue) {
+    return zippopotamusClient.validateZipCode(zipCodeValue);
   }
 }

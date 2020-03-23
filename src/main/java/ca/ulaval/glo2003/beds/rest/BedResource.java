@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
@@ -21,6 +22,7 @@ public class BedResource implements RouteGroup {
 
   private final BedService bedService;
 
+  @Inject
   public BedResource(BedService bedService) {
     this.bedService = bedService;
   }

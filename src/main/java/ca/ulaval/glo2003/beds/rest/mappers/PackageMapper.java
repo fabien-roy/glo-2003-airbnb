@@ -6,11 +6,13 @@ import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
+import javax.inject.Inject;
 
 public class PackageMapper {
 
   private PriceMapper priceMapper;
 
+  @Inject
   public PackageMapper(PriceMapper priceMapper) {
     this.priceMapper = priceMapper;
   }

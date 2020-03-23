@@ -5,6 +5,7 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.List;
 
 public class BedRequestBuilder {
@@ -15,7 +16,7 @@ public class BedRequestBuilder {
   private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
   private String DEFAULT_ZIP_CODE = createZipCode();
-  private String zipCode = DEFAULT_ZIP_CODE;
+  private ZipCode zipCode = new ZipCode(DEFAULT_ZIP_CODE);
 
   private String DEFAULT_BED_TYPE = createBedType();
   private String bedType = DEFAULT_BED_TYPE;
@@ -44,7 +45,7 @@ public class BedRequestBuilder {
     return this;
   }
 
-  public BedRequestBuilder withZipCode(String zipCode) {
+  public BedRequestBuilder withZipCode(ZipCode zipCode) {
     this.zipCode = zipCode;
     return this;
   }

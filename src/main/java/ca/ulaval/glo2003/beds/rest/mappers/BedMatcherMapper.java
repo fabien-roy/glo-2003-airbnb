@@ -1,13 +1,18 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 public class BedMatcherMapper {
 
@@ -19,6 +24,14 @@ public class BedMatcherMapper {
   public static final String MAX_DISTANCE_PARAM = "maxDistance";
   public static final String ORIGIN_PARAM = "origin";
   public static final String LODGING_MODE_PARAM = "lodgingMode";
+  public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
+
+  private final BookingDateMapper bookingDateMapper;
+
+  @Inject
+  public BedMatcherMapper(BookingDateMapper bookingDateMapper) {
+    this.bookingDateMapper = bookingDateMapper;
+  }
 
   public BedMatcher fromRequestParams(Map<String, String[]> params) {
     BedTypes bedType = null;
@@ -27,8 +40,9 @@ public class BedMatcherMapper {
     int capacity = 0;
     Packages packageName = null;
     int maxDistance = 0;
-    String origin = null;
+    ZipCode origin = null;
     LodgingModes lodgingMode = null;
+    BookingDate arrivalDate = null;
 
     if (params.get(BED_TYPE_PARAM) != null) {
       bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
@@ -51,9 +65,9 @@ public class BedMatcherMapper {
     }
 
     if (params.get(ORIGIN_PARAM) != null) {
-      origin = params.get(ORIGIN_PARAM)[0];
+      origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
       if (params.get(MAX_DISTANCE_PARAM) != null) {
-        maxDistance = parsePositiveInteger(params.get(MAX_DISTANCE_PARAM)[0]);
+        maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
       } else {
         maxDistance = 10;
       }
@@ -67,6 +81,10 @@ public class BedMatcherMapper {
       lodgingMode = LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
     }
 
+    if (params.get(ARRIVAL_DATE_PARAM) != null) {
+      arrivalDate = bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]);
+    }
+
     return new BedMatcher(
         bedType,
         cleaningFrequency,
@@ -75,7 +93,8 @@ public class BedMatcherMapper {
         packageName,
         maxDistance,
         origin,
-        lodgingMode);
+        lodgingMode,
+        arrivalDate);
   }
 
   private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
@@ -83,34 +102,26 @@ public class BedMatcherMapper {
   }
 
   private int parseCapacity(String capacity) {
-    int parsedCapacity;
-
-    try {
-      parsedCapacity = Integer.parseInt(capacity);
-    } catch (NumberFormatException e) {
-      throw new InvalidCapacityException();
-    }
-
-    if (parsedCapacity < 0) {
-      throw new InvalidCapacityException();
-    }
-
-    return parsedCapacity;
+    return parsePositiveInteger(capacity, new InvalidCapacityException());
   }
 
-  private int parsePositiveInteger(String integer) {
-    int parsedDistance;
+  private int parseMaxDistance(String maxDistance) {
+    return parsePositiveInteger(maxDistance, new InvalidMaxDistanceException());
+  }
+
+  private int parsePositiveInteger(String integer, BedException exception) {
+    int parsedInteger;
 
     try {
-      parsedDistance = Integer.parseInt(integer);
+      parsedInteger = Integer.parseInt(integer);
     } catch (NumberFormatException e) {
-      throw new InvalidMaxDistanceException();
+      throw exception;
     }
 
-    if (parsedDistance < 0) {
-      throw new InvalidMaxDistanceException();
+    if (parsedInteger < 0) {
+      throw exception;
     }
 
-    return parsedDistance;
+    return parsedInteger;
   }
 }
