@@ -4,7 +4,6 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.locations.domain.Location;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,9 +113,8 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
     }
   }
 
-  // TODO : Use default constructor
   private BookingDate getArrivalDate() {
-    return arrivalDate == null ? new BookingDate(LocalDate.now()) : arrivalDate;
+    return arrivalDate == null ? new BookingDate() : arrivalDate;
   }
 
   private int getNumberOfNights() {

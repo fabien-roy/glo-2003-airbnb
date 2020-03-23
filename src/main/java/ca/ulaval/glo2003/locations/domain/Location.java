@@ -22,18 +22,4 @@ public class Location {
     double distance = coordinates.calculateDistance(origin.getCoordinates());
     return distance <= maxDistance;
   }
-
-  @Override
-  public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-
-    Location location = (Location) object;
-
-    return zipCode.equals(location.getZipCode());
-  }
-
-  @Override
-  public int hashCode() {
-    return zipCode.hashCode();
-  }
 }
