@@ -194,12 +194,45 @@ class BedMatcherTest {
   }
 
   @Test
+  public void matches_withDifferentLodgingModes_shouldReturnFalse() {
+    LodgingModes lodgingMode = LodgingModes.PRIVATE;
+    LodgingModes otherLodgingMode = LodgingModes.COHABITATION;
+    BedMatcher bedMatcher = aBedMatcher().withLodging(lodgingMode).build();
+    Bed bed = aBed().withLodgingMode(otherLodgingMode).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertFalse(matches);
+  }
+
+  @Test
+  public void matches_withSameLodgingModes_shouldReturnTrue() {
+    LodgingModes lodgingModes = LodgingModes.PRIVATE;
+    BedMatcher bedMatcher = aBedMatcher().withLodging(lodgingModes).build();
+    Bed bed = aBed().withLodgingMode(lodgingModes).build();
+
+    boolean matches = bedMatcher.matches(bed);
+
+    assertTrue(matches);
+  }
+
+  @Test
   public void matches_withAllSameAttributes_shouldReturnTrue() {
     BedTypes bedType = BedTypes.LATEX;
     CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
+    LodgingModes lodgingModes = LodgingModes.PRIVATE;
     BedMatcher bedMatcher =
-        aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
-    Bed bed = aBed().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
+        aBedMatcher()
+            .withBedType(bedType)
+            .withCleaningFrequency(cleaningFrequency)
+            .withLodging(lodgingModes)
+            .build();
+    Bed bed =
+        aBed()
+            .withBedType(bedType)
+            .withCleaningFrequency(cleaningFrequency)
+            .withLodgingMode(lodgingModes)
+            .build();
 
     boolean matches = bedMatcher.matches(bed);
 
@@ -226,10 +259,20 @@ class BedMatcherTest {
     BedTypes otherBedtype = BedTypes.MEMORY_FOAM;
     CleaningFrequencies cleaningFrequency = CleaningFrequencies.ANNUAL;
     CleaningFrequencies otherCleaningFrequency = CleaningFrequencies.MONTHLY;
+    LodgingModes lodgingMode = LodgingModes.PRIVATE;
+    LodgingModes otherLodgingMode = LodgingModes.COHABITATION;
     BedMatcher bedMatcher =
-        aBedMatcher().withBedType(bedType).withCleaningFrequency(cleaningFrequency).build();
+        aBedMatcher()
+            .withBedType(bedType)
+            .withCleaningFrequency(cleaningFrequency)
+            .withLodging(lodgingMode)
+            .build();
     Bed bed =
-        aBed().withBedType(otherBedtype).withCleaningFrequency(otherCleaningFrequency).build();
+        aBed()
+            .withBedType(otherBedtype)
+            .withCleaningFrequency(otherCleaningFrequency)
+            .withLodgingMode(otherLodgingMode)
+            .build();
 
     boolean matches = bedMatcher.matches(bed);
 

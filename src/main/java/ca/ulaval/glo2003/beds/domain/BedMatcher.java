@@ -6,15 +6,18 @@ import java.util.List;
 
 public class BedMatcher {
 
+  public static final int UNSET_INT = 0;
+
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int minCapacity;
   private Packages packageName;
-  private int maxDistance;
-  private ZipCode origin;
-  private LodgingModes lodgingMode;
   private BookingDate arrivalDate;
+  private int numberOfNights;
+  private LodgingModes lodgingMode;
+  private ZipCode origin;
+  private int maxDistance;
 
   public BedMatcher(
       BedTypes bedType,
@@ -22,19 +25,21 @@ public class BedMatcher {
       List<BloodTypes> bloodTypes,
       int minCapacity,
       Packages packageName,
-      int maxDistance,
-      ZipCode origin,
+      BookingDate arrivalDate,
+      int numberOfNights,
       LodgingModes lodgingMode,
-      BookingDate arrivalDate) {
+      ZipCode origin,
+      int maxDistance) {
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
     this.minCapacity = minCapacity;
     this.packageName = packageName;
-    this.maxDistance = maxDistance;
-    this.origin = origin;
-    this.lodgingMode = lodgingMode;
     this.arrivalDate = arrivalDate;
+    this.numberOfNights = numberOfNights;
+    this.lodgingMode = lodgingMode;
+    this.origin = origin;
+    this.maxDistance = maxDistance;
   }
 
   public BedTypes getBedType() {
@@ -53,24 +58,44 @@ public class BedMatcher {
     return minCapacity;
   }
 
-  public Packages getPackageName() {
+  public Packages getPackage() {
     return packageName;
   }
 
-  public int getMaxDistance() {
-    return maxDistance;
+  public BookingDate getArrivalDate() {
+    return arrivalDate;
   }
 
-  public ZipCode getOrigin() {
-    return origin;
+  public void setArrivalDate(BookingDate arrivalDate) {
+    this.arrivalDate = arrivalDate;
   }
 
   public LodgingModes getLodgingMode() {
     return lodgingMode;
   }
 
-  public BookingDate getArrivalDate() {
-    return arrivalDate;
+  public int getNumberOfNights() {
+    return numberOfNights;
+  }
+
+  public void setNumberOfNights(int numberOfNights) {
+    this.numberOfNights = numberOfNights;
+  }
+
+  public ZipCode getOrigin() {
+    return origin;
+  }
+
+  public void setOrigin(ZipCode validZipCode) {
+    origin = validZipCode;
+  }
+
+  public int getMaxDistance() {
+    return maxDistance;
+  }
+
+  public void setMaxDistance(int maxDistance) {
+    this.maxDistance = maxDistance;
   }
 
   public boolean matches(Bed bed) {
@@ -85,10 +110,13 @@ public class BedMatcher {
 
     if (packageName != null && !bed.isPackageAvailable(packageName)) return false;
 
-    return true;
-  }
+    if (arrivalDate != null
+        && bed.getBookings().stream()
+            .anyMatch(booking -> booking.getDepartureDate().isAfter(arrivalDate.getValue())))
+      return false;
 
-  public void setOrigin(ZipCode validZipCode) {
-    origin = validZipCode;
+    if (lodgingMode != null && !lodgingMode.equals(bed.getLodgingMode())) return false;
+
+    return true;
   }
 }

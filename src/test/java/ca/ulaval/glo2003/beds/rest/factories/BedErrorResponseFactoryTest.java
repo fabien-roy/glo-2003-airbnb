@@ -52,6 +52,11 @@ class BedErrorResponseFactoryTest {
         Arguments.of(new InvalidLodgingModeException(), invalidLodgingMode()),
         Arguments.of(new InvalidPackageException(), invalidPackage()),
         Arguments.of(new InvalidMaxDistanceException(), invalidMaxDistance()),
+        Arguments.of(
+            new ArrivalDateWithoutMinimalCapacityException(), arrivalDateWithoutMinimalCapacity()),
+        Arguments.of(
+            new NumberOfNightsWithoutMinimalCapacityException(),
+            numberOfNightsWithoutMinimalCapacity()),
         Arguments.of(new MaxDistanceWithoutOriginException(), maxDistanceWithoutOrigin()),
         Arguments.of(new InvalidPublicKeyException(), invalidPublicKey()),
         Arguments.of(new PackageNotAvailableException(), packageNotAvailable()),

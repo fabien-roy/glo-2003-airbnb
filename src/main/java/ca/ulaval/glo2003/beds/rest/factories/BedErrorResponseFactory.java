@@ -23,6 +23,10 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
       return invalidPackage();
     } else if (exception instanceof InvalidMaxDistanceException) {
       return invalidMaxDistance();
+    } else if (exception instanceof ArrivalDateWithoutMinimalCapacityException) {
+      return arrivalDateWithoutMinimalCapacity();
+    } else if (exception instanceof NumberOfNightsWithoutMinimalCapacityException) {
+      return numberOfNightsWithoutMinimalCapacity();
     } else if (exception instanceof MaxDistanceWithoutOriginException) {
       return maxDistanceWithoutOrigin();
     } else if (exception instanceof InvalidPublicKeyException) {
@@ -84,6 +88,18 @@ public class BedErrorResponseFactory extends CatchallErrorResponseFactory {
   static String invalidMaxDistance() {
     return tryWriteValueAsString(
         "INVALID_MAX_DISTANCE", "distance should be a number greater than 0");
+  }
+
+  static String arrivalDateWithoutMinimalCapacity() {
+    return tryWriteValueAsString(
+        "ARRIVAL_DATE_WITHOUT_MINIMAL_CAPACITY",
+        "a minimal capacity should be provided along with the arrival date");
+  }
+
+  static String numberOfNightsWithoutMinimalCapacity() {
+    return tryWriteValueAsString(
+        "NUMBER_OF_NIGHTS_WITHOUT_MINIMAL_CAPACITY",
+        "a minimal capacity should be provided along with the number of nights");
   }
 
   static String maxDistanceWithoutOrigin() {

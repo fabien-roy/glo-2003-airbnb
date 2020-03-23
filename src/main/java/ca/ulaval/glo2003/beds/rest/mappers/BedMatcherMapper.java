@@ -1,11 +1,15 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
+import static ca.ulaval.glo2003.beds.domain.BedMatcher.UNSET_INT;
+import static ca.ulaval.glo2003.beds.rest.BedQueryMapBuilder.*;
+
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.exceptions.BedException;
+import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import java.util.Arrays;
@@ -16,15 +20,9 @@ import javax.inject.Inject;
 
 public class BedMatcherMapper {
 
-  public static final String BED_TYPE_PARAM = "bedType";
-  public static final String CLEANING_FREQUENCY_PARAM = "cleaningFreq";
-  public static final String BLOOD_TYPES_PARAM = "bloodTypes";
-  public static final String MIN_CAPACITY_PARAM = "minCapacity";
-  public static final String PACKAGE_NAME_PARAM = "packages";
-  public static final String MAX_DISTANCE_PARAM = "maxDistance";
-  public static final String ORIGIN_PARAM = "origin";
-  public static final String LODGING_MODE_PARAM = "lodgingMode";
-  public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
+  static final BookingDate DEFAULT_ARRIVAL_DATE = new BookingDate();
+  static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
+  static final int DEFAULT_MAX_DISTANCE = 10;
 
   private final BookingDateMapper bookingDateMapper;
 
@@ -34,67 +32,72 @@ public class BedMatcherMapper {
   }
 
   public BedMatcher fromRequestParams(Map<String, String[]> params) {
-    BedTypes bedType = null;
-    CleaningFrequencies cleaningFrequency = null;
-    List<BloodTypes> bloodTypes = null;
-    int capacity = 0;
-    Packages packageName = null;
-    int maxDistance = 0;
-    ZipCode origin = null;
-    LodgingModes lodgingMode = null;
-    BookingDate arrivalDate = null;
+    BedMatcher bedMatcher = buildBedMatcher(params);
 
-    if (params.get(BED_TYPE_PARAM) != null) {
-      bedType = BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
-    }
+    applyMinCapacityDependencies(bedMatcher);
+    applyOriginDependencies(bedMatcher);
 
-    if (params.get(CLEANING_FREQUENCY_PARAM) != null) {
-      cleaningFrequency = CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]);
-    }
+    return bedMatcher;
+  }
 
-    if (params.get(BLOOD_TYPES_PARAM) != null) {
-      bloodTypes = parseBloodTypes(params.get(BLOOD_TYPES_PARAM));
-    }
+  private BedMatcher buildBedMatcher(Map<String, String[]> params) {
+    BedTypes bedType =
+        params.get(BED_TYPE_PARAM) == null ? null : BedTypes.get(params.get(BED_TYPE_PARAM)[0]);
 
-    if (params.get(MIN_CAPACITY_PARAM) != null) {
-      capacity = parseCapacity(params.get(MIN_CAPACITY_PARAM)[0]);
-    }
+    CleaningFrequencies cleaningFrequency =
+        params.get(CLEANING_FREQUENCY_PARAM) == null
+            ? null
+            : CleaningFrequencies.get(params.get(CLEANING_FREQUENCY_PARAM)[0]);
 
-    if (params.get(PACKAGE_NAME_PARAM) != null) {
-      packageName = Packages.get(params.get(PACKAGE_NAME_PARAM)[0]);
-    }
+    List<BloodTypes> bloodTypes =
+        params.get(BLOOD_TYPES_PARAM) == null
+            ? null
+            : parseBloodTypes(params.get(BLOOD_TYPES_PARAM));
 
-    if (params.get(ORIGIN_PARAM) != null) {
-      origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
-      if (params.get(MAX_DISTANCE_PARAM) != null) {
-        maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
-      } else {
-        maxDistance = 10;
-      }
-    } else {
-      if (params.get(MAX_DISTANCE_PARAM) != null) {
-        throw new MaxDistanceWithoutOriginException();
-      }
-    }
+    int minCapacity =
+        params.get(MIN_CAPACITY_PARAM) == null
+            ? UNSET_INT
+            : parseCapacity(params.get(MIN_CAPACITY_PARAM)[0]);
 
-    if (params.get(LODGING_MODE_PARAM) != null) {
-      lodgingMode = LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
-    }
+    Packages packageName =
+        params.get(PACKAGE_NAME_PARAM) == null
+            ? null
+            : Packages.get(params.get(PACKAGE_NAME_PARAM)[0]);
 
-    if (params.get(ARRIVAL_DATE_PARAM) != null) {
-      arrivalDate = bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]);
-    }
+    BookingDate arrivalDate =
+        params.get(ARRIVAL_DATE_PARAM) == null
+            ? null
+            : bookingDateMapper.fromString(params.get(ARRIVAL_DATE_PARAM)[0]);
+
+    int numberOfNights =
+        params.get(NUMBER_OF_NIGHTS_PARAM) == null
+            ? UNSET_INT
+            : parseNumberOfNights(params.get(NUMBER_OF_NIGHTS_PARAM)[0]);
+
+    LodgingModes lodgingMode =
+        params.get(LODGING_MODE_PARAM) == null
+            ? null
+            : LodgingModes.get(params.get(LODGING_MODE_PARAM)[0]);
+
+    ZipCode origin =
+        params.get(ORIGIN_PARAM) == null ? null : new ZipCode(params.get(ORIGIN_PARAM)[0]);
+
+    int maxDistance =
+        params.get(MAX_DISTANCE_PARAM) == null
+            ? UNSET_INT
+            : parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
 
     return new BedMatcher(
         bedType,
         cleaningFrequency,
         bloodTypes,
-        capacity,
+        minCapacity,
         packageName,
-        maxDistance,
-        origin,
+        arrivalDate,
+        numberOfNights,
         lodgingMode,
-        arrivalDate);
+        origin,
+        maxDistance);
   }
 
   private List<BloodTypes> parseBloodTypes(String[] bloodTypes) {
@@ -109,7 +112,11 @@ public class BedMatcherMapper {
     return parsePositiveInteger(maxDistance, new InvalidMaxDistanceException());
   }
 
-  private int parsePositiveInteger(String integer, BedException exception) {
+  private int parseNumberOfNights(String numberOfNights) {
+    return parsePositiveInteger(numberOfNights, new InvalidNumberOfNightsException());
+  }
+
+  private int parsePositiveInteger(String integer, RuntimeException exception) {
     int parsedInteger;
 
     try {
@@ -123,5 +130,27 @@ public class BedMatcherMapper {
     }
 
     return parsedInteger;
+  }
+
+  private void applyMinCapacityDependencies(BedMatcher bedMatcher) {
+    if (bedMatcher.getMinCapacity() != UNSET_INT) {
+      if (bedMatcher.getArrivalDate() == null) bedMatcher.setArrivalDate(DEFAULT_ARRIVAL_DATE);
+      if (bedMatcher.getNumberOfNights() == UNSET_INT)
+        bedMatcher.setNumberOfNights(DEFAULT_NUMBER_OF_NIGHTS);
+    } else {
+      if (bedMatcher.getArrivalDate() != null)
+        throw new ArrivalDateWithoutMinimalCapacityException();
+
+      if (bedMatcher.getNumberOfNights() != UNSET_INT)
+        throw new NumberOfNightsWithoutMinimalCapacityException();
+    }
+  }
+
+  private void applyOriginDependencies(BedMatcher bedMatcher) {
+    if (bedMatcher.getOrigin() != null) {
+      if (bedMatcher.getMaxDistance() == UNSET_INT) bedMatcher.setMaxDistance(DEFAULT_MAX_DISTANCE);
+    } else if (bedMatcher.getMaxDistance() != UNSET_INT) {
+      throw new MaxDistanceWithoutOriginException();
+    }
   }
 }
