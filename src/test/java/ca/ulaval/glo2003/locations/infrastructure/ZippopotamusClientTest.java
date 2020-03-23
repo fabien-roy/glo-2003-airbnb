@@ -8,6 +8,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
+import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import ca.ulaval.glo2003.locations.mappers.LocationMapper;
 import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
@@ -48,5 +50,26 @@ class ZippopotamusClientTest {
     assertEquals(location, actualLocation);
   }
 
-  // TODO : Other tests for ZippopotamusClient
+  @Test
+  public void getLocation_withNonExistingZipCode_shouldThrowNonExistingZipCodeException()
+      throws IOException {
+    when(fakeUrlConnection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_NOT_FOUND);
+
+    assertThrows(
+        NonExistingZipCodeException.class,
+        () -> zippopotamusClient.getLocation(location.getZipCode()));
+  }
+
+  @Test
+  public void
+      getLocation_withUnreachableZippopotamusServer_shouldThrowUnreachableZippopotamusServerException()
+          throws IOException {
+    when(fakeUrlConnection.getResponseCode())
+        .thenThrow(new IOException())
+        .thenReturn(HttpURLConnection.HTTP_OK);
+
+    assertThrows(
+        UnreachableZippopotamusServerException.class,
+        () -> zippopotamusClient.getLocation(location.getZipCode()));
+  }
 }
