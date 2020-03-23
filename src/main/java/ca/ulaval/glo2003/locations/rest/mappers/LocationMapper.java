@@ -2,8 +2,12 @@ package ca.ulaval.glo2003.locations.rest.mappers;
 
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.rest.LocationResponse;
+import javax.inject.Inject;
 
 public class LocationMapper {
+
+  @Inject
+  public LocationMapper() {}
 
   public Location fromResponse(LocationResponse response) {
 
