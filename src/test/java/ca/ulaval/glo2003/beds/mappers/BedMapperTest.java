@@ -232,7 +232,7 @@ class BedMapperTest {
 
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
-    assertEquals(expectedLocation.getZipCode(), bedResponse.getZipCode());
+    assertEquals(expectedLocation.getZipCode().getValue(), bedResponse.getZipCode());
   }
 
   @Test
