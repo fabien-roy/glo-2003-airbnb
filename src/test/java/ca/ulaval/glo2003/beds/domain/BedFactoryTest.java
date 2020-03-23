@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocation;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,8 +13,9 @@ import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,7 +39,9 @@ class BedFactoryTest {
   private Map<Packages, Price> otherPackages = packageMapper.fromRequests(otherPackageRequests);
   private Bed bed = aBed().withPricesPerNights(packages).build();
   private Bed otherBed = aBed().withPricesPerNights(otherPackages).build();
-  private ZipCode zipCode = createZipCode();
+  private Location location = createLocation();
+
+  BedFactoryTest() throws IOException {}
 
   @BeforeAll
   public static void setUpFactory() {
@@ -49,22 +52,22 @@ class BedFactoryTest {
 
   @Test
   public void create_shouldSetBedNumber() {
-    bed = bedFactory.create(bed, zipCode);
+    bed = bedFactory.create(bed, location);
 
     assertNotNull(bed.getNumber());
   }
 
   @Test
   public void create_shouldSetZipCode() {
-    bed = bedFactory.create(bed, zipCode);
+    bed = bedFactory.create(bed, location);
 
-    assertEquals(zipCode, bed.getZipCode());
+    assertEquals(location, bed.getLocation());
   }
 
   @Test
   public void create_shouldSetDifferentBedNumbers() {
-    bed = bedFactory.create(bed, zipCode);
-    otherBed = bedFactory.create(otherBed, zipCode);
+    bed = bedFactory.create(bed, location);
+    otherBed = bedFactory.create(otherBed, location);
 
     assertNotEquals(bed.getNumber(), otherBed.getNumber());
   }
@@ -72,7 +75,7 @@ class BedFactoryTest {
   @ParameterizedTest
   @EnumSource(BedTypes.class)
   public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
-      BedTypes bedType) {
+      BedTypes bedType) throws IOException {
     int maxCapacity = BedTypesCapacities.get(bedType);
     bed =
         aBed()
@@ -82,12 +85,12 @@ class BedFactoryTest {
             .build();
 
     assertThrows(
-        ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed, zipCode));
+        ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed, location));
   }
 
   @ParameterizedTest
   @EnumSource(Packages.class)
-  public void create_withDependencies_shouldThrowNoThrow(Packages testPackage) {
+  public void create_withDependencies_shouldThrowNoThrow(Packages testPackage) throws IOException {
     List<String> requestPackagesNames = new ArrayList<>();
     do {
       requestPackagesNames.add(testPackage.toString());
@@ -100,22 +103,24 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertDoesNotThrow(() -> bedFactory.create(bed, zipCode));
+    assertDoesNotThrow(() -> bedFactory.create(bed, location));
   }
 
   @Test
-  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
+  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
+      throws IOException {
     String packageName = Packages.ALL_YOU_CAN_DRINK.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     packageRequests = Collections.singletonList(request);
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   @Test
-  public void create_withoutSweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
+  public void create_withoutSweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
+      throws IOException {
     String packageName = Packages.BLOODTHIRSTY.toString();
     String otherPackageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
@@ -124,12 +129,13 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   @Test
   public void
-      create_withSWAmdAYCNWithoutAYCDDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
+      create_withSWAmdAYCNWithoutAYCDDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
+          throws IOException {
     String packageName = Packages.ALL_YOU_CAN_DRINK.toString();
     String otherPackageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
@@ -138,18 +144,19 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   @Test
-  public void create_withOnlySweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
+  public void create_withOnlySweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
+      throws IOException {
     String packageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     packageRequests = Collections.singletonList(request);
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   private List<PackageRequest> getPackageRequest() {

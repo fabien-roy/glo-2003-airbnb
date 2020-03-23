@@ -6,8 +6,10 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
-import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.services.LocationService;
+import com.google.inject.Inject;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,8 +21,9 @@ public class BedService {
   private final BedMatcherMapper bedMatcherMapper;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
-  private final ZippopotamusClient zippopotamusClient;
+  private final LocationService locationService;
 
+  @Inject
   public BedService(
       BedFactory bedFactory,
       BedMapper bedMapper,
@@ -28,33 +31,33 @@ public class BedService {
       BedMatcherMapper bedMatcherMapper,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
-      ZippopotamusClient zippopotamusClient) {
+      LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedMapper = bedMapper;
     this.bedNumberMapper = bedNumberMapper;
     this.bedMatcherMapper = bedMatcherMapper;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
-    this.zippopotamusClient = zippopotamusClient;
+    this.locationService = locationService;
   }
 
-  public String add(BedRequest request) {
+  public String add(BedRequest request) throws IOException {
     Bed bed = bedMapper.fromRequest(request);
-    ZipCode zipCode = getValidatedZipCode(request.getZipCode());
+    Location location = locationService.getLocation(request.getZipCode());
 
-    bed = bedFactory.create(bed, zipCode);
+    bed = bedFactory.create(bed, location);
 
     bedRepository.add(bed);
 
     return bed.getNumber().toString();
   }
 
-  public List<BedResponse> getAll(Map<String, String[]> params) {
+  public List<BedResponse> getAll(Map<String, String[]> params) throws IOException {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     if (bedMatcher.getOrigin() != null) {
-      ZipCode zipCode = getValidatedZipCode(bedMatcher.getOrigin().getValue());
-      bedMatcher.setOrigin(zipCode);
+      Location location = locationService.getLocation(bedMatcher.getOrigin().getZipCode());
+      bedMatcher.setOrigin(location);
     }
 
     List<Bed> beds = bedRepository.getAll();
@@ -75,9 +78,5 @@ public class BedService {
     Bed bed = bedRepository.getByNumber(bedNumber);
 
     return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
-  }
-
-  private ZipCode getValidatedZipCode(String zipCodeValue) {
-    return zippopotamusClient.validateZipCode(zipCodeValue);
   }
 }

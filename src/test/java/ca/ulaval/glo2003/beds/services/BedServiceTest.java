@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.services;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocation;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseBuilder.aBedResponse;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,8 +14,9 @@ import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
-import ca.ulaval.glo2003.interfaces.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.services.LocationService;
+import java.io.IOException;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,11 +31,11 @@ public class BedServiceTest {
   private static BedMatcherMapper bedMatcherMapper;
   private static BedRepository bedRepository;
   private static BedStarsCalculator bedStarsCalculator;
-  private static ZippopotamusClient zippopotamusClient;
+  private static LocationService locationService;
 
   private UUID bedNumber = createBedNumber();
-  private ZipCode origin = createZipCode();
-  private ZipCode validatedZipCode = createZipCode();
+  private Location origin = createLocation();
+  private Location validatedLocation = createLocation();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
   private Bed otherBed = aBed().build();
   private BedMatcher bedMatcher = mock(BedMatcher.class);
@@ -45,6 +46,8 @@ public class BedServiceTest {
   private BedResponse otherBedResponse = aBedResponse().withStars(otherStars).build();
   private Map<String, String[]> params = new HashMap<>();
 
+  public BedServiceTest() throws IOException {}
+
   @BeforeAll
   public static void setUpService() {
     bedFactory = mock(BedFactory.class);
@@ -53,7 +56,7 @@ public class BedServiceTest {
     bedMatcherMapper = mock(BedMatcherMapper.class);
     bedRepository = mock(BedRepository.class);
     bedStarsCalculator = mock(BedStarsCalculator.class);
-    zippopotamusClient = mock(ZippopotamusClient.class);
+    locationService = mock(LocationService.class);
     bedService =
         new BedService(
             bedFactory,
@@ -62,25 +65,25 @@ public class BedServiceTest {
             bedMatcherMapper,
             bedRepository,
             bedStarsCalculator,
-            zippopotamusClient);
+            locationService);
   }
 
   @BeforeEach
-  public void setUpMocksForAdd() {
+  public void setUpMocksForAdd() throws IOException {
     when(bedMatcher.matches(bed)).thenReturn(true);
     when(bedMatcher.matches(otherBed)).thenReturn(true);
     when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(zippopotamusClient.validateZipCode(bedRequest.getZipCode())).thenReturn(validatedZipCode);
-    when(bedFactory.create(bed, validatedZipCode)).thenReturn(bed);
+    when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
+    when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
 
   @BeforeEach
-  public void setUpMocksForGetAll() {
+  public void setUpMocksForGetAll() throws IOException {
     when(bedRepository.getAll()).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
-    when(zippopotamusClient.validateZipCode(origin.getValue())).thenReturn(validatedZipCode);
+    when(locationService.getLocation(origin.getZipCode())).thenReturn(validatedLocation);
     when(bedMapper.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedMapper.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
   }
@@ -93,28 +96,28 @@ public class BedServiceTest {
   }
 
   @Test
-  public void add_withBedRequest_shouldAddBed() {
+  public void add_withBedRequest_shouldAddBed() throws IOException {
     bedService.add(bedRequest);
 
     verify(bedRepository).add(eq(bed));
   }
 
   @Test
-  public void add_withBedRequest_shouldReturnBedNumber() {
+  public void add_withBedRequest_shouldReturnBedNumber() throws IOException {
     String actualBedNumber = bedService.add(bedRequest);
 
     assertEquals(bedNumber.toString(), actualBedNumber);
   }
 
   @Test
-  public void add_shouldValidateZipCode() {
+  public void add_shouldGetLocation() throws IOException {
     bedService.add(bedRequest);
 
-    verify(zippopotamusClient).validateZipCode(eq(bedRequest.getZipCode()));
+    verify(locationService).getLocation(eq(bedRequest.getZipCode()));
   }
 
   @Test
-  public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() {
+  public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() throws IOException {
     when(bedMatcher.matches(otherBed)).thenReturn(false);
 
     List<BedResponse> bedResponses = bedService.getAll(params);
@@ -124,7 +127,7 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withParams_shouldGetMatchingBedsInDecreasingOrderOfStars() {
+  public void getAll_withParams_shouldGetMatchingBedsInDecreasingOrderOfStars() throws IOException {
     List<BedResponse> bedResponses = bedService.getAll(params);
 
     assertSame(bedResponse, bedResponses.get(0));
@@ -132,19 +135,19 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withoutOrigin_shouldNotMatchWithZipCode() {
+  public void getAll_withoutOrigin_shouldNotMatchWithZipCode() throws IOException {
     bedService.getAll(params);
 
     verify(bedMatcher, never()).setOrigin(any());
   }
 
   @Test
-  public void getAll_withOrigin_shouldMatchWithValidateZipCode() {
+  public void getAll_withOrigin_shouldMatchWithValidateZipCode() throws IOException {
     when(bedMatcher.getOrigin()).thenReturn(origin);
 
     bedService.getAll(params);
 
-    verify(bedMatcher).setOrigin(eq(validatedZipCode));
+    verify(bedMatcher).setOrigin(eq(validatedLocation));
   }
 
   @Test

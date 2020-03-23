@@ -1,17 +1,20 @@
 package ca.ulaval.glo2003.beds.rest.mappers;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.beds.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.services.LocationService;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 public class BedMatcherMapper {
 
@@ -26,19 +29,22 @@ public class BedMatcherMapper {
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
 
   private final BookingDateMapper bookingDateMapper;
+  private final LocationService locationService;
 
-  public BedMatcherMapper(BookingDateMapper bookingDateMapper) {
+  @Inject
+  public BedMatcherMapper(BookingDateMapper bookingDateMapper, LocationService locationService) {
     this.bookingDateMapper = bookingDateMapper;
+    this.locationService = locationService;
   }
 
-  public BedMatcher fromRequestParams(Map<String, String[]> params) {
+  public BedMatcher fromRequestParams(Map<String, String[]> params) throws IOException {
     BedTypes bedType = null;
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
     int capacity = 0;
     Packages packageName = null;
     int maxDistance = 0;
-    ZipCode origin = null;
+    Location origin = null;
     LodgingModes lodgingMode = null;
     BookingDate arrivalDate = null;
 
@@ -63,7 +69,7 @@ public class BedMatcherMapper {
     }
 
     if (params.get(ORIGIN_PARAM) != null) {
-      origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
+      origin = locationService.getLocation(params.get(ORIGIN_PARAM)[0]);
       if (params.get(MAX_DISTANCE_PARAM) != null) {
         maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
       } else {

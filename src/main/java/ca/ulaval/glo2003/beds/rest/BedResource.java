@@ -4,11 +4,12 @@ import static ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper.*;
 import static spark.Spark.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
@@ -21,6 +22,7 @@ public class BedResource implements RouteGroup {
 
   private final BedService bedService;
 
+  @Inject
   public BedResource(BedService bedService) {
     this.bedService = bedService;
   }
@@ -32,7 +34,7 @@ public class BedResource implements RouteGroup {
     get("/:number", this::getByNumber, new ObjectMapper()::writeValueAsString);
   }
 
-  public Object add(Request request, Response response) throws JsonProcessingException {
+  public Object add(Request request, Response response) throws IOException {
     BedRequest bedRequest;
 
     bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);
@@ -46,7 +48,7 @@ public class BedResource implements RouteGroup {
     return bedPath;
   }
 
-  public Object getAll(Request request, Response response) {
+  public Object getAll(Request request, Response response) throws IOException {
     Map<String, String[]> queryMap = buildQueryMap(request);
 
     List<BedResponse> bedResponses = bedService.getAll(queryMap);

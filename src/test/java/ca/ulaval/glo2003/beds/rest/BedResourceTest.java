@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +29,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void add_shouldReturnCorrectHeaderLocation() throws JsonProcessingException {
+  public void add_shouldReturnCorrectHeaderLocation() throws IOException {
     String expectedBedNumber = "expectedBedNumber";
     String expectedHeaderLocation = "/beds/" + expectedBedNumber;
     Request request = mock(Request.class);
@@ -45,7 +45,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void add_shouldSetCreatedAsHttpStatus() throws JsonProcessingException {
+  public void add_shouldSetCreatedAsHttpStatus() throws IOException {
     Request request = mock(Request.class);
     BedRequest bedRequest = mock(BedRequest.class);
     String requestBody = new ObjectMapper().writeValueAsString(bedRequest);
@@ -82,7 +82,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void getAll_withOneBed_shouldReturnThatBed() {
+  public void getAll_withOneBed_shouldReturnThatBed() throws IOException {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
@@ -96,7 +96,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void getAll_withMultipleBeds_shouldReturnAllBeds() {
+  public void getAll_withMultipleBeds_shouldReturnAllBeds() throws IOException {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
@@ -113,7 +113,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void getAll_shouldSetOKAsHttpStatus() {
+  public void getAll_shouldSetOKAsHttpStatus() throws IOException {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     when(request.queryMap()).thenReturn(mock(QueryParamsMap.class));

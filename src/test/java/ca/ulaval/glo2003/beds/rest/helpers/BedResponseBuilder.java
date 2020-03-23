@@ -13,9 +13,6 @@ public class BedResponseBuilder {
   private String DEFAULT_BED_NUMBER = createBedNumber();
   private String bedNumber = DEFAULT_BED_NUMBER;
 
-  private String DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
-  private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
-
   private String DEFAULT_ZIP_CODE = createZipCode();
   private String zipCode = DEFAULT_ZIP_CODE;
 

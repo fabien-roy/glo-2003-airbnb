@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
-import ca.ulaval.glo2003.beds.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.interfaces.domain.ZipCode;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 
 public class BedMatcherBuilder {
@@ -15,7 +15,7 @@ public class BedMatcherBuilder {
   private int minCapacity = 0;
   private Packages packageName = null;
   private int maxDistance = 0;
-  private ZipCode origin = null;
+  private Location origin = null;
   private LodgingModes lodgingMode = null;
   private BookingDate arrivalDate = null;
 
@@ -48,7 +48,7 @@ public class BedMatcherBuilder {
     return this;
   }
 
-  public BedMatcherBuilder withOriginAndMaxDistance(ZipCode origin, int maxDistance) {
+  public BedMatcherBuilder withOriginAndMaxDistance(Location origin, int maxDistance) {
     this.origin = origin;
     this.maxDistance = maxDistance;
     return this;
