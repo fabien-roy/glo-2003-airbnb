@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public interface ErrorFactory {
 
-  static String tryWriteValueAsString(java.lang.String error, java.lang.String description) {
+  static String tryWriteValueAsString(String error, String description) {
     try {
       ErrorResponse response = new ErrorResponse(error, description);
       return new ObjectMapper().writeValueAsString(response);
@@ -15,7 +15,7 @@ public interface ErrorFactory {
     }
   }
 
-  Exception canHandle();
+  boolean canHandle(Exception exception);
 
   String createResponse();
 
