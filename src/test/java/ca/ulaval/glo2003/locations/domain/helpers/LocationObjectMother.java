@@ -7,6 +7,6 @@ public class LocationObjectMother {
   private LocationObjectMother() {}
 
   public static String createZipCode() {
-    return Faker.instance().address().zipCode();
+    return Faker.instance().address().zipCode().substring(0, 5);
   }
 }
