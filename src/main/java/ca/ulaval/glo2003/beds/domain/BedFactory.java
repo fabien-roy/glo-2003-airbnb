@@ -1,18 +1,18 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.Set;
 import java.util.UUID;
 
 public class BedFactory {
 
-  public Bed create(Bed bed, ZipCode zipCode) {
+  public Bed create(Bed bed, Location location) {
     validateCapacity(bed);
     validatePackageDependencies(bed);
     UUID bedNumber = UUID.randomUUID();
     bed.setNumber(bedNumber);
-    bed.setZipCode(zipCode);
+    bed.setLocation(location);
     return bed;
   }
 

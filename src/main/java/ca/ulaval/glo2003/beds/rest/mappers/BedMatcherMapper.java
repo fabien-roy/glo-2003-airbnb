@@ -7,7 +7,7 @@ import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,7 @@ public class BedMatcherMapper {
     int capacity = 0;
     Packages packageName = null;
     int maxDistance = 0;
-    ZipCode origin = null;
+    Location origin = null;
     LodgingModes lodgingMode = null;
     BookingDate arrivalDate = null;
 
@@ -65,7 +65,7 @@ public class BedMatcherMapper {
     }
 
     if (params.get(ORIGIN_PARAM) != null) {
-      origin = new ZipCode(params.get(ORIGIN_PARAM)[0]);
+      origin = new Location(params.get(ORIGIN_PARAM)[0]);
       if (params.get(MAX_DISTANCE_PARAM) != null) {
         maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
       } else {

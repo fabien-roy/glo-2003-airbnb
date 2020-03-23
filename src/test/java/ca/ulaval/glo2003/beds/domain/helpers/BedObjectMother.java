@@ -8,7 +8,7 @@ import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import com.github.javafaker.Faker;
 import java.util.Collections;
 import java.util.List;
@@ -26,8 +26,8 @@ public class BedObjectMother {
     return createPublicKey();
   }
 
-  public static ZipCode createZipCode() {
-    return new ZipCode(Faker.instance().address().zipCode());
+  public static Location createZipCode() {
+    return new Location(Faker.instance().address().zipCode());
   }
 
   public static BedTypes createBedType() {

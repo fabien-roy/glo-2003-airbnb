@@ -13,7 +13,7 @@ import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +38,7 @@ class BedFactoryTest {
   private Map<Packages, Price> otherPackages = packageMapper.fromRequests(otherPackageRequests);
   private Bed bed = aBed().withPricesPerNights(packages).build();
   private Bed otherBed = aBed().withPricesPerNights(otherPackages).build();
-  private ZipCode zipCode = createZipCode();
+  private Location location = createZipCode();
 
   @BeforeAll
   public static void setUpFactory() {
@@ -49,22 +49,22 @@ class BedFactoryTest {
 
   @Test
   public void create_shouldSetBedNumber() {
-    bed = bedFactory.create(bed, zipCode);
+    bed = bedFactory.create(bed, location);
 
     assertNotNull(bed.getNumber());
   }
 
   @Test
   public void create_shouldSetZipCode() {
-    bed = bedFactory.create(bed, zipCode);
+    bed = bedFactory.create(bed, location);
 
-    assertEquals(zipCode, bed.getZipCode());
+    assertEquals(location, bed.getLocation());
   }
 
   @Test
   public void create_shouldSetDifferentBedNumbers() {
-    bed = bedFactory.create(bed, zipCode);
-    otherBed = bedFactory.create(otherBed, zipCode);
+    bed = bedFactory.create(bed, location);
+    otherBed = bedFactory.create(otherBed, location);
 
     assertNotEquals(bed.getNumber(), otherBed.getNumber());
   }
@@ -82,7 +82,7 @@ class BedFactoryTest {
             .build();
 
     assertThrows(
-        ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed, zipCode));
+        ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed, location));
   }
 
   @ParameterizedTest
@@ -100,7 +100,7 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertDoesNotThrow(() -> bedFactory.create(bed, zipCode));
+    assertDoesNotThrow(() -> bedFactory.create(bed, location));
   }
 
   @Test
@@ -111,7 +111,7 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   @Test
@@ -124,7 +124,7 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   @Test
@@ -138,7 +138,7 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   @Test
@@ -149,7 +149,7 @@ class BedFactoryTest {
     packages = packageMapper.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
-    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, zipCode));
+    assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, location));
   }
 
   private List<PackageRequest> getPackageRequest() {

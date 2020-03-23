@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
@@ -19,7 +19,7 @@ class ZippopotamusClientTest {
   private static ZippopotamusClient zippopotamusClient;
   private static HttpURLConnection fakeUrlConnection;
 
-  private static final ZipCode zipCode = new ZipCode("12345");
+  private static final Location LOCATION = new Location("12345");
 
   @BeforeAll
   public static void setUpMapper() {
@@ -33,10 +33,10 @@ class ZippopotamusClientTest {
   }
 
   @Test
-  public void validateZipCode_withValidZipCode_shouldReturnZipCode() {
-    ZipCode actualZipCode = zippopotamusClient.validateZipCode(zipCode.getValue());
+  public void validateZipCode_withValidZipCode_shouldReturnZipCode() throws IOException {
+    Location actualLocation = zippopotamusClient.validateZipCode(LOCATION.getZipCode());
 
-    assertEquals(zipCode, actualZipCode);
+    assertEquals(LOCATION, actualLocation);
   }
 
   @Test
@@ -46,7 +46,7 @@ class ZippopotamusClientTest {
 
     assertThrows(
         NonExistingZipCodeException.class,
-        () -> zippopotamusClient.validateZipCode(zipCode.getValue()));
+        () -> zippopotamusClient.validateZipCode(LOCATION.getZipCode()));
   }
 
   @Test
@@ -59,7 +59,7 @@ class ZippopotamusClientTest {
 
     assertThrows(
         UnreachableZippopotamusServerException.class,
-        () -> zippopotamusClient.validateZipCode(zipCode.getValue()));
+        () -> zippopotamusClient.validateZipCode(LOCATION.getZipCode()));
   }
 
   @Test

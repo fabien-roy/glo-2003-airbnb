@@ -8,14 +8,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class ZipCodeTest {
+class LocationTest {
 
   @Test
   void equals_shouldReturnFalse_whenObjectIsNotZipCode() {
     String zipValue = "12345";
-    ZipCode zipCode = new ZipCode(zipValue);
+    Location location = new Location(zipValue);
 
-    boolean result = zipCode.equals(zipValue);
+    boolean result = location.equals(zipValue);
 
     assertFalse(result);
   }
@@ -24,10 +24,10 @@ class ZipCodeTest {
   void equals_shouldReturnFalse_whenValuesAreNotEqual() {
     String value = "000000";
     String otherValue = "12345";
-    ZipCode zipCode = new ZipCode(value);
-    ZipCode otherZipCode = new ZipCode(otherValue);
+    Location location = new Location(value);
+    Location otherLocation = new Location(otherValue);
 
-    boolean result = zipCode.equals(otherZipCode);
+    boolean result = location.equals(otherLocation);
 
     assertFalse(result);
   }
@@ -35,10 +35,10 @@ class ZipCodeTest {
   @Test
   void equals_shouldReturnTrue_whenValuesAreEqual() {
     String value = "12345";
-    ZipCode zipCode = new ZipCode(value);
-    ZipCode otherZipCode = new ZipCode(value);
+    Location location = new Location(value);
+    Location otherLocation = new Location(value);
 
-    boolean result = zipCode.equals(otherZipCode);
+    boolean result = location.equals(otherLocation);
 
     assertTrue(result);
   }
@@ -52,7 +52,7 @@ class ZipCodeTest {
       String longitude2,
       double expectedDistance) {
     double distance =
-        ZipCode.calculateDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitude2);
+        Location.calculateDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitude2);
     assertEquals(expectedDistance, distance);
   }
 
@@ -88,18 +88,18 @@ class ZipCodeTest {
   @ParameterizedTest
   @MethodSource("provideDataForisWithinRadius_withMaxDistance")
   public void isWithinRadius_withMaxDistance_shouldReturnCorrectAnswer(
-      ZipCode zipCode, ZipCode origin, double maxDistance, double expectedAnswer) {
-    Boolean answer = zipCode.isWithinRadius(origin, maxDistance);
+      Location location, Location origin, double maxDistance, double expectedAnswer) {
+    Boolean answer = location.isWithinRadius(origin, maxDistance);
     assertEquals(expectedAnswer, answer);
   }
 
   private static Stream<Arguments> provideDataForisWithinRadius_withMaxDistance() {
-    ZipCode yotelNYCity = new ZipCode("10036", "40.759341", "-73.995611");
-    ZipCode grandCentralTerminal = new ZipCode("10017", "46.753077", "-73.977154");
-    ZipCode pfisterHotelMilhaukee = new ZipCode("53202", "43.039643", "-87.905641");
-    ZipCode beaconParkDetroit = new ZipCode("48226", "42.334705", "-83.055317");
-    ZipCode hotelRooseveltLA = new ZipCode("90028", "34.101990", "-118.341873");
-    ZipCode laInternationalAirport = new ZipCode("90045", "33.946834", "-118.408961");
+    Location yotelNYCity = new Location("10036", "40.759341", "-73.995611");
+    Location grandCentralTerminal = new Location("10017", "46.753077", "-73.977154");
+    Location pfisterHotelMilhaukee = new Location("53202", "43.039643", "-87.905641");
+    Location beaconParkDetroit = new Location("48226", "42.334705", "-83.055317");
+    Location hotelRooseveltLA = new Location("90028", "34.101990", "-118.341873");
+    Location laInternationalAirport = new Location("90045", "33.946834", "-118.408961");
 
     return Stream.of(
         Arguments.of(
@@ -128,16 +128,16 @@ class ZipCodeTest {
   @ParameterizedTest
   @MethodSource("provideDataForisWithinRadius_withoutMaxDistance")
   public void isWithinRadius_withoutMaxDistance_shouldReturnCorrectAnswer(
-      ZipCode zipCode, ZipCode origin, double expectedAnswer) {
-    Boolean answer = zipCode.isWithinRadius(origin);
+      Location location, Location origin, double expectedAnswer) {
+    Boolean answer = location.isWithinRadius(origin);
     assertEquals(expectedAnswer, answer);
   }
 
   private static Stream<Arguments> provideDataForisWithinRadius_withoutMaxDistance() {
-    ZipCode yotelNYCity = new ZipCode("10036", "40.759341", "-73.995611");
-    ZipCode grandCentralTerminal = new ZipCode("10017", "46.753077", "-73.977154");
-    ZipCode laInternationalAirport = new ZipCode("90045", "33.946834", "-118.408961");
-    ZipCode croationChurchNY = new ZipCode("10036", "40.759203", "-73.9970572");
+    Location yotelNYCity = new Location("10036", "40.759341", "-73.995611");
+    Location grandCentralTerminal = new Location("10017", "46.753077", "-73.977154");
+    Location laInternationalAirport = new Location("90045", "33.946834", "-118.408961");
+    Location croationChurchNY = new Location("10036", "40.759203", "-73.9970572");
 
     return Stream.of(
         Arguments.of(

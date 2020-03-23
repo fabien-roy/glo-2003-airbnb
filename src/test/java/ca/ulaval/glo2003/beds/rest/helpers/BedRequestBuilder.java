@@ -2,10 +2,9 @@ package ca.ulaval.glo2003.beds.rest.helpers;
 
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.*;
 
-import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 
 public class BedRequestBuilder {
@@ -16,7 +15,7 @@ public class BedRequestBuilder {
   private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
   private String DEFAULT_ZIP_CODE = createZipCode();
-  private ZipCode zipCode = new ZipCode(DEFAULT_ZIP_CODE);
+  private Location location = new Location(DEFAULT_ZIP_CODE);
 
   private String DEFAULT_BED_TYPE = createBedType();
   private String bedType = DEFAULT_BED_TYPE;
@@ -45,8 +44,8 @@ public class BedRequestBuilder {
     return this;
   }
 
-  public BedRequestBuilder withZipCode(ZipCode zipCode) {
-    this.zipCode = zipCode;
+  public BedRequestBuilder withZipCode(Location location) {
+    this.location = location;
     return this;
   }
 
@@ -83,7 +82,7 @@ public class BedRequestBuilder {
   public BedRequest build() {
     return new BedRequest(
         ownerPublicKey,
-        zipCode,
+        location,
         bedType,
         cleaningFrequency,
         bloodTypes,
