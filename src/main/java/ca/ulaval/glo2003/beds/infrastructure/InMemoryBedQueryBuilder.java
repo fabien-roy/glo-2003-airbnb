@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.infrastructure;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
@@ -15,7 +16,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
   private static final int UNSET_INT = 0;
   static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
-  private static final int DEFAULT_MAX_DISTANCE = 10;
+  static final int DEFAULT_MAX_DISTANCE = 10;
 
   private int minCapacity = UNSET_INT;
   private BookingDate arrivalDate = null;
@@ -110,7 +111,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
     if (origin != null) {
       filters.add(new InMemoryDistanceFilter(origin, getMaxDistance()));
     } else {
-      if (maxDistance != UNSET_INT) throw new RuntimeException(); // TODO : Throw correct exception
+      if (maxDistance != UNSET_INT) throw new MaxDistanceWithoutOriginException();
     }
   }
 
