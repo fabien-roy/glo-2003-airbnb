@@ -8,7 +8,7 @@ public class BedResponse {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String bedNumber;
 
-  private String zipCode;
+  private String zipCode; // TODO faut-il un attribut ZipCode plutot?
   private String bedType;
   private String cleaningFrequency;
   private List<String> bloodTypes;
