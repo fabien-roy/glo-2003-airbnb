@@ -6,7 +6,7 @@ import java.util.List;
 public class LocationResponse {
 
   @SerializedName("post code")
-  private String postCode; // Location.zipCode
+  private String postCode;
 
   private String country;
 

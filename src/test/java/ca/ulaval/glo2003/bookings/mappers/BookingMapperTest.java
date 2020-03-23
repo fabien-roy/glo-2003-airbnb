@@ -27,6 +27,8 @@ import org.junit.jupiter.api.Test;
 
 class BookingMapperTest {
 
+  // TODO : Refactor this test class
+
   private static BookingMapper bookingMapper;
   private static BookingDateMapper bookingDateMapper;
   private static PublicKeyMapper publicKeyMapper;
