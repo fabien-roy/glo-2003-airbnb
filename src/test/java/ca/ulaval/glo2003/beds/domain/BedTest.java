@@ -15,14 +15,13 @@ import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.io.IOException;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
 class BedTest {
 
   @Test
-  public void book_withBookings_shouldAddBooking() throws IOException {
+  public void book_withBookings_shouldAddBooking() {
     Packages bookingPackage = createPackageName();
     Booking presentBooking = aBooking().withPackage(bookingPackage).build();
     Bed bed =
@@ -41,8 +40,7 @@ class BedTest {
   }
 
   @Test
-  public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException()
-      throws IOException {
+  public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
     PublicKey ownerPublicKey = createOwnerPublicKey();
     Bed bed = aBed().withOwnerPublicKey(ownerPublicKey).build();
     Packages bookingPackage = bed.getPricesPerNight().keySet().iterator().next();
@@ -54,7 +52,7 @@ class BedTest {
   }
 
   @Test
-  public void book_withOverlappingDates_shouldThrowBedAlreadyBookedException() throws IOException {
+  public void book_withOverlappingDates_shouldThrowBedAlreadyBookedException() {
     Packages bookingPackage = createPackageName();
     Booking presentBooking = mock(Booking.class);
     when(presentBooking.getPackage()).thenReturn(bookingPackage);
@@ -72,8 +70,7 @@ class BedTest {
   }
 
   @Test
-  public void book_withUnavailablePackage_shouldThrowPackageUnavailableException()
-      throws IOException {
+  public void book_withUnavailablePackage_shouldThrowPackageUnavailableException() {
     Packages bookingPackage = Packages.SWEET_TOOTH;
     Booking booking = aBooking().withPackage(bookingPackage).build();
     Map<Packages, Price> pricesPerNight =
@@ -85,8 +82,7 @@ class BedTest {
   }
 
   @Test
-  public void getBookingByNumber_withNoBooking_shouldThrowBookingNotFoundException()
-      throws IOException {
+  public void getBookingByNumber_withNoBooking_shouldThrowBookingNotFoundException() {
     UUID bookingNumber = mock(UUID.class);
     Bed bed = aBed().withBookings(Collections.emptyList()).build();
 
@@ -94,8 +90,8 @@ class BedTest {
   }
 
   @Test
-  public void getBookingByNumber_withNonExistentBookingNumber_shouldThrowBookingNotFoundException()
-      throws IOException {
+  public void
+      getBookingByNumber_withNonExistentBookingNumber_shouldThrowBookingNotFoundException() {
     Packages bookingPackage = createPackageName();
     UUID existentBookingNumber = mock(UUID.class);
     UUID nonExistentBookingNumber = mock(UUID.class);

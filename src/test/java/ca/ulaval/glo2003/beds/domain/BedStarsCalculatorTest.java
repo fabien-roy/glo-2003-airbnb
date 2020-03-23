@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.beds.domain;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +19,7 @@ class BedStarsCalculatorTest {
       BedTypes bedType,
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
-      int expectedStars)
-      throws IOException {
+      int expectedStars) {
     Bed bed =
         aBed()
             .withBedType(bedType)

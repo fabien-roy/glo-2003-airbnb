@@ -84,7 +84,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void getAll_withOneBed_shouldReturnThatBed() throws IOException {
+  public void getAll_withOneBed_shouldReturnThatBed() {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);
@@ -98,7 +98,7 @@ public class BedResourceTest {
   }
 
   @Test
-  public void getAll_withMultipleBeds_shouldReturnAllBeds() throws IOException {
+  public void getAll_withMultipleBeds_shouldReturnAllBeds() {
     Request request = mock(Request.class);
     Response response = mock(Response.class);
     BedResponse expectedBedResponse = mock(BedResponse.class);

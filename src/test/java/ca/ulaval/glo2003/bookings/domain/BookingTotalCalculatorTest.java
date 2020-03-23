@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
@@ -22,7 +21,7 @@ class BookingTotalCalculatorTest {
   @ParameterizedTest
   @MethodSource("provideConditionsForCalculateTotal")
   public void calculateTotal_shouldReturnCorrectTotal(
-      Price pricePerNight, int numberOfNights, Price expectedTotal) throws IOException {
+      Price pricePerNight, int numberOfNights, Price expectedTotal) {
     Packages packageName = createPackageName();
     Map<Packages, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
     Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
