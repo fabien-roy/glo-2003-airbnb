@@ -15,8 +15,7 @@ import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.services.OutdatedLocationService;
-import java.io.IOException;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +30,7 @@ public class BedServiceTest {
   private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
   private static BedRepository bedRepository = mock(BedRepository.class);
   private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
-  private static OutdatedLocationService outdatedLocationService =
-      mock(OutdatedLocationService.class);
+  private static LocationService locationService = mock(LocationService.class);
 
   private UUID bedNumber = createBedNumber();
   private Location origin = createLocation();
@@ -46,8 +44,6 @@ public class BedServiceTest {
   private BedResponse otherBedResponse = aBedResponse().withStars(otherStars).build();
   private Map<String, String[]> params = new HashMap<>();
 
-  public BedServiceTest() throws IOException {}
-
   @BeforeAll
   public static void setUpService() {
     bedService =
@@ -58,14 +54,13 @@ public class BedServiceTest {
             bedNumberMapper,
             bedRepository,
             bedStarsCalculator,
-            outdatedLocationService);
+            locationService);
   }
 
   @BeforeEach
   public void setUpMocksForAdd() {
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(outdatedLocationService.getLocation(bedRequest.getZipCode()))
-        .thenReturn(validatedLocation);
+    when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
     when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
 
@@ -76,7 +71,7 @@ public class BedServiceTest {
     when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
-    when(outdatedLocationService.getLocation(origin.getZipCode())).thenReturn(validatedLocation);
+    when(locationService.getLocation(origin.getZipCode().getValue())).thenReturn(validatedLocation);
     when(bedMapper.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedMapper.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
   }
@@ -89,24 +84,24 @@ public class BedServiceTest {
   }
 
   @Test
-  public void add_withBedRequest_shouldAddBed() throws IOException {
+  public void add_withBedRequest_shouldAddBed() {
     bedService.add(bedRequest);
 
     verify(bedRepository).add(eq(bed));
   }
 
   @Test
-  public void add_withBedRequest_shouldReturnBedNumber() throws IOException {
+  public void add_withBedRequest_shouldReturnBedNumber() {
     String actualBedNumber = bedService.add(bedRequest);
 
     assertEquals(bedNumber.toString(), actualBedNumber);
   }
 
   @Test
-  public void add_shouldGetLocation() throws IOException {
+  public void add_shouldGetLocation() {
     bedService.add(bedRequest);
 
-    verify(outdatedLocationService).getLocation(eq(bedRequest.getZipCode()));
+    verify(locationService).getLocation(eq(bedRequest.getZipCode()));
   }
 
   @Test

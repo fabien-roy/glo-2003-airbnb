@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.locations.mappers;
 
-import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother.createLatitude;
-import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother.createLongitude;
+import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createLatitude;
+import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createLongitude;
 import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

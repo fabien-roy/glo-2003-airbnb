@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.infrastructure.LocationResponse;
 import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
 import java.util.Collections;
@@ -23,7 +24,7 @@ class LocationMapperTest {
   private static LocationMapper locationMapper;
   private static CoordinatesMapper coordinatesMapper = mock(CoordinatesMapper.class);
 
-  private static final String zipCode = createZipCode();
+  private static final ZipCode zipCode = createZipCode();
   private static final Coordinates coordinates = someCoordinates().build();
 
   private LocationResponse locationResponse;
@@ -37,7 +38,8 @@ class LocationMapperTest {
   public void setUpMocks() {
     PlaceResponse placeResponse = aPlaceResponse().build();
     List<PlaceResponse> placeResponses = Collections.singletonList(placeResponse);
-    locationResponse = aLocationResponse().withPostCode(zipCode).withPlaces(placeResponses).build();
+    locationResponse =
+        aLocationResponse().withPostCode(zipCode.getValue()).withPlaces(placeResponses).build();
     when(coordinatesMapper.fromResponse(placeResponse)).thenReturn(coordinates);
   }
 

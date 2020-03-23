@@ -7,13 +7,14 @@ import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 
 public class LocationBuilder {
 
   private LocationBuilder() {}
 
-  private String DEFAULT_ZIP_CODE = createZipCode();
-  private String zipCode = DEFAULT_ZIP_CODE;
+  private ZipCode DEFAULT_ZIP_CODE = createZipCode();
+  private ZipCode zipCode = DEFAULT_ZIP_CODE;
 
   private Coordinates DEFAULT_COORDINATES = someCoordinates().build();
   private Coordinates coordinates = DEFAULT_COORDINATES;
@@ -22,7 +23,7 @@ public class LocationBuilder {
     return new LocationBuilder();
   }
 
-  public LocationBuilder withZipCode(String zipCode) {
+  public LocationBuilder withZipCode(ZipCode zipCode) {
     this.zipCode = zipCode;
     return this;
   }

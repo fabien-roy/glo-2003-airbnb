@@ -2,15 +2,15 @@ package ca.ulaval.glo2003.locations.domain;
 
 public class Location {
 
-  private String zipCode;
+  private ZipCode zipCode;
   private Coordinates coordinates;
 
-  public Location(String zipCode, Coordinates coordinates) {
+  public Location(ZipCode zipCode, Coordinates coordinates) {
     this.zipCode = zipCode;
     this.coordinates = coordinates;
   }
 
-  public String getZipCode() {
+  public ZipCode getZipCode() {
     return zipCode;
   }
 

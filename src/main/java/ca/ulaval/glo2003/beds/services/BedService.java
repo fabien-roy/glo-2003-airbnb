@@ -7,9 +7,8 @@ import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.services.OutdatedLocationService;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import com.google.inject.Inject;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,7 +20,7 @@ public class BedService {
   private final BedNumberMapper bedNumberMapper;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
-  private final OutdatedLocationService outdatedLocationService;
+  private final LocationService locationService;
 
   @Inject
   public BedService(
@@ -31,19 +30,19 @@ public class BedService {
       BedNumberMapper bedNumberMapper,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
-      OutdatedLocationService outdatedLocationService) {
+      LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedQueryFactory = bedQueryFactory;
     this.bedMapper = bedMapper;
     this.bedNumberMapper = bedNumberMapper;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
-    this.outdatedLocationService = outdatedLocationService;
+    this.locationService = locationService;
   }
 
-  public String add(BedRequest request) throws IOException {
+  public String add(BedRequest request) {
     Bed bed = bedMapper.fromRequest(request);
-    Location location = outdatedLocationService.getLocation(request.getZipCode());
+    Location location = locationService.getLocation(request.getZipCode());
 
     bed = bedFactory.create(bed, location);
 

@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.locations.infrastructure;
 
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.locations.domain.LocationClient;
+import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import ca.ulaval.glo2003.locations.mappers.LocationMapper;
-import ca.ulaval.glo2003.locations.services.LocationClient;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,22 +26,9 @@ public class ZippopotamusClient implements LocationClient {
   }
 
   @Override
-  public Location getLocation(String zipCode) {
-    validateZipCodeFormat(zipCode);
-    LocationResponse locationResponse = tryGetLocationFromServer(zipCode);
+  public Location getLocation(ZipCode zipCode) {
+    LocationResponse locationResponse = tryGetLocationFromServer(zipCode.getValue());
     return locationMapper.fromResponse(locationResponse);
-  }
-
-  // TODO : ZipCode value object + mapper
-  private void validateZipCodeFormat(String zipCode) {
-    if (zipCode.length() != 5) {
-      throw new InvalidZipCodeException();
-    }
-    try {
-      Double.parseDouble(zipCode);
-    } catch (NumberFormatException e) {
-      throw new InvalidZipCodeException();
-    }
   }
 
   private LocationResponse tryGetLocationFromServer(String zipCode) {
