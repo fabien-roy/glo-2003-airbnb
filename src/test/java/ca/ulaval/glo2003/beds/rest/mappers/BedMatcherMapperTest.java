@@ -9,6 +9,8 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
+import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,6 +21,7 @@ class BedMatcherMapperTest {
 
   private static BedMatcherMapper bedMatcherMapper;
   private static BookingDateMapper bookingDateMapper;
+  private static LocationService locationService;
 
   private Map<String, String[]> params = new HashMap<>();
   private BookingDate arrivalDate = new BookingDate(LocalDate.now());
@@ -26,7 +29,8 @@ class BedMatcherMapperTest {
   @BeforeAll
   public static void setUpMapper() {
     bookingDateMapper = mock(BookingDateMapper.class);
-    bedMatcherMapper = new BedMatcherMapper(bookingDateMapper);
+    locationService = mock(LocationService.class);
+    bedMatcherMapper = new BedMatcherMapper(bookingDateMapper, locationService);
   }
 
   @BeforeEach
@@ -35,7 +39,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withNoParams_shouldReturnBedMatcherWithNullAttributes() {
+  public void fromRequestParams_withNoParams_shouldReturnBedMatcherWithNullAttributes()
+      throws IOException {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     assertNull(bedMatcher.getBedType());
@@ -46,7 +51,7 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withBedType_shouldReturnBedMatcherWithBedType() {
+  public void fromRequestParams_withBedType_shouldReturnBedMatcherWithBedType() throws IOException {
     BedTypes expectedBedType = BedTypes.LATEX;
     params.put(BED_TYPE_PARAM, new String[] {expectedBedType.toString()});
 
@@ -63,8 +68,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void
-      fromRequestParams_withCleaningFrequency_shouldReturnBedMatcherWithCleaningFrequency() {
+  public void fromRequestParams_withCleaningFrequency_shouldReturnBedMatcherWithCleaningFrequency()
+      throws IOException {
     CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
     params.put(CLEANING_FREQUENCY_PARAM, new String[] {expectedCleaningFrequency.toString()});
 
@@ -83,7 +88,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withSingleBloodType_shouldReturnBedMatcherWithBloodType() {
+  public void fromRequestParams_withSingleBloodType_shouldReturnBedMatcherWithBloodType()
+      throws IOException {
     BloodTypes expectedBloodType = BloodTypes.O_MINUS;
     params.put(BLOOD_TYPES_PARAM, new String[] {expectedBloodType.toString()});
 
@@ -94,7 +100,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withMultipleBloodTypes_shouldReturnBedMatcherWithBloodTypes() {
+  public void fromRequestParams_withMultipleBloodTypes_shouldReturnBedMatcherWithBloodTypes()
+      throws IOException {
     List<BloodTypes> expectedBloodTypes = Arrays.asList(BloodTypes.O_MINUS, BloodTypes.O_PLUS);
     String[] expectedBloodTypeStrings =
         new String[] {expectedBloodTypes.get(0).toString(), expectedBloodTypes.get(1).toString()};
@@ -115,7 +122,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withCapacity_shouldReturnBedMatcherWithCapacity() {
+  public void fromRequestParams_withCapacity_shouldReturnBedMatcherWithCapacity()
+      throws IOException {
     int expectedCapacity = 600;
     params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(expectedCapacity)});
 
@@ -140,7 +148,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withPackageName_shouldReturnBedMatcherWithPackage() {
+  public void fromRequestParams_withPackageName_shouldReturnBedMatcherWithPackage()
+      throws IOException {
     Packages expectedPackageName = Packages.BLOODTHIRSTY;
     params.put(PACKAGE_NAME_PARAM, new String[] {expectedPackageName.toString()});
 
@@ -176,7 +185,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withNoMaxDistance_shouldBeSetToDefaultMaxDistance() {
+  public void fromRequestParams_withNoMaxDistance_shouldBeSetToDefaultMaxDistance()
+      throws IOException {
     params.put(ORIGIN_PARAM, new String[] {"12345"});
     int expectedMaxDistance = 10;
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
@@ -195,7 +205,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withLodgingMode_shouldReturnBedMatcherWithLodgingMode() {
+  public void fromRequestParams_withLodgingMode_shouldReturnBedMatcherWithLodgingMode()
+      throws IOException {
     LodgingModes expectedLodgingMode = LodgingModes.COHABITATION;
     params.put(LODGING_MODE_PARAM, new String[] {expectedLodgingMode.toString()});
 
@@ -213,7 +224,8 @@ class BedMatcherMapperTest {
   }
 
   @Test
-  public void fromRequestParams_withArrivalDate_shouldReturnBedMatcherWithArrivalDate() {
+  public void fromRequestParams_withArrivalDate_shouldReturnBedMatcherWithArrivalDate()
+      throws IOException {
     params.put(ARRIVAL_DATE_PARAM, new String[] {arrivalDate.getValue().toString()});
 
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);

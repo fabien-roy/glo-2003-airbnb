@@ -13,11 +13,6 @@ public class Location {
   private static double DISTANCE_PER_DEGREE_OF_LATITUDE = 110.574; // in kilometers
   private static double DISTANCE_PER_DEGREE_OF_LONGTITUDE = 111.320; // in kilometers
 
-  // TODO Trouver une moyen d'initialiser la latitude et la longitude a l'aide de Zippopotamus
-  public Location(String zipCode) {
-    this.zipCode = zipCode;
-  }
-
   public Location(String zipCode, String latitude, String longitude) {
     this.zipCode = zipCode;
     this.latitude = latitude;
@@ -99,6 +94,16 @@ public class Location {
 
   @Override
   public String toString() {
-    return zipCode;
+    return "Location{"
+        + "zipCode='"
+        + zipCode
+        + '\''
+        + ", latitude='"
+        + latitude
+        + '\''
+        + ", longitude='"
+        + longitude
+        + '\''
+        + '}';
   }
 }

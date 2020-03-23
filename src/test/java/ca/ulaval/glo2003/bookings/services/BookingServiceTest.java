@@ -21,6 +21,7 @@ import ca.ulaval.glo2003.bookings.rest.mappers.BookingMapper;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,6 +49,8 @@ public class BookingServiceTest {
           .build();
   private BookingRequest bookingRequest = aBookingRequest().build();
   private Price total = createTotal();
+
+  public BookingServiceTest() throws IOException {}
 
   @BeforeAll
   public static void setUpService() {

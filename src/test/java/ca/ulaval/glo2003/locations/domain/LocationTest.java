@@ -1,8 +1,12 @@
 package ca.ulaval.glo2003.locations.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
+import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import java.io.IOException;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,22 +14,29 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class LocationTest {
 
-  @Test
-  void equals_shouldReturnFalse_whenObjectIsNotZipCode() {
-    String zipValue = "12345";
-    Location location = new Location(zipValue);
+  private static LocationService locationService;
 
-    boolean result = location.equals(zipValue);
+  @BeforeAll
+  public static void setUpService() {
+    locationService = mock(LocationService.class);
+  }
+
+  @Test
+  void equals_shouldReturnFalse_whenObjectIsNotZipCode() throws IOException {
+    String zipCode = "12345";
+    Location location = locationService.getLocation(zipCode);
+
+    boolean result = location.equals(zipCode);
 
     assertFalse(result);
   }
 
   @Test
-  void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    String value = "000000";
-    String otherValue = "12345";
-    Location location = new Location(value);
-    Location otherLocation = new Location(otherValue);
+  void equals_shouldReturnFalse_whenZipCodesAreNotEqual() throws IOException {
+    String zipCode = "000000";
+    String otherZipCode = "12345";
+    Location location = locationService.getLocation(zipCode);
+    Location otherLocation = locationService.getLocation(otherZipCode);
 
     boolean result = location.equals(otherLocation);
 
@@ -33,10 +44,10 @@ class LocationTest {
   }
 
   @Test
-  void equals_shouldReturnTrue_whenValuesAreEqual() {
-    String value = "12345";
-    Location location = new Location(value);
-    Location otherLocation = new Location(value);
+  void equals_shouldReturnTrue_whenZipCodesAreEqual() throws IOException {
+    String zipCode = "12345";
+    Location location = locationService.getLocation(zipCode);
+    Location otherLocation = locationService.getLocation(zipCode);
 
     boolean result = location.equals(otherLocation);
 

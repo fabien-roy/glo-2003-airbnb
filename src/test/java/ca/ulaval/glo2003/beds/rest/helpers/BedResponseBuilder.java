@@ -4,11 +4,13 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseObjectMother.*;
 
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.locations.domain.Location;
+import java.io.IOException;
 import java.util.List;
 
 public class BedResponseBuilder {
 
-  private BedResponseBuilder() {}
+  private BedResponseBuilder() throws IOException {}
 
   private String DEFAULT_BED_NUMBER = createBedNumber();
   private String bedNumber = DEFAULT_BED_NUMBER;
@@ -16,8 +18,8 @@ public class BedResponseBuilder {
   private String DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private String ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
-  private String DEFAULT_ZIP_CODE = createZipCode();
-  private String zipCode = DEFAULT_ZIP_CODE;
+  private Location DEFAULT_LOCATION = createLocation();
+  private Location location = DEFAULT_LOCATION;
 
   private String DEFAULT_BED_TYPE = createBedType();
   private String bedType = DEFAULT_BED_TYPE;
@@ -40,7 +42,7 @@ public class BedResponseBuilder {
   private int DEFAULT_STARS = createStars();
   private int stars = DEFAULT_STARS;
 
-  public static BedResponseBuilder aBedResponse() {
+  public static BedResponseBuilder aBedResponse() throws IOException {
     return new BedResponseBuilder();
   }
 
@@ -52,7 +54,7 @@ public class BedResponseBuilder {
   public BedResponse build() {
     return new BedResponse(
         bedNumber,
-        zipCode,
+        location,
         bedType,
         cleaningFrequency,
         bloodTypes,

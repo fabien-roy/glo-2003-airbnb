@@ -19,7 +19,7 @@ class ZippopotamusClientTest {
   private static ZippopotamusClient zippopotamusClient;
   private static HttpURLConnection fakeUrlConnection;
 
-  private static final Location LOCATION = new Location("12345");
+  private static final Location LOCATION = new Location("12345", "42.8333", "-74.058");
 
   @BeforeAll
   public static void setUpMapper() {

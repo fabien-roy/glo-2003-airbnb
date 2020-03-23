@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import ca.ulaval.glo2003.locations.domain.Location;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class BedResponse {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   private String bedNumber;
 
-  private String zipCode; // TODO faut-il un attribut Location plutot?
+  private Location location;
   private String bedType;
   private String cleaningFrequency;
   private List<String> bloodTypes;
@@ -18,7 +19,7 @@ public class BedResponse {
   private int stars;
 
   public BedResponse(
-      String zipCode,
+      Location location,
       String bedType,
       String cleaningFrequency,
       List<String> bloodTypes,
@@ -26,7 +27,7 @@ public class BedResponse {
       String lodgingMode,
       List<PackageResponse> packages,
       int stars) {
-    this.zipCode = zipCode;
+    this.location = location;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
@@ -38,7 +39,7 @@ public class BedResponse {
 
   public BedResponse(
       String bedNumber,
-      String zipCode,
+      Location location,
       String bedType,
       String cleaningFrequency,
       List<String> bloodTypes,
@@ -47,7 +48,7 @@ public class BedResponse {
       List<PackageResponse> packages,
       int stars) {
     this.bedNumber = bedNumber;
-    this.zipCode = zipCode;
+    this.location = location;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
     this.bloodTypes = bloodTypes;
@@ -65,8 +66,8 @@ public class BedResponse {
     this.bedNumber = bedNumber;
   }
 
-  public String getZipCode() {
-    return zipCode;
+  public Location getLocation() {
+    return location;
   }
 
   public String getBedType() {

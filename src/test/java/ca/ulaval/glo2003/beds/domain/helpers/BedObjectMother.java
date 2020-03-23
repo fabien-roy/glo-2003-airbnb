@@ -9,7 +9,10 @@ import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.rest.mappers.LocationMapper;
+import ca.ulaval.glo2003.locations.rest.services.LocationService;
 import com.github.javafaker.Faker;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +20,8 @@ import java.util.UUID;
 public class BedObjectMother {
 
   private BedObjectMother() {}
+  // TODO verifier si correct
+  private static final LocationService locationService = new LocationService(new LocationMapper());
 
   public static UUID createBedNumber() {
     return UUID.randomUUID();
@@ -26,8 +31,8 @@ public class BedObjectMother {
     return createPublicKey();
   }
 
-  public static Location createZipCode() {
-    return new Location(Faker.instance().address().zipCode());
+  public static Location createLocation() throws IOException {
+    return locationService.getLocation(Faker.instance().address().zipCode());
   }
 
   public static BedTypes createBedType() {

@@ -8,6 +8,8 @@ import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.rest.mappers.BookingDateMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.rest.services.LocationService;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +29,15 @@ public class BedMatcherMapper {
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
 
   private final BookingDateMapper bookingDateMapper;
+  private final LocationService locationService;
 
   @Inject
-  public BedMatcherMapper(BookingDateMapper bookingDateMapper) {
+  public BedMatcherMapper(BookingDateMapper bookingDateMapper, LocationService locationService) {
     this.bookingDateMapper = bookingDateMapper;
+    this.locationService = locationService;
   }
 
-  public BedMatcher fromRequestParams(Map<String, String[]> params) {
+  public BedMatcher fromRequestParams(Map<String, String[]> params) throws IOException {
     BedTypes bedType = null;
     CleaningFrequencies cleaningFrequency = null;
     List<BloodTypes> bloodTypes = null;
@@ -65,7 +69,7 @@ public class BedMatcherMapper {
     }
 
     if (params.get(ORIGIN_PARAM) != null) {
-      origin = new Location(params.get(ORIGIN_PARAM)[0]);
+      origin = locationService.getLocation(params.get(ORIGIN_PARAM)[0]);
       if (params.get(MAX_DISTANCE_PARAM) != null) {
         maxDistance = parseMaxDistance(params.get(MAX_DISTANCE_PARAM)[0]);
       } else {

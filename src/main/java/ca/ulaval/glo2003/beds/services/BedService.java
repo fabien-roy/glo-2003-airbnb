@@ -7,7 +7,7 @@ import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
 import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.rest.services.LocationService;
 import com.google.inject.Inject;
 import java.io.IOException;
 import java.util.*;
@@ -21,8 +21,7 @@ public class BedService {
   private final BedMatcherMapper bedMatcherMapper;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
-  private final ZippopotamusClient zippopotamusClient;
-  // TODO faut-il un parametre LocationService
+  private final LocationService locationService;
 
   @Inject
   public BedService(
@@ -32,20 +31,19 @@ public class BedService {
       BedMatcherMapper bedMatcherMapper,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
-      ZippopotamusClient zippopotamusClient) {
+      LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedMapper = bedMapper;
     this.bedNumberMapper = bedNumberMapper;
     this.bedMatcherMapper = bedMatcherMapper;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
-    this.zippopotamusClient = zippopotamusClient;
+    this.locationService = locationService;
   }
 
   public String add(BedRequest request) throws IOException {
     Bed bed = bedMapper.fromRequest(request);
-    // TODO revoir l'intialisation de location
-    Location location = getValidatedZipCode(request.getLocation().getZipCode());
+    Location location = locationService.getLocation(request.getLocation().getZipCode());
 
     bed = bedFactory.create(bed, location);
 
@@ -58,7 +56,7 @@ public class BedService {
     BedMatcher bedMatcher = bedMatcherMapper.fromRequestParams(params);
 
     if (bedMatcher.getOrigin() != null) {
-      Location location = getValidatedZipCode(bedMatcher.getOrigin().getZipCode());
+      Location location = locationService.getLocation(bedMatcher.getOrigin().getZipCode());
       bedMatcher.setOrigin(location);
     }
 
@@ -80,9 +78,5 @@ public class BedService {
     Bed bed = bedRepository.getByNumber(bedNumber);
 
     return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
-  }
-
-  private Location getValidatedZipCode(String zipCodeValue) throws IOException {
-    return zippopotamusClient.validateZipCode(zipCodeValue);
   }
 }

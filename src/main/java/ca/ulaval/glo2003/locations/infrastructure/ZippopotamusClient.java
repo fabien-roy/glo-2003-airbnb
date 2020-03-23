@@ -58,8 +58,10 @@ public class ZippopotamusClient {
     return (HttpURLConnection) url.openConnection();
   }
 
-  public LocationResponse getLocationResponse(String zipCodeValue) throws IOException {
-    HttpURLConnection connection = buildUrlConnection(zipCodeValue);
+  public LocationResponse getLocationResponse(String zipCode) throws IOException {
+    validateZipCodeFormat(zipCode);
+    validateZipCodeExistence(zipCode);
+    HttpURLConnection connection = buildUrlConnection(zipCode);
     connection.connect();
     Gson gson = new Gson();
     return gson.fromJson(

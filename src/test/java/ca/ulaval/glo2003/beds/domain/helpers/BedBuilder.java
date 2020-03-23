@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.UUID;
 
 public class BedBuilder {
 
-  private BedBuilder() {}
+  private BedBuilder() throws IOException {}
 
   private UUID DEFAULT_BED_NUMBER = createBedNumber();
   private UUID bedNumber = DEFAULT_BED_NUMBER;
@@ -23,8 +24,8 @@ public class BedBuilder {
   private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private PublicKey ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
-  private Location DEFAULT_ZIP_CODE = createZipCode();
-  private Location location = DEFAULT_ZIP_CODE;
+  private Location DEFAULT_LOCATION = createLocation();
+  private Location location = DEFAULT_LOCATION;
 
   private BedTypes DEFAULT_BED_TYPE = createBedType();
   private BedTypes bedType = DEFAULT_BED_TYPE;
@@ -48,7 +49,7 @@ public class BedBuilder {
   private List<Booking> DEFAULT_BOOKINGS = Collections.emptyList();
   private List<Booking> bookings = DEFAULT_BOOKINGS;
 
-  public static BedBuilder aBed() {
+  public static BedBuilder aBed() throws IOException {
     return new BedBuilder();
   }
 
@@ -62,7 +63,7 @@ public class BedBuilder {
     return this;
   }
 
-  public BedBuilder withZipCode(Location location) {
+  public BedBuilder withLocation(Location location) {
     this.location = location;
     return this;
   }

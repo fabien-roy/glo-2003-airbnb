@@ -5,7 +5,11 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.rest.mappers.LocationMapper;
+import ca.ulaval.glo2003.locations.rest.services.LocationService;
 import com.github.javafaker.Faker;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +17,8 @@ import java.util.UUID;
 public class BedResponseObjectMother {
 
   private BedResponseObjectMother() {}
+  // TODO verifier si correct
+  private static final LocationService locationService = new LocationService(new LocationMapper());
 
   public static String createBedNumber() {
     return UUID.randomUUID().toString();
@@ -22,8 +28,8 @@ public class BedResponseObjectMother {
     return createPublicKey().getValue();
   }
 
-  public static String createZipCode() {
-    return Faker.instance().address().zipCode();
+  public static Location createLocation() throws IOException {
+    return locationService.getLocation(Faker.instance().address().zipCode());
   }
 
   public static String createBedType() {

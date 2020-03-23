@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void add_shouldAddBed() {
+  public void add_shouldAddBed() throws IOException {
     Bed expectedBed = aBed().build();
 
     bedRepository.add(expectedBed);
@@ -32,7 +33,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void update_shouldUpdateBed() {
+  public void update_shouldUpdateBed() throws IOException {
     UUID bedNumber = createBedNumber();
     Bed originalBed = aBed().withBedNumber(bedNumber).build();
     Bed updatedBed = aBed().withBedNumber(bedNumber).build();
@@ -45,7 +46,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void update_withNonExistentBedNumber_shouldThrowBedNotFoundException() {
+  public void update_withNonExistentBedNumber_shouldThrowBedNotFoundException() throws IOException {
     UUID bedNumber = createBedNumber();
     UUID nonExistentBedNumber = createBedNumber();
     Bed originalBed = aBed().withBedNumber(bedNumber).build();
@@ -56,7 +57,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void getAll_withOneBed_shouldGetOneBed() {
+  public void getAll_withOneBed_shouldGetOneBed() throws IOException {
     Bed expectedBed = aBed().build();
     bedRepository.add(expectedBed);
 
@@ -67,7 +68,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void getAll_withMultipleBeds_shouldGetMultipleBeds() {
+  public void getAll_withMultipleBeds_shouldGetMultipleBeds() throws IOException {
     Bed expectedBed = aBed().build();
     Bed otherExpectedBed = aBed().build();
     bedRepository.add(expectedBed);
@@ -88,7 +89,8 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException() {
+  public void getByNumber_withNonExistentNumber_shouldThrowBedNotFoundException()
+      throws IOException {
     UUID existentBedNumber = createBedNumber();
     UUID nonExistentBedNumber = createBedNumber();
     Bed existentBed = aBed().withBedNumber(existentBedNumber).build();
@@ -98,7 +100,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void getByNumber_withOneBed_shouldGetBed() {
+  public void getByNumber_withOneBed_shouldGetBed() throws IOException {
     UUID bedNumber = createBedNumber();
     Bed expectedBed = aBed().withBedNumber(bedNumber).build();
     bedRepository.add(expectedBed);
@@ -109,7 +111,7 @@ public class InMemoryBedRepositoryTest {
   }
 
   @Test
-  public void getByNumber_withMultipleBeds_shouldGetBed() {
+  public void getByNumber_withMultipleBeds_shouldGetBed() throws IOException {
     UUID bedNumber = createBedNumber();
     UUID otherBedNumber = createBedNumber();
     Bed expectedBed = aBed().withBedNumber(bedNumber).build();
