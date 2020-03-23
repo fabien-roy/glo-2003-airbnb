@@ -31,7 +31,7 @@ class CoordinatesTest {
       Coordinates coordinates, Coordinates otherCoordinates, double distance) {
     double actualDistance = coordinates.calculateDistance(otherCoordinates);
 
-    assertEquals(distance, actualDistance);
+    assertEqualsWhenRounded(distance, actualDistance);
   }
 
   private static Stream<Arguments> provideDataForCalculateDistance() {
@@ -40,5 +40,11 @@ class CoordinatesTest {
         Arguments.of(coordinates3, coordinates4, 326.934371636417),
         Arguments.of(coordinates5, coordinates6, 31.281231789505952),
         Arguments.of(coordinates7, coordinates7, 0.0));
+  }
+
+  private void assertEqualsWhenRounded(double distance, double actualDistance) {
+    double roundedDistance = Math.round(distance);
+    double roundedActualDistance = Math.round(actualDistance);
+    assertEquals(roundedDistance, roundedActualDistance);
   }
 }
