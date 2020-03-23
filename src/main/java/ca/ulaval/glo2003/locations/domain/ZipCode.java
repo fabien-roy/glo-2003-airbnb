@@ -4,8 +4,8 @@ public class ZipCode {
 
   private String value;
 
-  public ZipCode(String zipCode) {
-    this.value = zipCode;
+  public ZipCode(String value) {
+    this.value = value;
   }
 
   public String getValue() {
