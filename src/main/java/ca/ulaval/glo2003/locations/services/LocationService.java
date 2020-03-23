@@ -24,10 +24,12 @@ public class LocationService {
     this.locationMapper = locationMapper;
   }
 
-  public Location getLocation(String zipCode) throws IOException {
-    validateZipCodeFormat(zipCode);
-    validateZipCodeExistence(zipCode);
-    return locationMapper.fromResponse(getByZipCode(zipCode));
+  public Location getLocation(String zipCode) {
+    try {
+      return locationMapper.fromResponse(getByZipCode(zipCode));
+    } catch (IOException e) {
+      return null; // TODO : This is why ZippopotamusClient is important.
+    }
   }
 
   public LocationResponse getByZipCode(String zipCode) throws IOException {
@@ -39,16 +41,6 @@ public class LocationService {
     return gson.fromJson(
         new InputStreamReader((InputStream) connection.getContent()), LocationResponse.class);
   }
-
-  //  public LocationResponse getLocationResponse(String zipCode) throws IOException {
-  //    validateZipCodeFormat(zipCode);
-  //    validateZipCodeExistence(zipCode);
-  //    HttpURLConnection connection = buildUrlConnection(zipCode);
-  //    connection.connect();
-  //    Gson gson = new Gson();
-  //    return gson.fromJson(
-  //        new InputStreamReader((InputStream) connection.getContent()), LocationResponse.class);
-  //  }
 
   protected HttpURLConnection buildUrlConnection(String zipCodeValue) throws IOException {
     URL url = new URL(ZIPPOPOTAMUS_URL + zipCodeValue);

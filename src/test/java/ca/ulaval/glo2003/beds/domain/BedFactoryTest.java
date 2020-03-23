@@ -10,12 +10,11 @@ import static org.mockito.Mockito.mock;
 import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
+import ca.ulaval.glo2003.beds.mappers.PackageMapper;
+import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.beds.rest.mappers.PackageMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.PriceMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +28,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class BedFactoryTest {
 
+  // TODO : Refactor this test class
+
   private static BedFactory bedFactory;
   private static PriceMapper priceMapper;
   private static PackageMapper packageMapper;
@@ -41,7 +42,7 @@ class BedFactoryTest {
   private Bed otherBed = aBed().withPricesPerNights(otherPackages).build();
   private Location location = createLocation();
 
-  BedFactoryTest() throws IOException {}
+  BedFactoryTest() {}
 
   @BeforeAll
   public static void setUpFactory() {
@@ -75,7 +76,7 @@ class BedFactoryTest {
   @ParameterizedTest
   @EnumSource(BedTypes.class)
   public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
-      BedTypes bedType) throws IOException {
+      BedTypes bedType) {
     int maxCapacity = BedTypesCapacities.get(bedType);
     bed =
         aBed()
@@ -90,7 +91,7 @@ class BedFactoryTest {
 
   @ParameterizedTest
   @EnumSource(Packages.class)
-  public void create_withDependencies_shouldThrowNoThrow(Packages testPackage) throws IOException {
+  public void create_withDependencies_shouldThrowNoThrow(Packages testPackage) {
     List<String> requestPackagesNames = new ArrayList<>();
     do {
       requestPackagesNames.add(testPackage.toString());
@@ -107,8 +108,7 @@ class BedFactoryTest {
   }
 
   @Test
-  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
-      throws IOException {
+  public void create_withoutAllYouCanDrinkDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
     String packageName = Packages.ALL_YOU_CAN_DRINK.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     packageRequests = Collections.singletonList(request);
@@ -119,8 +119,7 @@ class BedFactoryTest {
   }
 
   @Test
-  public void create_withoutSweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
-      throws IOException {
+  public void create_withoutSweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
     String packageName = Packages.BLOODTHIRSTY.toString();
     String otherPackageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
@@ -134,8 +133,7 @@ class BedFactoryTest {
 
   @Test
   public void
-      create_withSWAmdAYCNWithoutAYCDDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
-          throws IOException {
+      create_withSWAmdAYCNWithoutAYCDDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
     String packageName = Packages.ALL_YOU_CAN_DRINK.toString();
     String otherPackageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
@@ -148,8 +146,7 @@ class BedFactoryTest {
   }
 
   @Test
-  public void create_withOnlySweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage()
-      throws IOException {
+  public void create_withOnlySweetToothDependencies_shouldThrowCantOfferAllYouCanDrinkPackage() {
     String packageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     packageRequests = Collections.singletonList(request);

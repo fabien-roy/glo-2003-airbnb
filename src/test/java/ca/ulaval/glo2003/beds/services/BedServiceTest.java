@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
+import ca.ulaval.glo2003.beds.mappers.BedMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.BedMatcherMapper;
-import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.services.LocationService;
 import java.io.IOException;
@@ -25,20 +25,19 @@ import org.junit.jupiter.api.Test;
 public class BedServiceTest {
 
   private static BedService bedService;
-  private static BedFactory bedFactory;
-  private static BedMapper bedMapper;
-  private static BedNumberMapper bedNumberMapper;
-  private static BedMatcherMapper bedMatcherMapper;
-  private static BedRepository bedRepository;
-  private static BedStarsCalculator bedStarsCalculator;
-  private static LocationService locationService;
+  private static BedFactory bedFactory = mock(BedFactory.class);
+  private static BedQueryFactory bedQueryFactory = mock(BedQueryFactory.class);
+  private static BedMapper bedMapper = mock(BedMapper.class);
+  private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
+  private static BedRepository bedRepository = mock(BedRepository.class);
+  private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
+  private static LocationService locationService = mock(LocationService.class);
 
   private UUID bedNumber = createBedNumber();
   private Location origin = createLocation();
   private Location validatedLocation = createLocation();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
   private Bed otherBed = aBed().build();
-  private BedMatcher bedMatcher = mock(BedMatcher.class);
   private BedRequest bedRequest = aBedRequest().build();
   private int stars = 4;
   private int otherStars = 2;
@@ -50,37 +49,29 @@ public class BedServiceTest {
 
   @BeforeAll
   public static void setUpService() {
-    bedFactory = mock(BedFactory.class);
-    bedMapper = mock(BedMapper.class);
-    bedNumberMapper = mock(BedNumberMapper.class);
-    bedMatcherMapper = mock(BedMatcherMapper.class);
-    bedRepository = mock(BedRepository.class);
-    bedStarsCalculator = mock(BedStarsCalculator.class);
-    locationService = mock(LocationService.class);
     bedService =
         new BedService(
             bedFactory,
+            bedQueryFactory,
             bedMapper,
             bedNumberMapper,
-            bedMatcherMapper,
             bedRepository,
             bedStarsCalculator,
             locationService);
   }
 
   @BeforeEach
-  public void setUpMocksForAdd() throws IOException {
-    when(bedMatcher.matches(bed)).thenReturn(true);
-    when(bedMatcher.matches(otherBed)).thenReturn(true);
-    when(bedMatcherMapper.fromRequestParams(params)).thenReturn(bedMatcher);
+  public void setUpMocksForAdd() {
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
     when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
     when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
 
   @BeforeEach
-  public void setUpMocksForGetAll() throws IOException {
-    when(bedRepository.getAll()).thenReturn(Arrays.asList(bed, otherBed));
+  public void setUpMocksForGetAll() {
+    InMemoryBedQuery bedQuery = mock(InMemoryBedQuery.class);
+    when(bedQueryFactory.create(params)).thenReturn(bedQuery);
+    when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
     when(locationService.getLocation(origin.getZipCode())).thenReturn(validatedLocation);
@@ -117,37 +108,19 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getAll_withParams_shouldGetMatchingBedsWithCorrectAttributes() throws IOException {
-    when(bedMatcher.matches(otherBed)).thenReturn(false);
-
+  public void getAll_shouldGetBedsWithQuery() {
     List<BedResponse> bedResponses = bedService.getAll(params);
 
     assertTrue(bedResponses.contains(bedResponse));
-    assertFalse(bedResponses.contains(otherBedResponse));
+    assertTrue(bedResponses.contains(otherBedResponse));
   }
 
   @Test
-  public void getAll_withParams_shouldGetMatchingBedsInDecreasingOrderOfStars() throws IOException {
+  public void getAll_shouldOrderInDecreasingOrderOfStars() {
     List<BedResponse> bedResponses = bedService.getAll(params);
 
     assertSame(bedResponse, bedResponses.get(0));
     assertSame(otherBedResponse, bedResponses.get(1));
-  }
-
-  @Test
-  public void getAll_withoutOrigin_shouldNotMatchWithZipCode() throws IOException {
-    bedService.getAll(params);
-
-    verify(bedMatcher, never()).setOrigin(any());
-  }
-
-  @Test
-  public void getAll_withOrigin_shouldMatchWithValidateZipCode() throws IOException {
-    when(bedMatcher.getOrigin()).thenReturn(origin);
-
-    bedService.getAll(params);
-
-    verify(bedMatcher).setOrigin(eq(validatedLocation));
   }
 
   @Test

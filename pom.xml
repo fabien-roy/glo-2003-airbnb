@@ -17,7 +17,8 @@
         <exec-maven.version>1.2.1</exec-maven.version>
         <main-class>ca.ulaval.glo2003.Main</main-class>
         <!-- injection -->
-        <guice.version>3.0</guice.version>
+        <guice.version>4.2.0</guice.version>
+        <guice-multibings.version>4.2.0</guice-multibings.version>
         <!-- rest -->
         <spark-core.version>2.9.1</spark-core.version>
         <jackson-databind.version>2.10.1</jackson-databind.version>
@@ -50,6 +51,11 @@
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-multibindings</artifactId>
+            <version>${guice-multibings.version}</version>
         </dependency>
         <!-- rest -->
         <dependency>
