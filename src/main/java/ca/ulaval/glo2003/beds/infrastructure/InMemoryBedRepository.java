@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryBedRepository implements BedRepository {
+public class InMemoryBedRepository implements BedRepository<InMemoryBedQuery> {
 
   private List<Bed> beds;
 
@@ -28,8 +28,9 @@ public class InMemoryBedRepository implements BedRepository {
   }
 
   @Override
-  public List<Bed> getAll() {
-    return beds;
+  public List<Bed> getAll(InMemoryBedQuery query) {
+    query.setBeds(beds);
+    return query.execute();
   }
 
   @Override

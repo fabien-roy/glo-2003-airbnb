@@ -19,15 +19,15 @@ import spark.Response;
 
 public class BedResourceTest {
 
+  // TODO : Refactor this test class
+
   private BedResource bedResource;
-  private BedQueryMapBuilder bedQueryMapBuilder;
   private BedService bedService;
 
   @BeforeEach
   public void setUpResource() {
     bedService = mock(BedService.class);
-    bedQueryMapBuilder = mock(BedQueryMapBuilder.class);
-    bedResource = new BedResource(bedService, bedQueryMapBuilder);
+    bedResource = new BedResource(bedService);
   }
 
   @Test

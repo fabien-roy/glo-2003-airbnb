@@ -1,12 +1,12 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.services.BedService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
@@ -19,12 +19,10 @@ public class BedResource implements RouteGroup {
   public static final String BED_PATH = "/beds";
 
   private final BedService bedService;
-  private final BedQueryMapBuilder bedQueryMapBuilder;
 
   @Inject
-  public BedResource(BedService bedService, BedQueryMapBuilder bedQueryMapBuilder) {
+  public BedResource(BedService bedService) {
     this.bedService = bedService;
-    this.bedQueryMapBuilder = bedQueryMapBuilder;
   }
 
   @Override
@@ -49,9 +47,7 @@ public class BedResource implements RouteGroup {
   }
 
   public Object getAll(Request request, Response response) {
-    Map<String, String[]> queryMap = bedQueryMapBuilder.buildQueryMap(request);
-
-    List<BedResponse> bedResponses = bedService.getAll(queryMap);
+    List<BedResponse> bedResponses = bedService.getAll(request.queryMap().toMap());
 
     response.status(HttpStatus.OK_200);
     return bedResponses;
