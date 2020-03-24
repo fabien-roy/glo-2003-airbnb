@@ -37,29 +37,36 @@ public class CancelationService {
     if (now.plusDays(MINIMUM_DAYS_FOR_CANCELATION).isAfter(booking.getArrivalDate())) {
       throw new CancelationNotAllowedException();
     } else {
-      if (now.plusDays(MINIMUM_DAYS_FOR_FULL_REFUND).isAfter(booking.getArrivalDate())) {
-        Price tenantRefund = cancelationRefundCalculator.calculateTenantRefund(booking.getTotal());
-        Price ownerRefund = cancelationRefundCalculator.calculateOwnerRefund(booking.getTotal());
-        transactionService.addStayCanceledHalfRefund(
-            booking.getTenantPublicKey().getValue(),
-            bedOwner,
-            tenantRefund,
-            ownerRefund,
-            booking.getTotal(),
-            booking.getNumberOfNights());
-        refund = tenantRefund;
-      } else {
-        refund = booking.getTotal();
-        transactionService.addStayCanceledFullRefund(
-            booking.getTenantPublicKey().getValue(),
-            bedOwner,
-            booking.getTotal(),
-            booking.getNumberOfNights());
-      }
+      refund =
+          now.plusDays(MINIMUM_DAYS_FOR_FULL_REFUND).isAfter(booking.getArrivalDate())
+              ? refundHalfTotal(booking, bedOwner)
+              : refundFullTotal(booking, bedOwner);
     }
 
     booking.cancel();
 
     return cancelationMapper.toResponse(refund);
+  }
+
+  private Price refundHalfTotal(Booking booking, String bedOwner) {
+    Price tenantRefund = cancelationRefundCalculator.calculateTenantRefund(booking.getTotal());
+    Price ownerRefund = cancelationRefundCalculator.calculateOwnerRefund(booking.getTotal());
+    transactionService.addStayCanceledHalfRefund(
+        booking.getTenantPublicKey().getValue(),
+        bedOwner,
+        tenantRefund,
+        ownerRefund,
+        booking.getTotal(),
+        booking.getNumberOfNights());
+    return tenantRefund;
+  }
+
+  private Price refundFullTotal(Booking booking, String bedOwner) {
+    transactionService.addStayCanceledFullRefund(
+        booking.getTenantPublicKey().getValue(),
+        bedOwner,
+        booking.getTotal(),
+        booking.getNumberOfNights());
+    return booking.getTotal();
   }
 }

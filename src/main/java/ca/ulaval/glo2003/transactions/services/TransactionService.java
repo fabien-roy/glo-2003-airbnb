@@ -14,6 +14,8 @@ import javax.inject.Inject;
 
 public class TransactionService {
 
+  // TODO : This class could clearly be simplified
+
   private final TransactionFactory transactionFactory;
   private final TransactionRepository transactionRepository;
   private final TransactionMapper transactionMapper;
@@ -54,24 +56,22 @@ public class TransactionService {
       Price total,
       int numberOfNights) {
     Transaction transactionCancelTenant =
-        transactionFactory.createCancelPayment(AIRBNB, tenant, tenantTotal);
-    Transaction transactionCancelOwner =
-        transactionFactory.createCancelPayment(AIRBNB, owner, ownerTotal);
-    Transaction transactionCancelRefund =
-        transactionFactory.createCancelRefund(owner, AIRBNB, total, numberOfNights);
+        transactionFactory.createCancel(AIRBNB, tenant, tenantTotal);
+    Transaction transactionCancelOwner = transactionFactory.createCancel(AIRBNB, owner, ownerTotal);
+    Transaction transactionRefund =
+        transactionFactory.createRefund(owner, AIRBNB, total, numberOfNights);
     transactionRepository.add(transactionCancelTenant);
     transactionRepository.add(transactionCancelOwner);
-    transactionRepository.add(transactionCancelRefund);
+    transactionRepository.add(transactionRefund);
   }
 
   // TODO : Test
   public void addStayCanceledFullRefund(
       String tenant, String owner, Price total, int numberOfNights) {
-    Transaction transactionCancelTenant =
-        transactionFactory.createCancelPayment(AIRBNB, tenant, total);
-    Transaction transactionCancelOwner =
-        transactionFactory.createCancelRefund(owner, AIRBNB, total, numberOfNights);
-    transactionRepository.add(transactionCancelTenant);
-    transactionRepository.add(transactionCancelOwner);
+    Transaction transactionCancel = transactionFactory.createCancel(AIRBNB, tenant, total);
+    Transaction transactionRefund =
+        transactionFactory.createRefund(owner, AIRBNB, total, numberOfNights);
+    transactionRepository.add(transactionCancel);
+    transactionRepository.add(transactionRefund);
   }
 }

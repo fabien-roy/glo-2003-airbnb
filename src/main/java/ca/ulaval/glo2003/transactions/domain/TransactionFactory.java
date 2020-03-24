@@ -20,12 +20,12 @@ public class TransactionFactory {
     return new Transaction(timestamp, AIRBNB, owner, total, TransactionReasons.STAY_COMPLETED);
   }
 
-  public Transaction createCancelPayment(String from, String to, Price total) {
+  public Transaction createCancel(String from, String to, Price total) {
     // TODO
     return null;
   }
 
-  public Transaction createCancelRefund(String from, String to, Price total, int numberOfNights) {
+  public Transaction createRefund(String from, String to, Price total, int numberOfNights) {
     // TODO
     return null;
   }
