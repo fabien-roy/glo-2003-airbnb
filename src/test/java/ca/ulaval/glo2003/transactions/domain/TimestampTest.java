@@ -5,12 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class TimestampTest {
 
@@ -28,17 +26,17 @@ class TimestampTest {
   public void now_shouldSetValueToNow() {
     LocalDateTime now = LocalDateTime.now();
 
-    Timestamp timestamp = Timestamp.now();
+    timestamp = Timestamp.now();
 
     assertEquals(now, timestamp.getValue());
   }
 
   @ParameterizedTest
-  @MethodSource("provideDaysForInDays")
+  @ValueSource(ints = {1, 3, 5})
   public void inDays_shouldReturnTimestampInDays(int days) {
     LocalDate inDays = LocalDateTime.now().plusDays(days).toLocalDate();
 
-    Timestamp timestamp = Timestamp.inDays(days);
+    timestamp = Timestamp.inDays(days);
 
     assertEquals(inDays, timestamp.getValue().toLocalDate());
   }
@@ -47,7 +45,7 @@ class TimestampTest {
   public void inDays_shouldReturnTimestampAtMidnight() {
     LocalDateTime inDays = LocalDateTime.now().toLocalDate().atTime(LocalTime.MIDNIGHT);
 
-    Timestamp timestamp = Timestamp.inDays(0);
+    timestamp = Timestamp.inDays(0);
 
     assertEquals(inDays, timestamp.getValue());
   }
@@ -77,9 +75,5 @@ class TimestampTest {
     boolean result = timestamp.equals(otherTimestamp);
 
     assertTrue(result);
-  }
-
-  private static Stream<Arguments> provideDaysForInDays() {
-    return Stream.of(Arguments.of(1), Arguments.of(3), Arguments.of(5));
   }
 }
