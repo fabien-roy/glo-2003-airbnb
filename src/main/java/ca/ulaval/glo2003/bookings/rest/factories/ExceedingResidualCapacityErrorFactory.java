@@ -1,15 +1,13 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
-
+import ca.ulaval.glo2003.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.bookings.exceptions.ExceedingResidualCapacityException;
-import ca.ulaval.glo2003.errors.ErrorFactory;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class ExceedingResidualCapacityExceptionFactory implements ErrorFactory {
+public class ExceedingResidualCapacityErrorFactory extends BookingErrorFactory {
 
   @Override
-  public boolean canHandle(Exception exception) {
+  public boolean canHandle(BookingException exception) {
     return exception instanceof ExceedingResidualCapacityException;
   }
 
