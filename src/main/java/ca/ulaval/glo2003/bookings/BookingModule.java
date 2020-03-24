@@ -2,8 +2,12 @@ package ca.ulaval.glo2003.bookings;
 
 import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingResource;
+import ca.ulaval.glo2003.bookings.rest.factories.*;
+import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.bookings.services.BookingService;
 import com.google.inject.AbstractModule;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.Multibinder;
 
 public class BookingModule extends AbstractModule {
 
@@ -12,5 +16,17 @@ public class BookingModule extends AbstractModule {
     bind(BookingService.class);
     bind(BookingMapper.class);
     bind(BookingResource.class);
+    bind(BookingExceptionHandler.class);
+  }
+
+  private void configureErrorFactories() {
+    Multibinder<BookingErrorFactory> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<BookingErrorFactory>() {});
+    multibinder.addBinding().to(ArrivalDateInThePastErrorFactory.class);
+    multibinder.addBinding().to(BookingNotFoundErrorFactory.class);
+    multibinder.addBinding().to(ExceedingResidualCapacityErrorFactory.class);
+    multibinder.addBinding().to(InvalidArrivalDateErrorFactory.class);
+    multibinder.addBinding().to(InvalidColonySizeErrorFactory.class);
+    multibinder.addBinding().to(InvalidNumberOfNightsErrorFactory.class);
   }
 }
