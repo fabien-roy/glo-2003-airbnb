@@ -45,9 +45,8 @@ public class BookingService {
   }
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
     Booking booking = bookingMapper.fromRequest(bookingRequest);
-    Bed bed = bedRepository.getByNumber(parsedBedNumber);
+    Bed bed = getBedByNumber(bedNumber);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
     transactionService.addStayBooked(booking.getTenantPublicKey().getValue(), total);
@@ -59,10 +58,8 @@ public class BookingService {
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
     UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
-
-    Bed bed = bedRepository.getByNumber(parsedBedNumber);
+    Bed bed = getBedByNumber(bedNumber);
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
@@ -72,5 +69,10 @@ public class BookingService {
   public CancelationResponse cancel(String bedNumber, String bookingNumber) {
     // TODO
     return new CancelationResponse();
+  }
+
+  private Bed getBedByNumber(String bedNumber) {
+    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
+    return bedRepository.getByNumber(parsedBedNumber);
   }
 }

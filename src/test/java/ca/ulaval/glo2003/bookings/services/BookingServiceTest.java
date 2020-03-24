@@ -30,13 +30,13 @@ import org.junit.jupiter.api.Test;
 public class BookingServiceTest {
 
   private static BookingService bookingService;
-  private static TransactionService transactionService;
-  private static BookingMapper bookingMapper;
-  private static BedRepository bedRepository;
-  private static BookingFactory bookingFactory;
-  private static BookingTotalCalculator bookingTotalCalculator;
-  private static BedNumberMapper bedNumberMapper;
-  private static BookingNumberMapper bookingNumberMapper;
+  private static TransactionService transactionService = mock(TransactionService.class);
+  private static BookingMapper bookingMapper = mock(BookingMapper.class);
+  private static BedRepository bedRepository = mock(BedRepository.class);
+  private static BookingFactory bookingFactory = mock(BookingFactory.class);
+  private static BookingTotalCalculator bookingTotalCalculator = mock(BookingTotalCalculator.class);
+  private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
+  private static BookingNumberMapper bookingNumberMapper = mock(BookingNumberMapper.class);
 
   private UUID bedNumber = createBedNumber();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
@@ -51,13 +51,6 @@ public class BookingServiceTest {
 
   @BeforeAll
   public static void setUpService() {
-    transactionService = mock(TransactionService.class);
-    bookingMapper = mock(BookingMapper.class);
-    bedRepository = mock(BedRepository.class);
-    bookingFactory = mock(BookingFactory.class);
-    bookingTotalCalculator = mock(BookingTotalCalculator.class);
-    bedNumberMapper = mock(BedNumberMapper.class);
-    bookingNumberMapper = mock(BookingNumberMapper.class);
     bookingService =
         new BookingService(
             transactionService,
