@@ -1,12 +1,12 @@
-package ca.ulaval.glo2003.errors;
+package ca.ulaval.glo2003.errors.rest.factories;
 
 import ca.ulaval.glo2003.errors.rest.ErrorResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public interface ErrorFactory {
+public interface ErrorFactory<E extends Exception> {
 
-  static String tryWriteValueAsString(String error, String description) {
+  default String tryWriteValueAsString(String error, String description) {
     try {
       ErrorResponse response = new ErrorResponse(error, description);
       return new ObjectMapper().writeValueAsString(response);
@@ -15,7 +15,7 @@ public interface ErrorFactory {
     }
   }
 
-  boolean canHandle(Exception exception);
+  boolean canHandle(E exception);
 
   String createResponse();
 
