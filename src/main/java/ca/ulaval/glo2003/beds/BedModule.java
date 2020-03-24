@@ -9,6 +9,8 @@ import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.BedResource;
+import ca.ulaval.glo2003.beds.rest.factories.*;
+import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.beds.services.BedService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
@@ -20,6 +22,7 @@ public class BedModule extends AbstractModule {
   @Override
   protected void configure() {
     configureQueryParamAssemblers();
+    configureErrorFactories();
 
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
@@ -28,6 +31,7 @@ public class BedModule extends AbstractModule {
     bind(BedMapper.class);
     bind(PackageMapper.class);
     bind(BedResource.class);
+    bind(BedExceptionHandler.class);
   }
 
   private void configureQueryParamAssemblers() {
@@ -43,5 +47,26 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(LodgingModeQueryParamAssembler.class);
     multibinder.addBinding().to(OriginQueryParamAssembler.class);
     multibinder.addBinding().to(MaximumDistanceQueryParamAssembler.class);
+  }
+
+  private void configureErrorFactories() {
+    Multibinder<BedErrorFactory> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<BedErrorFactory>() {});
+    multibinder.addBinding().to(AllYouCanDrinkDependencyErrorFactory.class);
+    multibinder.addBinding().to(BedAlreadyBookedErrorFactory.class);
+    multibinder.addBinding().to(BedNotFoundErrorFactory.class);
+    multibinder.addBinding().to(BookingNotAllowedErrorFactory.class);
+    multibinder.addBinding().to(ExceedingAccommodationCapacityErrorFactory.class);
+    multibinder.addBinding().to(InvalidBedTypeErrorFactory.class);
+    multibinder.addBinding().to(InvalidBloodTypeErrorFactory.class);
+    multibinder.addBinding().to(InvalidCapacityErrorFactory.class);
+    multibinder.addBinding().to(InvalidCleaningFrequencyErrorFactory.class);
+    multibinder.addBinding().to(InvalidLodgingModeErrorFactory.class);
+    multibinder.addBinding().to(InvalidMaxDistanceErrorFactory.class);
+    multibinder.addBinding().to(InvalidPackageErrorFactory.class);
+    multibinder.addBinding().to(InvalidPublicKeyErrorFactory.class);
+    multibinder.addBinding().to(MaxDistanceWithoutOriginErrorFactory.class);
+    multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
+    multibinder.addBinding().to(SweetToothDependencyErrorFactory.class);
   }
 }
