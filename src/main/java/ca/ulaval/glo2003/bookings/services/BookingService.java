@@ -70,6 +70,7 @@ public class BookingService {
   }
 
   public CancelationResponse cancel(String bedNumber, String bookingNumber) {
+    // TODO
     return new CancelationResponse();
   }
 }

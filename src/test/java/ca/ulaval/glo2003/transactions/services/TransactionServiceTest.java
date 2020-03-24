@@ -32,8 +32,8 @@ class TransactionServiceTest {
   private static TransactionResponse otherTransactionResponse = aTransactionResponse().build();
   private static String tenant = createFrom();
   private static String owner = createTo();
-  private static Price tenantTotal = createTotal();
-  private static Price ownerTotal = createTotal();
+  private static Price tenantRefund = createTotal();
+  private static Price ownerRefund = createTotal();
   private static Price total = createTotal();
   private static int numberOfNights = 3;
 
@@ -66,9 +66,9 @@ class TransactionServiceTest {
 
   private void setUpMocksForAddStayCanceledHalfRefund() {
     resetMocks();
-    when(transactionFactory.createStayCanceled(AIRBNB, tenant, tenantTotal))
+    when(transactionFactory.createStayCanceled(AIRBNB, tenant, tenantRefund))
         .thenReturn(transaction);
-    when(transactionFactory.createStayCanceled(AIRBNB, owner, ownerTotal))
+    when(transactionFactory.createStayCanceled(AIRBNB, owner, ownerRefund))
         .thenReturn(otherTransaction);
     when(transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights))
         .thenReturn(anotherTransaction);
@@ -114,7 +114,7 @@ class TransactionServiceTest {
     setUpMocksForAddStayCanceledHalfRefund();
 
     transactionService.addStayCanceledHalfRefund(
-        tenant, owner, tenantTotal, ownerTotal, total, numberOfNights);
+        tenant, owner, tenantRefund, ownerRefund, total, numberOfNights);
 
     verify(transactionRepository).add(eq(transaction));
   }
@@ -124,7 +124,7 @@ class TransactionServiceTest {
     setUpMocksForAddStayCanceledHalfRefund();
 
     transactionService.addStayCanceledHalfRefund(
-        tenant, owner, tenantTotal, ownerTotal, total, numberOfNights);
+        tenant, owner, tenantRefund, ownerRefund, total, numberOfNights);
 
     verify(transactionRepository).add(eq(otherTransaction));
   }
@@ -134,7 +134,7 @@ class TransactionServiceTest {
     setUpMocksForAddStayCanceledHalfRefund();
 
     transactionService.addStayCanceledHalfRefund(
-        tenant, owner, tenantTotal, ownerTotal, total, numberOfNights);
+        tenant, owner, tenantRefund, ownerRefund, total, numberOfNights);
 
     verify(transactionRepository).add(eq(anotherTransaction));
   }

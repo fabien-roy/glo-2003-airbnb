@@ -12,8 +12,8 @@ import ca.ulaval.glo2003.transactions.services.TransactionService;
 
 public class CancelationService {
 
-  private static final int MINIMUM_DAYS_FOR_CANCELATION = 1;
-  private static final int MINIMUM_DAYS_FOR_FULL_REFUND = 7;
+  static final int MINIMUM_DAYS_FOR_CANCELATION = 1;
+  static final int MINIMUM_DAYS_FOR_FULL_REFUND = 7;
 
   private final CancelationRefundCalculator cancelationRefundCalculator;
   private final CancelationMapper cancelationMapper;

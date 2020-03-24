@@ -48,14 +48,14 @@ public class TransactionService {
   public void addStayCanceledHalfRefund(
       String tenant,
       String owner,
-      Price tenantTotal,
-      Price ownerTotal,
+      Price tenantRefund,
+      Price ownerRefund,
       Price total,
       int numberOfNights) {
     Transaction transactionCancelTenant =
-        transactionFactory.createStayCanceled(AIRBNB, tenant, tenantTotal);
+        transactionFactory.createStayCanceled(AIRBNB, tenant, tenantRefund);
     Transaction transactionCancelOwner =
-        transactionFactory.createStayCanceled(AIRBNB, owner, ownerTotal);
+        transactionFactory.createStayCanceled(AIRBNB, owner, ownerRefund);
     Transaction transactionRefund =
         transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights);
     transactionRepository.add(transactionCancelTenant);

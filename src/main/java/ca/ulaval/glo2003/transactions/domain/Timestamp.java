@@ -29,9 +29,9 @@ public class Timestamp {
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    Timestamp bookingDate = (Timestamp) object;
+    Timestamp timestamp = (Timestamp) object;
 
-    return value.equals(bookingDate.getValue());
+    return value.equals(timestamp.getValue());
   }
 
   @Override
