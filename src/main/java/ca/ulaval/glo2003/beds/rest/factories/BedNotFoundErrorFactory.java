@@ -1,17 +1,15 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
-
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
-import ca.ulaval.glo2003.errors.ErrorFactory;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class BedNotFoundExceptionFactory implements ErrorFactory {
+public class BedNotFoundErrorFactory extends BedErrorFactory {
 
   String number;
 
   @Override
-  public boolean canHandle(Exception exception) {
+  public boolean canHandle(BedException exception) {
     boolean possibleToHandle = exception instanceof BedNotFoundException;
     if (possibleToHandle) {
       number = ((BedNotFoundException) exception).getBedNumber();

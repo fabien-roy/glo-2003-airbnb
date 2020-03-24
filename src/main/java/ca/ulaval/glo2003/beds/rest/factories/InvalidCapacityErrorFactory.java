@@ -1,15 +1,13 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
-
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
-import ca.ulaval.glo2003.errors.ErrorFactory;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class InvalidCapacityExceptionFactory implements ErrorFactory {
+public class InvalidCapacityErrorFactory extends BedErrorFactory {
 
   @Override
-  public boolean canHandle(Exception exception) {
+  public boolean canHandle(BedException exception) {
     return exception instanceof InvalidCapacityException;
   }
 

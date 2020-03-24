@@ -1,15 +1,13 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
-
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
-import ca.ulaval.glo2003.errors.ErrorFactory;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class MaxDistanceWithoutOriginExceptionFactory implements ErrorFactory {
+public class MaxDistanceWithoutOriginErrorFactory extends BedErrorFactory {
 
   @Override
-  public boolean canHandle(Exception exception) {
+  public boolean canHandle(BedException exception) {
     return exception instanceof MaxDistanceWithoutOriginException;
   }
 
