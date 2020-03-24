@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.locations.domain.helpers;
 
-import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createLatitude;
-import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createLongitude;
+import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother.createLatitude;
+import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother.createLongitude;
 
 import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Latitude;

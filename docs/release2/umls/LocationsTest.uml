@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.locations.services.LocationServiceTest</OriginalElement>
+  <nodes>
+    <node x="1284.7850378787878" y="224.0">ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother</node>
+    <node x="983.3560606060605" y="370.0">ca.ulaval.glo2003.locations.mappers.ZipCodeMapperTest</node>
+    <node x="415.0" y="745.0">ca.ulaval.glo2003.locations.domain.LatitudeTest</node>
+    <node x="1720.3560606060605" y="0.0">ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseObjectMother</node>
+    <node x="2307.875" y="403.0">ca.ulaval.glo2003.locations.infrastructure.FakeZippopotamusClient</node>
+    <node x="1011.125" y="581.0">ca.ulaval.glo2003.locations.services.LocationServiceTest</node>
+    <node x="1926.875" y="370.0">ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder</node>
+    <node x="1690.3560606060605" y="191.0">ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder</node>
+    <node x="818.8125" y="22.0">ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother</node>
+    <node x="0.0" y="745.0">ca.ulaval.glo2003.locations.domain.LongitudeTest</node>
+    <node x="819.0" y="745.0">ca.ulaval.glo2003.locations.domain.ZipCodeTest</node>
+    <node x="2075.625" y="202.0">ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseObjectMother</node>
+    <node x="1890.1060606060605" y="559.0">ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClientTest</node>
+    <node x="1535.375" y="570.0">ca.ulaval.glo2003.locations.mappers.LocationMapperTest</node>
+    <node x="1543.3560606060605" y="370.0">ca.ulaval.glo2003.locations.mappers.CoordinatesMapperTest</node>
+    <node x="347.25" y="570.0">ca.ulaval.glo2003.locations.domain.LocationTest</node>
+    <node x="0.0" y="381.0">ca.ulaval.glo2003.locations.domain.CoordinatesTest</node>
+    <node x="669.3560606060605" y="370.0">ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder</node>
+    <node x="294.6060606060605" y="191.0">ca.ulaval.glo2003.locations.domain.helpers.CoordinatesBuilder</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.42129277566539924" x="1305.0" y="443.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>Tests</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
