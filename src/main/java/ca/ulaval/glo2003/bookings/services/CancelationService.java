@@ -9,6 +9,7 @@ import ca.ulaval.glo2003.bookings.mappers.CancelationMapper;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
+import javax.inject.Inject;
 
 public class CancelationService {
 
@@ -19,6 +20,7 @@ public class CancelationService {
   private final CancelationMapper cancelationMapper;
   private final TransactionService transactionService;
 
+  @Inject
   public CancelationService(
       CancelationRefundCalculator cancelationRefundCalculator,
       CancelationMapper cancelationMapper,

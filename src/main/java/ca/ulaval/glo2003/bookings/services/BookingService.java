@@ -1,8 +1,7 @@
 package ca.ulaval.glo2003.bookings.services;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
@@ -18,48 +17,45 @@ import javax.inject.Inject;
 
 public class BookingService {
 
+  private final BedService bedService;
   private final TransactionService transactionService;
   private final BookingMapper bookingMapper;
-  private final BedRepository bedRepository;
   private final BookingFactory bookingFactory;
   private final BookingTotalCalculator bookingTotalCalculator;
   private final BookingNumberMapper bookingNumberMapper;
-  private final BedNumberMapper bedNumberMapper;
 
   @Inject
   public BookingService(
+      BedService bedService,
       TransactionService transactionService,
       BookingMapper bookingMapper,
-      BedRepository bedRepository,
       BookingFactory bookingFactory,
       BookingTotalCalculator bookingTotalCalculator,
-      BedNumberMapper bedNumberMapper,
       BookingNumberMapper bookingNumberMapper) {
+    this.bedService = bedService;
     this.transactionService = transactionService;
     this.bookingMapper = bookingMapper;
-    this.bedRepository = bedRepository;
     this.bookingFactory = bookingFactory;
     this.bookingTotalCalculator = bookingTotalCalculator;
-    this.bedNumberMapper = bedNumberMapper;
     this.bookingNumberMapper = bookingNumberMapper;
   }
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
+    Bed bed = bedService.get(bedNumber);
     Booking booking = bookingMapper.fromRequest(bookingRequest);
-    Bed bed = getBedByNumber(bedNumber);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
     transactionService.addStayBooked(booking.getTenantPublicKey().getValue(), total);
     transactionService.addStayCompleted(
         bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
     bed.book(booking);
-    bedRepository.update(bed);
+    bedService.update(bed);
     return booking.getNumber().toString();
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
+    Bed bed = bedService.get(bedNumber);
     UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
-    Bed bed = getBedByNumber(bedNumber);
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
@@ -69,10 +65,5 @@ public class BookingService {
   public CancelationResponse cancel(String bedNumber, String bookingNumber) {
     // TODO
     return new CancelationResponse();
-  }
-
-  private Bed getBedByNumber(String bedNumber) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
-    return bedRepository.getByNumber(parsedBedNumber);
   }
 }

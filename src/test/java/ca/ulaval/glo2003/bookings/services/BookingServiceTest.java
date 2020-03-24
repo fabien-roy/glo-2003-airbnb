@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
@@ -30,12 +29,11 @@ import org.junit.jupiter.api.Test;
 public class BookingServiceTest {
 
   private static BookingService bookingService;
+  private static BedService bedService = mock(BedService.class);
   private static TransactionService transactionService = mock(TransactionService.class);
   private static BookingMapper bookingMapper = mock(BookingMapper.class);
-  private static BedRepository bedRepository = mock(BedRepository.class);
   private static BookingFactory bookingFactory = mock(BookingFactory.class);
   private static BookingTotalCalculator bookingTotalCalculator = mock(BookingTotalCalculator.class);
-  private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
   private static BookingNumberMapper bookingNumberMapper = mock(BookingNumberMapper.class);
 
   private UUID bedNumber = createBedNumber();
@@ -53,18 +51,17 @@ public class BookingServiceTest {
   public static void setUpService() {
     bookingService =
         new BookingService(
+            bedService,
             transactionService,
             bookingMapper,
-            bedRepository,
             bookingFactory,
             bookingTotalCalculator,
-            bedNumberMapper,
             bookingNumberMapper);
   }
 
   @BeforeEach
   public void setUpMocksForAdd() {
-    when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
+    when(bedService.get(bedNumber.toString())).thenReturn(bed);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
   }
@@ -72,7 +69,6 @@ public class BookingServiceTest {
   @BeforeEach
   public void setUpMocksForGetByNumber() {
     when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
-    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
   }
 
@@ -80,7 +76,7 @@ public class BookingServiceTest {
   public void add_shouldUpdateBedInRepository() {
     bookingService.add(bedNumber.toString(), bookingRequest);
 
-    verify(bedRepository).update(bed);
+    verify(bedService).update(bed);
   }
 
   @Test

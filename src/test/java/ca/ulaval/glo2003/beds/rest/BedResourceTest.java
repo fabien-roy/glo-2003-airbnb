@@ -66,7 +66,7 @@ public class BedResourceTest {
     String bedNumber = "bedNumber";
     when(request.params(eq("number"))).thenReturn(bedNumber);
     BedResponse expectedBedResponse = mock(BedResponse.class);
-    when(bedService.getByNumber(bedNumber)).thenReturn(expectedBedResponse);
+    when(bedService.getResponse(bedNumber)).thenReturn(expectedBedResponse);
 
     BedResponse bedResponse = (BedResponse) bedResource.getByNumber(request, response);
 
