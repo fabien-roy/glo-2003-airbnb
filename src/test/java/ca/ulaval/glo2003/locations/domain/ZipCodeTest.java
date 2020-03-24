@@ -1,40 +1,38 @@
 package ca.ulaval.glo2003.locations.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 class ZipCodeTest {
 
+  private static final String value = "12345";
+  private static final ZipCode zipCode = new ZipCode(value);
+
   @Test
   void equals_shouldReturnFalse_whenObjectIsNotZipCode() {
-    String zipValue = "12345";
-    ZipCode zipCode = new ZipCode(zipValue);
+    Object other = new Object();
 
-    boolean result = zipCode.equals(zipValue);
-
-    assertFalse(result);
-  }
-
-  @Test
-  void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    String value = "000000";
-    String otherValue = "12345";
-    ZipCode zipCode = new ZipCode(value);
-    ZipCode otherZipCode = new ZipCode(otherValue);
-
-    boolean result = zipCode.equals(otherValue);
+    boolean result = zipCode.equals(other);
 
     assertFalse(result);
   }
 
   @Test
-  void equals_shouldReturnTrue_whenValuesAreEqual() {
-    String value = "12345";
-    ZipCode zipCode = new ZipCode(value);
-    ZipCode otherZipCode = new ZipCode(value);
+  void equals_shouldReturnFalse_whenZipCodesAreNotEqual() {
+    ZipCode other = new ZipCode("23456");
 
-    boolean result = zipCode.equals(otherZipCode);
+    boolean result = zipCode.equals(other);
+
+    assertFalse(result);
+  }
+
+  @Test
+  void equals_shouldReturnTrue_whenZipCodesAreEqual() {
+    ZipCode other = new ZipCode(value);
+
+    boolean result = zipCode.equals(other);
 
     assertTrue(result);
   }

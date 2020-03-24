@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.services;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createZipCode;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocation;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseBuilder.aBedResponse;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,8 +14,8 @@ import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
-import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,11 +30,11 @@ public class BedServiceTest {
   private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
   private static BedRepository bedRepository = mock(BedRepository.class);
   private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
-  private static ZippopotamusClient zippopotamusClient = mock(ZippopotamusClient.class);
+  private static LocationService locationService = mock(LocationService.class);
 
   private UUID bedNumber = createBedNumber();
-  private ZipCode origin = createZipCode();
-  private ZipCode validatedZipCode = createZipCode();
+  private Location origin = createLocation();
+  private Location validatedLocation = createLocation();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
   private Bed otherBed = aBed().build();
   private BedRequest bedRequest = aBedRequest().build();
@@ -54,14 +54,14 @@ public class BedServiceTest {
             bedNumberMapper,
             bedRepository,
             bedStarsCalculator,
-            zippopotamusClient);
+            locationService);
   }
 
   @BeforeEach
   public void setUpMocksForAdd() {
     when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
-    when(zippopotamusClient.validateZipCode(bedRequest.getZipCode())).thenReturn(validatedZipCode);
-    when(bedFactory.create(bed, validatedZipCode)).thenReturn(bed);
+    when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
+    when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
 
   @BeforeEach
@@ -71,7 +71,7 @@ public class BedServiceTest {
     when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
-    when(zippopotamusClient.validateZipCode(origin.getValue())).thenReturn(validatedZipCode);
+    when(locationService.getLocation(origin.getZipCode().getValue())).thenReturn(validatedLocation);
     when(bedMapper.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedMapper.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
   }
@@ -98,10 +98,10 @@ public class BedServiceTest {
   }
 
   @Test
-  public void add_shouldValidateZipCode() {
+  public void add_shouldGetLocation() {
     bedService.add(bedRequest);
 
-    verify(zippopotamusClient).validateZipCode(eq(bedRequest.getZipCode()));
+    verify(locationService).getLocation(eq(bedRequest.getZipCode()));
   }
 
   @Test

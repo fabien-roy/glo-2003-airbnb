@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.locations.services.LocationServiceTest</OriginalElement>
+  <nodes>
+    <node x="601.0" y="1006.0">ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother</node>
+    <node x="672.0" y="186.0">ca.ulaval.glo2003.locations.mappers.ZipCodeMapperTest</node>
+    <node x="0.0" y="186.0">ca.ulaval.glo2003.locations.domain.LatitudeTest</node>
+    <node x="404.0" y="186.0">ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseObjectMother</node>
+    <node x="254.0" y="1006.0">ca.ulaval.glo2003.locations.infrastructure.FakeZippopotamusClient</node>
+    <node x="415.0" y="864.0">ca.ulaval.glo2003.locations.services.LocationServiceTest</node>
+    <node x="466.0" y="372.0">ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder</node>
+    <node x="333.0" y="536.0">ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder</node>
+    <node x="0.0" y="1006.0">ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother</node>
+    <node x="697.0" y="0.0">ca.ulaval.glo2003.locations.domain.LongitudeTest</node>
+    <node x="0.0" y="864.0">ca.ulaval.glo2003.locations.domain.ZipCodeTest</node>
+    <node x="770.0" y="864.0">ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseObjectMother</node>
+    <node x="0.0" y="0.0">ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClientTest</node>
+    <node x="0.0" y="536.0">ca.ulaval.glo2003.locations.mappers.LocationMapperTest</node>
+    <node x="661.0" y="536.0">ca.ulaval.glo2003.locations.mappers.CoordinatesMapperTest</node>
+    <node x="0.0" y="372.0">ca.ulaval.glo2003.locations.domain.LocationTest</node>
+    <node x="320.0" y="700.0">ca.ulaval.glo2003.locations.domain.CoordinatesTest</node>
+    <node x="872.0" y="372.0">ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder</node>
+    <node x="0.0" y="700.0">ca.ulaval.glo2003.locations.domain.helpers.CoordinatesBuilder</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.42129277566539924" x="1305.0" y="375.3510830324909" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>Tests</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

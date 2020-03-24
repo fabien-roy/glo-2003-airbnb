@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 
@@ -13,7 +13,7 @@ public class Bed {
 
   private UUID number;
   private PublicKey ownerPublicKey;
-  private ZipCode zipCode;
+  private Location location;
   private BedTypes bedType;
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
@@ -51,12 +51,12 @@ public class Bed {
     return ownerPublicKey;
   }
 
-  public ZipCode getZipCode() {
-    return zipCode;
+  public Location getLocation() {
+    return location;
   }
 
-  public void setZipCode(ZipCode zipCode) {
-    this.zipCode = zipCode;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   public BedTypes getBedType() {
