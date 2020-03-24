@@ -11,13 +11,17 @@ class BookingDateTest {
   private LocalDate otherDate = date.plusDays(1);
 
   @Test
-  public void construct_withoutParameter_shouldSetValueToNow() {
+  public void now_shouldSetValueToNow() {
     LocalDate now = LocalDate.now();
 
-    BookingDate bookingDate = new BookingDate();
+    BookingDate bookingDate = BookingDate.now();
 
     assertEquals(now, bookingDate.getValue());
   }
+
+  // TODO : Test plusDays
+
+  // TODO : Test isAfter
 
   @Test
   public void equals_shouldReturnFalse_whenObjectIsNotBookingDate() {

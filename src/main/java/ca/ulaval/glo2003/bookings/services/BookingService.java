@@ -10,7 +10,7 @@ import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
 import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
-import ca.ulaval.glo2003.bookings.rest.CancelResponse;
+import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.util.UUID;
@@ -69,7 +69,7 @@ public class BookingService {
     return bookingMapper.toResponse(booking);
   }
 
-  public CancelResponse cancel(String bedNumber, String bookingNumber) {
-    return new CancelResponse();
+  public CancelationResponse cancel(String bedNumber, String bookingNumber) {
+    return new CancelationResponse();
   }
 }

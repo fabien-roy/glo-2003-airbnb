@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.transactions.services;
 
+import static ca.ulaval.glo2003.transactions.domain.TransactionFactory.AIRBNB;
+
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
@@ -41,5 +43,35 @@ public class TransactionService {
     Transaction transactionBooked =
         transactionFactory.createStayCompleted(owner, total, numberOfNights);
     transactionRepository.add(transactionBooked);
+  }
+
+  // TODO : Test
+  public void addStayCanceledHalfRefund(
+      String tenant,
+      String owner,
+      Price tenantTotal,
+      Price ownerTotal,
+      Price total,
+      int numberOfNights) {
+    Transaction transactionCancelTenant =
+        transactionFactory.createCancelPayment(AIRBNB, tenant, tenantTotal);
+    Transaction transactionCancelOwner =
+        transactionFactory.createCancelPayment(AIRBNB, owner, ownerTotal);
+    Transaction transactionCancelRefund =
+        transactionFactory.createCancelRefund(owner, AIRBNB, total, numberOfNights);
+    transactionRepository.add(transactionCancelTenant);
+    transactionRepository.add(transactionCancelOwner);
+    transactionRepository.add(transactionCancelRefund);
+  }
+
+  // TODO : Test
+  public void addStayCanceledFullRefund(
+      String tenant, String owner, Price total, int numberOfNights) {
+    Transaction transactionCancelTenant =
+        transactionFactory.createCancelPayment(AIRBNB, tenant, total);
+    Transaction transactionCancelOwner =
+        transactionFactory.createCancelRefund(owner, AIRBNB, total, numberOfNights);
+    transactionRepository.add(transactionCancelTenant);
+    transactionRepository.add(transactionCancelOwner);
   }
 }
