@@ -16,50 +16,75 @@ import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TransactionServiceTest {
 
   private static TransactionService transactionService;
-  private static TransactionFactory transactionFactory;
-  private static TransactionRepository transactionRepository;
-  private static TransactionMapper transactionMapper;
+  private static TransactionFactory transactionFactory = mock(TransactionFactory.class);
+  private static TransactionRepository transactionRepository = mock(TransactionRepository.class);
+  private static TransactionMapper transactionMapper = mock(TransactionMapper.class);
 
-  private Transaction transaction = aTransaction().build();
-  private Transaction otherTransaction = aTransaction().build();
-  private TransactionResponse transactionResponse = aTransactionResponse().build();
-  private TransactionResponse otherTransactionResponse = aTransactionResponse().build();
-  private String tenant = createFrom();
-  private String owner = createTo();
-  private Price total = createTotal();
-  private int numberOfNights = 3;
+  private static Transaction transaction = aTransaction().build();
+  private static Transaction otherTransaction = aTransaction().build();
+  private static Transaction anotherTransaction = aTransaction().build();
+  private static TransactionResponse transactionResponse = aTransactionResponse().build();
+  private static TransactionResponse otherTransactionResponse = aTransactionResponse().build();
+  private static String tenant = createFrom();
+  private static String owner = createTo();
+  private static Price tenantTotal = createTotal();
+  private static Price ownerTotal = createTotal();
+  private static Price total = createTotal();
+  private static int numberOfNights = 3;
 
   @BeforeAll
   public static void setUpService() {
-    transactionFactory = mock(TransactionFactory.class);
-    transactionRepository = mock(TransactionRepository.class);
-    transactionMapper = mock(TransactionMapper.class);
     transactionService =
         new TransactionService(transactionFactory, transactionRepository, transactionMapper);
   }
 
-  @BeforeEach
-  public void setUpMocksForGetAll() {
+  private void resetMocks() {
+    reset(transactionFactory, transactionRepository, transactionMapper);
+  }
+
+  private void setUpMocksForGetAll() {
     when(transactionRepository.getAll()).thenReturn(Arrays.asList(transaction, otherTransaction));
     when(transactionMapper.toResponse(transaction)).thenReturn(transactionResponse);
     when(transactionMapper.toResponse(otherTransaction)).thenReturn(otherTransactionResponse);
   }
 
-  @BeforeEach
-  public void setUpMocksForAdd() {
+  private void setUpMocksForAddStayBooked() {
+    resetMocks();
     when(transactionFactory.createStayBooked(tenant, AIRBNB, total)).thenReturn(transaction);
+  }
+
+  private void setUpMocksForAddStayCompleted() {
+    resetMocks();
     when(transactionFactory.createStayCompleted(AIRBNB, owner, total, numberOfNights))
         .thenReturn(transaction);
   }
 
+  private void setUpMocksForAddStayCanceledHalfRefund() {
+    resetMocks();
+    when(transactionFactory.createStayCanceled(AIRBNB, tenant, tenantTotal))
+        .thenReturn(transaction);
+    when(transactionFactory.createStayCanceled(AIRBNB, owner, ownerTotal))
+        .thenReturn(otherTransaction);
+    when(transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights))
+        .thenReturn(anotherTransaction);
+  }
+
+  private void setUpMocksForAddStayCanceledFullRefund() {
+    resetMocks();
+    when(transactionFactory.createStayCanceled(AIRBNB, tenant, total)).thenReturn(transaction);
+    when(transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights))
+        .thenReturn(otherTransaction);
+  }
+
   @Test
   public void getAll_shouldGetAllTransactions() {
+    setUpMocksForGetAll();
+
     List<TransactionResponse> transactionResponses = transactionService.getAll();
 
     assertTrue(transactionResponses.contains(transactionResponse));
@@ -68,6 +93,8 @@ class TransactionServiceTest {
 
   @Test
   public void addStayBooked_shouldAddTransactionToRepository() {
+    setUpMocksForAddStayBooked();
+
     transactionService.addStayBooked(tenant, total);
 
     verify(transactionRepository).add(eq(transaction));
@@ -75,8 +102,58 @@ class TransactionServiceTest {
 
   @Test
   public void addStayCompleted_shouldAddTransactionToRepository() {
+    setUpMocksForAddStayCompleted();
+
     transactionService.addStayCompleted(owner, total, numberOfNights);
 
     verify(transactionRepository).add(eq(transaction));
+  }
+
+  @Test
+  public void addStayCanceledHalfRefund_shouldAddTransactionCancelTenantToRepository() {
+    setUpMocksForAddStayCanceledHalfRefund();
+
+    transactionService.addStayCanceledHalfRefund(
+        tenant, owner, tenantTotal, ownerTotal, total, numberOfNights);
+
+    verify(transactionRepository).add(eq(transaction));
+  }
+
+  @Test
+  public void addStayCanceledHalfRefund_shouldAddTransactionCancelOwnerToRepository() {
+    setUpMocksForAddStayCanceledHalfRefund();
+
+    transactionService.addStayCanceledHalfRefund(
+        tenant, owner, tenantTotal, ownerTotal, total, numberOfNights);
+
+    verify(transactionRepository).add(eq(otherTransaction));
+  }
+
+  @Test
+  public void addStayCanceledHalfRefund_shouldAddTransactionRefundToRepository() {
+    setUpMocksForAddStayCanceledHalfRefund();
+
+    transactionService.addStayCanceledHalfRefund(
+        tenant, owner, tenantTotal, ownerTotal, total, numberOfNights);
+
+    verify(transactionRepository).add(eq(anotherTransaction));
+  }
+
+  @Test
+  public void addStayCanceledFullRefund_shouldAddTransactionCancelToRepository() {
+    setUpMocksForAddStayCanceledFullRefund();
+
+    transactionService.addStayCanceledFullRefund(tenant, owner, total, numberOfNights);
+
+    verify(transactionRepository).add(eq(transaction));
+  }
+
+  @Test
+  public void addStayCanceledFullRefund_shouldAddTransactionRefundToRepository() {
+    setUpMocksForAddStayCanceledFullRefund();
+
+    transactionService.addStayCanceledFullRefund(tenant, owner, total, numberOfNights);
+
+    verify(transactionRepository).add(eq(otherTransaction));
   }
 }

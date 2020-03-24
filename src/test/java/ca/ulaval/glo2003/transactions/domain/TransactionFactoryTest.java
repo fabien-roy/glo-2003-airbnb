@@ -93,6 +93,4 @@ class TransactionFactoryTest {
 
     assertEquals(expectedReason, transaction.getReason());
   }
-
-  // TODO : Test cancel
 }

@@ -35,17 +35,16 @@ public class TransactionService {
   }
 
   public void addStayBooked(String tenant, Price total) {
-    Transaction transactionBooked = transactionFactory.createStayBooked(tenant, AIRBNB, total);
-    transactionRepository.add(transactionBooked);
+    Transaction transaction = transactionFactory.createStayBooked(tenant, AIRBNB, total);
+    transactionRepository.add(transaction);
   }
 
   public void addStayCompleted(String owner, Price total, int numberOfNights) {
-    Transaction transactionBooked =
+    Transaction transaction =
         transactionFactory.createStayCompleted(AIRBNB, owner, total, numberOfNights);
-    transactionRepository.add(transactionBooked);
+    transactionRepository.add(transaction);
   }
 
-  // TODO : Test
   public void addStayCanceledHalfRefund(
       String tenant,
       String owner,
@@ -64,7 +63,6 @@ public class TransactionService {
     transactionRepository.add(transactionRefund);
   }
 
-  // TODO : Test
   public void addStayCanceledFullRefund(
       String tenant, String owner, Price total, int numberOfNights) {
     Transaction transactionCancel = transactionFactory.createStayCanceled(AIRBNB, tenant, total);
