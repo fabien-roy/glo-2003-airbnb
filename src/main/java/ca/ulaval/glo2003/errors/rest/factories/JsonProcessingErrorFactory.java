@@ -1,20 +1,18 @@
 package ca.ulaval.glo2003.errors.rest.factories;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
-
-import ca.ulaval.glo2003.errors.ErrorFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class DefaultExceptionFactory implements ErrorFactory {
+public class JsonProcessingErrorFactory extends CatchallErrorFactory {
 
   @Override
   public boolean canHandle(Exception exception) {
-    return true;
+    return exception instanceof JsonProcessingException;
   }
 
   @Override
   public String createResponse() {
-    return tryWriteValueAsString("BAD_REQUEST", "something went wrong");
+    return tryWriteValueAsString("BAD_REQUEST", "could not parse JSON");
   }
 
   @Override
