@@ -2,8 +2,8 @@ package ca.ulaval.glo2003.transactions;
 
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
 import ca.ulaval.glo2003.transactions.infrastructure.InMemoryTransactionRepository;
+import ca.ulaval.glo2003.transactions.mappers.TransactionMapper;
 import ca.ulaval.glo2003.transactions.rest.TransactionResource;
-import ca.ulaval.glo2003.transactions.rest.mappers.TransactionMapper;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;

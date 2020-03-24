@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import ca.ulaval.glo2003.beds.rest.mappers.PriceJsonSerializer;
+import ca.ulaval.glo2003.beds.mappers.PriceJsonSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class PackageRequest {

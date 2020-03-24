@@ -6,6 +6,10 @@ public class BookingDate {
 
   private LocalDate value;
 
+  public BookingDate() {
+    value = LocalDate.now();
+  }
+
   public BookingDate(LocalDate value) {
     this.value = value;
   }

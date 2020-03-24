@@ -2,15 +2,15 @@ package ca.ulaval.glo2003.bookings.services;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.rest.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
+import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
+import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelResponse;
-import ca.ulaval.glo2003.bookings.rest.mappers.BookingMapper;
-import ca.ulaval.glo2003.bookings.rest.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.util.UUID;
