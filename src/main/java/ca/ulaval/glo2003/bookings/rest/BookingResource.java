@@ -29,6 +29,7 @@ public class BookingResource implements RouteGroup {
   public void addRoutes() {
     post("", this::add);
     get("/:bookingNumber", this::getByNumber, new ObjectMapper()::writeValueAsString);
+    post("/:bookingNumber/cancel", this::cancel, new ObjectMapper()::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws JsonProcessingException {
@@ -54,5 +55,14 @@ public class BookingResource implements RouteGroup {
 
     response.status(HttpStatus.OK_200);
     return bookingResponse;
+  }
+
+  public Object cancel(Request request, Response response) {
+    String bedNumber = request.params("bedNumber");
+    String bookingNumber = request.params("bookingNumber");
+    CancelResponse cancelResponse = bookingService.cancel(bedNumber, bookingNumber);
+
+    response.status(HttpStatus.OK_200);
+    return cancelResponse;
   }
 }

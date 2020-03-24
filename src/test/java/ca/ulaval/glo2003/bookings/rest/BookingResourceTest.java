@@ -8,48 +8,61 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 
 class BookingResourceTest {
 
-  private BookingResource bookingResource;
-  private BookingService bookingService;
+  private static BookingResource bookingResource;
+  private static BookingService bookingService = mock(BookingService.class);
 
-  @BeforeEach
-  public void setUpResource() {
-    bookingService = mock(BookingService.class);
+  private Request request = mock(Request.class);
+  private Response response = mock(Response.class);
+  private BookingRequest bookingRequest = mock(BookingRequest.class);
+  private BookingResponse bookingResponse = mock(BookingResponse.class);
+  private CancelResponse cancelResponse = mock(CancelResponse.class);
+  private String bedNumber = "bedNumber";
+  private String bookingNumber = "bookingNumber";
+
+  @BeforeAll
+  public static void setUpResource() {
     bookingResource = new BookingResource(bookingService);
+  }
+
+  private void setUpMocksForAdd() throws JsonProcessingException {
+    String requestBody = new ObjectMapper().writeValueAsString(bookingRequest);
+    when(request.body()).thenReturn(requestBody);
+    when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
+    when(bookingService.add(any(), any())).thenReturn(bookingNumber);
+  }
+
+  private void setUpMocksForGetByNumber() {
+    when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
+    when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
+    when(bookingService.getByNumber(bedNumber, bookingNumber)).thenReturn(bookingResponse);
+  }
+
+  private void setUpMocksForCancel() {
+    when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
+    when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
+    when(bookingService.cancel(bedNumber, bookingNumber)).thenReturn(cancelResponse);
   }
 
   @Test
   public void add_shouldReturnCorrectHeaderLocation() throws JsonProcessingException {
-    String expectedBedNumber = "expectedBedNumber";
-    String expectedBookingNumber = "expectedBookingNumber";
-    String expectedHeaderLocation =
-        "/beds/" + expectedBedNumber + "/bookings/" + expectedBookingNumber;
-    Request request = mock(Request.class);
-    BookingRequest bookingRequest = mock(BookingRequest.class);
-    String requestBody = new ObjectMapper().writeValueAsString(bookingRequest);
-    when(request.body()).thenReturn(requestBody);
-    Response response = mock(Response.class);
-    when(request.params(eq("bedNumber"))).thenReturn(expectedBedNumber);
-    when(bookingService.add(any(), any())).thenReturn(expectedBookingNumber);
+    setUpMocksForAdd();
+    String headerLocation = "/beds/" + bedNumber + "/bookings/" + bookingNumber;
 
     bookingResource.add(request, response);
 
-    verify(response).header(HttpHeader.LOCATION.asString(), expectedHeaderLocation);
+    verify(response).header(HttpHeader.LOCATION.asString(), headerLocation);
   }
 
   @Test
   public void add_shouldSetCreatedAsHttpStatus() throws JsonProcessingException {
-    Request request = mock(Request.class);
-    BookingRequest bookingRequest = mock(BookingRequest.class);
-    String requestBody = new ObjectMapper().writeValueAsString(bookingRequest);
-    when(request.body()).thenReturn(requestBody);
-    Response response = mock(Response.class);
+    setUpMocksForAdd();
 
     bookingResource.add(request, response);
 
@@ -58,27 +71,38 @@ class BookingResourceTest {
 
   @Test
   public void getByNumber_shouldReturnBooking() {
-    Request request = mock(Request.class);
-    Response response = mock(Response.class);
-    String bedNumber = "bedNumber";
-    String bookingNumber = "bookingNumber";
-    when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
-    when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
-    BookingResponse expectedBookingResponse = mock(BookingResponse.class);
-    when(bookingService.getByNumber(bedNumber, bookingNumber)).thenReturn(expectedBookingResponse);
+    setUpMocksForGetByNumber();
 
-    BookingResponse bookingResponse =
+    BookingResponse actualResponse =
         (BookingResponse) bookingResource.getByNumber(request, response);
 
-    assertSame(expectedBookingResponse, bookingResponse);
+    assertSame(bookingResponse, actualResponse);
   }
 
   @Test
   public void getByNumber_shouldSetOKAsHttpStatus() {
-    Request request = mock(Request.class);
-    Response response = mock(Response.class);
+    setUpMocksForGetByNumber();
 
     bookingResource.getByNumber(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
+  }
+
+  @Test
+  public void cancel_shouldReturnCancelResponse() {
+    setUpMocksForCancel();
+
+    CancelResponse actualCancelResponse =
+        (CancelResponse) bookingResource.cancel(request, response);
+
+    assertSame(cancelResponse, actualCancelResponse);
+  }
+
+  @Test
+  public void cancel_shouldSetOkAsHttpStatus() {
+    setUpMocksForCancel();
+
+    bookingResource.cancel(request, response);
 
     verify(response).status(HttpStatus.OK_200);
   }
