@@ -1,15 +1,14 @@
 package ca.ulaval.glo2003.errors.rest.handlers;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
 
 import ca.ulaval.glo2003.errors.ErrorFactory;
+import ca.ulaval.glo2003.errors.rest.factories.DefaultExceptionFactory;
 import ca.ulaval.glo2003.errors.rest.factories.InvalidFormatExceptionFactory;
 import ca.ulaval.glo2003.errors.rest.factories.JsonProcessingExceptionFactory;
 import com.google.inject.multibindings.Multibinder;
 import java.util.List;
 import java.util.Optional;
 import javax.inject.Inject;
-import org.eclipse.jetty.http.HttpStatus;
 import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
@@ -17,12 +16,15 @@ import spark.Response;
 public class CatchallExceptionHandler implements ExceptionHandler<Exception> {
 
   private final Multibinder<ErrorFactory> factories;
+  private final DefaultExceptionFactory defaultFactory;
 
   @Inject
-  public CatchallExceptionHandler(Multibinder<ErrorFactory> factories) {
+  public CatchallExceptionHandler(
+      Multibinder<ErrorFactory> factories, DefaultExceptionFactory defaultFactory) {
     this.factories = factories;
     factories.addBinding().to(InvalidFormatExceptionFactory.class);
     factories.addBinding().to(JsonProcessingExceptionFactory.class);
+    this.defaultFactory = defaultFactory;
   }
 
   @Override
@@ -35,22 +37,14 @@ public class CatchallExceptionHandler implements ExceptionHandler<Exception> {
         factories.stream().filter(factory -> factory.canHandle(e)).findFirst();
 
     if (foundFactory.isPresent()) {
-      errorResponse = foundFactory.get().createResponse();
       status = foundFactory.get().createStatus();
+      errorResponse = foundFactory.get().createResponse();
     } else {
-      status = defaultStatus();
-      errorResponse = defaultBody();
+      status = defaultFactory.createStatus();
+      errorResponse = defaultFactory.createResponse();
     }
 
     response.status(status);
     response.body(errorResponse);
-  }
-
-  private static int defaultStatus() {
-    return HttpStatus.BAD_REQUEST_400;
-  }
-
-  private static String defaultBody() {
-    return tryWriteValueAsString("BAD_REQUEST", "could not parse JSON");
   }
 }
