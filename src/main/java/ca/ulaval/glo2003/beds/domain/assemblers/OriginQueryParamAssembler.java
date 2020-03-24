@@ -14,8 +14,8 @@ public class OriginQueryParamAssembler implements BedQueryParamAssembler {
 
   // TODO : Should query param assembler know about location service?
   @Inject
-  public OriginQueryParamAssembler(LocationService outdatedLocationService) {
-    this.locationService = outdatedLocationService;
+  public OriginQueryParamAssembler(LocationService locationService) {
+    this.locationService = locationService;
   }
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
