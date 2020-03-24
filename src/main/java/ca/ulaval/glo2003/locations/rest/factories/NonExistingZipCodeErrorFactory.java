@@ -1,15 +1,13 @@
 package ca.ulaval.glo2003.locations.rest.factories;
 
-import static ca.ulaval.glo2003.errors.ErrorFactory.tryWriteValueAsString;
-
-import ca.ulaval.glo2003.errors.ErrorFactory;
+import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class NonExistingZipCodeExceptionFactory implements ErrorFactory {
+public class NonExistingZipCodeErrorFactory extends LocationServiceErrorFactory {
 
   @Override
-  public boolean canHandle(Exception exception) {
+  public boolean canHandle(LocationServiceException exception) {
     return exception instanceof NonExistingZipCodeException;
   }
 
