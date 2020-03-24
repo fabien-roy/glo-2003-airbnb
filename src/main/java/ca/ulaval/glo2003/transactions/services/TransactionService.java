@@ -1,7 +1,5 @@
 package ca.ulaval.glo2003.transactions.services;
 
-import static ca.ulaval.glo2003.transactions.domain.TransactionFactory.AIRBNB;
-
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
@@ -14,7 +12,7 @@ import javax.inject.Inject;
 
 public class TransactionService {
 
-  // TODO : This class could clearly be simplified
+  public static final String AIRBNB = "airbnb";
 
   private final TransactionFactory transactionFactory;
   private final TransactionRepository transactionRepository;
@@ -37,13 +35,13 @@ public class TransactionService {
   }
 
   public void addStayBooked(String tenant, Price total) {
-    Transaction transactionBooked = transactionFactory.createStayBooked(tenant, total);
+    Transaction transactionBooked = transactionFactory.createStayBooked(tenant, AIRBNB, total);
     transactionRepository.add(transactionBooked);
   }
 
   public void addStayCompleted(String owner, Price total, int numberOfNights) {
     Transaction transactionBooked =
-        transactionFactory.createStayCompleted(owner, total, numberOfNights);
+        transactionFactory.createStayCompleted(AIRBNB, owner, total, numberOfNights);
     transactionRepository.add(transactionBooked);
   }
 
@@ -56,10 +54,11 @@ public class TransactionService {
       Price total,
       int numberOfNights) {
     Transaction transactionCancelTenant =
-        transactionFactory.createCancel(AIRBNB, tenant, tenantTotal);
-    Transaction transactionCancelOwner = transactionFactory.createCancel(AIRBNB, owner, ownerTotal);
+        transactionFactory.createStayCanceled(AIRBNB, tenant, tenantTotal);
+    Transaction transactionCancelOwner =
+        transactionFactory.createStayCanceled(AIRBNB, owner, ownerTotal);
     Transaction transactionRefund =
-        transactionFactory.createRefund(owner, AIRBNB, total, numberOfNights);
+        transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights);
     transactionRepository.add(transactionCancelTenant);
     transactionRepository.add(transactionCancelOwner);
     transactionRepository.add(transactionRefund);
@@ -68,9 +67,9 @@ public class TransactionService {
   // TODO : Test
   public void addStayCanceledFullRefund(
       String tenant, String owner, Price total, int numberOfNights) {
-    Transaction transactionCancel = transactionFactory.createCancel(AIRBNB, tenant, total);
+    Transaction transactionCancel = transactionFactory.createStayCanceled(AIRBNB, tenant, total);
     Transaction transactionRefund =
-        transactionFactory.createRefund(owner, AIRBNB, total, numberOfNights);
+        transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights);
     transactionRepository.add(transactionCancel);
     transactionRepository.add(transactionRefund);
   }

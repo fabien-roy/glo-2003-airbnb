@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.transactions.services;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static ca.ulaval.glo2003.transactions.rest.helpers.TransactionResponseBuilder.aTransactionResponse;
+import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -52,8 +53,8 @@ class TransactionServiceTest {
 
   @BeforeEach
   public void setUpMocksForAdd() {
-    when(transactionFactory.createStayBooked(tenant, total)).thenReturn(transaction);
-    when(transactionFactory.createStayCompleted(owner, total, numberOfNights))
+    when(transactionFactory.createStayBooked(tenant, AIRBNB, total)).thenReturn(transaction);
+    when(transactionFactory.createStayCompleted(AIRBNB, owner, total, numberOfNights))
         .thenReturn(transaction);
   }
 
