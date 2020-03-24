@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.locations.services.LocationService</OriginalElement>
+  <nodes>
+    <node x="106.20999649859948" y="756.0">ca.ulaval.glo2003.locations.services.LocationService</node>
+    <node x="400.33773342670395" y="201.0">ca.ulaval.glo2003.locations.domain.ZipCode</node>
+    <node x="556.6710667600373" y="712.0">ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient</node>
+    <node x="845.0460667600373" y="201.0">ca.ulaval.glo2003.locations.domain.Coordinates</node>
+    <node x="102.21273342670395" y="401.0">ca.ulaval.glo2003.locations.mappers.ZipCodeMapper</node>
+    <node x="1301.053571428571" y="179.0">ca.ulaval.glo2003.locations.infrastructure.PlaceResponse</node>
+    <node x="821.1710667600373" y="0.0">ca.ulaval.glo2003.locations.domain.Longitude</node>
+    <node x="561.6710667600373" y="401.0">ca.ulaval.glo2003.locations.domain.Location</node>
+    <node x="929.3522934173669" y="599.0">ca.ulaval.glo2003.locations.mappers.LocationMapper</node>
+    <node x="0.0" y="913.0">ca.ulaval.glo2003.beds.services.BedService</node>
+    <node x="446.9166666666667" y="946.0">ca.ulaval.glo2003.beds.domain.assemblers.OriginQueryParamAssembler</node>
+    <node x="1047.3760679271709" y="412.0">ca.ulaval.glo2003.locations.mappers.CoordinatesMapper</node>
+    <node x="1083.8244047619046" y="0.0">ca.ulaval.glo2003.locations.domain.Latitude</node>
+    <node x="261.83773342670395" y="599.0">ca.ulaval.glo2003.locations.domain.LocationClient</node>
+    <node x="1346.553571428571" y="390.0">ca.ulaval.glo2003.locations.infrastructure.LocationResponse</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient" target="ca.ulaval.glo2003.locations.domain.LocationClient">
+      <point x="-140.0" y="-70.5" />
+      <point x="584.6710667600373" y="682.0" />
+      <point x="440.1710667600373" y="682.0" />
+      <point x="71.33333333333337" y="26.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5139664804469274" x="784.5" y="527.0" />
+  <SelectedNodes>
+    <node>ca.ulaval.glo2003.locations.services.LocationService</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.beds.domain.BedQuery</OriginalElement>
+  <nodes>
+    <node x="3149.490503875969" y="987.0">ca.ulaval.glo2003.beds.domain.assemblers.MinimalCapacityQueryParamAssembler</node>
+    <node x="3145.5" y="810.0">ca.ulaval.glo2003.beds.domain.assemblers.BloodTypesQueryParamAssembler</node>
+    <node x="1639.4500000000003" y="123.0">ca.ulaval.glo2003.beds.domain.BedRepository</node>
+    <node x="1666.9500000000003" y="380.0">ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository</node>
+    <node x="1431.3854054859871" y="987.0">ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler</node>
+    <node x="2779.4500000000003" y="0.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter</node>
+    <node x="666.5" y="821.0">ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler</node>
+    <node x="2009.4500000000003" y="123.0">ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery</node>
+    <node x="3558.4500000000003" y="145.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter</node>
+    <node x="2287.5" y="821.0">ca.ulaval.glo2003.beds.domain.assemblers.OriginQueryParamAssembler</node>
+    <node x="3575.5" y="832.0">ca.ulaval.glo2003.beds.domain.BedQueryFactory</node>
+    <node x="2272.4500000000003" y="145.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryLodgingModeFilter</node>
+    <node x="2774.4500000000003" y="134.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryDistanceFilter</node>
+    <node x="3305.4500000000003" y="145.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter</node>
+    <node x="2524.4500000000003" y="123.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryAvailabilityFilter</node>
+    <node x="1953.5" y="832.0">ca.ulaval.glo2003.beds.domain.assemblers.PositiveIntegerQueryParamAssembler</node>
+    <node x="2996.4500000000003" y="145.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter</node>
+    <node x="389.38540548598735" y="987.0">ca.ulaval.glo2003.beds.domain.assemblers.MaximumDistanceQueryParamAssembler</node>
+    <node x="2716.5" y="821.0">ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler</node>
+    <node x="1926.4500000000003" y="677.0">ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler</node>
+    <node x="1938.9500000000003" y="292.0">ca.ulaval.glo2003.beds.domain.BedQueryBuilder</node>
+    <node x="1812.4500000000003" y="0.0">ca.ulaval.glo2003.beds.domain.BedQuery</node>
+    <node x="1524.5" y="821.0">ca.ulaval.glo2003.beds.domain.assemblers.ArrivalDateQueryParamAssembler</node>
+    <node x="1095.5" y="821.0">ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler</node>
+    <node x="230.5" y="821.0">ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler</node>
+    <node x="3773.4500000000003" y="145.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.PositiveIntegerQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="0.0" y="-26.5" />
+      <point x="-20.450000000000045" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.BedQueryFactory" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="0.0" y="-26.5" />
+      <point x="3733.0" y="790.0" />
+      <point x="3785.0" y="790.0" />
+      <point x="3785.0" y="617.0" />
+      <point x="2278.642307692308" y="617.0" />
+      <point x="147.69230769230762" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-37.5" />
+      <point x="3421.9500000000003" y="93.0" />
+      <point x="2918.116666666667" y="93.0" />
+      <point x="42.666666666666515" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.MinimalCapacityQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.PositiveIntegerQueryParamAssembler">
+      <point x="0.0" y="-37.5" />
+      <point x="3353.990503875969" y="957.0" />
+      <point x="2241.3333333333335" y="957.0" />
+      <point x="130.83333333333348" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.MinimalCapacityQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="136.33333333333326" y="-37.5" />
+      <point x="3490.3238372093024" y="967.0" />
+      <point x="3565.0" y="967.0" />
+      <point x="3565.0" y="627.0" />
+      <point x="2249.1038461538465" y="627.0" />
+      <point x="118.15384615384619" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.BedQueryFactory" target="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery">
+      <point x="126.0" y="-26.5" />
+      <point x="3859.0" y="790.0" />
+      <point x="3807.0" y="790.0" />
+      <point x="3807.0" y="267.0" />
+      <point x="2211.9500000000003" y="267.0" />
+      <point x="81.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryAvailabilityFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-59.5" />
+      <point x="2639.4500000000003" y="103.0" />
+      <point x="2854.116666666667" y="103.0" />
+      <point x="-21.333333333333485" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="102.25" y="-37.5" />
+      <point x="3023.25" y="647.0" />
+      <point x="2190.026923076923" y="647.0" />
+      <point x="59.076923076923094" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BloodTypesQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="102.25" y="-48.5" />
+      <point x="3452.25" y="637.0" />
+      <point x="2219.565384615385" y="637.0" />
+      <point x="88.61538461538476" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BloodTypesQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-102.25" y="-48.5" />
+      <point x="3247.75" y="770.0" />
+      <point x="2233.2000000000003" y="770.0" />
+      <point x="102.25" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-37.5" />
+      <point x="3870.9500000000003" y="73.0" />
+      <point x="2960.7833333333333" y="73.0" />
+      <point x="85.33333333333303" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="0.0" y="-26.5" />
+      <point x="0.0" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery" target="ca.ulaval.glo2003.beds.domain.BedQuery">
+      <point x="-81.0" y="-59.5" />
+      <point x="2049.9500000000003" y="103.0" />
+      <point x="1928.7000000000003" y="103.0" />
+      <point x="38.75" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="102.25" y="-37.5" />
+      <point x="973.25" y="770.0" />
+      <point x="1987.8000000000002" y="770.0" />
+      <point x="-143.1500000000001" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.PositiveIntegerQueryParamAssembler">
+      <point x="136.33333333333348" y="-37.5" />
+      <point x="1772.2187388193206" y="967.0" />
+      <point x="2136.666666666667" y="967.0" />
+      <point x="26.166666666666742" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-59.5" />
+      <point x="2130.9500000000003" y="73.0" />
+      <point x="2790.116666666667" y="73.0" />
+      <point x="-85.33333333333348" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-102.25" y="-37.5" />
+      <point x="2818.75" y="780.0" />
+      <point x="2192.3" y="780.0" />
+      <point x="61.34999999999991" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-136.33333333333348" y="-37.5" />
+      <point x="1499.5520721526536" y="927.0" />
+      <point x="220.0" y="927.0" />
+      <point x="220.0" y="617.0" />
+      <point x="1983.2576923076927" y="617.0" />
+      <point x="-147.69230769230762" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.ArrivalDateQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="102.25" y="-37.5" />
+      <point x="1831.25" y="790.0" />
+      <point x="2069.6000000000004" y="790.0" />
+      <point x="-61.34999999999991" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-102.25" y="-37.5" />
+      <point x="768.75" y="637.0" />
+      <point x="2042.3346153846155" y="637.0" />
+      <point x="-88.61538461538453" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository" target="ca.ulaval.glo2003.beds.domain.BedRepository">
+      <point x="-63.0" y="-59.5" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.MaximumDistanceQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.PositiveIntegerQueryParamAssembler">
+      <point x="136.33333333333337" y="-37.5" />
+      <point x="730.2187388193206" y="947.0" />
+      <point x="2032.0" y="947.0" />
+      <point x="-78.5" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.OriginQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="102.25" y="-37.5" />
+      <point x="2594.25" y="657.0" />
+      <point x="2160.4884615384617" y="657.0" />
+      <point x="29.538461538461434" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository" target="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery">
+      <point x="63.0" y="-59.5" />
+      <point x="1855.9500000000003" y="267.0" />
+      <point x="2049.9500000000003" y="267.0" />
+      <point x="-81.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.OriginQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-102.25" y="-37.5" />
+      <point x="2389.75" y="790.0" />
+      <point x="2151.4" y="790.0" />
+      <point x="20.449999999999818" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.ArrivalDateQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-102.25" y="-37.5" />
+      <point x="1626.75" y="657.0" />
+      <point x="2101.411538461539" y="657.0" />
+      <point x="-29.538461538461434" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryLodgingModeFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-37.5" />
+      <point x="2388.4500000000003" y="93.0" />
+      <point x="2832.7833333333338" y="93.0" />
+      <point x="-42.666666666666515" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.BedRepository" target="ca.ulaval.glo2003.beds.domain.BedQuery">
+      <point x="0.0" y="-59.5" />
+      <point x="1729.9500000000003" y="103.0" />
+      <point x="1851.2000000000003" y="103.0" />
+      <point x="-38.75" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryDistanceFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-48.5" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-102.25" y="-37.5" />
+      <point x="1197.75" y="647.0" />
+      <point x="2071.873076923077" y="647.0" />
+      <point x="-59.076923076923094" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="102.25" y="-37.5" />
+      <point x="1402.25" y="780.0" />
+      <point x="2028.7000000000003" y="780.0" />
+      <point x="-102.25" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.BedQueryFactory" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-126.0" y="-26.5" />
+      <point x="3607.0" y="760.0" />
+      <point x="2274.1000000000004" y="760.0" />
+      <point x="143.1500000000001" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-104.0" y="-37.5" />
+      <point x="334.5" y="627.0" />
+      <point x="2012.796153846154" y="627.0" />
+      <point x="-118.15384615384619" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-37.5" />
+      <point x="3655.9500000000003" y="83.0" />
+      <point x="2939.4500000000003" y="83.0" />
+      <point x="64.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.BedQueryBuilder" target="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery">
+      <point x="0.0" y="-147.5" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="104.0" y="-37.5" />
+      <point x="542.5" y="760.0" />
+      <point x="1946.9" y="760.0" />
+      <point x="-184.04999999999995" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="0.0" y="-37.5" />
+      <point x="3140.9500000000003" y="103.0" />
+      <point x="2896.7833333333338" y="103.0" />
+      <point x="21.333333333333485" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.MaximumDistanceQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-136.33333333333326" y="-37.5" />
+      <point x="457.5520721526541" y="967.0" />
+      <point x="0.0" y="967.0" />
+      <point x="0.0" y="607.0" />
+      <point x="1953.7192307692308" y="607.0" />
+      <point x="-177.23076923076928" y="147.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5333980582524273" x="3164.2384412894376" y="309.5269619552729" />
+  <SelectedNodes>
+    <node>ca.ulaval.glo2003.beds.domain.BedQuery</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
