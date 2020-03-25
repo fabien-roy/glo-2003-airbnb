@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.locations.services.LocationService</OriginalElement>
+  <nodes>
+    <node x="1050.625" y="736.0">ca.ulaval.glo2003.locations.services.LocationService</node>
+    <node x="779.5490575396825" y="201.0">ca.ulaval.glo2003.locations.domain.ZipCode</node>
+    <node x="468.62574404761904" y="692.0">ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient</node>
+    <node x="420.275" y="201.0">ca.ulaval.glo2003.locations.domain.Coordinates</node>
+    <node x="1054.1740575396825" y="411.0">ca.ulaval.glo2003.locations.mappers.ZipCodeMapper</node>
+    <node x="492.4" y="0.0">ca.ulaval.glo2003.locations.domain.Longitude</node>
+    <node x="65.5" y="179.0">ca.ulaval.glo2003.locations.infrastructure.PlaceResponse</node>
+    <node x="585.0490575396825" y="411.0">ca.ulaval.glo2003.locations.domain.Location</node>
+    <node x="369.7545634920635" y="579.0">ca.ulaval.glo2003.locations.mappers.LocationMapper</node>
+    <node x="241.9999999999999" y="422.0">ca.ulaval.glo2003.locations.mappers.CoordinatesMapper</node>
+    <node x="300.4" y="0.0">ca.ulaval.glo2003.locations.domain.Latitude</node>
+    <node x="876.0490575396825" y="579.0">ca.ulaval.glo2003.locations.domain.LocationClient</node>
+    <node x="0.0" y="400.0">ca.ulaval.glo2003.locations.infrastructure.LocationResponse</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ca.ulaval.glo2003.locations.mappers.CoordinatesMapper" target="ca.ulaval.glo2003.locations.infrastructure.PlaceResponse">
+      <point x="-111.20000000000005" y="-37.5" />
+      <point x="269.79999999999984" y="380.0" />
+      <point x="233.83333333333326" y="380.0" />
+      <point x="67.33333333333326" y="70.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.LocationMapper" target="ca.ulaval.glo2003.locations.domain.ZipCode">
+      <point x="52.125" y="-26.5" />
+      <point x="560.8795634920634" y="559.0" />
+      <point x="574.5490575396825" y="559.0" />
+      <point x="574.5490575396825" y="360.0" />
+      <point x="808.2157242063493" y="360.0" />
+      <point x="-57.333333333333314" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.domain.LocationClient" target="ca.ulaval.glo2003.locations.domain.Location">
+      <point x="-53.5" y="-26.5" />
+      <point x="929.5490575396825" y="559.0" />
+      <point x="774.0490575396825" y="559.0" />
+      <point x="54.0" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient" target="ca.ulaval.glo2003.locations.mappers.LocationMapper">
+      <point x="-28.0" y="-70.5" />
+      <point x="608.625744047619" y="672.0" />
+      <point x="578.2545634920634" y="672.0" />
+      <point x="69.5" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.LocationMapper" target="ca.ulaval.glo2003.locations.domain.Coordinates">
+      <point x="-17.375" y="-26.5" />
+      <point x="491.3795634920635" y="539.0" />
+      <point x="530.4999999999999" y="539.0" />
+      <point x="530.4999999999999" y="380.0" />
+      <point x="546.775" y="380.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.domain.Location" target="ca.ulaval.glo2003.locations.domain.ZipCode">
+      <point x="33.75" y="-48.5" />
+      <point x="753.7990575396825" y="370.0" />
+      <point x="827.3268353174603" y="370.0" />
+      <point x="-38.22222222222223" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.ZipCodeMapper" target="ca.ulaval.glo2003.locations.domain.ZipCode">
+      <point x="-50.25" y="-48.5" />
+      <point x="1104.4240575396825" y="370.0" />
+      <point x="903.7712797619048" y="370.0" />
+      <point x="38.22222222222223" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.CoordinatesMapper" target="ca.ulaval.glo2003.locations.domain.Coordinates">
+      <point x="111.20000000000005" y="-37.5" />
+      <point x="492.19999999999993" y="380.0" />
+      <point x="496.17499999999995" y="380.0" />
+      <point x="-50.60000000000002" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient" target="ca.ulaval.glo2003.locations.domain.LocationClient">
+      <point x="140.0" y="-70.5" />
+      <point x="776.625744047619" y="672.0" />
+      <point x="911.7157242063493" y="672.0" />
+      <point x="-71.33333333333331" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient" target="ca.ulaval.glo2003.locations.infrastructure.LocationResponse">
+      <point x="-140.0" y="-70.5" />
+      <point x="496.62574404761904" y="672.0" />
+      <point x="55.5" y="672.0" />
+      <point x="-55.5" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.LocationMapper" target="ca.ulaval.glo2003.locations.domain.Location">
+      <point x="121.625" y="-26.5" />
+      <point x="630.3795634920634" y="559.0" />
+      <point x="666.0490575396825" y="559.0" />
+      <point x="-54.0" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.services.LocationService" target="ca.ulaval.glo2003.locations.domain.LocationClient">
+      <point x="-83.33333333333334" y="-26.5" />
+      <point x="1067.2916666666665" y="672.0" />
+      <point x="983.0490575396825" y="672.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient" target="ca.ulaval.glo2003.locations.domain.Location">
+      <point x="28.0" y="-70.5" />
+      <point x="664.625744047619" y="652.0" />
+      <point x="720.0490575396825" y="652.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.services.LocationService" target="ca.ulaval.glo2003.locations.domain.ZipCode">
+      <point x="83.33333333333337" y="-26.5" />
+      <point x="1233.9583333333333" y="672.0" />
+      <point x="1265.6740575396825" y="672.0" />
+      <point x="1265.6740575396825" y="350.0" />
+      <point x="941.993501984127" y="350.0" />
+      <point x="76.44444444444446" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.LocationResponse" target="ca.ulaval.glo2003.locations.infrastructure.PlaceResponse">
+      <point x="55.5" y="-59.5" />
+      <point x="0.0" y="70.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.CoordinatesMapper" target="ca.ulaval.glo2003.locations.domain.Latitude">
+      <point x="-55.60000000000002" y="-37.5" />
+      <point x="325.39999999999986" y="380.0" />
+      <point x="351.7285714285714" y="380.0" />
+      <point x="351.7285714285714" y="159.0" />
+      <point x="329.0666666666666" y="159.0" />
+      <point x="-57.33333333333337" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.domain.LocationClient" target="ca.ulaval.glo2003.locations.domain.ZipCode">
+      <point x="53.5" y="-26.5" />
+      <point x="1036.5490575396825" y="380.0" />
+      <point x="884.6601686507937" y="380.0" />
+      <point x="19.111111111111143" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.domain.Coordinates" target="ca.ulaval.glo2003.locations.domain.Latitude">
+      <point x="-94.875" y="-48.5" />
+      <point x="451.9" y="149.0" />
+      <point x="386.4" y="149.0" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.services.LocationService" target="ca.ulaval.glo2003.locations.mappers.ZipCodeMapper">
+      <point x="50.0" y="-26.5" />
+      <point x="1200.625" y="672.0" />
+      <point x="1175.75" y="672.0" />
+      <point x="1175.75" y="559.0" />
+      <point x="1204.9240575396825" y="559.0" />
+      <point x="50.25" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.domain.Location" target="ca.ulaval.glo2003.locations.domain.Coordinates">
+      <point x="-101.25" y="-48.5" />
+      <point x="618.7990575396825" y="340.0" />
+      <point x="597.3749999999999" y="340.0" />
+      <point x="50.59999999999991" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.CoordinatesMapper" target="ca.ulaval.glo2003.locations.domain.Longitude">
+      <point x="0.0" y="-37.5" />
+      <point x="380.9999999999999" y="380.0" />
+      <point x="375.05773809523805" y="380.0" />
+      <point x="375.05773809523805" y="159.0" />
+      <point x="521.0666666666666" y="159.0" />
+      <point x="-57.33333333333337" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.domain.Coordinates" target="ca.ulaval.glo2003.locations.domain.Longitude">
+      <point x="31.625" y="-48.5" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.LocationMapper" target="ca.ulaval.glo2003.locations.mappers.CoordinatesMapper">
+      <point x="-52.125" y="-26.5" />
+      <point x="456.6295634920635" y="559.0" />
+      <point x="450.4999999999999" y="559.0" />
+      <point x="69.5" y="37.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.mappers.LocationMapper" target="ca.ulaval.glo2003.locations.infrastructure.LocationResponse">
+      <point x="-121.625" y="-26.5" />
+      <point x="387.1295634920635" y="559.0" />
+      <point x="166.5" y="559.0" />
+      <point x="55.5" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.services.LocationService" target="ca.ulaval.glo2003.locations.domain.Location">
+      <point x="-16.66666666666663" y="-26.5" />
+      <point x="1133.9583333333333" y="672.0" />
+      <point x="1153.75" y="672.0" />
+      <point x="1153.75" y="549.0" />
+      <point x="828.0490575396825" y="549.0" />
+      <point x="108.0" y="48.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient" target="ca.ulaval.glo2003.locations.domain.ZipCode">
+      <point x="84.0" y="-70.5" />
+      <point x="720.625744047619" y="662.0" />
+      <point x="865.5490575396825" y="662.0" />
+      <point x="0.0" y="48.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6256983240223464" x="784.5" y="560.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

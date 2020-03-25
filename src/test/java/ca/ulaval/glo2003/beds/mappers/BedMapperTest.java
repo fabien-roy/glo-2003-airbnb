@@ -17,7 +17,7 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.Arrays;
@@ -27,6 +27,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BedMapperTest {
+
+  // TODO : Simplify this test class
 
   private BedMapper bedMapper;
   private PublicKeyMapper publicKeyMapper;
@@ -224,13 +226,13 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapZipCode() {
-    ZipCode expectedZipCode = createZipCode();
-    Bed bed = aBed().withZipCode(expectedZipCode).build();
+  public void toResponseWithoutNumber_shouldMapLocation() {
+    Location expectedLocation = createLocation();
+    Bed bed = aBed().withLocation(expectedLocation).build();
 
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
 
-    assertEquals(expectedZipCode.getValue(), bedResponse.getZipCode());
+    assertEquals(expectedLocation.getZipCode().getValue(), bedResponse.getZipCode());
   }
 
   @Test

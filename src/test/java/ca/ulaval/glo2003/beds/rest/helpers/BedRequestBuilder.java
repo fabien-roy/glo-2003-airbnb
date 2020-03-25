@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.beds.rest.helpers;
 
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.*;
 
-import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import java.util.List;
@@ -41,11 +40,6 @@ public class BedRequestBuilder {
 
   public BedRequestBuilder withOwnerPublicKey(String ownerPublicKey) {
     this.ownerPublicKey = ownerPublicKey;
-    return this;
-  }
-
-  public BedRequestBuilder withZipCode(String zipCode) {
-    this.zipCode = zipCode;
     return this;
   }
 

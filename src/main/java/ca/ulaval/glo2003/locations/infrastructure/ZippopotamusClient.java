@@ -1,50 +1,59 @@
 package ca.ulaval.glo2003.locations.infrastructure;
 
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.domain.LocationClient;
 import ca.ulaval.glo2003.locations.domain.ZipCode;
-import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
+import ca.ulaval.glo2003.locations.mappers.LocationMapper;
+import com.google.gson.Gson;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.inject.Inject;
 
-public class ZippopotamusClient {
+public class ZippopotamusClient implements LocationClient {
 
   private static final String ZIPPOPOTAMUS_URL = "http://api.zippopotam.us/us/";
 
-  public ZipCode validateZipCode(String zipCode) {
-    validateZipCodeFormat(zipCode);
-    validateZipCodeExistence(zipCode);
-    return new ZipCode(zipCode);
+  private final LocationMapper locationMapper;
+
+  @Inject
+  public ZippopotamusClient(LocationMapper locationMapper) {
+    this.locationMapper = locationMapper;
   }
 
-  private void validateZipCodeFormat(String zipCode) {
-    if (zipCode.length() != 5) {
-      throw new InvalidZipCodeException();
-    }
-    try {
-      Double.parseDouble(zipCode);
-    } catch (NumberFormatException e) {
-      throw new InvalidZipCodeException();
-    }
+  @Override
+  public Location getLocation(ZipCode zipCode) {
+    LocationResponse locationResponse = tryGetLocationFromServer(zipCode.getValue());
+    return locationMapper.fromResponse(locationResponse);
   }
 
-  private void validateZipCodeExistence(String zipCode) {
-    int response;
-
+  private LocationResponse tryGetLocationFromServer(String zipCode) {
     try {
-      response = getResponseForZipCode(zipCode);
+      return getLocationFromServer(zipCode);
     } catch (IOException ex) {
       throw new UnreachableZippopotamusServerException();
     }
-
-    if (response != HttpURLConnection.HTTP_OK) throw new NonExistingZipCodeException();
   }
 
-  private int getResponseForZipCode(String zipCode) throws IOException {
+  private LocationResponse getLocationFromServer(String zipCode) throws IOException {
     HttpURLConnection connection = buildUrlConnection(zipCode);
     connection.setRequestMethod("GET");
-    return connection.getResponseCode();
+    connection.connect();
+
+    if (connection.getResponseCode() != HttpURLConnection.HTTP_OK)
+      throw new NonExistingZipCodeException();
+
+    return readResponse(connection);
+  }
+
+  private LocationResponse readResponse(HttpURLConnection connection) throws IOException {
+    return new Gson()
+        .fromJson(
+            new InputStreamReader((InputStream) connection.getContent()), LocationResponse.class);
   }
 
   protected HttpURLConnection buildUrlConnection(String zipCode) throws IOException {

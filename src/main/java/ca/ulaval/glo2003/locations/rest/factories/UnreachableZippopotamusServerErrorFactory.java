@@ -19,6 +19,6 @@ public class UnreachableZippopotamusServerErrorFactory extends LocationErrorFact
 
   @Override
   public int createStatus() {
-    return HttpStatus.BAD_REQUEST_400;
+    return HttpStatus.SERVICE_UNAVAILABLE_503;
   }
 }

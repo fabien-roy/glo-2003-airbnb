@@ -1,14 +1,20 @@
 package ca.ulaval.glo2003.locations.infrastructure;
 
+import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocation;
+import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder.aLocationResponse;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.locations.domain.ZipCode;
-import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
+import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
+import ca.ulaval.glo2003.locations.mappers.LocationMapper;
+import com.google.gson.Gson;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,41 +23,46 @@ import org.junit.jupiter.api.Test;
 class ZippopotamusClientTest {
 
   private static ZippopotamusClient zippopotamusClient;
-  private static HttpURLConnection fakeUrlConnection;
+  private static LocationMapper locationMapper = mock(LocationMapper.class);
+  private static HttpURLConnection fakeUrlConnection = mock(HttpURLConnection.class);
 
-  private static final ZipCode zipCode = new ZipCode("12345");
+  private static final Location location = aLocation().build();
+  private static final LocationResponse locationResponse = aLocationResponse().build();
 
   @BeforeAll
-  public static void setUpMapper() {
-    fakeUrlConnection = mock(HttpURLConnection.class);
-    zippopotamusClient = new FakeZippopotamusClient(fakeUrlConnection);
+  public static void setUpClient() {
+    zippopotamusClient = new FakeZippopotamusClient(locationMapper, fakeUrlConnection);
   }
 
   @BeforeEach
   public void setUpMocks() throws IOException {
+    String content = new Gson().toJson(locationResponse);
+    InputStream inputStream = new ByteArrayInputStream(content.getBytes());
     when(fakeUrlConnection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_OK);
+    when(fakeUrlConnection.getContent()).thenReturn(inputStream);
+    when(locationMapper.fromResponse(any())).thenReturn(location);
   }
 
   @Test
-  public void validateZipCode_withValidZipCode_shouldReturnZipCode() {
-    ZipCode actualZipCode = zippopotamusClient.validateZipCode(zipCode.getValue());
+  public void getLocation_shouldGetLocationFromServer() {
+    Location actualLocation = zippopotamusClient.getLocation(location.getZipCode());
 
-    assertEquals(zipCode, actualZipCode);
+    assertEquals(location, actualLocation);
   }
 
   @Test
-  public void validateZipCode_withNonExistingZipCode_shouldThrowNonExistingZipCodeException()
+  public void getLocation_withNonExistingZipCode_shouldThrowNonExistingZipCodeException()
       throws IOException {
     when(fakeUrlConnection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_NOT_FOUND);
 
     assertThrows(
         NonExistingZipCodeException.class,
-        () -> zippopotamusClient.validateZipCode(zipCode.getValue()));
+        () -> zippopotamusClient.getLocation(location.getZipCode()));
   }
 
   @Test
   public void
-      validateZipCode_withUnreachableZippopotamusServer_shouldThrowUnreachableZippopotamusServerException()
+      getLocation_withUnreachableZippopotamusServer_shouldThrowUnreachableZippopotamusServerException()
           throws IOException {
     when(fakeUrlConnection.getResponseCode())
         .thenThrow(new IOException())
@@ -59,22 +70,6 @@ class ZippopotamusClientTest {
 
     assertThrows(
         UnreachableZippopotamusServerException.class,
-        () -> zippopotamusClient.validateZipCode(zipCode.getValue()));
-  }
-
-  @Test
-  void validateZipCode_withInvalidZipCodeLength_shouldThrowNonExistingZipCodeException() {
-    String invalidZipCode = "0000";
-
-    assertThrows(
-        InvalidZipCodeException.class, () -> zippopotamusClient.validateZipCode(invalidZipCode));
-  }
-
-  @Test
-  void validateZipCode_withNotAllNumericZipCode_shouldThrowNonExistingZipCodeException() {
-    String invalidZipCode = "00A2E";
-
-    assertThrows(
-        InvalidZipCodeException.class, () -> zippopotamusClient.validateZipCode(invalidZipCode));
+        () -> zippopotamusClient.getLocation(location.getZipCode()));
   }
 }
