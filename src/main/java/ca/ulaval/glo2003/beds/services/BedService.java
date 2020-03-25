@@ -6,8 +6,8 @@ import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
-import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import com.google.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ public class BedService {
   private final BedNumberMapper bedNumberMapper;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
-  private final ZippopotamusClient zippopotamusClient;
+  private final LocationService locationService;
 
   @Inject
   public BedService(
@@ -30,21 +30,21 @@ public class BedService {
       BedNumberMapper bedNumberMapper,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
-      ZippopotamusClient zippopotamusClient) {
+      LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedQueryFactory = bedQueryFactory;
     this.bedMapper = bedMapper;
     this.bedNumberMapper = bedNumberMapper;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
-    this.zippopotamusClient = zippopotamusClient;
+    this.locationService = locationService;
   }
 
   public String add(BedRequest request) {
     Bed bed = bedMapper.fromRequest(request);
-    ZipCode zipCode = getValidatedZipCode(request.getZipCode());
+    Location location = locationService.getLocation(request.getZipCode());
 
-    bed = bedFactory.create(bed, zipCode);
+    bed = bedFactory.create(bed, location);
 
     bedRepository.add(bed);
 
@@ -73,10 +73,6 @@ public class BedService {
 
   public void update(Bed bed) {
     bedRepository.update(bed);
-  }
-
-  private ZipCode getValidatedZipCode(String zipCodeValue) {
-    return zippopotamusClient.validateZipCode(zipCodeValue);
   }
 
   private List<BedResponse> toResponses(List<Bed> beds) {

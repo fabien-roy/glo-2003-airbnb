@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.mappers.BookingDateMapper;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,8 +21,7 @@ class ArrivalDateQueryParamAssemblerTest {
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private BookingDate arrivalDate =
-      new BookingDate(LocalDate.now()); // TODO : Use default constructor
+  private BookingDate arrivalDate = BookingDate.now();
   private Map<String, String[]> params = new HashMap<>();
 
   @BeforeAll

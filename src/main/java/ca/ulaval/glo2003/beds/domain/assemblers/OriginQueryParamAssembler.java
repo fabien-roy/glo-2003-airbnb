@@ -1,28 +1,28 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
-import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
-import com.google.inject.Inject;
+import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.locations.services.LocationService;
 import java.util.Map;
+import javax.inject.Inject;
 
 public class OriginQueryParamAssembler implements BedQueryParamAssembler {
 
   public static final String ORIGIN_PARAM = "origin";
 
-  private final ZippopotamusClient
-      zippopotamusClient; // TODO : Use an interface, like ZipCodeClient
+  private final LocationService locationService;
 
+  // TODO : Should query param assembler know about location service?
   @Inject
-  public OriginQueryParamAssembler(ZippopotamusClient zippopotamusClient) {
-    this.zippopotamusClient = zippopotamusClient;
+  public OriginQueryParamAssembler(LocationService locationService) {
+    this.locationService = locationService;
   }
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
     return params.get(ORIGIN_PARAM) != null ? builder.withOrigin(parseOrigin(params)) : builder;
   }
 
-  public ZipCode parseOrigin(Map<String, String[]> params) {
-    return zippopotamusClient.validateZipCode(params.get(ORIGIN_PARAM)[0]);
+  public Location parseOrigin(Map<String, String[]> params) {
+    return locationService.getLocation(params.get(ORIGIN_PARAM)[0]);
   }
 }

@@ -46,15 +46,8 @@ public class BedResponse {
       String lodgingMode,
       List<PackageResponse> packages,
       int stars) {
+    this(zipCode, bedType, cleaningFrequency, bloodTypes, capacity, lodgingMode, packages, stars);
     this.bedNumber = bedNumber;
-    this.zipCode = zipCode;
-    this.bedType = bedType;
-    this.cleaningFrequency = cleaningFrequency;
-    this.bloodTypes = bloodTypes;
-    this.capacity = capacity;
-    this.lodgingMode = lodgingMode;
-    this.packages = packages;
-    this.stars = stars;
   }
 
   public String getBedNumber() {

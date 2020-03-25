@@ -1,9 +1,12 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
+import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.locations.domain.ZipCode;
+import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,18 +15,18 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   private List<InMemoryBedFilter> filters = new ArrayList<>();
 
   private static final int UNSET_INT = 0;
-  private static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
-  private static final int DEFAULT_MAX_DISTANCE = 10;
+  static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
+  static final int DEFAULT_MAX_DISTANCE = 10;
 
   private int minCapacity = UNSET_INT;
   private BookingDate arrivalDate = null;
   private int numberOfNights = UNSET_INT;
-  private ZipCode origin = null;
+  private Location origin = null;
   private int maxDistance = UNSET_INT;
 
   @Override
   public BedQueryBuilder aBedQuery() {
-    return this;
+    return new InMemoryBedQueryBuilder();
   }
 
   @Override
@@ -75,7 +78,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   @Override
-  public InMemoryBedQueryBuilder withOrigin(ZipCode origin) {
+  public InMemoryBedQueryBuilder withOrigin(Location origin) {
     this.origin = origin;
     return this;
   }
@@ -98,10 +101,9 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
       filters.add(
           new InMemoryAvailabilityFilter(minCapacity, getArrivalDate(), getNumberOfNights()));
     } else {
-      if (arrivalDate != null) throw new RuntimeException(); // TODO : Throw correct exception
+      if (arrivalDate != null) throw new ArrivalDateWithoutMinimalCapacityException();
 
-      if (numberOfNights != UNSET_INT)
-        throw new RuntimeException(); // TODO : Throw correct exception
+      if (numberOfNights != UNSET_INT) throw new NumberOfNightsWithoutMinimalCapacityException();
     }
   }
 
@@ -109,7 +111,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
     if (origin != null) {
       filters.add(new InMemoryDistanceFilter(origin, getMaxDistance()));
     } else {
-      if (maxDistance != UNSET_INT) throw new RuntimeException(); // TODO : Throw correct exception
+      if (maxDistance != UNSET_INT) throw new MaxDistanceWithoutOriginException();
     }
   }
 

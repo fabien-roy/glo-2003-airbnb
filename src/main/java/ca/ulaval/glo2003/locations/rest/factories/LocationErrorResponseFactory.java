@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 
-public class LocationServiceErrorResponseFactory extends CatchallErrorResponseFactory {
+public class LocationErrorResponseFactory extends CatchallErrorResponseFactory {
 
   @Override
   public String create(Exception exception) {

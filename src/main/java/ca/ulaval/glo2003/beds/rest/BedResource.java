@@ -4,8 +4,8 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.services.BedService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
@@ -32,7 +32,7 @@ public class BedResource implements RouteGroup {
     get("/:number", this::getByNumber, new ObjectMapper()::writeValueAsString);
   }
 
-  public Object add(Request request, Response response) throws JsonProcessingException {
+  public Object add(Request request, Response response) throws IOException {
     BedRequest bedRequest;
 
     bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);

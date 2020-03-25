@@ -1,10 +1,18 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_MAX_DISTANCE;
+import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_NUMBER_OF_NIGHTS;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
+import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +25,12 @@ class InMemoryBedQueryBuilderTest {
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
   private List<BloodTypes> bloodTypes = createBloodTypes();
   private Packages packageName = Packages.BLOODTHIRSTY;
+  private int minCapacity = 100;
+  private BookingDate arrivalDate = createArrivalDate();
+  private int numberOfNights = 2;
   private LodgingModes lodgingMode = createLodgingMode();
+  private Location origin = createLocation();
+  private int maxDistance = 20;
 
   @BeforeEach
   public void setUpBuilder() {
@@ -63,7 +76,74 @@ class InMemoryBedQueryBuilderTest {
     assertEquals(packageName, ((InMemoryPackageFilter) bedQuery.getFilters().get(0)).getPackage());
   }
 
-  // TODO : Tests for availability
+  @Test
+  public void withMinCapacity_shouldAddAvailabilityFilter() {
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withMinCapacity(minCapacity).build();
+
+    assertEquals(
+        minCapacity, ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getMinCapacity());
+  }
+
+  @Test
+  public void withArrivalDate_shouldAddAvailabilityFilter() {
+    InMemoryBedQuery bedQuery =
+        bedQueryBuilder
+            .aBedQuery()
+            .withMinCapacity(minCapacity)
+            .withArrivalDate(arrivalDate)
+            .build();
+
+    assertEquals(
+        arrivalDate, ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getArrivalDate());
+  }
+
+  @Test
+  public void withoutArrivalDate_shouldSetArrivalDateToNow() {
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withMinCapacity(minCapacity).build();
+
+    assertEquals(
+        new BookingDate(),
+        ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getArrivalDate());
+  }
+
+  @Test
+  public void
+      withArrivalDateAndWithoutMinCapacity_shouldThrowArrivalDateWithoutMinimalCapacityException() {
+    BedQueryBuilder builder = bedQueryBuilder.aBedQuery().withArrivalDate(arrivalDate);
+
+    assertThrows(ArrivalDateWithoutMinimalCapacityException.class, builder::build);
+  }
+
+  @Test
+  public void withNumberOfNights_shouldAddAvailabilityFilter() {
+    InMemoryBedQuery bedQuery =
+        bedQueryBuilder
+            .aBedQuery()
+            .withMinCapacity(minCapacity)
+            .withNumberOfNights(numberOfNights)
+            .build();
+
+    assertEquals(
+        numberOfNights,
+        ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getNumberOfNights());
+  }
+
+  @Test
+  public void withoutNumberOfNights_shouldSetDefaultNumberOfNights() {
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withMinCapacity(minCapacity).build();
+
+    assertEquals(
+        DEFAULT_NUMBER_OF_NIGHTS,
+        ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getNumberOfNights());
+  }
+
+  @Test
+  public void
+      withNumberOfNightsAndWithoutMinCapacity_shouldThrowNumberOfNightsWithoutMinimalCapacityException() {
+    BedQueryBuilder builder = bedQueryBuilder.aBedQuery().withNumberOfNights(numberOfNights);
+
+    assertThrows(NumberOfNightsWithoutMinimalCapacityException.class, builder::build);
+  }
 
   @Test
   public void withLodgingMode_shouldAddLodgingModeFilter() {
@@ -73,5 +153,35 @@ class InMemoryBedQueryBuilderTest {
         lodgingMode, ((InMemoryLodgingModeFilter) bedQuery.getFilters().get(0)).getLodgingMode());
   }
 
-  // TODO : Tests for distance
+  @Test
+  public void withOrigin_shouldAddDistanceFilter() {
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withOrigin(origin).build();
+
+    assertEquals(origin, ((InMemoryDistanceFilter) bedQuery.getFilters().get(0)).getOrigin());
+  }
+
+  @Test
+  public void withMaxDistance_shouldAddDistanceFilter() {
+    InMemoryBedQuery bedQuery =
+        bedQueryBuilder.aBedQuery().withOrigin(origin).withMaxDistance(maxDistance).build();
+
+    assertEquals(
+        maxDistance, ((InMemoryDistanceFilter) bedQuery.getFilters().get(0)).getMaxDistance());
+  }
+
+  @Test
+  public void withoutMaxDistance_shouldSetMaxDistanceToDefault() {
+    InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withOrigin(origin).build();
+
+    assertEquals(
+        DEFAULT_MAX_DISTANCE,
+        ((InMemoryDistanceFilter) bedQuery.getFilters().get(0)).getMaxDistance());
+  }
+
+  @Test
+  public void withMaxDistanceAndWithoutOrigin_shouldThrowMaxDistanceWithoutOriginException() {
+    BedQueryBuilder builder = bedQueryBuilder.aBedQuery().withMaxDistance(maxDistance);
+
+    assertThrows(MaxDistanceWithoutOriginException.class, builder::build);
+  }
 }
