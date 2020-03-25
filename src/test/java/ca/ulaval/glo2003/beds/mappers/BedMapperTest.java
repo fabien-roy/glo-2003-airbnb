@@ -2,16 +2,12 @@ package ca.ulaval.glo2003.beds.mappers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
-import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother;
 import ca.ulaval.glo2003.beds.exceptions.*;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
@@ -23,320 +19,321 @@ import java.util.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BedMapperTest {
 
-  // TODO : Simplify this test class
+  private static BedMapper bedMapper;
+  private static PublicKeyMapper publicKeyMapper = mock(PublicKeyMapper.class);
+  private static PackageMapper packageMapper = mock(PackageMapper.class);
 
-  private BedMapper bedMapper;
-  private PublicKeyMapper publicKeyMapper;
-  private PackageMapper packageMapper;
+  private static Bed bed;
+  private static UUID bedNumber;
+  private static PublicKey ownerPublicKey;
+  private static Location location;
+  private static BedTypes bedType;
+  private static CleaningFrequencies cleaningFrequency;
+  private static BloodTypes bloodType;
+  private static BloodTypes otherBloodType;
+  private static List<BloodTypes> bloodTypes;
+  private static int capacity;
+  private static LodgingModes lodgingMode;
+  private static Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
+  private static int stars;
+
+  private static BedRequest bedRequest;
+  private static PackageRequest packageRequest = mock(PackageRequest.class);
+  private static List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
+  private static PackageResponse packageResponse = mock(PackageResponse.class);
+  private static List<PackageResponse> packageResponses =
+      Collections.singletonList(packageResponse);
+
+  @BeforeAll
+  public static void setUpMapper() {
+    bedMapper = new BedMapper(publicKeyMapper, packageMapper);
+  }
 
   @BeforeEach
-  public void setUpMapper() {
-    publicKeyMapper = mock(PublicKeyMapper.class);
-    packageMapper = mock(PackageMapper.class);
-    bedMapper = new BedMapper(publicKeyMapper, packageMapper);
+  public void setUpMocks() {
+    resetMocks();
+    when(publicKeyMapper.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
+    when(packageMapper.fromRequests(packageRequests)).thenReturn(pricesPerNight);
+    when(packageMapper.toResponses(pricesPerNight)).thenReturn(packageResponses);
+  }
+
+  private static void resetMocks() {
+    bedNumber = createBedNumber();
+    ownerPublicKey = createOwnerPublicKey();
+    location = createLocation();
+    bedType = createBedType();
+    cleaningFrequency = createCleaningFrequency();
+    bloodType = BloodTypes.O_MINUS;
+    otherBloodType = BloodTypes.O_MINUS;
+    bloodTypes = Arrays.asList(bloodType, otherBloodType);
+    capacity = 100;
+    lodgingMode = createLodgingMode();
+    stars = 3;
+
+    bed = buildBed();
+    bedRequest = buildBedRequest();
+  }
+
+  private static Bed buildBed() {
+    return aBed()
+        .withBedNumber(bedNumber)
+        .withOwnerPublicKey(ownerPublicKey)
+        .withLocation(location)
+        .withBedType(bedType)
+        .withCleaningFrequency(cleaningFrequency)
+        .withBloodTypes(bloodTypes)
+        .withCapacity(capacity)
+        .withLodgingMode(lodgingMode)
+        .withPricesPerNights(pricesPerNight)
+        .build();
+  }
+
+  private static BedRequest buildBedRequest() {
+    return aBedRequest()
+        .withOwnerPublicKey(ownerPublicKey.getValue())
+        .withBedType(bedType.toString())
+        .withCleaningFrequency(cleaningFrequency.toString())
+        .withBloodTypes(convertToStrings(bloodTypes))
+        .withCapacity(capacity)
+        .withLodgingMode(lodgingMode.toString())
+        .build();
+  }
+
+  private static List<String> convertToStrings(List<BloodTypes> bloodTypes) {
+    return bloodTypes.stream().map(BloodTypes::toString).collect(Collectors.toList());
+  }
+
+  @Test
+  public void fromRequest_shouldMapOwnerPublicKey() {
+    bed = bedMapper.fromRequest(bedRequest);
+
+    assertEquals(ownerPublicKey, bed.getOwnerPublicKey());
   }
 
   @Test
   public void fromRequest_shouldMapBedType() {
-    BedTypes expectedBedType = BedTypes.LATEX;
-    BedRequest bedRequest = aBedRequest().withBedType(expectedBedType.toString()).build();
+    bed = bedMapper.fromRequest(bedRequest);
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedBedType, bed.getBedType());
+    assertEquals(bedType, bed.getBedType());
   }
 
   @Test
   public void fromRequest_withoutBedType_shouldThrowInvalidBedTypeException() {
-    BedRequest bedRequest = aBedRequest().withBedType(null).build();
+    bedRequest = aBedRequest().withBedType(null).build();
 
     assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_withInvalidBedType_shouldThrowInvalidBedTypeException() {
-    String invalidBedType = "invalidBedType";
-    BedRequest bedRequest = aBedRequest().withBedType(invalidBedType).build();
+    bedRequest = aBedRequest().withBedType("invalidBedType").build();
 
     assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_shouldMapCleaningFrequency() {
-    CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
-    BedRequest bedRequest =
-        aBedRequest().withCleaningFrequency(expectedCleaningFrequency.toString()).build();
+    bed = bedMapper.fromRequest(bedRequest);
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedCleaningFrequency, bed.getCleaningFrequency());
+    assertEquals(cleaningFrequency, bed.getCleaningFrequency());
   }
 
   @Test
-  public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
-    String invalidCleaningFrequency = "invalidCleaningFrequency";
-    BedRequest bedRequest = aBedRequest().withCleaningFrequency(invalidCleaningFrequency).build();
+  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
+    bedRequest = aBedRequest().withCleaningFrequency(null).build();
 
     assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
-  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
-    BedRequest bedRequest = aBedRequest().withCleaningFrequency(null).build();
+  public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
+    bedRequest = aBedRequest().withCleaningFrequency("invalidCleaningFrequency").build();
 
     assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
-    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-    List<String> bloodTypes = Collections.singletonList(expectedBloodType.toString());
-    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+    List<String> bloodTypeStrings = convertToStrings(Collections.singletonList(bloodType));
+    bedRequest = aBedRequest().withBloodTypes(bloodTypeStrings).build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(1, bed.getBloodTypes().size());
-    assertEquals(expectedBloodType, bed.getBloodTypes().get(0));
+    assertEquals(bloodType, bed.getBloodTypes().get(0));
   }
 
   @Test
   public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
-    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-    BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
-    List<String> bloodTypes =
-        Arrays.asList(expectedBloodType.toString(), otherExpectedBloodType.toString());
-    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
-
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    bed = bedMapper.fromRequest(bedRequest);
 
     assertEquals(2, bed.getBloodTypes().size());
-    assertTrue(bed.getBloodTypes().contains(expectedBloodType));
-    assertTrue(bed.getBloodTypes().contains(otherExpectedBloodType));
+    assertTrue(bed.getBloodTypes().contains(bloodType));
+    assertTrue(bed.getBloodTypes().contains(otherBloodType));
   }
+
+  // TODO : withInvalidBloodTypes (String instead of array) (also test numerical)
 
   @Test
   public void fromRequest_withoutBloodTypes_shouldThrowInvalidBloodTypesException() {
-    List<String> bloodTypes = Collections.singletonList(null);
-    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+    bedRequest = aBedRequest().withBloodTypes(null).build();
 
     assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidBloodTypesException() {
-    List<String> bloodTypes = Collections.emptyList();
-    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+    bedRequest = aBedRequest().withBloodTypes(Collections.emptyList()).build();
 
     assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
+  // TODO : withNullBloodType (null element in field)
+
   @Test
   public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
-    String invalidBloodType = "invalidBloodType";
-    List<String> bloodTypes = Collections.singletonList(invalidBloodType);
-    BedRequest bedRequest = aBedRequest().withBloodTypes(bloodTypes).build();
+    bedRequest =
+        aBedRequest().withBloodTypes(Collections.singletonList("invalidBloodType")).build();
 
     assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_shouldMapCapacity() {
-    int expectedCapacity = 1000;
-    BedRequest bedRequest = aBedRequest().withCapacity(expectedCapacity).build();
+    bed = bedMapper.fromRequest(bedRequest);
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedCapacity, bed.getCapacity());
+    assertEquals(capacity, bed.getCapacity());
   }
 
   @Test
   public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
-    int capacity = -100;
-    BedRequest bedRequest = aBedRequest().withCapacity(capacity).build();
+    bedRequest = aBedRequest().withCapacity(-1).build();
 
     assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
+  // TODO : withStringifiedCapacity (String) (also test array)
+
   @Test
   public void fromRequest_shouldMapLodgingMode() {
-    LodgingModes expectedLodgingMode = BedObjectMother.createLodgingMode();
-    BedRequest bedRequest = aBedRequest().withLodgingMode(expectedLodgingMode.toString()).build();
+    bed = bedMapper.fromRequest(bedRequest);
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedLodgingMode, bed.getLodgingMode());
+    assertEquals(lodgingMode, bed.getLodgingMode());
   }
 
   @Test
   public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() {
-    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
-    BedRequest bedRequest = aBedRequest().withLodgingMode(null).build();
+    bedRequest = aBedRequest().withLodgingMode(null).build();
 
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    bed = bedMapper.fromRequest(bedRequest);
 
-    assertEquals(expectedLodgingMode, bed.getLodgingMode());
+    assertEquals(LodgingModes.PRIVATE, bed.getLodgingMode());
   }
 
   @Test
   public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
-    String invalidLodgingMode = "invalidLodgingMode";
-    BedRequest bedRequest = aBedRequest().withLodgingMode(invalidLodgingMode).build();
+    bedRequest = aBedRequest().withLodgingMode("invalidLodgingMode").build();
 
     assertThrows(InvalidLodgingModeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_shouldMapPricesPerNight() {
-    PackageRequest packageRequest = aPackageRequest().build();
-    List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
-    BedRequest bedRequest = aBedRequest().withPackages(packageRequests).build();
-    Map<Packages, Price> expectedPricesPerNight = new EnumMap<>(Packages.class);
-    when(packageMapper.fromRequests(packageRequests)).thenReturn(expectedPricesPerNight);
-
     Bed bed = bedMapper.fromRequest(bedRequest);
 
-    assertEquals(expectedPricesPerNight, bed.getPricesPerNight());
-  }
-
-  @Test
-  public void fromRequest_shouldMapOwnerPublicKey() {
-    PublicKey expectedOwnerPublicKey = BedObjectMother.createOwnerPublicKey();
-    BedRequest bedRequest =
-        aBedRequest().withOwnerPublicKey(expectedOwnerPublicKey.getValue()).build();
-    when(publicKeyMapper.fromString(expectedOwnerPublicKey.getValue()))
-        .thenReturn(expectedOwnerPublicKey);
-
-    Bed bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(expectedOwnerPublicKey, bed.getOwnerPublicKey());
+    assertEquals(pricesPerNight, bed.getPricesPerNight());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldNotMapBedNumber() {
-    Bed bed = aBed().build();
-
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
     assertNull(bedResponse.getBedNumber());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapLocation() {
-    Location expectedLocation = createLocation();
-    Bed bed = aBed().withLocation(expectedLocation).build();
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
-
-    assertEquals(expectedLocation.getZipCode().getValue(), bedResponse.getZipCode());
+    assertEquals(location.getZipCode().getValue(), bedResponse.getZipCode());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapBedType() {
-    BedTypes expectedBedType = BedTypes.LATEX;
-    Bed bed = aBed().withBedType(expectedBedType).build();
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
-
-    assertEquals(expectedBedType.toString(), bedResponse.getBedType());
+    assertEquals(bedType.toString(), bedResponse.getBedType());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapCleaningFrequency() {
-    CleaningFrequencies expectedCleaningFrequency = CleaningFrequencies.ANNUAL;
-    Bed bed = aBed().withCleaningFrequency(expectedCleaningFrequency).build();
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
-
-    assertEquals(expectedCleaningFrequency.toString(), bedResponse.getCleaningFrequency());
+    assertEquals(cleaningFrequency.toString(), bedResponse.getCleaningFrequency());
   }
 
   @Test
   public void toResponseWithoutNumber_withSingleBloodType_shouldMapBloodType() {
-    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-    List<BloodTypes> bloodTypes = Collections.singletonList(expectedBloodType);
-    Bed bed = aBed().withBloodTypes(bloodTypes).build();
+    bed = aBed().withBloodTypes(bloodTypes.subList(0, 1)).build();
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
     assertEquals(1, bedResponse.getBloodTypes().size());
-    assertEquals(expectedBloodType.toString(), bedResponse.getBloodTypes().get(0));
+    assertEquals(bloodType.toString(), bedResponse.getBloodTypes().get(0));
   }
 
   @Test
   public void toResponseWithoutNumber_withMultipleBloodTypes_shouldMapBloodTypes() {
-    BloodTypes expectedBloodType = BloodTypes.O_MINUS;
-    BloodTypes otherExpectedBloodType = BloodTypes.O_PLUS;
-    List<BloodTypes> bloodTypes = Arrays.asList(expectedBloodType, otherExpectedBloodType);
-    Bed bed = aBed().withBloodTypes(bloodTypes).build();
-
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
     assertEquals(2, bedResponse.getBloodTypes().size());
     assertTrue(
         bedResponse.getBloodTypes().stream()
-            .anyMatch(bloodType -> bloodType.equals(expectedBloodType.toString())));
+            .anyMatch(bloodTypeString -> bloodTypeString.equals(bloodType.toString())));
     assertTrue(
         bedResponse.getBloodTypes().stream()
-            .anyMatch(bloodType -> bloodType.equals(otherExpectedBloodType.toString())));
+            .anyMatch(bloodTypeString -> bloodTypeString.equals(otherBloodType.toString())));
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapCapacity() {
-    int expectedCapacity = 100;
-    Bed bed = aBed().withCapacity(expectedCapacity).build();
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
-
-    assertEquals(expectedCapacity, bedResponse.getCapacity());
+    assertEquals(capacity, bedResponse.getCapacity());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapLodgingMode() {
-    LodgingModes expectedLodgingMode = LodgingModes.PRIVATE;
-    Bed bed = aBed().withLodgingMode(expectedLodgingMode).build();
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
-
-    assertEquals(expectedLodgingMode.toString(), bedResponse.getLodgingMode());
+    assertEquals(lodgingMode.toString(), bedResponse.getLodgingMode());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapPricesPerNights() {
-    Map<Packages, Price> pricesPerNight =
-        Collections.singletonMap(createPackageName(), createPricePerNight());
-    Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
-    PackageResponse expectedPackageResponse = mock(PackageResponse.class);
-    List<PackageResponse> expectedPackageResponses =
-        Collections.singletonList(expectedPackageResponse);
-    when(packageMapper.toResponses(pricesPerNight)).thenReturn(expectedPackageResponses);
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, 0);
-
-    assertEquals(expectedPackageResponses, bedResponse.getPackages());
+    assertEquals(packageResponses, bedResponse.getPackages());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapStars() {
-    int expectedStars = 3;
-    Bed bed = aBed().build();
+    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, expectedStars);
-
-    assertEquals(expectedStars, bedResponse.getStars());
+    assertEquals(stars, bedResponse.getStars());
   }
 
   @Test
   public void toResponseWithNumber_shouldMapBedNumber() {
-    UUID expectedBedNumber = createBedNumber();
-    Bed bed = aBed().withBedNumber(expectedBedNumber).build();
+    BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, stars);
 
-    BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, 0);
-
-    assertEquals(expectedBedNumber.toString(), bedResponse.getBedNumber());
+    assertEquals(bedNumber.toString(), bedResponse.getBedNumber());
   }
 }

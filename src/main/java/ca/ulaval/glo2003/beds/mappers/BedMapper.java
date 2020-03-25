@@ -70,7 +70,8 @@ public class BedMapper {
   }
 
   private void validateRequest(BedRequest request) {
-    if (request.getBloodTypes().isEmpty()) throw new InvalidBloodTypesException();
+    if (request.getBloodTypes() == null || request.getBloodTypes().isEmpty())
+      throw new InvalidBloodTypesException();
 
     if (request.getCapacity() <= 0) throw new InvalidCapacityException();
   }
