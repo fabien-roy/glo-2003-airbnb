@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.parsers.rest.factories;
 
-import ca.ulaval.glo2003.parsers.exceptions.CapacityProcessingException;
+import ca.ulaval.glo2003.parsers.exceptions.CapacityParsingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -10,7 +10,7 @@ public class CapacityParsingErrorFactory extends ParsingErrorFactory {
 
   @Override
   public boolean canHandle(JsonMappingException exception) {
-    return exception instanceof CapacityProcessingException;
+    return exception instanceof CapacityParsingException;
   }
 
   @Override

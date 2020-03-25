@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.parsers.exceptions;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-public class ColonySizeProcessingException extends JsonMappingException {
+public class ColonySizeParsingException extends JsonMappingException {
 
-  public ColonySizeProcessingException() {
+  public ColonySizeParsingException() {
     super("INVALID_COLONY_SIZE");
   }
 }

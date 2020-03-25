@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.parsers.exceptions;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-public class CapacityProcessingException extends JsonMappingException {
+public class CapacityParsingException extends JsonMappingException {
 
-  public CapacityProcessingException() {
+  public CapacityParsingException() {
     super("INVALID_CAPACITY");
   }
 }
