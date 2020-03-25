@@ -1,17 +1,16 @@
 package ca.ulaval.glo2003.bookings.services;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingResponseBuilder.aBookingResponse;
 import static ca.ulaval.glo2003.bookings.rest.helpers.CancelationResponseBuilder.aCancelationResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
@@ -23,7 +22,6 @@ import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
-import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,8 +39,10 @@ public class BookingServiceTest {
 
   private static UUID bedNumber = createBedNumber();
   private static Bed bed = buildBed();
+  private static PublicKey ownerPublicKey = createOwnerPublicKey();
   private static UUID bookingNumber = createBookingNumber();
   private static Booking booking = buildBooking();
+  private static PublicKey tenantPublicKey = createTenantPublicKey();
   private static BookingRequest bookingRequest = aBookingRequest().build();
   private static BookingResponse bookingResponse = aBookingResponse().build();
   private static CancelationResponse cancelationResponse = aCancelationResponse().build();
@@ -71,7 +71,7 @@ public class BookingServiceTest {
 
   private void setUpMocksForGetResponse() {
     resetMocks();
-    bed.book(booking);
+    when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
     when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
     when(bookingMapper.toResponse(booking)).thenReturn(bookingResponse);
@@ -79,7 +79,7 @@ public class BookingServiceTest {
 
   private void setUpMocksForCancel() {
     resetMocks();
-    bed.book(booking);
+    when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
     when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
     when(cancelationService.cancel(booking, bed.getOwnerPublicKey().toString()))
@@ -93,14 +93,17 @@ public class BookingServiceTest {
   }
 
   private static Bed buildBed() {
-    return aBed().withBedNumber(bedNumber).build();
+    Bed bed = mock(Bed.class);
+    when(bed.getNumber()).thenReturn(bedNumber);
+    when(bed.getOwnerPublicKey()).thenReturn(ownerPublicKey);
+    return bed;
   }
 
   private static Booking buildBooking() {
-    return aBooking()
-        .withBookingNumber(bookingNumber)
-        .withPackage(bed.getPricesPerNight().keySet().iterator().next())
-        .build();
+    Booking booking = mock(Booking.class);
+    when(booking.getNumber()).thenReturn(bookingNumber);
+    when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
+    return booking;
   }
 
   @Test
@@ -126,9 +129,8 @@ public class BookingServiceTest {
     setUpMocksForAdd();
 
     bookingService.add(bedNumber.toString(), bookingRequest);
-    List<Booking> bookings = bed.getBookings();
 
-    assertTrue(bookings.contains(booking));
+    verify(bed).book(booking);
   }
 
   @Test
