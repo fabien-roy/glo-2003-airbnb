@@ -5,6 +5,7 @@ import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingParser;
 import ca.ulaval.glo2003.bookings.rest.BookingResource;
 import ca.ulaval.glo2003.bookings.rest.ColonySizeDeserializer;
+import ca.ulaval.glo2003.bookings.rest.NumberOfNightsDeserializer;
 import ca.ulaval.glo2003.bookings.rest.factories.*;
 import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.bookings.services.BookingService;
@@ -13,6 +14,7 @@ import ca.ulaval.glo2003.parsers.rest.DeserializingModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class BookingModule extends AbstractModule {
@@ -41,7 +43,8 @@ public class BookingModule extends AbstractModule {
 
   private void configureDeserializers() {
     DeserializingModule deserializingModule =
-        new DeserializingModule(Collections.singletonList(new ColonySizeDeserializer()));
+        new DeserializingModule(
+            Arrays.asList(new ColonySizeDeserializer(), new NumberOfNightsDeserializer()));
     BookingParser bookingParser = new BookingParser(Collections.singletonList(deserializingModule));
 
     bind(BookingParser.class).toInstance(bookingParser);

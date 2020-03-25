@@ -7,6 +7,8 @@ public class BookingRequest {
 
   private String tenantPublicKey;
   private String arrivalDate;
+
+  @JsonDeserialize(using = NumberOfNightsDeserializer.class)
   private int numberOfNights;
 
   @JsonDeserialize(using = ColonySizeDeserializer.class)
