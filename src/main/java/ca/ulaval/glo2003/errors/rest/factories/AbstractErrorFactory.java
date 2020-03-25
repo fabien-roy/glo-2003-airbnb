@@ -11,7 +11,7 @@ public abstract class AbstractErrorFactory<E extends Exception> implements Error
       ErrorResponse response = new ErrorResponse(error, description);
       return new ObjectMapper().writeValueAsString(response);
     } catch (JsonProcessingException ex) {
-      return null;
+      return "BAD REQUEST";
     }
   }
 }

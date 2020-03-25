@@ -28,5 +28,6 @@ public class ErrorModule extends AbstractModule {
         Multibinder.newSetBinder(binder(), new TypeLiteral<CatchallErrorFactory>() {});
     multibinder.addBinding().to(InvalidFormatErrorFactory.class);
     multibinder.addBinding().to(JsonProcessingErrorFactory.class);
+    multibinder.addBinding().to(DefaultErrorFactory.class);
   }
 }
