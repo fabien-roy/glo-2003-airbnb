@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.services.BedService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
@@ -19,23 +18,23 @@ public class BedResource implements RouteGroup {
   public static final String BED_PATH = "/beds";
 
   private final BedService bedService;
+  private final BedParser bedParser;
 
   @Inject
-  public BedResource(BedService bedService) {
+  public BedResource(BedService bedService, BedParser bedParser) {
     this.bedService = bedService;
+    this.bedParser = bedParser;
   }
 
   @Override
   public void addRoutes() {
     post("", this::add);
-    get("", this::getAll, new ObjectMapper()::writeValueAsString);
-    get("/:number", this::getByNumber, new ObjectMapper()::writeValueAsString);
+    get("", this::getAll, bedParser::writeValueAsString);
+    get("/:number", this::getByNumber, bedParser::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws IOException {
-    BedRequest bedRequest;
-
-    bedRequest = new ObjectMapper().readValue(request.body(), BedRequest.class);
+    BedRequest bedRequest = bedParser.readValue(request.body(), BedRequest.class);
 
     String bedNumber = bedService.add(bedRequest);
     String bedPath = String.format("%s/%s", BED_PATH, bedNumber);

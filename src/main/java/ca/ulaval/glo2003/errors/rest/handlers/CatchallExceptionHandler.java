@@ -1,25 +1,23 @@
 package ca.ulaval.glo2003.errors.rest.handlers;
 
 import ca.ulaval.glo2003.errors.rest.factories.DefaultErrorFactory;
-import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
-import java.util.Set;
 import javax.inject.Inject;
 import spark.Request;
 import spark.Response;
 
-public class CatchallExceptionHandler extends DefaultExceptionHandler<Exception> {
+public class CatchallExceptionHandler extends AbstractExceptionHandler<Exception> {
 
-  private final Set<ErrorFactory<Exception>> factories;
+  private final DefaultErrorFactory defaultFactory;
 
   @Inject
-  public CatchallExceptionHandler(
-      DefaultErrorFactory defaultFactory, Set<ErrorFactory<Exception>> catchallFactories) {
-    super(defaultFactory);
-    this.factories = catchallFactories;
+  public CatchallExceptionHandler(DefaultErrorFactory defaultFactory) {
+    this.defaultFactory = defaultFactory;
   }
 
   @Override
   public void handle(Exception exception, Request request, Response response) {
-    handleIfCan(factories, exception, response);
+    int status = defaultFactory.createStatus();
+    String errorResponse = defaultFactory.createResponse();
+    setResponse(response, status, errorResponse);
   }
 }

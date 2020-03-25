@@ -53,8 +53,6 @@ class BloodTypesMapperTest {
     assertTrue(bloodTypes.contains(otherBloodType));
   }
 
-  // TODO : withInvalidBloodTypes (String instead of array) (also test numerical)
-
   @Test
   public void fromStrings_withoutBloodTypes_shouldThrowInvalidBloodTypesException() {
     bloodTypeStrings = null;

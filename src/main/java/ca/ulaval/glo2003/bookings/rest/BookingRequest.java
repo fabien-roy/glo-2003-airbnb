@@ -1,12 +1,15 @@
 package ca.ulaval.glo2003.bookings.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class BookingRequest {
 
   private String tenantPublicKey;
   private String arrivalDate;
   private int numberOfNights;
+
+  @JsonDeserialize(using = ColonySizeDeserializer.class)
   private int colonySize;
 
   @JsonProperty("package")

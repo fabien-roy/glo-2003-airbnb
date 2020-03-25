@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 
 public class BedRequest {
@@ -9,7 +10,10 @@ public class BedRequest {
   private String bedType;
   private String cleaningFrequency;
   private List<String> bloodTypes;
+
+  @JsonDeserialize(using = CapacityDeserializer.class)
   private int capacity;
+
   private String lodgingMode;
   private List<PackageRequest> packages;
 

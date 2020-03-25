@@ -9,15 +9,19 @@ import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
+import ca.ulaval.glo2003.beds.rest.BedParser;
 import ca.ulaval.glo2003.beds.rest.BedResource;
+import ca.ulaval.glo2003.beds.rest.CapacityDeserializer;
 import ca.ulaval.glo2003.beds.rest.factories.*;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.parsers.rest.DeserializingModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import java.util.Collections;
 
 public class BedModule extends AbstractModule {
 
@@ -25,6 +29,7 @@ public class BedModule extends AbstractModule {
   protected void configure() {
     configureQueryParamAssemblers();
     configureErrorFactories();
+    configureDeserializers();
 
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
@@ -72,5 +77,13 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(NumberOfNightsWithoutMinimalCapacityErrorFactory.class);
     multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
     multibinder.addBinding().to(CantOfferSweetToothPackageErrorFactory.class);
+  }
+
+  private void configureDeserializers() {
+    DeserializingModule deserializingModule =
+        new DeserializingModule(Collections.singletonList(new CapacityDeserializer()));
+    BedParser bookingParser = new BedParser(Collections.singletonList(deserializingModule));
+
+    bind(BedParser.class).toInstance(bookingParser);
   }
 }
