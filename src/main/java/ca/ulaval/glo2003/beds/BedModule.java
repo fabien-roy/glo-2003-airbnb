@@ -54,7 +54,7 @@ public class BedModule extends AbstractModule {
   private void configureErrorFactories() {
     Multibinder<ErrorFactory<BedException>> multibinder =
         Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<BedException>>() {});
-    multibinder.addBinding().to(AllYouCanDrinkDependencyErrorFactory.class);
+    multibinder.addBinding().to(CantOfferAllYouCanDrinkPackageErrorFactory.class);
     multibinder.addBinding().to(BedAlreadyBookedErrorFactory.class);
     multibinder.addBinding().to(BedNotFoundErrorFactory.class);
     multibinder.addBinding().to(BookingNotAllowedErrorFactory.class);
@@ -68,7 +68,9 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(InvalidPackageErrorFactory.class);
     multibinder.addBinding().to(InvalidPublicKeyErrorFactory.class);
     multibinder.addBinding().to(MaxDistanceWithoutOriginErrorFactory.class);
+    multibinder.addBinding().to(ArrivalDateWithoutMinimalCapacityErrorFactory.class);
+    multibinder.addBinding().to(NumberOfNightsWithoutMinimalCapacityErrorFactory.class);
     multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
-    multibinder.addBinding().to(SweetToothDependencyErrorFactory.class);
+    multibinder.addBinding().to(CantOfferSweetToothPackageErrorFactory.class);
   }
 }

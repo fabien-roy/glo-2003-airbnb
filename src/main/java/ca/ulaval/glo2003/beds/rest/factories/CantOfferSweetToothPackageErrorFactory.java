@@ -4,7 +4,7 @@ import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class SweetToothDependencyErrorFactory extends BedErrorFactory {
+public class CantOfferSweetToothPackageErrorFactory extends BedErrorFactory {
 
   @Override
   public boolean canHandle(BedException exception) {

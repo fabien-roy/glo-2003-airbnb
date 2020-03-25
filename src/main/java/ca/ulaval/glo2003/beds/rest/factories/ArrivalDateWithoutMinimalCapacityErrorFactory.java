@@ -1,21 +1,21 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
+import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class AllYouCanDrinkDependencyErrorFactory extends BedErrorFactory {
+public class ArrivalDateWithoutMinimalCapacityErrorFactory extends BedErrorFactory {
 
   @Override
   public boolean canHandle(BedException exception) {
-    return exception instanceof AllYouCanDrinkDependencyException;
+    return exception instanceof ArrivalDateWithoutMinimalCapacityException;
   }
 
   @Override
   public String createResponse() {
     return tryWriteValueAsString(
-        "CANT_OFFER_ALL_YOU_CAN_DRINK_PACKAGE",
-        "in order to offer allYouCanDrink package, you must also offer the bloodthirsty package");
+        "ARRIVAL_DATE_WITHOUT_MINIMAL_CAPACITY",
+        "a minimal capacity should be provided along with the arrival date");
   }
 
   @Override

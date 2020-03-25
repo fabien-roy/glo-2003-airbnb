@@ -13,8 +13,7 @@ public class InvalidCapacityErrorFactory extends BedErrorFactory {
 
   @Override
   public String createResponse() {
-    return tryWriteValueAsString(
-        "INVALID_CAPACITY", "minimal capacity should be a positive number");
+    return tryWriteValueAsString("INVALID_CAPACITY", "capacity should be a positive number");
   }
 
   @Override
