@@ -50,10 +50,10 @@ public class BookingService {
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
+    bed.book(booking);
     transactionService.addStayBooked(booking.getTenantPublicKey().getValue(), total);
     transactionService.addStayCompleted(
         bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
-    bed.book(booking);
     bedRepository.update(bed);
     return booking.getNumber().toString();
   }
