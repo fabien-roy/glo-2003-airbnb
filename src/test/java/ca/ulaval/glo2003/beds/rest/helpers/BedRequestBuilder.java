@@ -79,7 +79,7 @@ public class BedRequestBuilder {
         zipCode,
         bedType,
         cleaningFrequency,
-        bloodTypes.toArray(new String[0]),
+        bloodTypes,
         capacity,
         lodgingMode,
         packages);

@@ -9,10 +9,7 @@ import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
-import ca.ulaval.glo2003.beds.rest.BedParser;
-import ca.ulaval.glo2003.beds.rest.BedResource;
-import ca.ulaval.glo2003.beds.rest.BloodTypesDeserializer;
-import ca.ulaval.glo2003.beds.rest.CapacityDeserializer;
+import ca.ulaval.glo2003.beds.rest.*;
 import ca.ulaval.glo2003.beds.rest.factories.*;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
@@ -84,7 +81,10 @@ public class BedModule extends AbstractModule {
   private void configureDeserializers() {
     DeserializingModule deserializingModule =
         new DeserializingModule(
-            Arrays.asList(new CapacityDeserializer(), new BloodTypesDeserializer()));
+            Arrays.asList(
+                new CapacityDeserializer(),
+                new BloodTypesDeserializer(),
+                new PackagesDeserializer()));
     BedParser bookingParser = new BedParser(Collections.singletonList(deserializingModule));
 
     bind(BedParser.class).toInstance(bookingParser);

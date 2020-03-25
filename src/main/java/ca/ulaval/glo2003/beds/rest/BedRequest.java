@@ -18,6 +18,8 @@ public class BedRequest {
   private int capacity;
 
   private String lodgingMode;
+
+  @JsonDeserialize(using = PackagesDeserializer.class)
   private List<PackageRequest> packages;
 
   public BedRequest() {
@@ -29,7 +31,7 @@ public class BedRequest {
       String zipCode,
       String bedType,
       String cleaningFrequency,
-      String[] bloodTypes,
+      List<String> bloodTypes,
       int capacity,
       String lodgingMode,
       List<PackageRequest> packages) {
@@ -37,7 +39,7 @@ public class BedRequest {
     this.zipCode = zipCode;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
-    this.bloodTypes = Arrays.asList(bloodTypes);
+    this.bloodTypes = bloodTypes;
     this.capacity = capacity;
     this.lodgingMode = lodgingMode;
     this.packages = packages;
@@ -99,7 +101,7 @@ public class BedRequest {
     return packages;
   }
 
-  public void setPackages(List<PackageRequest> packages) {
-    this.packages = packages;
+  public void setPackages(PackageRequest[] packages) {
+    this.packages = Arrays.asList(packages);
   }
 }

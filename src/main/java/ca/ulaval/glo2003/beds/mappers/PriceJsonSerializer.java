@@ -11,6 +11,8 @@ import java.util.Locale;
 
 public class PriceJsonSerializer extends JsonSerializer<Double> {
 
+  // TODO : Use Deserializer instead of serializer...
+
   private NumberFormat decimalFormat;
 
   public PriceJsonSerializer() {
