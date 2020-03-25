@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.mappers;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -43,13 +43,13 @@ public class PackageMapper {
   }
 
   private void validateRequests(List<PackageRequest> packageRequests) {
-    if (packageRequests == null || packageRequests.isEmpty()) throw new InvalidPackageException();
+    if (packageRequests == null || packageRequests.isEmpty()) throw new InvalidPackagesException();
   }
 
   private void validatePackageOnce(
       Set<Packages> packageRequestsSet, List<PackageRequest> packageRequestsList) {
     if (packageRequestsSet.size() != packageRequestsList.size()) {
-      throw new InvalidPackageException();
+      throw new InvalidPackagesException();
     }
   }
 }

@@ -60,12 +60,12 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(BookingNotAllowedErrorFactory.class);
     multibinder.addBinding().to(ExceedingAccommodationCapacityErrorFactory.class);
     multibinder.addBinding().to(InvalidBedTypeErrorFactory.class);
-    multibinder.addBinding().to(InvalidBloodTypeErrorFactory.class);
+    multibinder.addBinding().to(InvalidBloodTypesErrorFactory.class);
     multibinder.addBinding().to(InvalidCapacityErrorFactory.class);
     multibinder.addBinding().to(InvalidCleaningFrequencyErrorFactory.class);
     multibinder.addBinding().to(InvalidLodgingModeErrorFactory.class);
     multibinder.addBinding().to(InvalidMaxDistanceErrorFactory.class);
-    multibinder.addBinding().to(InvalidPackageErrorFactory.class);
+    multibinder.addBinding().to(InvalidPackagesErrorFactory.class);
     multibinder.addBinding().to(InvalidPublicKeyErrorFactory.class);
     multibinder.addBinding().to(MaxDistanceWithoutOriginErrorFactory.class);
     multibinder.addBinding().to(ArrivalDateWithoutMinimalCapacityErrorFactory.class);

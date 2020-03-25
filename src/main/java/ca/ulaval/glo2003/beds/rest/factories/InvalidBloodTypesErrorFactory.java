@@ -1,14 +1,14 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
 import ca.ulaval.glo2003.beds.exceptions.BedException;
-import ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class InvalidBloodTypeErrorFactory extends BedErrorFactory {
+public class InvalidBloodTypesErrorFactory extends BedErrorFactory {
 
   @Override
   public boolean canHandle(BedException exception) {
-    return exception instanceof InvalidBedTypeException;
+    return exception instanceof InvalidBloodTypesException;
   }
 
   @Override

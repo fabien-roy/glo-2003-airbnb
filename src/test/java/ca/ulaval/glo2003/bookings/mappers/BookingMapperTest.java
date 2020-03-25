@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.mappers.PublicKeyMapper;
 import ca.ulaval.glo2003.bookings.domain.Booking;
@@ -190,13 +190,13 @@ class BookingMapperTest {
     String invalidPackage = "invalidPackage";
     BookingRequest bookingRequest = aBookingRequest().withPackage(invalidPackage).build();
 
-    assertThrows(InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(InvalidPackagesException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 
   @Test
   public void fromRequest_withoutPackage_shouldThrowInvalidPackageException() {
     BookingRequest bookingRequest = aBookingRequest().withPackage(null).build();
 
-    assertThrows(InvalidPackageException.class, () -> bookingMapper.fromRequest(bookingRequest));
+    assertThrows(InvalidPackagesException.class, () -> bookingMapper.fromRequest(bookingRequest));
   }
 }

@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -32,14 +32,14 @@ class PackageMapperTest {
   public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
     List<PackageRequest> requests = Collections.emptyList();
 
-    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
   }
 
   @Test
   public void fromRequests_withNullRequest_shouldThrowInvalidPackageException() {
     List<PackageRequest> requests = null;
 
-    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
   }
 
   @Test
@@ -98,7 +98,7 @@ class PackageMapperTest {
     PackageRequest request = aPackageRequest().withName(invalidPackageName).build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
   }
 
   @Test
@@ -148,7 +148,7 @@ class PackageMapperTest {
     PackageRequest request2 = aPackageRequest().withName(packageName.toString()).build();
     List<PackageRequest> requests = Arrays.asList(request1, request2);
 
-    assertThrows(InvalidPackageException.class, () -> packageMapper.fromRequests(requests));
+    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
   }
 
   @Test
