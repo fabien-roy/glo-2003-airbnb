@@ -4,7 +4,7 @@ import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class InvalidZipCodeErrorFactoryService extends LocationServiceErrorFactory {
+public class InvalidZipCodeErrorFactory extends LocationErrorFactory {
 
   @Override
   public boolean canHandle(LocationServiceException exception) {

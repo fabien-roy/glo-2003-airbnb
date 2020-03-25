@@ -15,20 +15,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class LocationServiceErrorStatusFactoryTest {
+class LocationErrorStatusFactoryTest {
 
-  private static LocationServiceErrorStatusFactory locationServiceErrorStatusFactory;
+  private static LocationErrorStatusFactory locationErrorStatusFactory;
 
   @BeforeAll
   public static void setUpFactory() {
-    locationServiceErrorStatusFactory = new LocationServiceErrorStatusFactory();
+    locationErrorStatusFactory = new LocationErrorStatusFactory();
   }
 
   @ParameterizedTest
   @MethodSource("provideStatusForExternalServiceException")
   public void create_withExternalServiceException_shouldCreateAssociatedStatus(
       LocationServiceException exception, int expectedStatus) {
-    int status = locationServiceErrorStatusFactory.create(exception);
+    int status = locationErrorStatusFactory.create(exception);
 
     assertEquals(expectedStatus, status);
   }
@@ -38,7 +38,7 @@ class LocationServiceErrorStatusFactoryTest {
     Exception exception = new Exception();
     int expectedStatus = new CatchallErrorStatusFactory().create(exception);
 
-    int status = locationServiceErrorStatusFactory.create(exception);
+    int status = locationErrorStatusFactory.create(exception);
 
     assertEquals(expectedStatus, status);
   }

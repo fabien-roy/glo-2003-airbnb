@@ -8,7 +8,7 @@ import ca.ulaval.glo2003.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
-import ca.ulaval.glo2003.locations.rest.handlers.LocationServiceExceptionHandler;
+import ca.ulaval.glo2003.locations.rest.handlers.LocationExceptionHandler;
 import com.google.inject.Inject;
 import spark.RouteGroup;
 
@@ -17,18 +17,18 @@ public class ErrorMapper implements RouteGroup {
   public static final String ERROR_PATH = "*";
 
   private final CatchallExceptionHandler catchallExceptionHandler;
-  private final LocationServiceExceptionHandler locationServiceExceptionHandler;
+  private final LocationExceptionHandler locationExceptionHandler;
   private final BedExceptionHandler bedExceptionHandler;
   private final BookingExceptionHandler bookingExceptionHandler;
 
   @Inject
   public ErrorMapper(
       CatchallExceptionHandler catchallExceptionHandler,
-      LocationServiceExceptionHandler locationServiceExceptionHandler,
+      LocationExceptionHandler locationExceptionHandler,
       BedExceptionHandler bedExceptionHandler,
       BookingExceptionHandler bookingExceptionHandler) {
     this.catchallExceptionHandler = catchallExceptionHandler;
-    this.locationServiceExceptionHandler = locationServiceExceptionHandler;
+    this.locationExceptionHandler = locationExceptionHandler;
     this.bedExceptionHandler = bedExceptionHandler;
     this.bookingExceptionHandler = bookingExceptionHandler;
   }
@@ -36,7 +36,7 @@ public class ErrorMapper implements RouteGroup {
   @Override
   public void addRoutes() {
     exception(Exception.class, catchallExceptionHandler);
-    exception(LocationServiceException.class, locationServiceExceptionHandler);
+    exception(LocationServiceException.class, locationExceptionHandler);
     exception(BedException.class, bedExceptionHandler);
     exception(BookingException.class, bookingExceptionHandler);
   }

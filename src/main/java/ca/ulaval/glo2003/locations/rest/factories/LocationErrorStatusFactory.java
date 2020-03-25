@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class LocationServiceErrorStatusFactory extends CatchallErrorStatusFactory {
+public class LocationErrorStatusFactory extends CatchallErrorStatusFactory {
 
   @Override
   public int create(Exception exception) {

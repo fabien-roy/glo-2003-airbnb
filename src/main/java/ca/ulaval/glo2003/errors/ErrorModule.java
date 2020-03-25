@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.factories.*;
 import ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.mappers.ErrorMapper;
-import ca.ulaval.glo2003.locations.rest.handlers.LocationServiceExceptionHandler;
+import ca.ulaval.glo2003.locations.rest.handlers.LocationExceptionHandler;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
@@ -17,7 +17,7 @@ public class ErrorModule extends AbstractModule {
     configureErrorFactories();
 
     bind(CatchallExceptionHandler.class);
-    bind(LocationServiceExceptionHandler.class);
+    bind(LocationExceptionHandler.class);
     bind(BedExceptionHandler.class);
     bind(BookingExceptionHandler.class);
     bind(ErrorMapper.class);

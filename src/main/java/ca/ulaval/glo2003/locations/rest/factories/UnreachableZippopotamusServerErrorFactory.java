@@ -4,7 +4,7 @@ import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class UnreachableZippopotamusServerErrorFactory extends LocationServiceErrorFactory {
+public class UnreachableZippopotamusServerErrorFactory extends LocationErrorFactory {
 
   @Override
   public boolean canHandle(LocationServiceException exception) {
