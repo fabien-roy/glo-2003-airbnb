@@ -22,6 +22,10 @@ public abstract class AbstractExceptionHandler<E extends Exception> implements E
     int status = errorFactory.createStatus();
     String errorResponse = errorFactory.createResponse();
 
+    setResponse(response, status, errorResponse);
+  }
+
+  protected void setResponse(Response response, int status, String errorResponse) {
     response.status(status);
     response.body(errorResponse);
   }

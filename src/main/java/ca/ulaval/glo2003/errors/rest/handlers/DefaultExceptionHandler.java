@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.errors.rest.handlers;
 
+import ca.ulaval.glo2003.errors.rest.factories.DefaultErrorFactory;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import java.util.Optional;
 import java.util.Set;
@@ -8,9 +9,9 @@ import spark.Response;
 public abstract class DefaultExceptionHandler<E extends Exception>
     extends AbstractExceptionHandler<E> {
 
-  private final ErrorFactory<E> defaultFactory;
+  private final DefaultErrorFactory defaultFactory;
 
-  public DefaultExceptionHandler(ErrorFactory<E> defaultFactory) {
+  public DefaultExceptionHandler(DefaultErrorFactory defaultFactory) {
     this.defaultFactory = defaultFactory;
   }
 
@@ -21,7 +22,9 @@ public abstract class DefaultExceptionHandler<E extends Exception>
     if (foundFactory.isPresent()) {
       setResponse(response, foundFactory.get());
     } else {
-      setResponse(response, defaultFactory);
+      int status = defaultFactory.createStatus();
+      String errorResponse = defaultFactory.createResponse();
+      setResponse(response, status, errorResponse);
     }
   }
 }

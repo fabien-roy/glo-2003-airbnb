@@ -18,8 +18,6 @@ public class ErrorModule extends AbstractModule {
   }
 
   private void configureErrorFactories() {
-    bind(ErrorFactory.class).to(DefaultErrorFactory.class);
-
     Multibinder<ErrorFactory<Exception>> multibinder =
         Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<Exception>>() {});
     multibinder.addBinding().to(InvalidFormatErrorFactory.class);
