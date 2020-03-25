@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.rest;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.Arrays;
 import java.util.List;
 
 public class BedRequest {
@@ -28,7 +29,7 @@ public class BedRequest {
       String zipCode,
       String bedType,
       String cleaningFrequency,
-      List<String> bloodTypes,
+      String[] bloodTypes,
       int capacity,
       String lodgingMode,
       List<PackageRequest> packages) {
@@ -36,7 +37,7 @@ public class BedRequest {
     this.zipCode = zipCode;
     this.bedType = bedType;
     this.cleaningFrequency = cleaningFrequency;
-    this.bloodTypes = bloodTypes;
+    this.bloodTypes = Arrays.asList(bloodTypes);
     this.capacity = capacity;
     this.lodgingMode = lodgingMode;
     this.packages = packages;
@@ -78,8 +79,8 @@ public class BedRequest {
     return bloodTypes;
   }
 
-  public void setBloodTypes(List<String> bloodTypes) {
-    this.bloodTypes = bloodTypes;
+  public void setBloodTypes(String[] bloodTypes) {
+    this.bloodTypes = Arrays.asList(bloodTypes);
   }
 
   public int getCapacity() {
