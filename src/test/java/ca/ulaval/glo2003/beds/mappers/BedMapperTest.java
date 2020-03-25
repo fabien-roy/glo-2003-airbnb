@@ -8,7 +8,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.exceptions.*;
+import ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -16,9 +19,6 @@ import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +28,7 @@ class BedMapperTest {
 
   private static BedMapper bedMapper;
   private static PublicKeyMapper publicKeyMapper = mock(PublicKeyMapper.class);
+  private static BloodTypesMapper bloodTypesMapper = mock(BloodTypesMapper.class);
   private static PackageMapper packageMapper = mock(PackageMapper.class);
 
   private static Bed bed;
@@ -36,15 +37,15 @@ class BedMapperTest {
   private static Location location;
   private static BedTypes bedType;
   private static CleaningFrequencies cleaningFrequency;
-  private static BloodTypes bloodType;
-  private static BloodTypes otherBloodType;
-  private static List<BloodTypes> bloodTypes;
+  private static BloodTypes bloodType = mock(BloodTypes.class);
+  private static List<BloodTypes> bloodTypes = Collections.singletonList(bloodType);
   private static int capacity;
   private static LodgingModes lodgingMode;
   private static Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
   private static int stars;
 
   private static BedRequest bedRequest;
+  private static List<String> bloodTypeStrings = Collections.singletonList(bloodType.toString());
   private static PackageRequest packageRequest = mock(PackageRequest.class);
   private static List<PackageRequest> packageRequests = Collections.singletonList(packageRequest);
   private static PackageResponse packageResponse = mock(PackageResponse.class);
@@ -53,13 +54,15 @@ class BedMapperTest {
 
   @BeforeAll
   public static void setUpMapper() {
-    bedMapper = new BedMapper(publicKeyMapper, packageMapper);
+    bedMapper = new BedMapper(publicKeyMapper, bloodTypesMapper, packageMapper);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
     when(publicKeyMapper.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
+    when(bloodTypesMapper.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
+    when(bloodTypesMapper.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
     when(packageMapper.fromRequests(packageRequests)).thenReturn(pricesPerNight);
     when(packageMapper.toResponses(pricesPerNight)).thenReturn(packageResponses);
   }
@@ -70,9 +73,6 @@ class BedMapperTest {
     location = createLocation();
     bedType = createBedType();
     cleaningFrequency = createCleaningFrequency();
-    bloodType = BloodTypes.O_MINUS;
-    otherBloodType = BloodTypes.O_MINUS;
-    bloodTypes = Arrays.asList(bloodType, otherBloodType);
     capacity = 100;
     lodgingMode = createLodgingMode();
     stars = 3;
@@ -160,49 +160,10 @@ class BedMapperTest {
   }
 
   @Test
-  public void fromRequest_withSingleBloodType_shouldReturnBedWithSingleBloodType() {
-    List<String> bloodTypeStrings = convertToStrings(Collections.singletonList(bloodType));
-    bedRequest = aBedRequest().withBloodTypes(bloodTypeStrings).build();
-
+  public void fromRequest_shouldMapBloodTypes() {
     bed = bedMapper.fromRequest(bedRequest);
 
-    assertEquals(1, bed.getBloodTypes().size());
-    assertEquals(bloodType, bed.getBloodTypes().get(0));
-  }
-
-  @Test
-  public void fromRequest_withMultipleBloodTypes_shouldReturnBedWithMultipleBloodTypes() {
-    bed = bedMapper.fromRequest(bedRequest);
-
-    assertEquals(2, bed.getBloodTypes().size());
-    assertTrue(bed.getBloodTypes().contains(bloodType));
-    assertTrue(bed.getBloodTypes().contains(otherBloodType));
-  }
-
-  // TODO : withInvalidBloodTypes (String instead of array) (also test numerical)
-
-  @Test
-  public void fromRequest_withoutBloodTypes_shouldThrowInvalidBloodTypesException() {
-    bedRequest = aBedRequest().withBloodTypes(null).build();
-
-    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  @Test
-  public void fromRequest_withEmptyBloodTypes_shouldThrowInvalidBloodTypesException() {
-    bedRequest = aBedRequest().withBloodTypes(Collections.emptyList()).build();
-
-    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
-  }
-
-  // TODO : withNullBloodType (null element in field)
-
-  @Test
-  public void fromRequest_withInvalidBloodType_shouldThrowInvalidBloodTypeException() {
-    bedRequest =
-        aBedRequest().withBloodTypes(Collections.singletonList("invalidBloodType")).build();
-
-    assertThrows(InvalidBloodTypesException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertEquals(bloodTypes, bed.getBloodTypes());
   }
 
   @Test
@@ -280,26 +241,10 @@ class BedMapperTest {
   }
 
   @Test
-  public void toResponseWithoutNumber_withSingleBloodType_shouldMapBloodType() {
-    bed = aBed().withBloodTypes(bloodTypes.subList(0, 1)).build();
-
+  public void toResponseWithoutNumber_shouldMapBloodTypes() {
     BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
 
-    assertEquals(1, bedResponse.getBloodTypes().size());
-    assertEquals(bloodType.toString(), bedResponse.getBloodTypes().get(0));
-  }
-
-  @Test
-  public void toResponseWithoutNumber_withMultipleBloodTypes_shouldMapBloodTypes() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
-
-    assertEquals(2, bedResponse.getBloodTypes().size());
-    assertTrue(
-        bedResponse.getBloodTypes().stream()
-            .anyMatch(bloodTypeString -> bloodTypeString.equals(bloodType.toString())));
-    assertTrue(
-        bedResponse.getBloodTypes().stream()
-            .anyMatch(bloodTypeString -> bloodTypeString.equals(otherBloodType.toString())));
+    assertEquals(bloodTypeStrings, bedResponse.getBloodTypes());
   }
 
   @Test

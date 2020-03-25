@@ -1,35 +1,39 @@
 package ca.ulaval.glo2003.beds.mappers;
 
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.exceptions.*;
+import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class BedMapper {
 
   private final PublicKeyMapper publicKeyMapper;
+  private final BloodTypesMapper bloodTypesMapper;
   private final PackageMapper packageMapper;
 
   @Inject
-  public BedMapper(PublicKeyMapper publicKeyMapper, PackageMapper packageMapper) {
+  public BedMapper(
+      PublicKeyMapper publicKeyMapper,
+      BloodTypesMapper bloodTypesMapper,
+      PackageMapper packageMapper) {
     this.publicKeyMapper = publicKeyMapper;
+    this.bloodTypesMapper = bloodTypesMapper;
     this.packageMapper = packageMapper;
   }
 
   public Bed fromRequest(BedRequest request) {
-    validateRequest(request);
+    if (request.getCapacity() <= 0) throw new InvalidCapacityException();
 
     PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
     BedTypes bedType = BedTypes.get(request.getBedType());
     CleaningFrequencies cleaningFrequencies =
         CleaningFrequencies.get(request.getCleaningFrequency());
-    List<BloodTypes> bloodTypes = parseBloodTypes(request.getBloodTypes());
+    List<BloodTypes> bloodTypes = bloodTypesMapper.fromStrings(request.getBloodTypes());
     LodgingModes mode =
         request.getLodgingMode() == null
             ? LodgingModes.PRIVATE
@@ -47,9 +51,7 @@ public class BedMapper {
   }
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
-    List<String> bloodTypes =
-        bed.getBloodTypes().stream().map(BloodTypes::toString).collect(Collectors.toList());
-
+    List<String> bloodTypes = bloodTypesMapper.toStrings(bed.getBloodTypes());
     List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
@@ -67,16 +69,5 @@ public class BedMapper {
     BedResponse bedResponse = toResponseWithoutNumber(bed, stars);
     bedResponse.setBedNumber(bed.getNumber().toString());
     return bedResponse;
-  }
-
-  private void validateRequest(BedRequest request) {
-    if (request.getBloodTypes() == null || request.getBloodTypes().isEmpty())
-      throw new InvalidBloodTypesException();
-
-    if (request.getCapacity() <= 0) throw new InvalidCapacityException();
-  }
-
-  private List<BloodTypes> parseBloodTypes(List<String> bloodTypes) {
-    return bloodTypes.stream().map(BloodTypes::get).collect(Collectors.toList());
   }
 }
