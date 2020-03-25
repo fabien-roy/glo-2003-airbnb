@@ -9,6 +9,8 @@ public class BedRequest {
   private String zipCode;
   private String bedType;
   private String cleaningFrequency;
+
+  @JsonDeserialize(using = BloodTypesDeserializer.class)
   private List<String> bloodTypes;
 
   @JsonDeserialize(using = CapacityDeserializer.class)

@@ -11,6 +11,7 @@ import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.BedParser;
 import ca.ulaval.glo2003.beds.rest.BedResource;
+import ca.ulaval.glo2003.beds.rest.BloodTypesDeserializer;
 import ca.ulaval.glo2003.beds.rest.CapacityDeserializer;
 import ca.ulaval.glo2003.beds.rest.factories.*;
 import ca.ulaval.glo2003.beds.services.BedService;
@@ -21,6 +22,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class BedModule extends AbstractModule {
@@ -81,7 +83,8 @@ public class BedModule extends AbstractModule {
 
   private void configureDeserializers() {
     DeserializingModule deserializingModule =
-        new DeserializingModule(Collections.singletonList(new CapacityDeserializer()));
+        new DeserializingModule(
+            Arrays.asList(new CapacityDeserializer(), new BloodTypesDeserializer()));
     BedParser bookingParser = new BedParser(Collections.singletonList(deserializingModule));
 
     bind(BedParser.class).toInstance(bookingParser);

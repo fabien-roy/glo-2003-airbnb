@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.parsers;
 
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.parsers.rest.factories.BloodTypesParsingErrorFactory;
 import ca.ulaval.glo2003.parsers.rest.factories.CapacityParsingErrorFactory;
 import ca.ulaval.glo2003.parsers.rest.factories.ColonySizeParsingErrorFactory;
 import ca.ulaval.glo2003.parsers.rest.factories.JsonParsingErrorFactory;
@@ -21,6 +22,7 @@ public class ParsingModule extends AbstractModule {
         Multibinder.newSetBinder(
             binder(), new TypeLiteral<ErrorFactory<JsonMappingException>>() {});
     multibinder.addBinding().to(CapacityParsingErrorFactory.class);
+    multibinder.addBinding().to(BloodTypesParsingErrorFactory.class);
     multibinder.addBinding().to(ColonySizeParsingErrorFactory.class);
     multibinder.addBinding().to(JsonParsingErrorFactory.class);
   }
