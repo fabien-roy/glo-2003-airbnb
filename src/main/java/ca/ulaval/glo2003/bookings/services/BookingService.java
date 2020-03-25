@@ -18,6 +18,7 @@ import javax.inject.Inject;
 public class BookingService {
 
   private final BedService bedService;
+  private final CancelationService cancelationService;
   private final TransactionService transactionService;
   private final BookingMapper bookingMapper;
   private final BookingFactory bookingFactory;
@@ -27,12 +28,14 @@ public class BookingService {
   @Inject
   public BookingService(
       BedService bedService,
+      CancelationService cancelationService,
       TransactionService transactionService,
       BookingMapper bookingMapper,
       BookingFactory bookingFactory,
       BookingTotalCalculator bookingTotalCalculator,
       BookingNumberMapper bookingNumberMapper) {
     this.bedService = bedService;
+    this.cancelationService = cancelationService;
     this.transactionService = transactionService;
     this.bookingMapper = bookingMapper;
     this.bookingFactory = bookingFactory;
@@ -53,7 +56,7 @@ public class BookingService {
     return booking.getNumber().toString();
   }
 
-  public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
+  public BookingResponse getResponse(String bedNumber, String bookingNumber) {
     Bed bed = bedService.get(bedNumber);
     UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
 
@@ -63,7 +66,11 @@ public class BookingService {
   }
 
   public CancelationResponse cancel(String bedNumber, String bookingNumber) {
-    // TODO
-    return new CancelationResponse();
+    Bed bed = bedService.get(bedNumber);
+    UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
+
+    Booking booking = bed.getBookingByNumber(parsedBookingNumber);
+
+    return cancelationService.cancel(booking, bed.getOwnerPublicKey().toString());
   }
 }

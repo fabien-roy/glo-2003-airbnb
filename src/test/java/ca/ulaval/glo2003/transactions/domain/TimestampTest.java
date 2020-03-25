@@ -70,7 +70,7 @@ class TimestampTest {
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    Timestamp otherTimestamp = new Timestamp(date);
+    Timestamp otherTimestamp = new Timestamp(timestamp.getValue());
 
     boolean result = timestamp.equals(otherTimestamp);
 

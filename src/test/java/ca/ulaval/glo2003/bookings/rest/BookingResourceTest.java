@@ -41,7 +41,7 @@ class BookingResourceTest {
   private void setUpMocksForGetByNumber() {
     when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
     when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
-    when(bookingService.getByNumber(bedNumber, bookingNumber)).thenReturn(bookingResponse);
+    when(bookingService.getResponse(bedNumber, bookingNumber)).thenReturn(bookingResponse);
   }
 
   private void setUpMocksForCancel() {
