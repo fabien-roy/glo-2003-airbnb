@@ -4,14 +4,16 @@ import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.assemblers.*;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.factories.*;
-import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
@@ -50,8 +52,8 @@ public class BedModule extends AbstractModule {
   }
 
   private void configureErrorFactories() {
-    Multibinder<BedErrorFactory> multibinder =
-        Multibinder.newSetBinder(binder(), new TypeLiteral<BedErrorFactory>() {});
+    Multibinder<ErrorFactory<BedException>> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<BedException>>() {});
     multibinder.addBinding().to(AllYouCanDrinkDependencyErrorFactory.class);
     multibinder.addBinding().to(BedAlreadyBookedErrorFactory.class);
     multibinder.addBinding().to(BedNotFoundErrorFactory.class);

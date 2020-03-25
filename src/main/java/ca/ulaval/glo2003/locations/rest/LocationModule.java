@@ -1,7 +1,8 @@
 package ca.ulaval.glo2003.locations.rest;
 
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.locations.exceptions.LocationException;
 import ca.ulaval.glo2003.locations.rest.factories.InvalidZipCodeErrorFactory;
-import ca.ulaval.glo2003.locations.rest.factories.LocationErrorFactory;
 import ca.ulaval.glo2003.locations.rest.factories.NonExistingZipCodeErrorFactory;
 import ca.ulaval.glo2003.locations.rest.factories.UnreachableZippopotamusServerErrorFactory;
 import ca.ulaval.glo2003.locations.rest.handlers.LocationExceptionHandler;
@@ -19,8 +20,8 @@ public class LocationModule extends AbstractModule {
   }
 
   private void configureErrorFactories() {
-    Multibinder<LocationErrorFactory> multibinder =
-        Multibinder.newSetBinder(binder(), new TypeLiteral<LocationErrorFactory>() {});
+    Multibinder<ErrorFactory<LocationException>> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<LocationException>>() {});
     multibinder.addBinding().to(InvalidZipCodeErrorFactory.class);
     multibinder.addBinding().to(NonExistingZipCodeErrorFactory.class);
     multibinder.addBinding().to(UnreachableZippopotamusServerErrorFactory.class);

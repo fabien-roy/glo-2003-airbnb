@@ -1,36 +1,24 @@
 package ca.ulaval.glo2003.locations.rest.handlers;
 
-import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
-import ca.ulaval.glo2003.locations.rest.factories.LocationErrorFactory;
-import java.util.Optional;
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.errors.rest.handlers.AbstractExceptionHandler;
+import ca.ulaval.glo2003.locations.exceptions.LocationException;
 import java.util.Set;
 import javax.inject.Inject;
-import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class LocationExceptionHandler implements ExceptionHandler<LocationServiceException> {
+public class LocationExceptionHandler extends AbstractExceptionHandler<LocationException> {
 
-  private final Set<LocationErrorFactory> factories;
+  private final Set<ErrorFactory<LocationException>> factories;
 
   @Inject
-  public LocationExceptionHandler(Set<LocationErrorFactory> factories) {
+  public LocationExceptionHandler(Set<ErrorFactory<LocationException>> factories) {
     this.factories = factories;
   }
 
-  // TODO : Refactor this
   @Override
-  public void handle(LocationServiceException e, Request request, Response response) {
-    String errorResponse;
-    int status;
-
-    Optional<LocationErrorFactory> foundFactory =
-        factories.stream().filter(factory -> factory.canHandle(e)).findFirst();
-
-    status = foundFactory.get().createStatus();
-    errorResponse = foundFactory.get().createResponse();
-
-    response.status(status);
-    response.body(errorResponse);
+  public void handle(LocationException e, Request request, Response response) {
+    handleIfCan(factories, e, response);
   }
 }

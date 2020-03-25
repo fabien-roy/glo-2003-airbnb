@@ -1,24 +1,26 @@
 package ca.ulaval.glo2003.errors.rest.handlers;
 
-import ca.ulaval.glo2003.errors.rest.factories.DefaultErrorFactory;
-import javax.inject.Inject;
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import java.util.Optional;
+import java.util.Set;
 import spark.ExceptionHandler;
-import spark.Request;
 import spark.Response;
 
 public abstract class AbstractExceptionHandler<E extends Exception> implements ExceptionHandler<E> {
 
-  private final DefaultErrorFactory defaultFactory;
+  protected void handleIfCan(Set<ErrorFactory<E>> factories, E exception, Response response) {
+    Optional<ErrorFactory<E>> foundFactory = findFactory(factories, exception);
 
-  @Inject
-  public AbstractExceptionHandler(DefaultErrorFactory defaultFactory) {
-    this.defaultFactory = defaultFactory;
+    foundFactory.ifPresent(factory -> setResponse(response, factory));
   }
 
-  @Override
-  public void handle(E e, Request request, Response response) {
-    int status = defaultFactory.createStatus();
-    String errorResponse = defaultFactory.createResponse();
+  protected Optional<ErrorFactory<E>> findFactory(Set<ErrorFactory<E>> factories, E exception) {
+    return factories.stream().filter(factory -> factory.canHandle(exception)).findFirst();
+  }
+
+  protected void setResponse(Response response, ErrorFactory<E> errorFactory) {
+    int status = errorFactory.createStatus();
+    String errorResponse = errorFactory.createResponse();
 
     response.status(status);
     response.body(errorResponse);

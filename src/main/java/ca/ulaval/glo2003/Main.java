@@ -3,6 +3,7 @@ package ca.ulaval.glo2003;
 import ca.ulaval.glo2003.beds.BedModule;
 import ca.ulaval.glo2003.bookings.BookingModule;
 import ca.ulaval.glo2003.errors.ErrorModule;
+import ca.ulaval.glo2003.locations.rest.LocationModule;
 import ca.ulaval.glo2003.transactions.TransactionModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -24,7 +25,8 @@ public class Main {
             new ErrorModule(),
             new TransactionModule(),
             new BedModule(),
-            new BookingModule());
+            new BookingModule(),
+            new LocationModule());
     injector.getInstance(Server.class).start(retrievePortNumber());
   }
 

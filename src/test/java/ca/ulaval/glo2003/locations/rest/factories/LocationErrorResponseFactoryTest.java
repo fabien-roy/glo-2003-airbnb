@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.errors.rest.factories.CatchallErrorResponseFactory;
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
-import ca.ulaval.glo2003.locations.exceptions.LocationServiceException;
+import ca.ulaval.glo2003.locations.exceptions.LocationException;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
 import java.util.stream.Stream;
@@ -27,7 +27,7 @@ class LocationErrorResponseFactoryTest {
   @ParameterizedTest
   @MethodSource("provideResponseForExternalServiceException")
   public void create_withExternalServiceException_shouldCreateAssociatedResponse(
-      LocationServiceException exception, String expectedResponse) {
+      LocationException exception, String expectedResponse) {
     String response = locationErrorResponseFactory.create(exception);
 
     assertEquals(expectedResponse, response);
