@@ -2,10 +2,9 @@ package ca.ulaval.glo2003.parsers.rest;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import java.io.IOException;
 
-public abstract class PositiveIntegerDeserializer<E extends JsonMappingException>
+public abstract class PositiveIntegerDeserializer<E extends RuntimeException>
     extends AbstractDeserializer<Integer, E> {
 
   protected PositiveIntegerDeserializer() {

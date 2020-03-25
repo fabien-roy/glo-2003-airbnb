@@ -7,15 +7,15 @@ import javax.inject.Inject;
 import spark.Request;
 import spark.Response;
 
-public class CatchallExceptionHandler extends DefaultExceptionHandler<Exception> {
+public class FakeDefaultExceptionHandler extends DefaultExceptionHandler<Exception> {
 
   private final Set<ErrorFactory<Exception>> factories;
 
   @Inject
-  public CatchallExceptionHandler(
-      DefaultErrorFactory defaultFactory, Set<ErrorFactory<Exception>> catchallFactories) {
+  public FakeDefaultExceptionHandler(
+      DefaultErrorFactory defaultFactory, Set<ErrorFactory<Exception>> factories) {
     super(defaultFactory);
-    this.factories = catchallFactories;
+    this.factories = factories;
   }
 
   @Override

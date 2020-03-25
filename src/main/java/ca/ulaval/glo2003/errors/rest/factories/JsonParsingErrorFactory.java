@@ -1,13 +1,12 @@
-package ca.ulaval.glo2003.parsers.rest.factories;
+package ca.ulaval.glo2003.errors.rest.factories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class JsonParsingErrorFactory extends ParsingErrorFactory {
+public class JsonParsingErrorFactory extends CatchallErrorFactory {
 
   @Override
-  public boolean canHandle(JsonMappingException exception) {
+  public boolean canHandle(Exception exception) {
     return exception instanceof JsonProcessingException;
   }
 

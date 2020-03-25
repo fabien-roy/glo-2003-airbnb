@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import ca.ulaval.glo2003.parsers.exceptions.BloodTypesParsingException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException;
 import ca.ulaval.glo2003.parsers.rest.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodTypesDeserializer
-    extends AbstractDeserializer<String[], BloodTypesParsingException> {
+    extends AbstractDeserializer<String[], InvalidBloodTypesException> {
 
   public BloodTypesDeserializer() {
     super(String[].class);
@@ -21,13 +21,13 @@ public class BloodTypesDeserializer
   }
 
   @Override
-  public void throwException() throws BloodTypesParsingException {
-    throw new BloodTypesParsingException();
+  public void throwException() throws InvalidBloodTypesException {
+    throw new InvalidBloodTypesException();
   }
 
   @Override
   public String[] deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws BloodTypesParsingException {
+      throws InvalidBloodTypesException {
     if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
       List<String> bloodTypes = new ArrayList<>();
 
