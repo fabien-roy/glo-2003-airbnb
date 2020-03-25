@@ -10,7 +10,7 @@ public abstract class AbstractDeserializer<T, E extends JsonMappingException>
     super(t);
   }
 
-  public abstract Class<T> getType();
+  public abstract Class<?> getType();
 
   public abstract void throwException() throws E;
 }

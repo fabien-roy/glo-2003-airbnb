@@ -13,7 +13,7 @@ public abstract class PositiveIntegerDeserializer<E extends JsonMappingException
   }
 
   @Override
-  public Class<Integer> getType() {
+  public Class<?> getType() {
     return Integer.class;
   }
 
