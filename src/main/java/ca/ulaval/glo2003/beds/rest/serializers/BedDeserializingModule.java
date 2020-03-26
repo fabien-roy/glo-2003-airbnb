@@ -17,6 +17,7 @@ public class BedDeserializingModule extends DeserializingModule {
       CapacityDeserializer capacityDeserializer,
       BloodTypesDeserializer bloodTypesDeserializer,
       PackagesDeserializer packagesDeserializer,
+      PackageNameDeserializer packageNameDeserializer,
       PriceDeserializer priceDeserializer) {
     super(
         Arrays.asList(
@@ -26,6 +27,7 @@ public class BedDeserializingModule extends DeserializingModule {
             cleaningFrequencyDeserializer,
             capacityDeserializer,
             bloodTypesDeserializer,
+            packageNameDeserializer,
             packagesDeserializer,
             priceDeserializer));
   }

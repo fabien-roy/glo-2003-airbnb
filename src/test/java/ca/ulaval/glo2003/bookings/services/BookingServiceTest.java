@@ -15,7 +15,7 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
-import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
+import ca.ulaval.glo2003.bookings.mappers.BookingConverter;
 import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
@@ -31,7 +31,7 @@ public class BookingServiceTest {
 
   private static BookingService bookingService;
   private static TransactionService transactionService;
-  private static BookingMapper bookingMapper;
+  private static BookingConverter bookingConverter;
   private static BedRepository bedRepository;
   private static BookingFactory bookingFactory;
   private static BookingTotalCalculator bookingTotalCalculator;
@@ -52,7 +52,7 @@ public class BookingServiceTest {
   @BeforeAll
   public static void setUpService() {
     transactionService = mock(TransactionService.class);
-    bookingMapper = mock(BookingMapper.class);
+    bookingConverter = mock(BookingConverter.class);
     bedRepository = mock(BedRepository.class);
     bookingFactory = mock(BookingFactory.class);
     bookingTotalCalculator = mock(BookingTotalCalculator.class);
@@ -61,7 +61,7 @@ public class BookingServiceTest {
     bookingService =
         new BookingService(
             transactionService,
-            bookingMapper,
+            bookingConverter,
             bedRepository,
             bookingFactory,
             bookingTotalCalculator,
@@ -80,7 +80,7 @@ public class BookingServiceTest {
   public void setUpMocksForGetByNumber() {
     when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedNumberConverter.fromString(bedNumber.toString())).thenReturn(bedNumber);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
+    when(bookingConverter.fromRequest(bookingRequest)).thenReturn(booking);
   }
 
   @Test
@@ -127,7 +127,7 @@ public class BookingServiceTest {
   public void getByNumber_shouldGetBooking() {
     bed.book(booking);
     BookingResponse expectedBookingResponse = mock(BookingResponse.class);
-    when(bookingMapper.toResponse(booking)).thenReturn(expectedBookingResponse);
+    when(bookingConverter.toResponse(booking)).thenReturn(expectedBookingResponse);
 
     BookingResponse bookingResponse =
         bookingService.getByNumber(bedNumber.toString(), bookingNumber.toString());

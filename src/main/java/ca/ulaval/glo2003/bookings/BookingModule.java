@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.bookings;
 
 import ca.ulaval.glo2003.bookings.exceptions.BookingException;
+import ca.ulaval.glo2003.bookings.mappers.BookingConverter;
 import ca.ulaval.glo2003.bookings.rest.BookingMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingResource;
 import ca.ulaval.glo2003.bookings.rest.factories.*;
@@ -21,7 +22,7 @@ public class BookingModule extends AbstractModule {
     bind(BookingDeserializingModule.class);
     bind(BookingMapper.class);
     bind(BookingService.class);
-    bind(ca.ulaval.glo2003.bookings.mappers.BookingMapper.class);
+    bind(BookingConverter.class);
     bind(BookingResource.class);
     bind(BookingExceptionHandler.class);
   }

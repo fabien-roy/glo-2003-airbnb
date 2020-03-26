@@ -5,21 +5,20 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import javax.inject.Inject;
 
-public class BookingMapper {
+public class BookingConverter {
 
   private final PublicKeyConverter publicKeyConverter;
   private final BookingDateMapper bookingDateMapper;
   private final PriceConverter priceConverter;
 
   @Inject
-  public BookingMapper(
+  public BookingConverter(
       PublicKeyConverter publicKeyConverter,
       BookingDateMapper bookingDateMapper,
       PriceConverter priceConverter) {
@@ -30,18 +29,16 @@ public class BookingMapper {
 
   public Booking fromRequest(BookingRequest bookingRequest) {
     validateNumberOfNights(bookingRequest.getNumberOfNights());
-    validateColonySize(bookingRequest.getColonySize());
 
     PublicKey tenantPublicKey = publicKeyConverter.fromString(bookingRequest.getTenantPublicKey());
     BookingDate arrivalDate = bookingDateMapper.fromString(bookingRequest.getArrivalDate());
-    Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
 
     return new Booking(
         tenantPublicKey,
         arrivalDate,
         bookingRequest.getNumberOfNights(),
         bookingRequest.getColonySize(),
-        bookingPackage);
+        Packages.get(bookingRequest.getBookingPackage()));
   }
 
   public BookingResponse toResponse(Booking booking) {
@@ -60,12 +57,6 @@ public class BookingMapper {
   private void validateNumberOfNights(int numberOfNights) {
     if (numberOfNights < 1 || numberOfNights > 90) {
       throw new InvalidNumberOfNightsException();
-    }
-  }
-
-  private void validateColonySize(int colonySize) {
-    if (colonySize < 0) {
-      throw new InvalidColonySizeException();
     }
   }
 }

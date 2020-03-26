@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
-import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
+import ca.ulaval.glo2003.bookings.mappers.BookingConverter;
 import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class BookingService {
 
   private final TransactionService transactionService;
-  private final BookingMapper bookingMapper;
+  private final BookingConverter bookingConverter;
   private final BedRepository bedRepository;
   private final BookingFactory bookingFactory;
   private final BookingTotalCalculator bookingTotalCalculator;
@@ -29,14 +29,14 @@ public class BookingService {
   @Inject
   public BookingService(
       TransactionService transactionService,
-      BookingMapper bookingMapper,
+      BookingConverter bookingConverter,
       BedRepository bedRepository,
       BookingFactory bookingFactory,
       BookingTotalCalculator bookingTotalCalculator,
       BedNumberConverter bedNumberConverter,
       BookingNumberMapper bookingNumberMapper) {
     this.transactionService = transactionService;
-    this.bookingMapper = bookingMapper;
+    this.bookingConverter = bookingConverter;
     this.bedRepository = bedRepository;
     this.bookingFactory = bookingFactory;
     this.bookingTotalCalculator = bookingTotalCalculator;
@@ -46,7 +46,7 @@ public class BookingService {
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
     UUID parsedBedNumber = bedNumberConverter.fromString(bedNumber);
-    Booking booking = bookingMapper.fromRequest(bookingRequest);
+    Booking booking = bookingConverter.fromRequest(bookingRequest);
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
@@ -66,7 +66,7 @@ public class BookingService {
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
-    return bookingMapper.toResponse(booking);
+    return bookingConverter.toResponse(booking);
   }
 
   public CancelResponse cancel(String bedNumber, String bookingNumber) {
