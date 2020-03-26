@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.bookings.mappers;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.mappers.PriceMapper;
-import ca.ulaval.glo2003.beds.mappers.PublicKeyMapper;
+import ca.ulaval.glo2003.beds.mappers.PublicKeyConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
@@ -14,16 +14,16 @@ import javax.inject.Inject;
 
 public class BookingMapper {
 
-  private final PublicKeyMapper publicKeyMapper;
+  private final PublicKeyConverter publicKeyConverter;
   private final BookingDateMapper bookingDateMapper;
   private final PriceMapper priceMapper;
 
   @Inject
   public BookingMapper(
-      PublicKeyMapper publicKeyMapper,
+      PublicKeyConverter publicKeyConverter,
       BookingDateMapper bookingDateMapper,
       PriceMapper priceMapper) {
-    this.publicKeyMapper = publicKeyMapper;
+    this.publicKeyConverter = publicKeyConverter;
     this.bookingDateMapper = bookingDateMapper;
     this.priceMapper = priceMapper;
   }
@@ -32,7 +32,7 @@ public class BookingMapper {
     validateNumberOfNights(bookingRequest.getNumberOfNights());
     validateColonySize(bookingRequest.getColonySize());
 
-    PublicKey tenantPublicKey = publicKeyMapper.fromString(bookingRequest.getTenantPublicKey());
+    PublicKey tenantPublicKey = publicKeyConverter.fromString(bookingRequest.getTenantPublicKey());
     BookingDate arrivalDate = bookingDateMapper.fromString(bookingRequest.getArrivalDate());
     Packages bookingPackage = Packages.get(bookingRequest.getBookingPackage());
 

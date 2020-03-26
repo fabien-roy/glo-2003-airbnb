@@ -28,8 +28,8 @@ class BedConverterTest {
 
   private static BedConverter bedConverter;
   private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
-  private static PublicKeyMapper publicKeyMapper = mock(PublicKeyMapper.class);
-  private static BloodTypesMapper bloodTypesMapper = mock(BloodTypesMapper.class);
+  private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
+  private static BloodTypesConverter bloodTypesConverter = mock(BloodTypesConverter.class);
   private static PackageMapper packageMapper = mock(PackageMapper.class);
 
   private static Bed bed;
@@ -56,16 +56,17 @@ class BedConverterTest {
   @BeforeAll
   public static void setUpMapper() {
     bedConverter =
-        new BedConverter(bedNumberConverter, publicKeyMapper, bloodTypesMapper, packageMapper);
+        new BedConverter(
+            bedNumberConverter, publicKeyConverter, bloodTypesConverter, packageMapper);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
     when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
-    when(publicKeyMapper.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
-    when(bloodTypesMapper.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
-    when(bloodTypesMapper.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
+    when(publicKeyConverter.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
+    when(bloodTypesConverter.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
+    when(bloodTypesConverter.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
     when(packageMapper.fromRequests(packageRequests)).thenReturn(pricesPerNight);
     when(packageMapper.toResponses(pricesPerNight)).thenReturn(packageResponses);
   }

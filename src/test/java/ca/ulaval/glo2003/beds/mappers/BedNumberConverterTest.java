@@ -16,7 +16,7 @@ class BedNumberConverterTest {
   private UUID bedNumber = createBedNumber();
 
   @BeforeAll
-  public static void setUpMapper() {
+  public static void setUpConverter() {
     bedNumberConverter = new BedNumberConverter();
   }
 

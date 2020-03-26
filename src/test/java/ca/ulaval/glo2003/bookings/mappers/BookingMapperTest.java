@@ -9,7 +9,7 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.mappers.PriceMapper;
-import ca.ulaval.glo2003.beds.mappers.PublicKeyMapper;
+import ca.ulaval.glo2003.beds.mappers.PublicKeyConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
@@ -31,15 +31,15 @@ class BookingMapperTest {
 
   private static BookingMapper bookingMapper;
   private static BookingDateMapper bookingDateMapper;
-  private static PublicKeyMapper publicKeyMapper;
+  private static PublicKeyConverter publicKeyConverter;
   private static PriceMapper priceMapper;
 
   @BeforeAll
   public static void setUpMapper() {
     bookingDateMapper = mock(BookingDateMapper.class);
-    publicKeyMapper = mock(PublicKeyMapper.class);
+    publicKeyConverter = mock(PublicKeyConverter.class);
     priceMapper = mock(PriceMapper.class);
-    bookingMapper = new BookingMapper(publicKeyMapper, bookingDateMapper, priceMapper);
+    bookingMapper = new BookingMapper(publicKeyConverter, bookingDateMapper, priceMapper);
   }
 
   @Test
@@ -112,7 +112,7 @@ class BookingMapperTest {
     PublicKey expectedPublicKey = BookingObjectMother.createTenantPublicKey();
     BookingRequest request =
         aBookingRequest().withTenantPublicKey(expectedPublicKey.getValue()).build();
-    when(publicKeyMapper.fromString(expectedPublicKey.getValue())).thenReturn(expectedPublicKey);
+    when(publicKeyConverter.fromString(expectedPublicKey.getValue())).thenReturn(expectedPublicKey);
 
     Booking booking = bookingMapper.fromRequest(request);
 

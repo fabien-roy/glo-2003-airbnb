@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BloodTypesMapperTest {
+class BloodTypesConverterTest {
 
-  private static BloodTypesMapper bloodTypesMapper;
+  private static BloodTypesConverter bloodTypesConverter;
 
   private static BloodTypes bloodType;
   private static BloodTypes otherBloodType;
@@ -22,8 +22,8 @@ class BloodTypesMapperTest {
   private static List<String> bloodTypeStrings;
 
   @BeforeAll
-  public static void setUpMapper() {
-    bloodTypesMapper = new BloodTypesMapper();
+  public static void setUpConverter() {
+    bloodTypesConverter = new BloodTypesConverter();
   }
 
   @BeforeEach
@@ -35,18 +35,18 @@ class BloodTypesMapperTest {
   }
 
   @Test
-  public void fromStrings_withSingleBloodType_shouldMapSingleBloodType() {
+  public void fromStrings_withSingleBloodType_shouldConvertSingleBloodType() {
     bloodTypeStrings = bloodTypeStrings.subList(0, 1);
 
-    bloodTypes = bloodTypesMapper.fromStrings(bloodTypeStrings);
+    bloodTypes = bloodTypesConverter.fromStrings(bloodTypeStrings);
 
     assertEquals(1, bloodTypes.size());
     assertEquals(bloodType, bloodTypes.get(0));
   }
 
   @Test
-  public void fromStrings_withMultipleBloodTypes_shouldMapMultipleBloodTypes() {
-    bloodTypes = bloodTypesMapper.fromStrings(bloodTypeStrings);
+  public void fromStrings_withMultipleBloodTypes_shouldConvertMultipleBloodTypes() {
+    bloodTypes = bloodTypesConverter.fromStrings(bloodTypeStrings);
 
     assertEquals(2, bloodTypes.size());
     assertTrue(bloodTypes.contains(bloodType));
@@ -54,27 +54,11 @@ class BloodTypesMapperTest {
   }
 
   @Test
-  public void fromStrings_withoutBloodTypes_shouldThrowInvalidBloodTypesException() {
-    bloodTypeStrings = null;
-
-    assertThrows(
-        InvalidBloodTypesException.class, () -> bloodTypesMapper.fromStrings(bloodTypeStrings));
-  }
-
-  @Test
-  public void fromStrings_withEmptyBloodTypes_shouldThrowInvalidBloodTypesException() {
-    bloodTypeStrings = Collections.emptyList();
-
-    assertThrows(
-        InvalidBloodTypesException.class, () -> bloodTypesMapper.fromStrings(bloodTypeStrings));
-  }
-
-  @Test
   public void fromStrings_witNullBloodType_shouldThrowInvalidBloodTypeException() {
     bloodTypeStrings = Collections.singletonList(null);
 
     assertThrows(
-        InvalidBloodTypesException.class, () -> bloodTypesMapper.fromStrings(bloodTypeStrings));
+        InvalidBloodTypesException.class, () -> bloodTypesConverter.fromStrings(bloodTypeStrings));
   }
 
   @Test
@@ -82,22 +66,22 @@ class BloodTypesMapperTest {
     bloodTypeStrings = Collections.singletonList("invalidBloodType");
 
     assertThrows(
-        InvalidBloodTypesException.class, () -> bloodTypesMapper.fromStrings(bloodTypeStrings));
+        InvalidBloodTypesException.class, () -> bloodTypesConverter.fromStrings(bloodTypeStrings));
   }
 
   @Test
-  public void toStrings_withSingleBloodType_shouldMapBloodType() {
+  public void toStrings_withSingleBloodType_shouldConvertBloodType() {
     bloodTypes = bloodTypes.subList(0, 1);
 
-    bloodTypeStrings = bloodTypesMapper.toStrings(bloodTypes);
+    bloodTypeStrings = bloodTypesConverter.toStrings(bloodTypes);
 
     assertEquals(1, bloodTypeStrings.size());
     assertEquals(bloodType.toString(), bloodTypeStrings.get(0));
   }
 
   @Test
-  public void toStrings_withMultipleBloodTypes_shouldMapBloodTypes() {
-    bloodTypeStrings = bloodTypesMapper.toStrings(bloodTypes);
+  public void toStrings_withMultipleBloodTypes_shouldConvertBloodTypes() {
+    bloodTypeStrings = bloodTypesConverter.toStrings(bloodTypes);
 
     assertEquals(2, bloodTypeStrings.size());
     assertTrue(

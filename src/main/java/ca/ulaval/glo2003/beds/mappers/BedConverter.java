@@ -13,27 +13,27 @@ import javax.inject.Inject;
 public class BedConverter {
 
   private final BedNumberConverter bedNumberConverter;
-  private final PublicKeyMapper publicKeyMapper;
-  private final BloodTypesMapper bloodTypesMapper;
+  private final PublicKeyConverter publicKeyConverter;
+  private final BloodTypesConverter bloodTypesConverter;
   private final PackageMapper packageMapper;
 
   @Inject
   public BedConverter(
       BedNumberConverter bedNumberConverter,
-      PublicKeyMapper publicKeyMapper,
-      BloodTypesMapper bloodTypesMapper,
+      PublicKeyConverter publicKeyConverter,
+      BloodTypesConverter bloodTypesConverter,
       PackageMapper packageMapper) {
     this.bedNumberConverter = bedNumberConverter;
-    this.publicKeyMapper = publicKeyMapper;
-    this.bloodTypesMapper = bloodTypesMapper;
+    this.publicKeyConverter = publicKeyConverter;
+    this.bloodTypesConverter = bloodTypesConverter;
     this.packageMapper = packageMapper;
   }
 
   public Bed fromRequest(BedRequest request) {
     if (request.getCapacity() < 0) throw new InvalidCapacityException();
 
-    PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
-    List<BloodTypes> bloodTypes = bloodTypesMapper.fromStrings(request.getBloodTypes());
+    PublicKey ownerPublicKey = publicKeyConverter.fromString(request.getOwnerPublicKey());
+    List<BloodTypes> bloodTypes = bloodTypesConverter.fromStrings(request.getBloodTypes());
     LodgingModes mode =
         request.getLodgingMode() == null
             ? LodgingModes.PRIVATE
@@ -51,7 +51,7 @@ public class BedConverter {
   }
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
-    List<String> bloodTypes = bloodTypesMapper.toStrings(bed.getBloodTypes());
+    List<String> bloodTypes = bloodTypesConverter.toStrings(bed.getBloodTypes());
     List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
