@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import static org.junit.jupiter.api.Assertions.*;
 

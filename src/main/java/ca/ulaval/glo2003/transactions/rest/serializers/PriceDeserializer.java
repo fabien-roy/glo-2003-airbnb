@@ -5,6 +5,7 @@ import ca.ulaval.glo2003.parsers.domain.serializers.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 
+// TODO : Should PriceDeserializer throw InvalidPackagesException? (it's the only usage)
 public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPackagesException> {
 
   public PriceDeserializer() {

@@ -1,26 +1,26 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.transactions.converters;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PriceMapperTest {
+class PriceConverterTest {
 
-  private PriceMapper priceMapper;
+  private PriceConverter priceConverter;
 
   @BeforeEach
   public void setUpMapper() {
-    this.priceMapper = new PriceMapper();
+    this.priceConverter = new PriceConverter();
   }
 
   @Test
   public void fromDouble_shouldMapValue() {
     double expectedValue = 100;
 
-    Price price = priceMapper.fromDouble(expectedValue);
+    Price price = priceConverter.fromDouble(expectedValue);
 
     assertEquals(expectedValue, price.getValue().doubleValue());
   }
@@ -31,7 +31,7 @@ class PriceMapperTest {
     double expectedValue = 100.00;
     Price total = new Price(BigDecimal.valueOf(value));
 
-    double mappedValue = priceMapper.toDouble(total);
+    double mappedValue = priceConverter.toDouble(total);
 
     assertEquals(expectedValue, mappedValue);
   }
@@ -42,7 +42,7 @@ class PriceMapperTest {
     double expectedValue = 100.00;
     Price total = new Price(BigDecimal.valueOf(value));
 
-    double mappedValue = priceMapper.toDouble(total);
+    double mappedValue = priceConverter.toDouble(total);
 
     assertEquals(expectedValue, mappedValue);
   }

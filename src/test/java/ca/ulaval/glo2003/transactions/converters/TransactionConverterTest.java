@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.transactions.mappers;
+package ca.ulaval.glo2003.transactions.converters;
 
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
@@ -16,15 +15,15 @@ import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TransactionMapperTest {
+public class TransactionConverterTest {
 
-  private TransactionMapper transactionMapper;
-  private PriceMapper priceMapper;
+  private TransactionConverter transactionConverter;
+  private PriceConverter priceConverter;
 
   @BeforeEach
   public void setUpMapper() {
-    priceMapper = mock(PriceMapper.class);
-    transactionMapper = new TransactionMapper(priceMapper);
+    priceConverter = mock(PriceConverter.class);
+    transactionConverter = new TransactionConverter(priceConverter);
   }
 
   @Test
@@ -33,7 +32,7 @@ public class TransactionMapperTest {
     String expectedReason = reason.toString();
     Transaction transaction = aTransaction().withTransactionReason(reason).build();
 
-    TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
+    TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
     assertEquals(expectedReason, transactionResponse.getReason());
   }
@@ -43,7 +42,7 @@ public class TransactionMapperTest {
     String expectedFrom = createFrom();
     Transaction transaction = aTransaction().withFrom(expectedFrom).build();
 
-    TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
+    TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
     assertEquals(expectedFrom, transactionResponse.getFrom());
   }
@@ -53,7 +52,7 @@ public class TransactionMapperTest {
     String expectedTo = createTo();
     Transaction transaction = aTransaction().withTo(expectedTo).build();
 
-    TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
+    TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
     assertEquals(expectedTo, transactionResponse.getTo());
   }
@@ -63,9 +62,9 @@ public class TransactionMapperTest {
     Price total = createTotal();
     double expectedTotal = total.getValue().doubleValue();
     Transaction transaction = aTransaction().withTotal(total).build();
-    when(priceMapper.toDouble(total)).thenReturn(expectedTotal);
+    when(priceConverter.toDouble(total)).thenReturn(expectedTotal);
 
-    TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
+    TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
     assertEquals(expectedTotal, transactionResponse.getTotal());
   }
@@ -76,7 +75,7 @@ public class TransactionMapperTest {
     String expectedTimestamp = timestamp.format(DateTimeFormatter.ISO_DATE_TIME) + "Z";
     Transaction transaction = aTransaction().withTimestamp(timestamp).build();
 
-    TransactionResponse transactionResponse = transactionMapper.toResponse(transaction);
+    TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
     assertEquals(expectedTimestamp, transactionResponse.getTimestamp());
   }

@@ -1,31 +1,31 @@
 package ca.ulaval.glo2003.bookings.mappers;
 
+import ca.ulaval.glo2003.beds.converters.PublicKeyConverter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.beds.mappers.PriceMapper;
-import ca.ulaval.glo2003.beds.mappers.PublicKeyConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import javax.inject.Inject;
 
 public class BookingMapper {
 
   private final PublicKeyConverter publicKeyConverter;
   private final BookingDateMapper bookingDateMapper;
-  private final PriceMapper priceMapper;
+  private final PriceConverter priceConverter;
 
   @Inject
   public BookingMapper(
       PublicKeyConverter publicKeyConverter,
       BookingDateMapper bookingDateMapper,
-      PriceMapper priceMapper) {
+      PriceConverter priceConverter) {
     this.publicKeyConverter = publicKeyConverter;
     this.bookingDateMapper = bookingDateMapper;
-    this.priceMapper = priceMapper;
+    this.priceConverter = priceConverter;
   }
 
   public Booking fromRequest(BookingRequest bookingRequest) {
@@ -46,7 +46,7 @@ public class BookingMapper {
 
   public BookingResponse toResponse(Booking booking) {
     String arrivalDate = bookingDateMapper.toString(booking.getArrivalDate());
-    Double total = priceMapper.toDouble(booking.getTotal());
+    Double total = priceConverter.toDouble(booking.getTotal());
 
     return new BookingResponse(
         arrivalDate,

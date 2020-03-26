@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static org.junit.jupiter.api.Assertions.assertEquals;

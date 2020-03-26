@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
@@ -15,18 +15,18 @@ public class BedConverter {
   private final BedNumberConverter bedNumberConverter;
   private final PublicKeyConverter publicKeyConverter;
   private final BloodTypesConverter bloodTypesConverter;
-  private final PackageMapper packageMapper;
+  private final PackageConverter packageConverter;
 
   @Inject
   public BedConverter(
       BedNumberConverter bedNumberConverter,
       PublicKeyConverter publicKeyConverter,
       BloodTypesConverter bloodTypesConverter,
-      PackageMapper packageMapper) {
+      PackageConverter packageConverter) {
     this.bedNumberConverter = bedNumberConverter;
     this.publicKeyConverter = publicKeyConverter;
     this.bloodTypesConverter = bloodTypesConverter;
-    this.packageMapper = packageMapper;
+    this.packageConverter = packageConverter;
   }
 
   public Bed fromRequest(BedRequest request) {
@@ -38,7 +38,7 @@ public class BedConverter {
         request.getLodgingMode() == null
             ? LodgingModes.PRIVATE
             : LodgingModes.get(request.getLodgingMode());
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(request.getPackages());
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(request.getPackages());
 
     return new Bed(
         ownerPublicKey,
@@ -52,7 +52,7 @@ public class BedConverter {
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
     List<String> bloodTypes = bloodTypesConverter.toStrings(bed.getBloodTypes());
-    List<PackageResponse> packageResponses = packageMapper.toResponses(bed.getPricesPerNight());
+    List<PackageResponse> packageResponses = packageConverter.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(
         bed.getLocation().getZipCode().getValue(),

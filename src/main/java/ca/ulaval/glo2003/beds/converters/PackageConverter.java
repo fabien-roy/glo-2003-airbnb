@@ -1,31 +1,33 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import javax.inject.Inject;
 
-public class PackageMapper {
+public class PackageConverter {
 
-  private PriceMapper priceMapper;
+  private PriceConverter priceConverter;
 
   @Inject
-  public PackageMapper(PriceMapper priceMapper) {
-    this.priceMapper = priceMapper;
+  public PackageConverter(PriceConverter priceConverter) {
+    this.priceConverter = priceConverter;
   }
 
   public Map<Packages, Price> fromRequests(List<PackageRequest> packageRequests) {
-    validateRequests(packageRequests);
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
+
     packageRequests.forEach(
         packageRequest -> {
           Packages packageName = Packages.get(packageRequest.getName());
-          Price price = priceMapper.fromDouble(packageRequest.getPricePerNight());
+          Price price = priceConverter.fromDouble(packageRequest.getPricePerNight());
           pricesPerNight.put(packageName, price);
         });
+
     validatePackageOnce(pricesPerNight.keySet(), packageRequests);
     return pricesPerNight;
   }
@@ -35,15 +37,11 @@ public class PackageMapper {
 
     pricesPerNight.forEach(
         (packageName, price) -> {
-          Double priceValue = priceMapper.toDouble(price);
+          Double priceValue = priceConverter.toDouble(price);
           packageResponses.add(new PackageResponse(packageName.toString(), priceValue));
         });
 
     return packageResponses;
-  }
-
-  private void validateRequests(List<PackageRequest> packageRequests) {
-    if (packageRequests == null || packageRequests.isEmpty()) throw new InvalidPackagesException();
   }
 
   private void validatePackageOnce(

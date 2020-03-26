@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
@@ -11,35 +11,23 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.util.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class PackageMapperTest {
+class PackageConverterTest {
 
-  private PackageMapper packageMapper;
-  private PriceMapper priceMapper;
+  // TODO : Refactor this test class
 
-  @BeforeEach
-  public void setUpMapper() {
-    priceMapper = mock(PriceMapper.class);
-    packageMapper = new PackageMapper(priceMapper);
-  }
+  private static PackageConverter packageConverter;
+  private static PriceConverter priceConverter = mock(PriceConverter.class);
 
-  @Test
-  public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
-    List<PackageRequest> requests = Collections.emptyList();
-
-    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
-  }
-
-  @Test
-  public void fromRequests_withNullRequest_shouldThrowInvalidPackageException() {
-    List<PackageRequest> requests = null;
-
-    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
+  @BeforeAll
+  public static void setUpMapper() {
+    packageConverter = new PackageConverter(priceConverter);
   }
 
   @Test
@@ -47,7 +35,7 @@ class PackageMapperTest {
     PackageRequest request = aPackageRequest().build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
 
     assertEquals(1, pricesPerNight.keySet().size());
   }
@@ -59,7 +47,7 @@ class PackageMapperTest {
         aPackageRequest().withName(Packages.BLOODTHIRSTY.toString()).build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
 
     assertEquals(2, pricesPerNight.keySet().size());
   }
@@ -71,7 +59,7 @@ class PackageMapperTest {
     PackageRequest request = aPackageRequest().withName(packageName).build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
 
     assertTrue(pricesPerNight.containsKey(expectedPackage));
   }
@@ -86,7 +74,7 @@ class PackageMapperTest {
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
 
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
 
     assertTrue(pricesPerNight.containsKey(expectedPackage));
     assertTrue(pricesPerNight.containsKey(otherExpectedPackage));
@@ -98,7 +86,7 @@ class PackageMapperTest {
     PackageRequest request = aPackageRequest().withName(invalidPackageName).build();
     List<PackageRequest> requests = Collections.singletonList(request);
 
-    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
+    assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
@@ -109,9 +97,9 @@ class PackageMapperTest {
     PackageRequest request =
         aPackageRequest().withName(packageName.toString()).withPricePerNight(priceValue).build();
     List<PackageRequest> requests = Collections.singletonList(request);
-    when(priceMapper.fromDouble(priceValue)).thenReturn(expectedPrice);
+    when(priceConverter.fromDouble(priceValue)).thenReturn(expectedPrice);
 
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
 
     assertEquals(expectedPrice, pricesPerNight.get(packageName));
   }
@@ -132,10 +120,10 @@ class PackageMapperTest {
             .withPricePerNight(otherPriceValue)
             .build();
     List<PackageRequest> requests = Arrays.asList(request, otherRequest);
-    when(priceMapper.fromDouble(priceValue)).thenReturn(expectedPrice);
-    when(priceMapper.fromDouble(otherPriceValue)).thenReturn(otherExpectedPrice);
+    when(priceConverter.fromDouble(priceValue)).thenReturn(expectedPrice);
+    when(priceConverter.fromDouble(otherPriceValue)).thenReturn(otherExpectedPrice);
 
-    Map<Packages, Price> pricesPerNight = packageMapper.fromRequests(requests);
+    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
 
     assertEquals(expectedPrice, pricesPerNight.get(packageName));
     assertEquals(otherExpectedPrice, pricesPerNight.get(otherPackageName));
@@ -148,7 +136,7 @@ class PackageMapperTest {
     PackageRequest request2 = aPackageRequest().withName(packageName.toString()).build();
     List<PackageRequest> requests = Arrays.asList(request1, request2);
 
-    assertThrows(InvalidPackagesException.class, () -> packageMapper.fromRequests(requests));
+    assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
@@ -156,7 +144,7 @@ class PackageMapperTest {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), createPricePerNight());
 
-    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
 
     assertEquals(1, responses.size());
   }
@@ -167,7 +155,7 @@ class PackageMapperTest {
     pricesPerNight.put(Packages.SWEET_TOOTH, createPricePerNight());
     pricesPerNight.put(Packages.BLOODTHIRSTY, createPricePerNight());
 
-    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
 
     assertEquals(2, responses.size());
   }
@@ -179,7 +167,7 @@ class PackageMapperTest {
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(packageName, createPricePerNight());
 
-    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
 
     assertEquals(expectedPackageName, responses.get(0).getName());
   }
@@ -194,7 +182,7 @@ class PackageMapperTest {
     pricesPerNight.put(packageName, createPricePerNight());
     pricesPerNight.put(otherPackageName, createPricePerNight());
 
-    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
 
     assertTrue(
         responses.stream().anyMatch(response -> expectedPackageName.equals(response.getName())));
@@ -209,9 +197,9 @@ class PackageMapperTest {
     double expectedPricePerNight = pricePerNight.getValue().doubleValue();
     Map<Packages, Price> pricesPerNight =
         Collections.singletonMap(createPackageName(), pricePerNight);
-    when(priceMapper.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
+    when(priceConverter.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
 
-    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
 
     assertEquals(expectedPricePerNight, responses.get(0).getPricePerNight());
   }
@@ -225,10 +213,10 @@ class PackageMapperTest {
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
     pricesPerNight.put(Packages.SWEET_TOOTH, pricePerNight);
     pricesPerNight.put(Packages.BLOODTHIRSTY, otherPricePerNight);
-    when(priceMapper.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
-    when(priceMapper.toDouble(otherPricePerNight)).thenReturn(otherExpectedPricePerNight);
+    when(priceConverter.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
+    when(priceConverter.toDouble(otherPricePerNight)).thenReturn(otherExpectedPricePerNight);
 
-    List<PackageResponse> responses = packageMapper.toResponses(pricesPerNight);
+    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
 
     assertTrue(
         responses.stream()

@@ -1,10 +1,12 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import ca.ulaval.glo2003.beds.rest.serializers.PackageNameDeserializer;
 import ca.ulaval.glo2003.transactions.rest.serializers.PriceDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class PackageRequest {
 
+  @JsonDeserialize(using = PackageNameDeserializer.class)
   private String name;
 
   @JsonDeserialize(using = PriceDeserializer.class)

@@ -7,13 +7,13 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
-import ca.ulaval.glo2003.beds.mappers.PackageMapper;
-import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.locations.domain.Location;
+import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,13 +31,13 @@ class BedFactoryTest {
   // TODO : Refactor this test class
 
   private static BedFactory bedFactory;
-  private static PriceMapper priceMapper;
-  private static PackageMapper packageMapper;
+  private static PriceConverter priceConverter;
+  private static PackageConverter packageConverter;
 
   private List<PackageRequest> packageRequests = getPackageRequest();
   private List<PackageRequest> otherPackageRequests = getPackageRequest();
-  private Map<Packages, Price> packages = packageMapper.fromRequests(packageRequests);
-  private Map<Packages, Price> otherPackages = packageMapper.fromRequests(otherPackageRequests);
+  private Map<Packages, Price> packages = packageConverter.fromRequests(packageRequests);
+  private Map<Packages, Price> otherPackages = packageConverter.fromRequests(otherPackageRequests);
   private Bed bed = aBed().withPricesPerNights(packages).build();
   private Bed otherBed = aBed().withPricesPerNights(otherPackages).build();
   private Location location = createLocation();
@@ -47,8 +47,8 @@ class BedFactoryTest {
   @BeforeAll
   public static void setUpFactory() {
     bedFactory = new BedFactory();
-    priceMapper = mock(PriceMapper.class);
-    packageMapper = new PackageMapper(priceMapper);
+    priceConverter = mock(PriceConverter.class);
+    packageConverter = new PackageConverter(priceConverter);
   }
 
   @Test
@@ -101,7 +101,7 @@ class BedFactoryTest {
         requestPackagesNames.stream()
             .map(s -> aPackageRequest().withName(s).build())
             .collect(Collectors.toList());
-    packages = packageMapper.fromRequests(packageRequests);
+    packages = packageConverter.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
     assertDoesNotThrow(() -> bedFactory.create(bed, location));
@@ -112,7 +112,7 @@ class BedFactoryTest {
     String packageName = Packages.ALL_YOU_CAN_DRINK.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     packageRequests = Collections.singletonList(request);
-    packages = packageMapper.fromRequests(packageRequests);
+    packages = packageConverter.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
     assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, location));
@@ -125,7 +125,7 @@ class BedFactoryTest {
     PackageRequest request = aPackageRequest().withName(packageName).build();
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     packageRequests = Arrays.asList(request, otherRequest);
-    packages = packageMapper.fromRequests(packageRequests);
+    packages = packageConverter.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
     assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, location));
@@ -139,7 +139,7 @@ class BedFactoryTest {
     PackageRequest request = aPackageRequest().withName(packageName).build();
     PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
     packageRequests = Arrays.asList(request, otherRequest);
-    packages = packageMapper.fromRequests(packageRequests);
+    packages = packageConverter.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
     assertThrows(AllYouCanDrinkDependencyException.class, () -> bedFactory.create(bed, location));
@@ -150,7 +150,7 @@ class BedFactoryTest {
     String packageName = Packages.SWEET_TOOTH.toString();
     PackageRequest request = aPackageRequest().withName(packageName).build();
     packageRequests = Collections.singletonList(request);
-    packages = packageMapper.fromRequests(packageRequests);
+    packages = packageConverter.fromRequests(packageRequests);
     bed = aBed().withPricesPerNights(packages).build();
 
     assertThrows(SweetToothDependencyException.class, () -> bedFactory.create(bed, location));

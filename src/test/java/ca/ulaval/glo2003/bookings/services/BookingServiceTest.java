@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;

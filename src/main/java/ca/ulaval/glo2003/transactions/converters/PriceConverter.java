@@ -1,9 +1,9 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.transactions.converters;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 
-public class PriceMapper {
+public class PriceConverter {
 
   public Price fromDouble(Double priceValue) {
     return new Price(BigDecimal.valueOf(priceValue));

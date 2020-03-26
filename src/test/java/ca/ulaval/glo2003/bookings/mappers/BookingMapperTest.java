@@ -5,11 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.beds.converters.PublicKeyConverter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
-import ca.ulaval.glo2003.beds.mappers.PriceMapper;
-import ca.ulaval.glo2003.beds.mappers.PublicKeyConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
@@ -19,6 +18,7 @@ import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,14 +32,14 @@ class BookingMapperTest {
   private static BookingMapper bookingMapper;
   private static BookingDateMapper bookingDateMapper;
   private static PublicKeyConverter publicKeyConverter;
-  private static PriceMapper priceMapper;
+  private static PriceConverter priceConverter;
 
   @BeforeAll
   public static void setUpMapper() {
     bookingDateMapper = mock(BookingDateMapper.class);
     publicKeyConverter = mock(PublicKeyConverter.class);
-    priceMapper = mock(PriceMapper.class);
-    bookingMapper = new BookingMapper(publicKeyConverter, bookingDateMapper, priceMapper);
+    priceConverter = mock(PriceConverter.class);
+    bookingMapper = new BookingMapper(publicKeyConverter, bookingDateMapper, priceConverter);
   }
 
   @Test
@@ -90,7 +90,7 @@ class BookingMapperTest {
     double expectedTotalValue = 100.00;
     Price expectedTotal = new Price(BigDecimal.valueOf(expectedTotalValue));
     Booking bookingToMap = BookingBuilder.aBooking().withTotal(expectedTotal).build();
-    when(priceMapper.toDouble(expectedTotal)).thenReturn(expectedTotalValue);
+    when(priceConverter.toDouble(expectedTotal)).thenReturn(expectedTotalValue);
 
     BookingResponse response = bookingMapper.toResponse(bookingToMap);
 

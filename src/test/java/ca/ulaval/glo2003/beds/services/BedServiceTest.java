@@ -8,10 +8,10 @@ import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseBuilder.aBedRespons
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
-import ca.ulaval.glo2003.beds.mappers.BedConverter;
-import ca.ulaval.glo2003.beds.mappers.BedNumberConverter;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;

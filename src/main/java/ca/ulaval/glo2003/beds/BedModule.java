@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.beds;
 
+import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
@@ -7,8 +9,6 @@ import ca.ulaval.glo2003.beds.domain.assemblers.*;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedConverter;
-import ca.ulaval.glo2003.beds.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.BedMapper;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.factories.*;
@@ -36,7 +36,7 @@ public class BedModule extends AbstractModule {
     bind(BedMapper.class);
     bind(BedService.class);
     bind(BedConverter.class);
-    bind(PackageMapper.class);
+    bind(PackageConverter.class);
     bind(BedResource.class);
     bind(BedExceptionHandler.class);
   }

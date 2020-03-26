@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.UUID;

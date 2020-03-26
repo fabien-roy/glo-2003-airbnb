@@ -1,25 +1,24 @@
-package ca.ulaval.glo2003.transactions.mappers;
+package ca.ulaval.glo2003.transactions.converters;
 
-import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.time.format.DateTimeFormatter;
 import javax.inject.Inject;
 
-public class TransactionMapper {
+public class TransactionConverter {
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
 
-  private final PriceMapper priceMapper;
+  private final PriceConverter priceConverter;
 
   @Inject
-  public TransactionMapper(PriceMapper priceMapper) {
-    this.priceMapper = priceMapper;
+  public TransactionConverter(PriceConverter priceConverter) {
+    this.priceConverter = priceConverter;
   }
 
   public TransactionResponse toResponse(Transaction transaction) {
     String timestamp = transaction.getTimestamp().format(DATE_TIME_FORMATTER) + "Z";
-    Double total = priceMapper.toDouble(transaction.getTotal());
+    Double total = priceConverter.toDouble(transaction.getTotal());
     return new TransactionResponse(
         timestamp,
         transaction.getFrom(),

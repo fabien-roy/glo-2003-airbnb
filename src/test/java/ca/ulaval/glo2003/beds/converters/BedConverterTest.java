@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.beds.converters;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
@@ -30,7 +30,7 @@ class BedConverterTest {
   private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
   private static BloodTypesConverter bloodTypesConverter = mock(BloodTypesConverter.class);
-  private static PackageMapper packageMapper = mock(PackageMapper.class);
+  private static PackageConverter packageConverter = mock(PackageConverter.class);
 
   private static Bed bed;
   private static UUID bedNumber;
@@ -57,7 +57,7 @@ class BedConverterTest {
   public static void setUpMapper() {
     bedConverter =
         new BedConverter(
-            bedNumberConverter, publicKeyConverter, bloodTypesConverter, packageMapper);
+            bedNumberConverter, publicKeyConverter, bloodTypesConverter, packageConverter);
   }
 
   @BeforeEach
@@ -67,8 +67,8 @@ class BedConverterTest {
     when(publicKeyConverter.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
     when(bloodTypesConverter.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
     when(bloodTypesConverter.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
-    when(packageMapper.fromRequests(packageRequests)).thenReturn(pricesPerNight);
-    when(packageMapper.toResponses(pricesPerNight)).thenReturn(packageResponses);
+    when(packageConverter.fromRequests(packageRequests)).thenReturn(pricesPerNight);
+    when(packageConverter.toResponses(pricesPerNight)).thenReturn(packageResponses);
   }
 
   private static void resetMocks() {
