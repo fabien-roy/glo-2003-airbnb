@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.parsers.rest;
+package ca.ulaval.glo2003.parsers.rest.serializers;
 
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 

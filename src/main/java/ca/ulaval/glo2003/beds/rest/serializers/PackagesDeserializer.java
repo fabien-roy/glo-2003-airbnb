@@ -1,7 +1,8 @@
-package ca.ulaval.glo2003.beds.rest;
+package ca.ulaval.glo2003.beds.rest.serializers;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
-import ca.ulaval.glo2003.parsers.rest.AbstractDeserializer;
+import ca.ulaval.glo2003.beds.rest.PackageRequest;
+import ca.ulaval.glo2003.parsers.rest.serializers.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;

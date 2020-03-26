@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.beds.mappers;
+package ca.ulaval.glo2003.transactions.rest.serializers;
 
+import ca.ulaval.glo2003.parsers.rest.serializers.AbstractSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -9,16 +9,20 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class PriceJsonSerializer extends JsonSerializer<Double> {
-
-  // TODO : Use Deserializer instead of serializer...
+public class PriceSerializer extends AbstractSerializer<Double> {
 
   private NumberFormat decimalFormat;
 
-  public PriceJsonSerializer() {
+  public PriceSerializer() {
+    super(Double.class);
     DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.US);
     otherSymbols.setDecimalSeparator('.');
     decimalFormat = new DecimalFormat("#.00", otherSymbols);
+  }
+
+  @Override
+  public Class<?> getType() {
+    return Double.class;
   }
 
   @Override

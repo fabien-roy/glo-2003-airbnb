@@ -1,5 +1,8 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import ca.ulaval.glo2003.beds.rest.serializers.BloodTypesDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.CapacityDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.PackagesDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Arrays;
 import java.util.List;

@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.bookings.rest;
+package ca.ulaval.glo2003.bookings.rest.serializers;
 
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
-import ca.ulaval.glo2003.parsers.rest.PositiveIntegerDeserializer;
+import ca.ulaval.glo2003.parsers.rest.serializers.PositiveIntegerDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 

@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.transactions.rest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -8,20 +9,22 @@ import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 
 class TransactionResourceTest {
 
-  TransactionService transactionService;
-  TransactionResource transactionResource;
+  // TODO : Refactor this test class
 
-  @BeforeEach
-  public void setUpResource() {
-    transactionService = mock(TransactionService.class);
-    transactionResource = new TransactionResource(transactionService);
+  private static TransactionResource transactionResource;
+  private static TransactionService transactionService = mock(TransactionService.class);
+  private static TransactionParser transactionParser = mock(TransactionParser.class);
+
+  @BeforeAll
+  public static void setUpResource() {
+    transactionResource = new TransactionResource(transactionService, transactionParser);
   }
 
   @Test

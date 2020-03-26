@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.bookings.rest;
 
+import ca.ulaval.glo2003.bookings.rest.serializers.ColonySizeDeserializer;
+import ca.ulaval.glo2003.bookings.rest.serializers.NumberOfNightsDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 

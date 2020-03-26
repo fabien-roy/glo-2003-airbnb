@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AbstractParser extends ObjectMapper {
 
-  public AbstractParser(List<DeserializingModule> modules) {
+  public AbstractParser(List<SerializingModule> modules) {
     modules.forEach(this::registerModule);
     disable(DeserializationFeature.WRAP_EXCEPTIONS);
   }

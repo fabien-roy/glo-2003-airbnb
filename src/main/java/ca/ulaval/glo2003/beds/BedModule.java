@@ -11,10 +11,15 @@ import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
 import ca.ulaval.glo2003.beds.rest.*;
 import ca.ulaval.glo2003.beds.rest.factories.*;
+import ca.ulaval.glo2003.beds.rest.serializers.BloodTypesDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.CapacityDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.PackagesDeserializer;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
-import ca.ulaval.glo2003.parsers.rest.DeserializingModule;
+import ca.ulaval.glo2003.parsers.rest.SerializingModule;
+import ca.ulaval.glo2003.transactions.rest.serializers.PriceDeserializer;
+import ca.ulaval.glo2003.transactions.rest.serializers.PriceSerializer;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
@@ -79,13 +84,15 @@ public class BedModule extends AbstractModule {
   }
 
   private void configureDeserializers() {
-    DeserializingModule deserializingModule =
-        new DeserializingModule(
+    SerializingModule serializingModule =
+        new SerializingModule(
+            Collections.singletonList(new PriceSerializer()),
             Arrays.asList(
                 new CapacityDeserializer(),
                 new BloodTypesDeserializer(),
-                new PackagesDeserializer()));
-    BedParser bookingParser = new BedParser(Collections.singletonList(deserializingModule));
+                new PackagesDeserializer(),
+                new PriceDeserializer()));
+    BedParser bookingParser = new BedParser(Collections.singletonList(serializingModule));
 
     bind(BedParser.class).toInstance(bookingParser);
   }

@@ -4,13 +4,13 @@ import ca.ulaval.glo2003.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingParser;
 import ca.ulaval.glo2003.bookings.rest.BookingResource;
-import ca.ulaval.glo2003.bookings.rest.ColonySizeDeserializer;
-import ca.ulaval.glo2003.bookings.rest.NumberOfNightsDeserializer;
 import ca.ulaval.glo2003.bookings.rest.factories.*;
 import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
+import ca.ulaval.glo2003.bookings.rest.serializers.ColonySizeDeserializer;
+import ca.ulaval.glo2003.bookings.rest.serializers.NumberOfNightsDeserializer;
 import ca.ulaval.glo2003.bookings.services.BookingService;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
-import ca.ulaval.glo2003.parsers.rest.DeserializingModule;
+import ca.ulaval.glo2003.parsers.rest.SerializingModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
@@ -22,7 +22,7 @@ public class BookingModule extends AbstractModule {
   @Override
   protected void configure() {
     configureErrorFactories();
-    configureDeserializers();
+    configureSerializers();
 
     bind(BookingService.class);
     bind(BookingMapper.class);
@@ -41,11 +41,12 @@ public class BookingModule extends AbstractModule {
     multibinder.addBinding().to(InvalidNumberOfNightsErrorFactory.class);
   }
 
-  private void configureDeserializers() {
-    DeserializingModule deserializingModule =
-        new DeserializingModule(
+  private void configureSerializers() {
+    SerializingModule serializingModule =
+        new SerializingModule(
+            Collections.emptyList(),
             Arrays.asList(new ColonySizeDeserializer(), new NumberOfNightsDeserializer()));
-    BookingParser bookingParser = new BookingParser(Collections.singletonList(deserializingModule));
+    BookingParser bookingParser = new BookingParser(Collections.singletonList(serializingModule));
 
     bind(BookingParser.class).toInstance(bookingParser);
   }
