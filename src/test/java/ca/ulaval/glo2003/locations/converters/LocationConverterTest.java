@@ -1,10 +1,11 @@
-package ca.ulaval.glo2003.locations.mappers;
+package ca.ulaval.glo2003.locations.converters;
 
 import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesBuilder.someCoordinates;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createZipCode;
 import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder.aLocationResponse;
 import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,10 +20,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class LocationMapperTest {
+class LocationConverterTest {
 
-  private static LocationMapper locationMapper;
-  private static CoordinatesMapper coordinatesMapper = mock(CoordinatesMapper.class);
+  private static LocationConverter locationConverter;
+  private static CoordinatesConverter coordinatesConverter = mock(CoordinatesConverter.class);
 
   private static final ZipCode zipCode = createZipCode();
   private static final Coordinates coordinates = someCoordinates().build();
@@ -30,8 +31,8 @@ class LocationMapperTest {
   private LocationResponse locationResponse;
 
   @BeforeAll
-  public static void setUpMapper() {
-    locationMapper = new LocationMapper(coordinatesMapper);
+  public static void setUpConverter() {
+    locationConverter = new LocationConverter(coordinatesConverter);
   }
 
   @BeforeEach
@@ -40,19 +41,19 @@ class LocationMapperTest {
     List<PlaceResponse> placeResponses = Collections.singletonList(placeResponse);
     locationResponse =
         aLocationResponse().withPostCode(zipCode.getValue()).withPlaces(placeResponses).build();
-    when(coordinatesMapper.fromResponse(placeResponse)).thenReturn(coordinates);
+    when(coordinatesConverter.fromResponse(placeResponse)).thenReturn(coordinates);
   }
 
   @Test
-  public void fromResponse_shouldMapZipCode() {
-    Location location = locationMapper.fromResponse(locationResponse);
+  public void fromResponse_shouldConvertZipCode() {
+    Location location = locationConverter.fromResponse(locationResponse);
 
     assertEquals(zipCode, location.getZipCode());
   }
 
   @Test
-  public void fromResponse_shouldMapCoordinates() {
-    Location location = locationMapper.fromResponse(locationResponse);
+  public void fromResponse_shouldConvertCoordinates() {
+    Location location = locationConverter.fromResponse(locationResponse);
 
     assertSame(coordinates, location.getCoordinates());
   }

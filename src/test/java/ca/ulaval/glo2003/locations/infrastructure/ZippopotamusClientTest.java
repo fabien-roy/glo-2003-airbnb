@@ -7,10 +7,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.locations.converters.LocationConverter;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
-import ca.ulaval.glo2003.locations.mappers.LocationMapper;
 import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 class ZippopotamusClientTest {
 
   private static ZippopotamusClient zippopotamusClient;
-  private static LocationMapper locationMapper = mock(LocationMapper.class);
+  private static LocationConverter locationConverter = mock(LocationConverter.class);
   private static HttpURLConnection fakeUrlConnection = mock(HttpURLConnection.class);
 
   private static final Location location = aLocation().build();
@@ -31,7 +31,7 @@ class ZippopotamusClientTest {
 
   @BeforeAll
   public static void setUpClient() {
-    zippopotamusClient = new FakeZippopotamusClient(locationMapper, fakeUrlConnection);
+    zippopotamusClient = new FakeZippopotamusClient(locationConverter, fakeUrlConnection);
   }
 
   @BeforeEach
@@ -40,7 +40,7 @@ class ZippopotamusClientTest {
     InputStream inputStream = new ByteArrayInputStream(content.getBytes());
     when(fakeUrlConnection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_OK);
     when(fakeUrlConnection.getContent()).thenReturn(inputStream);
-    when(locationMapper.fromResponse(any())).thenReturn(location);
+    when(locationConverter.fromResponse(any())).thenReturn(location);
   }
 
   @Test
