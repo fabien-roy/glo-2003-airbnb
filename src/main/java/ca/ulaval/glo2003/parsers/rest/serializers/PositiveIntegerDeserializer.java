@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.parsers.rest.serializers;
 
+import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import java.io.IOException;
 
 public abstract class PositiveIntegerDeserializer<E extends RuntimeException>
-    extends AbstractDeserializer<Integer, E> {
+    extends ThrowingDeserializer<Integer, E> {
 
   protected PositiveIntegerDeserializer() {
     super(Integer.class);

@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.rest.serializers;
 
-import ca.ulaval.glo2003.parsers.rest.serializers.AbstractSerializer;
+import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class PriceSerializer extends AbstractSerializer<Double> {
+public class PriceSerializer extends ThrowingSerializer<Double> {
 
   private NumberFormat decimalFormat;
 

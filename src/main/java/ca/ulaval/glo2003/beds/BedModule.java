@@ -9,23 +9,21 @@ import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.mappers.BedMapper;
 import ca.ulaval.glo2003.beds.mappers.PackageMapper;
-import ca.ulaval.glo2003.beds.rest.*;
+import ca.ulaval.glo2003.beds.rest.BedParser;
+import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.factories.*;
-import ca.ulaval.glo2003.beds.rest.serializers.BloodTypesDeserializer;
-import ca.ulaval.glo2003.beds.rest.serializers.CapacityDeserializer;
-import ca.ulaval.glo2003.beds.rest.serializers.PackagesDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
-import ca.ulaval.glo2003.parsers.rest.SerializingModule;
+import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingDeserializer;
+import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingSerializer;
 import ca.ulaval.glo2003.transactions.rest.serializers.PriceDeserializer;
 import ca.ulaval.glo2003.transactions.rest.serializers.PriceSerializer;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class BedModule extends AbstractModule {
 
@@ -38,6 +36,7 @@ public class BedModule extends AbstractModule {
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
     bind(BedQueryFactory.class);
+    bind(BedParser.class);
     bind(BedService.class);
     bind(BedMapper.class);
     bind(PackageMapper.class);
@@ -84,16 +83,17 @@ public class BedModule extends AbstractModule {
   }
 
   private void configureDeserializers() {
-    SerializingModule serializingModule =
-        new SerializingModule(
-            Collections.singletonList(new PriceSerializer()),
-            Arrays.asList(
-                new CapacityDeserializer(),
-                new BloodTypesDeserializer(),
-                new PackagesDeserializer(),
-                new PriceDeserializer()));
-    BedParser bookingParser = new BedParser(Collections.singletonList(serializingModule));
+    Multibinder<ThrowingSerializer> serializerMultibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<ThrowingSerializer>() {});
+    serializerMultibinder.addBinding().to(PriceSerializer.class);
+    bind(BedSerializingModule.class);
 
-    bind(BedParser.class).toInstance(bookingParser);
+    Multibinder<ThrowingDeserializer> deserializerMultibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<ThrowingDeserializer>() {});
+    deserializerMultibinder.addBinding().to(CapacityDeserializer.class);
+    deserializerMultibinder.addBinding().to(BloodTypesDeserializer.class);
+    deserializerMultibinder.addBinding().to(PackagesDeserializer.class);
+    deserializerMultibinder.addBinding().to(PriceDeserializer.class);
+    bind(BedDeserializatingModule.class);
   }
 }

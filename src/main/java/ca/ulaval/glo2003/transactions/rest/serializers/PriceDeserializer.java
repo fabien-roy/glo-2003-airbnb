@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.transactions.rest.serializers;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
-import ca.ulaval.glo2003.parsers.rest.serializers.AbstractDeserializer;
+import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 
-public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPackagesException> {
+public class PriceDeserializer extends ThrowingDeserializer<Double, InvalidPackagesException> {
 
   public PriceDeserializer() {
     super(Double.class);
@@ -24,7 +24,7 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
   @Override
   public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws InvalidPackagesException {
-    Double price;
+    double price;
 
     try {
       if (jsonParser.isNaN()) throwException();
