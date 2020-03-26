@@ -6,11 +6,11 @@ import static ca.ulaval.glo2003.transactions.rest.helpers.TransactionResponseBui
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
-import ca.ulaval.glo2003.transactions.mappers.TransactionMapper;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,7 @@ class TransactionServiceTest {
   private static TransactionService transactionService;
   private static TransactionFactory transactionFactory;
   private static TransactionRepository transactionRepository;
-  private static TransactionMapper transactionMapper;
+  private static TransactionConverter transactionConverter;
 
   private Transaction transaction = aTransaction().build();
   private Transaction otherTransaction = aTransaction().build();
@@ -38,16 +38,16 @@ class TransactionServiceTest {
   public static void setUpService() {
     transactionFactory = mock(TransactionFactory.class);
     transactionRepository = mock(TransactionRepository.class);
-    transactionMapper = mock(TransactionMapper.class);
+    transactionConverter = mock(TransactionConverter.class);
     transactionService =
-        new TransactionService(transactionFactory, transactionRepository, transactionMapper);
+        new TransactionService(transactionFactory, transactionRepository, transactionConverter);
   }
 
   @BeforeEach
   public void setUpMocksForGetAll() {
     when(transactionRepository.getAll()).thenReturn(Arrays.asList(transaction, otherTransaction));
-    when(transactionMapper.toResponse(transaction)).thenReturn(transactionResponse);
-    when(transactionMapper.toResponse(otherTransaction)).thenReturn(otherTransactionResponse);
+    when(transactionConverter.toResponse(transaction)).thenReturn(transactionResponse);
+    when(transactionConverter.toResponse(otherTransaction)).thenReturn(otherTransactionResponse);
   }
 
   @BeforeEach

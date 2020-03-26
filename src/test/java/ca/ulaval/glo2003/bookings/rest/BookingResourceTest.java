@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.bookings.rest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.bookings.services.BookingService;
@@ -17,6 +17,7 @@ class BookingResourceTest {
 
   private static BookingResource bookingResource;
   private static BookingService bookingService = mock(BookingService.class);
+  private static BookingMapper bookingParser = mock(BookingMapper.class);
 
   private Request request = mock(Request.class);
   private Response response = mock(Response.class);
@@ -28,7 +29,7 @@ class BookingResourceTest {
 
   @BeforeAll
   public static void setUpResource() {
-    bookingResource = new BookingResource(bookingService);
+    bookingResource = new BookingResource(bookingService, bookingParser);
   }
 
   private void setUpMocksForAdd() throws JsonProcessingException {

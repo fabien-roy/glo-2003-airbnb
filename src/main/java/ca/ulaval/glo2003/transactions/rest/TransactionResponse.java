@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.rest;
 
-import ca.ulaval.glo2003.beds.mappers.PriceJsonSerializer;
+import ca.ulaval.glo2003.transactions.rest.serializers.PriceSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class TransactionResponse {
@@ -9,7 +9,7 @@ public class TransactionResponse {
   private String from;
   private String to;
 
-  @JsonSerialize(using = PriceJsonSerializer.class)
+  @JsonSerialize(using = PriceSerializer.class)
   private Double total;
 
   private String reason;

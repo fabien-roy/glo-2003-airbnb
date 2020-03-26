@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import spark.QueryParamsMap;
 import spark.Request;
@@ -21,13 +21,13 @@ public class BedResourceTest {
 
   // TODO : Refactor this test class
 
-  private BedResource bedResource;
-  private BedService bedService;
+  private static BedResource bedResource;
+  private static BedService bedService = mock(BedService.class);
+  private static BedMapper bedMapper = mock(BedMapper.class);
 
-  @BeforeEach
-  public void setUpResource() {
-    bedService = mock(BedService.class);
-    bedResource = new BedResource(bedService);
+  @BeforeAll
+  public static void setUpResource() {
+    bedResource = new BedResource(bedService, bedMapper);
   }
 
   @Test

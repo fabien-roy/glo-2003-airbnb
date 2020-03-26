@@ -1,16 +1,34 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import ca.ulaval.glo2003.beds.rest.serializers.*;
+import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.Arrays;
 import java.util.List;
 
 public class BedRequest {
 
+  @JsonDeserialize(using = PublicKeyDeserializer.class)
   private String ownerPublicKey;
+
+  @JsonDeserialize(using = ZipCodeDeserializer.class)
   private String zipCode;
+
+  @JsonDeserialize(using = BedTypeDeserializer.class)
   private String bedType;
+
+  @JsonDeserialize(using = CleaningFrequencyDeserializer.class)
   private String cleaningFrequency;
+
+  @JsonDeserialize(using = BloodTypesDeserializer.class)
   private List<String> bloodTypes;
+
+  @JsonDeserialize(using = CapacityDeserializer.class)
   private int capacity;
+
   private String lodgingMode;
+
+  @JsonDeserialize(using = PackagesDeserializer.class)
   private List<PackageRequest> packages;
 
   public BedRequest() {
@@ -72,8 +90,8 @@ public class BedRequest {
     return bloodTypes;
   }
 
-  public void setBloodTypes(List<String> bloodTypes) {
-    this.bloodTypes = bloodTypes;
+  public void setBloodTypes(String[] bloodTypes) {
+    this.bloodTypes = Arrays.asList(bloodTypes);
   }
 
   public int getCapacity() {
@@ -92,7 +110,7 @@ public class BedRequest {
     return packages;
   }
 
-  public void setPackages(List<PackageRequest> packages) {
-    this.packages = packages;
+  public void setPackages(PackageRequest[] packages) {
+    this.packages = Arrays.asList(packages);
   }
 }

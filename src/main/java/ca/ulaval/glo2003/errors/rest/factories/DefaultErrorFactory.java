@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.errors.rest.factories;
 
 import org.eclipse.jetty.http.HttpStatus;
 
-public class DefaultErrorFactory extends CatchallErrorFactory {
+public class DefaultErrorFactory extends AbstractErrorFactory<Exception> {
 
   @Override
   public boolean canHandle(Exception exception) {

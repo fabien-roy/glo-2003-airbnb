@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.bookings.rest;
 
-import ca.ulaval.glo2003.beds.mappers.PriceJsonSerializer;
+import ca.ulaval.glo2003.transactions.rest.serializers.PriceSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -14,7 +14,7 @@ public class BookingResponse {
   @JsonProperty("package")
   private String bookingPackage;
 
-  @JsonSerialize(using = PriceJsonSerializer.class)
+  @JsonSerialize(using = PriceSerializer.class)
   private Double total;
 
   public BookingResponse(

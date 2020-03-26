@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.errors;
 
-import ca.ulaval.glo2003.errors.rest.factories.*;
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.errors.rest.factories.JsonParsingErrorFactory;
 import ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.mappers.ErrorMapper;
 import com.google.inject.AbstractModule;
@@ -20,7 +21,6 @@ public class ErrorModule extends AbstractModule {
   private void configureErrorFactories() {
     Multibinder<ErrorFactory<Exception>> multibinder =
         Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<Exception>>() {});
-    multibinder.addBinding().to(InvalidFormatErrorFactory.class);
-    multibinder.addBinding().to(JsonProcessingErrorFactory.class);
+    multibinder.addBinding().to(JsonParsingErrorFactory.class);
   }
 }

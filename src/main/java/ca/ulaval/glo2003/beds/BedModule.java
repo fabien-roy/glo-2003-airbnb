@@ -1,5 +1,7 @@
 package ca.ulaval.glo2003.beds;
 
+import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
@@ -7,10 +9,10 @@ import ca.ulaval.glo2003.beds.domain.assemblers.*;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.mappers.PackageMapper;
+import ca.ulaval.glo2003.beds.rest.BedMapper;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.factories.*;
+import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
@@ -29,9 +31,12 @@ public class BedModule extends AbstractModule {
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
     bind(BedQueryFactory.class);
-    bind(BedService.class);
+    bind(BedSerializingModule.class);
+    bind(BedDeserializingModule.class);
     bind(BedMapper.class);
-    bind(PackageMapper.class);
+    bind(BedService.class);
+    bind(BedConverter.class);
+    bind(PackageConverter.class);
     bind(BedResource.class);
     bind(BedExceptionHandler.class);
   }
@@ -60,12 +65,12 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(BookingNotAllowedErrorFactory.class);
     multibinder.addBinding().to(ExceedingAccommodationCapacityErrorFactory.class);
     multibinder.addBinding().to(InvalidBedTypeErrorFactory.class);
-    multibinder.addBinding().to(InvalidBloodTypeErrorFactory.class);
+    multibinder.addBinding().to(InvalidBloodTypesErrorFactory.class);
     multibinder.addBinding().to(InvalidCapacityErrorFactory.class);
     multibinder.addBinding().to(InvalidCleaningFrequencyErrorFactory.class);
     multibinder.addBinding().to(InvalidLodgingModeErrorFactory.class);
     multibinder.addBinding().to(InvalidMaxDistanceErrorFactory.class);
-    multibinder.addBinding().to(InvalidPackageErrorFactory.class);
+    multibinder.addBinding().to(InvalidPackagesErrorFactory.class);
     multibinder.addBinding().to(InvalidPublicKeyErrorFactory.class);
     multibinder.addBinding().to(MaxDistanceWithoutOriginErrorFactory.class);
     multibinder.addBinding().to(ArrivalDateWithoutMinimalCapacityErrorFactory.class);

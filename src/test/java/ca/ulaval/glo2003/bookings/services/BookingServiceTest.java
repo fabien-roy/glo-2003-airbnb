@@ -3,20 +3,21 @@ package ca.ulaval.glo2003.bookings.services;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createTotal;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.bookings.converters.BookingConverter;
+import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
-import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
-import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -30,13 +31,13 @@ import org.junit.jupiter.api.Test;
 public class BookingServiceTest {
 
   private static BookingService bookingService;
-  private static TransactionService transactionService;
-  private static BookingMapper bookingMapper;
-  private static BedRepository bedRepository;
-  private static BookingFactory bookingFactory;
-  private static BookingTotalCalculator bookingTotalCalculator;
-  private static BedNumberMapper bedNumberMapper;
-  private static BookingNumberMapper bookingNumberMapper;
+  private static BookingConverter bookingConverter = mock(BookingConverter.class);
+  private static BookingNumberConverter bookingNumberConverter = mock(BookingNumberConverter.class);
+  private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
+  private static BedRepository bedRepository = mock(BedRepository.class);
+  private static BookingFactory bookingFactory = mock(BookingFactory.class);
+  private static BookingTotalCalculator bookingTotalCalculator = mock(BookingTotalCalculator.class);
+  private static TransactionService transactionService = mock(TransactionService.class);
 
   private UUID bedNumber = createBedNumber();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
@@ -51,22 +52,15 @@ public class BookingServiceTest {
 
   @BeforeAll
   public static void setUpService() {
-    transactionService = mock(TransactionService.class);
-    bookingMapper = mock(BookingMapper.class);
-    bedRepository = mock(BedRepository.class);
-    bookingFactory = mock(BookingFactory.class);
-    bookingTotalCalculator = mock(BookingTotalCalculator.class);
-    bedNumberMapper = mock(BedNumberMapper.class);
-    bookingNumberMapper = mock(BookingNumberMapper.class);
     bookingService =
         new BookingService(
-            transactionService,
-            bookingMapper,
+            bookingConverter,
+            bookingNumberConverter,
+            bedNumberConverter,
             bedRepository,
             bookingFactory,
             bookingTotalCalculator,
-            bedNumberMapper,
-            bookingNumberMapper);
+            transactionService);
   }
 
   @BeforeEach
@@ -74,13 +68,14 @@ public class BookingServiceTest {
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
+    when(bookingNumberConverter.toString(bookingNumber)).thenReturn(bookingNumber.toString());
   }
 
   @BeforeEach
   public void setUpMocksForGetByNumber() {
-    when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
-    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
+    when(bookingNumberConverter.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
+    when(bedNumberConverter.fromString(bedNumber.toString())).thenReturn(bedNumber);
+    when(bookingConverter.fromRequest(bookingRequest)).thenReturn(booking);
   }
 
   @Test
@@ -92,12 +87,11 @@ public class BookingServiceTest {
 
   @Test
   public void add_shouldReturnBookingNumber() {
-    UUID expectedBookingNumber = createBookingNumber();
-    booking.setNumber(expectedBookingNumber);
+    booking.setNumber(bookingNumber);
 
-    String bookingNumber = bookingService.add(bedNumber.toString(), bookingRequest);
+    String actualBookingNumber = bookingService.add(bedNumber.toString(), bookingRequest);
 
-    assertEquals(expectedBookingNumber.toString(), bookingNumber);
+    assertEquals(bookingNumber.toString(), actualBookingNumber);
   }
 
   @Test
@@ -127,7 +121,7 @@ public class BookingServiceTest {
   public void getByNumber_shouldGetBooking() {
     bed.book(booking);
     BookingResponse expectedBookingResponse = mock(BookingResponse.class);
-    when(bookingMapper.toResponse(booking)).thenReturn(expectedBookingResponse);
+    when(bookingConverter.toResponse(booking)).thenReturn(expectedBookingResponse);
 
     BookingResponse bookingResponse =
         bookingService.getByNumber(bedNumber.toString(), bookingNumber.toString());

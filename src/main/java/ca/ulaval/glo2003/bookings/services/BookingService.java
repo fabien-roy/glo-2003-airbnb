@@ -1,13 +1,13 @@
 package ca.ulaval.glo2003.bookings.services;
 
+import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.bookings.converters.BookingConverter;
+import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
-import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
-import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelResponse;
@@ -18,35 +18,35 @@ import javax.inject.Inject;
 
 public class BookingService {
 
-  private final TransactionService transactionService;
-  private final BookingMapper bookingMapper;
+  private final BookingConverter bookingConverter;
+  private final BookingNumberConverter bookingNumberConverter;
+  private final BedNumberConverter bedNumberConverter;
   private final BedRepository bedRepository;
   private final BookingFactory bookingFactory;
   private final BookingTotalCalculator bookingTotalCalculator;
-  private final BookingNumberMapper bookingNumberMapper;
-  private final BedNumberMapper bedNumberMapper;
+  private final TransactionService transactionService;
 
   @Inject
   public BookingService(
-      TransactionService transactionService,
-      BookingMapper bookingMapper,
+      BookingConverter bookingConverter,
+      BookingNumberConverter bookingNumberConverter,
+      BedNumberConverter bedNumberConverter,
       BedRepository bedRepository,
       BookingFactory bookingFactory,
       BookingTotalCalculator bookingTotalCalculator,
-      BedNumberMapper bedNumberMapper,
-      BookingNumberMapper bookingNumberMapper) {
-    this.transactionService = transactionService;
-    this.bookingMapper = bookingMapper;
+      TransactionService transactionService) {
+    this.bookingConverter = bookingConverter;
+    this.bookingNumberConverter = bookingNumberConverter;
+    this.bedNumberConverter = bedNumberConverter;
     this.bedRepository = bedRepository;
     this.bookingFactory = bookingFactory;
     this.bookingTotalCalculator = bookingTotalCalculator;
-    this.bedNumberMapper = bedNumberMapper;
-    this.bookingNumberMapper = bookingNumberMapper;
+    this.transactionService = transactionService;
   }
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
-    Booking booking = bookingMapper.fromRequest(bookingRequest);
+    UUID parsedBedNumber = bedNumberConverter.fromString(bedNumber);
+    Booking booking = bookingConverter.fromRequest(bookingRequest);
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
@@ -55,18 +55,18 @@ public class BookingService {
     transactionService.addStayCompleted(
         bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
     bedRepository.update(bed);
-    return booking.getNumber().toString();
+    return bookingNumberConverter.toString(booking.getNumber());
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
-    UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
+    UUID parsedBedNumber = bedNumberConverter.fromString(bedNumber);
+    UUID parsedBookingNumber = bookingNumberConverter.fromString(bookingNumber);
 
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
-    return bookingMapper.toResponse(booking);
+    return bookingConverter.toResponse(booking);
   }
 
   public CancelResponse cancel(String bedNumber, String bookingNumber) {

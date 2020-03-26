@@ -1,10 +1,12 @@
 package ca.ulaval.glo2003.bookings;
 
+import ca.ulaval.glo2003.bookings.converters.BookingConverter;
 import ca.ulaval.glo2003.bookings.exceptions.BookingException;
-import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
+import ca.ulaval.glo2003.bookings.rest.BookingMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingResource;
 import ca.ulaval.glo2003.bookings.rest.factories.*;
 import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
+import ca.ulaval.glo2003.bookings.rest.serializers.BookingDeserializingModule;
 import ca.ulaval.glo2003.bookings.services.BookingService;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import com.google.inject.AbstractModule;
@@ -17,8 +19,10 @@ public class BookingModule extends AbstractModule {
   protected void configure() {
     configureErrorFactories();
 
-    bind(BookingService.class);
+    bind(BookingDeserializingModule.class);
     bind(BookingMapper.class);
+    bind(BookingService.class);
+    bind(BookingConverter.class);
     bind(BookingResource.class);
     bind(BookingExceptionHandler.class);
   }
