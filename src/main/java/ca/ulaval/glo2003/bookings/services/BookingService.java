@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.bookings.services;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
@@ -24,7 +24,7 @@ public class BookingService {
   private final BookingFactory bookingFactory;
   private final BookingTotalCalculator bookingTotalCalculator;
   private final BookingNumberMapper bookingNumberMapper;
-  private final BedNumberMapper bedNumberMapper;
+  private final BedNumberConverter bedNumberConverter;
 
   @Inject
   public BookingService(
@@ -33,19 +33,19 @@ public class BookingService {
       BedRepository bedRepository,
       BookingFactory bookingFactory,
       BookingTotalCalculator bookingTotalCalculator,
-      BedNumberMapper bedNumberMapper,
+      BedNumberConverter bedNumberConverter,
       BookingNumberMapper bookingNumberMapper) {
     this.transactionService = transactionService;
     this.bookingMapper = bookingMapper;
     this.bedRepository = bedRepository;
     this.bookingFactory = bookingFactory;
     this.bookingTotalCalculator = bookingTotalCalculator;
-    this.bedNumberMapper = bedNumberMapper;
+    this.bedNumberConverter = bedNumberConverter;
     this.bookingNumberMapper = bookingNumberMapper;
   }
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
+    UUID parsedBedNumber = bedNumberConverter.fromString(bedNumber);
     Booking booking = bookingMapper.fromRequest(bookingRequest);
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
@@ -59,7 +59,7 @@ public class BookingService {
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
-    UUID parsedBedNumber = bedNumberMapper.fromString(bedNumber);
+    UUID parsedBedNumber = bedNumberConverter.fromString(bedNumber);
     UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
 
     Bed bed = bedRepository.getByNumber(parsedBedNumber);

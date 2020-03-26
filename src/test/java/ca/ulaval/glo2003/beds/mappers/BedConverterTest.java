@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 class BedConverterTest {
 
   private static BedConverter bedConverter;
+  private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
   private static PublicKeyMapper publicKeyMapper = mock(PublicKeyMapper.class);
   private static BloodTypesMapper bloodTypesMapper = mock(BloodTypesMapper.class);
   private static PackageMapper packageMapper = mock(PackageMapper.class);
@@ -54,12 +55,14 @@ class BedConverterTest {
 
   @BeforeAll
   public static void setUpMapper() {
-    bedConverter = new BedConverter(publicKeyMapper, bloodTypesMapper, packageMapper);
+    bedConverter =
+        new BedConverter(bedNumberConverter, publicKeyMapper, bloodTypesMapper, packageMapper);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
+    when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
     when(publicKeyMapper.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
     when(bloodTypesMapper.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
     when(bloodTypesMapper.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);

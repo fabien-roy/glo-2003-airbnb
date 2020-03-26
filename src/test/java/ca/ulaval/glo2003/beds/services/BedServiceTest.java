@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.beds.mappers.BedConverter;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberConverter;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
@@ -27,7 +27,7 @@ public class BedServiceTest {
   private static BedFactory bedFactory = mock(BedFactory.class);
   private static BedQueryFactory bedQueryFactory = mock(BedQueryFactory.class);
   private static BedConverter bedConverter = mock(BedConverter.class);
-  private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
+  private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
   private static BedRepository bedRepository = mock(BedRepository.class);
   private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
   private static LocationService locationService = mock(LocationService.class);
@@ -51,7 +51,7 @@ public class BedServiceTest {
             bedFactory,
             bedQueryFactory,
             bedConverter,
-            bedNumberMapper,
+            bedNumberConverter,
             bedRepository,
             bedStarsCalculator,
             locationService);
@@ -74,11 +74,12 @@ public class BedServiceTest {
     when(locationService.getLocation(origin.getZipCode().getValue())).thenReturn(validatedLocation);
     when(bedConverter.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedConverter.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
+    when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
   }
 
   @BeforeEach
   public void setUpMocksForGetByNumber() {
-    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
+    when(bedNumberConverter.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
     when(bedConverter.toResponseWithoutNumber(bed, stars)).thenReturn(bedResponse);
   }

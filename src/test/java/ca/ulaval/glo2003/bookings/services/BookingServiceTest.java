@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
@@ -35,7 +35,7 @@ public class BookingServiceTest {
   private static BedRepository bedRepository;
   private static BookingFactory bookingFactory;
   private static BookingTotalCalculator bookingTotalCalculator;
-  private static BedNumberMapper bedNumberMapper;
+  private static BedNumberConverter bedNumberConverter;
   private static BookingNumberMapper bookingNumberMapper;
 
   private UUID bedNumber = createBedNumber();
@@ -56,7 +56,7 @@ public class BookingServiceTest {
     bedRepository = mock(BedRepository.class);
     bookingFactory = mock(BookingFactory.class);
     bookingTotalCalculator = mock(BookingTotalCalculator.class);
-    bedNumberMapper = mock(BedNumberMapper.class);
+    bedNumberConverter = mock(BedNumberConverter.class);
     bookingNumberMapper = mock(BookingNumberMapper.class);
     bookingService =
         new BookingService(
@@ -65,7 +65,7 @@ public class BookingServiceTest {
             bedRepository,
             bookingFactory,
             bookingTotalCalculator,
-            bedNumberMapper,
+            bedNumberConverter,
             bookingNumberMapper);
   }
 
@@ -79,7 +79,7 @@ public class BookingServiceTest {
   @BeforeEach
   public void setUpMocksForGetByNumber() {
     when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
-    when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
+    when(bedNumberConverter.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
   }
 

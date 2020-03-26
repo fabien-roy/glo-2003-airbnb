@@ -12,15 +12,18 @@ import javax.inject.Inject;
 
 public class BedConverter {
 
+  private final BedNumberConverter bedNumberConverter;
   private final PublicKeyMapper publicKeyMapper;
   private final BloodTypesMapper bloodTypesMapper;
   private final PackageMapper packageMapper;
 
   @Inject
   public BedConverter(
+      BedNumberConverter bedNumberConverter,
       PublicKeyMapper publicKeyMapper,
       BloodTypesMapper bloodTypesMapper,
       PackageMapper packageMapper) {
+    this.bedNumberConverter = bedNumberConverter;
     this.publicKeyMapper = publicKeyMapper;
     this.bloodTypesMapper = bloodTypesMapper;
     this.packageMapper = packageMapper;
@@ -64,7 +67,8 @@ public class BedConverter {
 
   public BedResponse toResponseWithNumber(Bed bed, int stars) {
     BedResponse bedResponse = toResponseWithoutNumber(bed, stars);
-    bedResponse.setBedNumber(bed.getNumber().toString());
+    String bedNumber = bedNumberConverter.toString(bed.getNumber());
+    bedResponse.setBedNumber(bedNumber);
     return bedResponse;
   }
 }

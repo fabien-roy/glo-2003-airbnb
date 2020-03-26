@@ -5,7 +5,6 @@ import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Arrays;
 import java.util.List;
-import jdk.internal.jline.internal.Nullable;
 
 public class BedRequest {
 
@@ -27,7 +26,7 @@ public class BedRequest {
   @JsonDeserialize(using = CapacityDeserializer.class)
   private int capacity;
 
-  @Nullable private String lodgingMode;
+  private String lodgingMode;
 
   @JsonDeserialize(using = PackagesDeserializer.class)
   private List<PackageRequest> packages;

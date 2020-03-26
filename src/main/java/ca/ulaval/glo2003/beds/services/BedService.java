@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.services;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.beds.mappers.BedConverter;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
+import ca.ulaval.glo2003.beds.mappers.BedNumberConverter;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
@@ -17,7 +17,7 @@ public class BedService {
   private final BedFactory bedFactory;
   private final BedQueryFactory bedQueryFactory;
   private final BedConverter bedConverter;
-  private final BedNumberMapper bedNumberMapper;
+  private final BedNumberConverter bedNumberConverter;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
   private final LocationService locationService;
@@ -27,14 +27,14 @@ public class BedService {
       BedFactory bedFactory,
       BedQueryFactory bedQueryFactory,
       BedConverter bedConverter,
-      BedNumberMapper bedNumberMapper,
+      BedNumberConverter bedNumberConverter,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
       LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedQueryFactory = bedQueryFactory;
     this.bedConverter = bedConverter;
-    this.bedNumberMapper = bedNumberMapper;
+    this.bedNumberConverter = bedNumberConverter;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
     this.locationService = locationService;
@@ -48,7 +48,7 @@ public class BedService {
 
     bedRepository.add(bed);
 
-    return bed.getNumber().toString();
+    return bedNumberConverter.toString(bed.getNumber());
   }
 
   public List<BedResponse> getAll(Map<String, String[]> params) {
@@ -60,7 +60,7 @@ public class BedService {
   }
 
   public BedResponse getByNumber(String number) {
-    UUID bedNumber = bedNumberMapper.fromString(number);
+    UUID bedNumber = bedNumberConverter.fromString(number);
 
     Bed bed = bedRepository.getByNumber(bedNumber);
 
