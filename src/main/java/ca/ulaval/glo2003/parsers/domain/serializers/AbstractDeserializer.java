@@ -2,10 +2,9 @@ package ca.ulaval.glo2003.parsers.domain.serializers;
 
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-public abstract class ThrowingDeserializer<T, E extends RuntimeException>
-    extends StdDeserializer<T> {
+public abstract class AbstractDeserializer<T, E extends Exception> extends StdDeserializer<T> {
 
-  protected ThrowingDeserializer(Class<T> t) {
+  protected AbstractDeserializer(Class<T> t) {
     super(t);
   }
 

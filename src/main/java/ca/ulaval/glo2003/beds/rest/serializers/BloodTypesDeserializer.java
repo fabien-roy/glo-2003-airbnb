@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.serializers;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException;
-import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingDeserializer;
+import ca.ulaval.glo2003.parsers.domain.serializers.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodTypesDeserializer
-    extends ThrowingDeserializer<String[], InvalidBloodTypesException> {
+    extends AbstractDeserializer<String[], InvalidBloodTypesException> {
 
   public BloodTypesDeserializer() {
     super(String[].class);

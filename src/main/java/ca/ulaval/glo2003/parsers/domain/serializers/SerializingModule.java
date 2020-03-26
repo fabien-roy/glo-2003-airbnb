@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class SerializingModule extends SimpleModule {
 
-  public SerializingModule(List<ThrowingSerializer> serializers) {
+  public SerializingModule(List<AbstractSerializer> serializers) {
     serializers.forEach(serializer -> addSerializer(serializer.getType(), serializer));
   }
 }

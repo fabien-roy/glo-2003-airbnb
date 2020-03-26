@@ -1,12 +1,12 @@
 package ca.ulaval.glo2003.parsers.rest.serializers;
 
-import ca.ulaval.glo2003.parsers.domain.serializers.ThrowingDeserializer;
+import ca.ulaval.glo2003.parsers.domain.serializers.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import java.io.IOException;
 
 public abstract class PositiveIntegerDeserializer<E extends RuntimeException>
-    extends ThrowingDeserializer<Integer, E> {
+    extends AbstractDeserializer<Integer, E> {
 
   protected PositiveIntegerDeserializer() {
     super(Integer.class);
@@ -20,13 +20,12 @@ public abstract class PositiveIntegerDeserializer<E extends RuntimeException>
   @Override
   public Integer deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws E {
-    int integer;
+    int integer = 0;
 
     try {
       integer = jsonParser.getIntValue();
     } catch (IOException e) {
       throwException();
-      return 0; // TODO : Do not return anything
     }
 
     if (integer <= 0) throwException();

@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class DeserializingModule extends SimpleModule {
 
-  public DeserializingModule(List<ThrowingDeserializer> deserializers) {
+  public DeserializingModule(List<AbstractDeserializer> deserializers) {
     deserializers.forEach(deserializer -> addDeserializer(deserializer.getType(), deserializer));
   }
 }

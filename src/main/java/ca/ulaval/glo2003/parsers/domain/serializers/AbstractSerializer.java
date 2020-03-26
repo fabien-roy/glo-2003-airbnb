@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.parsers.domain.serializers;
 
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-public abstract class ThrowingSerializer<T> extends StdSerializer<T> {
+public abstract class AbstractSerializer<T> extends StdSerializer<T> {
 
-  protected ThrowingSerializer(Class<T> t) {
+  protected AbstractSerializer(Class<T> t) {
     super(t);
   }
 
