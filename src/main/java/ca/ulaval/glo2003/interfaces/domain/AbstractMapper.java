@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.parsers.domain;
+package ca.ulaval.glo2003.interfaces.domain;
 
-import ca.ulaval.glo2003.parsers.domain.serializers.DeserializingModule;
-import ca.ulaval.glo2003.parsers.domain.serializers.SerializingModule;
+import ca.ulaval.glo2003.interfaces.domain.serializers.DeserializingModule;
+import ca.ulaval.glo2003.interfaces.domain.serializers.SerializingModule;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

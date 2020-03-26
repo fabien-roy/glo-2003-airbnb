@@ -1,8 +1,8 @@
-package ca.ulaval.glo2003.parsers.rest.serializers;
+package ca.ulaval.glo2003.interfaces.rest.serializers;
 
 import ca.ulaval.glo2003.errors.exceptions.TestingException;
 
-class FakeStringArrayDeserializer extends StringArrayDeserializer<TestingException> {
+class FakeIntegerDeserializer extends IntegerDeserializer<TestingException> {
 
   @Override
   public void throwException() throws TestingException {

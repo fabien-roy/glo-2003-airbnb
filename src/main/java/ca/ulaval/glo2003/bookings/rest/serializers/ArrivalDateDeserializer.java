@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.bookings.rest.serializers;
 
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
-import ca.ulaval.glo2003.parsers.rest.serializers.StringDeserializer;
+import ca.ulaval.glo2003.interfaces.rest.serializers.StringDeserializer;
 
 public class ArrivalDateDeserializer extends StringDeserializer<InvalidArrivalDateException> {
 

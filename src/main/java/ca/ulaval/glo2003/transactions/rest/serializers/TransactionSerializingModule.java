@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.rest.serializers;
 
-import ca.ulaval.glo2003.parsers.domain.serializers.SerializingModule;
+import ca.ulaval.glo2003.interfaces.domain.serializers.SerializingModule;
 import com.google.inject.Inject;
 import java.util.Collections;
 

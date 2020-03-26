@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.rest.serializers;
 
-import ca.ulaval.glo2003.parsers.domain.serializers.AbstractSerializer;
+import ca.ulaval.glo2003.interfaces.domain.serializers.AbstractSerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;

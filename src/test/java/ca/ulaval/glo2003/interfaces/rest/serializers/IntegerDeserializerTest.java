@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.parsers.rest.serializers;
+package ca.ulaval.glo2003.interfaces.rest.serializers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

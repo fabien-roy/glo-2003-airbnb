@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.parsers.domain.serializers;
+package ca.ulaval.glo2003.interfaces.domain.serializers;
 
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
