@@ -15,18 +15,18 @@ public class TransactionResource implements RouteGroup {
   public static final String TRANSACTION_PATH = "/admin/transactions";
 
   private final TransactionService transactionService;
-  private final TransactionMapper transactionParser;
+  private final TransactionMapper transactionMapper;
 
   @Inject
   public TransactionResource(
-      TransactionService transactionService, TransactionMapper transactionParser) {
+      TransactionService transactionService, TransactionMapper transactionMapper) {
     this.transactionService = transactionService;
-    this.transactionParser = transactionParser;
+    this.transactionMapper = transactionMapper;
   }
 
   @Override
   public void addRoutes() {
-    get("", this::getAll, transactionParser::writeValueAsString);
+    get("", this::getAll, transactionMapper::writeValueAsString);
   }
 
   public Object getAll(Request request, Response response) {

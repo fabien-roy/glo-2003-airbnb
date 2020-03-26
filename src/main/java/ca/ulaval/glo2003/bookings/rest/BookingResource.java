@@ -19,23 +19,23 @@ public class BookingResource implements RouteGroup {
   public static final String BOOKING_PATH = "/beds/:bedNumber/bookings";
 
   private final BookingService bookingService;
-  private final BookingMapper bookingParser;
+  private final BookingMapper bookingMapper;
 
   @Inject
-  public BookingResource(BookingService bookingService, BookingMapper bookingParser) {
+  public BookingResource(BookingService bookingService, BookingMapper bookingMapper) {
     this.bookingService = bookingService;
-    this.bookingParser = bookingParser;
+    this.bookingMapper = bookingMapper;
   }
 
   @Override
   public void addRoutes() {
     post("", this::add);
-    get("/:bookingNumber", this::getByNumber, bookingParser::writeValueAsString);
-    post("/:bookingNumber/cancel", this::cancel, bookingParser::writeValueAsString);
+    get("/:bookingNumber", this::getByNumber, bookingMapper::writeValueAsString);
+    post("/:bookingNumber/cancel", this::cancel, bookingMapper::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws JsonProcessingException {
-    BookingRequest bookingRequest = bookingParser.readValue(request.body(), BookingRequest.class);
+    BookingRequest bookingRequest = bookingMapper.readValue(request.body(), BookingRequest.class);
 
     String bedNumber = request.params("bedNumber");
     String bookingNumber = bookingService.add(bedNumber, bookingRequest);
