@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.mappers;
+package ca.ulaval.glo2003.bookings.converters;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
 import static org.junit.jupiter.api.Assertions.assertEquals;

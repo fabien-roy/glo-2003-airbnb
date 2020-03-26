@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.mappers;
+package ca.ulaval.glo2003.bookings.converters;
 
 import ca.ulaval.glo2003.beds.converters.PublicKeyConverter;
 import ca.ulaval.glo2003.beds.domain.Packages;
@@ -14,16 +14,16 @@ import javax.inject.Inject;
 public class BookingConverter {
 
   private final PublicKeyConverter publicKeyConverter;
-  private final BookingDateMapper bookingDateMapper;
+  private final BookingDateConverter bookingDateConverter;
   private final PriceConverter priceConverter;
 
   @Inject
   public BookingConverter(
       PublicKeyConverter publicKeyConverter,
-      BookingDateMapper bookingDateMapper,
+      BookingDateConverter bookingDateConverter,
       PriceConverter priceConverter) {
     this.publicKeyConverter = publicKeyConverter;
-    this.bookingDateMapper = bookingDateMapper;
+    this.bookingDateConverter = bookingDateConverter;
     this.priceConverter = priceConverter;
   }
 
@@ -31,7 +31,7 @@ public class BookingConverter {
     validateNumberOfNights(bookingRequest.getNumberOfNights());
 
     PublicKey tenantPublicKey = publicKeyConverter.fromString(bookingRequest.getTenantPublicKey());
-    BookingDate arrivalDate = bookingDateMapper.fromString(bookingRequest.getArrivalDate());
+    BookingDate arrivalDate = bookingDateConverter.fromString(bookingRequest.getArrivalDate());
 
     return new Booking(
         tenantPublicKey,
@@ -42,7 +42,7 @@ public class BookingConverter {
   }
 
   public BookingResponse toResponse(Booking booking) {
-    String arrivalDate = bookingDateMapper.toString(booking.getArrivalDate());
+    String arrivalDate = bookingDateConverter.toString(booking.getArrivalDate());
     Double total = priceConverter.toDouble(booking.getTotal());
 
     return new BookingResponse(

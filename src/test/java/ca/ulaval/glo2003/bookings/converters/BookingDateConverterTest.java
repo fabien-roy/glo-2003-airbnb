@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.mappers;
+package ca.ulaval.glo2003.bookings.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,21 +10,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class BookingDateMapperTest {
+class BookingDateConverterTest {
 
-  private static BookingDateMapper bookingDateMapper;
+  private static BookingDateConverter bookingDateConverter;
 
   @BeforeAll
-  public static void setUpMapper() {
-    bookingDateMapper = new BookingDateMapper();
+  public static void setUpConverter() {
+    bookingDateConverter = new BookingDateConverter();
   }
 
   @Test
-  public void fromString_shouldMapBookingDate() {
+  public void fromString_shouldConvertBookingDate() {
     BookingDate expectedDate = new BookingDate(LocalDate.now());
     String requestedDate = expectedDate.getValue().toString();
 
-    BookingDate bookingDate = bookingDateMapper.fromString(requestedDate);
+    BookingDate bookingDate = bookingDateConverter.fromString(requestedDate);
 
     assertEquals(expectedDate, bookingDate);
   }
@@ -34,7 +34,8 @@ class BookingDateMapperTest {
     String invalidArrivalDate = "invalidArrivalDate";
 
     Assertions.assertThrows(
-        InvalidArrivalDateException.class, () -> bookingDateMapper.fromString(invalidArrivalDate));
+        InvalidArrivalDateException.class,
+        () -> bookingDateConverter.fromString(invalidArrivalDate));
   }
 
   @Test
@@ -43,7 +44,7 @@ class BookingDateMapperTest {
 
     Assertions.assertThrows(
         ArrivalDateInThePastException.class,
-        () -> bookingDateMapper.fromString(arrivalDateInThePast));
+        () -> bookingDateConverter.fromString(arrivalDateInThePast));
   }
 
   @Test
@@ -51,15 +52,15 @@ class BookingDateMapperTest {
     String nullArrivalDate = null;
 
     Assertions.assertThrows(
-        InvalidArrivalDateException.class, () -> bookingDateMapper.fromString(nullArrivalDate));
+        InvalidArrivalDateException.class, () -> bookingDateConverter.fromString(nullArrivalDate));
   }
 
   @Test
-  public void toString_shouldMapBookingDate() {
+  public void toString_shouldConvertBookingDate() {
     BookingDate bookingDate = new BookingDate(LocalDate.now());
     String expectedValue = bookingDate.getValue().toString();
 
-    String value = bookingDateMapper.toString(bookingDate);
+    String value = bookingDateConverter.toString(bookingDate);
 
     assertEquals(expectedValue, value);
   }

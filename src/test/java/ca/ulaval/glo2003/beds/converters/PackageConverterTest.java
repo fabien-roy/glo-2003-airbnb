@@ -26,7 +26,7 @@ class PackageConverterTest {
   private static PriceConverter priceConverter = mock(PriceConverter.class);
 
   @BeforeAll
-  public static void setUpMapper() {
+  public static void setUpConverter() {
     packageConverter = new PackageConverter(priceConverter);
   }
 

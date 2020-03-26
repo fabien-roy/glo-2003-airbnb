@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.mappers;
+package ca.ulaval.glo2003.bookings.converters;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 class BookingConverterTest {
 
   private static BookingConverter bookingConverter;
-  private static BookingDateMapper bookingDateMapper = mock(BookingDateMapper.class);
+  private static BookingDateConverter bookingDateConverter = mock(BookingDateConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
   private static PriceConverter priceConverter = mock(PriceConverter.class);
 
@@ -45,8 +45,9 @@ class BookingConverterTest {
   private static BookingResponse bookingResponse;
 
   @BeforeAll
-  public static void setUpMapper() {
-    bookingConverter = new BookingConverter(publicKeyConverter, bookingDateMapper, priceConverter);
+  public static void setUpConverter() {
+    bookingConverter =
+        new BookingConverter(publicKeyConverter, bookingDateConverter, priceConverter);
   }
 
   @BeforeEach
@@ -54,8 +55,9 @@ class BookingConverterTest {
     resetMocks();
     when(publicKeyConverter.fromString(tenantPublicKey.getValue())).thenReturn(tenantPublicKey);
     when(publicKeyConverter.toString(tenantPublicKey)).thenReturn(tenantPublicKey.getValue());
-    when(bookingDateMapper.fromString(arrivalDate.getValue().toString())).thenReturn(arrivalDate);
-    when(bookingDateMapper.toString(arrivalDate)).thenReturn(arrivalDate.getValue().toString());
+    when(bookingDateConverter.fromString(arrivalDate.getValue().toString()))
+        .thenReturn(arrivalDate);
+    when(bookingDateConverter.toString(arrivalDate)).thenReturn(arrivalDate.getValue().toString());
     when(priceConverter.toDouble(total)).thenReturn(total.getValue().doubleValue());
   }
 
@@ -95,28 +97,28 @@ class BookingConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapTenantPublicKey() {
+  public void fromRequest_shouldConvertTenantPublicKey() {
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(tenantPublicKey, booking.getTenantPublicKey());
   }
 
   @Test
-  public void fromRequest_shouldMapArrivalDate() {
+  public void fromRequest_shouldConvertArrivalDate() {
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(arrivalDate, booking.getArrivalDate());
   }
 
   @Test
-  public void fromRequest_shouldMapNumberOfNights() {
+  public void fromRequest_shouldConvertNumberOfNights() {
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(numberOfNights, booking.getNumberOfNights());
   }
 
   @Test
-  public void fromRequest_shouldMapColonySize() {
+  public void fromRequest_shouldConvertColonySize() {
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(colonySize, booking.getColonySize());
@@ -141,7 +143,7 @@ class BookingConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapPackage() {
+  public void fromRequest_shouldConvertPackage() {
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(packageName, booking.getPackage());
@@ -157,42 +159,42 @@ class BookingConverterTest {
   }
 
   @Test
-  public void toResponse_shouldMapArrivalDate() {
+  public void toResponse_shouldConvertArrivalDate() {
     bookingResponse = bookingConverter.toResponse(booking);
 
     assertEquals(arrivalDate.getValue().toString(), bookingResponse.getArrivalDate());
   }
 
   @Test
-  public void toResponse_shouldMapPackage() {
+  public void toResponse_shouldConvertPackage() {
     bookingResponse = bookingConverter.toResponse(booking);
 
     assertEquals(packageNameValue, bookingResponse.getBookingPackage());
   }
 
   @Test
-  public void toResponse_shouldMapNumberOfNights() {
+  public void toResponse_shouldConvertNumberOfNights() {
     bookingResponse = bookingConverter.toResponse(booking);
 
     assertEquals(numberOfNights, bookingResponse.getNumberOfNights());
   }
 
   @Test
-  public void toResponse_shouldMapColonySize() {
+  public void toResponse_shouldConvertColonySize() {
     bookingResponse = bookingConverter.toResponse(booking);
 
     assertEquals(colonySize, bookingResponse.getColonySize());
   }
 
   @Test
-  public void toResponse_shouldMapTotal() {
+  public void toResponse_shouldConvertTotal() {
     bookingResponse = bookingConverter.toResponse(booking);
 
     assertEquals(total.getValue().doubleValue(), bookingResponse.getTotal());
   }
 
   @Test
-  public void toResponse_shouldMapStatus() {
+  public void toResponse_shouldConvertStatus() {
     bookingResponse = bookingConverter.toResponse(booking);
 
     assertEquals(status.toString(), bookingResponse.getStatus());

@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.mappers;
+package ca.ulaval.glo2003.bookings.converters;
 
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import java.util.UUID;

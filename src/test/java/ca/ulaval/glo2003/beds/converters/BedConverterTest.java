@@ -54,7 +54,7 @@ class BedConverterTest {
       Collections.singletonList(packageResponse);
 
   @BeforeAll
-  public static void setUpMapper() {
+  public static void setUpConverter() {
     bedConverter =
         new BedConverter(
             bedNumberConverter, publicKeyConverter, bloodTypesConverter, packageConverter);
@@ -115,14 +115,14 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapOwnerPublicKey() {
+  public void fromRequest_shouldConvertOwnerPublicKey() {
     bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(ownerPublicKey, bed.getOwnerPublicKey());
   }
 
   @Test
-  public void fromRequest_shouldMapBedType() {
+  public void fromRequest_shouldConvertBedType() {
     bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(bedType, bed.getBedType());
@@ -136,7 +136,7 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapCleaningFrequency() {
+  public void fromRequest_shouldConvertCleaningFrequency() {
     bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(cleaningFrequency, bed.getCleaningFrequency());
@@ -151,14 +151,14 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapBloodTypes() {
+  public void fromRequest_shouldConvertBloodTypes() {
     bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(bloodTypes, bed.getBloodTypes());
   }
 
   @Test
-  public void fromRequest_shouldMapCapacity() {
+  public void fromRequest_shouldConvertCapacity() {
     bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(capacity, bed.getCapacity());
@@ -172,14 +172,14 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapLodgingMode() {
+  public void fromRequest_shouldConvertLodgingMode() {
     bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(lodgingMode, bed.getLodgingMode());
   }
 
   @Test
-  public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() {
+  public void fromRequest_withoutLodgingMode_shouldConvertPrivateLodgingMode() {
     bedRequest = aBedRequest().withLodgingMode(null).build();
 
     bed = bedConverter.fromRequest(bedRequest);
@@ -195,77 +195,77 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_shouldMapPricesPerNight() {
+  public void fromRequest_shouldConvertPricesPerNight() {
     Bed bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(pricesPerNight, bed.getPricesPerNight());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldNotMapBedNumber() {
+  public void toResponseWithoutNumber_shouldNotConvertBedNumber() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertNull(bedResponse.getBedNumber());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapLocation() {
+  public void toResponseWithoutNumber_shouldConvertLocation() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(location.getZipCode().getValue(), bedResponse.getZipCode());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapBedType() {
+  public void toResponseWithoutNumber_shouldConvertBedType() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(bedType.toString(), bedResponse.getBedType());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapCleaningFrequency() {
+  public void toResponseWithoutNumber_shouldConvertCleaningFrequency() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(cleaningFrequency.toString(), bedResponse.getCleaningFrequency());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapBloodTypes() {
+  public void toResponseWithoutNumber_shouldConvertBloodTypes() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(bloodTypeStrings, bedResponse.getBloodTypes());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapCapacity() {
+  public void toResponseWithoutNumber_shouldConvertCapacity() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(capacity, bedResponse.getCapacity());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapLodgingMode() {
+  public void toResponseWithoutNumber_shouldConvertLodgingMode() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(lodgingMode.toString(), bedResponse.getLodgingMode());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapPricesPerNights() {
+  public void toResponseWithoutNumber_shouldConvertPricesPerNights() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(packageResponses, bedResponse.getPackages());
   }
 
   @Test
-  public void toResponseWithoutNumber_shouldMapStars() {
+  public void toResponseWithoutNumber_shouldConvertStars() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(stars, bedResponse.getStars());
   }
 
   @Test
-  public void toResponseWithNumber_shouldMapBedNumber() {
+  public void toResponseWithNumber_shouldConvertBedNumber() {
     BedResponse bedResponse = bedConverter.toResponseWithNumber(bed, stars);
 
     assertEquals(bedNumber.toString(), bedResponse.getBedNumber());
