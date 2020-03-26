@@ -165,8 +165,8 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_withNegativeCapacity_shouldThrowInvalidCapacityException() {
-    bedRequest = aBedRequest().withCapacity(-1).build();
+  public void fromRequest_withoutCapacity_shouldThrowInvalidCapacityException() {
+    bedRequest = aBedRequest().withCapacity(0).build();
 
     assertThrows(InvalidCapacityException.class, () -> bedConverter.fromRequest(bedRequest));
   }

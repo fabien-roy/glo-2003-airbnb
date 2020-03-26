@@ -30,7 +30,7 @@ public class BedConverter {
   }
 
   public Bed fromRequest(BedRequest request) {
-    if (request.getCapacity() < 0) throw new InvalidCapacityException();
+    if (request.getCapacity() < 1) throw new InvalidCapacityException();
 
     PublicKey ownerPublicKey = publicKeyConverter.fromString(request.getOwnerPublicKey());
     List<BloodTypes> bloodTypes = bloodTypesConverter.fromStrings(request.getBloodTypes());
