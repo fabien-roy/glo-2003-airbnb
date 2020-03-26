@@ -1,9 +1,9 @@
-package ca.ulaval.glo2003.locations.mappers;
+package ca.ulaval.glo2003.locations.converters;
 
 import ca.ulaval.glo2003.locations.domain.ZipCode;
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
 
-public class ZipCodeMapper {
+public class ZipCodeConverter {
 
   public ZipCode fromString(String value) {
     validateLength(value);

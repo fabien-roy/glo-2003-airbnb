@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.locations.mappers;
+package ca.ulaval.glo2003.locations.converters;
 
 import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother.createLatitude;
 import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesObjectMother.createLongitude;
@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CoordinatesMapperTest {
+class CoordinatesConverterTest {
 
-  private static CoordinatesMapper coordinatesMapper;
+  private static CoordinatesConverter coordinatesConverter;
 
   private static final Longitude longitude = createLongitude();
   private static final Latitude latitude = createLatitude();
@@ -23,8 +23,8 @@ class CoordinatesMapperTest {
   private PlaceResponse placeResponse;
 
   @BeforeAll
-  public static void setUpMapper() {
-    coordinatesMapper = new CoordinatesMapper();
+  public static void setUpConverter() {
+    coordinatesConverter = new CoordinatesConverter();
   }
 
   @BeforeEach
@@ -37,15 +37,15 @@ class CoordinatesMapperTest {
   }
 
   @Test
-  public void fromResponse_shouldMapLongitude() {
-    Coordinates coordinates = coordinatesMapper.fromResponse(placeResponse);
+  public void fromResponse_shouldConvertLongitude() {
+    Coordinates coordinates = coordinatesConverter.fromResponse(placeResponse);
 
     assertEquals(longitude, coordinates.getLongitude());
   }
 
   @Test
-  public void fromResponse_shouldMapLatitude() {
-    Coordinates coordinates = coordinatesMapper.fromResponse(placeResponse);
+  public void fromResponse_shouldConvertLatitude() {
+    Coordinates coordinates = coordinatesConverter.fromResponse(placeResponse);
 
     assertEquals(latitude, coordinates.getLatitude());
   }

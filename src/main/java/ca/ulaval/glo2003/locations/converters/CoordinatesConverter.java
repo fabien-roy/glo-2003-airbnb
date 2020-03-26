@@ -1,11 +1,11 @@
-package ca.ulaval.glo2003.locations.mappers;
+package ca.ulaval.glo2003.locations.converters;
 
 import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Latitude;
 import ca.ulaval.glo2003.locations.domain.Longitude;
 import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
 
-public class CoordinatesMapper {
+public class CoordinatesConverter {
 
   public Coordinates fromResponse(PlaceResponse place) {
     double latitude = parseDouble(place.getLatitude());
