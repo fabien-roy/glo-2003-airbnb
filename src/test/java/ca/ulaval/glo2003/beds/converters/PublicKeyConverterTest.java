@@ -1,30 +1,45 @@
 package ca.ulaval.glo2003.beds.converters;
 
-import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.createOwnerPublicKey;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PublicKeyConverterTest {
 
-  private PublicKeyConverter publicKeyConverter;
+  private static PublicKeyConverter publicKeyConverter;
+
+  private static PublicKey publicKey;
+
+  @BeforeAll
+  public static void setUpConverter() {
+    publicKeyConverter = new PublicKeyConverter();
+  }
 
   @BeforeEach
-  public void setUpConverter() {
-    publicKeyConverter = new PublicKeyConverter();
+  public void resetMock() {
+    publicKey = createOwnerPublicKey();
   }
 
   @Test
   public void fromString_shouldConvertPublicKey() {
-    PublicKey expectedPublicKey = new PublicKey(createOwnerPublicKey());
+    PublicKey actualPublicKey = publicKeyConverter.fromString(publicKey.getValue());
 
-    PublicKey publicKey = publicKeyConverter.fromString(expectedPublicKey.getValue());
+    assertEquals(publicKey, actualPublicKey);
+  }
 
-    assertEquals(expectedPublicKey, publicKey);
+  @Test
+  public void fromString_withLowerCaseString_shouldConvertPublicKey() {
+    String lowerCaseString = publicKey.getValue().toLowerCase();
+
+    PublicKey actualPublicKey = publicKeyConverter.fromString(lowerCaseString);
+
+    assertEquals(publicKey, actualPublicKey);
   }
 
   @Test
@@ -37,11 +52,8 @@ class PublicKeyConverterTest {
 
   @Test
   public void toString_shouldConvertPublicKey() {
-    PublicKey publicKey = new PublicKey(createOwnerPublicKey());
-    String expectedValue = publicKey.getValue();
-
     String value = publicKeyConverter.toString(publicKey);
 
-    assertEquals(expectedValue, value);
+    assertEquals(publicKey.getValue(), value);
   }
 }
