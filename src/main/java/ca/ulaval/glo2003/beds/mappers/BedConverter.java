@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 
-public class BedMapper {
+public class BedConverter {
 
   private final PublicKeyMapper publicKeyMapper;
   private final BloodTypesMapper bloodTypesMapper;
   private final PackageMapper packageMapper;
 
   @Inject
-  public BedMapper(
+  public BedConverter(
       PublicKeyMapper publicKeyMapper,
       BloodTypesMapper bloodTypesMapper,
       PackageMapper packageMapper) {
@@ -27,12 +27,9 @@ public class BedMapper {
   }
 
   public Bed fromRequest(BedRequest request) {
-    if (request.getCapacity() <= 0) throw new InvalidCapacityException();
+    if (request.getCapacity() < 0) throw new InvalidCapacityException();
 
     PublicKey ownerPublicKey = publicKeyMapper.fromString(request.getOwnerPublicKey());
-    BedTypes bedType = BedTypes.get(request.getBedType());
-    CleaningFrequencies cleaningFrequencies =
-        CleaningFrequencies.get(request.getCleaningFrequency());
     List<BloodTypes> bloodTypes = bloodTypesMapper.fromStrings(request.getBloodTypes());
     LodgingModes mode =
         request.getLodgingMode() == null
@@ -42,8 +39,8 @@ public class BedMapper {
 
     return new Bed(
         ownerPublicKey,
-        bedType,
-        cleaningFrequencies,
+        BedTypes.get(request.getBedType()),
+        CleaningFrequencies.get(request.getCleaningFrequency()),
         bloodTypes,
         request.getCapacity(),
         mode,

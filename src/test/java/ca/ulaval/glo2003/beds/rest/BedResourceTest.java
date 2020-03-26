@@ -23,11 +23,11 @@ public class BedResourceTest {
 
   private static BedResource bedResource;
   private static BedService bedService = mock(BedService.class);
-  private static BedParser bedParser = mock(BedParser.class);
+  private static BedMapper bedMapper = mock(BedMapper.class);
 
   @BeforeAll
   public static void setUpResource() {
-    bedResource = new BedResource(bedService, bedParser);
+    bedResource = new BedResource(bedService, bedMapper);
   }
 
   @Test

@@ -17,7 +17,7 @@ class BookingResourceTest {
 
   private static BookingResource bookingResource;
   private static BookingService bookingService = mock(BookingService.class);
-  private static BookingParser bookingParser = mock(BookingParser.class);
+  private static BookingMapper bookingParser = mock(BookingMapper.class);
 
   private Request request = mock(Request.class);
   private Response response = mock(Response.class);

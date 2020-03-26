@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.beds.rest.serializers;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
-import ca.ulaval.glo2003.parsers.rest.serializers.PositiveIntegerDeserializer;
+import ca.ulaval.glo2003.parsers.rest.serializers.IntegerDeserializer;
 
-public class CapacityDeserializer extends PositiveIntegerDeserializer<InvalidCapacityException> {
+public class CapacityDeserializer extends IntegerDeserializer<InvalidCapacityException> {
 
   @Override
   public void throwException() throws InvalidCapacityException {

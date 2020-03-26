@@ -18,23 +18,23 @@ public class BedResource implements RouteGroup {
   public static final String BED_PATH = "/beds";
 
   private final BedService bedService;
-  private final BedParser bedParser;
+  private final BedMapper bedMapper;
 
   @Inject
-  public BedResource(BedService bedService, BedParser bedParser) {
+  public BedResource(BedService bedService, BedMapper bedMapper) {
     this.bedService = bedService;
-    this.bedParser = bedParser;
+    this.bedMapper = bedMapper;
   }
 
   @Override
   public void addRoutes() {
     post("", this::add);
-    get("", this::getAll, bedParser::writeValueAsString);
-    get("/:number", this::getByNumber, bedParser::writeValueAsString);
+    get("", this::getAll, bedMapper::writeValueAsString);
+    get("/:number", this::getByNumber, bedMapper::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws IOException {
-    BedRequest bedRequest = bedParser.readValue(request.body(), BedRequest.class);
+    BedRequest bedRequest = bedMapper.readValue(request.body(), BedRequest.class);
 
     String bedNumber = bedService.add(bedRequest);
     String bedPath = String.format("%s/%s", BED_PATH, bedNumber);

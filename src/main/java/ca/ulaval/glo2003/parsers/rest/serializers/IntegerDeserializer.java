@@ -5,10 +5,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import java.io.IOException;
 
-public abstract class PositiveIntegerDeserializer<E extends RuntimeException>
+public abstract class IntegerDeserializer<E extends RuntimeException>
     extends AbstractDeserializer<Integer, E> {
 
-  protected PositiveIntegerDeserializer() {
+  protected IntegerDeserializer() {
     super(Integer.class);
   }
 
@@ -27,8 +27,6 @@ public abstract class PositiveIntegerDeserializer<E extends RuntimeException>
     } catch (IOException e) {
       throwException();
     }
-
-    if (integer <= 0) throwException();
 
     return integer;
   }

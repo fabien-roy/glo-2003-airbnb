@@ -24,9 +24,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BedMapperTest {
+class BedConverterTest {
 
-  private static BedMapper bedMapper;
+  private static BedConverter bedConverter;
   private static PublicKeyMapper publicKeyMapper = mock(PublicKeyMapper.class);
   private static BloodTypesMapper bloodTypesMapper = mock(BloodTypesMapper.class);
   private static PackageMapper packageMapper = mock(PackageMapper.class);
@@ -54,7 +54,7 @@ class BedMapperTest {
 
   @BeforeAll
   public static void setUpMapper() {
-    bedMapper = new BedMapper(publicKeyMapper, bloodTypesMapper, packageMapper);
+    bedConverter = new BedConverter(publicKeyMapper, bloodTypesMapper, packageMapper);
   }
 
   @BeforeEach
@@ -112,79 +112,64 @@ class BedMapperTest {
 
   @Test
   public void fromRequest_shouldMapOwnerPublicKey() {
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(ownerPublicKey, bed.getOwnerPublicKey());
   }
 
   @Test
   public void fromRequest_shouldMapBedType() {
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(bedType, bed.getBedType());
-  }
-
-  @Test
-  public void fromRequest_withoutBedType_shouldThrowInvalidBedTypeException() {
-    bedRequest = aBedRequest().withBedType(null).build();
-
-    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_withInvalidBedType_shouldThrowInvalidBedTypeException() {
     bedRequest = aBedRequest().withBedType("invalidBedType").build();
 
-    assertThrows(InvalidBedTypeException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidBedTypeException.class, () -> bedConverter.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_shouldMapCleaningFrequency() {
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(cleaningFrequency, bed.getCleaningFrequency());
-  }
-
-  @Test
-  public void fromRequest_withoutCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
-    bedRequest = aBedRequest().withCleaningFrequency(null).build();
-
-    assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_withInvalidCleaningFrequency_shouldThrowInvalidFormatException() {
     bedRequest = aBedRequest().withCleaningFrequency("invalidCleaningFrequency").build();
 
-    assertThrows(InvalidCleaningFrequencyException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(
+        InvalidCleaningFrequencyException.class, () -> bedConverter.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_shouldMapBloodTypes() {
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(bloodTypes, bed.getBloodTypes());
   }
 
   @Test
   public void fromRequest_shouldMapCapacity() {
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(capacity, bed.getCapacity());
   }
 
   @Test
-  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+  public void fromRequest_withNegativeCapacity_shouldThrowInvalidCapacityException() {
     bedRequest = aBedRequest().withCapacity(-1).build();
 
-    assertThrows(InvalidCapacityException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidCapacityException.class, () -> bedConverter.fromRequest(bedRequest));
   }
-
-  // TODO : withStringifiedCapacity (String) (also test array)
 
   @Test
   public void fromRequest_shouldMapLodgingMode() {
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(lodgingMode, bed.getLodgingMode());
   }
@@ -193,7 +178,7 @@ class BedMapperTest {
   public void fromRequest_withoutLodgingMode_shouldMapPrivateLodgingMode() {
     bedRequest = aBedRequest().withLodgingMode(null).build();
 
-    bed = bedMapper.fromRequest(bedRequest);
+    bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(LodgingModes.PRIVATE, bed.getLodgingMode());
   }
@@ -202,82 +187,82 @@ class BedMapperTest {
   public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
     bedRequest = aBedRequest().withLodgingMode("invalidLodgingMode").build();
 
-    assertThrows(InvalidLodgingModeException.class, () -> bedMapper.fromRequest(bedRequest));
+    assertThrows(InvalidLodgingModeException.class, () -> bedConverter.fromRequest(bedRequest));
   }
 
   @Test
   public void fromRequest_shouldMapPricesPerNight() {
-    Bed bed = bedMapper.fromRequest(bedRequest);
+    Bed bed = bedConverter.fromRequest(bedRequest);
 
     assertEquals(pricesPerNight, bed.getPricesPerNight());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldNotMapBedNumber() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertNull(bedResponse.getBedNumber());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapLocation() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(location.getZipCode().getValue(), bedResponse.getZipCode());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapBedType() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(bedType.toString(), bedResponse.getBedType());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapCleaningFrequency() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(cleaningFrequency.toString(), bedResponse.getCleaningFrequency());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapBloodTypes() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(bloodTypeStrings, bedResponse.getBloodTypes());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapCapacity() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(capacity, bedResponse.getCapacity());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapLodgingMode() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(lodgingMode.toString(), bedResponse.getLodgingMode());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapPricesPerNights() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(packageResponses, bedResponse.getPackages());
   }
 
   @Test
   public void toResponseWithoutNumber_shouldMapStars() {
-    BedResponse bedResponse = bedMapper.toResponseWithoutNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
     assertEquals(stars, bedResponse.getStars());
   }
 
   @Test
   public void toResponseWithNumber_shouldMapBedNumber() {
-    BedResponse bedResponse = bedMapper.toResponseWithNumber(bed, stars);
+    BedResponse bedResponse = bedConverter.toResponseWithNumber(bed, stars);
 
     assertEquals(bedNumber.toString(), bedResponse.getBedNumber());
   }

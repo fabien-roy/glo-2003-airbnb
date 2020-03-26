@@ -1,22 +1,10 @@
 package ca.ulaval.glo2003.bookings.rest.serializers;
 
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
-import ca.ulaval.glo2003.parsers.rest.serializers.PositiveIntegerDeserializer;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
+import ca.ulaval.glo2003.parsers.rest.serializers.IntegerDeserializer;
 
 public class NumberOfNightsDeserializer
-    extends PositiveIntegerDeserializer<InvalidNumberOfNightsException> {
-
-  @Override
-  public Integer deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws InvalidNumberOfNightsException {
-    int colonySize = super.deserialize(jsonParser, deserializationContext);
-
-    if (colonySize > 90) throwException();
-
-    return colonySize;
-  }
+    extends IntegerDeserializer<InvalidNumberOfNightsException> {
 
   @Override
   public void throwException() throws InvalidNumberOfNightsException {

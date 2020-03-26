@@ -15,6 +15,6 @@ public class BedDeserializingModule extends DeserializingModule {
       PriceDeserializer priceDeserializer) {
     super(
         Arrays.asList(
-            capacityDeserializer, bloodTypesDeserializer, capacityDeserializer, priceDeserializer));
+            capacityDeserializer, bloodTypesDeserializer, packagesDeserializer, priceDeserializer));
   }
 }

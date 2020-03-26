@@ -19,10 +19,10 @@ public class BookingResource implements RouteGroup {
   public static final String BOOKING_PATH = "/beds/:bedNumber/bookings";
 
   private final BookingService bookingService;
-  private final BookingParser bookingParser;
+  private final BookingMapper bookingParser;
 
   @Inject
-  public BookingResource(BookingService bookingService, BookingParser bookingParser) {
+  public BookingResource(BookingService bookingService, BookingMapper bookingParser) {
     this.bookingService = bookingService;
     this.bookingParser = bookingParser;
   }

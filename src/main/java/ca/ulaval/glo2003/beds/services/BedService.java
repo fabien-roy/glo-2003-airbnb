@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.services;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
-import ca.ulaval.glo2003.beds.mappers.BedMapper;
+import ca.ulaval.glo2003.beds.mappers.BedConverter;
 import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
@@ -16,7 +16,7 @@ public class BedService {
 
   private final BedFactory bedFactory;
   private final BedQueryFactory bedQueryFactory;
-  private final BedMapper bedMapper;
+  private final BedConverter bedConverter;
   private final BedNumberMapper bedNumberMapper;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
@@ -26,14 +26,14 @@ public class BedService {
   public BedService(
       BedFactory bedFactory,
       BedQueryFactory bedQueryFactory,
-      BedMapper bedMapper,
+      BedConverter bedConverter,
       BedNumberMapper bedNumberMapper,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
       LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedQueryFactory = bedQueryFactory;
-    this.bedMapper = bedMapper;
+    this.bedConverter = bedConverter;
     this.bedNumberMapper = bedNumberMapper;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
@@ -41,7 +41,7 @@ public class BedService {
   }
 
   public String add(BedRequest request) {
-    Bed bed = bedMapper.fromRequest(request);
+    Bed bed = bedConverter.fromRequest(request);
     Location location = locationService.getLocation(request.getZipCode());
 
     bed = bedFactory.create(bed, location);
@@ -64,14 +64,14 @@ public class BedService {
 
     Bed bed = bedRepository.getByNumber(bedNumber);
 
-    return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
+    return bedConverter.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
   }
 
   private List<BedResponse> toResponses(List<Bed> beds) {
     return beds.stream()
         .map(
             matchingBed ->
-                bedMapper.toResponseWithNumber(
+                bedConverter.toResponseWithNumber(
                     matchingBed, bedStarsCalculator.calculateStars(matchingBed)))
         .collect(Collectors.toList());
   }

@@ -15,11 +15,11 @@ public class TransactionResource implements RouteGroup {
   public static final String TRANSACTION_PATH = "/admin/transactions";
 
   private final TransactionService transactionService;
-  private final TransactionParser transactionParser;
+  private final TransactionMapper transactionParser;
 
   @Inject
   public TransactionResource(
-      TransactionService transactionService, TransactionParser transactionParser) {
+      TransactionService transactionService, TransactionMapper transactionParser) {
     this.transactionService = transactionService;
     this.transactionParser = transactionParser;
   }

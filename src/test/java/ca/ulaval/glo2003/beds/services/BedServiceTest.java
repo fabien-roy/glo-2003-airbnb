@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
-import ca.ulaval.glo2003.beds.mappers.BedMapper;
+import ca.ulaval.glo2003.beds.mappers.BedConverter;
 import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
@@ -26,7 +26,7 @@ public class BedServiceTest {
   private static BedService bedService;
   private static BedFactory bedFactory = mock(BedFactory.class);
   private static BedQueryFactory bedQueryFactory = mock(BedQueryFactory.class);
-  private static BedMapper bedMapper = mock(BedMapper.class);
+  private static BedConverter bedConverter = mock(BedConverter.class);
   private static BedNumberMapper bedNumberMapper = mock(BedNumberMapper.class);
   private static BedRepository bedRepository = mock(BedRepository.class);
   private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
@@ -50,7 +50,7 @@ public class BedServiceTest {
         new BedService(
             bedFactory,
             bedQueryFactory,
-            bedMapper,
+            bedConverter,
             bedNumberMapper,
             bedRepository,
             bedStarsCalculator,
@@ -59,7 +59,7 @@ public class BedServiceTest {
 
   @BeforeEach
   public void setUpMocksForAdd() {
-    when(bedMapper.fromRequest(bedRequest)).thenReturn(bed);
+    when(bedConverter.fromRequest(bedRequest)).thenReturn(bed);
     when(locationService.getLocation(bedRequest.getZipCode())).thenReturn(validatedLocation);
     when(bedFactory.create(bed, validatedLocation)).thenReturn(bed);
   }
@@ -72,15 +72,15 @@ public class BedServiceTest {
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
     when(locationService.getLocation(origin.getZipCode().getValue())).thenReturn(validatedLocation);
-    when(bedMapper.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
-    when(bedMapper.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
+    when(bedConverter.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
+    when(bedConverter.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
   }
 
   @BeforeEach
   public void setUpMocksForGetByNumber() {
     when(bedNumberMapper.fromString(bedNumber.toString())).thenReturn(bedNumber);
     when(bedRepository.getByNumber(bedNumber)).thenReturn(bed);
-    when(bedMapper.toResponseWithoutNumber(bed, stars)).thenReturn(bedResponse);
+    when(bedConverter.toResponseWithoutNumber(bed, stars)).thenReturn(bedResponse);
   }
 
   @Test

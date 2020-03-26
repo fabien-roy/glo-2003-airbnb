@@ -20,7 +20,7 @@ class TransactionResourceTest {
 
   private static TransactionResource transactionResource;
   private static TransactionService transactionService = mock(TransactionService.class);
-  private static TransactionParser transactionParser = mock(TransactionParser.class);
+  private static TransactionMapper transactionParser = mock(TransactionMapper.class);
 
   @BeforeAll
   public static void setUpResource() {
