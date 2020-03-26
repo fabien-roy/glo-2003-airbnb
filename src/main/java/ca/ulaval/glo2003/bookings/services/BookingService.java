@@ -7,7 +7,7 @@ import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.bookings.mappers.BookingConverter;
-import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
+import ca.ulaval.glo2003.bookings.mappers.BookingNumberConverter;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelResponse;
@@ -18,30 +18,30 @@ import javax.inject.Inject;
 
 public class BookingService {
 
-  private final TransactionService transactionService;
   private final BookingConverter bookingConverter;
+  private final BookingNumberConverter bookingNumberConverter;
+  private final BedNumberConverter bedNumberConverter;
   private final BedRepository bedRepository;
   private final BookingFactory bookingFactory;
   private final BookingTotalCalculator bookingTotalCalculator;
-  private final BookingNumberMapper bookingNumberMapper;
-  private final BedNumberConverter bedNumberConverter;
+  private final TransactionService transactionService;
 
   @Inject
   public BookingService(
-      TransactionService transactionService,
       BookingConverter bookingConverter,
+      BookingNumberConverter bookingNumberConverter,
+      BedNumberConverter bedNumberConverter,
       BedRepository bedRepository,
       BookingFactory bookingFactory,
       BookingTotalCalculator bookingTotalCalculator,
-      BedNumberConverter bedNumberConverter,
-      BookingNumberMapper bookingNumberMapper) {
-    this.transactionService = transactionService;
+      TransactionService transactionService) {
     this.bookingConverter = bookingConverter;
+    this.bookingNumberConverter = bookingNumberConverter;
+    this.bedNumberConverter = bedNumberConverter;
     this.bedRepository = bedRepository;
     this.bookingFactory = bookingFactory;
     this.bookingTotalCalculator = bookingTotalCalculator;
-    this.bedNumberConverter = bedNumberConverter;
-    this.bookingNumberMapper = bookingNumberMapper;
+    this.transactionService = transactionService;
   }
 
   public String add(String bedNumber, BookingRequest bookingRequest) {
@@ -55,12 +55,12 @@ public class BookingService {
     transactionService.addStayCompleted(
         bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
     bedRepository.update(bed);
-    return booking.getNumber().toString();
+    return bookingNumberConverter.toString(booking.getNumber());
   }
 
   public BookingResponse getByNumber(String bedNumber, String bookingNumber) {
     UUID parsedBedNumber = bedNumberConverter.fromString(bedNumber);
-    UUID parsedBookingNumber = bookingNumberMapper.fromString(bookingNumber);
+    UUID parsedBookingNumber = bookingNumberConverter.fromString(bookingNumber);
 
     Bed bed = bedRepository.getByNumber(parsedBedNumber);
 
