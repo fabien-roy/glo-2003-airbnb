@@ -12,38 +12,38 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class IntegerDeserializerTest {
+class StringDeserializerTest {
 
-  private static IntegerDeserializer integerDeserializer;
+  private static StringDeserializer stringDeserializer;
   private static JsonParser jsonParser = mock(JsonParser.class);
   private static DeserializationContext deserializationContext = mock(DeserializationContext.class);
 
-  private static int integer = 1;
+  private static String value = "value";
 
   @BeforeAll
   public static void setUpDeserializer() {
-    integerDeserializer = new FakeIntegerDeserializer();
+    stringDeserializer = new FakeStringDeserializer();
   }
 
   @BeforeEach
   public void setUpMocks() throws IOException {
     reset(jsonParser);
-    when(jsonParser.getIntValue()).thenReturn(integer);
+    when(jsonParser.getText()).thenReturn(value);
   }
 
   @Test
-  public void deserialize_shouldReturnInteger() {
-    int actualInteger = integerDeserializer.deserialize(jsonParser, deserializationContext);
+  public void deserialize_shouldReturnString() {
+    String actualValue = stringDeserializer.deserialize(jsonParser, deserializationContext);
 
-    assertEquals(integer, actualInteger);
+    assertEquals(value, actualValue);
   }
 
   @Test
-  public void deserialize_withInvalidInteger_shouldThrowException() throws IOException {
-    when(jsonParser.getIntValue()).thenThrow(new IOException());
+  public void deserialize_withInvalidString_shouldThrowException() throws IOException {
+    when(jsonParser.getText()).thenThrow(new IOException());
 
     assertThrows(
         TestingException.class,
-        () -> integerDeserializer.deserialize(jsonParser, deserializationContext));
+        () -> stringDeserializer.deserialize(jsonParser, deserializationContext));
   }
 }

@@ -1,17 +1,24 @@
 package ca.ulaval.glo2003.beds.rest;
 
-import ca.ulaval.glo2003.beds.rest.serializers.BloodTypesDeserializer;
-import ca.ulaval.glo2003.beds.rest.serializers.CapacityDeserializer;
-import ca.ulaval.glo2003.beds.rest.serializers.PackagesDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.*;
+import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Arrays;
 import java.util.List;
+import jdk.internal.jline.internal.Nullable;
 
 public class BedRequest {
 
+  @JsonDeserialize(using = PublicKeyDeserializer.class)
   private String ownerPublicKey;
+
+  @JsonDeserialize(using = ZipCodeDeserializer.class)
   private String zipCode;
+
+  @JsonDeserialize(using = BedTypeDeserializer.class)
   private String bedType;
+
+  @JsonDeserialize(using = CleaningFrequencyDeserializer.class)
   private String cleaningFrequency;
 
   @JsonDeserialize(using = BloodTypesDeserializer.class)
@@ -20,7 +27,7 @@ public class BedRequest {
   @JsonDeserialize(using = CapacityDeserializer.class)
   private int capacity;
 
-  private String lodgingMode;
+  @Nullable private String lodgingMode;
 
   @JsonDeserialize(using = PackagesDeserializer.class)
   private List<PackageRequest> packages;
