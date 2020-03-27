@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 public class PackageConverter {
 
-  private PriceConverter priceConverter;
+  private final PriceConverter priceConverter;
 
   @Inject
   public PackageConverter(PriceConverter priceConverter) {
@@ -19,6 +19,8 @@ public class PackageConverter {
   }
 
   public Map<Packages, Price> fromRequests(List<PackageRequest> packageRequests) {
+    if (packageRequests.isEmpty()) throw new InvalidPackagesException(); // TODO : Test this
+
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
 
     packageRequests.forEach(

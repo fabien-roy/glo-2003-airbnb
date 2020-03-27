@@ -39,11 +39,9 @@ public abstract class ListDeserializer<T, E extends RuntimeException>
       resetCollection();
 
       try {
-        if (jsonParser.nextToken() == JsonToken.END_ARRAY) throwException();
-
-        do {
+        while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
           addElement(jsonParser);
-        } while (jsonParser.nextToken() != JsonToken.END_ARRAY);
+        }
       } catch (IOException e) {
         throwException();
         return null; // TODO : Return nothing
