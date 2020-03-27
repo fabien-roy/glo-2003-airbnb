@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : Needs testing
 public class PackagesDeserializer
     extends ListDeserializer<PackageRequest, InvalidPackagesException> {
 

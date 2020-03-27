@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import java.io.IOException;
 import java.util.List;
 
-// TODO : Needs testing
 public abstract class ListDeserializer<T, E extends RuntimeException>
     extends AbstractDeserializer<List<T>, E> implements ContextualDeserializer {
 
