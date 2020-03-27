@@ -1,46 +1,37 @@
 package ca.ulaval.glo2003.interfaces.rest.serializers;
 
-import ca.ulaval.glo2003.interfaces.domain.serializers.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.BeanProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO : Needs testing
 public abstract class StringArrayDeserializer<E extends RuntimeException>
-    extends AbstractDeserializer<String[], E> {
+    extends CollectionDeserializer<String[], E> {
+
+  List<String> strings = new ArrayList<>();
 
   protected StringArrayDeserializer() {
-    super(String[].class);
+    super();
+  }
+
+  protected StringArrayDeserializer(BeanProperty property) {
+    super(property);
   }
 
   @Override
-  public Class<?> getType() {
-    return String[].class;
+  protected void resetCollection() {
+    strings = new ArrayList<>();
   }
 
   @Override
-  public String[] deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws E {
-    if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
-      List<String> strings = new ArrayList<>();
+  protected void addElement(JsonParser jsonParser) throws IOException {
+    strings.add(jsonParser.getValueAsString());
+  }
 
-      try {
-        if (jsonParser.nextToken() == JsonToken.END_ARRAY) throwException();
-
-        do {
-          strings.add(jsonParser.getValueAsString());
-        } while (jsonParser.nextToken() != JsonToken.END_ARRAY);
-      } catch (IOException e) {
-        throwException();
-        return new String[0]; // TODO : Return nothing
-      }
-
-      return strings.toArray(new String[0]);
-    }
-
-    throwException();
-    return new String[0]; // TODO : Return nothing
+  @Override
+  protected String[] buildDeserializedCollection() {
+    return strings.toArray(new String[0]);
   }
 }

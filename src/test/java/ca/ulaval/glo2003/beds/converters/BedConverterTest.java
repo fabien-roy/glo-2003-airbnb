@@ -110,8 +110,10 @@ class BedConverterTest {
         .build();
   }
 
-  private static List<String> convertToStrings(List<BloodTypes> bloodTypes) {
-    return bloodTypes.stream().map(BloodTypes::toString).collect(Collectors.toList());
+  private static ArrayList<String> convertToStrings(List<BloodTypes> bloodTypes) {
+    return bloodTypes.stream()
+        .map(BloodTypes::toString)
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Test
