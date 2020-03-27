@@ -11,21 +11,18 @@ class BookingTest {
 
   @Test
   public void construct_shouldSetStatusToBooked() {
-    BookingStatuses expectedBookingStatus = BookingStatuses.BOOKED;
-
     Booking booking = aBooking().build();
 
-    assertEquals(expectedBookingStatus, booking.getStatus());
+    assertFalse(booking.isCanceled());
   }
 
   @Test
   public void cancel_shouldSetStatusToCanceled() {
-    BookingStatuses expectedBookingStatus = BookingStatuses.CANCELED;
     Booking booking = aBooking().build();
 
     booking.cancel();
 
-    assertEquals(expectedBookingStatus, booking.getStatus());
+    assertTrue(booking.isCanceled());
   }
 
   @Test

@@ -75,8 +75,16 @@ public class Booking {
     return transactions;
   }
 
+  public BookingStatuses getStatus() {
+    return status;
+  }
+
   public void cancel() {
     status = BookingStatuses.CANCELED;
+  }
+
+  public boolean isCanceled() {
+    return status == BookingStatuses.CANCELED;
   }
 
   public boolean isOverlapping(Booking otherBooking) {
@@ -86,9 +94,5 @@ public class Booking {
 
   public LocalDate getDepartureDate() {
     return arrivalDate.getValue().plusDays(numberOfNights - 1);
-  }
-
-  public BookingStatuses getStatus() {
-    return status;
   }
 }

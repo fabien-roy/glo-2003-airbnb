@@ -122,9 +122,23 @@ public class BedServiceTest {
   }
 
   @Test
-  public void getByNumber_withNumber_shouldGetBed() {
-    BedResponse actualBedResponse = bedService.getByNumber(bedNumber.toString());
+  public void getResponse_shouldGetBedResponse() {
+    BedResponse actualBedResponse = bedService.getResponse(bedNumber.toString());
 
     assertSame(bedResponse, actualBedResponse);
+  }
+
+  @Test
+  public void get_shouldGetBed() {
+    Bed actualBed = bedService.get(bedNumber.toString());
+
+    assertSame(bed, actualBed);
+  }
+
+  @Test
+  public void update_shouldUpdateBed() {
+    bedService.update(bed);
+
+    verify(bedRepository).update(bed);
   }
 }

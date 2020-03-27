@@ -21,7 +21,7 @@ class ArrivalDateQueryParamAssemblerTest {
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private BookingDate arrivalDate = new BookingDate();
+  private BookingDate arrivalDate = BookingDate.now();
   private Map<String, String[]> params = new HashMap<>();
 
   @BeforeAll

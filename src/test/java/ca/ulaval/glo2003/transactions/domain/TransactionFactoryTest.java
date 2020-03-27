@@ -3,101 +3,93 @@ package ca.ulaval.glo2003.transactions.domain;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class TransactionFactoryTest {
 
-  TransactionFactory transactionFactory;
+  private static TransactionFactory transactionFactory;
 
-  @BeforeEach
-  public void setUpFactory() {
+  private static String from = createFrom();
+  private static String to = createTo();
+  private static Price total = createTotal();
+  private static int numberOfDays = 2;
+
+  @BeforeAll
+  public static void setUpFactory() {
     transactionFactory = new TransactionFactory();
   }
 
   @Test
   public void createStayBooked_shouldSetTimestamp() {
-    Transaction transaction = transactionFactory.createStayBooked(createFrom(), createTotal());
+    Transaction transaction = transactionFactory.createStayBooked(from, to, total);
 
     assertNotNull(transaction.getTimestamp());
   }
 
   @Test
   public void createStayBooked_shouldSetFrom() {
-    String expectedFrom = createFrom();
+    Transaction transaction = transactionFactory.createStayBooked(from, to, total);
 
-    Transaction transaction = transactionFactory.createStayBooked(expectedFrom, createTotal());
-
-    assertEquals(expectedFrom, transaction.getFrom());
+    assertEquals(from, transaction.getFrom());
   }
 
   @Test
-  public void createStayBooked_shouldSetToAsAirbnb() {
-    String expectedTo = TransactionFactory.AIRBNB;
+  public void createStayBooked_shouldSetTo() {
+    Transaction transaction = transactionFactory.createStayBooked(from, to, total);
 
-    Transaction transaction = transactionFactory.createStayBooked(createFrom(), createTotal());
-
-    assertEquals(expectedTo, transaction.getTo());
+    assertEquals(to, transaction.getTo());
   }
 
   @Test
   public void createStayBooked_shouldSetTotal() {
-    Price expectedTotal = createTotal();
+    Transaction transaction = transactionFactory.createStayBooked(from, to, total);
 
-    Transaction transaction = transactionFactory.createStayBooked(createFrom(), expectedTotal);
-
-    assertEquals(expectedTotal, transaction.getTotal());
+    assertEquals(total, transaction.getTotal());
   }
 
   @Test
   public void createStayBooked_shouldSetReasonAsStayBooked() {
     TransactionReasons expectedReason = TransactionReasons.STAY_BOOKED;
 
-    Transaction transaction = transactionFactory.createStayBooked(createFrom(), createTotal());
+    Transaction transaction = transactionFactory.createStayBooked(from, to, total);
 
     assertEquals(expectedReason, transaction.getReason());
   }
 
   @Test
   public void createStayCompleted_shouldSetTimestamp() {
-    Transaction transaction = transactionFactory.createStayCompleted(createTo(), createTotal(), 1);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
 
     assertNotNull(transaction.getTimestamp());
   }
 
   @Test
-  public void createStayCompleted_shouldSetFromAsAirbnb() {
-    String expectedFrom = TransactionFactory.AIRBNB;
+  public void createStayCompleted_shouldSetFrom() {
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
 
-    Transaction transaction =
-        transactionFactory.createStayCompleted(expectedFrom, createTotal(), 1);
-
-    assertEquals(expectedFrom, transaction.getFrom());
+    assertEquals(from, transaction.getFrom());
   }
 
   @Test
   public void createStayCompleted_shouldSetTo() {
-    String expectedTo = createTo();
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
 
-    Transaction transaction = transactionFactory.createStayCompleted(expectedTo, createTotal(), 1);
-
-    assertEquals(expectedTo, transaction.getTo());
+    assertEquals(to, transaction.getTo());
   }
 
   @Test
   public void createStayCompleted_shouldSetTotal() {
-    Price expectedTotal = createTotal();
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
 
-    Transaction transaction = transactionFactory.createStayCompleted(createTo(), expectedTotal, 1);
-
-    assertEquals(expectedTotal, transaction.getTotal());
+    assertEquals(total, transaction.getTotal());
   }
 
   @Test
   public void createStayCompleted_shouldSetReasonAsStayCompleted() {
     TransactionReasons expectedReason = TransactionReasons.STAY_COMPLETED;
 
-    Transaction transaction = transactionFactory.createStayCompleted(createTo(), createTotal(), 1);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
 
     assertEquals(expectedReason, transaction.getReason());
   }

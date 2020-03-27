@@ -102,7 +102,7 @@ class InMemoryBedQueryBuilderTest {
     InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withMinCapacity(minCapacity).build();
 
     assertEquals(
-        new BookingDate(),
+        BookingDate.now(),
         ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getArrivalDate());
   }
 

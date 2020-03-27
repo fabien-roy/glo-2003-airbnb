@@ -2,23 +2,22 @@ package ca.ulaval.glo2003.transactions.converters;
 
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
-import java.time.format.DateTimeFormatter;
-import javax.inject.Inject;
 
 public class TransactionConverter {
 
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
-
+  private final TimestampConverter timestampConverter;
   private final PriceConverter priceConverter;
 
-  @Inject
-  public TransactionConverter(PriceConverter priceConverter) {
+  public TransactionConverter(
+      TimestampConverter timestampConverter, PriceConverter priceConverter) {
+    this.timestampConverter = timestampConverter;
     this.priceConverter = priceConverter;
   }
 
   public TransactionResponse toResponse(Transaction transaction) {
-    String timestamp = transaction.getTimestamp().format(DATE_TIME_FORMATTER) + "Z";
+    String timestamp = timestampConverter.toString(transaction.getTimestamp());
     Double total = priceConverter.toDouble(transaction.getTotal());
+
     return new TransactionResponse(
         timestamp,
         transaction.getFrom(),
