@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.errors.exceptions.TestingException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.github.javafaker.Faker;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,7 @@ class StringDeserializerTest {
   private static JsonParser jsonParser = mock(JsonParser.class);
   private static DeserializationContext deserializationContext = mock(DeserializationContext.class);
 
-  private static String value = "value";
+  private static String value = Faker.instance().dragonBall().character();
 
   @BeforeAll
   public static void setUpDeserializer() {
