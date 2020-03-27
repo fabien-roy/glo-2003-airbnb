@@ -48,10 +48,10 @@ public class BookingService {
     Booking booking = bookingMapper.fromRequest(bookingRequest);
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
+    bed.book(booking);
     transactionService.addStayBooked(booking.getTenantPublicKey().getValue(), total);
     transactionService.addStayCompleted(
         bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
-    bed.book(booking);
     bedService.update(bed);
     return booking.getNumber().toString();
   }
