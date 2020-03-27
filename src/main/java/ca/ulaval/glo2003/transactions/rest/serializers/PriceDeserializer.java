@@ -35,7 +35,7 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
       price = jsonParser.getDoubleValue();
     } catch (Exception e) {
       throwException();
-      return 0.0; // TODO : Do not return anything
+      return 0.0;
     }
 
     return price;

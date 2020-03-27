@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ListDeserializer<T, E extends RuntimeException>
@@ -43,13 +44,13 @@ public abstract class ListDeserializer<T, E extends RuntimeException>
         }
       } catch (IOException e) {
         throwException();
-        return null; // TODO : Return nothing
+        return new ArrayList<>();
       }
 
       return buildDeserializedCollection();
     }
 
     throwException();
-    return null; // TODO : Return nothing
+    return new ArrayList<>();
   }
 }
