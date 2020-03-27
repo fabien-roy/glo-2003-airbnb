@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.beds.rest;
 import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.Arrays;
 import java.util.List;
 
 public class BedRequest {
@@ -90,8 +89,8 @@ public class BedRequest {
     return bloodTypes;
   }
 
-  public void setBloodTypes(String[] bloodTypes) {
-    this.bloodTypes = Arrays.asList(bloodTypes);
+  public void setBloodTypes(List<String> bloodTypes) {
+    this.bloodTypes = bloodTypes;
   }
 
   public int getCapacity() {
@@ -110,7 +109,7 @@ public class BedRequest {
     return packages;
   }
 
-  public void setPackages(PackageRequest[] packages) {
-    this.packages = Arrays.asList(packages);
+  public void setPackages(List<PackageRequest> packages) {
+    this.packages = packages;
   }
 }

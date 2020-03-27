@@ -7,17 +7,17 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.List;
 
 // TODO : Needs testing
-public abstract class CollectionDeserializer<T, E extends RuntimeException>
-    extends AbstractDeserializer<T, E> implements ContextualDeserializer {
+public abstract class ListDeserializer<T, E extends RuntimeException>
+    extends AbstractDeserializer<List<T>, E> implements ContextualDeserializer {
 
-  protected CollectionDeserializer() {
-    super(Collection.class);
+  protected ListDeserializer() {
+    super(List.class);
   }
 
-  protected CollectionDeserializer(BeanProperty property) {
+  protected ListDeserializer(BeanProperty property) {
     super(property.getType());
   }
 
@@ -25,15 +25,15 @@ public abstract class CollectionDeserializer<T, E extends RuntimeException>
 
   protected abstract void addElement(JsonParser jsonParser) throws IOException;
 
-  protected abstract T buildDeserializedCollection();
+  protected abstract List<T> buildDeserializedCollection();
 
   @Override
   public Class<?> getType() {
-    return Collection.class;
+    return List.class;
   }
 
   @Override
-  public T deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+  public List<T> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws E {
     if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
       resetCollection();

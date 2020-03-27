@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.rest.serializers;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.interfaces.rest.serializers.CollectionDeserializer;
+import ca.ulaval.glo2003.interfaces.rest.serializers.ListDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -13,7 +13,7 @@ import java.util.List;
 
 // TODO : Needs testing
 public class PackagesDeserializer
-    extends CollectionDeserializer<PackageRequest[], InvalidPackagesException> {
+    extends ListDeserializer<PackageRequest, InvalidPackagesException> {
 
   List<PackageRequest> packages = new ArrayList<>();
 
@@ -41,8 +41,8 @@ public class PackagesDeserializer
   }
 
   @Override
-  protected PackageRequest[] buildDeserializedCollection() {
-    return packages.toArray(new PackageRequest[0]);
+  protected List<PackageRequest> buildDeserializedCollection() {
+    return packages;
   }
 
   @Override

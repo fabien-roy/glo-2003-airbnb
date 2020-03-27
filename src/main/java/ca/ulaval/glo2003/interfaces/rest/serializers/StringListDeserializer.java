@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO : Needs testing
-public abstract class StringArrayDeserializer<E extends RuntimeException>
-    extends CollectionDeserializer<String[], E> {
+public abstract class StringListDeserializer<E extends RuntimeException>
+    extends ListDeserializer<String, E> {
 
   List<String> strings = new ArrayList<>();
 
-  protected StringArrayDeserializer() {
+  protected StringListDeserializer() {
     super();
   }
 
-  protected StringArrayDeserializer(BeanProperty property) {
+  protected StringListDeserializer(BeanProperty property) {
     super(property);
   }
 
@@ -31,7 +31,7 @@ public abstract class StringArrayDeserializer<E extends RuntimeException>
   }
 
   @Override
-  protected String[] buildDeserializedCollection() {
-    return strings.toArray(new String[0]);
+  protected List<String> buildDeserializedCollection() {
+    return strings;
   }
 }
