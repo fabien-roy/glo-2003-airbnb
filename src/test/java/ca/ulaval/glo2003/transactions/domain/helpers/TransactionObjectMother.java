@@ -6,21 +6,10 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 public class TransactionObjectMother {
 
   private TransactionObjectMother() {}
-
-  public static LocalDateTime createTimestamp() {
-    return Faker.instance()
-        .date()
-        .birthday()
-        .toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDateTime();
-  }
 
   public static String createFrom() {
     return Faker.instance().name().firstName();

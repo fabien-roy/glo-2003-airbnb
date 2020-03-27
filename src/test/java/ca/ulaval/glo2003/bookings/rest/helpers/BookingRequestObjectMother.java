@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.bookings.rest.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import com.github.javafaker.Faker;
@@ -27,6 +28,6 @@ public class BookingRequestObjectMother {
   }
 
   public static String createPackageName() {
-    return Packages.ALL_YOU_CAN_DRINK.toString();
+    return randomEnum(Packages.class).toString();
   }
 }

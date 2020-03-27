@@ -3,22 +3,21 @@ package ca.ulaval.glo2003.transactions.mappers;
 import ca.ulaval.glo2003.beds.mappers.PriceMapper;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
-import java.time.format.DateTimeFormatter;
 import javax.inject.Inject;
 
 public class TransactionMapper {
 
-  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
-
+  private final TimestampMapper timestampMapper;
   private final PriceMapper priceMapper;
 
   @Inject
-  public TransactionMapper(PriceMapper priceMapper) {
+  public TransactionMapper(TimestampMapper timestampMapper, PriceMapper priceMapper) {
+    this.timestampMapper = timestampMapper;
     this.priceMapper = priceMapper;
   }
 
   public TransactionResponse toResponse(Transaction transaction) {
-    String timestamp = transaction.getTimestamp().format(DATE_TIME_FORMATTER) + "Z";
+    String timestamp = timestampMapper.toString(transaction.getTimestamp());
     Double total = priceMapper.toDouble(transaction.getTotal());
     return new TransactionResponse(
         timestamp,

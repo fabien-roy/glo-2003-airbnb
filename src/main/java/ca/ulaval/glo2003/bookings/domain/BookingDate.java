@@ -6,8 +6,8 @@ public class BookingDate {
 
   private LocalDate value;
 
-  public BookingDate() {
-    value = LocalDate.now();
+  public static BookingDate now() {
+    return new BookingDate(LocalDate.now());
   }
 
   public BookingDate(LocalDate value) {
@@ -16,6 +16,14 @@ public class BookingDate {
 
   public LocalDate getValue() {
     return value;
+  }
+
+  public BookingDate plusDays(int days) {
+    return new BookingDate(value.plusDays(days));
+  }
+
+  public boolean isAfter(BookingDate other) {
+    return value.isAfter(other.getValue());
   }
 
   @Override
