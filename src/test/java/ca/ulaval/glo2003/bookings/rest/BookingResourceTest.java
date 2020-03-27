@@ -22,7 +22,7 @@ class BookingResourceTest {
   private Response response = mock(Response.class);
   private BookingRequest bookingRequest = mock(BookingRequest.class);
   private BookingResponse bookingResponse = mock(BookingResponse.class);
-  private CancelResponse cancelResponse = mock(CancelResponse.class);
+  private CancelationResponse cancelationResponse = mock(CancelationResponse.class);
   private String bedNumber = "bedNumber";
   private String bookingNumber = "bookingNumber";
 
@@ -41,13 +41,13 @@ class BookingResourceTest {
   private void setUpMocksForGetByNumber() {
     when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
     when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
-    when(bookingService.getByNumber(bedNumber, bookingNumber)).thenReturn(bookingResponse);
+    when(bookingService.getResponse(bedNumber, bookingNumber)).thenReturn(bookingResponse);
   }
 
   private void setUpMocksForCancel() {
     when(request.params(eq("bedNumber"))).thenReturn(bedNumber);
     when(request.params(eq("bookingNumber"))).thenReturn(bookingNumber);
-    when(bookingService.cancel(bedNumber, bookingNumber)).thenReturn(cancelResponse);
+    when(bookingService.cancel(bedNumber, bookingNumber)).thenReturn(cancelationResponse);
   }
 
   @Test
@@ -92,10 +92,10 @@ class BookingResourceTest {
   public void cancel_shouldReturnCancelResponse() {
     setUpMocksForCancel();
 
-    CancelResponse actualCancelResponse =
-        (CancelResponse) bookingResource.cancel(request, response);
+    CancelationResponse actualCancelationResponse =
+        (CancelationResponse) bookingResource.cancel(request, response);
 
-    assertSame(cancelResponse, actualCancelResponse);
+    assertSame(cancelationResponse, actualCancelationResponse);
   }
 
   @Test

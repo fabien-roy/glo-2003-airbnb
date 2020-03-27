@@ -51,7 +51,7 @@ public class BookingResource implements RouteGroup {
   public Object getByNumber(Request request, Response response) {
     String bedNumber = request.params("bedNumber");
     String bookingNumber = request.params("bookingNumber");
-    BookingResponse bookingResponse = bookingService.getByNumber(bedNumber, bookingNumber);
+    BookingResponse bookingResponse = bookingService.getResponse(bedNumber, bookingNumber);
 
     response.status(HttpStatus.OK_200);
     return bookingResponse;
@@ -60,9 +60,9 @@ public class BookingResource implements RouteGroup {
   public Object cancel(Request request, Response response) {
     String bedNumber = request.params("bedNumber");
     String bookingNumber = request.params("bookingNumber");
-    CancelResponse cancelResponse = bookingService.cancel(bedNumber, bookingNumber);
+    CancelationResponse cancelationResponse = bookingService.cancel(bedNumber, bookingNumber);
 
     response.status(HttpStatus.OK_200);
-    return cancelResponse;
+    return cancelationResponse;
   }
 }
