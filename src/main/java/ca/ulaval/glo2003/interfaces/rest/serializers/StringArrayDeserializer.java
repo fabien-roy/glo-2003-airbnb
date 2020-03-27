@@ -29,9 +29,9 @@ public abstract class StringArrayDeserializer<E extends RuntimeException>
       try {
         if (jsonParser.nextToken() == JsonToken.END_ARRAY) throwException();
 
-        while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+        do {
           strings.add(jsonParser.getValueAsString());
-        }
+        } while (jsonParser.nextToken() != JsonToken.END_ARRAY);
       } catch (IOException e) {
         throwException();
         return new String[0]; // TODO : Return nothing

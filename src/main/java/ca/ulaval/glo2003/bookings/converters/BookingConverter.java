@@ -13,9 +13,6 @@ import javax.inject.Inject;
 
 public class BookingConverter {
 
-  // TODO (RSC) : Validate colony size is there only if bed.lodgingMode is private
-  // TODO (RSC) : Validate colony size value only if bed.lodgingMode is private
-
   private final PublicKeyConverter publicKeyConverter;
   private final BookingDateConverter bookingDateConverter;
   private final PriceConverter priceConverter;

@@ -26,8 +26,6 @@ public class PackagesDeserializer
     throw new InvalidPackagesException();
   }
 
-  // TODO : This is duplicated in BloodTypesDeserializer. How about an abstract class to check if
-  // not empty
   @Override
   public PackageRequest[] deserialize(
       JsonParser jsonParser, DeserializationContext deserializationContext)
@@ -36,9 +34,11 @@ public class PackagesDeserializer
       List<PackageRequest> packages = new ArrayList<>();
 
       try {
-        while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+        if (jsonParser.nextToken() == JsonToken.END_ARRAY) throwException();
+
+        do {
           packages.add(jsonParser.readValuesAs(PackageRequest.class).next());
-        }
+        } while (jsonParser.nextToken() != JsonToken.END_ARRAY);
       } catch (Exception e) {
         throwException();
         return new PackageRequest[0]; // TODO : Return nothing
