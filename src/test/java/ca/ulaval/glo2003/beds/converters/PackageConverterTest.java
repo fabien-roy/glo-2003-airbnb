@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.converters;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,216 +12,200 @@ import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.math.BigDecimal;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PackageConverterTest {
 
-  // TODO : Refactor this test class
-
   private static PackageConverter packageConverter;
   private static PriceConverter priceConverter = mock(PriceConverter.class);
+
+  private static Map<Packages, Price> pricesPerNight;
+  private static Packages packageName;
+  private static Packages otherPackageName;
+  private static Price price = createPricePerNight();
+  private static Price otherPrice = createPricePerNight();
+
+  private static PackageRequest request;
+  private static PackageRequest otherRequest;
+  private static List<PackageRequest> requests;
+  private static String packageNameValue;
+  private static String otherPackageNameValue;
+  private static double priceValue = price.getValue().doubleValue();
+  private static double otherPriceValue = otherPrice.getValue().doubleValue();
+  private static List<PackageResponse> responses;
 
   @BeforeAll
   public static void setUpConverter() {
     packageConverter = new PackageConverter(priceConverter);
   }
 
+  @BeforeEach
+  public void setUpPackages() {
+    packageName = Packages.BLOODTHIRSTY;
+    otherPackageName = Packages.ALL_YOU_CAN_DRINK;
+    packageNameValue = packageName.toString();
+    otherPackageNameValue = otherPackageName.toString();
+
+    pricesPerNight = buildPricesPerNight();
+    requests = buildPackageRequests();
+  }
+
+  @BeforeEach
+  public void setUpMocks() {
+    when(priceConverter.fromDouble(priceValue)).thenReturn(price);
+    when(priceConverter.fromDouble(otherPriceValue)).thenReturn(otherPrice);
+    when(priceConverter.toDouble(price)).thenReturn(priceValue);
+    when(priceConverter.toDouble(otherPrice)).thenReturn(otherPriceValue);
+  }
+
+  private Map<Packages, Price> buildPricesPerNight() {
+    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
+    pricesPerNight.put(packageName, price);
+    pricesPerNight.put(otherPackageName, otherPrice);
+    return pricesPerNight;
+  }
+
+  private List<PackageRequest> buildPackageRequests() {
+    request = buildPackageRequest();
+    otherRequest = buildOtherPackageRequest();
+    return Arrays.asList(request, otherRequest);
+  }
+
+  private PackageRequest buildPackageRequest() {
+    return aPackageRequest().withName(packageNameValue).withPricePerNight(priceValue).build();
+  }
+
+  private PackageRequest buildOtherPackageRequest() {
+    return aPackageRequest()
+        .withName(otherPackageNameValue)
+        .withPricePerNight(otherPriceValue)
+        .build();
+  }
+
   @Test
   public void fromRequests_withSingleRequest_shouldMapASinglePricePerNight() {
-    PackageRequest request = aPackageRequest().build();
-    List<PackageRequest> requests = Collections.singletonList(request);
+    requests = requests.subList(0, 1);
 
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
+    pricesPerNight = packageConverter.fromRequests(requests);
 
     assertEquals(1, pricesPerNight.keySet().size());
   }
 
   @Test
   public void fromRequests_withMultipleRequests_shouldMapMultiplePricesPerNight() {
-    PackageRequest request = aPackageRequest().withName(Packages.SWEET_TOOTH.toString()).build();
-    PackageRequest otherRequest =
-        aPackageRequest().withName(Packages.BLOODTHIRSTY.toString()).build();
-    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
-
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
+    pricesPerNight = packageConverter.fromRequests(requests);
 
     assertEquals(2, pricesPerNight.keySet().size());
   }
 
   @Test
   public void fromRequests_withSingleRequest_shouldMapName() {
-    Packages expectedPackage = Packages.BLOODTHIRSTY;
-    String packageName = expectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    List<PackageRequest> requests = Collections.singletonList(request);
+    requests = requests.subList(0, 1);
 
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
+    pricesPerNight = packageConverter.fromRequests(requests);
 
-    assertTrue(pricesPerNight.containsKey(expectedPackage));
+    assertTrue(pricesPerNight.containsKey(packageName));
   }
 
   @Test
   public void fromRequests_withMultipleRequests_shouldMapNames() {
-    Packages expectedPackage = Packages.BLOODTHIRSTY;
-    Packages otherExpectedPackage = Packages.SWEET_TOOTH;
-    String packageName = expectedPackage.toString();
-    String otherPackageName = otherExpectedPackage.toString();
-    PackageRequest request = aPackageRequest().withName(packageName).build();
-    PackageRequest otherRequest = aPackageRequest().withName(otherPackageName).build();
-    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
+    pricesPerNight = packageConverter.fromRequests(requests);
 
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
+    assertTrue(pricesPerNight.containsKey(packageName));
+    assertTrue(pricesPerNight.containsKey(otherPackageName));
+  }
 
-    assertTrue(pricesPerNight.containsKey(expectedPackage));
-    assertTrue(pricesPerNight.containsKey(otherExpectedPackage));
+  @Test
+  public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
+    requests = Collections.emptyList();
+
+    assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
   public void fromRequests_withInvalidPackageName_shouldThrowInvalidPackageException() {
-    String invalidPackageName = "invalidPackageName";
-    PackageRequest request = aPackageRequest().withName(invalidPackageName).build();
-    List<PackageRequest> requests = Collections.singletonList(request);
+    packageNameValue = "invalidPackageName";
+    requests = buildPackageRequests();
 
     assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
   public void fromRequests_withSingleRequest_shouldMapPricePerNight() {
-    double priceValue = 100.0;
-    Price expectedPrice = new Price(BigDecimal.valueOf(priceValue));
-    Packages packageName = Packages.BLOODTHIRSTY;
-    PackageRequest request =
-        aPackageRequest().withName(packageName.toString()).withPricePerNight(priceValue).build();
-    List<PackageRequest> requests = Collections.singletonList(request);
-    when(priceConverter.fromDouble(priceValue)).thenReturn(expectedPrice);
+    pricesPerNight = packageConverter.fromRequests(requests);
 
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
-
-    assertEquals(expectedPrice, pricesPerNight.get(packageName));
+    assertEquals(price, pricesPerNight.get(packageName));
   }
 
   @Test
   public void fromRequests_withMultipleRequests_shouldMapPricesPerNight() {
-    double priceValue = 100.0;
-    double otherPriceValue = 200.0;
-    Price expectedPrice = new Price(BigDecimal.valueOf(priceValue));
-    Price otherExpectedPrice = new Price(BigDecimal.valueOf(otherPriceValue));
-    Packages packageName = Packages.BLOODTHIRSTY;
-    Packages otherPackageName = Packages.SWEET_TOOTH;
-    PackageRequest request =
-        aPackageRequest().withName(packageName.toString()).withPricePerNight(priceValue).build();
-    PackageRequest otherRequest =
-        aPackageRequest()
-            .withName(otherPackageName.toString())
-            .withPricePerNight(otherPriceValue)
-            .build();
-    List<PackageRequest> requests = Arrays.asList(request, otherRequest);
-    when(priceConverter.fromDouble(priceValue)).thenReturn(expectedPrice);
-    when(priceConverter.fromDouble(otherPriceValue)).thenReturn(otherExpectedPrice);
+    pricesPerNight = packageConverter.fromRequests(requests);
 
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(requests);
-
-    assertEquals(expectedPrice, pricesPerNight.get(packageName));
-    assertEquals(otherExpectedPrice, pricesPerNight.get(otherPackageName));
+    assertEquals(price, pricesPerNight.get(packageName));
+    assertEquals(otherPrice, pricesPerNight.get(otherPackageName));
   }
 
   @Test
   public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackage() {
-    Packages packageName = Packages.BLOODTHIRSTY;
-    PackageRequest request1 = aPackageRequest().withName(packageName.toString()).build();
-    PackageRequest request2 = aPackageRequest().withName(packageName.toString()).build();
-    List<PackageRequest> requests = Arrays.asList(request1, request2);
+    otherPackageNameValue = packageNameValue;
+    requests = buildPackageRequests();
 
     assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
   public void toResponses_withSinglePricePerNight_shouldMapASinglePackageResponse() {
-    Map<Packages, Price> pricesPerNight =
-        Collections.singletonMap(createPackageName(), createPricePerNight());
+    pricesPerNight = Collections.singletonMap(packageName, price);
 
-    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
+    responses = packageConverter.toResponses(pricesPerNight);
 
     assertEquals(1, responses.size());
   }
 
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapMultiplePackageResponses() {
-    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
-    pricesPerNight.put(Packages.SWEET_TOOTH, createPricePerNight());
-    pricesPerNight.put(Packages.BLOODTHIRSTY, createPricePerNight());
-
-    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
+    responses = packageConverter.toResponses(pricesPerNight);
 
     assertEquals(2, responses.size());
   }
 
   @Test
   public void toResponses_withSinglePricePerNight_shouldMapName() {
-    Packages packageName = createPackageName();
-    String expectedPackageName = packageName.toString();
-    Map<Packages, Price> pricesPerNight =
-        Collections.singletonMap(packageName, createPricePerNight());
+    pricesPerNight = Collections.singletonMap(packageName, price);
 
-    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
+    responses = packageConverter.toResponses(pricesPerNight);
 
-    assertEquals(expectedPackageName, responses.get(0).getName());
+    assertEquals(packageNameValue, responses.get(0).getName());
   }
 
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapNames() {
-    Packages packageName = createPackageName();
-    Packages otherPackageName = createPackageName();
-    String expectedPackageName = packageName.toString();
-    String otherExpectedPackageName = otherPackageName.toString();
-    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
-    pricesPerNight.put(packageName, createPricePerNight());
-    pricesPerNight.put(otherPackageName, createPricePerNight());
-
-    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
+    responses = packageConverter.toResponses(pricesPerNight);
 
     assertTrue(
-        responses.stream().anyMatch(response -> expectedPackageName.equals(response.getName())));
+        responses.stream().anyMatch(response -> packageNameValue.equals(response.getName())));
     assertTrue(
-        responses.stream()
-            .anyMatch(response -> otherExpectedPackageName.equals(response.getName())));
+        responses.stream().anyMatch(response -> otherPackageNameValue.equals(response.getName())));
   }
 
   @Test
   public void toResponses_withSinglePricePerNight_shouldMapPricePerNight() {
-    Price pricePerNight = createPricePerNight();
-    double expectedPricePerNight = pricePerNight.getValue().doubleValue();
-    Map<Packages, Price> pricesPerNight =
-        Collections.singletonMap(createPackageName(), pricePerNight);
-    when(priceConverter.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
+    pricesPerNight = Collections.singletonMap(packageName, price);
 
-    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
+    responses = packageConverter.toResponses(pricesPerNight);
 
-    assertEquals(expectedPricePerNight, responses.get(0).getPricePerNight());
+    assertEquals(priceValue, responses.get(0).getPricePerNight());
   }
 
   @Test
   public void toResponses_withMultiplePricesPerNight_shouldMapPricesPerNight() {
-    Price pricePerNight = createPricePerNight();
-    Price otherPricePerNight = createPricePerNight();
-    double expectedPricePerNight = pricePerNight.getValue().doubleValue();
-    double otherExpectedPricePerNight = otherPricePerNight.getValue().doubleValue();
-    Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
-    pricesPerNight.put(Packages.SWEET_TOOTH, pricePerNight);
-    pricesPerNight.put(Packages.BLOODTHIRSTY, otherPricePerNight);
-    when(priceConverter.toDouble(pricePerNight)).thenReturn(expectedPricePerNight);
-    when(priceConverter.toDouble(otherPricePerNight)).thenReturn(otherExpectedPricePerNight);
+    responses = packageConverter.toResponses(pricesPerNight);
 
-    List<PackageResponse> responses = packageConverter.toResponses(pricesPerNight);
-
+    assertTrue(responses.stream().anyMatch(response -> priceValue == response.getPricePerNight()));
     assertTrue(
-        responses.stream()
-            .anyMatch(response -> expectedPricePerNight == response.getPricePerNight()));
-    assertTrue(
-        responses.stream()
-            .anyMatch(response -> otherExpectedPricePerNight == response.getPricePerNight()));
+        responses.stream().anyMatch(response -> otherPriceValue == response.getPricePerNight()));
   }
 }

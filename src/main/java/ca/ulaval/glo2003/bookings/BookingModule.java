@@ -36,5 +36,7 @@ public class BookingModule extends AbstractModule {
     multibinder.addBinding().to(InvalidArrivalDateErrorFactory.class);
     multibinder.addBinding().to(InvalidColonySizeErrorFactory.class);
     multibinder.addBinding().to(InvalidNumberOfNightsErrorFactory.class);
+    multibinder.addBinding().to(BookingAlreadyCanceledErrorFactory.class);
+    multibinder.addBinding().to(CancelationNotAllowedErrorFactory.class);
   }
 }

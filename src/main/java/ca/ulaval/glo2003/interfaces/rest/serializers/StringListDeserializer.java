@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : Needs testing
 public abstract class StringListDeserializer<E extends RuntimeException>
     extends ListDeserializer<String, E> {
 
