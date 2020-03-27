@@ -1,17 +1,15 @@
 package ca.ulaval.glo2003.transactions.domain;
 
-import java.time.LocalDateTime;
-
 public class Transaction {
 
-  private LocalDateTime timestamp;
+  private Timestamp timestamp;
   private String from;
   private String to;
   private Price total;
   private TransactionReasons reason;
 
   public Transaction(
-      LocalDateTime timestamp, String from, String to, Price total, TransactionReasons reason) {
+      Timestamp timestamp, String from, String to, Price total, TransactionReasons reason) {
     this.timestamp = timestamp;
     this.from = from;
     this.to = to;
@@ -19,7 +17,7 @@ public class Transaction {
     this.reason = reason;
   }
 
-  public LocalDateTime getTimestamp() {
+  public Timestamp getTimestamp() {
     return timestamp;
   }
 

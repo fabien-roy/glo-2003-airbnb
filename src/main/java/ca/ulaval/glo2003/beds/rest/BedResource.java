@@ -54,7 +54,7 @@ public class BedResource implements RouteGroup {
 
   public Object getByNumber(Request request, Response response) {
     String bedNumber = request.params("number");
-    BedResponse bedResponse = bedService.getByNumber(bedNumber);
+    BedResponse bedResponse = bedService.getResponse(bedNumber);
 
     response.status(HttpStatus.OK_200);
     return bedResponse;

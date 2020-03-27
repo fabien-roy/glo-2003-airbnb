@@ -27,9 +27,11 @@ public abstract class StringArrayDeserializer<E extends RuntimeException>
       List<String> strings = new ArrayList<>();
 
       try {
-        while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+        if (jsonParser.nextToken() == JsonToken.END_ARRAY) throwException();
+
+        do {
           strings.add(jsonParser.getValueAsString());
-        }
+        } while (jsonParser.nextToken() != JsonToken.END_ARRAY);
       } catch (IOException e) {
         throwException();
         return new String[0]; // TODO : Return nothing

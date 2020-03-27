@@ -38,7 +38,7 @@ class BedConverterTest {
   private static Location location;
   private static BedTypes bedType;
   private static CleaningFrequencies cleaningFrequency;
-  private static BloodTypes bloodType = mock(BloodTypes.class);
+  private static BloodTypes bloodType = createBloodTypes().get(0);
   private static List<BloodTypes> bloodTypes = Collections.singletonList(bloodType);
   private static int capacity;
   private static LodgingModes lodgingMode;

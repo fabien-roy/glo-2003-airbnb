@@ -19,23 +19,23 @@ public class BookingResource implements RouteGroup {
   public static final String BOOKING_PATH = "/beds/:bedNumber/bookings";
 
   private final BookingService bookingService;
-  private final BookingMapper bookingParser;
+  private final BookingMapper bookingMapper;
 
   @Inject
-  public BookingResource(BookingService bookingService, BookingMapper bookingParser) {
+  public BookingResource(BookingService bookingService, BookingMapper bookingMapper) {
     this.bookingService = bookingService;
-    this.bookingParser = bookingParser;
+    this.bookingMapper = bookingMapper;
   }
 
   @Override
   public void addRoutes() {
     post("", this::add);
-    get("/:bookingNumber", this::getByNumber, bookingParser::writeValueAsString);
-    post("/:bookingNumber/cancel", this::cancel, bookingParser::writeValueAsString);
+    get("/:bookingNumber", this::getByNumber, bookingMapper::writeValueAsString);
+    post("/:bookingNumber/cancel", this::cancel, bookingMapper::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws JsonProcessingException {
-    BookingRequest bookingRequest = bookingParser.readValue(request.body(), BookingRequest.class);
+    BookingRequest bookingRequest = bookingMapper.readValue(request.body(), BookingRequest.class);
 
     String bedNumber = request.params("bedNumber");
     String bookingNumber = bookingService.add(bedNumber, bookingRequest);
@@ -51,7 +51,7 @@ public class BookingResource implements RouteGroup {
   public Object getByNumber(Request request, Response response) {
     String bedNumber = request.params("bedNumber");
     String bookingNumber = request.params("bookingNumber");
-    BookingResponse bookingResponse = bookingService.getByNumber(bedNumber, bookingNumber);
+    BookingResponse bookingResponse = bookingService.getResponse(bedNumber, bookingNumber);
 
     response.status(HttpStatus.OK_200);
     return bookingResponse;
@@ -60,9 +60,9 @@ public class BookingResource implements RouteGroup {
   public Object cancel(Request request, Response response) {
     String bedNumber = request.params("bedNumber");
     String bookingNumber = request.params("bookingNumber");
-    CancelResponse cancelResponse = bookingService.cancel(bedNumber, bookingNumber);
+    CancelationResponse cancelationResponse = bookingService.cancel(bedNumber, bookingNumber);
 
     response.status(HttpStatus.OK_200);
-    return cancelResponse;
+    return cancelationResponse;
   }
 }

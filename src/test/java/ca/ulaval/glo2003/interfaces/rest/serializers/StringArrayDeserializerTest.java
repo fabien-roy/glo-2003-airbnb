@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.errors.exceptions.TestingException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.github.javafaker.Faker;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +21,8 @@ class StringArrayDeserializerTest {
   private static JsonParser jsonParser = mock(JsonParser.class);
   private static DeserializationContext deserializationContext = mock(DeserializationContext.class);
 
-  private static String firstString = "firstString";
-  private static String secondString = "secondString";
+  private static String firstString = Faker.instance().dragonBall().character();
+  private static String secondString = Faker.instance().dragonBall().character();
 
   @BeforeAll
   public static void setUpDeserializer() {
@@ -61,6 +62,16 @@ class StringArrayDeserializerTest {
   @Test
   public void deserialize_withInvalidValue_shouldThrowException() throws IOException {
     when(jsonParser.getValueAsString()).thenThrow(new IOException());
+
+    assertThrows(
+        TestingException.class,
+        () -> stringArrayDeserializer.deserialize(jsonParser, deserializationContext));
+  }
+
+  @Test
+  public void deserialize_withEmptyArray_shouldThrowException() throws IOException {
+    when(jsonParser.getCurrentToken()).thenReturn(JsonToken.START_ARRAY);
+    when(jsonParser.nextToken()).thenReturn(JsonToken.END_ARRAY);
 
     assertThrows(
         TestingException.class,

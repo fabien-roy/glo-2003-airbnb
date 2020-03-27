@@ -9,6 +9,8 @@ import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.UUID;
 
@@ -33,7 +35,7 @@ public class BookingObjectMother {
     return new BookingDate(
         Faker.instance()
             .date()
-            .birthday()
+            .between(Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now().plusDays(30)))
             .toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate());

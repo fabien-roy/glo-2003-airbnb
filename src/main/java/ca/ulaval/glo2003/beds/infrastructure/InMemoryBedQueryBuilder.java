@@ -116,7 +116,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   private BookingDate getArrivalDate() {
-    return arrivalDate == null ? new BookingDate() : arrivalDate;
+    return arrivalDate == null ? BookingDate.now() : arrivalDate;
   }
 
   private int getNumberOfNights() {

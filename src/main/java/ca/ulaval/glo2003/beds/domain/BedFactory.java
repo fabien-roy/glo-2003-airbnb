@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public class BedFactory {
 
-  // TODO : Validation of capacity and package dependencies should be moved to converter
-
   public Bed create(Bed bed, Location location) {
     validateCapacity(bed);
     validatePackageDependencies(bed);

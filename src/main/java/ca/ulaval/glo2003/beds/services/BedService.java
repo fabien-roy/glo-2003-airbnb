@@ -59,12 +59,20 @@ public class BedService {
     return orderByStars(toResponses(beds));
   }
 
-  public BedResponse getByNumber(String number) {
-    UUID bedNumber = bedNumberConverter.fromString(number);
-
-    Bed bed = bedRepository.getByNumber(bedNumber);
+  public BedResponse getResponse(String number) {
+    Bed bed = get(number);
 
     return bedConverter.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
+  }
+
+  public Bed get(String number) {
+    UUID bedNumber = bedNumberConverter.fromString(number);
+
+    return bedRepository.getByNumber(bedNumber);
+  }
+
+  public void update(Bed bed) {
+    bedRepository.update(bed);
   }
 
   private List<BedResponse> toResponses(List<Bed> beds) {
