@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BloodTypesConverterTest {
+class BloodTypeConverterTest {
 
-  private static BloodTypesConverter bloodTypesConverter;
+  private static BloodTypeConverter bloodTypeConverter;
 
   private static BloodTypes bloodType;
   private static BloodTypes otherBloodType;
@@ -23,7 +23,7 @@ class BloodTypesConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    bloodTypesConverter = new BloodTypesConverter();
+    bloodTypeConverter = new BloodTypeConverter();
   }
 
   @BeforeEach
@@ -38,7 +38,7 @@ class BloodTypesConverterTest {
   public void fromStrings_withSingleBloodType_shouldConvertSingleBloodType() {
     bloodTypeStrings = bloodTypeStrings.subList(0, 1);
 
-    bloodTypes = bloodTypesConverter.fromStrings(bloodTypeStrings);
+    bloodTypes = bloodTypeConverter.fromStrings(bloodTypeStrings);
 
     assertEquals(1, bloodTypes.size());
     assertEquals(bloodType, bloodTypes.get(0));
@@ -46,7 +46,7 @@ class BloodTypesConverterTest {
 
   @Test
   public void fromStrings_withMultipleBloodTypes_shouldConvertMultipleBloodTypes() {
-    bloodTypes = bloodTypesConverter.fromStrings(bloodTypeStrings);
+    bloodTypes = bloodTypeConverter.fromStrings(bloodTypeStrings);
 
     assertEquals(2, bloodTypes.size());
     assertTrue(bloodTypes.contains(bloodType));
@@ -54,11 +54,19 @@ class BloodTypesConverterTest {
   }
 
   @Test
+  public void fromStrings_withoutBloodType_shouldThrowInvalidBloodTypesException() {
+    bloodTypeStrings = Collections.emptyList();
+
+    assertThrows(
+        InvalidBloodTypesException.class, () -> bloodTypeConverter.fromStrings(bloodTypeStrings));
+  }
+
+  @Test
   public void fromStrings_witNullBloodType_shouldThrowInvalidBloodTypeException() {
     bloodTypeStrings = Collections.singletonList(null);
 
     assertThrows(
-        InvalidBloodTypesException.class, () -> bloodTypesConverter.fromStrings(bloodTypeStrings));
+        InvalidBloodTypesException.class, () -> bloodTypeConverter.fromStrings(bloodTypeStrings));
   }
 
   @Test
@@ -66,14 +74,14 @@ class BloodTypesConverterTest {
     bloodTypeStrings = Collections.singletonList("invalidBloodType");
 
     assertThrows(
-        InvalidBloodTypesException.class, () -> bloodTypesConverter.fromStrings(bloodTypeStrings));
+        InvalidBloodTypesException.class, () -> bloodTypeConverter.fromStrings(bloodTypeStrings));
   }
 
   @Test
   public void toStrings_withSingleBloodType_shouldConvertBloodType() {
     bloodTypes = bloodTypes.subList(0, 1);
 
-    bloodTypeStrings = bloodTypesConverter.toStrings(bloodTypes);
+    bloodTypeStrings = bloodTypeConverter.toStrings(bloodTypes);
 
     assertEquals(1, bloodTypeStrings.size());
     assertEquals(bloodType.toString(), bloodTypeStrings.get(0));
@@ -81,7 +89,7 @@ class BloodTypesConverterTest {
 
   @Test
   public void toStrings_withMultipleBloodTypes_shouldConvertBloodTypes() {
-    bloodTypeStrings = bloodTypesConverter.toStrings(bloodTypes);
+    bloodTypeStrings = bloodTypeConverter.toStrings(bloodTypes);
 
     assertEquals(2, bloodTypeStrings.size());
     assertTrue(

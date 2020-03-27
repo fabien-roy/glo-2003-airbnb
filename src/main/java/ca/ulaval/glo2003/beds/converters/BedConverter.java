@@ -14,18 +14,18 @@ public class BedConverter {
 
   private final BedNumberConverter bedNumberConverter;
   private final PublicKeyConverter publicKeyConverter;
-  private final BloodTypesConverter bloodTypesConverter;
+  private final BloodTypeConverter bloodTypeConverter;
   private final PackageConverter packageConverter;
 
   @Inject
   public BedConverter(
       BedNumberConverter bedNumberConverter,
       PublicKeyConverter publicKeyConverter,
-      BloodTypesConverter bloodTypesConverter,
+      BloodTypeConverter bloodTypeConverter,
       PackageConverter packageConverter) {
     this.bedNumberConverter = bedNumberConverter;
     this.publicKeyConverter = publicKeyConverter;
-    this.bloodTypesConverter = bloodTypesConverter;
+    this.bloodTypeConverter = bloodTypeConverter;
     this.packageConverter = packageConverter;
   }
 
@@ -33,7 +33,7 @@ public class BedConverter {
     if (request.getCapacity() < 1) throw new InvalidCapacityException();
 
     PublicKey ownerPublicKey = publicKeyConverter.fromString(request.getOwnerPublicKey());
-    List<BloodTypes> bloodTypes = bloodTypesConverter.fromStrings(request.getBloodTypes());
+    List<BloodTypes> bloodTypes = bloodTypeConverter.fromStrings(request.getBloodTypes());
     LodgingModes mode =
         request.getLodgingMode() == null
             ? LodgingModes.PRIVATE
@@ -51,7 +51,7 @@ public class BedConverter {
   }
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
-    List<String> bloodTypes = bloodTypesConverter.toStrings(bed.getBloodTypes());
+    List<String> bloodTypes = bloodTypeConverter.toStrings(bed.getBloodTypes());
     List<PackageResponse> packageResponses = packageConverter.toResponses(bed.getPricesPerNight());
 
     return new BedResponse(

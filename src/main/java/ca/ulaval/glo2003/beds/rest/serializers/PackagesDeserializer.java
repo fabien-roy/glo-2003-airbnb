@@ -2,23 +2,27 @@ package ca.ulaval.glo2003.beds.rest.serializers;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
-import ca.ulaval.glo2003.interfaces.domain.serializers.AbstractDeserializer;
+import ca.ulaval.glo2003.interfaces.rest.serializers.ListDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO : Needs testing
 public class PackagesDeserializer
-    extends AbstractDeserializer<PackageRequest[], InvalidPackagesException> {
+    extends ListDeserializer<PackageRequest, InvalidPackagesException> {
 
-  public PackagesDeserializer() {
-    super(PackageRequest[].class);
+  List<PackageRequest> packages = new ArrayList<>();
+
+  protected PackagesDeserializer() {
+    super();
   }
 
-  @Override
-  public Class<?> getType() {
-    return PackageRequest[].class;
+  protected PackagesDeserializer(BeanProperty property) {
+    super(property);
   }
 
   @Override
@@ -27,27 +31,23 @@ public class PackagesDeserializer
   }
 
   @Override
-  public PackageRequest[] deserialize(
-      JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws InvalidPackagesException {
-    if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
-      List<PackageRequest> packages = new ArrayList<>();
+  protected void resetCollection() {
+    packages = new ArrayList<>();
+  }
 
-      try {
-        if (jsonParser.nextToken() == JsonToken.END_ARRAY) throwException();
+  @Override
+  protected void addElement(JsonParser jsonParser) throws IOException {
+    packages.add(jsonParser.readValuesAs(PackageRequest.class).next());
+  }
 
-        do {
-          packages.add(jsonParser.readValuesAs(PackageRequest.class).next());
-        } while (jsonParser.nextToken() != JsonToken.END_ARRAY);
-      } catch (Exception e) {
-        throwException();
-        return new PackageRequest[0]; // TODO : Return nothing
-      }
+  @Override
+  protected List<PackageRequest> buildDeserializedCollection() {
+    return packages;
+  }
 
-      return packages.toArray(new PackageRequest[0]);
-    }
-
-    throwException();
-    return new PackageRequest[0]; // TODO : Return nothing
+  @Override
+  public JsonDeserializer<?> createContextual(
+      DeserializationContext deserializationContext, BeanProperty property) {
+    return new PackagesDeserializer(property);
   }
 }

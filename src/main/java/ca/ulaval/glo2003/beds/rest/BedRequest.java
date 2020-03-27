@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.rest;
 import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BedRequest {
@@ -21,7 +21,7 @@ public class BedRequest {
   private String cleaningFrequency;
 
   @JsonDeserialize(using = BloodTypesDeserializer.class)
-  private List<String> bloodTypes;
+  private List<String> bloodTypes = new ArrayList<>();
 
   @JsonDeserialize(using = CapacityDeserializer.class)
   private int capacity;
@@ -29,7 +29,7 @@ public class BedRequest {
   private String lodgingMode;
 
   @JsonDeserialize(using = PackagesDeserializer.class)
-  private List<PackageRequest> packages;
+  private List<PackageRequest> packages = new ArrayList<>();
 
   public BedRequest() {
     // Empty constructor for parsing
@@ -90,8 +90,8 @@ public class BedRequest {
     return bloodTypes;
   }
 
-  public void setBloodTypes(String[] bloodTypes) {
-    this.bloodTypes = Arrays.asList(bloodTypes);
+  public void setBloodTypes(List<String> bloodTypes) {
+    this.bloodTypes = bloodTypes;
   }
 
   public int getCapacity() {
@@ -110,7 +110,7 @@ public class BedRequest {
     return packages;
   }
 
-  public void setPackages(PackageRequest[] packages) {
-    this.packages = Arrays.asList(packages);
+  public void setPackages(List<PackageRequest> packages) {
+    this.packages = packages;
   }
 }
