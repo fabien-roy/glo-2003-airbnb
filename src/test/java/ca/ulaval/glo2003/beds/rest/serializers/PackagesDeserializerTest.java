@@ -56,7 +56,7 @@ class PackagesDeserializerTest {
   }
 
   @Test
-  public void deserialize_withMultiplePackages_shouldGetPackage() {
+  public void deserialize_withMultiplePackages_shouldGetPackages() {
     List<PackageRequest> packages =
         packagesDeserializer.deserialize(jsonParser, deserializationContext);
 
@@ -66,8 +66,9 @@ class PackagesDeserializerTest {
   }
 
   @Test
-  public void deserialize_withInvalidString_shouldInvalidPackagesException() throws IOException {
-    when(jsonParser.readValuesAs(PackageRequest.class)).thenThrow(new InvalidPackagesException());
+  public void deserialize_withInvalidString_shouldThrowInvalidPackagesException()
+      throws IOException {
+    when(jsonParser.readValuesAs(PackageRequest.class)).thenThrow(new IOException());
 
     assertThrows(
         InvalidPackagesException.class,
