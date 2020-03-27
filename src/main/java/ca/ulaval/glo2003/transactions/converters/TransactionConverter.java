@@ -2,12 +2,14 @@ package ca.ulaval.glo2003.transactions.converters;
 
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
+import javax.inject.Inject;
 
 public class TransactionConverter {
 
   private final TimestampConverter timestampConverter;
   private final PriceConverter priceConverter;
 
+  @Inject
   public TransactionConverter(
       TimestampConverter timestampConverter, PriceConverter priceConverter) {
     this.timestampConverter = timestampConverter;

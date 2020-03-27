@@ -67,4 +67,14 @@ class StringArrayDeserializerTest {
         TestingException.class,
         () -> stringArrayDeserializer.deserialize(jsonParser, deserializationContext));
   }
+
+  @Test
+  public void deserialize_withEmptyArray_shouldThrowException() throws IOException {
+    when(jsonParser.getCurrentToken()).thenReturn(JsonToken.START_ARRAY);
+    when(jsonParser.nextToken()).thenReturn(JsonToken.END_ARRAY);
+
+    assertThrows(
+        TestingException.class,
+        () -> stringArrayDeserializer.deserialize(jsonParser, deserializationContext));
+  }
 }
