@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class PackageQueryParamAssembler implements BedQueryParamAssembler {
 
-  public static final String PACKAGE_NAME_PARAM = "packages";
+  public static final String PACKAGE_NAME_PARAM = "package";
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, String[]> params) {
     return params.get(PACKAGE_NAME_PARAM) != null
