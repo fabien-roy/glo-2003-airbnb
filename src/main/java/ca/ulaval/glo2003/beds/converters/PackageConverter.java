@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.converters;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
@@ -24,7 +25,7 @@ public class PackageConverter {
 
     packageRequests.forEach(
         packageRequest -> {
-          Packages packageName = Packages.get(packageRequest.getName());
+          Packages packageName = parsePackageName(packageRequest.getName());
           Price price = priceConverter.fromDouble(packageRequest.getPricePerNight());
           pricesPerNight.put(packageName, price);
         });
@@ -50,6 +51,14 @@ public class PackageConverter {
 
     if (requests.stream().anyMatch(request -> request.getPricePerNight() <= 0))
       throw new InvalidPackagesException();
+  }
+
+  private Packages parsePackageName(String packageName) {
+    try {
+      return Packages.get(packageName);
+    } catch (InvalidPackageException e) {
+      throw new InvalidPackagesException();
+    }
   }
 
   private void validatePackageOnce(

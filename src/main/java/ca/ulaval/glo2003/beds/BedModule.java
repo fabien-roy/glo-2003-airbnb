@@ -70,6 +70,7 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(InvalidCleaningFrequencyErrorFactory.class);
     multibinder.addBinding().to(InvalidLodgingModeErrorFactory.class);
     multibinder.addBinding().to(InvalidMaxDistanceErrorFactory.class);
+    multibinder.addBinding().to(InvalidPackageErrorFactory.class);
     multibinder.addBinding().to(InvalidPackagesErrorFactory.class);
     multibinder.addBinding().to(InvalidPublicKeyErrorFactory.class);
     multibinder.addBinding().to(MaxDistanceWithoutOriginErrorFactory.class);

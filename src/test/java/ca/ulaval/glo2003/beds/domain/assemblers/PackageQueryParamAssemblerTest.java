@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,6 +48,6 @@ class PackageQueryParamAssemblerTest {
     params.put(PACKAGE_NAME_PARAM, new String[] {"invalidPackageName"});
 
     assertThrows(
-        InvalidPackagesException.class, () -> queryAssembler.assemble(queryBuilder, params));
+        InvalidPackageException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 }
