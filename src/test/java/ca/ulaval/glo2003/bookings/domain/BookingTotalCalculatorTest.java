@@ -41,14 +41,14 @@ class BookingTotalCalculatorTest {
         Arguments.of(
             new Price(BigDecimal.valueOf(100)),
             3,
-            new Price(BigDecimal.valueOf(315))), // 100 * 3 * 0.95
+            new Price(BigDecimal.valueOf(285))), // 100 * 3 * 0.95
         Arguments.of(
             new Price(BigDecimal.valueOf(100)),
             10,
-            new Price(BigDecimal.valueOf(1100))), // 100 * 10 * 0.9
+            new Price(BigDecimal.valueOf(900))), // 100 * 10 * 0.9
         Arguments.of(
             new Price(BigDecimal.valueOf(100)),
             30,
-            new Price(BigDecimal.valueOf(3750)))); // 100 * 30 * 0.75
+            new Price(BigDecimal.valueOf(2250)))); // 100 * 30 * 0.75
   }
 }

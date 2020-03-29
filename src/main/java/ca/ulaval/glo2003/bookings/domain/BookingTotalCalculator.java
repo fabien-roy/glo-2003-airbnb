@@ -14,8 +14,8 @@ public class BookingTotalCalculator {
 
   private Price applyDiscount(Price total, int numberOfNights) {
     if (numberOfNights < 3) return total;
-    else if (numberOfNights < 10) return total.multiply(BigDecimal.valueOf(1.05));
-    else if (numberOfNights < 30) return total.multiply(BigDecimal.valueOf(1.1));
-    return total.multiply(BigDecimal.valueOf(1.25));
+    else if (numberOfNights < 10) return total.multiply(BigDecimal.valueOf(0.95));
+    else if (numberOfNights < 30) return total.multiply(BigDecimal.valueOf(0.9));
+    return total.multiply(BigDecimal.valueOf(0.75));
   }
 }
