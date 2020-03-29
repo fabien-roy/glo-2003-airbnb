@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.bookings.domain;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingStatus;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createTotal;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -46,5 +47,15 @@ public class BookingFactoryTest {
     booking = bookingFactory.create(booking, expectedTotal);
 
     assertEquals(expectedTotal, booking.getTotal());
+  }
+
+  @Test
+  public void create_shouldSetStatus() {
+    BookingStatuses expectedStatus = createBookingStatus();
+    Booking booking = aBooking().build();
+
+    booking = bookingFactory.create(booking, mock(Price.class));
+
+    assertEquals(expectedStatus, booking.getStatus());
   }
 }
