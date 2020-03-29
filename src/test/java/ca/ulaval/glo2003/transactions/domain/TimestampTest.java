@@ -28,7 +28,7 @@ class TimestampTest {
 
     timestamp = Timestamp.now();
 
-    assertEquals(now, timestamp.getValue());
+    assertEquals(now.toLocalDate(), timestamp.getValue().toLocalDate());
   }
 
   @ParameterizedTest
