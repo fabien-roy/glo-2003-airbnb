@@ -24,7 +24,7 @@ class BloodTypesQueryParamAssemblerTest {
   private BloodTypes otherBloodType = BloodTypes.AB_MINUS;
   private List<BloodTypes> singleBloodType = Collections.singletonList(bloodType);
   private List<BloodTypes> multipleBloodTypes = Arrays.asList(bloodType, otherBloodType);
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -53,15 +53,13 @@ class BloodTypesQueryParamAssemblerTest {
 
   @Test
   public void assemble_withInvalidBloodTypes_shouldThrowInvalidBloodTypeException() {
-    params.put(BLOOD_TYPES_PARAM, new String[] {"invalidBloodTypes"});
+    params.put(BLOOD_TYPES_PARAM, Collections.singletonList("invalidBloodTypes"));
 
     assertThrows(
         InvalidBloodTypesException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 
-  private String[] toParam(List<BloodTypes> bloodTypes) {
-    String unrepairedBloodTypes =
-        bloodTypes.stream().map(BloodTypes::toString).collect(Collectors.joining(","));
-    return new String[] {unrepairedBloodTypes};
+  private List<String> toParam(List<BloodTypes> bloodTypes) {
+    return bloodTypes.stream().map(BloodTypes::toString).collect(Collectors.toList());
   }
 }

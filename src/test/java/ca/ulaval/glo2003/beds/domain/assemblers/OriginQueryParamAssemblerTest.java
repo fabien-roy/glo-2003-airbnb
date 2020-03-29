@@ -9,7 +9,9 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.services.LocationService;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +25,7 @@ class OriginQueryParamAssemblerTest {
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private Location origin = createLocation();
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -38,7 +40,7 @@ class OriginQueryParamAssemblerTest {
 
   @Test
   public void assemble_withOrigin_shouldAssembleBuilder() {
-    params.put(ORIGIN_PARAM, new String[] {origin.getZipCode().getValue()});
+    params.put(ORIGIN_PARAM, Collections.singletonList(origin.getZipCode().getValue()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 

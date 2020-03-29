@@ -4,8 +4,10 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.interfaces.rest.QueryParamMapConverter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
@@ -19,11 +21,14 @@ public class BedResource implements RouteGroup {
 
   private final BedService bedService;
   private final BedMapper bedMapper;
+  private final QueryParamMapConverter queryParamMapConverter;
 
   @Inject
-  public BedResource(BedService bedService, BedMapper bedMapper) {
+  public BedResource(
+      BedService bedService, BedMapper bedMapper, QueryParamMapConverter queryParamMapConverter) {
     this.bedService = bedService;
     this.bedMapper = bedMapper;
+    this.queryParamMapConverter = queryParamMapConverter;
   }
 
   @Override
@@ -46,7 +51,9 @@ public class BedResource implements RouteGroup {
   }
 
   public Object getAll(Request request, Response response) {
-    List<BedResponse> bedResponses = bedService.getAll(request.queryMap().toMap());
+    Map<String, List<String>> queryParamMap =
+        queryParamMapConverter.fromString(request.raw().getQueryString());
+    List<BedResponse> bedResponses = bedService.getAll(queryParamMap);
 
     response.status(HttpStatus.OK_200);
     return bedResponses;

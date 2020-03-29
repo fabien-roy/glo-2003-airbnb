@@ -8,7 +8,9 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +23,7 @@ class NumberOfNightsQueryParamAssemblerTest {
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private int numberOfNights = 2;
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -35,7 +37,7 @@ class NumberOfNightsQueryParamAssemblerTest {
 
   @Test
   public void assemble_withNumberOfNights_shouldAssembleBuilder() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(numberOfNights)});
+    params.put(NUMBER_OF_NIGHTS_PARAM, Collections.singletonList(Integer.toString(numberOfNights)));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
@@ -44,7 +46,7 @@ class NumberOfNightsQueryParamAssemblerTest {
 
   @Test
   public void create_withNegativeNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {Integer.toString(-1)});
+    params.put(NUMBER_OF_NIGHTS_PARAM, Collections.singletonList("-1"));
 
     assertThrows(
         InvalidNumberOfNightsException.class, () -> queryAssembler.assemble(queryBuilder, params));
@@ -52,7 +54,7 @@ class NumberOfNightsQueryParamAssemblerTest {
 
   @Test
   public void create_withInvalidNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, new String[] {"invalidNumberOfNights"});
+    params.put(NUMBER_OF_NIGHTS_PARAM, Collections.singletonList("invalidNumberOfNights"));
 
     assertThrows(
         InvalidNumberOfNightsException.class, () -> queryAssembler.assemble(queryBuilder, params));
