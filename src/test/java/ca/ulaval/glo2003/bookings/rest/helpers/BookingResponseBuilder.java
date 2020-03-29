@@ -14,9 +14,6 @@ public class BookingResponseBuilder {
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
 
-  private int DEFAULT_COLONY_SIZE = createColonySize();
-  private int colonySize = DEFAULT_COLONY_SIZE;
-
   private String DEFAULT_BOOKING_PACKAGE = createBookingPackage();
   private String bookingPackage = DEFAULT_BOOKING_PACKAGE;
 
@@ -31,7 +28,6 @@ public class BookingResponseBuilder {
   }
 
   public BookingResponse build() {
-    return new BookingResponse(
-        arrivalDate, numberOfNights, colonySize, bookingPackage, total, status);
+    return new BookingResponse(arrivalDate, numberOfNights, bookingPackage, total, status);
   }
 }
