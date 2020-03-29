@@ -4,7 +4,7 @@ import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class InvalidPackagesErrorFactory extends BedErrorFactory {
+public class InvalidPackageErrorFactory extends BedErrorFactory {
 
   @Override
   public boolean canHandle(BedException exception) {
@@ -14,8 +14,7 @@ public class InvalidPackagesErrorFactory extends BedErrorFactory {
   @Override
   public String createResponse() {
     return tryWriteValueAsString(
-        "INVALID_PACKAGES",
-        "packages should be an array of package name with its corresponding price per night");
+        "INVALID_PACKAGE", "package should be one of bloodthirsty, allYouCanDrink, sweetTooth");
   }
 
   @Override

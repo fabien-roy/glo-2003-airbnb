@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.converters.PublicKeyConverter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
@@ -154,8 +154,7 @@ class BookingConverterTest {
     packageNameValue = "invalidPackage";
     bookingRequest = buildBookingRequest();
 
-    assertThrows(
-        InvalidPackagesException.class, () -> bookingConverter.fromRequest(bookingRequest));
+    assertThrows(InvalidPackageException.class, () -> bookingConverter.fromRequest(bookingRequest));
   }
 
   @Test
