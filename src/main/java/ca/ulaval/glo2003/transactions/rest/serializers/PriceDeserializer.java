@@ -25,7 +25,7 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
   @Override
   public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws InvalidPackagesException {
-    double price;
+    double price = 0.0;
 
     try {
       if (jsonParser.isNaN()) throwException();
@@ -35,7 +35,6 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
       price = jsonParser.getDoubleValue();
     } catch (Exception e) {
       throwException();
-      return 0.0;
     }
 
     return price;

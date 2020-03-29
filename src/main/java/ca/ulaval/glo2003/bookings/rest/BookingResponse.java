@@ -15,14 +15,14 @@ public class BookingResponse {
   private String bookingPackage;
 
   @JsonSerialize(using = PriceSerializer.class)
-  private Double total;
+  private double total;
 
   public BookingResponse(
       String arrivalDate,
       int numberOfNights,
       int colonySize,
       String bookingPackage,
-      Double total,
+      double total,
       String status) {
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
@@ -48,7 +48,7 @@ public class BookingResponse {
     return bookingPackage;
   }
 
-  public Double getTotal() {
+  public double getTotal() {
     return total;
   }
 

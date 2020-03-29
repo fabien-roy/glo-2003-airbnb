@@ -28,7 +28,7 @@ public class TransactionResponseObjectMother {
     return Faker.instance().name().firstName();
   }
 
-  public static Double createTotal() {
+  public static double createTotal() {
     return Faker.instance().number().randomDouble(2, 100, 1000);
   }
 

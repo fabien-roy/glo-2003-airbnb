@@ -10,30 +10,23 @@ public class PackageRequest {
   private String name;
 
   @JsonDeserialize(using = PriceDeserializer.class)
-  private Double pricePerNight;
+  private double pricePerNight = 0;
 
   public PackageRequest() {
     // Empty constructor for parsing
   }
 
-  public PackageRequest(String name, double pricePerNight) {
+  public PackageRequest(String name, Double pricePerNight) {
     this.name = name;
-    this.pricePerNight = pricePerNight;
+
+    if (pricePerNight != null) this.pricePerNight = pricePerNight;
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Double getPricePerNight() {
+  public double getPricePerNight() {
     return pricePerNight;
-  }
-
-  public void setPricePerNight(Double pricePerNight) {
-    this.pricePerNight = pricePerNight;
   }
 }
