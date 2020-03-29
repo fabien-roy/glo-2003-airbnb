@@ -180,13 +180,6 @@ class BookingConverterTest {
   }
 
   @Test
-  public void toResponse_shouldConvertColonySize() {
-    bookingResponse = bookingConverter.toResponse(booking);
-
-    assertEquals(colonySize, bookingResponse.getColonySize());
-  }
-
-  @Test
   public void toResponse_shouldConvertTotal() {
     bookingResponse = bookingConverter.toResponse(booking);
 
