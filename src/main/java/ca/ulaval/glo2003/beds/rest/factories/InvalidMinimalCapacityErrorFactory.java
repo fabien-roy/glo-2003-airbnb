@@ -1,20 +1,20 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
 import ca.ulaval.glo2003.beds.exceptions.BedException;
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class InvalidPackageErrorFactory extends BedErrorFactory {
+public class InvalidMinimalCapacityErrorFactory extends BedErrorFactory {
 
   @Override
   public boolean canHandle(BedException exception) {
-    return exception instanceof InvalidPackageException;
+    return exception instanceof InvalidMinimalCapacityException;
   }
 
   @Override
   public String createResponse() {
     return tryWriteValueAsString(
-        "INVALID_PACKAGE", "package should be one of bloodthirsty, allYouCanDrink, sweetTooth");
+        "INVALID_MINIMAL_CAPACITY", "minimal capacity should be a positive number");
   }
 
   @Override
