@@ -17,8 +17,8 @@ public class TransactionResponseBuilder {
   private String DEFAULT_TO = createTo();
   private String to = DEFAULT_TO;
 
-  private Double DEFAULT_TOTAL = createTotal();
-  private Double total = DEFAULT_TOTAL;
+  private double DEFAULT_TOTAL = createTotal();
+  private double total = DEFAULT_TOTAL;
 
   private String DEFAULT_REASON = createReason();
   private String reason = DEFAULT_REASON;

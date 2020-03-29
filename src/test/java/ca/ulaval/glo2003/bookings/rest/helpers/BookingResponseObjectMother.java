@@ -27,7 +27,7 @@ public class BookingResponseObjectMother {
     return randomEnum(Packages.class).toString();
   }
 
-  public static Double createTotal() {
+  public static double createTotal() {
     return Faker.instance().number().randomDouble(2, 100, 1000);
   }
 
