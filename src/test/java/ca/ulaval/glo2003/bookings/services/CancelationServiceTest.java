@@ -4,15 +4,16 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
 import static ca.ulaval.glo2003.bookings.rest.helpers.CancelationResponseBuilder.aCancelationResponse;
 import static ca.ulaval.glo2003.bookings.services.CancelationService.MINIMUM_DAYS_FOR_FULL_REFUND;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.bookings.converters.CancelationConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.CancelationRefundCalculator;
 import ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException;
 import ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException;
-import ca.ulaval.glo2003.bookings.mappers.CancelationMapper;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
@@ -25,7 +26,7 @@ class CancelationServiceTest {
   private static CancelationService cancelationService;
   private static CancelationRefundCalculator cancelationRefundCalculator =
       mock(CancelationRefundCalculator.class);
-  private static CancelationMapper cancelationMapper = mock(CancelationMapper.class);
+  private static CancelationConverter cancelationConverter = mock(CancelationConverter.class);
   private static TransactionService transactionService = mock(TransactionService.class);
 
   private static Booking booking;
@@ -39,7 +40,8 @@ class CancelationServiceTest {
   @BeforeAll
   public static void setUpService() {
     cancelationService =
-        new CancelationService(cancelationRefundCalculator, cancelationMapper, transactionService);
+        new CancelationService(
+            cancelationRefundCalculator, cancelationConverter, transactionService);
   }
 
   @BeforeEach
@@ -51,9 +53,9 @@ class CancelationServiceTest {
   }
 
   private void resetMocks() {
-    reset(cancelationMapper, cancelationRefundCalculator);
-    when(cancelationMapper.toResponse(tenantRefund)).thenReturn(cancelationResponse);
-    when(cancelationMapper.toResponse(total)).thenReturn(cancelationResponse);
+    reset(cancelationConverter, cancelationRefundCalculator);
+    when(cancelationConverter.toResponse(tenantRefund)).thenReturn(cancelationResponse);
+    when(cancelationConverter.toResponse(total)).thenReturn(cancelationResponse);
     when(cancelationRefundCalculator.calculateTenantRefund(total)).thenReturn(tenantRefund);
     when(cancelationRefundCalculator.calculateOwnerRefund(total)).thenReturn(ownerRefund);
   }

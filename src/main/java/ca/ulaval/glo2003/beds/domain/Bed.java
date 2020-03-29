@@ -84,6 +84,7 @@ public class Bed {
   }
 
   public Price getPricePerNight(Packages packageName) {
+    validatePackageAvailable(packageName);
     return pricesPerNight.get(packageName);
   }
 
@@ -109,7 +110,7 @@ public class Bed {
   public void book(Booking booking) {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
-    if (!isPackageAvailable(booking.getPackage())) throw new PackageNotAvailableException();
+    validatePackageAvailable(booking.getPackage());
 
     if (isBedAlreadyBooked(booking)) throw new BedAlreadyBookedException();
 
@@ -118,6 +119,10 @@ public class Bed {
 
   public boolean isPackageAvailable(Packages bookingPackage) {
     return pricesPerNight.containsKey(bookingPackage);
+  }
+
+  private void validatePackageAvailable(Packages packageName) {
+    if (!pricesPerNight.containsKey(packageName)) throw new PackageNotAvailableException();
   }
 
   private boolean isBedAlreadyBooked(Booking booking) {

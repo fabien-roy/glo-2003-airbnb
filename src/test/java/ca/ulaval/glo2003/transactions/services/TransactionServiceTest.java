@@ -4,14 +4,14 @@ import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.a
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static ca.ulaval.glo2003.transactions.rest.helpers.TransactionResponseBuilder.aTransactionResponse;
 import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
-import ca.ulaval.glo2003.transactions.mappers.TransactionMapper;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.Arrays;
 import java.util.List;
@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 class TransactionServiceTest {
 
   private static TransactionService transactionService;
-  private static TransactionFactory transactionFactory = mock(TransactionFactory.class);
-  private static TransactionRepository transactionRepository = mock(TransactionRepository.class);
-  private static TransactionMapper transactionMapper = mock(TransactionMapper.class);
+  private static TransactionFactory transactionFactory;
+  private static TransactionRepository transactionRepository;
+  private static TransactionConverter transactionConverter;
 
   private static Transaction transaction = aTransaction().build();
   private static Transaction otherTransaction = aTransaction().build();
@@ -39,18 +39,21 @@ class TransactionServiceTest {
 
   @BeforeAll
   public static void setUpService() {
+    transactionFactory = mock(TransactionFactory.class);
+    transactionRepository = mock(TransactionRepository.class);
+    transactionConverter = mock(TransactionConverter.class);
     transactionService =
-        new TransactionService(transactionFactory, transactionRepository, transactionMapper);
+        new TransactionService(transactionFactory, transactionRepository, transactionConverter);
   }
 
   private void resetMocks() {
-    reset(transactionFactory, transactionRepository, transactionMapper);
+    reset(transactionFactory, transactionRepository, transactionConverter);
   }
 
   private void setUpMocksForGetAll() {
     when(transactionRepository.getAll()).thenReturn(Arrays.asList(transaction, otherTransaction));
-    when(transactionMapper.toResponse(transaction)).thenReturn(transactionResponse);
-    when(transactionMapper.toResponse(otherTransaction)).thenReturn(otherTransactionResponse);
+    when(transactionConverter.toResponse(transaction)).thenReturn(transactionResponse);
+    when(transactionConverter.toResponse(otherTransaction)).thenReturn(otherTransactionResponse);
   }
 
   private void setUpMocksForAddStayBooked() {

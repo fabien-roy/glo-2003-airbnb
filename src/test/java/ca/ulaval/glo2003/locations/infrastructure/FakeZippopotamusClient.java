@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.locations.infrastructure;
 
-import ca.ulaval.glo2003.locations.mappers.LocationMapper;
+import ca.ulaval.glo2003.locations.converters.LocationConverter;
 import java.net.HttpURLConnection;
 
 public class FakeZippopotamusClient extends ZippopotamusClient {
@@ -8,8 +8,8 @@ public class FakeZippopotamusClient extends ZippopotamusClient {
   private final HttpURLConnection fakeUrlConnection;
 
   public FakeZippopotamusClient(
-      LocationMapper locationMapper, HttpURLConnection fakeUrlConnection) {
-    super(locationMapper);
+      LocationConverter locationConverter, HttpURLConnection fakeUrlConnection) {
+    super(locationConverter);
     this.fakeUrlConnection = fakeUrlConnection;
   }
 

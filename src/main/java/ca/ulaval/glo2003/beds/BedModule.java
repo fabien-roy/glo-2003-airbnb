@@ -1,15 +1,21 @@
 package ca.ulaval.glo2003.beds;
 
+import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.assemblers.*;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
-import ca.ulaval.glo2003.beds.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.mappers.PackageMapper;
+import ca.ulaval.glo2003.beds.rest.BedMapper;
 import ca.ulaval.glo2003.beds.rest.BedResource;
+import ca.ulaval.glo2003.beds.rest.factories.*;
+import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
@@ -20,14 +26,19 @@ public class BedModule extends AbstractModule {
   @Override
   protected void configure() {
     configureQueryParamAssemblers();
+    configureErrorFactories();
 
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
     bind(BedQueryFactory.class);
-    bind(BedService.class);
+    bind(BedSerializingModule.class);
+    bind(BedDeserializingModule.class);
     bind(BedMapper.class);
-    bind(PackageMapper.class);
+    bind(BedService.class);
+    bind(BedConverter.class);
+    bind(PackageConverter.class);
     bind(BedResource.class);
+    bind(BedExceptionHandler.class);
   }
 
   private void configureQueryParamAssemblers() {
@@ -43,5 +54,28 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(LodgingModeQueryParamAssembler.class);
     multibinder.addBinding().to(OriginQueryParamAssembler.class);
     multibinder.addBinding().to(MaximumDistanceQueryParamAssembler.class);
+  }
+
+  private void configureErrorFactories() {
+    Multibinder<ErrorFactory<BedException>> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<BedException>>() {});
+    multibinder.addBinding().to(CantOfferAllYouCanDrinkPackageErrorFactory.class);
+    multibinder.addBinding().to(BedAlreadyBookedErrorFactory.class);
+    multibinder.addBinding().to(BedNotFoundErrorFactory.class);
+    multibinder.addBinding().to(BookingNotAllowedErrorFactory.class);
+    multibinder.addBinding().to(ExceedingAccommodationCapacityErrorFactory.class);
+    multibinder.addBinding().to(InvalidBedTypeErrorFactory.class);
+    multibinder.addBinding().to(InvalidBloodTypesErrorFactory.class);
+    multibinder.addBinding().to(InvalidCapacityErrorFactory.class);
+    multibinder.addBinding().to(InvalidCleaningFrequencyErrorFactory.class);
+    multibinder.addBinding().to(InvalidLodgingModeErrorFactory.class);
+    multibinder.addBinding().to(InvalidMaxDistanceErrorFactory.class);
+    multibinder.addBinding().to(InvalidPackagesErrorFactory.class);
+    multibinder.addBinding().to(InvalidPublicKeyErrorFactory.class);
+    multibinder.addBinding().to(MaxDistanceWithoutOriginErrorFactory.class);
+    multibinder.addBinding().to(ArrivalDateWithoutMinimalCapacityErrorFactory.class);
+    multibinder.addBinding().to(NumberOfNightsWithoutMinimalCapacityErrorFactory.class);
+    multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
+    multibinder.addBinding().to(CantOfferSweetToothPackageErrorFactory.class);
   }
 }

@@ -12,11 +12,11 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.bookings.converters.BookingConverter;
+import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
-import ca.ulaval.glo2003.bookings.mappers.BookingMapper;
-import ca.ulaval.glo2003.bookings.mappers.BookingNumberMapper;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
@@ -32,10 +32,10 @@ public class BookingServiceTest {
   private static BedService bedService = mock(BedService.class);
   private static CancelationService cancelationService = mock(CancelationService.class);
   private static TransactionService transactionService = mock(TransactionService.class);
-  private static BookingMapper bookingMapper = mock(BookingMapper.class);
+  private static BookingConverter bookingConverter = mock(BookingConverter.class);
+  private static BookingNumberConverter bookingNumberConverter = mock(BookingNumberConverter.class);
   private static BookingFactory bookingFactory = mock(BookingFactory.class);
   private static BookingTotalCalculator bookingTotalCalculator = mock(BookingTotalCalculator.class);
-  private static BookingNumberMapper bookingNumberMapper = mock(BookingNumberMapper.class);
 
   private static UUID bedNumber = createBedNumber();
   private static Bed bed = buildBed();
@@ -52,35 +52,36 @@ public class BookingServiceTest {
   public static void setUpService() {
     bookingService =
         new BookingService(
-            bedService,
-            cancelationService,
-            transactionService,
-            bookingMapper,
+            bookingConverter,
+            bookingNumberConverter,
             bookingFactory,
             bookingTotalCalculator,
-            bookingNumberMapper);
+            transactionService,
+            bedService,
+            cancelationService);
   }
 
   private void setUpMocksForAdd() {
     resetMocks();
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
-    when(bookingMapper.fromRequest(bookingRequest)).thenReturn(booking);
+    when(bookingConverter.fromRequest(bookingRequest)).thenReturn(booking);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
+    when(bookingNumberConverter.toString(bookingNumber)).thenReturn(bookingNumber.toString());
   }
 
   private void setUpMocksForGetResponse() {
     resetMocks();
     when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
-    when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
+    when(bookingNumberConverter.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
-    when(bookingMapper.toResponse(booking)).thenReturn(bookingResponse);
+    when(bookingConverter.toResponse(booking)).thenReturn(bookingResponse);
   }
 
   private void setUpMocksForCancel() {
     resetMocks();
     when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
-    when(bookingNumberMapper.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
+    when(bookingNumberConverter.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
     when(cancelationService.cancel(booking, bed.getOwnerPublicKey().toString()))
         .thenReturn(cancelationResponse);

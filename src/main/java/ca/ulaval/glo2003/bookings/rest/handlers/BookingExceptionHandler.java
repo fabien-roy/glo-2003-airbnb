@@ -1,29 +1,24 @@
 package ca.ulaval.glo2003.bookings.rest.handlers;
 
 import ca.ulaval.glo2003.bookings.exceptions.BookingException;
-import ca.ulaval.glo2003.bookings.rest.factories.BookingErrorResponseFactory;
-import ca.ulaval.glo2003.bookings.rest.factories.BookingErrorStatusFactory;
+import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.errors.rest.handlers.AbstractExceptionHandler;
+import java.util.Set;
 import javax.inject.Inject;
-import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-public class BookingExceptionHandler implements ExceptionHandler<BookingException> {
+public class BookingExceptionHandler extends AbstractExceptionHandler<BookingException> {
 
-  private final BookingErrorStatusFactory bookingErrorStatusFactory;
-  private final BookingErrorResponseFactory bookingErrorResponseFactory;
+  private final Set<ErrorFactory<BookingException>> factories;
 
   @Inject
-  public BookingExceptionHandler(
-      BookingErrorStatusFactory bookingErrorStatusFactory,
-      BookingErrorResponseFactory bookingErrorResponseFactory) {
-    this.bookingErrorStatusFactory = bookingErrorStatusFactory;
-    this.bookingErrorResponseFactory = bookingErrorResponseFactory;
+  public BookingExceptionHandler(Set<ErrorFactory<BookingException>> factories) {
+    this.factories = factories;
   }
 
   @Override
   public void handle(BookingException e, Request request, Response response) {
-    response.status(bookingErrorStatusFactory.create(e));
-    response.body(bookingErrorResponseFactory.create(e));
+    handleIfCan(factories, e, response);
   }
 }

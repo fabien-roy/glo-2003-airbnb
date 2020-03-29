@@ -1,17 +1,35 @@
 package ca.ulaval.glo2003.beds.rest;
 
+import ca.ulaval.glo2003.beds.rest.serializers.*;
+import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BedRequest {
 
+  @JsonDeserialize(using = PublicKeyDeserializer.class)
   private String ownerPublicKey;
+
+  @JsonDeserialize(using = ZipCodeDeserializer.class)
   private String zipCode;
+
+  @JsonDeserialize(using = BedTypeDeserializer.class)
   private String bedType;
+
+  @JsonDeserialize(using = CleaningFrequencyDeserializer.class)
   private String cleaningFrequency;
-  private List<String> bloodTypes;
+
+  @JsonDeserialize(using = BloodTypesDeserializer.class)
+  private List<String> bloodTypes = new ArrayList<>();
+
+  @JsonDeserialize(using = CapacityDeserializer.class)
   private int capacity;
+
   private String lodgingMode;
-  private List<PackageRequest> packages;
+
+  @JsonDeserialize(using = PackagesDeserializer.class)
+  private List<PackageRequest> packages = new ArrayList<>();
 
   public BedRequest() {
     // Empty constructor for parsing

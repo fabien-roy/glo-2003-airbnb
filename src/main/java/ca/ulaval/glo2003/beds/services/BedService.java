@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.beds.services;
 
+import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
-import ca.ulaval.glo2003.beds.mappers.BedMapper;
-import ca.ulaval.glo2003.beds.mappers.BedNumberMapper;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
@@ -16,8 +16,8 @@ public class BedService {
 
   private final BedFactory bedFactory;
   private final BedQueryFactory bedQueryFactory;
-  private final BedMapper bedMapper;
-  private final BedNumberMapper bedNumberMapper;
+  private final BedConverter bedConverter;
+  private final BedNumberConverter bedNumberConverter;
   private final BedRepository bedRepository;
   private final BedStarsCalculator bedStarsCalculator;
   private final LocationService locationService;
@@ -26,29 +26,29 @@ public class BedService {
   public BedService(
       BedFactory bedFactory,
       BedQueryFactory bedQueryFactory,
-      BedMapper bedMapper,
-      BedNumberMapper bedNumberMapper,
+      BedConverter bedConverter,
+      BedNumberConverter bedNumberConverter,
       BedRepository bedRepository,
       BedStarsCalculator bedStarsCalculator,
       LocationService locationService) {
     this.bedFactory = bedFactory;
     this.bedQueryFactory = bedQueryFactory;
-    this.bedMapper = bedMapper;
-    this.bedNumberMapper = bedNumberMapper;
+    this.bedConverter = bedConverter;
+    this.bedNumberConverter = bedNumberConverter;
     this.bedRepository = bedRepository;
     this.bedStarsCalculator = bedStarsCalculator;
     this.locationService = locationService;
   }
 
   public String add(BedRequest request) {
-    Bed bed = bedMapper.fromRequest(request);
+    Bed bed = bedConverter.fromRequest(request);
     Location location = locationService.getLocation(request.getZipCode());
 
     bed = bedFactory.create(bed, location);
 
     bedRepository.add(bed);
 
-    return bed.getNumber().toString();
+    return bedNumberConverter.toString(bed.getNumber());
   }
 
   public List<BedResponse> getAll(Map<String, String[]> params) {
@@ -62,11 +62,11 @@ public class BedService {
   public BedResponse getResponse(String number) {
     Bed bed = get(number);
 
-    return bedMapper.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
+    return bedConverter.toResponseWithoutNumber(bed, bedStarsCalculator.calculateStars(bed));
   }
 
   public Bed get(String number) {
-    UUID bedNumber = bedNumberMapper.fromString(number);
+    UUID bedNumber = bedNumberConverter.fromString(number);
 
     return bedRepository.getByNumber(bedNumber);
   }
@@ -79,7 +79,7 @@ public class BedService {
     return beds.stream()
         .map(
             matchingBed ->
-                bedMapper.toResponseWithNumber(
+                bedConverter.toResponseWithNumber(
                     matchingBed, bedStarsCalculator.calculateStars(matchingBed)))
         .collect(Collectors.toList());
   }

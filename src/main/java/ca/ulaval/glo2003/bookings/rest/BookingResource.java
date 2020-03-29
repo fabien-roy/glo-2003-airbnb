@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.bookings.rest;
 
 import static ca.ulaval.glo2003.beds.rest.BedResource.BED_PATH;
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 import ca.ulaval.glo2003.bookings.services.BookingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
@@ -19,23 +19,23 @@ public class BookingResource implements RouteGroup {
   public static final String BOOKING_PATH = "/beds/:bedNumber/bookings";
 
   private final BookingService bookingService;
+  private final BookingMapper bookingMapper;
 
   @Inject
-  public BookingResource(BookingService bookingService) {
+  public BookingResource(BookingService bookingService, BookingMapper bookingMapper) {
     this.bookingService = bookingService;
+    this.bookingMapper = bookingMapper;
   }
 
   @Override
   public void addRoutes() {
     post("", this::add);
-    get("/:bookingNumber", this::getByNumber, new ObjectMapper()::writeValueAsString);
-    post("/:bookingNumber/cancel", this::cancel, new ObjectMapper()::writeValueAsString);
+    get("/:bookingNumber", this::getByNumber, bookingMapper::writeValueAsString);
+    post("/:bookingNumber/cancel", this::cancel, bookingMapper::writeValueAsString);
   }
 
   public Object add(Request request, Response response) throws JsonProcessingException {
-    BookingRequest bookingRequest;
-
-    bookingRequest = new ObjectMapper().readValue(request.body(), BookingRequest.class);
+    BookingRequest bookingRequest = bookingMapper.readValue(request.body(), BookingRequest.class);
 
     String bedNumber = request.params("bedNumber");
     String bookingNumber = bookingService.add(bedNumber, bookingRequest);
