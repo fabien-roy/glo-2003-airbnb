@@ -68,20 +68,15 @@ public class BedRequestBuilder {
     return this;
   }
 
-  public BedRequestBuilder withPackages(List<PackageRequest> packages) {
-    this.packages = packages;
-    return this;
-  }
-
   public BedRequest build() {
     return new BedRequest(
         ownerPublicKey,
         zipCode,
         bedType,
         cleaningFrequency,
-        bloodTypes,
+        bloodTypes.toArray(new String[0]),
         capacity,
         lodgingMode,
-        packages);
+        packages.toArray(new PackageRequest[0]));
   }
 }

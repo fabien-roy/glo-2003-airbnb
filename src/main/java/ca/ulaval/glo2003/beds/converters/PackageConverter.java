@@ -19,8 +19,7 @@ public class PackageConverter {
   }
 
   public Map<Packages, Price> fromRequests(List<PackageRequest> packageRequests) {
-    if (packageRequests.isEmpty()) throw new InvalidPackagesException();
-
+    validateRequests(packageRequests);
     Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
 
     packageRequests.forEach(
@@ -44,6 +43,13 @@ public class PackageConverter {
         });
 
     return packageResponses;
+  }
+
+  private void validateRequests(List<PackageRequest> requests) {
+    if (requests.isEmpty()) throw new InvalidPackagesException();
+
+    if (requests.stream().anyMatch(request -> request.getPricePerNight() <= 0))
+      throw new InvalidPackagesException();
   }
 
   private void validatePackageOnce(

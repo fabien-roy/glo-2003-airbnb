@@ -17,8 +17,8 @@ public class BookingResponseBuilder {
   private String DEFAULT_BOOKING_PACKAGE = createBookingPackage();
   private String bookingPackage = DEFAULT_BOOKING_PACKAGE;
 
-  private Double DEFAULT_TOTAL = createTotal();
-  private Double total = DEFAULT_TOTAL;
+  private double DEFAULT_TOTAL = createTotal();
+  private double total = DEFAULT_TOTAL;
 
   private String DEFAULT_STATUS = createStatus();
   private String status = DEFAULT_STATUS;

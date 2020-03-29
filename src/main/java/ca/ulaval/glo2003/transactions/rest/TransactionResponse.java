@@ -10,12 +10,12 @@ public class TransactionResponse {
   private String to;
 
   @JsonSerialize(using = PriceSerializer.class)
-  private Double total;
+  private double total;
 
   private String reason;
 
   public TransactionResponse(
-      String timestamp, String from, String to, Double total, String reason) {
+      String timestamp, String from, String to, double total, String reason) {
     this.timestamp = timestamp;
     this.from = from;
     this.to = to;
@@ -35,7 +35,7 @@ public class TransactionResponse {
     return to;
   }
 
-  public Double getTotal() {
+  public double getTotal() {
     return total;
   }
 

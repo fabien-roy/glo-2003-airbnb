@@ -8,9 +8,9 @@ public class PackageResponse {
   private String name;
 
   @JsonSerialize(using = PriceSerializer.class)
-  private Double pricePerNight;
+  private double pricePerNight;
 
-  public PackageResponse(String name, Double pricePerNight) {
+  public PackageResponse(String name, double pricePerNight) {
     this.name = name;
     this.pricePerNight = pricePerNight;
   }
@@ -19,7 +19,7 @@ public class PackageResponse {
     return name;
   }
 
-  public Double getPricePerNight() {
+  public double getPricePerNight() {
     return pricePerNight;
   }
 }

@@ -25,16 +25,14 @@ class PackageConverterTest {
   private static Map<Packages, Price> pricesPerNight;
   private static Packages packageName;
   private static Packages otherPackageName;
-  private static Price price = createPricePerNight();
-  private static Price otherPrice = createPricePerNight();
+  private static Price price;
+  private static Price otherPrice;
 
-  private static PackageRequest request;
-  private static PackageRequest otherRequest;
   private static List<PackageRequest> requests;
   private static String packageNameValue;
   private static String otherPackageNameValue;
-  private static double priceValue = price.getValue().doubleValue();
-  private static double otherPriceValue = otherPrice.getValue().doubleValue();
+  private static double priceValue;
+  private static double otherPriceValue;
   private static List<PackageResponse> responses;
 
   @BeforeAll
@@ -45,16 +43,21 @@ class PackageConverterTest {
   @BeforeEach
   public void setUpPackages() {
     packageName = Packages.BLOODTHIRSTY;
+    price = createPricePerNight();
+    otherPrice = createPricePerNight();
     otherPackageName = Packages.ALL_YOU_CAN_DRINK;
     packageNameValue = packageName.toString();
     otherPackageNameValue = otherPackageName.toString();
+    priceValue = price.getValue().doubleValue();
+    otherPriceValue = otherPrice.getValue().doubleValue();
 
     pricesPerNight = buildPricesPerNight();
     requests = buildPackageRequests();
+
+    resetMocks();
   }
 
-  @BeforeEach
-  public void setUpMocks() {
+  private void resetMocks() {
     when(priceConverter.fromDouble(priceValue)).thenReturn(price);
     when(priceConverter.fromDouble(otherPriceValue)).thenReturn(otherPrice);
     when(priceConverter.toDouble(price)).thenReturn(priceValue);
@@ -69,8 +72,8 @@ class PackageConverterTest {
   }
 
   private List<PackageRequest> buildPackageRequests() {
-    request = buildPackageRequest();
-    otherRequest = buildOtherPackageRequest();
+    PackageRequest request = buildPackageRequest();
+    PackageRequest otherRequest = buildOtherPackageRequest();
     return Arrays.asList(request, otherRequest);
   }
 
@@ -121,6 +124,12 @@ class PackageConverterTest {
   @Test
   public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
     requests = Collections.emptyList();
+  }
+
+  @Test
+  public void fromRequests_withInvalidPricePerNight_throwInvalidPackageException() {
+    priceValue = -1;
+    requests = buildPackageRequests();
 
     assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }

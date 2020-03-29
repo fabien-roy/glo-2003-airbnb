@@ -28,6 +28,13 @@ class ZipCodeConverterTest {
   }
 
   @Test
+  void fromString_withNullZipCode_shouldThrowNonExistingZipCodeException() {
+    String nullZipCode = null;
+
+    assertThrows(InvalidZipCodeException.class, () -> zipCodeConverter.fromString(nullZipCode));
+  }
+
+  @Test
   void fromString_withInvalidZipCodeLength_shouldThrowNonExistingZipCodeException() {
     String invalidZipCode = "0000";
 
