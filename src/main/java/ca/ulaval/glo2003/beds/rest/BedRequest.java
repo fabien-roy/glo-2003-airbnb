@@ -91,7 +91,7 @@ public class BedRequest {
   }
 
   public void setBloodTypes(List<String> bloodTypes) {
-    this.bloodTypes = bloodTypes;
+    if (bloodTypes != null) this.bloodTypes = bloodTypes;
   }
 
   public int getCapacity() {
@@ -111,6 +111,6 @@ public class BedRequest {
   }
 
   public void setPackages(List<PackageRequest> packages) {
-    this.packages = packages;
+    if (packages != null) this.packages = packages;
   }
 }
