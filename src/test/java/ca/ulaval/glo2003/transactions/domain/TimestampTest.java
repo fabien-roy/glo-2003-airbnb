@@ -3,7 +3,10 @@ package ca.ulaval.glo2003.transactions.domain;
 import static ca.ulaval.glo2003.transactions.domain.Timestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
