@@ -1,10 +1,10 @@
-package ca.ulaval.glo2003.locations.infrastructure.helpers;
+package ca.ulaval.glo2003.locations.clients.helpers;
 
-import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseObjectMother.*;
-import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseBuilder.aPlaceResponse;
+import static ca.ulaval.glo2003.locations.clients.helpers.LocationResponseObjectMother.*;
+import static ca.ulaval.glo2003.locations.clients.helpers.PlaceResponseBuilder.aPlaceResponse;
 
-import ca.ulaval.glo2003.locations.infrastructure.LocationResponse;
-import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
+import ca.ulaval.glo2003.locations.clients.LocationResponse;
+import ca.ulaval.glo2003.locations.clients.PlaceResponse;
 import java.util.Collections;
 import java.util.List;
 

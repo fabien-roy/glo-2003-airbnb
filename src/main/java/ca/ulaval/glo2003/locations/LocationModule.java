@@ -1,10 +1,11 @@
 package ca.ulaval.glo2003.locations;
 
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.locations.clients.LocationMapper;
+import ca.ulaval.glo2003.locations.clients.ZippopotamusClient;
 import ca.ulaval.glo2003.locations.converters.LocationConverter;
 import ca.ulaval.glo2003.locations.domain.LocationClient;
 import ca.ulaval.glo2003.locations.exceptions.LocationException;
-import ca.ulaval.glo2003.locations.infrastructure.ZippopotamusClient;
 import ca.ulaval.glo2003.locations.rest.factories.InvalidZipCodeErrorFactory;
 import ca.ulaval.glo2003.locations.rest.factories.NonExistingZipCodeErrorFactory;
 import ca.ulaval.glo2003.locations.rest.factories.UnreachableZippopotamusServerErrorFactory;
@@ -21,6 +22,7 @@ public class LocationModule extends AbstractModule {
     configureErrorFactories();
 
     bind(LocationExceptionHandler.class);
+    bind(LocationMapper.class);
     bind(LocationConverter.class);
     bind(LocationClient.class).to(ZippopotamusClient.class);
     bind(LocationService.class);

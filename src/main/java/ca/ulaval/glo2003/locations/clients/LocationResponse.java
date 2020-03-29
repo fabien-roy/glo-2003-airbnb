@@ -1,19 +1,23 @@
-package ca.ulaval.glo2003.locations.infrastructure;
+package ca.ulaval.glo2003.locations.clients;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class LocationResponse {
 
-  @SerializedName("post code")
+  @JsonProperty("post code")
   private String postCode;
 
   private String country;
 
-  @SerializedName("country abbreviation")
+  @JsonProperty("country abbreviation")
   private String countryAbbreviation;
 
   private List<PlaceResponse> places;
+
+  public LocationResponse() {
+    // Empty constructor for parsing
+  }
 
   public LocationResponse(
       String postCode, String country, String countryAbbreviation, List<PlaceResponse> places) {
@@ -25,14 +29,6 @@ public class LocationResponse {
 
   public String getPostCode() {
     return postCode;
-  }
-
-  public String getCountry() {
-    return country;
-  }
-
-  public String getCountryAbbreviation() {
-    return countryAbbreviation;
   }
 
   public List<PlaceResponse> getPlaces() {
