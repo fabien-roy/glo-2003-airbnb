@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException;
 import java.util.Map;
 
 public class MinimalCapacityQueryParamAssembler extends PositiveIntegerQueryParamAssembler {
@@ -15,6 +15,7 @@ public class MinimalCapacityQueryParamAssembler extends PositiveIntegerQueryPara
   }
 
   private int parseMinCapacity(Map<String, String[]> params) {
-    return parsePositiveInteger(params.get(MIN_CAPACITY_PARAM)[0], new InvalidCapacityException());
+    return parsePositiveInteger(
+        params.get(MIN_CAPACITY_PARAM)[0], new InvalidMinimalCapacityException());
   }
 }

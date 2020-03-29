@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,18 +43,18 @@ class MinimalCapacityQueryParamAssemblerTest {
   }
 
   @Test
-  public void create_withNegativeMinCapacity_shouldThrowInvalidCapacityException() {
+  public void create_withNegativeMinCapacity_shouldThrowInvalidMinimalCapacityException() {
     params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(-1)});
 
     assertThrows(
-        InvalidCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
+        InvalidMinimalCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 
   @Test
-  public void create_withInvalidMinCapacity_shouldThrowInvalidCapacityException() {
+  public void create_withInvalidMinCapacity_shouldThrowInvalidMinimalCapacityException() {
     params.put(MIN_CAPACITY_PARAM, new String[] {"invalidMinCapacity"});
 
     assertThrows(
-        InvalidCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
+        InvalidMinimalCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 }
