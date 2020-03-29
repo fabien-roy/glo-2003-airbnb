@@ -1,10 +1,9 @@
 package ca.ulaval.glo2003.transactions.domain;
 
+import static ca.ulaval.glo2003.transactions.domain.Timestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,21 +13,22 @@ class TimestampTest {
 
   private static Timestamp timestamp;
 
-  private static LocalDateTime date = LocalDateTime.now();
-  private static LocalDateTime otherDate = date.plusDays(1);
+  private static LocalDateTime dateTime = LocalDateTime.now();
+  private static Instant instant = dateTime.toInstant(ZONE_OFFSET);
+  private static Instant otherInstant = dateTime.plusDays(1).toInstant(ZONE_OFFSET);
 
   @BeforeAll
   public static void setUpTimestamp() {
-    timestamp = new Timestamp(date);
+    timestamp = new Timestamp(instant);
   }
 
   @Test
   public void now_shouldSetValueToNow() {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDate now = LocalDateTime.now().toLocalDate();
 
     timestamp = Timestamp.now();
 
-    assertEquals(now.toLocalDate(), timestamp.getValue().toLocalDate());
+    assertEquals(now, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @ParameterizedTest
@@ -38,7 +38,7 @@ class TimestampTest {
 
     timestamp = Timestamp.inDays(days);
 
-    assertEquals(inDays, timestamp.getValue().toLocalDate());
+    assertEquals(inDays, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test
@@ -47,7 +47,7 @@ class TimestampTest {
 
     timestamp = Timestamp.inDays(0);
 
-    assertEquals(inDays, timestamp.getValue());
+    assertEquals(inDays, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDateTime());
   }
 
   @Test
@@ -61,7 +61,7 @@ class TimestampTest {
 
   @Test
   public void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    Timestamp otherTimestamp = new Timestamp(otherDate);
+    Timestamp otherTimestamp = new Timestamp(otherInstant);
 
     boolean result = timestamp.equals(otherTimestamp);
 
