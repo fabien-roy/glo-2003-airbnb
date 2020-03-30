@@ -9,7 +9,7 @@ public class BedFactory {
 
   public Bed create(Bed bed, Location location) {
     validateCapacity(bed);
-    validatePackageDependencies(bed);
+    OutdatedvalidatePackageDependencies(bed);
     UUID bedNumber = UUID.randomUUID();
     bed.setNumber(bedNumber);
     bed.setLocation(location);
@@ -24,16 +24,16 @@ public class BedFactory {
     }
   }
 
-  private void validatePackageDependencies(Bed bed) {
+  private void OutdatedvalidatePackageDependencies(Bed bed) {
     Set<Packages> packages = bed.getPackages();
-    packages.forEach(packageName -> validatePackageDependency(packageName, packages));
+    packages.forEach(packageName -> outdatedvalidatePackageDependency(packageName, packages));
   }
 
-  private void validatePackageDependency(Packages packageName, Set<Packages> packages) {
-    Packages dependency = PackagesDependencies.getDependency(packageName);
+  private void outdatedvalidatePackageDependency(Packages packageName, Set<Packages> packages) {
+    Packages dependency = OutdatedPackagesDependencies.getDependency(packageName);
 
     if (dependency != null && !packages.contains(dependency)) {
-      throw PackagesDependencies.getException(packageName);
+      throw OutdatedPackagesDependencies.getException(packageName);
     }
   }
 }

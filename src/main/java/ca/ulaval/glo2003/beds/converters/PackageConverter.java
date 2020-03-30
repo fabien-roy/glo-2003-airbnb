@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.converters;
 
+import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
@@ -8,15 +9,23 @@ import ca.ulaval.glo2003.beds.rest.PackageResponse;
 import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class PackageConverter {
 
   private final PriceConverter priceConverter;
+  private final Set<PackageValidator> validators;
+  private final PackageValidator defaultValidator;
 
   @Inject
-  public PackageConverter(PriceConverter priceConverter) {
+  public PackageConverter(
+      PriceConverter priceConverter,
+      Set<PackageValidator> validators,
+      PackageValidator defaultValidator) {
     this.priceConverter = priceConverter;
+    this.validators = validators;
+    this.defaultValidator = defaultValidator;
   }
 
   public Map<Packages, Price> fromRequests(List<PackageRequest> packageRequests) {
@@ -51,6 +60,8 @@ public class PackageConverter {
 
     if (requests.stream().anyMatch(request -> request.getPricePerNight() <= 0))
       throw new InvalidPackagesException();
+
+    validatePackagesDependencies(requests);
   }
 
   private Packages parsePackageName(String packageName) {
@@ -66,5 +77,27 @@ public class PackageConverter {
     if (packageRequestsSet.size() != packageRequestsList.size()) {
       throw new InvalidPackagesException();
     }
+  }
+
+  private void validatePackagesDependencies(List<PackageRequest> requests) {
+    List<String> requestPackagesName =
+        requests.stream().map(PackageRequest::getName).collect(Collectors.toList());
+    Set<Packages> presentPackages =
+        requestPackagesName.stream().map(Packages::get).collect(Collectors.toSet());
+
+    presentPackages.forEach(
+        packageName -> validatePackageDependencies(packageName, presentPackages));
+  }
+
+  private void validatePackageDependencies(Packages packageName, Set<Packages> presentPackages) {
+    PackageValidator foundValidator = findValidator(packageName);
+    List<Packages> dependencies = foundValidator.get();
+    if (!presentPackages.containsAll(dependencies)) foundValidator.throwException();
+  }
+
+  private PackageValidator findValidator(Packages packages) {
+    Optional<PackageValidator> packageValidator =
+        validators.stream().filter(validator -> validator.isPackage(packages)).findFirst();
+    return packageValidator.orElse(defaultValidator);
   }
 }
