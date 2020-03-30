@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.locations.converters;
 
+import ca.ulaval.glo2003.locations.clients.PlaceResponse;
 import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Latitude;
 import ca.ulaval.glo2003.locations.domain.Longitude;
-import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
 
 public class CoordinatesConverter {
 

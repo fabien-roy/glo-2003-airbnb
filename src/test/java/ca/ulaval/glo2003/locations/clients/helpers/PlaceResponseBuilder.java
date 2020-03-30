@@ -1,8 +1,8 @@
-package ca.ulaval.glo2003.locations.infrastructure.helpers;
+package ca.ulaval.glo2003.locations.clients.helpers;
 
-import static ca.ulaval.glo2003.locations.infrastructure.helpers.PlaceResponseObjectMother.*;
+import static ca.ulaval.glo2003.locations.clients.helpers.PlaceResponseObjectMother.*;
 
-import ca.ulaval.glo2003.locations.infrastructure.PlaceResponse;
+import ca.ulaval.glo2003.locations.clients.PlaceResponse;
 
 public class PlaceResponseBuilder {
 

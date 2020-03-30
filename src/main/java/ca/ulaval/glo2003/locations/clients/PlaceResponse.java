@@ -1,19 +1,23 @@
-package ca.ulaval.glo2003.locations.infrastructure;
+package ca.ulaval.glo2003.locations.clients;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlaceResponse {
 
-  @SerializedName("place name")
+  @JsonProperty("place name")
   private String placeName;
 
   private String longitude;
   private String state;
 
-  @SerializedName("state abbreviation")
+  @JsonProperty("state abbreviation")
   private String stateAbbreviation;
 
   private String latitude;
+
+  public PlaceResponse() {
+    // Empty constructor for parsing
+  }
 
   public PlaceResponse(
       String placeName, String longitude, String state, String stateAbbreviation, String latitude) {
@@ -24,20 +28,8 @@ public class PlaceResponse {
     this.latitude = latitude;
   }
 
-  public String getPlaceName() {
-    return placeName;
-  }
-
   public String getLongitude() {
     return longitude;
-  }
-
-  public String getState() {
-    return state;
-  }
-
-  public String getStateAbbreviation() {
-    return stateAbbreviation;
   }
 
   public String getLatitude() {

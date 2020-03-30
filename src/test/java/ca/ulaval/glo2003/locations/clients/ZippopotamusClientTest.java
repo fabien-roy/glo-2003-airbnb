@@ -1,9 +1,9 @@
-package ca.ulaval.glo2003.locations.infrastructure;
+package ca.ulaval.glo2003.locations.clients;
 
+import static ca.ulaval.glo2003.locations.clients.helpers.LocationResponseBuilder.aLocationResponse;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocation;
-import static ca.ulaval.glo2003.locations.infrastructure.helpers.LocationResponseBuilder.aLocationResponse;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +11,6 @@ import ca.ulaval.glo2003.locations.converters.LocationConverter;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import ca.ulaval.glo2003.locations.exceptions.UnreachableZippopotamusServerException;
-import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +22,7 @@ import org.junit.jupiter.api.Test;
 class ZippopotamusClientTest {
 
   private static ZippopotamusClient zippopotamusClient;
+  private static LocationMapper locationMapper = mock(LocationMapper.class);
   private static LocationConverter locationConverter = mock(LocationConverter.class);
   private static HttpURLConnection fakeUrlConnection = mock(HttpURLConnection.class);
 
@@ -31,16 +31,18 @@ class ZippopotamusClientTest {
 
   @BeforeAll
   public static void setUpClient() {
-    zippopotamusClient = new FakeZippopotamusClient(locationConverter, fakeUrlConnection);
+    zippopotamusClient =
+        new FakeZippopotamusClient(locationMapper, locationConverter, fakeUrlConnection);
   }
 
   @BeforeEach
   public void setUpMocks() throws IOException {
-    String content = new Gson().toJson(locationResponse);
-    InputStream inputStream = new ByteArrayInputStream(content.getBytes());
+    InputStream inputStream = new ByteArrayInputStream("inputStream".getBytes());
     when(fakeUrlConnection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_OK);
-    when(fakeUrlConnection.getContent()).thenReturn(inputStream);
-    when(locationConverter.fromResponse(any())).thenReturn(location);
+    when(fakeUrlConnection.getInputStream()).thenReturn(inputStream);
+    when(locationMapper.readValue(inputStream, LocationResponse.class))
+        .thenReturn(locationResponse);
+    when(locationConverter.fromResponse(locationResponse)).thenReturn(location);
   }
 
   @Test
