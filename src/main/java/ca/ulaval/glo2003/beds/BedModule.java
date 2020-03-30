@@ -2,23 +2,24 @@ package ca.ulaval.glo2003.beds;
 
 import ca.ulaval.glo2003.beds.converters.BedConverter;
 import ca.ulaval.glo2003.beds.converters.PackageConverter;
+import ca.ulaval.glo2003.beds.converters.validators.AllYouCanDrinkValidator;
+import ca.ulaval.glo2003.beds.converters.validators.BloodthirstyValidator;
+import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
+import ca.ulaval.glo2003.beds.converters.validators.SweetToothValidator;
+import ca.ulaval.glo2003.beds.domain.BedFactory;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.assemblers.*;
-import ca.ulaval.glo2003.beds.domain.validator.AllYouCanDrinkValidator;
-import ca.ulaval.glo2003.beds.domain.validator.BloodthirstyValidator;
-import ca.ulaval.glo2003.beds.domain.validator.PackageValidator;
-import ca.ulaval.glo2003.beds.domain.validator.SweetToothValidator;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
 import ca.ulaval.glo2003.beds.rest.BedMapper;
 import ca.ulaval.glo2003.beds.rest.BedResource;
 import ca.ulaval.glo2003.beds.rest.factories.*;
+import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.beds.services.BedService;
-import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
@@ -44,6 +45,7 @@ public class BedModule extends AbstractModule {
     bind(PackageConverter.class);
     bind(BedResource.class);
     bind(BedExceptionHandler.class);
+    bind(BedFactory.class);
   }
 
   private void configureQueryParamAssemblers() {
@@ -89,8 +91,9 @@ public class BedModule extends AbstractModule {
   private void configurePackagesValidators() {
     Multibinder<PackageValidator> multibinder =
         Multibinder.newSetBinder(binder(), new TypeLiteral<PackageValidator>() {});
-    multibinder.addBinding().to(BloodthirstyValidator.class);
     multibinder.addBinding().to(AllYouCanDrinkValidator.class);
     multibinder.addBinding().to(SweetToothValidator.class);
+
+    bind(PackageValidator.class).to(BloodthirstyValidator.class);
   }
 }
