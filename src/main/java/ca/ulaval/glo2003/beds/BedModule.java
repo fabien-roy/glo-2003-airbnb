@@ -6,6 +6,10 @@ import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.domain.assemblers.*;
+import ca.ulaval.glo2003.beds.domain.validator.AllYouCanDrinkValidator;
+import ca.ulaval.glo2003.beds.domain.validator.BloodthirstyValidator;
+import ca.ulaval.glo2003.beds.domain.validator.PackageValidator;
+import ca.ulaval.glo2003.beds.domain.validator.SweetToothValidator;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder;
 import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository;
@@ -27,6 +31,7 @@ public class BedModule extends AbstractModule {
   protected void configure() {
     configureQueryParamAssemblers();
     configureErrorFactories();
+    configurePackagesValidators();
 
     bind(BedRepository.class).to(InMemoryBedRepository.class).in(Singleton.class);
     bind(BedQueryBuilder.class).to(InMemoryBedQueryBuilder.class);
@@ -79,5 +84,13 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(NumberOfNightsWithoutMinimalCapacityErrorFactory.class);
     multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
     multibinder.addBinding().to(CantOfferSweetToothPackageErrorFactory.class);
+  }
+
+  private void configurePackagesValidators() {
+    Multibinder<PackageValidator> multibinder =
+        Multibinder.newSetBinder(binder(), new TypeLiteral<PackageValidator>() {});
+    multibinder.addBinding().to(BloodthirstyValidator.class);
+    multibinder.addBinding().to(AllYouCanDrinkValidator.class);
+    multibinder.addBinding().to(SweetToothValidator.class);
   }
 }
