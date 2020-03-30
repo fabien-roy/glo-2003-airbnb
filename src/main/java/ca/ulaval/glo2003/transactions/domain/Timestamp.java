@@ -1,27 +1,28 @@
 package ca.ulaval.glo2003.transactions.domain;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 public class Timestamp {
 
-  private LocalDateTime value;
+  public static final LocalTime LOCAL_TIME = LocalTime.MIDNIGHT;
+  public static final ZoneOffset ZONE_OFFSET = ZoneOffset.UTC;
+
+  private Instant value;
 
   public static Timestamp now() {
-    return new Timestamp(LocalDateTime.now());
+    return new Timestamp(LocalDateTime.now().toInstant(ZONE_OFFSET));
   }
 
   public static Timestamp inDays(int days) {
-    LocalDateTime value = LocalDate.now().plusDays(days).atTime(LocalTime.MIDNIGHT);
+    Instant value = LocalDate.now().plusDays(days).atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
     return new Timestamp(value);
   }
 
-  public Timestamp(LocalDateTime value) {
+  public Timestamp(Instant value) {
     this.value = value;
   }
 
-  public LocalDateTime getValue() {
+  public Instant getValue() {
     return value;
   }
 
