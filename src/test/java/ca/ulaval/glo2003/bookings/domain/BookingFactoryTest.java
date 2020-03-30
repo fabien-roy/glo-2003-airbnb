@@ -47,4 +47,13 @@ public class BookingFactoryTest {
 
     assertEquals(expectedTotal, booking.getTotal());
   }
+
+  @Test
+  public void create_shouldSetStatusToBooked() {
+    Booking booking = aBooking().withStatus(null).build();
+
+    booking = bookingFactory.create(booking, mock(Price.class));
+
+    assertEquals(BookingStatuses.BOOKED, booking.getStatus());
+  }
 }

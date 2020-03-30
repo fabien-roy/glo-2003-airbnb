@@ -32,7 +32,6 @@ public class Booking {
     this.numberOfNights = numberOfNights;
     this.colonySize = colonySize;
     this.packageName = packageName;
-    this.status = BookingStatuses.BOOKED;
   }
 
   public UUID getNumber() {
@@ -94,5 +93,9 @@ public class Booking {
 
   public LocalDate getDepartureDate() {
     return arrivalDate.getValue().plusDays(numberOfNights - 1);
+  }
+
+  public void setStatus(BookingStatuses bookingStatus) {
+    this.status = bookingStatus;
   }
 }
