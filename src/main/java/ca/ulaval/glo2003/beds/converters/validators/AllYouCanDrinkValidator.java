@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.beds.domain.validator;
+package ca.ulaval.glo2003.beds.converters.validators;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
@@ -8,7 +8,7 @@ import java.util.List;
 public class AllYouCanDrinkValidator implements PackageValidator {
 
   @Override
-  public boolean validate(Packages packages) {
+  public boolean isPackage(Packages packages) {
     return packages.equals(Packages.ALL_YOU_CAN_DRINK);
   }
 
