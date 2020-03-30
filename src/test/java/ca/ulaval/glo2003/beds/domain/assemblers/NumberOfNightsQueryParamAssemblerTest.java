@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class NumberOfNightsQueryParamAssemblerTest {
 
-  private static BedQueryParamAssembler queryAssembler;
+  private static PositiveIntegerQueryParamAssembler queryAssembler;
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
@@ -45,18 +45,7 @@ class NumberOfNightsQueryParamAssemblerTest {
   }
 
   @Test
-  public void create_withNegativeNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, Collections.singletonList("-1"));
-
-    assertThrows(
-        InvalidNumberOfNightsException.class, () -> queryAssembler.assemble(queryBuilder, params));
-  }
-
-  @Test
-  public void create_withInvalidNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
-    params.put(NUMBER_OF_NIGHTS_PARAM, Collections.singletonList("invalidNumberOfNights"));
-
-    assertThrows(
-        InvalidNumberOfNightsException.class, () -> queryAssembler.assemble(queryBuilder, params));
+  public void throwException_shouldThrowInvalidNumberOfNightsException() {
+    assertThrows(InvalidNumberOfNightsException.class, () -> queryAssembler.throwException());
   }
 }

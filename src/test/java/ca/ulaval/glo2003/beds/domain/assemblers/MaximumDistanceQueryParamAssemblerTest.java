@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class MaximumDistanceQueryParamAssemblerTest {
 
-  private static BedQueryParamAssembler queryAssembler;
+  private static PositiveIntegerQueryParamAssembler queryAssembler;
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
@@ -45,18 +45,7 @@ class MaximumDistanceQueryParamAssemblerTest {
   }
 
   @Test
-  public void create_withNegativeMaxDistance_shouldThrowInvalidMaxDistanceException() {
-    params.put(MAX_DISTANCE_PARAM, Collections.singletonList("-1"));
-
-    assertThrows(
-        InvalidMaxDistanceException.class, () -> queryAssembler.assemble(queryBuilder, params));
-  }
-
-  @Test
-  public void create_withInvalidMaxDistance_shouldThrowInvalidMaxDistanceException() {
-    params.put(MAX_DISTANCE_PARAM, Collections.singletonList("invalidMaxDistance"));
-
-    assertThrows(
-        InvalidMaxDistanceException.class, () -> queryAssembler.assemble(queryBuilder, params));
+  public void throwException_shouldThrowInvalidMaxDistanceException() {
+    assertThrows(InvalidMaxDistanceException.class, () -> queryAssembler.throwException());
   }
 }

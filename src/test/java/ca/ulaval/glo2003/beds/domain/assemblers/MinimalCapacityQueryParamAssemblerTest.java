@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class MinimalCapacityQueryParamAssemblerTest {
 
-  private static BedQueryParamAssembler queryAssembler;
+  private static PositiveIntegerQueryParamAssembler queryAssembler;
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
@@ -45,18 +45,7 @@ class MinimalCapacityQueryParamAssemblerTest {
   }
 
   @Test
-  public void create_withNegativeMinCapacity_shouldThrowInvalidMinimalCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, Collections.singletonList("-1"));
-
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
-  }
-
-  @Test
-  public void create_withInvalidMinCapacity_shouldThrowInvalidMinimalCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, Collections.singletonList("invalidMinCapacity"));
-
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
+  public void throwException_shouldThrowInvalidMinimalCapacityException() {
+    assertThrows(InvalidMinimalCapacityException.class, () -> queryAssembler.throwException());
   }
 }

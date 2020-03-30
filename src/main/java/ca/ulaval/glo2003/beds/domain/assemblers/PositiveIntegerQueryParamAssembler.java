@@ -13,7 +13,7 @@ public abstract class PositiveIntegerQueryParamAssembler implements BedQueryPara
       throwException();
     }
 
-    if (parsedInteger < 0) {
+    if (parsedInteger <= 0) {
       throwException();
     }
 
