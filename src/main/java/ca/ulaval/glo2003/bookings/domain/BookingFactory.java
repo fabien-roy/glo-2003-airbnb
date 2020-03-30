@@ -9,6 +9,7 @@ public class BookingFactory {
     UUID bookingNumber = UUID.randomUUID();
     booking.setNumber(bookingNumber);
     booking.setTotal(total);
+    booking.setStatus(BookingStatuses.BOOKED);
     return booking;
   }
 }

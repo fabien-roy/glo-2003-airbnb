@@ -6,6 +6,7 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.UUID;
 
@@ -34,13 +35,10 @@ public class BookingBuilder {
   private Packages DEFAULT_PACKAGE = createPackageName();
   private Packages packageName = DEFAULT_PACKAGE;
 
+  private BookingStatuses bookingStatus = BookingStatuses.BOOKED;
+
   public static BookingBuilder aBooking() {
     return new BookingBuilder();
-  }
-
-  public BookingBuilder withBookingNumber(UUID bookingNumber) {
-    this.bookingNumber = bookingNumber;
-    return this;
   }
 
   public BookingBuilder withTenantPublicKey(PublicKey tenantPublicKey) {
@@ -73,11 +71,17 @@ public class BookingBuilder {
     return this;
   }
 
+  public BookingBuilder withStatus(BookingStatuses bookingStatus) {
+    this.bookingStatus = bookingStatus;
+    return this;
+  }
+
   public Booking build() {
     Booking booking =
         new Booking(tenantPublicKey, arrivalDate, numberOfNights, colonySize, packageName);
     booking.setNumber(bookingNumber);
     booking.setTotal(total);
+    booking.setStatus(bookingStatus);
     return booking;
   }
 }
