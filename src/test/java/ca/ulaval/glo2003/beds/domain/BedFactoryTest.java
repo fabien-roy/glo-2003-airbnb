@@ -95,7 +95,7 @@ class BedFactoryTest {
     List<String> requestPackagesNames = new ArrayList<>();
     do {
       requestPackagesNames.add(testPackage.toString());
-      testPackage = PackagesDependency.getDependency(testPackage);
+      testPackage = PackagesDependencies.getDependency(testPackage);
     } while (testPackage != null);
     packageRequests =
         requestPackagesNames.stream()
@@ -161,7 +161,7 @@ class BedFactoryTest {
     List<String> requestPackagesNames = new ArrayList<>();
     do {
       requestPackagesNames.add(randPackage.toString());
-      randPackage = PackagesDependency.getDependency(randPackage);
+      randPackage = PackagesDependencies.getDependency(randPackage);
     } while (randPackage != null);
     return requestPackagesNames.stream()
         .map(s -> aPackageRequest().withName(s).build())

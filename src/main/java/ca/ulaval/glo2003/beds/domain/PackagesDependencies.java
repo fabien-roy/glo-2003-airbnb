@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PackagesDependency {
+public class PackagesDependencies {
 
   private static class DependencyObject {
     private Packages dependency;

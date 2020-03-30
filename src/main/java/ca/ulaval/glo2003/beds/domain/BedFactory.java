@@ -30,10 +30,10 @@ public class BedFactory {
   }
 
   private void validatePackageDependency(Packages packageName, Set<Packages> packages) {
-    Packages dependency = PackagesDependency.getDependency(packageName);
+    Packages dependency = PackagesDependencies.getDependency(packageName);
 
     if (dependency != null && !packages.contains(dependency)) {
-      throw PackagesDependency.getException(packageName);
+      throw PackagesDependencies.getException(packageName);
     }
   }
 }
