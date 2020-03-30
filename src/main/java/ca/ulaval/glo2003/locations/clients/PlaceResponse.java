@@ -28,8 +28,20 @@ public class PlaceResponse {
     this.latitude = latitude;
   }
 
+  public String getPlaceName() {
+    return placeName;
+  }
+
   public String getLongitude() {
     return longitude;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public String getStateAbbreviation() {
+    return stateAbbreviation;
   }
 
   public String getLatitude() {

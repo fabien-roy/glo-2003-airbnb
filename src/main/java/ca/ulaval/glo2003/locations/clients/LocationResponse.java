@@ -31,6 +31,14 @@ public class LocationResponse {
     return postCode;
   }
 
+  public String getCountry() {
+    return country;
+  }
+
+  public String getCountryAbbreviation() {
+    return countryAbbreviation;
+  }
+
   public List<PlaceResponse> getPlaces() {
     return places;
   }
