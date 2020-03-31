@@ -100,20 +100,6 @@ class BedConverterTest {
         .build();
   }
 
-  private static Bed buildBedWithExceedingCapacity() {
-    return aBed()
-        .withBedNumber(bedNumber)
-        .withOwnerPublicKey(ownerPublicKey)
-        .withLocation(location)
-        .withBedType(bedType)
-        .withCleaningFrequency(cleaningFrequency)
-        .withBloodTypes(bloodTypes)
-        .withCapacity(BedTypesCapacities.get(bedType) + 1)
-        .withLodgingMode(lodgingMode)
-        .withPricesPerNights(pricesPerNight)
-        .build();
-  }
-
   private static BedRequest buildBedRequest() {
     return aBedRequest()
         .withOwnerPublicKey(ownerPublicKey.getValue())
@@ -176,7 +162,11 @@ class BedConverterTest {
 
   @Test
   public void fromRequest_withExceedingCapacity_shouldThrowInvalidCapacityException() {
-    bedRequest = aBedRequest().withCapacity(BedTypesCapacities.get(bedType) + 1).build();
+    bedRequest =
+        aBedRequest()
+            .withBedType(bedType.toString())
+            .withCapacity(BedTypesCapacities.get(bedType) + 1)
+            .build();
 
     assertThrows(
         ExceedingAccommodationCapacityException.class, () -> bedConverter.fromRequest(bedRequest));
