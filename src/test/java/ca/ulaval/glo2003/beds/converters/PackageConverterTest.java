@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.beds.converters;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -12,7 +11,6 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.errors.exceptions.TestingException;
 import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
@@ -94,12 +92,6 @@ class PackageConverterTest {
         .build();
   }
 
-  private void setUpForMissingDependency() {
-    when(validator.isPackage(otherPackageName)).thenReturn(true);
-    when(validator.get()).thenReturn(Collections.singletonList(packageName));
-    doThrow(TestingException.class).when(validator).throwException();
-  }
-
   @Test
   public void fromRequests_withSingleRequest_shouldMapASinglePricePerNight() {
     requests = requests.subList(0, 1);
@@ -170,19 +162,11 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackages() {
+  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackagesException() {
     otherPackageNameValue = packageNameValue;
     requests = buildPackageRequests();
 
     assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
-  }
-
-  @Test
-  public void fromRequests_withMissingDependency_shouldThrowInvalidPackages() {
-    setUpForMissingDependency();
-    requests = Collections.singletonList(buildOtherPackageRequest());
-
-    assertThrows(TestingException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test

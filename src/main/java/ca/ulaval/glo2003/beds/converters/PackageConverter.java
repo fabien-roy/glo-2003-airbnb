@@ -16,7 +16,6 @@ public class PackageConverter {
 
   private final PriceConverter priceConverter;
   private final Set<PackageValidator> validators;
-  private final PackageValidator defaultValidator;
 
   @Inject
   public PackageConverter(
@@ -25,7 +24,6 @@ public class PackageConverter {
       PackageValidator defaultValidator) {
     this.priceConverter = priceConverter;
     this.validators = validators;
-    this.defaultValidator = defaultValidator;
   }
 
   public Map<Packages, Price> fromRequests(List<PackageRequest> packageRequests) {
@@ -56,10 +54,13 @@ public class PackageConverter {
   }
 
   private void validateRequests(List<PackageRequest> requests) {
-    if (requests.isEmpty()) throw new InvalidPackagesException();
-
-    if (requests.stream().anyMatch(request -> request.getPricePerNight() <= 0))
+    if (requests.isEmpty()) {
       throw new InvalidPackagesException();
+    }
+
+    if (requests.stream().anyMatch(request -> request.getPricePerNight() <= 0)) {
+      throw new InvalidPackagesException();
+    }
 
     validatePackagesDependencies(requests);
   }
@@ -90,14 +91,14 @@ public class PackageConverter {
   }
 
   private void validatePackageDependencies(Packages packageName, Set<Packages> presentPackages) {
-    PackageValidator foundValidator = findValidator(packageName);
-    List<Packages> dependencies = foundValidator.get();
-    if (!presentPackages.containsAll(dependencies)) foundValidator.throwException();
+    Optional<PackageValidator> foundValidator = findValidator(packageName);
+    if (foundValidator.isPresent()) {
+      PackageValidator validator = foundValidator.get();
+      validator.validate(presentPackages);
+    }
   }
 
-  private PackageValidator findValidator(Packages packageName) {
-    Optional<PackageValidator> packageValidator =
-        validators.stream().filter(validator -> validator.isPackage(packageName)).findFirst();
-    return packageValidator.orElse(defaultValidator);
+  private Optional<PackageValidator> findValidator(Packages packageName) {
+    return validators.stream().filter(validator -> validator.isForPackage(packageName)).findFirst();
   }
 }
