@@ -16,12 +16,12 @@ import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class InMemoryBedQueryBuilderTest {
 
-  private BedQueryBuilder bedQueryBuilder;
+  private static BedQueryBuilder bedQueryBuilder;
 
   private BedTypes bedType = createBedType();
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
@@ -34,8 +34,8 @@ class InMemoryBedQueryBuilderTest {
   private Location origin = createLocation();
   private int maxDistance = 20;
 
-  @BeforeEach
-  public void setUpBuilder() {
+  @BeforeAll
+  public static void setUpBuilder() {
     bedQueryBuilder = new InMemoryBedQueryBuilder();
   }
 
