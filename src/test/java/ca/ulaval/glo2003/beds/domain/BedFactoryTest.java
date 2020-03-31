@@ -5,23 +5,12 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocati
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
-import ca.ulaval.glo2003.beds.converters.PackageConverter;
-import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
-import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
-import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.transactions.converters.PriceConverter;
-import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -33,24 +22,18 @@ class BedFactoryTest {
   // TODO : Refactor this test class
 
   private static BedFactory bedFactory;
-  private static PriceConverter priceConverter = mock(PriceConverter.class);
-  private static Set<PackageValidator> validators =
-      Collections.singleton(mock(PackageValidator.class));
-  private static PackageValidator defaultValidator = mock(PackageValidator.class);
-  private static PackageConverter packageConverter;
 
-  private List<PackageRequest> packageRequests = getPackageRequest();
-  private List<PackageRequest> otherPackageRequests = getPackageRequest();
-  private Map<Packages, Price> packages = packageConverter.fromRequests(packageRequests);
-  private Map<Packages, Price> otherPackages = packageConverter.fromRequests(otherPackageRequests);
-  private Bed bed = aBed().withPricesPerNights(packages).build();
-  private Bed otherBed = aBed().withPricesPerNights(otherPackages).build();
+  private Bed bed = aBed().build();
+  private Bed otherBed = aBed().build();
   private Location location = createLocation();
 
   @BeforeAll
   public static void setUpFactory() {
     bedFactory = new BedFactory();
-    packageConverter = new PackageConverter(priceConverter, validators, defaultValidator);
+  }
+
+  private void resetMocks() {
+    // when(priceConverter.fromDouble(priceValue)).thenReturn(price);
   }
 
   @Test
@@ -80,12 +63,7 @@ class BedFactoryTest {
   public void create_withExceedingCapacity_shouldThrowExceedingAccommodationCapacityException(
       BedTypes bedType) {
     int maxCapacity = BedTypesCapacities.get(bedType);
-    bed =
-        aBed()
-            .withBedType(bedType)
-            .withCapacity(maxCapacity + 1)
-            .withPricesPerNights(packages)
-            .build();
+    bed = aBed().withBedType(bedType).withCapacity(maxCapacity + 1).build();
 
     assertThrows(
         ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed, location));
