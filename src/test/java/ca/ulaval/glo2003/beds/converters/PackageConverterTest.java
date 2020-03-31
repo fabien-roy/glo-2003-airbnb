@@ -23,7 +23,6 @@ class PackageConverterTest {
   private static PackageConverter packageConverter;
   private static PriceConverter priceConverter = mock(PriceConverter.class);
   private static PackageValidator validator = mock(PackageValidator.class);
-  private static PackageValidator defaultValidator = mock(PackageValidator.class);
 
   private static Map<Packages, Price> pricesPerNight;
   private static Packages packageName;
@@ -41,7 +40,7 @@ class PackageConverterTest {
   @BeforeAll
   public static void setUpConverter() {
     Set<PackageValidator> validators = Collections.singleton(validator);
-    packageConverter = new PackageConverter(priceConverter, validators, defaultValidator);
+    packageConverter = new PackageConverter(priceConverter, validators);
   }
 
   @BeforeEach

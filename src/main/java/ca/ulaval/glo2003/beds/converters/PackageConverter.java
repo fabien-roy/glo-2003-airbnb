@@ -18,10 +18,7 @@ public class PackageConverter {
   private final Set<PackageValidator> validators;
 
   @Inject
-  public PackageConverter(
-      PriceConverter priceConverter,
-      Set<PackageValidator> validators,
-      PackageValidator defaultValidator) {
+  public PackageConverter(PriceConverter priceConverter, Set<PackageValidator> validators) {
     this.priceConverter = priceConverter;
     this.validators = validators;
   }
