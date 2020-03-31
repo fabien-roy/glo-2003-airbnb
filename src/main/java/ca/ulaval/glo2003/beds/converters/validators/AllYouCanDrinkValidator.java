@@ -5,15 +5,15 @@ import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import java.util.Collections;
 import java.util.List;
 
-public class AllYouCanDrinkValidator implements PackageValidator {
+public class AllYouCanDrinkValidator extends AbstractPackageValidator {
 
   @Override
-  public boolean isPackage(Packages packages) {
+  public boolean isForPackage(Packages packages) {
     return packages.equals(Packages.ALL_YOU_CAN_DRINK);
   }
 
   @Override
-  public List<Packages> get() {
+  protected List<Packages> dependencies() {
     return Collections.singletonList(Packages.BLOODTHIRSTY);
   }
 
