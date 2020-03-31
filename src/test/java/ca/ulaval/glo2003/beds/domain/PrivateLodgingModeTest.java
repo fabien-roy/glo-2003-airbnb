@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class PrivateLodgingModeTest {
 
-  private static PrivateLodgingMode privateLodgingMode;
+  private static LodgingMode privateLodgingMode;
   private static Bed bed = mock(Bed.class);
   private static Booking booking = aBooking().build();
 
