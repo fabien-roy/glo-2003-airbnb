@@ -17,8 +17,8 @@ public class BookingRequestBuilder {
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
 
-  private int DEFAULT_COLONY_SIZE = createColonySize();
-  private int colonySize = DEFAULT_COLONY_SIZE;
+  private Integer DEFAULT_COLONY_SIZE = createColonySize();
+  private Integer colonySize = DEFAULT_COLONY_SIZE;
 
   private String DEFAULT_PACKAGE = createPackageName();
   private String packageName = DEFAULT_PACKAGE;
@@ -42,7 +42,7 @@ public class BookingRequestBuilder {
     return this;
   }
 
-  public BookingRequestBuilder withColonySize(int colonySize) {
+  public BookingRequestBuilder withColonySize(Integer colonySize) {
     this.colonySize = colonySize;
     return this;
   }

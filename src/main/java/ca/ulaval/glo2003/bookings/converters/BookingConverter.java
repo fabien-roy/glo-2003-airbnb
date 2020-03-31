@@ -61,8 +61,8 @@ public class BookingConverter {
     }
   }
 
-  private void validateColonySize(int colonySize) {
-    if (colonySize < 1) {
+  private void validateColonySize(Integer colonySize) {
+    if (colonySize != null && colonySize < 1) {
       throw new InvalidColonySizeException();
     }
   }

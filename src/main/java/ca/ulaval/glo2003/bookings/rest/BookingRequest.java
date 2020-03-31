@@ -58,7 +58,7 @@ public class BookingRequest {
     return numberOfNights;
   }
 
-  public int getColonySize() {
+  public Integer getColonySize() {
     return colonySize;
   }
 

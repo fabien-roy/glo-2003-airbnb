@@ -25,7 +25,7 @@ public class Booking {
       PublicKey tenantPublicKey,
       BookingDate arrivalDate,
       int numberOfNights,
-      int colonySize,
+      Integer colonySize,
       Packages packageName) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;

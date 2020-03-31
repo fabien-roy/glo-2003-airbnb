@@ -38,7 +38,7 @@ class BookingConverterTest {
   private static PublicKey tenantPublicKey;
   private static BookingDate arrivalDate;
   private static int numberOfNights;
-  private static int colonySize;
+  private static Integer colonySize;
   private static Packages packageName;
   private static Price total;
   private static BookingStatuses status;
@@ -122,6 +122,16 @@ class BookingConverterTest {
 
   @Test
   public void fromRequest_shouldConvertColonySize() {
+    booking = bookingConverter.fromRequest(bookingRequest);
+
+    assertEquals(colonySize, booking.getColonySize());
+  }
+
+  @Test
+  public void fromRequest_withoutColonySize_shouldNotConvertColonySize() {
+    colonySize = null;
+    bookingRequest = buildBookingRequest();
+
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(colonySize, booking.getColonySize());

@@ -45,7 +45,7 @@ public class BookingObjectMother {
     return Faker.instance().number().numberBetween(1, 5);
   }
 
-  public static int createColonySize() {
+  public static Integer createColonySize() {
     return Faker.instance().number().numberBetween(1, 100);
   }
 
