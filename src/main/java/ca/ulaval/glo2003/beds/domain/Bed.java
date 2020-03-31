@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
@@ -110,6 +111,7 @@ public class Bed {
     if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
 
     validatePackageAvailable(booking.getPackage());
+    validateAccommodationCapacity(booking.getColonySize());
 
     lodgingMode.validateLodging(this, booking);
 
@@ -126,5 +128,10 @@ public class Bed {
 
   private void validatePackageAvailable(Packages packageName) {
     if (!isPackageAvailable(packageName)) throw new PackageNotAvailableException();
+  }
+
+  private void validateAccommodationCapacity(Integer colonySize) {
+    if (colonySize != null && colonySize > capacity)
+      throw new ExceedingAccommodationCapacityException();
   }
 }

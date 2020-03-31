@@ -1,8 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
@@ -11,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
@@ -26,6 +26,7 @@ class BedTest {
   private static Bed bed;
   private static PublicKey ownerPublicKey;
   private static Packages bedPackage;
+  private static int capacity;
   private static List<Booking> bookings;
 
   private static Booking booking = mock(Booking.class);
@@ -34,16 +35,19 @@ class BedTest {
   private static UUID otherBookingNumber;
   private static Packages bookingPackage;
   private static PublicKey tenantPublicKey;
+  private static Integer colonySize;
 
   @BeforeEach
   public void setUpBed() {
     ownerPublicKey = createOwnerPublicKey();
     bedPackage = createPackageName();
+    capacity = createCapacity();
     bookings = Collections.emptyList();
     bookingNumber = createBookingNumber();
     otherBookingNumber = createBookingNumber();
     bookingPackage = bedPackage;
     tenantPublicKey = createTenantPublicKey();
+    colonySize = capacity;
 
     resetBooking();
     resetOtherBooking();
@@ -54,6 +58,7 @@ class BedTest {
     return aBed()
         .withOwnerPublicKey(ownerPublicKey)
         .withPricesPerNights(Collections.singletonMap(bedPackage, createPricePerNight()))
+        .withCapacity(capacity)
         .withBookings(bookings)
         .build();
   }
@@ -64,6 +69,7 @@ class BedTest {
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
     when(booking.getPackage()).thenReturn(bookingPackage);
     when(booking.isOverlapping(otherBooking)).thenReturn(false);
+    when(booking.getColonySize()).thenReturn(colonySize);
   }
 
   private void resetOtherBooking() {
@@ -84,7 +90,7 @@ class BedTest {
   }
 
   @Test
-  public void book_withBookings_shouldAddBooking() {
+  public void get_withMultipleBookings_shouldGetBooking() {
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
@@ -96,11 +102,55 @@ class BedTest {
   }
 
   @Test
+  public void book_shouldAddBooking() {
+    bed.book(booking);
+    List<Booking> bookings = bed.getBookings();
+
+    assertEquals(1, bookings.size());
+    assertTrue(bookings.contains(booking));
+  }
+
+  @Test
+  public void book_withBookings_shouldAddBooking() {
+    bookings = Collections.singletonList(booking);
+    bed = buildBed();
+
+    bed.book(otherBooking);
+    List<Booking> bookings = bed.getBookings();
+
+    assertEquals(2, bookings.size());
+    assertTrue(bookings.contains(booking));
+    assertTrue(bookings.contains(otherBooking));
+  }
+
+  @Test
+  public void book_withoutColonySize_shouldAddBooking() {
+    colonySize = null;
+    resetBooking();
+
+    bed.book(booking);
+    List<Booking> bookings = bed.getBookings();
+
+    assertEquals(1, bookings.size());
+    assertTrue(bookings.contains(booking));
+  }
+
+  @Test
   public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
     tenantPublicKey = new PublicKey(ownerPublicKey.getValue());
     resetBooking();
 
     assertThrows(BookingNotAllowedException.class, () -> bed.book(booking));
+    assertFalse(bed.getBookings().contains(booking));
+  }
+
+  @Test
+  public void
+      book_withExceedingAccommodationCapacity_shouldThrowExceedingAccommodationCapacityException() {
+    colonySize = capacity + 1;
+    resetBooking();
+
+    assertThrows(ExceedingAccommodationCapacityException.class, () -> bed.book(booking));
     assertFalse(bed.getBookings().contains(booking));
   }
 
