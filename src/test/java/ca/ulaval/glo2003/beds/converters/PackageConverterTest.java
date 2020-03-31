@@ -3,10 +3,13 @@ package ca.ulaval.glo2003.beds.converters;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
@@ -21,6 +24,9 @@ class PackageConverterTest {
 
   private static PackageConverter packageConverter;
   private static PriceConverter priceConverter = mock(PriceConverter.class);
+  private static PackageValidator validator;
+  private static Set<PackageValidator> validators = Collections.singleton(validator);
+  private static PackageValidator defaultValidator = mock(PackageValidator.class);
 
   private static Map<Packages, Price> pricesPerNight;
   private static Packages packageName;
@@ -37,7 +43,9 @@ class PackageConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    packageConverter = new PackageConverter(priceConverter);
+    validator = mock(PackageValidator.class);
+    validators = Collections.singleton(validator);
+    packageConverter = new PackageConverter(priceConverter, validators, defaultValidator);
   }
 
   @BeforeEach
@@ -88,6 +96,12 @@ class PackageConverterTest {
         .build();
   }
 
+  private void setUpForMissingDependency() {
+    when(validator.isPackage(otherPackageName)).thenReturn(true);
+    when(validator.get()).thenReturn(Collections.singletonList(packageName));
+    doThrow(AllYouCanDrinkDependencyException.class).when(validator).throwException();
+  }
+
   @Test
   public void fromRequests_withSingleRequest_shouldMapASinglePricePerNight() {
     requests = requests.subList(0, 1);
@@ -122,12 +136,12 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
+  public void fromRequests_withoutRequest_shouldThrowInvalidPackagesException() {
     requests = Collections.emptyList();
   }
 
   @Test
-  public void fromRequests_withInvalidPricePerNight_throwInvalidPackageException() {
+  public void fromRequests_withInvalidPricePerNight_throwInvalidPackagesException() {
     priceValue = -1;
     requests = buildPackageRequests();
 
@@ -135,7 +149,7 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withInvalidPackageName_shouldThrowInvalidPackageException() {
+  public void fromRequests_withInvalidPackageName_shouldThrowInvalidPackagesException() {
     packageNameValue = "invalidPackageName";
     requests = buildPackageRequests();
 
@@ -158,11 +172,20 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackage() {
+  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackages() {
     otherPackageNameValue = packageNameValue;
     requests = buildPackageRequests();
 
     assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
+  }
+
+  @Test
+  public void fromRequests_withMissingDependency_shouldThrowInvalidPackages() {
+    setUpForMissingDependency();
+    requests = Collections.singletonList(buildOtherPackageRequest());
+
+    assertThrows(
+        AllYouCanDrinkDependencyException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test

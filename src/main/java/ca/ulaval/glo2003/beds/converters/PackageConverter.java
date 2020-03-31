@@ -82,7 +82,7 @@ public class PackageConverter {
   private void validatePackagesDependencies(List<PackageRequest> requests) {
     Set<Packages> presentPackages =
         requests.stream()
-            .map(packageRequest -> parsePackageName(packageRequest.toString()))
+            .map(packageRequest -> parsePackageName(packageRequest.getName()))
             .collect(Collectors.toSet());
 
     presentPackages.forEach(
@@ -95,9 +95,9 @@ public class PackageConverter {
     if (!presentPackages.containsAll(dependencies)) foundValidator.throwException();
   }
 
-  private PackageValidator findValidator(Packages packages) {
+  private PackageValidator findValidator(Packages packageName) {
     Optional<PackageValidator> packageValidator =
-        validators.stream().filter(validator -> validator.isPackage(packages)).findFirst();
+        validators.stream().filter(validator -> validator.isPackage(packageName)).findFirst();
     return packageValidator.orElse(defaultValidator);
   }
 }
