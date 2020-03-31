@@ -2,16 +2,10 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocation;
-import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
-import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
-import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.locations.domain.Location;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -67,17 +61,5 @@ class BedFactoryTest {
 
     assertThrows(
         ExceedingAccommodationCapacityException.class, () -> bedFactory.create(bed, location));
-  }
-
-  private List<PackageRequest> getPackageRequest() {
-    Packages randPackage = randomEnum(Packages.class);
-    List<String> requestPackagesNames = new ArrayList<>();
-    do {
-      requestPackagesNames.add(randPackage.toString());
-      randPackage = OutdatedPackagesDependencies.getDependency(randPackage);
-    } while (randPackage != null);
-    return requestPackagesNames.stream()
-        .map(s -> aPackageRequest().withName(s).build())
-        .collect(Collectors.toList());
   }
 }
