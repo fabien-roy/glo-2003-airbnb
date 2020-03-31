@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.converters;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
@@ -30,10 +31,10 @@ public class BedConverter {
   }
 
   public Bed fromRequest(BedRequest request) {
-    if (request.getCapacity() < 1) throw new InvalidCapacityException();
 
     PublicKey ownerPublicKey = publicKeyConverter.fromString(request.getOwnerPublicKey());
     List<BloodTypes> bloodTypes = bloodTypeConverter.fromStrings(request.getBloodTypes());
+    validateCapacity(request.getBedType(), request.getCapacity());
     LodgingModes mode =
         request.getLodgingMode() == null
             ? LodgingModes.PRIVATE
@@ -70,5 +71,13 @@ public class BedConverter {
     String bedNumber = bedNumberConverter.toString(bed.getNumber());
     bedResponse.setBedNumber(bedNumber);
     return bedResponse;
+  }
+
+  public void validateCapacity(String bedType, int capacity) {
+    if (capacity < 1) throw new InvalidCapacityException();
+
+    int maxCapacity = BedTypesCapacities.get(BedTypes.get(bedType));
+
+    if (capacity > maxCapacity) throw new ExceedingAccommodationCapacityException();
   }
 }
