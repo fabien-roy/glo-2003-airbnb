@@ -31,10 +31,11 @@ public class BedConverter {
   }
 
   public Bed fromRequest(BedRequest request) {
+    BedTypes bedType = BedTypes.get(request.getBedType());
+    validateCapacity(bedType, request.getCapacity());
 
     PublicKey ownerPublicKey = publicKeyConverter.fromString(request.getOwnerPublicKey());
     List<BloodTypes> bloodTypes = bloodTypeConverter.fromStrings(request.getBloodTypes());
-    validateCapacity(request.getBedType(), request.getCapacity());
     LodgingModes mode =
         request.getLodgingMode() == null
             ? LodgingModes.PRIVATE
@@ -43,7 +44,7 @@ public class BedConverter {
 
     return new Bed(
         ownerPublicKey,
-        BedTypes.get(request.getBedType()),
+        bedType,
         CleaningFrequencies.get(request.getCleaningFrequency()),
         bloodTypes,
         request.getCapacity(),
@@ -73,10 +74,10 @@ public class BedConverter {
     return bedResponse;
   }
 
-  public void validateCapacity(String bedType, int capacity) {
+  public void validateCapacity(BedTypes bedType, int capacity) {
     if (capacity < 1) throw new InvalidCapacityException();
 
-    int maxCapacity = BedTypesCapacities.get(BedTypes.get(bedType));
+    int maxCapacity = BedTypesCapacities.get(bedType);
 
     if (capacity > maxCapacity) throw new ExceedingAccommodationCapacityException();
   }
