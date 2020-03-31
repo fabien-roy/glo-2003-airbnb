@@ -8,7 +8,9 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.bookings.converters.BookingDateConverter;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,7 @@ class ArrivalDateQueryParamAssemblerTest {
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private BookingDate arrivalDate = BookingDate.now();
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -38,7 +40,7 @@ class ArrivalDateQueryParamAssemblerTest {
 
   @Test
   public void assemble_withArrivalDate_shouldAssembleBuilder() {
-    params.put(ARRIVAL_DATE_PARAM, new String[] {arrivalDate.getValue().toString()});
+    params.put(ARRIVAL_DATE_PARAM, Collections.singletonList(arrivalDate.getValue().toString()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 

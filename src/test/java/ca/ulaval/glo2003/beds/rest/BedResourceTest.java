@@ -4,16 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.interfaces.rest.QueryParamMapConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 
@@ -22,6 +24,7 @@ public class BedResourceTest {
   private static BedResource bedResource;
   private static BedService bedService = mock(BedService.class);
   private static BedMapper bedMapper = mock(BedMapper.class);
+  private static QueryParamMapConverter queryParamMapConverter = mock(QueryParamMapConverter.class);
 
   private static String bedNumber = "bedNumber";
 
@@ -30,21 +33,25 @@ public class BedResourceTest {
   private static BedRequest bedRequest = mock(BedRequest.class);
   private static BedResponse bedResponse = mock(BedResponse.class);
   private static BedResponse otherBedResponse = mock(BedResponse.class);
-  private static QueryParamsMap queryParamsMap = mock(QueryParamsMap.class);
+  private static Map<String, List<String>> queryParamsMap = mock(Map.class);
+  private static HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 
   @BeforeAll
   public static void setUpResource() {
-    bedResource = new BedResource(bedService, bedMapper);
+    bedResource = new BedResource(bedService, bedMapper, queryParamMapConverter);
   }
 
   @BeforeEach
   public void setUpMocks() throws JsonProcessingException {
     reset(response);
     String requestBody = "requestBody";
+    String queryString = "queryString";
     when(request.body()).thenReturn(requestBody);
     when(request.params(eq("number"))).thenReturn(bedNumber);
-    when(request.queryMap()).thenReturn(queryParamsMap);
-    when(bedService.getAll(queryParamsMap.toMap()))
+    when(request.raw()).thenReturn(httpServletRequest);
+    when(httpServletRequest.getQueryString()).thenReturn(queryString);
+    when(queryParamMapConverter.fromString(queryString)).thenReturn(queryParamsMap);
+    when(bedService.getAll(queryParamsMap))
         .thenReturn(Arrays.asList(bedResponse, otherBedResponse));
     when(bedService.add(bedRequest)).thenReturn(bedNumber);
     when(bedService.getResponse(bedNumber)).thenReturn(bedResponse);

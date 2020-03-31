@@ -8,7 +8,9 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +18,12 @@ import org.junit.jupiter.api.Test;
 
 class MinimalCapacityQueryParamAssemblerTest {
 
-  private static BedQueryParamAssembler queryAssembler;
+  private static PositiveIntegerQueryParamAssembler queryAssembler;
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private int minCapacity = 100;
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -35,7 +37,7 @@ class MinimalCapacityQueryParamAssemblerTest {
 
   @Test
   public void assemble_withMinCapacity_shouldAssembleBuilder() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(minCapacity)});
+    params.put(MIN_CAPACITY_PARAM, Collections.singletonList(Integer.toString(minCapacity)));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
@@ -43,18 +45,7 @@ class MinimalCapacityQueryParamAssemblerTest {
   }
 
   @Test
-  public void create_withNegativeMinCapacity_shouldThrowInvalidMinimalCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {Integer.toString(-1)});
-
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
-  }
-
-  @Test
-  public void create_withInvalidMinCapacity_shouldThrowInvalidMinimalCapacityException() {
-    params.put(MIN_CAPACITY_PARAM, new String[] {"invalidMinCapacity"});
-
-    assertThrows(
-        InvalidMinimalCapacityException.class, () -> queryAssembler.assemble(queryBuilder, params));
+  public void throwException_shouldThrowInvalidMinimalCapacityException() {
+    assertThrows(InvalidMinimalCapacityException.class, () -> queryAssembler.throwException());
   }
 }
