@@ -5,6 +5,7 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
@@ -29,6 +30,7 @@ public class BookingConverter {
 
   public Booking fromRequest(BookingRequest bookingRequest) {
     validateNumberOfNights(bookingRequest.getNumberOfNights());
+    validateColonySize(bookingRequest.getColonySize());
 
     PublicKey tenantPublicKey = publicKeyConverter.fromString(bookingRequest.getTenantPublicKey());
     BookingDate arrivalDate = bookingDateConverter.fromString(bookingRequest.getArrivalDate());
@@ -56,6 +58,12 @@ public class BookingConverter {
   private void validateNumberOfNights(int numberOfNights) {
     if (numberOfNights < 1 || numberOfNights > 90) {
       throw new InvalidNumberOfNightsException();
+    }
+  }
+
+  private void validateColonySize(int colonySize) {
+    if (colonySize < 1) {
+      throw new InvalidColonySizeException();
     }
   }
 }

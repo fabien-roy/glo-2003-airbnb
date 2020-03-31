@@ -15,6 +15,7 @@ import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
+import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
@@ -23,6 +24,8 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BookingConverterTest {
 
@@ -122,6 +125,17 @@ class BookingConverterTest {
     booking = bookingConverter.fromRequest(bookingRequest);
 
     assertEquals(colonySize, booking.getColonySize());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {0, -1})
+  public void fromRequest_withNonPositiveColonySize_shouldThrowInvalidColonySizeException(
+      int invalidColonySize) {
+    colonySize = invalidColonySize;
+    bookingRequest = buildBookingRequest();
+
+    assertThrows(
+        InvalidColonySizeException.class, () -> bookingConverter.fromRequest(bookingRequest));
   }
 
   @Test
