@@ -82,5 +82,6 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
     multibinder.addBinding().to(CantOfferSweetToothPackageErrorFactory.class);
     multibinder.addBinding().to(MissingColonySizeErrorFactory.class);
+    multibinder.addBinding().to(ExceedingResidualCapacityErrorFactory.class);
   }
 }
