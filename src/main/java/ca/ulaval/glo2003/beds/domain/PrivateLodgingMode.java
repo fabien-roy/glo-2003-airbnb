@@ -5,7 +5,6 @@ import ca.ulaval.glo2003.bookings.domain.Booking;
 
 public class PrivateLodgingMode implements LodgingMode {
 
-  // TODO : Tests
   public void validateLodging(Bed bed, Booking booking) {
     if (bed.hasOverlappingBookings(booking)) throw new BedAlreadyBookedException();
   }
