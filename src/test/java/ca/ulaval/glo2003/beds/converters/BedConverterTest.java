@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
@@ -99,6 +100,20 @@ class BedConverterTest {
         .build();
   }
 
+  private static Bed buildBedWithExceedingCapacity() {
+    return aBed()
+        .withBedNumber(bedNumber)
+        .withOwnerPublicKey(ownerPublicKey)
+        .withLocation(location)
+        .withBedType(bedType)
+        .withCleaningFrequency(cleaningFrequency)
+        .withBloodTypes(bloodTypes)
+        .withCapacity(BedTypesCapacities.get(bedType) + 1)
+        .withLodgingMode(lodgingMode)
+        .withPricesPerNights(pricesPerNight)
+        .build();
+  }
+
   private static BedRequest buildBedRequest() {
     return aBedRequest()
         .withOwnerPublicKey(ownerPublicKey.getValue())
@@ -150,6 +165,21 @@ class BedConverterTest {
 
     assertThrows(
         InvalidCleaningFrequencyException.class, () -> bedConverter.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withInvalidCapacity_shouldThrowInvalidCapacityException() {
+    bedRequest = aBedRequest().withCapacity(-1).build();
+
+    assertThrows(InvalidCapacityException.class, () -> bedConverter.fromRequest(bedRequest));
+  }
+
+  @Test
+  public void fromRequest_withExceedingCapacity_shouldThrowInvalidCapacityException() {
+    bedRequest = aBedRequest().withCapacity(BedTypesCapacities.get(bedType) + 1).build();
+
+    assertThrows(
+        ExceedingAccommodationCapacityException.class, () -> bedConverter.fromRequest(bedRequest));
   }
 
   @Test
