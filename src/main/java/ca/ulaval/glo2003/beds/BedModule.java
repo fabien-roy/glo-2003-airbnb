@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.beds;
 import ca.ulaval.glo2003.beds.converters.BedConverter;
 import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.converters.validators.AllYouCanDrinkValidator;
-import ca.ulaval.glo2003.beds.converters.validators.BloodthirstyValidator;
 import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.converters.validators.SweetToothValidator;
 import ca.ulaval.glo2003.beds.domain.BedFactory;
@@ -93,7 +92,5 @@ public class BedModule extends AbstractModule {
         Multibinder.newSetBinder(binder(), new TypeLiteral<PackageValidator>() {});
     multibinder.addBinding().to(AllYouCanDrinkValidator.class);
     multibinder.addBinding().to(SweetToothValidator.class);
-
-    bind(PackageValidator.class).to(BloodthirstyValidator.class);
   }
 }
