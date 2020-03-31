@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeBuilder.aLodgingMode;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 
@@ -38,7 +39,8 @@ public class BedBuilder {
   private int DEFAULT_CAPACITY = BedTypesCapacities.get(DEFAULT_BED_TYPE);
   private int capacity = DEFAULT_CAPACITY;
 
-  private LodgingMode DEFAULT_BED_LODGING_MODE = createLodgingMode();
+  private LodgingMode DEFAULT_BED_LODGING_MODE =
+      aLodgingMode().withType(LodgingModes.PRIVATE).build();
   private LodgingMode lodgingMode = DEFAULT_BED_LODGING_MODE;
 
   private Map<Packages, Price> DEFAULT_PRICES_PER_NIGHT =

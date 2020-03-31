@@ -7,6 +7,7 @@ import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocati
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.locations.domain.Location;
+import com.github.javafaker.Faker;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +38,10 @@ public class BedObjectMother {
 
   public static List<BloodTypes> createBloodTypes() {
     return Collections.singletonList(randomEnum(BloodTypes.class));
+  }
+
+  public static int createCapacity() {
+    return Faker.instance().number().numberBetween(1, 1000);
   }
 
   public static LodgingMode createLodgingMode() {
