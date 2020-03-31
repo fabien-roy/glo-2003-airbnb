@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class BedFactoryTest {
 
-  // TODO : Refactor this test class
-
   private static BedFactory bedFactory;
 
   private Bed bed = aBed().build();
@@ -21,10 +19,6 @@ class BedFactoryTest {
   @BeforeAll
   public static void setUpFactory() {
     bedFactory = new BedFactory();
-  }
-
-  private void resetMocks() {
-    // when(priceConverter.fromDouble(priceValue)).thenReturn(price);
   }
 
   @Test
