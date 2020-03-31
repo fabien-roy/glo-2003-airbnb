@@ -1,7 +1,8 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 import ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler;
@@ -19,7 +20,7 @@ class BedQueryFactoryTest {
   private BedTypeQueryParamAssembler firstQueryAssembler = mock(BedTypeQueryParamAssembler.class);
   private InMemoryBedQuery query = mock(InMemoryBedQuery.class);
   private InMemoryBedQuery filteredQuery = mock(InMemoryBedQuery.class);
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   private Set<BedQueryParamAssembler> queryParamAssemblers =
       new HashSet<>(Collections.singletonList(firstQueryAssembler));

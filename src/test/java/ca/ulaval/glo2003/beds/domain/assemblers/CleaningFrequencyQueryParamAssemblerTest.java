@@ -10,7 +10,9 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +25,7 @@ class CleaningFrequencyQueryParamAssemblerTest {
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -37,7 +39,7 @@ class CleaningFrequencyQueryParamAssemblerTest {
 
   @Test
   public void assemble_withCleaningFrequency_shouldAssembleBuilder() {
-    params.put(CLEANING_FREQUENCY_PARAM, new String[] {cleaningFrequency.toString()});
+    params.put(CLEANING_FREQUENCY_PARAM, Collections.singletonList(cleaningFrequency.toString()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
@@ -46,7 +48,7 @@ class CleaningFrequencyQueryParamAssemblerTest {
 
   @Test
   public void assemble_withInvalidCleaningFrequency_shouldThrowInvalidCleaningFrequencyException() {
-    params.put(CLEANING_FREQUENCY_PARAM, new String[] {"invalidCleaningFrequency"});
+    params.put(CLEANING_FREQUENCY_PARAM, Collections.singletonList("invalidCleaningFrequency"));
 
     assertThrows(
         InvalidCleaningFrequencyException.class,
