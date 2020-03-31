@@ -9,10 +9,10 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
+import ca.ulaval.glo2003.errors.exceptions.TestingException;
 import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
@@ -24,8 +24,7 @@ class PackageConverterTest {
 
   private static PackageConverter packageConverter;
   private static PriceConverter priceConverter = mock(PriceConverter.class);
-  private static PackageValidator validator;
-  private static Set<PackageValidator> validators = Collections.singleton(validator);
+  private static PackageValidator validator = mock(PackageValidator.class);
   private static PackageValidator defaultValidator = mock(PackageValidator.class);
 
   private static Map<Packages, Price> pricesPerNight;
@@ -43,8 +42,7 @@ class PackageConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    validator = mock(PackageValidator.class);
-    validators = Collections.singleton(validator);
+    Set<PackageValidator> validators = Collections.singleton(validator);
     packageConverter = new PackageConverter(priceConverter, validators, defaultValidator);
   }
 
@@ -99,7 +97,7 @@ class PackageConverterTest {
   private void setUpForMissingDependency() {
     when(validator.isPackage(otherPackageName)).thenReturn(true);
     when(validator.get()).thenReturn(Collections.singletonList(packageName));
-    doThrow(AllYouCanDrinkDependencyException.class).when(validator).throwException();
+    doThrow(TestingException.class).when(validator).throwException();
   }
 
   @Test
@@ -184,8 +182,7 @@ class PackageConverterTest {
     setUpForMissingDependency();
     requests = Collections.singletonList(buildOtherPackageRequest());
 
-    assertThrows(
-        AllYouCanDrinkDependencyException.class, () -> packageConverter.fromRequests(requests));
+    assertThrows(TestingException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
