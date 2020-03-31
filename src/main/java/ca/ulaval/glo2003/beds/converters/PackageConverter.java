@@ -80,10 +80,10 @@ public class PackageConverter {
   }
 
   private void validatePackagesDependencies(List<PackageRequest> requests) {
-    List<String> requestPackagesName =
-        requests.stream().map(PackageRequest::getName).collect(Collectors.toList());
     Set<Packages> presentPackages =
-        requestPackagesName.stream().map(Packages::get).collect(Collectors.toSet());
+        requests.stream()
+            .map(packageRequest -> parsePackageName(packageRequest.toString()))
+            .collect(Collectors.toSet());
 
     presentPackages.forEach(
         packageName -> validatePackageDependencies(packageName, presentPackages));
