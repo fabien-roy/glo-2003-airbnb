@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds;
 
 import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.LodgingModeConverter;
 import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.BedQueryFactory;
@@ -36,6 +37,7 @@ public class BedModule extends AbstractModule {
     bind(BedMapper.class);
     bind(BedService.class);
     bind(BedConverter.class);
+    bind(LodgingModeConverter.class);
     bind(PackageConverter.class);
     bind(BedResource.class);
     bind(BedExceptionHandler.class);

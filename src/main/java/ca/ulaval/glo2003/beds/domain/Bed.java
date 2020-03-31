@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
@@ -18,7 +17,7 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private LodgingModes lodgingMode;
+  private LodgingMode lodgingMode;
   private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
 
@@ -28,7 +27,7 @@ public class Bed {
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      LodgingModes lodgingMode,
+      LodgingMode lodgingMode,
       Map<Packages, Price> pricesPerNight) {
     this.ownerPublicKey = ownerPublicKey;
     this.bedType = bedType;
@@ -75,7 +74,7 @@ public class Bed {
     return capacity;
   }
 
-  public LodgingModes getLodgingMode() {
+  public LodgingMode getLodgingMode() {
     return lodgingMode;
   }
 
@@ -112,9 +111,13 @@ public class Bed {
 
     validatePackageAvailable(booking.getPackage());
 
-    if (isBedAlreadyBooked(booking)) throw new BedAlreadyBookedException();
+    lodgingMode.validateLodging(this, booking);
 
     bookings.add(booking);
+  }
+
+  public boolean hasOverlappingBookings(Booking booking) {
+    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
   }
 
   public boolean isPackageAvailable(Packages bookingPackage) {
@@ -122,10 +125,6 @@ public class Bed {
   }
 
   private void validatePackageAvailable(Packages packageName) {
-    if (!pricesPerNight.containsKey(packageName)) throw new PackageNotAvailableException();
-  }
-
-  private boolean isBedAlreadyBooked(Booking booking) {
-    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
+    if (!isPackageAvailable(packageName)) throw new PackageNotAvailableException();
   }
 }

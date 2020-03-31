@@ -15,7 +15,7 @@ public class Booking {
   private PublicKey tenantPublicKey;
   private BookingDate arrivalDate;
   private int numberOfNights;
-  private int colonySize;
+  private Integer colonySize;
   private Packages packageName;
   private Price total;
   private List<Transaction> transactions = new ArrayList<>();
@@ -54,7 +54,7 @@ public class Booking {
     return numberOfNights;
   }
 
-  public int getColonySize() {
+  public Integer getColonySize() {
     return colonySize;
   }
 

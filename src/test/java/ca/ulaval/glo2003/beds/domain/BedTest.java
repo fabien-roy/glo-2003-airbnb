@@ -10,7 +10,6 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.crea
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
@@ -106,13 +105,25 @@ class BedTest {
   }
 
   @Test
-  public void book_withOverlappingDates_shouldThrowBedAlreadyBookedException() {
+  public void hasOverlappingBookings_withOverlappingDates_returnTrue() {
     bookings = Collections.singletonList(booking);
     bed = buildBed();
     when(booking.isOverlapping(otherBooking)).thenReturn(true);
 
-    assertThrows(BedAlreadyBookedException.class, () -> bed.book(otherBooking));
-    assertFalse(bed.getBookings().contains(otherBooking));
+    boolean result = bed.hasOverlappingBookings(otherBooking);
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void hasOverlappingBookings_withoutOverlappingDates_shouldReturnFalse() {
+    bookings = Collections.singletonList(booking);
+    bed = buildBed();
+    when(booking.isOverlapping(otherBooking)).thenReturn(false);
+
+    boolean result = bed.hasOverlappingBookings(otherBooking);
+
+    assertFalse(result);
   }
 
   @Test

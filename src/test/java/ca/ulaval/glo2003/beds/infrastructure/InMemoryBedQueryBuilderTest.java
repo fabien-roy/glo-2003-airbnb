@@ -1,10 +1,12 @@
 package ca.ulaval.glo2003.beds.infrastructure;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeType;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_MAX_DISTANCE;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_NUMBER_OF_NIGHTS;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException;
@@ -28,7 +30,7 @@ class InMemoryBedQueryBuilderTest {
   private int minCapacity = 100;
   private BookingDate arrivalDate = createArrivalDate();
   private int numberOfNights = 2;
-  private LodgingModes lodgingMode = createLodgingMode();
+  private LodgingModes lodgingMode = createLodgingModeType();
   private Location origin = createLocation();
   private int maxDistance = 20;
 

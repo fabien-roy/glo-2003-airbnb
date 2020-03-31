@@ -11,7 +11,6 @@ import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException;
-import ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -30,6 +29,7 @@ class BedConverterTest {
   private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
   private static BloodTypeConverter bloodTypeConverter = mock(BloodTypeConverter.class);
+  private static LodgingModeConverter lodgingModeConverter = mock(LodgingModeConverter.class);
   private static PackageConverter packageConverter = mock(PackageConverter.class);
 
   private static Bed bed;
@@ -41,7 +41,7 @@ class BedConverterTest {
   private static BloodTypes bloodType = createBloodTypes().get(0);
   private static List<BloodTypes> bloodTypes = Collections.singletonList(bloodType);
   private static int capacity;
-  private static LodgingModes lodgingMode;
+  private static LodgingMode lodgingMode = createLodgingMode();
   private static Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
   private static int stars;
 
@@ -57,7 +57,11 @@ class BedConverterTest {
   public static void setUpConverter() {
     bedConverter =
         new BedConverter(
-            bedNumberConverter, publicKeyConverter, bloodTypeConverter, packageConverter);
+            bedNumberConverter,
+            publicKeyConverter,
+            bloodTypeConverter,
+            lodgingModeConverter,
+            packageConverter);
   }
 
   @BeforeEach
@@ -67,6 +71,8 @@ class BedConverterTest {
     when(publicKeyConverter.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
     when(bloodTypeConverter.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
     when(bloodTypeConverter.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
+    when(lodgingModeConverter.fromString(lodgingMode.getName().toString())).thenReturn(lodgingMode);
+    when(lodgingModeConverter.toString(lodgingMode)).thenReturn(lodgingMode.getName().toString());
     when(packageConverter.fromRequests(packageRequests)).thenReturn(pricesPerNight);
     when(packageConverter.toResponses(pricesPerNight)).thenReturn(packageResponses);
   }
@@ -78,7 +84,6 @@ class BedConverterTest {
     bedType = createBedType();
     cleaningFrequency = createCleaningFrequency();
     capacity = 100;
-    lodgingMode = createLodgingMode();
     stars = 3;
 
     bed = buildBed();
@@ -106,7 +111,7 @@ class BedConverterTest {
         .withCleaningFrequency(cleaningFrequency.toString())
         .withBloodTypes(convertToStrings(bloodTypes))
         .withCapacity(capacity)
-        .withLodgingMode(lodgingMode.toString())
+        .withLodgingMode(lodgingMode.getName().toString())
         .build();
   }
 
@@ -181,22 +186,6 @@ class BedConverterTest {
   }
 
   @Test
-  public void fromRequest_withoutLodgingMode_shouldConvertPrivateLodgingMode() {
-    bedRequest = aBedRequest().withLodgingMode(null).build();
-
-    bed = bedConverter.fromRequest(bedRequest);
-
-    assertEquals(LodgingModes.PRIVATE, bed.getLodgingMode());
-  }
-
-  @Test
-  public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
-    bedRequest = aBedRequest().withLodgingMode("invalidLodgingMode").build();
-
-    assertThrows(InvalidLodgingModeException.class, () -> bedConverter.fromRequest(bedRequest));
-  }
-
-  @Test
   public void fromRequest_shouldConvertPricesPerNight() {
     Bed bed = bedConverter.fromRequest(bedRequest);
 
@@ -249,7 +238,7 @@ class BedConverterTest {
   public void toResponseWithoutNumber_shouldConvertLodgingMode() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
-    assertEquals(lodgingMode.toString(), bedResponse.getLodgingMode());
+    assertEquals(lodgingMode.getName().toString(), bedResponse.getLodgingMode());
   }
 
   @Test
