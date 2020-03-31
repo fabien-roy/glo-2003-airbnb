@@ -51,7 +51,7 @@ public class BedService {
     return bedNumberConverter.toString(bed.getNumber());
   }
 
-  public List<BedResponse> getAll(Map<String, String[]> params) {
+  public List<BedResponse> getAll(Map<String, List<String>> params) {
     InMemoryBedQuery bedQuery = bedQueryFactory.create(params);
 
     List<Bed> beds = bedRepository.getAll(bedQuery);

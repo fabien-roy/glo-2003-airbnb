@@ -10,7 +10,9 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +25,7 @@ class LodgingModeQueryParamAssemblerTest {
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private LodgingModes lodgingMode = createLodgingMode();
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -37,7 +39,7 @@ class LodgingModeQueryParamAssemblerTest {
 
   @Test
   public void assemble_withLodgingMode_shouldAssembleBuilder() {
-    params.put(LODGING_MODE_PARAM, new String[] {lodgingMode.toString()});
+    params.put(LODGING_MODE_PARAM, Collections.singletonList(lodgingMode.toString()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
@@ -46,7 +48,7 @@ class LodgingModeQueryParamAssemblerTest {
 
   @Test
   public void create_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
-    params.put(LODGING_MODE_PARAM, new String[] {"invalidLodgingMode"});
+    params.put(LODGING_MODE_PARAM, Collections.singletonList("invalidLodgingMode"));
 
     assertThrows(
         InvalidLodgingModeException.class, () -> queryAssembler.assemble(queryBuilder, params));
