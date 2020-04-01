@@ -9,6 +9,7 @@ import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bed {
 
@@ -108,6 +109,16 @@ public class Bed {
     return pricesPerNight.keySet();
   }
 
+  // TODO : Test
+  public int getRemainingCapacityOnDate(BookingDate date) {
+    int remainingCapacity = capacity;
+
+    for (Booking booking : getBookingsOnDate(date))
+      remainingCapacity = remainingCapacity - booking.getColonySize();
+
+    return remainingCapacity;
+  }
+
   public void book(Booking booking) {
     validateOwnerNotTenant(booking.getTenantPublicKey());
     validatePackageAvailable(booking.getPackage());
@@ -129,6 +140,12 @@ public class Bed {
 
   public boolean hasOverlappingBookings(Booking booking) {
     return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
+  }
+
+  private List<Booking> getBookingsOnDate(BookingDate date) {
+    return bookings.stream()
+        .filter(booking -> booking.isOverlapping(date, 0))
+        .collect(Collectors.toList());
   }
 
   private void validateOwnerNotTenant(PublicKey tenantPublicKey) {

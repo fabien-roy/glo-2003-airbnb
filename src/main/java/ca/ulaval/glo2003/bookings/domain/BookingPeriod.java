@@ -1,5 +1,8 @@
 package ca.ulaval.glo2003.bookings.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookingPeriod {
 
   private BookingDate start;
@@ -20,6 +23,16 @@ public class BookingPeriod {
 
   public boolean isOverlapping(BookingPeriod other) {
     return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
+  }
+
+  public List<BookingDate> getDates() {
+    List<BookingDate> dates = new ArrayList<>();
+
+    for (BookingDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+      dates.add(date);
+    }
+
+    return dates;
   }
 
   @Override
