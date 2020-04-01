@@ -18,7 +18,6 @@ public class BookingDate {
     return value;
   }
 
-  // TODO : Test
   public BookingDate minusDays(int days) {
     return new BookingDate(value.minusDays(days));
   }
@@ -27,7 +26,6 @@ public class BookingDate {
     return new BookingDate(value.plusDays(days));
   }
 
-  // TODO : Test
   public boolean isBefore(BookingDate other) {
     return value.isBefore(other.getValue());
   }

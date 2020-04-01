@@ -31,6 +31,16 @@ class BookingDateTest {
 
   @ParameterizedTest
   @ValueSource(ints = {1, 3, 5})
+  public void minusDays_shouldReturnBookingDateMinusDays(int days) {
+    LocalDate minusDays = date.minusDays(days);
+
+    BookingDate actualBookingDate = bookingDate.minusDays(days);
+
+    assertEquals(minusDays, actualBookingDate.getValue());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
   public void plusDays_shouldReturnBookingDatePlusDays(int days) {
     LocalDate plusDays = date.plusDays(days);
 
