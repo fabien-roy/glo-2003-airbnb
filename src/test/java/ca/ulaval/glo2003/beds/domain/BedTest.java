@@ -79,12 +79,14 @@ class BedTest {
     when(booking.getArrivalDate()).thenReturn(arrivalDate);
     when(booking.getNumberOfNights()).thenReturn(numberOfNights);
     when(booking.isOverlapping(otherBooking)).thenReturn(false);
+    when(booking.isOverlapping(arrivalDate, 0)).thenReturn(true);
   }
 
   private void resetOtherBooking() {
     reset(otherBooking);
     when(otherBooking.getNumber()).thenReturn(otherBookingNumber);
     when(otherBooking.getPackage()).thenReturn(bookingPackage);
+    when(otherBooking.isOverlapping(arrivalDate, 0)).thenReturn(false);
   }
 
   private void resetLodgingMode() {
@@ -115,6 +117,51 @@ class BedTest {
     assertEquals(2, bookings.size());
     assertTrue(bookings.contains(booking));
     assertTrue(bookings.contains(otherBooking));
+  }
+
+  @Test
+  public void getRemainingCapacity_withoutBooking_shouldReturnCapacity() {
+    int expectedCapacity = bed.getCapacity();
+
+    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+
+    assertEquals(expectedCapacity, remainingCapacity);
+  }
+
+  @Test
+  public void getRemainingCapacity_withOneBooking_shouldReturnCapacityMinusColonySize() {
+    int expectedCapacity = bed.getCapacity() - booking.getColonySize();
+    bookings = Collections.singletonList(booking);
+    bed = buildBed();
+
+    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+
+    assertEquals(expectedCapacity, remainingCapacity);
+  }
+
+  @Test
+  public void getRemainingCapacity_withMultipleBookings_shouldReturnCapacityMinusColonySizes() {
+    int expectedCapacity =
+        bed.getCapacity() - booking.getColonySize() - otherBooking.getColonySize();
+    when(otherBooking.isOverlapping(arrivalDate, 0)).thenReturn(true);
+    bookings = Arrays.asList(booking, otherBooking);
+    bed = buildBed();
+
+    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+
+    assertEquals(expectedCapacity, remainingCapacity);
+  }
+
+  @Test
+  public void
+      getRemainingCapacity_withBookingsOnDifferentDates_shouldReturnCapacityMinusColonySizesOnDate() {
+    int expectedCapacity = bed.getCapacity() - booking.getColonySize();
+    bookings = Arrays.asList(booking, otherBooking);
+    bed = buildBed();
+
+    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+
+    assertEquals(expectedCapacity, remainingCapacity);
   }
 
   @Test

@@ -109,7 +109,6 @@ public class Bed {
     return pricesPerNight.keySet();
   }
 
-  // TODO : Test
   public int getRemainingCapacityOnDate(BookingDate date) {
     int remainingCapacity = capacity;
 
