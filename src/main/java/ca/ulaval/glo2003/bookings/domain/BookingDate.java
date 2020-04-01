@@ -34,6 +34,14 @@ public class BookingDate {
     return value.isAfter(other.getValue());
   }
 
+  public BookingPeriod periodToDays(int days) {
+    return periodTo(plusDays(days - 1));
+  }
+
+  private BookingPeriod periodTo(BookingDate other) {
+    return new BookingPeriod(this, other);
+  }
+
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;

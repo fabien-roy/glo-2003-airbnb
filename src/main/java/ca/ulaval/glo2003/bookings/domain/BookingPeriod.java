@@ -22,7 +22,17 @@ public class BookingPeriod {
     return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
   }
 
-  public boolean isOverlapping(BookingDate otherDate, int numberOfNights) {
-    return isOverlapping(new BookingPeriod(otherDate, otherDate.plusDays(numberOfNights)));
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || getClass() != object.getClass()) return false;
+
+    BookingPeriod bookingPeriod = (BookingPeriod) object;
+
+    return start.equals(bookingPeriod.getStart()) && end.equals(bookingPeriod.getEnd());
+  }
+
+  @Override
+  public int hashCode() {
+    return start.hashCode() + end.hashCode();
   }
 }

@@ -92,4 +92,40 @@ class BookingPeriodTest {
 
     assertFalse(result);
   }
+
+  @Test
+  public void equals_shouldReturnFalse_whenObjectIsNotBookingPeriod() {
+    Object object = new Object();
+
+    boolean result = period.equals(object);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void equals_shouldReturnFalse_whenStartsAreNotEqual() {
+    BookingPeriod otherPeriod = new BookingPeriod(start.plusDays(1), end);
+
+    boolean result = period.equals(otherPeriod);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void equals_shouldReturnFalse_whenEndsAreNotEqual() {
+    BookingPeriod otherPeriod = new BookingPeriod(start, end.plusDays(1));
+
+    boolean result = period.equals(otherPeriod);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void equals_shouldReturnTrue_whenValuesAreEqual() {
+    BookingPeriod otherPeriod = new BookingPeriod(start, end);
+
+    boolean result = period.equals(otherPeriod);
+
+    assertTrue(result);
+  }
 }

@@ -103,6 +103,24 @@ class BookingDateTest {
     assertTrue(result);
   }
 
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
+  public void periodTo_shouldReturnPeriodWithThisAsStart(int days) {
+    BookingPeriod period = bookingDate.periodToDays(days);
+
+    assertEquals(bookingDate, period.getStart());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
+  public void periodTo_shouldReturnPeriodWithThisInDaysAsEnd(int days) {
+    BookingDate bookingDateInDays = bookingDate.plusDays(days - 1);
+
+    BookingPeriod period = bookingDate.periodToDays(days);
+
+    assertEquals(bookingDateInDays, period.getEnd());
+  }
+
   @Test
   public void equals_shouldReturnFalse_whenObjectIsNotBookingDate() {
     Object object = new Object();
