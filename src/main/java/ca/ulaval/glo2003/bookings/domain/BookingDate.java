@@ -22,6 +22,11 @@ public class BookingDate {
     return new BookingDate(value.plusDays(days));
   }
 
+  // TODO : Test
+  public boolean isBefore(BookingDate other) {
+    return value.isBefore(other.getValue());
+  }
+
   public boolean isAfter(BookingDate other) {
     return value.isAfter(other.getValue());
   }

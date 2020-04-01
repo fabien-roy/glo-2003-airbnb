@@ -4,10 +4,12 @@ import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bed {
 
@@ -92,6 +94,13 @@ public class Bed {
     return bookings;
   }
 
+  // TODO : Test
+  public List<Booking> getBookingsOnDate(BookingDate date) {
+    return bookings.stream()
+        .filter(booking -> booking.getArrivalDate().equals(date))
+        .collect(Collectors.toList());
+  }
+
   public Booking getBookingByNumber(UUID number) {
     Optional<Booking> foundBooking =
         bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
@@ -108,30 +117,42 @@ public class Bed {
   }
 
   public void book(Booking booking) {
-    if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
-
+    validateOwnerNotTenant(booking.getTenantPublicKey());
     validatePackageAvailable(booking.getPackage());
-    validateAccommodationCapacity(booking.getColonySize());
-
-    lodgingMode.validateLodging(this, booking);
+    validateMinCapacity(booking.getColonySize());
+    lodgingMode.validateAvailable(this, booking);
 
     bookings.add(booking);
   }
 
-  public boolean hasOverlappingBookings(Booking booking) {
-    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
+  // TODO : Test
+  public boolean isAvailable(Integer minCapacity, BookingDate arrivalData, int numberOfNights) {
+    if (isExceedingCapacity(minCapacity)) return false;
+
+    return lodgingMode.isAvailable(this, minCapacity, arrivalData, numberOfNights);
   }
 
   public boolean isPackageAvailable(Packages bookingPackage) {
     return pricesPerNight.containsKey(bookingPackage);
   }
 
+  public boolean hasOverlappingBookings(Booking booking) {
+    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
+  }
+
+  private void validateOwnerNotTenant(PublicKey tenantPublicKey) {
+    if (ownerPublicKey.equals(tenantPublicKey)) throw new BookingNotAllowedException();
+  }
+
   private void validatePackageAvailable(Packages packageName) {
     if (!isPackageAvailable(packageName)) throw new PackageNotAvailableException();
   }
 
-  private void validateAccommodationCapacity(Integer colonySize) {
-    if (colonySize != null && colonySize > capacity)
-      throw new ExceedingAccommodationCapacityException();
+  private void validateMinCapacity(Integer minCapacity) {
+    if (isExceedingCapacity(minCapacity)) throw new ExceedingAccommodationCapacityException();
+  }
+
+  private boolean isExceedingCapacity(Integer minCapacity) {
+    return minCapacity != null && minCapacity > capacity;
   }
 }

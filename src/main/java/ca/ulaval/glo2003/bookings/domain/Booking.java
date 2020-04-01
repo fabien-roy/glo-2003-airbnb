@@ -83,12 +83,22 @@ public class Booking {
   }
 
   public boolean isCanceled() {
-    return status == BookingStatuses.CANCELED;
+    return status.equals(BookingStatuses.CANCELED);
   }
 
+  // TODO : Test
   public boolean isOverlapping(Booking otherBooking) {
-    return !(arrivalDate.getValue().isAfter(otherBooking.getDepartureDate())
-        || getDepartureDate().isBefore(otherBooking.getArrivalDate().getValue()));
+    return getPeriod().isOverlapping(otherBooking.getPeriod());
+  }
+
+  // TODO : Test
+  public boolean isOverlapping(BookingDate otherDate, int numberOfNights) {
+    return getPeriod().isOverlapping(otherDate, numberOfNights);
+  }
+
+  // TODO : Test
+  public BookingPeriod getPeriod() {
+    return new BookingPeriod(arrivalDate, arrivalDate.plusDays(numberOfNights));
   }
 
   public LocalDate getDepartureDate() {

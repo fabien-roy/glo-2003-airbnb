@@ -6,11 +6,12 @@ import java.util.List;
 
 public class InMemoryAvailabilityFilter implements InMemoryBedFilter {
 
-  private final int minCapacity;
+  private final Integer minCapacity; // TODO : Make nullable everywhere
   private final BookingDate arrivalDate;
   private final int numberOfNights;
 
-  public InMemoryAvailabilityFilter(int minCapacity, BookingDate arrivalDate, int numberOfNights) {
+  public InMemoryAvailabilityFilter(
+      Integer minCapacity, BookingDate arrivalDate, int numberOfNights) {
     this.minCapacity = minCapacity;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;

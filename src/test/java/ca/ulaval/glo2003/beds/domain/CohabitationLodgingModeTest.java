@@ -28,7 +28,7 @@ class CohabitationLodgingModeTest {
 
     assertThrows(
         MissingColonySizeException.class,
-        () -> cohabitationLodgingMode.validateLodging(bed, booking));
+        () -> cohabitationLodgingMode.validateAvailable(bed, booking));
   }
 
   @Test
