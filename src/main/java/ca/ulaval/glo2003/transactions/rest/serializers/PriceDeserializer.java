@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 // TODO : Should PriceDeserializer throw InvalidPackagesException? (it's the only usage)
 public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPackagesException> {
 
+  private static final int MAX_DECIMALS = 2;
+
   public PriceDeserializer() {
     super(Double.class);
   }
@@ -25,7 +27,7 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
   @Override
   public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws InvalidPackagesException {
-    double price = 0.0;
+    double price = 0d;
 
     try {
       if (jsonParser.isNaN()) throwException();
@@ -41,6 +43,6 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
   }
 
   private boolean hasGoodAmountOfDecimals(String price) {
-    return price.substring(price.indexOf('.') + 1).length() == 2;
+    return !price.contains(".") || price.substring(price.indexOf('.') + 1).length() <= MAX_DECIMALS;
   }
 }
