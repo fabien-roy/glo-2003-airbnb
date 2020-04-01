@@ -42,7 +42,7 @@ public class BedServiceTest {
   private int otherStars = 2;
   private BedResponse bedResponse = aBedResponse().withStars(stars).build();
   private BedResponse otherBedResponse = aBedResponse().withStars(otherStars).build();
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpService() {

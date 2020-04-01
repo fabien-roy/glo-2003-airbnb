@@ -9,7 +9,9 @@ import static org.mockito.Mockito.when;
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,7 @@ class PackageQueryParamAssemblerTest {
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
   private Packages packageName = Packages.BLOODTHIRSTY;
-  private Map<String, String[]> params = new HashMap<>();
+  private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
@@ -36,7 +38,7 @@ class PackageQueryParamAssemblerTest {
 
   @Test
   public void assemble_withPackageName_shouldAssembleBuilder() {
-    params.put(PACKAGE_NAME_PARAM, new String[] {packageName.toString()});
+    params.put(PACKAGE_NAME_PARAM, Collections.singletonList(packageName.toString()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
@@ -45,7 +47,7 @@ class PackageQueryParamAssemblerTest {
 
   @Test
   public void assemble_withInvalidPackageName_shouldThrowInvalidPackageException() {
-    params.put(PACKAGE_NAME_PARAM, new String[] {"invalidPackageName"});
+    params.put(PACKAGE_NAME_PARAM, Collections.singletonList("invalidPackageName"));
 
     assertThrows(
         InvalidPackageException.class, () -> queryAssembler.assemble(queryBuilder, params));
