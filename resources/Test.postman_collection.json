@@ -9,346 +9,1065 @@
 			"name": "Release 1",
 			"item": [
 				{
-					"name": "Invalid public key (null)",
-					"event": [
+					"name": "Public key",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-								"exec": [
-									"pm.test(\"response is ok\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"contains right error\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
-									"});",
-									"",
-									"pm.test(\"contains right description\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
-									"});"
+							"name": "Invalid public key (null)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": null,\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid public key (missing)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid public key (not hexadecimal)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"ZF0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid public key (not right length)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"ownerPublicKey\": \"ZF0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4567/beds",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4567",
-							"path": [
-								"beds"
-							]
-						}
-					},
-					"response": []
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Invalid public key (missing)",
-					"event": [
+					"name": "Zip code",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-								"exec": [
-									"pm.test(\"response is ok\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"contains right error\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
-									"});",
-									"",
-									"pm.test(\"contains right description\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
-									"});"
+							"name": "Invalid zip code (null)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": null,\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid zip code (missing)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid zip code (wrong length)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"1234\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid zip code (include letters)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"A1234\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4567/beds",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4567",
-							"path": [
-								"beds"
-							]
-						}
-					},
-					"response": []
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Invalid public key (not hezadecimal)",
-					"event": [
+					"name": "Bed type",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-								"exec": [
-									"pm.test(\"response is ok\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"contains right error\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
-									"});",
-									"",
-									"pm.test(\"contains right description\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
-									"});"
+							"name": "Invalid bed type (null)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"invalid\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid bed type (missing)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid bed type",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"invalid\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"ownerPublicKey\": \"ZF0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4567/beds",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4567",
-							"path": [
-								"beds"
-							]
-						}
-					},
-					"response": []
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Invalid public key (not right length)",
-					"event": [
+					"name": "Cleaning frequency",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-								"exec": [
-									"pm.test(\"response is ok\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"contains right error\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
-									"});",
-									"",
-									"pm.test(\"contains right description\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
-									"});"
+							"name": "Invalid cleaning frequency (null)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_CLEANING_FREQUENCY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"cleaning frequency should be one of weekly, monthly, annual or never\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": null,\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid cleaning frequency (missing)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_CLEANING_FREQUENCY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"cleaning frequency should be one of weekly, monthly, annual or never\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid cleaning frequency",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_CLEANING_FREQUENCY\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"cleaning frequency should be one of weekly, monthly, annual or never\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"invalid\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"ownerPublicKey\": \"F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4567/beds",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4567",
-							"path": [
-								"beds"
-							]
-						}
-					},
-					"response": []
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Invalid zip code (wrong length)",
-					"event": [
+					"name": "Blood type",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-								"exec": [
-									"pm.test(\"response is ok\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"contains right error\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
-									"});",
-									"",
-									"pm.test(\"contains right description\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
-									"});"
+							"name": "Invalid blood type (null)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
 								],
-								"type": "text/javascript"
-							}
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"invalid\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid blood type (missing)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid blood type",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"invalid\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid blood type (outside of array)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": \"A+\",\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4567/beds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4567",
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
 						}
 					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"1234\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4567/beds",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4567",
-							"path": [
-								"beds"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Invalid bed type",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-								"exec": [
-									"pm.test(\"response is ok\", function () {",
-									"    pm.response.to.have.status(400);",
-									"});",
-									"",
-									"pm.test(\"contains right error\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
-									"});",
-									"",
-									"pm.test(\"contains right description\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"invalid\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4567/beds",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4567",
-							"path": [
-								"beds"
-							]
-						}
-					},
-					"response": []
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -378,6 +1097,63 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4567/beds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4567",
+					"path": [
+						"beds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Base test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+						"exec": [
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"contains right error\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
+							"});",
+							"",
+							"pm.test(\"contains right description\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
