@@ -9,7 +9,6 @@ import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Bed {
 
@@ -94,13 +93,6 @@ public class Bed {
     return bookings;
   }
 
-  // TODO : Test
-  public List<Booking> getBookingsOnDate(BookingDate date) {
-    return bookings.stream()
-        .filter(booking -> booking.getArrivalDate().equals(date))
-        .collect(Collectors.toList());
-  }
-
   public Booking getBookingByNumber(UUID number) {
     Optional<Booking> foundBooking =
         bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
@@ -125,7 +117,6 @@ public class Bed {
     bookings.add(booking);
   }
 
-  // TODO : Test
   public boolean isAvailable(Integer minCapacity, BookingDate arrivalData, int numberOfNights) {
     if (isExceedingCapacity(minCapacity)) return false;
 

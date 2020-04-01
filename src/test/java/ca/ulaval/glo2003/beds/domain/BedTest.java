@@ -4,8 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createTenantPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -13,6 +12,7 @@ import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +28,7 @@ class BedTest {
   private static Packages bedPackage;
   private static int capacity;
   private static List<Booking> bookings;
+  private static LodgingMode lodgingMode = mock(LodgingMode.class);
 
   private static Booking booking = mock(Booking.class);
   private static Booking otherBooking = mock(Booking.class);
@@ -35,7 +36,9 @@ class BedTest {
   private static UUID otherBookingNumber;
   private static Packages bookingPackage;
   private static PublicKey tenantPublicKey;
+  private static BookingDate arrivalDate;
   private static Integer colonySize;
+  private static int numberOfNights;
 
   @BeforeEach
   public void setUpBed() {
@@ -47,10 +50,13 @@ class BedTest {
     otherBookingNumber = createBookingNumber();
     bookingPackage = bedPackage;
     tenantPublicKey = createTenantPublicKey();
+    arrivalDate = createArrivalDate();
     colonySize = capacity;
+    numberOfNights = createNumberOfNights();
 
     resetBooking();
     resetOtherBooking();
+    resetLodgingMode();
     bed = buildBed();
   }
 
@@ -60,6 +66,7 @@ class BedTest {
         .withPricesPerNights(Collections.singletonMap(bedPackage, createPricePerNight()))
         .withCapacity(capacity)
         .withBookings(bookings)
+        .withLodgingMode(lodgingMode)
         .build();
   }
 
@@ -68,14 +75,23 @@ class BedTest {
     when(booking.getNumber()).thenReturn(bookingNumber);
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
     when(booking.getPackage()).thenReturn(bookingPackage);
-    when(booking.isOverlapping(otherBooking)).thenReturn(false);
     when(booking.getColonySize()).thenReturn(colonySize);
+    when(booking.getArrivalDate()).thenReturn(arrivalDate);
+    when(booking.getNumberOfNights()).thenReturn(numberOfNights);
+    when(booking.isOverlapping(otherBooking)).thenReturn(false);
   }
 
   private void resetOtherBooking() {
     reset(otherBooking);
     when(otherBooking.getNumber()).thenReturn(otherBookingNumber);
     when(otherBooking.getPackage()).thenReturn(bookingPackage);
+  }
+
+  private void resetLodgingMode() {
+    reset(lodgingMode);
+    when(lodgingMode.isAvailable(
+            any(Bed.class), eq(colonySize), eq(arrivalDate), eq(numberOfNights)))
+        .thenReturn(true);
   }
 
   @Test
@@ -152,6 +168,34 @@ class BedTest {
 
     assertThrows(ExceedingAccommodationCapacityException.class, () -> bed.book(booking));
     assertFalse(bed.getBookings().contains(booking));
+  }
+
+  @Test
+  public void isAvailable_withAvailablePeriod_shouldReturnTrue() {
+    boolean result = bed.isAvailable(colonySize, arrivalDate, numberOfNights);
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void isAvailable_withUnavailablePeriod_shouldReturnFalse() {
+    when(lodgingMode.isAvailable(
+            any(Bed.class), eq(colonySize), eq(arrivalDate), eq(numberOfNights)))
+        .thenReturn(false);
+
+    boolean result = bed.isAvailable(colonySize, arrivalDate, numberOfNights);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isAvailable_withExceedingAccommodationCapacity_shouldReturnFalse() {
+    colonySize = capacity + 1;
+    resetBooking();
+
+    boolean result = bed.isAvailable(colonySize, arrivalDate, numberOfNights);
+
+    assertFalse(result);
   }
 
   @Test
