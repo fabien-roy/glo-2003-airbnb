@@ -12,7 +12,7 @@ public class CohabitationLodgingMode implements LodgingMode {
   public void validateAvailable(Bed bed, Booking booking) {
     if (booking.getColonySize() == null) throw new MissingColonySizeException();
 
-    if (isAvailable(
+    if (!isAvailable(
         bed, booking.getColonySize(), booking.getArrivalDate(), booking.getNumberOfNights()))
       throw new ExceedingAccommodationCapacityException();
   }

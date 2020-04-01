@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.crea
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
@@ -75,12 +76,24 @@ class CohabitationLodgingModeTest {
 
   @Test
   public void isAvailable_withoutRemainingCapacity_shouldReturnFalse() {
+    resetBed();
     when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity - 1);
 
     boolean result =
         cohabitationLodgingMode.isAvailable(bed, minCapacity, arrivalDate, numberOfNights);
 
     assertFalse(result);
+  }
+
+  @Test
+  public void
+      validateAvailable_withoutUnavailableBed_shouldThrowExceedingAccommodationCapacityException() {
+    resetBed();
+    when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity - 1);
+
+    assertThrows(
+        ExceedingAccommodationCapacityException.class,
+        () -> cohabitationLodgingMode.validateAvailable(bed, booking));
   }
 
   @Test
