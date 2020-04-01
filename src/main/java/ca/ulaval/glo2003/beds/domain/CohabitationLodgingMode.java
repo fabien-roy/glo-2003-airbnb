@@ -8,8 +8,6 @@ import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
 
 public class CohabitationLodgingMode implements LodgingMode {
 
-  // TODO : Test this whole thing
-
   @Override
   public void validateAvailable(Bed bed, Booking booking) {
     if (booking.getColonySize() == null) throw new MissingColonySizeException();
