@@ -34,6 +34,7 @@ class LodgingModeConverterTest {
     when(lodgingModeBuilder.withType(nonDefaultLodgingModeType))
         .thenReturn(nonDefaultLodgingModeBuilder);
     when(nonDefaultLodgingModeBuilder.build()).thenReturn(nonDefaultLodgingMode);
+    when(nonDefaultLodgingMode.getName()).thenReturn(nonDefaultLodgingModeType);
   }
 
   @Test
@@ -53,11 +54,18 @@ class LodgingModeConverterTest {
   }
 
   @Test
-  public void fromRequest_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
+  public void fromString_withInvalidLodgingMode_shouldThrowInvalidLodgingModeException() {
     String invalidLodgingMode = "invalidLodgingMode";
 
     assertThrows(
         InvalidLodgingModeException.class,
         () -> lodgingModeConverter.fromString(invalidLodgingMode));
+  }
+
+  @Test
+  public void toString_shouldConvertDefaultLodgingMode() {
+    String lodgingModeString = lodgingModeConverter.toString(nonDefaultLodgingMode);
+
+    assertSame(nonDefaultLodgingModeType.toString(), lodgingModeString);
   }
 }

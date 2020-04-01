@@ -80,6 +80,7 @@ class BedTest {
     when(booking.getNumberOfNights()).thenReturn(numberOfNights);
     when(booking.isOverlapping(otherBooking)).thenReturn(false);
     when(booking.isOverlapping(arrivalDate, 0)).thenReturn(true);
+    when(booking.getColonySize()).thenReturn(colonySize);
   }
 
   private void resetOtherBooking() {
