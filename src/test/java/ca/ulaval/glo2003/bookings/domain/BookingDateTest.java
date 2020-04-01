@@ -67,6 +67,33 @@ class BookingDateTest {
   }
 
   @Test
+  public void isBefore_withDateBefore_shouldReturnFalse() {
+    BookingDate dateBefore = new BookingDate(date.minusDays(1));
+
+    boolean result = bookingDate.isBefore(dateBefore);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateEquals_shouldReturnFalse() {
+    BookingDate dateEqual = new BookingDate(date);
+
+    boolean result = bookingDate.isBefore(dateEqual);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateAfter_shouldReturnTrue() {
+    BookingDate dateAfter = new BookingDate(date.plusDays(1));
+
+    boolean result = bookingDate.isBefore(dateAfter);
+
+    assertTrue(result);
+  }
+
+  @Test
   public void equals_shouldReturnFalse_whenObjectIsNotBookingDate() {
     Object object = new Object();
 
