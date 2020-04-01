@@ -18,6 +18,11 @@ public class BookingDate {
     return value;
   }
 
+  // TODO : Test
+  public BookingDate minusDays(int days) {
+    return new BookingDate(value.minusDays(days));
+  }
+
   public BookingDate plusDays(int days) {
     return new BookingDate(value.plusDays(days));
   }
