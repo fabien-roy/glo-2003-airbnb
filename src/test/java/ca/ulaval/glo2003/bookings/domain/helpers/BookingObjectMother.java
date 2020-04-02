@@ -35,7 +35,9 @@ public class BookingObjectMother {
     return new BookingDate(
         Faker.instance()
             .date()
-            .between(Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now().plusDays(30)))
+            .between(
+                Date.valueOf(LocalDate.now().plusDays(1)),
+                Date.valueOf(LocalDate.now().plusDays(31)))
             .toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate());
