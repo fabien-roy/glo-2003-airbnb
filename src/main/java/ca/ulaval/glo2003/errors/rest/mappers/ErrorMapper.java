@@ -3,8 +3,8 @@ package ca.ulaval.glo2003.errors.rest.mappers;
 import static spark.Spark.exception;
 
 import ca.ulaval.glo2003.beds.exceptions.BedException;
+import ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.bookings.exceptions.BookingException;
-import ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler;
 import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.locations.exceptions.LocationException;
