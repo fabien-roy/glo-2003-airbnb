@@ -1,13 +1,15 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bed {
 
@@ -18,7 +20,7 @@ public class Bed {
   private CleaningFrequencies cleaningFrequency;
   private List<BloodTypes> bloodTypes;
   private int capacity;
-  private LodgingModes lodgingMode;
+  private LodgingMode lodgingMode;
   private Map<Packages, Price> pricesPerNight;
   private List<Booking> bookings = new ArrayList<>();
 
@@ -28,7 +30,7 @@ public class Bed {
       CleaningFrequencies cleaningFrequency,
       List<BloodTypes> bloodTypes,
       int capacity,
-      LodgingModes lodgingMode,
+      LodgingMode lodgingMode,
       Map<Packages, Price> pricesPerNight) {
     this.ownerPublicKey = ownerPublicKey;
     this.bedType = bedType;
@@ -75,7 +77,7 @@ public class Bed {
     return capacity;
   }
 
-  public LodgingModes getLodgingMode() {
+  public LodgingMode getLodgingMode() {
     return lodgingMode;
   }
 
@@ -107,25 +109,57 @@ public class Bed {
     return pricesPerNight.keySet();
   }
 
+  public int getRemainingCapacityOnDate(BookingDate date) {
+    int remainingCapacity = capacity;
+
+    for (Booking booking : getBookingsOnDate(date))
+      remainingCapacity = remainingCapacity - booking.getColonySize();
+
+    return remainingCapacity;
+  }
+
   public void book(Booking booking) {
-    if (ownerPublicKey.equals(booking.getTenantPublicKey())) throw new BookingNotAllowedException();
-
+    validateOwnerNotTenant(booking.getTenantPublicKey());
     validatePackageAvailable(booking.getPackage());
-
-    if (isBedAlreadyBooked(booking)) throw new BedAlreadyBookedException();
+    validateMinCapacity(booking.getColonySize());
+    lodgingMode.validateAvailable(this, booking);
 
     bookings.add(booking);
+  }
+
+  public boolean isAvailable(Integer minCapacity, BookingDate arrivalData, int numberOfNights) {
+    if (isExceedingCapacity(minCapacity)) return false;
+
+    return lodgingMode.isAvailable(this, minCapacity, arrivalData, numberOfNights);
   }
 
   public boolean isPackageAvailable(Packages bookingPackage) {
     return pricesPerNight.containsKey(bookingPackage);
   }
 
-  private void validatePackageAvailable(Packages packageName) {
-    if (!pricesPerNight.containsKey(packageName)) throw new PackageNotAvailableException();
+  public boolean hasOverlappingBookings(Booking booking) {
+    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
   }
 
-  private boolean isBedAlreadyBooked(Booking booking) {
-    return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
+  private List<Booking> getBookingsOnDate(BookingDate date) {
+    return bookings.stream()
+        .filter(booking -> booking.isOverlapping(date, 0))
+        .collect(Collectors.toList());
+  }
+
+  private void validateOwnerNotTenant(PublicKey tenantPublicKey) {
+    if (ownerPublicKey.equals(tenantPublicKey)) throw new BookingNotAllowedException();
+  }
+
+  private void validatePackageAvailable(Packages packageName) {
+    if (!isPackageAvailable(packageName)) throw new PackageNotAvailableException();
+  }
+
+  private void validateMinCapacity(Integer minCapacity) {
+    if (isExceedingCapacity(minCapacity)) throw new ExceedingAccommodationCapacityException();
+  }
+
+  private boolean isExceedingCapacity(Integer minCapacity) {
+    return minCapacity != null && minCapacity > capacity;
   }
 }

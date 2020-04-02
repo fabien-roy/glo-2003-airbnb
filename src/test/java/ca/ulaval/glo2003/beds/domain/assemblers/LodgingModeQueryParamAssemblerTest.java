@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import static ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler.LODGING_MODE_PARAM;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLodgingMode;
+import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeType;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -24,7 +24,7 @@ class LodgingModeQueryParamAssemblerTest {
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private LodgingModes lodgingMode = createLodgingMode();
+  private LodgingModes lodgingMode = createLodgingModeType();
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll

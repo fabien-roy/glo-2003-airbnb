@@ -4,136 +4,76 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BookingTest {
 
-  @Test
-  public void construct_shouldSetStatusToBooked() {
-    Booking booking = aBooking().build();
+  private static Booking booking;
+  private static Booking otherBooking;
+  private static BookingDate arrivalDate;
+  private static BookingDate otherArrivalDate;
+  private static int numberOfNights;
 
-    assertFalse(booking.isCanceled());
+  @BeforeEach
+  public void setUpBooking() {
+    numberOfNights = 1;
+    arrivalDate = createArrivalDate();
+    otherArrivalDate = arrivalDate.plusDays(numberOfNights);
+
+    booking = buildBooking();
+    otherBooking = buildOtherBooking();
+  }
+
+  private Booking buildBooking() {
+    return aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
+  }
+
+  private Booking buildOtherBooking() {
+    return aBooking().withArrivalDate(otherArrivalDate).withNumberOfNights(numberOfNights).build();
   }
 
   @Test
   public void cancel_shouldSetStatusToCanceled() {
-    Booking booking = aBooking().build();
-
     booking.cancel();
 
     assertTrue(booking.isCanceled());
   }
 
   @Test
-  public void getDepartureDate_shouldReturnArrivalDatePlusNumberOfNights() {
-    BookingDate arrivalDate = createArrivalDate();
-    int numberOfNights = 3;
-    LocalDate expectedDepartureDate = arrivalDate.getValue().plusDays(numberOfNights - 1);
-    Booking booking =
-        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
+  public void getPeriod_shouldReturnPeriodWithArrivalAsStart() {
+    BookingPeriod expectedPeriod = arrivalDate.periodToDays(numberOfNights);
 
-    LocalDate departureDate = booking.getDepartureDate();
+    BookingPeriod period = booking.getPeriod();
 
-    assertEquals(expectedDepartureDate, departureDate);
+    assertEquals(expectedPeriod, period);
   }
 
   @Test
-  public void isOverlapping_withArrivalDateAfterOtherDepartureDate_shouldReturnFalse() {
-    BookingDate arrivalDate = createArrivalDate();
-    BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().minusDays(3));
-    int otherNumberOfNights = 2;
-    Booking booking = aBooking().withArrivalDate(arrivalDate).build();
-    Booking otherBooking =
-        aBooking()
-            .withArrivalDate(otherArrivalDate)
-            .withNumberOfNights(otherNumberOfNights)
-            .build();
+  public void isOverlapping_withOverlappingBooking_shouldReturnTrue() {
+    boolean result = booking.isOverlapping(booking);
 
-    boolean isOverlapping = booking.isOverlapping(otherBooking);
-
-    assertFalse(isOverlapping);
+    assertTrue(result);
   }
 
   @Test
-  public void isOverlapping_withDepartureDateBeforeOtherArrivalDate_shouldReturnFalse() {
-    BookingDate arrivalDate = createArrivalDate();
-    BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().plusDays(3));
-    int numberOfNights = 2;
-    Booking booking =
-        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
-    Booking otherBooking = aBooking().withArrivalDate(otherArrivalDate).build();
+  public void isOverlapping_withNonOverlappingBooking_shouldReturnFalse() {
+    boolean result = booking.isOverlapping(otherBooking);
 
-    boolean isOverlapping = booking.isOverlapping(otherBooking);
-
-    assertFalse(isOverlapping);
+    assertFalse(result);
   }
 
   @Test
-  public void isOverlapping_withOtherDepartureDateDuringBooking_shouldReturnTrue() {
-    BookingDate arrivalDate = createArrivalDate();
-    int numberOfNights = 3;
-    BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().minusDays(1));
-    Booking booking =
-        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
-    Booking otherBooking =
-        aBooking().withArrivalDate(otherArrivalDate).withNumberOfNights(numberOfNights).build();
+  public void isOverlapping_withOverlappingPeriod_shouldReturnTrue() {
+    boolean result = booking.isOverlapping(arrivalDate, numberOfNights);
 
-    boolean isOverlapping = booking.isOverlapping(otherBooking);
-
-    assertTrue(isOverlapping);
+    assertTrue(result);
   }
 
   @Test
-  public void isOverlapping_withOtherArrivalDateDuringBooking_shouldReturnTrue() {
-    BookingDate arrivalDate = createArrivalDate();
-    int numberOfNights = 3;
-    BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().plusDays(1));
-    Booking booking =
-        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
-    Booking otherBooking =
-        aBooking().withArrivalDate(otherArrivalDate).withNumberOfNights(numberOfNights).build();
+  public void isOverlapping_withNonOverlappingPeriod_shouldReturnFalse() {
+    boolean result = booking.isOverlapping(otherArrivalDate, numberOfNights);
 
-    boolean isOverlapping = booking.isOverlapping(otherBooking);
-
-    assertTrue(isOverlapping);
-  }
-
-  @Test
-  public void isOverlapping_withOtherBookingDuringBooking_shouldReturnTrue() {
-    BookingDate arrivalDate = createArrivalDate();
-    int numberOfNights = 4;
-    BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().plusDays(1));
-    int otherNumberOfNights = 2;
-    Booking booking =
-        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
-    Booking otherBooking =
-        aBooking()
-            .withArrivalDate(otherArrivalDate)
-            .withNumberOfNights(otherNumberOfNights)
-            .build();
-
-    boolean isOverlapping = booking.isOverlapping(otherBooking);
-
-    assertTrue(isOverlapping);
-  }
-
-  @Test
-  public void isOverlapping_withBookingDuringOtherBooking_shouldReturnTrue() {
-    BookingDate arrivalDate = createArrivalDate();
-    int numberOfNights = 4;
-    BookingDate otherArrivalDate = new BookingDate(arrivalDate.getValue().minusDays(1));
-    int otherNumberOfNights = 6;
-    Booking booking =
-        aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
-    Booking otherBooking =
-        aBooking()
-            .withArrivalDate(otherArrivalDate)
-            .withNumberOfNights(otherNumberOfNights)
-            .build();
-
-    boolean isOverlapping = booking.isOverlapping(otherBooking);
-
-    assertTrue(isOverlapping);
+    assertFalse(result);
   }
 }

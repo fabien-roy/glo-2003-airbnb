@@ -20,7 +20,7 @@ public class InMemoryLodgingModeFilter implements InMemoryBedFilter {
   @Override
   public List<Bed> filter(List<Bed> beds) {
     return beds.stream()
-        .filter(bed -> bed.getLodgingMode().equals(lodgingMode))
+        .filter(bed -> bed.getLodgingMode().getName().equals(lodgingMode))
         .collect(Collectors.toList());
   }
 }

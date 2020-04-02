@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.beds;
 
 import ca.ulaval.glo2003.beds.converters.BedConverter;
+import ca.ulaval.glo2003.beds.converters.LodgingModeConverter;
 import ca.ulaval.glo2003.beds.converters.PackageConverter;
 import ca.ulaval.glo2003.beds.converters.validators.AllYouCanDrinkValidator;
 import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
@@ -41,6 +42,7 @@ public class BedModule extends AbstractModule {
     bind(BedMapper.class);
     bind(BedService.class);
     bind(BedConverter.class);
+    bind(LodgingModeConverter.class);
     bind(PackageConverter.class);
     bind(BedResource.class);
     bind(BedExceptionHandler.class);
@@ -85,6 +87,8 @@ public class BedModule extends AbstractModule {
     multibinder.addBinding().to(NumberOfNightsWithoutMinimalCapacityErrorFactory.class);
     multibinder.addBinding().to(PackageNotAvailableErrorFactory.class);
     multibinder.addBinding().to(CantOfferSweetToothPackageErrorFactory.class);
+    multibinder.addBinding().to(MissingColonySizeErrorFactory.class);
+    multibinder.addBinding().to(ExceedingResidualCapacityErrorFactory.class);
   }
 
   private void configurePackagesValidators() {

@@ -31,6 +31,16 @@ class BookingDateTest {
 
   @ParameterizedTest
   @ValueSource(ints = {1, 3, 5})
+  public void minusDays_shouldReturnBookingDateMinusDays(int days) {
+    LocalDate minusDays = date.minusDays(days);
+
+    BookingDate actualBookingDate = bookingDate.minusDays(days);
+
+    assertEquals(minusDays, actualBookingDate.getValue());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
   public void plusDays_shouldReturnBookingDatePlusDays(int days) {
     LocalDate plusDays = date.plusDays(days);
 
@@ -64,6 +74,51 @@ class BookingDateTest {
     boolean result = bookingDate.isAfter(dateAfter);
 
     assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateBefore_shouldReturnFalse() {
+    BookingDate dateBefore = new BookingDate(date.minusDays(1));
+
+    boolean result = bookingDate.isBefore(dateBefore);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateEquals_shouldReturnFalse() {
+    BookingDate dateEqual = new BookingDate(date);
+
+    boolean result = bookingDate.isBefore(dateEqual);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateAfter_shouldReturnTrue() {
+    BookingDate dateAfter = new BookingDate(date.plusDays(1));
+
+    boolean result = bookingDate.isBefore(dateAfter);
+
+    assertTrue(result);
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
+  public void periodTo_shouldReturnPeriodWithThisAsStart(int days) {
+    BookingPeriod period = bookingDate.periodToDays(days);
+
+    assertEquals(bookingDate, period.getStart());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
+  public void periodTo_shouldReturnPeriodWithThisInDaysAsEnd(int days) {
+    BookingDate bookingDateInDays = bookingDate.plusDays(days - 1);
+
+    BookingPeriod period = bookingDate.periodToDays(days);
+
+    assertEquals(bookingDateInDays, period.getEnd());
   }
 
   @Test

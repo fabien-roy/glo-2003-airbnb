@@ -32,7 +32,6 @@ public class BookingModule extends AbstractModule {
         Multibinder.newSetBinder(binder(), new TypeLiteral<ErrorFactory<BookingException>>() {});
     multibinder.addBinding().to(ArrivalDateInThePastErrorFactory.class);
     multibinder.addBinding().to(BookingNotFoundErrorFactory.class);
-    multibinder.addBinding().to(ExceedingResidualCapacityErrorFactory.class);
     multibinder.addBinding().to(InvalidArrivalDateErrorFactory.class);
     multibinder.addBinding().to(InvalidColonySizeErrorFactory.class);
     multibinder.addBinding().to(InvalidNumberOfNightsErrorFactory.class);

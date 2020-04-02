@@ -1,14 +1,13 @@
 package ca.ulaval.glo2003.beds.converters;
 
 import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
-import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.transactions.domain.Price;
-import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 
 public class BedConverter {
@@ -16,6 +15,7 @@ public class BedConverter {
   private final BedNumberConverter bedNumberConverter;
   private final PublicKeyConverter publicKeyConverter;
   private final BloodTypeConverter bloodTypeConverter;
+  private final LodgingModeConverter lodgingModeConverter;
   private final PackageConverter packageConverter;
 
   @Inject
@@ -23,10 +23,12 @@ public class BedConverter {
       BedNumberConverter bedNumberConverter,
       PublicKeyConverter publicKeyConverter,
       BloodTypeConverter bloodTypeConverter,
+      LodgingModeConverter lodgingModeConverter,
       PackageConverter packageConverter) {
     this.bedNumberConverter = bedNumberConverter;
     this.publicKeyConverter = publicKeyConverter;
     this.bloodTypeConverter = bloodTypeConverter;
+    this.lodgingModeConverter = lodgingModeConverter;
     this.packageConverter = packageConverter;
   }
 
@@ -34,36 +36,25 @@ public class BedConverter {
     BedTypes bedType = BedTypes.get(request.getBedType());
     validateCapacity(bedType, request.getCapacity());
 
-    PublicKey ownerPublicKey = publicKeyConverter.fromString(request.getOwnerPublicKey());
-    List<BloodTypes> bloodTypes = bloodTypeConverter.fromStrings(request.getBloodTypes());
-    LodgingModes mode =
-        request.getLodgingMode() == null
-            ? LodgingModes.PRIVATE
-            : LodgingModes.get(request.getLodgingMode());
-    Map<Packages, Price> pricesPerNight = packageConverter.fromRequests(request.getPackages());
-
     return new Bed(
-        ownerPublicKey,
+        publicKeyConverter.fromString(request.getOwnerPublicKey()),
         bedType,
         CleaningFrequencies.get(request.getCleaningFrequency()),
-        bloodTypes,
+        bloodTypeConverter.fromStrings(request.getBloodTypes()),
         request.getCapacity(),
-        mode,
-        pricesPerNight);
+        lodgingModeConverter.fromString(request.getLodgingMode()),
+        packageConverter.fromRequests(request.getPackages()));
   }
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
-    List<String> bloodTypes = bloodTypeConverter.toStrings(bed.getBloodTypes());
-    List<PackageResponse> packageResponses = packageConverter.toResponses(bed.getPricesPerNight());
-
     return new BedResponse(
         bed.getLocation().getZipCode().getValue(),
         bed.getBedType().toString(),
         bed.getCleaningFrequency().toString(),
-        bloodTypes,
+        bloodTypeConverter.toStrings(bed.getBloodTypes()),
         bed.getCapacity(),
-        bed.getLodgingMode().toString(),
-        packageResponses,
+        lodgingModeConverter.toString(bed.getLodgingMode()),
+        packageConverter.toResponses(bed.getPricesPerNight()),
         stars);
   }
 
