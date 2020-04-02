@@ -143,7 +143,7 @@ public class Bed {
 
   private List<Booking> getBookingsOnDate(BookingDate date) {
     return bookings.stream()
-        .filter(booking -> booking.isOverlapping(date, 0))
+        .filter(booking -> booking.isOverlapping(date, 1))
         .collect(Collectors.toList());
   }
 

@@ -79,7 +79,7 @@ class BedTest {
     when(booking.getArrivalDate()).thenReturn(arrivalDate);
     when(booking.getNumberOfNights()).thenReturn(numberOfNights);
     when(booking.isOverlapping(otherBooking)).thenReturn(false);
-    when(booking.isOverlapping(arrivalDate, 0)).thenReturn(true);
+    when(booking.isOverlapping(arrivalDate, 1)).thenReturn(true);
     when(booking.getColonySize()).thenReturn(colonySize);
   }
 
@@ -87,7 +87,7 @@ class BedTest {
     reset(otherBooking);
     when(otherBooking.getNumber()).thenReturn(otherBookingNumber);
     when(otherBooking.getPackage()).thenReturn(bookingPackage);
-    when(otherBooking.isOverlapping(arrivalDate, 0)).thenReturn(false);
+    when(otherBooking.isOverlapping(arrivalDate, 1)).thenReturn(false);
   }
 
   private void resetLodgingMode() {

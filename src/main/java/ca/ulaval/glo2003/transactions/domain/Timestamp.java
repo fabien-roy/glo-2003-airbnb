@@ -4,7 +4,7 @@ import java.time.*;
 
 public class Timestamp {
 
-  public static final LocalTime LOCAL_TIME = LocalTime.MIDNIGHT;
+  public static final LocalTime LOCAL_TIME = LocalTime.MAX;
   public static final ZoneOffset ZONE_OFFSET = ZoneOffset.UTC;
 
   private Instant value;

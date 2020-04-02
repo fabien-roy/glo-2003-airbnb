@@ -46,7 +46,7 @@ class TimestampTest {
 
   @Test
   public void inDays_shouldReturnTimestampAtMidnight() {
-    LocalDateTime inDays = LocalDateTime.now().toLocalDate().atTime(LocalTime.MIDNIGHT);
+    LocalDateTime inDays = LocalDateTime.now().toLocalDate().atTime(LocalTime.MAX);
 
     timestamp = Timestamp.inDays(0);
 

@@ -20,7 +20,7 @@ public class CohabitationLodgingMode implements LodgingMode {
   @Override
   public boolean isAvailable(
       Bed bed, Integer minCapacity, BookingDate arrivalDate, int numberOfNights) {
-    BookingPeriod period = arrivalDate.periodToDays(numberOfNights);
+    BookingPeriod period = arrivalDate.periodToDays(numberOfNights - 1);
 
     for (BookingDate date : period.getDates()) {
       int remainingCapacity = bed.getRemainingCapacityOnDate(date);

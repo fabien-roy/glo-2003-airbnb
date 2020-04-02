@@ -17,7 +17,7 @@ class BookingTest {
 
   @BeforeEach
   public void setUpBooking() {
-    numberOfNights = 1;
+    numberOfNights = 3;
     arrivalDate = createArrivalDate();
     otherArrivalDate = arrivalDate.plusDays(numberOfNights);
 
@@ -42,11 +42,38 @@ class BookingTest {
 
   @Test
   public void getPeriod_shouldReturnPeriodWithArrivalAsStart() {
-    BookingPeriod expectedPeriod = arrivalDate.periodToDays(numberOfNights);
+    BookingPeriod period = booking.getPeriod();
+
+    assertEquals(arrivalDate, period.getStart());
+  }
+
+  @Test
+  public void getPeriod_shouldReturnPeriodWithDepartureAsEnd() {
+    BookingDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
 
     BookingPeriod period = booking.getPeriod();
 
-    assertEquals(expectedPeriod, period);
+    assertEquals(departureDate, period.getEnd());
+  }
+
+  @Test
+  public void getPeriod_withOneNight_shouldReturnPeriodWithArrivalAsStart() {
+    numberOfNights = 1;
+    booking = buildBooking();
+
+    BookingPeriod period = booking.getPeriod();
+
+    assertEquals(arrivalDate, period.getStart());
+  }
+
+  @Test
+  public void getPeriod_withOneNight_shouldReturnPeriodWithArrivalAsEnd() {
+    numberOfNights = 1;
+    booking = buildBooking();
+
+    BookingPeriod period = booking.getPeriod();
+
+    assertEquals(arrivalDate, period.getEnd());
   }
 
   @Test
