@@ -5,8 +5,9 @@
 
 This is our project for course GLO-2003 at Laval University. We are team 8.
 
-Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2003-h2020-eq08.herokuapp.com).
+Docs about what must be achieved by this app is documented in [/docs](/docs).
 
+Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2003-h2020-eq08.herokuapp.com).
 
 ## How to compile
 
@@ -38,13 +39,9 @@ Code style is verified pre-commit. To apply [Google Java Code Style](https://goo
 
 ## Requests
 
-### GET /hello
-
-Simply returns `"Hello World"`. This is used to test if the app is correctly deployed.
-
 ### POST /beds
 
-
+Example request body :
 ```{json}
 {
   "ownerPublicKey": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E"::string,
@@ -55,6 +52,7 @@ Simply returns `"Hello World"`. This is used to test if the app is correctly dep
     "O-" | "O+" | "AB-" | "AB+" | "B-" | "B+" | "A-" | "A+"
   ]::string[],
   "capacity": 234::number,
+  "lodgingMode": "private" | "cohabitation"::string,
   "packages": [
     { 
       "name": "bloodthirsty" | "allYouCanDrink" | "sweetTooth"::string,
@@ -64,42 +62,63 @@ Simply returns `"Hello World"`. This is used to test if the app is correctly dep
 }
 ```
 
-If request is valid, returns "Headers `Location: /beds/:bedNumber`"
+- `ownerPublicKey` must be a 64 characters long hexadecimal string.
+- `zipCode` must be a valid 5-digit US zip code.
+- `bloodTypes` must be a non-empty array with no duplicate blood type.
+- `capacity` must a positive integer not exceeding bed type's maximal capacity.
+- `lodgingMode` is optional. Default is `"private"`.
+- `packages` must be a non-empty array with no duplicate package names.
+- `package.pricePerNight` must be a positive number with not more than 2 decimals.
+
+Returns `Headers Location: /beds/:bedNumber`
 
 ### GET /beds/:bedNumber
 
-If bed number exists, returns formatted bed.
+Returns formatted bed.
 
 ### GET /beds
 
-Possible query parameters are : 
+Optional query parameters are : 
 
-- package
-- bedType
-- cleaningFreq
-- bloodTypes
-- minCapacity
+- `package` ("bloodthirsty" | "allYouCanDrink" | "sweetTooth")
+- `bedType` ("latex " | "memoryFoam" | "springs")
+- `cleaningFreq` ("never" | "weekly" | "monthly" | "annual")
+- `bloodTypes` ("O-" | "O+" | "A-" | "A+" | "B-" | "B+" | "AB-" | "AB+"  (array))
+- `minCapacity` (positive)
+- `arrivalDate` (YYYY-MM-DD, in future, need minCapacity, default is now))
+- `numberOfNights` (positive, need minCapacity, default is 3)
+- `origin` (valid 5-digit US zip code)
+- `maxDistance` (positive, in kilometers, need origin, default is 10)
 
 Returns filtered formatted beds.
 
 ### POST /beds/:bedNumber/bookings
 
+Example request body :
 ```{json}
 {
-  "tenantPublicKey":
-    "72001343BA93508E74E3BFFA68593C
-     2016D0434CF0AA76CB3DF64F93170D60EC"::string,
+  "tenantPublicKey": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC"::string,
   "arrivalDate": "2020-05-21"::string,
   "numberOfNights": 3::number,
-  "package": "allYouCanDrink"::string
+  "package": "allYouCanDrink"::string,
+  "colonySize": 20::number
 }
 ```
 
-If request is valid, returns "Headers `Location: /beds/:bedNumber/bookings/:bookingNumber`"
+- `tenantPublicKey` must be a 64 characters long hexadecimal string.
+- `arrivalDate` must be formatted as YYYY-MM-DD and in future.
+- `numberOfNights` must be positive.
+- `colonySize` is optional if bed has a private lodging mode.
+
+Returns `Headers Location: /beds/:bedNumber/bookings/:bookingNumber`
 
 ### GET /beds/:bedNumber/bookings/:bookingNumber
 
-If bed number exists and booking number exists for that bed, returns formatted booking.
+Returns formatted booking.
+
+### POST /beds/:bedNumber/bookings/:bookingNumber/cancel
+
+Cancels bed and adds cancelation transactions.
 
 ### GET /admin/transactions
 
