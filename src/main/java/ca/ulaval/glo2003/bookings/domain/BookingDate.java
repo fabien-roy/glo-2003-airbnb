@@ -35,7 +35,7 @@ public class BookingDate {
   }
 
   public BookingPeriod periodToDays(int days) {
-    return periodTo(plusDays(days - 1));
+    return periodTo(plusDays(days));
   }
 
   private BookingPeriod periodTo(BookingDate other) {

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.rest;
 
 import ca.ulaval.glo2003.beds.rest.serializers.PackageNameDeserializer;
-import ca.ulaval.glo2003.transactions.rest.serializers.PriceDeserializer;
+import ca.ulaval.glo2003.beds.rest.serializers.PricePerNightDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class PackageRequest {
@@ -9,7 +9,7 @@ public class PackageRequest {
   @JsonDeserialize(using = PackageNameDeserializer.class)
   private String name;
 
-  @JsonDeserialize(using = PriceDeserializer.class)
+  @JsonDeserialize(using = PricePerNightDeserializer.class)
   private double pricePerNight = 0;
 
   public PackageRequest() {

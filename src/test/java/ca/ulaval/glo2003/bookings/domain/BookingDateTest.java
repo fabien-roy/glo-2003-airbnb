@@ -114,7 +114,7 @@ class BookingDateTest {
   @ParameterizedTest
   @ValueSource(ints = {1, 3, 5})
   public void periodTo_shouldReturnPeriodWithThisInDaysAsEnd(int days) {
-    BookingDate bookingDateInDays = bookingDate.plusDays(days - 1);
+    BookingDate bookingDateInDays = bookingDate.plusDays(days);
 
     BookingPeriod period = bookingDate.periodToDays(days);
 
