@@ -35,7 +35,8 @@ public class BookingBuilder {
   private Packages DEFAULT_PACKAGE = createPackageName();
   private Packages packageName = DEFAULT_PACKAGE;
 
-  private BookingStatuses bookingStatus = BookingStatuses.BOOKED;
+  private BookingStatuses DEFAULT_BOOKING_STATUS = BookingStatuses.BOOKED;
+  private BookingStatuses bookingStatus = DEFAULT_BOOKING_STATUS;
 
   public static BookingBuilder aBooking() {
     return new BookingBuilder();

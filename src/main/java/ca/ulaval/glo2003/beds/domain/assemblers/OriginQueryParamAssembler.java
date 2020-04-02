@@ -13,7 +13,6 @@ public class OriginQueryParamAssembler implements BedQueryParamAssembler {
 
   private final LocationService locationService;
 
-  // TODO : Should query param assembler know about location service?
   @Inject
   public OriginQueryParamAssembler(LocationService locationService) {
     this.locationService = locationService;

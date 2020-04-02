@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
+import ca.ulaval.glo2003.errors.exceptions.TestingException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import java.io.IOException;
@@ -24,7 +24,7 @@ class PriceDeserializerTest {
 
   @BeforeAll
   public static void setUpDeserializer() {
-    priceDeserializer = new PriceDeserializer();
+    priceDeserializer = new FakePriceDeserializer();
   }
 
   @BeforeEach
@@ -52,22 +52,21 @@ class PriceDeserializerTest {
   }
 
   @Test
-  public void deserialize_withPriceWithMoreThanTwoDecimals_shouldThrowInvalidPackagesException()
+  public void deserialize_withPriceWithMoreThanTwoDecimals_shouldThrowException()
       throws IOException {
     when(jsonParser.getText()).thenReturn("100.000");
 
     assertThrows(
-        InvalidPackagesException.class,
+        TestingException.class,
         () -> priceDeserializer.deserialize(jsonParser, deserializationContext));
   }
 
   @Test
-  public void deserialize_withInvalidPrice_shouldThrowInvalidPackagesException()
-      throws IOException {
+  public void deserialize_withInvalidPrice_shouldThrowException() throws IOException {
     when(jsonParser.isNaN()).thenReturn(true);
 
     assertThrows(
-        InvalidPackagesException.class,
+        TestingException.class,
         () -> priceDeserializer.deserialize(jsonParser, deserializationContext));
   }
 }
