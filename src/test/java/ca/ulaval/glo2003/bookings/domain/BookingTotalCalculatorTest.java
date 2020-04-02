@@ -88,24 +88,24 @@ class BookingTotalCalculatorTest {
             1,
             10,
             20,
-            new Price(BigDecimal.valueOf(50))), // 100 * 1
+            new Price(BigDecimal.valueOf(50))), // (10/20)*100 * 1
         Arguments.of(
             new Price(BigDecimal.valueOf(100)),
             3,
             10,
             20,
-            new Price(BigDecimal.valueOf(142.5))), // 100 * 3 * 0.95
+            new Price(BigDecimal.valueOf(142.5))), // (10/20)*100 * 3 * 0.95
         Arguments.of(
             new Price(BigDecimal.valueOf(100)),
             10,
             10,
             20,
-            new Price(BigDecimal.valueOf(450))), // 100 * 10 * 0.9
+            new Price(BigDecimal.valueOf(450))), // (10/20)*100 * 10 * 0.9
         Arguments.of(
             new Price(BigDecimal.valueOf(100)),
             30,
             10,
             20,
-            new Price(BigDecimal.valueOf(1125)))); // 100 * 30 * 0.75
+            new Price(BigDecimal.valueOf(1125)))); // (10/20)*100 * 30 * 0.75
   }
 }
