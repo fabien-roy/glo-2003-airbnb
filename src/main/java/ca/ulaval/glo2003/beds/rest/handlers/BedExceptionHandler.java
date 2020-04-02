@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.rest.handlers;
+package ca.ulaval.glo2003.beds.rest.handlers;
 
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;

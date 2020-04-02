@@ -11,6 +11,8 @@ import java.util.List;
 
 public class BedRequestObjectMother {
 
+  private static int minMaximalCapacity = 400;
+
   private BedRequestObjectMother() {}
 
   public static String createOwnerPublicKey() {
@@ -34,7 +36,7 @@ public class BedRequestObjectMother {
   }
 
   public static int createCapacity() {
-    return Faker.instance().number().numberBetween(1, 1000);
+    return Faker.instance().number().numberBetween(1, minMaximalCapacity);
   }
 
   public static List<PackageRequest> createPackages() {

@@ -3,7 +3,7 @@
   <ID>JAVA</ID>
   <OriginalElement>ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler</OriginalElement>
   <nodes>
-    <node x="1355.9963885429638" y="677.0">ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler</node>
+    <node x="1355.9963885429638" y="677.0">ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler</node>
     <node x="663.9963885429638" y="677.0">ca.ulaval.glo2003.errors.rest.handlers.DefaultExceptionHandler</node>
     <node x="242.0" y="399.0">ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory</node>
     <node x="1670.9963885429638" y="677.0">ca.ulaval.glo2003.locations.rest.handlers.LocationExceptionHandler</node>
@@ -27,7 +27,7 @@
       <point x="349.598876979185" y="79.0" />
       <point x="24.666666666666742" y="14.5" />
     </edge>
-    <edge source="ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler" target="ca.ulaval.glo2003.errors.rest.handlers.AbstractExceptionHandler">
+    <edge source="ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler" target="ca.ulaval.glo2003.errors.rest.handlers.AbstractExceptionHandler">
       <point x="-36.875" y="-26.5" />
       <point x="1466.6213885429638" y="657.0" />
       <point x="1408.9113769791848" y="657.0" />
@@ -203,7 +203,7 @@
       <point x="275.598876979185" y="49.0" />
       <point x="-49.33333333333326" y="14.5" />
     </edge>
-    <edge source="ca.ulaval.glo2003.bookings.rest.handlers.BedExceptionHandler" target="ca.ulaval.glo2003.errors.rest.factories.ErrorFactory">
+    <edge source="ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler" target="ca.ulaval.glo2003.errors.rest.factories.ErrorFactory">
       <point x="110.625" y="-26.5" />
       <point x="1614.1213885429638" y="657.0" />
       <point x="1677.0246212121212" y="657.0" />
