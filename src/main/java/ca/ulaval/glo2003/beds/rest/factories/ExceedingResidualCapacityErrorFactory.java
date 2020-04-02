@@ -1,13 +1,13 @@
-package ca.ulaval.glo2003.bookings.rest.factories;
+package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.bookings.exceptions.BookingException;
-import ca.ulaval.glo2003.bookings.exceptions.ExceedingResidualCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.BedException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class ExceedingResidualCapacityErrorFactory extends BookingErrorFactory {
+public class ExceedingResidualCapacityErrorFactory extends BedErrorFactory {
 
   @Override
-  public boolean canHandle(BookingException exception) {
+  public boolean canHandle(BedException exception) {
     return exception instanceof ExceedingResidualCapacityException;
   }
 

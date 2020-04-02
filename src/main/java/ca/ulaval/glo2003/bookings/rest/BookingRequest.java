@@ -20,7 +20,7 @@ public class BookingRequest {
   private int numberOfNights = 0;
 
   @JsonDeserialize(using = ColonySizeDeserializer.class)
-  private int colonySize = 0;
+  private Integer colonySize;
 
   @JsonProperty("package")
   @JsonDeserialize(using = PackageNameDeserializer.class)
@@ -41,7 +41,7 @@ public class BookingRequest {
 
     if (numberOfNights != null) this.numberOfNights = numberOfNights;
 
-    if (colonySize != null) this.colonySize = colonySize;
+    this.colonySize = colonySize;
 
     this.bookingPackage = bookingPackage;
   }
@@ -58,7 +58,7 @@ public class BookingRequest {
     return numberOfNights;
   }
 
-  public int getColonySize() {
+  public Integer getColonySize() {
     return colonySize;
   }
 

@@ -26,8 +26,8 @@ public class BookingBuilder {
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
 
-  private int DEFAULT_COLONY_SIZE = createColonySize();
-  private int colonySize = DEFAULT_COLONY_SIZE;
+  private Integer DEFAULT_COLONY_SIZE = createColonySize();
+  private Integer colonySize = DEFAULT_COLONY_SIZE;
 
   private Price DEFAULT_TOTAL = createTotal();
   private Price total = DEFAULT_TOTAL;
@@ -56,7 +56,7 @@ public class BookingBuilder {
     return this;
   }
 
-  public BookingBuilder withColonySize(int colonySize) {
+  public BookingBuilder withColonySize(Integer colonySize) {
     this.colonySize = colonySize;
     return this;
   }
