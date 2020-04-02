@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -21,6 +22,7 @@ class PackageConverterTest {
 
   private static PackageConverter packageConverter;
   private static PriceConverter priceConverter = mock(PriceConverter.class);
+  private static PackageValidator validator = mock(PackageValidator.class);
 
   private static Map<Packages, Price> pricesPerNight;
   private static Packages packageName;
@@ -37,7 +39,8 @@ class PackageConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    packageConverter = new PackageConverter(priceConverter);
+    Set<PackageValidator> validators = Collections.singleton(validator);
+    packageConverter = new PackageConverter(priceConverter, validators);
   }
 
   @BeforeEach
@@ -122,12 +125,12 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withoutRequest_shouldThrowInvalidPackageException() {
+  public void fromRequests_withoutRequest_shouldThrowInvalidPackagesException() {
     requests = Collections.emptyList();
   }
 
   @Test
-  public void fromRequests_withInvalidPricePerNight_throwInvalidPackageException() {
+  public void fromRequests_withInvalidPricePerNight_throwInvalidPackagesException() {
     priceValue = -1;
     requests = buildPackageRequests();
 
@@ -135,7 +138,7 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withInvalidPackageName_shouldThrowInvalidPackageException() {
+  public void fromRequests_withInvalidPackageName_shouldThrowInvalidPackagesException() {
     packageNameValue = "invalidPackageName";
     requests = buildPackageRequests();
 
@@ -158,7 +161,7 @@ class PackageConverterTest {
   }
 
   @Test
-  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackage() {
+  public void fromRequests_withSamePackageTwice_shouldThrowInvalidPackagesException() {
     otherPackageNameValue = packageNameValue;
     requests = buildPackageRequests();
 
