@@ -1,12 +1,11 @@
 package ca.ulaval.glo2003.transactions.rest.serializers;
 
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.interfaces.domain.serializers.AbstractDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 
-// TODO : Should PriceDeserializer throw InvalidPackagesException? (it's the only usage)
-public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPackagesException> {
+public abstract class PriceDeserializer<E extends RuntimeException>
+    extends AbstractDeserializer<Double, E> {
 
   private static final int MAX_DECIMALS = 2;
 
@@ -20,13 +19,8 @@ public class PriceDeserializer extends AbstractDeserializer<Double, InvalidPacka
   }
 
   @Override
-  public void throwException() throws InvalidPackagesException {
-    throw new InvalidPackagesException();
-  }
-
-  @Override
   public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws InvalidPackagesException {
+      throws E {
     double price = 0d;
 
     try {

@@ -10,8 +10,6 @@ import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,6 @@ class CohabitationLodgingModeTest {
   private static Integer minCapacity;
   private static BookingDate arrivalDate;
   private static int numberOfNights;
-  private static List<Booking> bookings;
 
   @BeforeAll
   public static void setUpLodgingMode() {
@@ -36,7 +33,6 @@ class CohabitationLodgingModeTest {
     minCapacity = createCapacity();
     arrivalDate = createArrivalDate();
     numberOfNights = createNumberOfNights();
-    bookings = Collections.emptyList();
 
     resetMocks();
   }
@@ -76,8 +72,7 @@ class CohabitationLodgingModeTest {
 
   @Test
   public void isAvailable_withoutRemainingCapacity_shouldReturnFalse() {
-    resetBed();
-    when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity - 1);
+    when(bed.getRemainingCapacityOnDate(arrivalDate)).thenReturn(minCapacity - 1);
 
     boolean result =
         cohabitationLodgingMode.isAvailable(bed, minCapacity, arrivalDate, numberOfNights);
@@ -88,8 +83,7 @@ class CohabitationLodgingModeTest {
   @Test
   public void
       validateAvailable_withoutUnavailableBed_shouldThrowExceedingAccommodationCapacityException() {
-    resetBed();
-    when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity - 1);
+    when(bed.getRemainingCapacityOnDate(arrivalDate)).thenReturn(minCapacity - 1);
 
     assertThrows(
         ExceedingAccommodationCapacityException.class,

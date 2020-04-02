@@ -72,7 +72,7 @@ class BookingConverterTest {
     packageName = createPackageName();
     packageNameValue = packageName.toString();
     total = createTotal();
-    status = BookingStatuses.BOOKED; // TODO : Use withStatus() when it will be set in constructor
+    status = BookingStatuses.BOOKED;
 
     booking = buildBooking();
     bookingRequest = buildBookingRequest();
@@ -86,6 +86,7 @@ class BookingConverterTest {
         .withColonySize(colonySize)
         .withPackage(packageName)
         .withTotal(total)
+        .withStatus(status)
         .build();
   }
 

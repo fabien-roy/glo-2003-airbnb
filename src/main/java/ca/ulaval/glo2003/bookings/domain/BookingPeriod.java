@@ -28,9 +28,11 @@ public class BookingPeriod {
   public List<BookingDate> getDates() {
     List<BookingDate> dates = new ArrayList<>();
 
-    for (BookingDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+    BookingDate date = start;
+    do {
       dates.add(date);
-    }
+      date = date.plusDays(1);
+    } while (date.isBefore(end));
 
     return dates;
   }

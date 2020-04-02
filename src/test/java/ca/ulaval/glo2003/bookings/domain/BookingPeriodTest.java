@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.bookings.domain;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +19,8 @@ class BookingPeriodTest {
   private static BookingPeriod beforeOverlappingPeriod;
   private static BookingPeriod afterOverlappingPeriod;
 
-  @BeforeAll
-  public static void setUpPeriod() {
+  @BeforeEach
+  public void setUpPeriod() {
     period = new BookingPeriod(start, end);
   }
 
@@ -91,6 +90,15 @@ class BookingPeriodTest {
     boolean result = period.isOverlapping(afterPeriod);
 
     assertFalse(result);
+  }
+
+  @Test
+  public void getDates_withASingleDate_shouldGetDate() {
+    period = new BookingPeriod(start, start);
+
+    List<BookingDate> dates = period.getDates();
+
+    assertEquals(start, dates.get(0));
   }
 
   @Test
