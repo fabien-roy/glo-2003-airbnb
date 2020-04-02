@@ -4,7 +4,6 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -83,16 +82,19 @@ public class Booking {
   }
 
   public boolean isCanceled() {
-    return status == BookingStatuses.CANCELED;
+    return status.equals(BookingStatuses.CANCELED);
   }
 
   public boolean isOverlapping(Booking otherBooking) {
-    return !(arrivalDate.getValue().isAfter(otherBooking.getDepartureDate())
-        || getDepartureDate().isBefore(otherBooking.getArrivalDate().getValue()));
+    return getPeriod().isOverlapping(otherBooking.getPeriod());
   }
 
-  public LocalDate getDepartureDate() {
-    return arrivalDate.getValue().plusDays(numberOfNights - 1);
+  public boolean isOverlapping(BookingDate otherDate, int numberOfNights) {
+    return getPeriod().isOverlapping(otherDate.periodToDays(numberOfNights));
+  }
+
+  public BookingPeriod getPeriod() {
+    return arrivalDate.periodToDays(numberOfNights);
   }
 
   public void setStatus(BookingStatuses bookingStatus) {

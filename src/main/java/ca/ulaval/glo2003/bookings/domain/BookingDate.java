@@ -18,12 +18,28 @@ public class BookingDate {
     return value;
   }
 
+  public BookingDate minusDays(int days) {
+    return new BookingDate(value.minusDays(days));
+  }
+
   public BookingDate plusDays(int days) {
     return new BookingDate(value.plusDays(days));
   }
 
+  public boolean isBefore(BookingDate other) {
+    return value.isBefore(other.getValue());
+  }
+
   public boolean isAfter(BookingDate other) {
     return value.isAfter(other.getValue());
+  }
+
+  public BookingPeriod periodToDays(int days) {
+    return periodTo(plusDays(days - 1));
+  }
+
+  private BookingPeriod periodTo(BookingDate other) {
+    return new BookingPeriod(this, other);
   }
 
   @Override

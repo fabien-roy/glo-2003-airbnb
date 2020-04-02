@@ -1,14 +1,33 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
 
 public class CohabitationLodgingMode implements LodgingMode {
 
-  public void validateLodging(Bed bed, Booking booking) {
+  @Override
+  public void validateAvailable(Bed bed, Booking booking) {
     if (booking.getColonySize() == null) throw new MissingColonySizeException();
 
-    // TODO : Validate lodging using total colony size per day (#164)
+    if (!isAvailable(
+        bed, booking.getColonySize(), booking.getArrivalDate(), booking.getNumberOfNights()))
+      throw new ExceedingAccommodationCapacityException();
+  }
+
+  @Override
+  public boolean isAvailable(
+      Bed bed, Integer minCapacity, BookingDate arrivalDate, int numberOfNights) {
+    BookingPeriod period = arrivalDate.periodToDays(numberOfNights);
+
+    for (BookingDate date : period.getDates()) {
+      int remainingCapacity = bed.getRemainingCapacityOnDate(date);
+      if (remainingCapacity < minCapacity) return false;
+    }
+
+    return true;
   }
 
   @Override
