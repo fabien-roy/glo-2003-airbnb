@@ -83,7 +83,7 @@ class CohabitationLodgingModeTest {
   @Test
   public void
       validateAvailable_withoutUnavailableBed_shouldThrowExceedingAccommodationCapacityException() {
-    when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity - 1);
+    when(bed.getRemainingCapacityOnDate(arrivalDate)).thenReturn(minCapacity - 1);
 
     assertThrows(
         ExceedingAccommodationCapacityException.class,

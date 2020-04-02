@@ -2,60 +2,55 @@ package ca.ulaval.glo2003.transactions.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 
 class TransactionResourceTest {
 
-  // TODO : Refactor this test class
-
   private static TransactionResource transactionResource;
   private static TransactionService transactionService = mock(TransactionService.class);
   private static TransactionMapper transactionParser = mock(TransactionMapper.class);
+
+  private static Request request = mock(Request.class);
+  private static Response response = mock(Response.class);
+  private static TransactionResponse transactionResponse = mock(TransactionResponse.class);
+  private static TransactionResponse otherTransactionResponse = mock(TransactionResponse.class);
 
   @BeforeAll
   public static void setUpResource() {
     transactionResource = new TransactionResource(transactionService, transactionParser);
   }
 
-  @Test
-  public void getAll_withOneTransaction_shouldReturnOnlyOneTransaction() {
-    Request request = mock(Request.class);
-    Response response = mock(Response.class);
-    TransactionResponse expectedTransactionResponse = mock(TransactionResponse.class);
+  @BeforeEach
+  public void setUpMocks() {
+    reset(response);
     when(transactionService.getAll())
-        .thenReturn(Collections.singletonList(expectedTransactionResponse));
-
-    List<TransactionResponse> transactionResponses =
-        (List<TransactionResponse>) transactionResource.getAll(request, response);
-
-    assertEquals(1, transactionResponses.size());
-    assertTrue(transactionResponses.contains(expectedTransactionResponse));
+        .thenReturn(Arrays.asList(transactionResponse, otherTransactionResponse));
   }
 
   @Test
-  public void getAll_withMultipleTransactions_shouldReturnAllTransactions() {
-    Request request = mock(Request.class);
-    Response response = mock(Response.class);
-    TransactionResponse expectedTransactionResponse = mock(TransactionResponse.class);
-    TransactionResponse otherExpectedTransactionResponse = mock(TransactionResponse.class);
-    when(transactionService.getAll())
-        .thenReturn(Arrays.asList(expectedTransactionResponse, otherExpectedTransactionResponse));
-
+  public void getAll_shouldReturnTransactions() {
     List<TransactionResponse> transactionResponses =
         (List<TransactionResponse>) transactionResource.getAll(request, response);
 
     assertEquals(2, transactionResponses.size());
-    assertTrue(transactionResponses.contains(expectedTransactionResponse));
-    assertTrue(transactionResponses.contains(otherExpectedTransactionResponse));
+    assertTrue(transactionResponses.contains(transactionResponse));
+    assertTrue(transactionResponses.contains(otherTransactionResponse));
+  }
+
+  @Test
+  public void getAll_shouldSetOKAsHttpStatus() {
+    transactionResource.getAll(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
   }
 }

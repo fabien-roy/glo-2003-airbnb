@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.beds.rest.serializers;
 
 import ca.ulaval.glo2003.interfaces.domain.serializers.DeserializingModule;
 import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
-import ca.ulaval.glo2003.transactions.rest.serializers.PriceDeserializer;
 import com.google.inject.Inject;
 import java.util.Arrays;
 
@@ -18,7 +17,7 @@ public class BedDeserializingModule extends DeserializingModule {
       BloodTypesDeserializer bloodTypesDeserializer,
       PackagesDeserializer packagesDeserializer,
       PackageNameDeserializer packageNameDeserializer,
-      PriceDeserializer priceDeserializer) {
+      PricePerNightDeserializer pricePerNightDeserializer) {
     super(
         Arrays.asList(
             publicKeyDeserializer,
@@ -29,6 +28,6 @@ public class BedDeserializingModule extends DeserializingModule {
             bloodTypesDeserializer,
             packageNameDeserializer,
             packagesDeserializer,
-            priceDeserializer));
+            pricePerNightDeserializer));
   }
 }
