@@ -1,0 +1,149 @@
+{
+	"id": "2758147d-4a10-471c-904f-96fc36f1accd",
+	"name": "PROC - Airbnb",
+	"values": [
+		{
+			"key": "queryParam.bedType",
+			"value": "latex",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.package",
+			"value": "bloodthirsty",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.cleaningFreq",
+			"value": "never",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.bloodTypes",
+			"value": "O-,O+",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.minCapacity",
+			"value": "100",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.arrivalDate",
+			"value": "2020-10-10",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.numberOfNights",
+			"value": "2",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.origin",
+			"value": "17855",
+			"enabled": true
+		},
+		{
+			"key": "queryParam.maxDistance",
+			"value": "20",
+			"enabled": true
+		},
+		{
+			"key": "param.bedNumber",
+			"value": "9c870016-d863-43ff-b46c-1fca8a2d997a",
+			"enabled": true
+		},
+		{
+			"key": "param.bookingNumber",
+			"value": "ee64116c-1c8d-46a5-ab4c-064b51e7f0b5",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.ownerPublicKey",
+			"value": "\"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\"",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.zipCode",
+			"value": "\"90210\"",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.bedType",
+			"value": "\"latex\"",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.cleaningFrequency",
+			"value": "\"never\"",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.bloodTypes",
+			"value": "[\"O-\", \"AB+\"]",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.capacity",
+			"value": "400",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.package1.name",
+			"value": "\"bloodthirsty\"",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.package1.pricePerNight",
+			"value": "100.00",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.package2.name",
+			"value": "\"allYouCanDrink\"",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.package2.pricePerNight",
+			"value": "200.00",
+			"enabled": true
+		},
+		{
+			"key": "request.bed.lodgingMode",
+			"value": "\"cohabitation\"",
+			"enabled": true
+		},
+		{
+			"key": "host",
+			"value": "http://localhost:4567",
+			"enabled": true
+		},
+		{
+			"key": "request.booking.tenantPublicKey",
+			"value": "\"72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC\"",
+			"enabled": true
+		},
+		{
+			"key": "request.booking.arrivalDate",
+			"value": "\"2020-10-10\"",
+			"enabled": true
+		},
+		{
+			"key": "request.booking.numberOfNights",
+			"value": "2",
+			"enabled": true
+		},
+		{
+			"key": "request.booking.package",
+			"value": "\"allYouCanDrink\"",
+			"enabled": true
+		},
+		{
+			"key": "request.booking.colonySize",
+			"value": "20",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-04-02T21:03:06.263Z",
+	"_postman_exported_using": "Postman/7.21.1"
+}
