@@ -13,13 +13,12 @@ public class Timestamp {
     return new Timestamp(LocalDateTime.now().toInstant(ZONE_OFFSET));
   }
 
-  public static Timestamp inDays(int days) {
-    Instant value = LocalDate.now().plusDays(days).atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
-    return new Timestamp(value);
-  }
-
   public Timestamp(Instant value) {
     this.value = value;
+  }
+
+  public Timestamp(LocalDate localDate) {
+    value = localDate.atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
   }
 
   public Instant getValue() {

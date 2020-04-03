@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.bookings.domain;
 
+import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import java.time.LocalDate;
 
 public class BookingDate {
@@ -40,6 +41,10 @@ public class BookingDate {
 
   private BookingPeriod periodTo(BookingDate other) {
     return new BookingPeriod(this, other);
+  }
+
+  public Timestamp toTimestamp() {
+    return new Timestamp(value);
   }
 
   @Override

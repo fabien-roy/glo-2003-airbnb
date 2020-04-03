@@ -15,6 +15,7 @@ import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.converters.BookingConverter;
 import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
@@ -43,6 +44,7 @@ public class BookingServiceTest {
   private static UUID bookingNumber = createBookingNumber();
   private static Booking booking = buildBooking();
   private static PublicKey tenantPublicKey = createTenantPublicKey();
+  private static BookingDate departureDate = createArrivalDate();
   private static BookingRequest bookingRequest = aBookingRequest().build();
   private static BookingResponse bookingResponse = aBookingResponse().build();
   private static CancelationResponse cancelationResponse = aCancelationResponse().build();
@@ -104,6 +106,7 @@ public class BookingServiceTest {
     Booking booking = mock(Booking.class);
     when(booking.getNumber()).thenReturn(bookingNumber);
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
+    when(booking.getDepartureDate()).thenReturn(departureDate);
     return booking;
   }
 
@@ -150,7 +153,8 @@ public class BookingServiceTest {
     bookingService.add(bedNumber.toString(), bookingRequest);
 
     verify(transactionService)
-        .addStayCompleted(bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
+        .addStayCompleted(
+            bed.getOwnerPublicKey().getValue(), total, booking.getDepartureDate().toTimestamp());
   }
 
   @Test

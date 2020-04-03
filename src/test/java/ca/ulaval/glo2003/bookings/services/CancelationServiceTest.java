@@ -108,7 +108,7 @@ class CancelationServiceTest {
             eq(tenantRefund),
             eq(ownerRefund),
             eq(total),
-            eq(booking.getNumberOfNights()));
+            eq(booking.getDepartureDate().toTimestamp()));
   }
 
   @Test
@@ -122,7 +122,7 @@ class CancelationServiceTest {
             eq(booking.getTenantPublicKey().getValue()),
             eq(bedOwner),
             eq(total),
-            eq(booking.getNumberOfNights()));
+            eq(booking.getDepartureDate().toTimestamp()));
   }
 
   @Test
@@ -130,6 +130,7 @@ class CancelationServiceTest {
     booking = mock(Booking.class);
     when(booking.getTenantPublicKey()).thenReturn(createTenantPublicKey());
     when(booking.getArrivalDate()).thenReturn(arrivalDate);
+    when(booking.getDepartureDate()).thenReturn(arrivalDate);
     when(booking.getTotal()).thenReturn(total);
 
     cancelationService.cancel(booking, bedOwner);
