@@ -38,6 +38,13 @@ class QueryParamMapConverterTest {
   }
 
   @Test
+  public void fromString_withoutQueryParam_shouldConvertEmptyMap() {
+    queryParamMap = queryParamMapConverter.fromString(null);
+
+    assertEquals(0, queryParamMap.size());
+  }
+
+  @Test
   public void fromString_withMultipleParams_shouldConvertQueryParams() {
     queryParamMap = queryParamMapConverter.fromString(multipleQueryParams);
 

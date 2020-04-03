@@ -14,8 +14,9 @@ public class QueryParamMapConverter {
   public Map<String, List<String>> fromString(String queryString) {
     Map<String, List<String>> map = new HashMap<>();
 
-    parseQueryParams(queryString)
-        .forEach(param -> map.put(parseQueryParamKey(param), parseQueryParamValues(param)));
+    if (queryString != null)
+      parseQueryParams(queryString)
+          .forEach(param -> map.put(parseQueryParamKey(param), parseQueryParamValues(param)));
 
     return map;
   }
