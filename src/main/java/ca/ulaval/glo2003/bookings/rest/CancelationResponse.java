@@ -6,14 +6,15 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class CancelationResponse {
 
-    @JsonProperty("refund_amount")
-    @JsonSerialize(using = PriceSerializer.class)
-    private double refundAmount;
+  @JsonProperty("refund_amount")
+  @JsonSerialize(using = PriceSerializer.class)
+  private double refundAmount;
 
-    public CancelationResponse(double refundAmount){
-        this.refundAmount = refundAmount;
-    }
+  public CancelationResponse(double refundAmount) {
+    this.refundAmount = refundAmount;
+  }
 
-    public double getRefundAmount(){return refundAmount;}
-
+  public double getRefundAmount() {
+    return refundAmount;
+  }
 }

@@ -9,16 +9,14 @@ public class CancelationConverter {
 
   private final PriceConverter priceConverter;
 
-
   @Inject
-  public CancelationConverter( PriceConverter priceConverter){
+  public CancelationConverter(PriceConverter priceConverter) {
     this.priceConverter = priceConverter;
   }
 
   public CancelationResponse toResponse(Price refund) {
     Double total = priceConverter.toDouble(refund);
 
-    return new CancelationResponse(
-            total);
+    return new CancelationResponse(total);
   }
 }

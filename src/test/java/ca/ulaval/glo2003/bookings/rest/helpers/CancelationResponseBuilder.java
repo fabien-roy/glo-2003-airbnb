@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.bookings.rest.helpers;
 
-import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
-
 import static ca.ulaval.glo2003.transactions.rest.helpers.TransactionResponseObjectMother.createTotal;
+
+import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 
 public class CancelationResponseBuilder {
 
