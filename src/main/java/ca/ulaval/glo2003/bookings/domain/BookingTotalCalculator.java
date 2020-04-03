@@ -10,38 +10,6 @@ public class BookingTotalCalculator {
     Price pricePerNight = bed.getPricePerNight(booking.getPackage());
     Price total = pricePerNight.multiply(BigDecimal.valueOf(booking.getNumberOfNights()));
 
-    Integer colonySize = booking.getColonySize();
-    if (colonySize != null)
-      return applyDiscountWithColonySize(
-          total, booking.getNumberOfNights(), colonySize, bed.getCapacity());
-    else return applyDiscount(total, booking.getNumberOfNights());
-  }
-
-  private Price applyDiscount(Price total, int numberOfNights) {
-    if (numberOfNights < 3) return total;
-    else if (numberOfNights < 10) return total.multiply(BigDecimal.valueOf(0.95));
-    else if (numberOfNights < 30) return total.multiply(BigDecimal.valueOf(0.9));
-    return total.multiply(BigDecimal.valueOf(0.75));
-  }
-
-  private Price applyDiscountWithColonySize(
-      Price total, int numberOfNights, Integer colonySize, int bedCapacity) {
-
-    if (numberOfNights < 3)
-      return total.multiply(BigDecimal.valueOf(colonySize).divide(BigDecimal.valueOf(bedCapacity)));
-    else if (numberOfNights < 10)
-      return total.multiply(
-          BigDecimal.valueOf(0.95)
-              .multiply(BigDecimal.valueOf(colonySize))
-              .divide(BigDecimal.valueOf(bedCapacity)));
-    else if (numberOfNights < 30)
-      return total.multiply(
-          BigDecimal.valueOf(0.9)
-              .multiply(BigDecimal.valueOf(colonySize))
-              .divide(BigDecimal.valueOf(bedCapacity)));
-
-    return total
-        .multiply(BigDecimal.valueOf(0.75))
-        .multiply(BigDecimal.valueOf(colonySize).divide(BigDecimal.valueOf(bedCapacity)));
+    return bed.getLodgingMode().applyDiscount(total, booking, bed);
   }
 }
