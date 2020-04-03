@@ -1,17 +1,27 @@
 {
 	"info": {
 		"_postman_id": "d2cbdba1-c27f-42c0-8e00-24f2213330b5",
-		"name": "PROC",
+		"name": "PROC - Airbnb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "GET /hello",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "Add bed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e311bb77-0baf-4872-a8ad-7a593e87e16d",
+						"exec": [
+							"var bedNumber = responseBody.split('/')[2]",
+							"postman.setEnvironmentVariable(\"param.bedNumber\", bedNumber)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -22,7 +32,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"ownerPublicKey\": {{request.bed.ownerPublicKey}},\r\n  \"zipCode\": {{request.bed.zipCode}},\r\n  \"bedType\": {{request.bed.bedType}},\r\n  \"cleaningFrequency\": {{request.bed.cleaningFrequency}},\r\n  \"bloodTypes\": {{request.bed.bloodTypes}},\r\n  \"capacity\": {{request.bed.capacity}},\r\n  \"lodgingMode\": {{request.bed.lodgingMode}},\r\n  \"packages\": [\r\n    { \r\n      \"name\": {{request.bed.package1.name}},\r\n      \"pricePerNight\": {{request.bed.package1.pricePerNight}}\r\n    },\r\n    { \r\n      \"name\": {{request.bed.package2.name}},\r\n      \"pricePerNight\": {{request.bed.package2.pricePerNight}}\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -30,21 +40,31 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/hello",
-					"protocol": "http",
+					"raw": "{{host}}/beds",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
-						"hello"
+						"beds"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET /beds",
+			"name": "Get all beds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5742ab2c-4df6-42ec-b651-04f8df2f267f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -68,35 +88,73 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/beds?bedType=latex&package=bloodthristy&cleaningFreq=annual&bloodTypes=O-,O+&minCapacity=20",
-					"protocol": "http",
+					"raw": "{{host}}/beds",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
 						"beds"
 					],
 					"query": [
 						{
 							"key": "bedType",
-							"value": "latex"
+							"value": "{{queryParam.bedType}}",
+							"description": "\"latex \" | \"memoryFoam\" | \"springs\"",
+							"disabled": true
 						},
 						{
 							"key": "package",
-							"value": "bloodthristy"
+							"value": "{{queryParam.package}}",
+							"description": "\"bloodthirsty\" | \"allYouCanDrink\" | \"sweetTooth\"",
+							"disabled": true
 						},
 						{
 							"key": "cleaningFreq",
-							"value": "annual"
+							"value": "{{queryParam.cleaningFreq}}",
+							"description": "\"never\" | \"weekly\" | \"monthly\" | \"annual\"",
+							"disabled": true
 						},
 						{
 							"key": "bloodTypes",
-							"value": "O-,O+"
+							"value": "{{queryParam.bloodTypes}}",
+							"description": "\"O-\" | \"O+\" | \"A-\" | \"A+\" | \"B-\" | \"B+\" | \"AB-\" | \"AB+\"  (array)",
+							"disabled": true
 						},
 						{
 							"key": "minCapacity",
-							"value": "20"
+							"value": "{{queryParam.minCapacity}}",
+							"description": "> 0",
+							"disabled": true
+						},
+						{
+							"key": "arrivalDate",
+							"value": "{{queryParam.arrivalDate}}",
+							"description": "YYYY-MM-DD (in future, need minCapacity, default=now)",
+							"disabled": true
+						},
+						{
+							"key": "numberOfNights",
+							"value": "{{queryParam.numberOfNights}}",
+							"description": "> 0 (need minCapacity, default=3)",
+							"disabled": true
+						},
+						{
+							"key": "origin",
+							"value": "{{queryParam.origin}}",
+							"description": "Valid 5-digit US zip code",
+							"disabled": true
+						},
+						{
+							"key": "maxDistance",
+							"value": "{{queryParam.maxDistance}}",
+							"description": "> 0 (need origin, default=10)",
+							"disabled": true
+						},
+						{
+							"key": "lodgingMode",
+							"value": "{{queryParam.lodgingMode}}",
+							"description": "\"private\" | \"cohabitation\"",
+							"disabled": true
 						}
 					]
 				}
@@ -104,7 +162,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /beds/:number",
+			"name": "Get bed",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -128,57 +186,33 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/beds/1",
-					"protocol": "http",
+					"raw": "{{host}}/beds/{{param.bedNumber}}",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
 						"beds",
-						"1"
+						"{{param.bedNumber}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "POST /beds",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+			"name": "Add booking to bed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c122828f-fe14-4707-8308-51eb9ad436e5",
+						"exec": [
+							"var bookingNumber = responseBody.split('/')[4]",
+							"postman.setEnvironmentVariable(\"param.bookingNumber\", bookingNumber)"
+						],
+						"type": "text/javascript"
 					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12445\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4567/beds",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4567",
-					"path": [
-						"beds"
-					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST /beds/:number/bookings",
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -191,7 +225,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"tenantPublicKey\": \"72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC\",\r\n  \"arrivalDate\": \"2020-05-21\",\r\n  \"numberOfNights\": 3,\r\n  \"package\": \"allYouCanDrink\"\r\n}",
+					"raw": "{\r\n  \"tenantPublicKey\": {{request.booking.tenantPublicKey}},\r\n  \"arrivalDate\": {{request.booking.arrivalDate}},\r\n  \"numberOfNights\": {{request.booking.numberOfNights}},\r\n  \"package\": {{request.booking.package}},\r\n  \"colonySize\": {{request.booking.colonySize}}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -199,15 +233,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/beds/1/bookings",
-					"protocol": "http",
+					"raw": "{{host}}/beds/{{param.bedNumber}}/bookings",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
 						"beds",
-						"1",
+						"{{param.bedNumber}}",
 						"bookings"
 					]
 				}
@@ -215,7 +247,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /beds/:number/bookings/:number",
+			"name": "Get booking in bed",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -239,24 +271,59 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/beds/1/bookings/1",
-					"protocol": "http",
+					"raw": "{{host}}/beds/{{param.bedNumber}}/bookings/{{param.bookingNumber}}",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
 						"beds",
-						"1",
+						"{{param.bedNumber}}",
 						"bookings",
-						"1"
+						"{{param.bookingNumber}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET /admin/transactions",
+			"name": "Cancel booking in bed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/beds/{{param.bedNumber}}/bookings/{{param.bookingNumber}}/cancel",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"beds",
+						"{{param.bedNumber}}",
+						"bookings",
+						"{{param.bookingNumber}}",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all transactions",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -280,12 +347,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/admin/transactions",
-					"protocol": "http",
+					"raw": "{{host}}/admin/transactions",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
 						"admin",
 						"transactions"
