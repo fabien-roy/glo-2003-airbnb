@@ -95,4 +95,41 @@ class TransactionFactoryTest {
 
     assertEquals(expectedReason, transaction.getReason());
   }
+
+  @Test
+  public void createStayCanceled_shouldSetTimestamp() {
+    Transaction transaction = transactionFactory.createStayCanceled(from, to, total);
+
+    assertNotNull(transaction.getTimestamp());
+  }
+
+  @Test
+  public void createStayCanceled_shouldSetFrom() {
+    Transaction transaction = transactionFactory.createStayCanceled(from, to, total);
+
+    assertEquals(from, transaction.getFrom());
+  }
+
+  @Test
+  public void createStayCanceled_shouldSetTo() {
+    Transaction transaction = transactionFactory.createStayCanceled(from, to, total);
+
+    assertEquals(to, transaction.getTo());
+  }
+
+  @Test
+  public void createStayCanceled_shouldSetTotal() {
+    Transaction transaction = transactionFactory.createStayCanceled(from, to, total);
+
+    assertEquals(total, transaction.getTotal());
+  }
+
+  @Test
+  public void createStayCanceled_shouldSetReasonAsStayCanceled() {
+    TransactionReasons expectedReason = TransactionReasons.STAY_CANCELED;
+
+    Transaction transaction = transactionFactory.createStayCanceled(from, to, total);
+
+    assertEquals(expectedReason, transaction.getReason());
+  }
 }
