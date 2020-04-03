@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CohabitationLodgingMode implements LodgingMode {
 
@@ -34,26 +35,11 @@ public class CohabitationLodgingMode implements LodgingMode {
 
   @Override
   public Price applyDiscount(Price total, Bed bed, Booking booking) {
-    if (booking.getNumberOfNights() < 3)
-      return total.multiply(
-          BigDecimal.valueOf(booking.getColonySize())
-              .divide(BigDecimal.valueOf(bed.getCapacity())));
-    else if (booking.getNumberOfNights() < 10)
-      return total.multiply(
-          BigDecimal.valueOf(0.95)
-              .multiply(BigDecimal.valueOf(booking.getColonySize()))
-              .divide(BigDecimal.valueOf(bed.getCapacity())));
-    else if (booking.getNumberOfNights() < 30)
-      return total.multiply(
-          BigDecimal.valueOf(0.9)
-              .multiply(BigDecimal.valueOf(booking.getColonySize()))
-              .divide(BigDecimal.valueOf(bed.getCapacity())));
+    BigDecimal colonySize = BigDecimal.valueOf(booking.getColonySize());
+    BigDecimal capacity = BigDecimal.valueOf(bed.getCapacity());
+    BigDecimal factor = colonySize.divide(capacity, 4, RoundingMode.HALF_EVEN);
 
-    return total
-        .multiply(BigDecimal.valueOf(0.75))
-        .multiply(
-            BigDecimal.valueOf(booking.getColonySize())
-                .divide(BigDecimal.valueOf(bed.getCapacity())));
+    return total.multiply(factor);
   }
 
   @Override

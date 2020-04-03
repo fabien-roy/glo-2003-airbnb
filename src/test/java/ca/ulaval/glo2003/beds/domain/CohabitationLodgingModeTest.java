@@ -1,11 +1,8 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -15,8 +12,6 @@ import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +25,7 @@ class CohabitationLodgingModeTest {
   private static LodgingMode cohabitationLodgingMode;
   private static Bed bed = mock(Bed.class);
   private static Booking booking = mock(Booking.class);
+  private static Price total = new Price(BigDecimal.valueOf(100));
   private static Integer minCapacity;
   private static BookingDate arrivalDate;
   private static int numberOfNights;
@@ -116,53 +112,23 @@ class CohabitationLodgingModeTest {
   }
 
   @ParameterizedTest
-  @MethodSource("provideConditionsForApplyDiscount")
+  @MethodSource("provideConditionsToApplyDiscount")
   public void applyDiscount_shouldReturnCorrectTotal(
-      Price pricePerNight,
-      int numberOfNights,
-      Integer colonySize,
-      int bedCapacity,
-      Price expectedTotal) {
-    Packages packageName = createPackageName();
-    Map<Packages, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
-    Bed bed = aBed().withPricesPerNights(pricesPerNight).withCapacity(bedCapacity).build();
-    Booking booking =
-        aBooking()
-            .withPackage(packageName)
-            .withNumberOfNights(numberOfNights)
-            .withColonySize(colonySize)
-            .build();
+      Integer colonySize, int capacity, Price expectedTotal) {
+    when(booking.getColonySize()).thenReturn(colonySize);
+    when(bed.getCapacity()).thenReturn(capacity);
 
-    Price prix = pricePerNight.multiply(BigDecimal.valueOf(booking.getNumberOfNights()));
-    Price totalprix = cohabitationLodgingMode.applyDiscount(prix, bed, booking);
-    assertEquals(expectedTotal, totalprix);
+    Price discountedTotal = cohabitationLodgingMode.applyDiscount(total, bed, booking);
+
+    assertEquals(expectedTotal, discountedTotal);
   }
 
-  private static Stream<Arguments> provideConditionsForApplyDiscount() {
+  private static Stream<Arguments> provideConditionsToApplyDiscount() {
     return Stream.of(
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            1,
-            10,
-            20,
-            new Price(BigDecimal.valueOf(50))), // 100 * 1
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            3,
-            10,
-            20,
-            new Price(BigDecimal.valueOf(142.5))), // 100 * 3 * 0.95
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            10,
-            10,
-            20,
-            new Price(BigDecimal.valueOf(450))), // 100 * 10 * 0.9
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            30,
-            10,
-            20,
-            new Price(BigDecimal.valueOf(1125)))); // 100 * 30 * 0.75
+        Arguments.of(100, 100, new Price(BigDecimal.valueOf(100))),
+        Arguments.of(100, 1000, new Price(BigDecimal.valueOf(10))),
+        Arguments.of(1000, 100, new Price(BigDecimal.valueOf(1000))),
+        Arguments.of(525, 50, new Price(BigDecimal.valueOf(1050))),
+        Arguments.of(27, 89, new Price(BigDecimal.valueOf(30.34))));
   }
 }

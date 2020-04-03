@@ -3,23 +3,29 @@ package ca.ulaval.glo2003.transactions.domain;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PriceTest {
 
+  private static Price price;
+
+  @BeforeEach
+  public void setUpPrice() {
+    price = new Price(BigDecimal.valueOf(100));
+  }
+
   @Test
   void multiply_shouldMultiplyValue() {
-    Price price = new Price(BigDecimal.valueOf(100));
-    BigDecimal expectedMultipliedValue = BigDecimal.valueOf(500);
+    BigDecimal expectedValue = BigDecimal.valueOf(500);
 
     price = price.multiply(BigDecimal.valueOf(5));
 
-    assertEquals(expectedMultipliedValue, price.getValue());
+    assertEquals(expectedValue, price.getValue());
   }
 
   @Test
   void equals_shouldReturnFalse_whenObjectIsNotPrice() {
-    Price price = new Price(BigDecimal.ZERO);
     Object object = new Object();
 
     boolean result = price.equals(object);
@@ -29,8 +35,7 @@ class PriceTest {
 
   @Test
   void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    Price price = new Price(BigDecimal.ZERO);
-    Price otherPrice = new Price(BigDecimal.ONE);
+    Price otherPrice = new Price(BigDecimal.ZERO);
 
     boolean result = price.equals(otherPrice);
 
@@ -39,8 +44,7 @@ class PriceTest {
 
   @Test
   void equals_shouldReturnTrue_whenValuesAreEqual() {
-    Price price = new Price(BigDecimal.ZERO);
-    Price otherPrice = new Price(BigDecimal.ZERO);
+    Price otherPrice = new Price(price.getValue());
 
     boolean result = price.equals(otherPrice);
 
