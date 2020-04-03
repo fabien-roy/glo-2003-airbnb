@@ -134,7 +134,7 @@ class CohabitationLodgingModeTest {
             .build();
 
     Price prix = pricePerNight.multiply(BigDecimal.valueOf(booking.getNumberOfNights()));
-    Price totalprix = cohabitationLodgingMode.applyDiscount(prix, booking, bed);
+    Price totalprix = cohabitationLodgingMode.applyDiscount(prix, bed, booking);
     assertEquals(expectedTotal, totalprix);
   }
 

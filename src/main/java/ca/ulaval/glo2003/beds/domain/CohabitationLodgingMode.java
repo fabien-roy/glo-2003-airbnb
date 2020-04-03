@@ -33,8 +33,7 @@ public class CohabitationLodgingMode implements LodgingMode {
   }
 
   @Override
-  public Price applyDiscount(Price total, Booking booking, Bed bed) {
-
+  public Price applyDiscount(Price total, Bed bed, Booking booking) {
     if (booking.getNumberOfNights() < 3)
       return total.multiply(
           BigDecimal.valueOf(booking.getColonySize())

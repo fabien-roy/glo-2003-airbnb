@@ -10,7 +10,7 @@ public interface LodgingMode {
 
   boolean isAvailable(Bed bed, Integer minCapacity, BookingDate arrivalDate, int numberOfNights);
 
-  Price applyDiscount(Price total, Booking booking, Bed bed);
+  Price applyDiscount(Price total, Bed bed, Booking booking);
 
   LodgingModes getName();
 }

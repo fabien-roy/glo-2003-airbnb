@@ -1,59 +1,61 @@
 package ca.ulaval.glo2003.bookings.domain;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.LodgingMode;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Map;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class BookingTotalCalculatorTest {
 
-  @ParameterizedTest
-  @MethodSource("provideConditionsForCalculateTotal")
-  public void calculateTotal_shouldReturnCorrectTotal(
-      Price pricePerNight, int numberOfNights, Price expectedTotal) {
-    Packages packageName = createPackageName();
-    Integer colonySize = null;
-    Map<Packages, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
-    Bed bed = aBed().withPricesPerNights(pricesPerNight).build();
-    Booking booking =
-        aBooking()
-            .withPackage(packageName)
-            .withNumberOfNights(numberOfNights)
-            .withColonySize(colonySize)
-            .build();
-    BookingTotalCalculator bookingTotalCalculator = new BookingTotalCalculator();
+  private static BookingTotalCalculator bookingTotalCalculator;
 
-    Price total = bookingTotalCalculator.calculateTotal(bed, booking);
+  private static Price total = new Price(BigDecimal.valueOf(100));
+  private static Price pricePerNight = mock(Price.class);
+  private static Bed bed = mock(Bed.class);
+  private static Packages bedPackage = createPackageName();
+  private static LodgingMode lodgingMode = mock(LodgingMode.class);
+  private static Booking booking = mock(Booking.class);
 
-    assertEquals(expectedTotal, total);
+  @BeforeAll
+  public static void setUpCalculator() {
+    bookingTotalCalculator = new BookingTotalCalculator();
   }
 
-  private static Stream<Arguments> provideConditionsForCalculateTotal() {
+  public void resetMocks(int numberOfNights) {
+    when(booking.getPackage()).thenReturn(bedPackage);
+    when(bed.getPricePerNight(bedPackage)).thenReturn(pricePerNight);
+    when(booking.getNumberOfNights()).thenReturn(numberOfNights);
+    when(pricePerNight.multiply(BigDecimal.valueOf(numberOfNights))).thenReturn(total);
+    when(bed.getLodgingMode()).thenReturn(lodgingMode);
+    when(lodgingMode.applyDiscount(total, bed, booking)).thenReturn(total);
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideConditionsToCalculateTotal")
+  public void calculateTotal_shouldApplyCorrectDiscount(int numberOfNights, Price total) {
+    resetMocks(numberOfNights);
+
+    Price actualTotal = bookingTotalCalculator.calculateTotal(bed, booking);
+
+    assertEquals(total, actualTotal);
+  }
+
+  private static Stream<Arguments> provideConditionsToCalculateTotal() {
     return Stream.of(
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)), 1, new Price(BigDecimal.valueOf(100))), // 100 * 1
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            3,
-            new Price(BigDecimal.valueOf(285))), // 100 * 3 * 0.95
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            10,
-            new Price(BigDecimal.valueOf(900))), // 100 * 10 * 0.9
-        Arguments.of(
-            new Price(BigDecimal.valueOf(100)),
-            30,
-            new Price(BigDecimal.valueOf(2250)))); // 100 * 30 * 0.75
+        Arguments.of(1, new Price(BigDecimal.valueOf(100))),
+        Arguments.of(3, new Price(BigDecimal.valueOf(95))),
+        Arguments.of(10, new Price(BigDecimal.valueOf(90))),
+        Arguments.of(30, new Price(BigDecimal.valueOf(75))));
   }
 }
