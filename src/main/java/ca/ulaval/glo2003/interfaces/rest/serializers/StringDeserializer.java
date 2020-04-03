@@ -28,8 +28,6 @@ public abstract class StringDeserializer<E extends RuntimeException>
       throwException();
     }
 
-    if (value == null || value.equals("")) throwException();
-
     return value;
   }
 }

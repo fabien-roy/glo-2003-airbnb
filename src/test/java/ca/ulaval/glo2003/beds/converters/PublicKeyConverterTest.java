@@ -51,6 +51,14 @@ class PublicKeyConverterTest {
   }
 
   @Test
+  public void fromString_withNullPublicKey_shouldThrowInvalidPublicKeyException() {
+    String invalidPublicKey = null;
+
+    assertThrows(
+        InvalidPublicKeyException.class, () -> publicKeyConverter.fromString(invalidPublicKey));
+  }
+
+  @Test
   public void toString_shouldConvertPublicKey() {
     String value = publicKeyConverter.toString(publicKey);
 

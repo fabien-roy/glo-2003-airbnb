@@ -47,22 +47,4 @@ class StringDeserializerTest {
         TestingException.class,
         () -> stringDeserializer.deserialize(jsonParser, deserializationContext));
   }
-
-  @Test
-  public void deserialize_withNullString_shouldThrowException() throws IOException {
-    when(jsonParser.getText()).thenReturn(null);
-
-    assertThrows(
-        TestingException.class,
-        () -> stringDeserializer.deserialize(jsonParser, deserializationContext));
-  }
-
-  @Test
-  public void deserialize_withEmptyString_shouldThrowException() throws IOException {
-    when(jsonParser.getText()).thenReturn("");
-
-    assertThrows(
-        TestingException.class,
-        () -> stringDeserializer.deserialize(jsonParser, deserializationContext));
-  }
 }
