@@ -141,9 +141,14 @@
 			"key": "request.booking.colonySize",
 			"value": "20",
 			"enabled": true
+		},
+		{
+			"key": "queryParam.lodgingMode",
+			"value": "private",
+			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2020-04-02T21:03:06.263Z",
+	"_postman_exported_at": "2020-04-02T22:31:26.052Z",
 	"_postman_exported_using": "Postman/7.21.1"
 }
