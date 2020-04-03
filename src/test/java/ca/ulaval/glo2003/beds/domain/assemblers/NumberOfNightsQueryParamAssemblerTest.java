@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
+import static ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler.MAX_NUMBER_OF_NIGHTS;
 import static ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler.NUMBER_OF_NIGHTS_PARAM;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,6 +44,16 @@ class NumberOfNightsQueryParamAssemblerTest {
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
     assertSame(assembledQueryBuilder, actualQueryBuilder);
+  }
+
+  @Test
+  public void assemble_withTooHighNumberOfNights_shouldThrowInvalidNumberOfNightsException() {
+    params.put(
+        NUMBER_OF_NIGHTS_PARAM,
+        Collections.singletonList(Integer.toString(MAX_NUMBER_OF_NIGHTS + 1)));
+
+    assertThrows(
+        InvalidNumberOfNightsException.class, () -> queryAssembler.assemble(queryBuilder, params));
   }
 
   @Test
