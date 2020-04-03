@@ -52,7 +52,7 @@ To review a PR is a lot of things. First, you must read each added line, underst
 
 A milestone is achieved once every of its issues are solved. This includes everything to add for a new release, from adding features, to solving bugs and improving performance.
 
-For issues, they are closed once all described tasks are confirmed done be team (closed PR). 
+Issues are closed once all described tasks are confirmed done by the reviewers, which only means that the PR is closed. This requires reviewing code style, quality, tests and actual functionality of said PR.
 
 ## Development
 
@@ -78,7 +78,9 @@ Normally, every branch is a fork of `master`. Some exceptions are features build
 
 Our branch names are as following : `code_whatIsAdded` (ex : `aul_convertBedRequest`). Always camelcase.
 
-We try, as must as possible, to format commit messages as following : `[CODE] What is added` (ex : `[AUL] Add empty BedRequest class`)
+We try, as much as possible, to format commit messages as following : `[CODE] What is added` (ex : `[AUL] Add empty BedRequest class`)
+
+When a PR is merged, the associated branch is deleted as we do not want unnecessary unmaintained branches on our remote.
 
 ## Contributors
 
