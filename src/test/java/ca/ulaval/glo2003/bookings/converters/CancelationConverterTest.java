@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.bookings.converters;
 
-import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.createTotal;
-import static org.junit.jupiter.api.Assertions.*;
+import static ca.ulaval.glo2003.bookings.rest.helpers.CancelationResponseObjectMother.createRefundAmount;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,7 +15,8 @@ class CancelationConverterTest {
   private static CancelationConverter cancelationConverter;
   private static PriceConverter priceConverter = mock(PriceConverter.class);
 
-  private static Price total = createTotal();
+  private static Price refundAmount = mock(Price.class);
+  private static double refundAmountValue = createRefundAmount();
 
   @BeforeEach
   public void setUpMapper() {
@@ -24,13 +25,13 @@ class CancelationConverterTest {
 
   @BeforeEach
   public void setUpMock() {
-    when(priceConverter.toDouble(total)).thenReturn(total.getValue().doubleValue());
+    when(priceConverter.toDouble(refundAmount)).thenReturn(refundAmountValue);
   }
 
   @Test
-  public void toResponse_shouldMapTotal() {
-    CancelationResponse cancelationResponse = cancelationConverter.toResponse(total);
+  public void toResponse_shouldMapRefundAmount() {
+    CancelationResponse cancelationResponse = cancelationConverter.toResponse(refundAmount);
 
-    assertEquals(total.getValue().doubleValue(), cancelationResponse.getRefundAmount());
+    assertEquals(refundAmountValue, cancelationResponse.getRefundAmount());
   }
 }

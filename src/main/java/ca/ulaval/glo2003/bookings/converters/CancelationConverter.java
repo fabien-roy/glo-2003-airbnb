@@ -14,9 +14,9 @@ public class CancelationConverter {
     this.priceConverter = priceConverter;
   }
 
-  public CancelationResponse toResponse(Price refund) {
-    Double total = priceConverter.toDouble(refund);
+  public CancelationResponse toResponse(Price refundAmount) {
+    Double refundAmountValue = priceConverter.toDouble(refundAmount);
 
-    return new CancelationResponse(total);
+    return new CancelationResponse(refundAmountValue);
   }
 }
