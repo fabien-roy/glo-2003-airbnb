@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
+import ca.ulaval.glo2003.interfaces.domain.assemblers.PositiveIntegerQueryParamAssembler;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class NumberOfNightsQueryParamAssembler extends PositiveIntegerQueryParam
   }
 
   @Override
-  protected void throwException() {
+  public void throwException() {
     throw new InvalidNumberOfNightsException();
   }
 }

@@ -1,9 +1,9 @@
-package ca.ulaval.glo2003.beds.domain.assemblers;
+package ca.ulaval.glo2003.interfaces.domain.assemblers;
 
 public abstract class PositiveIntegerQueryParamAssembler
     extends PositiveNumberQueryParamAssembler<Integer> {
 
-  protected abstract void throwException();
+  public abstract void throwException();
 
   @Override
   protected Integer parseValue(String value) {

@@ -1,4 +1,6 @@
-package ca.ulaval.glo2003.beds.domain.assemblers;
+package ca.ulaval.glo2003.interfaces.domain.assemblers;
+
+import ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler;
 
 public abstract class PositiveNumberQueryParamAssembler<T extends Number>
     implements BedQueryParamAssembler {

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
+import ca.ulaval.glo2003.interfaces.domain.assemblers.PositiveDoubleQueryParamAssembler;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
