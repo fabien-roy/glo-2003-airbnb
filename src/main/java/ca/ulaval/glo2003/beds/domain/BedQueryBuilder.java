@@ -27,7 +27,7 @@ public interface BedQueryBuilder {
 
   BedQueryBuilder withOrigin(Location origin);
 
-  BedQueryBuilder withMaxDistance(int maxDistance);
+  BedQueryBuilder withMaxDistance(double maxDistance);
 
   InMemoryBedQuery build();
 }

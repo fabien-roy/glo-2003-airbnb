@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 public class InMemoryDistanceFilter implements InMemoryBedFilter {
 
   private final Location origin;
-  private final int maxDistance;
+  private final double maxDistance;
 
-  public InMemoryDistanceFilter(Location origin, int maxDistance) {
+  public InMemoryDistanceFilter(Location origin, double maxDistance) {
     this.origin = origin;
     this.maxDistance = maxDistance;
   }
@@ -19,7 +19,7 @@ public class InMemoryDistanceFilter implements InMemoryBedFilter {
     return origin;
   }
 
-  public int getMaxDistance() {
+  public double getMaxDistance() {
     return maxDistance;
   }
 

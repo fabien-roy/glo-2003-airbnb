@@ -32,7 +32,7 @@ class InMemoryBedQueryBuilderTest {
   private int numberOfNights = 2;
   private LodgingModes lodgingMode = createLodgingModeType();
   private Location origin = createLocation();
-  private int maxDistance = 20;
+  private double maxDistance = 20d;
 
   @BeforeAll
   public static void setUpBuilder() {

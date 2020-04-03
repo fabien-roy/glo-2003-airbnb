@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
 import java.util.List;
 import java.util.Map;
 
-public class MaximumDistanceQueryParamAssembler extends PositiveIntegerQueryParamAssembler {
+public class MaximumDistanceQueryParamAssembler extends PositiveDoubleQueryParamAssembler {
 
   public static final String MAX_DISTANCE_PARAM = "maxDistance";
 
@@ -13,7 +13,7 @@ public class MaximumDistanceQueryParamAssembler extends PositiveIntegerQueryPara
     List<String> maxDistances = params.get(MAX_DISTANCE_PARAM);
 
     return maxDistances != null
-        ? builder.withMaxDistance(parsePositiveInteger(maxDistances.get(0)))
+        ? builder.withMaxDistance(parsePositiveDouble(maxDistances.get(0)))
         : builder;
   }
 

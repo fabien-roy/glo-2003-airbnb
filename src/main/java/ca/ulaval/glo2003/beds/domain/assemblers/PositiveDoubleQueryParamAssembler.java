@@ -1,14 +1,14 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
-public abstract class PositiveIntegerQueryParamAssembler implements BedQueryParamAssembler {
+public abstract class PositiveDoubleQueryParamAssembler implements BedQueryParamAssembler {
 
   protected abstract void throwException();
 
-  protected int parsePositiveInteger(String value) {
-    int parsedValue = -1;
+  protected double parsePositiveDouble(String value) {
+    double parsedValue = -1;
 
     try {
-      parsedValue = Integer.parseInt(value);
+      parsedValue = Double.parseDouble(value);
     } catch (NumberFormatException e) {
       throwException();
     }
