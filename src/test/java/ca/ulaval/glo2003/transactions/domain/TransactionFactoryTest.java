@@ -132,4 +132,41 @@ class TransactionFactoryTest {
 
     assertEquals(expectedReason, transaction.getReason());
   }
+
+  @Test
+  public void createStayRefunded_shouldSetTimestamp() {
+    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+
+    assertEquals(timestamp, transaction.getTimestamp());
+  }
+
+  @Test
+  public void createStayRefunded_shouldSetFrom() {
+    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+
+    assertEquals(from, transaction.getFrom());
+  }
+
+  @Test
+  public void createStayRefunded_shouldSetTo() {
+    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+
+    assertEquals(to, transaction.getTo());
+  }
+
+  @Test
+  public void createStayRefunded_shouldSetTotal() {
+    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+
+    assertEquals(total, transaction.getTotal());
+  }
+
+  @Test
+  public void createStayRefunded_shouldSetReasonAsStayCanceled() {
+    TransactionReasons expectedReason = TransactionReasons.STAY_CANCELED;
+
+    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+
+    assertEquals(expectedReason, transaction.getReason());
+  }
 }
