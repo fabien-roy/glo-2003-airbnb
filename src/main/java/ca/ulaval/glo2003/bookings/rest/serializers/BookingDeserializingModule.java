@@ -13,6 +13,11 @@ public class BookingDeserializingModule extends DeserializingModule {
       ArrivalDateDeserializer arrivalDateDeserializer,
       ColonySizeDeserializer colonySizeDeserializer,
       NumberOfNightsDeserializer numberOfNightsDeserializer) {
-    super(Arrays.asList(publicKeyDeserializer, colonySizeDeserializer, numberOfNightsDeserializer));
+    super(
+        Arrays.asList(
+            publicKeyDeserializer,
+            arrivalDateDeserializer,
+            colonySizeDeserializer,
+            numberOfNightsDeserializer));
   }
 }
