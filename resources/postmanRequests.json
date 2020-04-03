@@ -6,6 +6,52 @@
 	},
 	"item": [
 		{
+			"name": "Add bed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e311bb77-0baf-4872-a8ad-7a593e87e16d",
+						"exec": [
+							"var bedNumber = responseBody.split('/')[2]",
+							"postman.setEnvironmentVariable(\"param.bedNumber\", bedNumber)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ownerPublicKey\": {{request.bed.ownerPublicKey}},\r\n  \"zipCode\": {{request.bed.zipCode}},\r\n  \"bedType\": {{request.bed.bedType}},\r\n  \"cleaningFrequency\": {{request.bed.cleaningFrequency}},\r\n  \"bloodTypes\": {{request.bed.bloodTypes}},\r\n  \"capacity\": {{request.bed.capacity}},\r\n  \"lodgingMode\": {{request.bed.lodgingMode}},\r\n  \"packages\": [\r\n    { \r\n      \"name\": {{request.bed.package1.name}},\r\n      \"pricePerNight\": {{request.bed.package1.pricePerNight}}\r\n    },\r\n    { \r\n      \"name\": {{request.bed.package2.name}},\r\n      \"pricePerNight\": {{request.bed.package2.pricePerNight}}\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/beds",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"beds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get all beds",
 			"event": [
 				{
@@ -42,12 +88,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4567/beds",
-					"protocol": "http",
+					"raw": "{{host}}/beds",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "4567",
 					"path": [
 						"beds"
 					],
@@ -105,53 +149,13 @@
 							"value": "{{queryParam.maxDistance}}",
 							"description": "> 0 (need origin, default=10)",
 							"disabled": true
+						},
+						{
+							"key": "lodgingMode",
+							"value": "{{queryParam.lodgingMode}}",
+							"description": "\"private\" | \"cohabitation\"",
+							"disabled": true
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add bed",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e311bb77-0baf-4872-a8ad-7a593e87e16d",
-						"exec": [
-							"var bedNumber = responseBody.split('/')[2]",
-							"postman.setEnvironmentVariable(\"param.bedNumber\", bedNumber)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"ownerPublicKey\": {{request.bed.ownerPublicKey}},\r\n  \"zipCode\": {{request.bed.zipCode}},\r\n  \"bedType\": {{request.bed.bedType}},\r\n  \"cleaningFrequency\": {{request.bed.cleaningFrequency}},\r\n  \"bloodTypes\": {{request.bed.bloodTypes}},\r\n  \"capacity\": {{request.bed.capacity}},\r\n  \"lodgingMode\": {{request.bed.lodgingMode}},\r\n  \"packages\": [\r\n    { \r\n      \"name\": {{request.bed.package1.name}},\r\n      \"pricePerNight\": {{request.bed.package1.pricePerNight}}\r\n    },\r\n    { \r\n      \"name\": {{request.bed.package2.name}},\r\n      \"pricePerNight\": {{request.bed.package2.pricePerNight}}\r\n    }\r\n  ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/beds",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"beds"
 					]
 				}
 			},
