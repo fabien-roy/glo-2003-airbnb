@@ -1,8 +1,11 @@
 package ca.ulaval.glo2003.beds.domain;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -12,9 +15,15 @@ import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CohabitationLodgingModeTest {
 
@@ -24,7 +33,6 @@ class CohabitationLodgingModeTest {
   private static Integer minCapacity;
   private static BookingDate arrivalDate;
   private static int numberOfNights;
-  private static Price total;
 
   @BeforeAll
   public static void setUpLodgingMode() {
@@ -36,14 +44,7 @@ class CohabitationLodgingModeTest {
     minCapacity = createCapacity();
     arrivalDate = createArrivalDate();
     numberOfNights = createNumberOfNights();
-
-    setUpCalculator();
-
     resetMocks();
-  }
-
-  public void setUpCalculator() {
-    total = new Price(BigDecimal.valueOf(100));
   }
 
   private void resetMocks() {
@@ -114,12 +115,54 @@ class CohabitationLodgingModeTest {
     assertEquals(LodgingModes.COHABITATION, cohabitationLodgingMode.getName());
   }
 
-  @Test
-  public void applyDiscount_shouldReturnCorrectTotal() {
+  @ParameterizedTest
+  @MethodSource("provideConditionsForApplyDiscount")
+  public void applyDiscount_shouldReturnCorrectTotal(
+      Price pricePerNight,
+      int numberOfNights,
+      Integer colonySize,
+      int bedCapacity,
+      Price expectedTotal) {
+    Packages packageName = createPackageName();
+    Map<Packages, Price> pricesPerNight = Collections.singletonMap(packageName, pricePerNight);
+    Bed bed = aBed().withPricesPerNights(pricesPerNight).withCapacity(bedCapacity).build();
+    Booking booking =
+        aBooking()
+            .withPackage(packageName)
+            .withNumberOfNights(numberOfNights)
+            .withColonySize(colonySize)
+            .build();
 
-    Price expectedTotal = new Price(BigDecimal.valueOf(100));
+    Price prix = pricePerNight.multiply(BigDecimal.valueOf(booking.getNumberOfNights()));
+    Price totalprix = cohabitationLodgingMode.applyDiscount(prix, booking, bed);
+    assertEquals(expectedTotal, totalprix);
+  }
 
-    // assertEquals(expectedTotal,
-    // cohabitationLodgingMode.applyDiscount(total,booking,bed).getValue());
+  private static Stream<Arguments> provideConditionsForApplyDiscount() {
+    return Stream.of(
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            1,
+            10,
+            20,
+            new Price(BigDecimal.valueOf(50))), // 100 * 1
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            3,
+            10,
+            20,
+            new Price(BigDecimal.valueOf(142.5))), // 100 * 3 * 0.95
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            10,
+            10,
+            20,
+            new Price(BigDecimal.valueOf(450))), // 100 * 10 * 0.9
+        Arguments.of(
+            new Price(BigDecimal.valueOf(100)),
+            30,
+            10,
+            20,
+            new Price(BigDecimal.valueOf(1125)))); // 100 * 30 * 0.75
   }
 }
