@@ -8,6 +8,8 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,6 +25,7 @@ class PrivateLodgingModeTest {
   private static BookingDate arrivalDate;
   private static int numberOfNights;
   private static List<Booking> bookings;
+  private static Price total;
 
   @BeforeAll
   public static void setUpLodgingMode() {
@@ -36,7 +39,13 @@ class PrivateLodgingModeTest {
     numberOfNights = createNumberOfNights();
     bookings = Collections.emptyList();
 
+    setUpCalculator();
+
     resetMocks();
+  }
+
+  public void setUpCalculator() {
+    total = new Price(BigDecimal.valueOf(100));
   }
 
   private void setUpWithBookings() {
@@ -86,6 +95,14 @@ class PrivateLodgingModeTest {
     boolean result = privateLodgingMode.isAvailable(bed, minCapacity, arrivalDate, numberOfNights);
 
     assertFalse(result);
+  }
+
+  @Test
+  public void applyDiscount_shouldReturnCorrectTotal() {
+
+    Price expectedTotal = new Price(BigDecimal.valueOf(100));
+
+    // assertEquals(expectedTotal, privateLodgingMode.applyDiscount(total,booking,bed).getValue());
   }
 
   @Test

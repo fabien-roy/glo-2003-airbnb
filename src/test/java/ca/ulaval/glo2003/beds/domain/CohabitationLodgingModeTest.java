@@ -10,6 +10,8 @@ import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ class CohabitationLodgingModeTest {
   private static Integer minCapacity;
   private static BookingDate arrivalDate;
   private static int numberOfNights;
+  private static Price total;
 
   @BeforeAll
   public static void setUpLodgingMode() {
@@ -34,7 +37,13 @@ class CohabitationLodgingModeTest {
     arrivalDate = createArrivalDate();
     numberOfNights = createNumberOfNights();
 
+    setUpCalculator();
+
     resetMocks();
+  }
+
+  public void setUpCalculator() {
+    total = new Price(BigDecimal.valueOf(100));
   }
 
   private void resetMocks() {
@@ -45,6 +54,7 @@ class CohabitationLodgingModeTest {
   private void resetBed() {
     reset(bed);
     when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity);
+    when(bed.getCapacity()).thenReturn(minCapacity);
   }
 
   private void resetBooking() {
@@ -102,5 +112,14 @@ class CohabitationLodgingModeTest {
   @Test
   public void getName_shouldReturnCohabitation() {
     assertEquals(LodgingModes.COHABITATION, cohabitationLodgingMode.getName());
+  }
+
+  @Test
+  public void applyDiscount_shouldReturnCorrectTotal() {
+
+    Price expectedTotal = new Price(BigDecimal.valueOf(100));
+
+    // assertEquals(expectedTotal,
+    // cohabitationLodgingMode.applyDiscount(total,booking,bed).getValue());
   }
 }
