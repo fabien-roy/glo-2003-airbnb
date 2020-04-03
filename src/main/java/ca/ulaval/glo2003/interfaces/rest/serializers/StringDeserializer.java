@@ -28,6 +28,8 @@ public abstract class StringDeserializer<E extends RuntimeException>
       throwException();
     }
 
+    if (value == null) throwException();
+
     return value;
   }
 }
