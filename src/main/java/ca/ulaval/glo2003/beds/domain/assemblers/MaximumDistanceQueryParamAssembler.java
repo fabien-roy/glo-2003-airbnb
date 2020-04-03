@@ -13,7 +13,7 @@ public class MaximumDistanceQueryParamAssembler extends PositiveDoubleQueryParam
     List<String> maxDistances = params.get(MAX_DISTANCE_PARAM);
 
     return maxDistances != null
-        ? builder.withMaxDistance(parsePositiveDouble(maxDistances.get(0)))
+        ? builder.withMaxDistance(parsePositiveValue(maxDistances.get(0)))
         : builder;
   }
 

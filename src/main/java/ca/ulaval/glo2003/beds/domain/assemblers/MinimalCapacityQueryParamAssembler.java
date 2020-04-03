@@ -13,7 +13,7 @@ public class MinimalCapacityQueryParamAssembler extends PositiveIntegerQueryPara
     List<String> minimalCapacities = params.get(MIN_CAPACITY_PARAM);
 
     return minimalCapacities != null
-        ? builder.withMinCapacity(parsePositiveInteger(minimalCapacities.get(0)))
+        ? builder.withMinCapacity(parsePositiveValue(minimalCapacities.get(0)))
         : builder;
   }
 

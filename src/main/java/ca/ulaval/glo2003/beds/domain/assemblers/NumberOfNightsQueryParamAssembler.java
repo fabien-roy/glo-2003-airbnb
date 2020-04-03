@@ -13,7 +13,7 @@ public class NumberOfNightsQueryParamAssembler extends PositiveIntegerQueryParam
     List<String> numbersOfNights = params.get(NUMBER_OF_NIGHTS_PARAM);
 
     return numbersOfNights != null
-        ? builder.withNumberOfNights(parsePositiveInteger(numbersOfNights.get(0)))
+        ? builder.withNumberOfNights(parsePositiveValue(numbersOfNights.get(0)))
         : builder;
   }
 

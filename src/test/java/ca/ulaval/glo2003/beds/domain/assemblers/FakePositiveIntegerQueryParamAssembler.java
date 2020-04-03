@@ -16,7 +16,7 @@ public class FakePositiveIntegerQueryParamAssembler extends PositiveIntegerQuery
 
   @Override
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, List<String>> params) {
-    parsePositiveInteger(params.get(POSITIVE_INT_PARAM).get(0));
+    parsePositiveValue(params.get(POSITIVE_INT_PARAM).get(0));
     return builder;
   }
 }
