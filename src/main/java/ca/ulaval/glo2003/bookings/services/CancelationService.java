@@ -59,7 +59,7 @@ public class CancelationService {
         tenantRefund,
         ownerRefund,
         booking.getTotal(),
-        booking.getNumberOfNights());
+        booking.getDepartureDate().toTimestamp());
     return tenantRefund;
   }
 
@@ -68,7 +68,7 @@ public class CancelationService {
         booking.getTenantPublicKey().getValue(),
         bedOwner,
         booking.getTotal(),
-        booking.getNumberOfNights());
+        booking.getDepartureDate().toTimestamp());
     return booking.getTotal();
   }
 }

@@ -9,14 +9,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class TimestampTest {
 
   private static Timestamp timestamp;
 
   private static LocalDateTime dateTime = LocalDateTime.now();
+  private static LocalDate date = LocalDate.now();
   private static Instant instant = dateTime.toInstant(ZONE_OFFSET);
   private static Instant otherInstant = dateTime.plusDays(1).toInstant(ZONE_OFFSET);
 
@@ -26,31 +25,29 @@ class TimestampTest {
   }
 
   @Test
+  public void construct_withLocalDate_shouldReturnTimestampAtZuluZoneOffset() {
+    timestamp = new Timestamp(date);
+
+    assertEquals(date, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
+  }
+
+  @Test
+  public void construct_withLocalDate_shouldReturnTimestampAtMax() {
+    LocalDateTime max =
+        timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate().atTime(LocalTime.MAX);
+
+    timestamp = new Timestamp(date);
+
+    assertEquals(max, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDateTime());
+  }
+
+  @Test
   public void now_shouldSetValueToNow() {
     LocalDate now = LocalDateTime.now().toLocalDate();
 
     timestamp = Timestamp.now();
 
     assertEquals(now, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {1, 3, 5})
-  public void inDays_shouldReturnTimestampInDays(int days) {
-    LocalDate inDays = LocalDateTime.now().plusDays(days).toLocalDate();
-
-    timestamp = Timestamp.inDays(days);
-
-    assertEquals(inDays, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
-  }
-
-  @Test
-  public void inDays_shouldReturnTimestampAtMidnight() {
-    LocalDateTime inDays = LocalDateTime.now().toLocalDate().atTime(LocalTime.MAX);
-
-    timestamp = Timestamp.inDays(0);
-
-    assertEquals(inDays, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDateTime());
   }
 
   @Test

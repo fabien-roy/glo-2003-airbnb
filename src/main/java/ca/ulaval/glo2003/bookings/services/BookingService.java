@@ -51,7 +51,7 @@ public class BookingService {
     bed.book(booking);
     transactionService.addStayBooked(booking.getTenantPublicKey().getValue(), total);
     transactionService.addStayCompleted(
-        bed.getOwnerPublicKey().getValue(), total, booking.getNumberOfNights());
+        bed.getOwnerPublicKey().getValue(), total, booking.getDepartureDate().toTimestamp());
     bedService.update(bed);
     return bookingNumberConverter.toString(booking.getNumber());
   }
