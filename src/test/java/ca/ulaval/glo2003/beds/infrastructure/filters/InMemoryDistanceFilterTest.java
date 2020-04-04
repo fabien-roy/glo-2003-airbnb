@@ -19,7 +19,7 @@ class InMemoryDistanceFilterTest {
 
   private static InMemoryBedFilter filter;
   private static Location origin = mock(Location.class);
-  private static int maxDistance = 20;
+  private static double maxDistance = 20d;
 
   private Bed bedWithinRadius;
   private static Location bedLocation = createLocation();

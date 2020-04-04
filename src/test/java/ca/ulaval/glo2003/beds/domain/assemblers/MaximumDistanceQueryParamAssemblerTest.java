@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException;
+import ca.ulaval.glo2003.interfaces.domain.assemblers.PositiveDoubleQueryParamAssembler;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +19,11 @@ import org.junit.jupiter.api.Test;
 
 class MaximumDistanceQueryParamAssemblerTest {
 
-  private static PositiveIntegerQueryParamAssembler queryAssembler;
+  private static PositiveDoubleQueryParamAssembler queryAssembler;
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private int maxDistance = 30;
+  private double maxDistance = 30d;
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
@@ -37,7 +38,7 @@ class MaximumDistanceQueryParamAssemblerTest {
 
   @Test
   public void assemble_withMaxDistance_shouldAssembleBuilder() {
-    params.put(MAX_DISTANCE_PARAM, Collections.singletonList(Integer.toString(maxDistance)));
+    params.put(MAX_DISTANCE_PARAM, Collections.singletonList(Double.toString(maxDistance)));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 

@@ -14,15 +14,15 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
 
   private List<InMemoryBedFilter> filters = new ArrayList<>();
 
-  private static final int UNSET_INT = 0;
+  private static final int UNSET_NUMERIC = 0;
   static final int DEFAULT_NUMBER_OF_NIGHTS = 3;
   static final int DEFAULT_MAX_DISTANCE = 10;
 
-  private int minCapacity = UNSET_INT;
+  private int minCapacity = UNSET_NUMERIC;
   private BookingDate arrivalDate = null;
-  private int numberOfNights = UNSET_INT;
+  private int numberOfNights = UNSET_NUMERIC;
   private Location origin = null;
-  private int maxDistance = UNSET_INT;
+  private double maxDistance = UNSET_NUMERIC;
 
   @Override
   public BedQueryBuilder aBedQuery() {
@@ -84,7 +84,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   @Override
-  public InMemoryBedQueryBuilder withMaxDistance(int maxDistance) {
+  public InMemoryBedQueryBuilder withMaxDistance(double maxDistance) {
     this.maxDistance = maxDistance;
     return this;
   }
@@ -97,13 +97,14 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   private void addAvailabilityFilter() {
-    if (minCapacity != UNSET_INT) {
+    if (minCapacity != UNSET_NUMERIC) {
       filters.add(
           new InMemoryAvailabilityFilter(minCapacity, getArrivalDate(), getNumberOfNights()));
     } else {
       if (arrivalDate != null) throw new ArrivalDateWithoutMinimalCapacityException();
 
-      if (numberOfNights != UNSET_INT) throw new NumberOfNightsWithoutMinimalCapacityException();
+      if (numberOfNights != UNSET_NUMERIC)
+        throw new NumberOfNightsWithoutMinimalCapacityException();
     }
   }
 
@@ -111,7 +112,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
     if (origin != null) {
       filters.add(new InMemoryDistanceFilter(origin, getMaxDistance()));
     } else {
-      if (maxDistance != UNSET_INT) throw new MaxDistanceWithoutOriginException();
+      if (maxDistance != UNSET_NUMERIC) throw new MaxDistanceWithoutOriginException();
     }
   }
 
@@ -120,10 +121,10 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   }
 
   private int getNumberOfNights() {
-    return numberOfNights == UNSET_INT ? DEFAULT_NUMBER_OF_NIGHTS : numberOfNights;
+    return numberOfNights == UNSET_NUMERIC ? DEFAULT_NUMBER_OF_NIGHTS : numberOfNights;
   }
 
-  private int getMaxDistance() {
-    return maxDistance == UNSET_INT ? DEFAULT_MAX_DISTANCE : maxDistance;
+  private double getMaxDistance() {
+    return maxDistance == UNSET_NUMERIC ? DEFAULT_MAX_DISTANCE : maxDistance;
   }
 }
