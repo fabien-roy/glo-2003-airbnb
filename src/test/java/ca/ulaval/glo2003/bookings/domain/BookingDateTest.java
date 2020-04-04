@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.bookings.domain;
 
+import static ca.ulaval.glo2003.transactions.domain.Timestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -119,6 +121,13 @@ class BookingDateTest {
     BookingPeriod period = bookingDate.periodToDays(days);
 
     assertEquals(bookingDateInDays, period.getEnd());
+  }
+
+  @Test
+  public void toTimestamp_shouldReturnTimestampWithSameValue() {
+    Timestamp timestamp = bookingDate.toTimestamp();
+
+    assertEquals(bookingDate.getValue(), timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test

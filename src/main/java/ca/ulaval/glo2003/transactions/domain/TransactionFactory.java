@@ -6,8 +6,7 @@ public class TransactionFactory {
     return new Transaction(Timestamp.now(), from, to, total, TransactionReasons.STAY_BOOKED);
   }
 
-  public Transaction createStayCompleted(String from, String to, Price total, int numberOfNights) {
-    Timestamp timestamp = Timestamp.inDays(numberOfNights);
+  public Transaction createStayCompleted(String from, String to, Price total, Timestamp timestamp) {
     return new Transaction(timestamp, from, to, total, TransactionReasons.STAY_COMPLETED);
   }
 
@@ -16,7 +15,7 @@ public class TransactionFactory {
     return null;
   }
 
-  public Transaction createStayRefunded(String from, String to, Price total, int numberOfNights) {
+  public Transaction createStayRefunded(String from, String to, Price total, Timestamp timestamp) {
     // TODO
     return null;
   }

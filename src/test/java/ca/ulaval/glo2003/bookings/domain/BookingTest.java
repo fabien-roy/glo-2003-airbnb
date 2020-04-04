@@ -34,6 +34,15 @@ class BookingTest {
   }
 
   @Test
+  public void getDepartureDate_shouldReturnArrivalDatePlusNumberOfNights() {
+    BookingDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
+
+    BookingDate date = booking.getDepartureDate();
+
+    assertEquals(departureDate, date);
+  }
+
+  @Test
   public void cancel_shouldSetStatusToCanceled() {
     booking.cancel();
 
