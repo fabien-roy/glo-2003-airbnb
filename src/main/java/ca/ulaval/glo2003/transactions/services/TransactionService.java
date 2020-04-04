@@ -1,10 +1,7 @@
 package ca.ulaval.glo2003.transactions.services;
 
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
-import ca.ulaval.glo2003.transactions.domain.Price;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
-import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
+import ca.ulaval.glo2003.transactions.domain.*;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,9 +36,9 @@ public class TransactionService {
     transactionRepository.add(transaction);
   }
 
-  public void addStayCompleted(String owner, Price total, int numberOfNights) {
+  public void addStayCompleted(String owner, Price total, Timestamp departureDate) {
     Transaction transaction =
-        transactionFactory.createStayCompleted(AIRBNB, owner, total, numberOfNights);
+        transactionFactory.createStayCompleted(AIRBNB, owner, total, departureDate);
     transactionRepository.add(transaction);
   }
 
@@ -51,23 +48,23 @@ public class TransactionService {
       Price tenantRefund,
       Price ownerRefund,
       Price total,
-      int numberOfNights) {
+      Timestamp departureDate) {
     Transaction transactionCancelTenant =
         transactionFactory.createStayCanceled(AIRBNB, tenant, tenantRefund);
     Transaction transactionCancelOwner =
         transactionFactory.createStayCanceled(AIRBNB, owner, ownerRefund);
     Transaction transactionRefund =
-        transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights);
+        transactionFactory.createStayRefunded(owner, AIRBNB, total, departureDate);
     transactionRepository.add(transactionCancelTenant);
     transactionRepository.add(transactionCancelOwner);
     transactionRepository.add(transactionRefund);
   }
 
   public void addStayCanceledFullRefund(
-      String tenant, String owner, Price total, int numberOfNights) {
+      String tenant, String owner, Price total, Timestamp departureDate) {
     Transaction transactionCancel = transactionFactory.createStayCanceled(AIRBNB, tenant, total);
     Transaction transactionRefund =
-        transactionFactory.createStayRefunded(owner, AIRBNB, total, numberOfNights);
+        transactionFactory.createStayRefunded(owner, AIRBNB, total, departureDate);
     transactionRepository.add(transactionCancel);
     transactionRepository.add(transactionRefund);
   }

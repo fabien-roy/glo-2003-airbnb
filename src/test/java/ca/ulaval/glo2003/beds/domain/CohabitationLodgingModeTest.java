@@ -10,15 +10,22 @@ import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import java.math.BigDecimal;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CohabitationLodgingModeTest {
 
   private static LodgingMode cohabitationLodgingMode;
   private static Bed bed = mock(Bed.class);
   private static Booking booking = mock(Booking.class);
+  private static Price total = new Price(BigDecimal.valueOf(100));
   private static Integer minCapacity;
   private static BookingDate arrivalDate;
   private static int numberOfNights;
@@ -33,7 +40,6 @@ class CohabitationLodgingModeTest {
     minCapacity = createCapacity();
     arrivalDate = createArrivalDate();
     numberOfNights = createNumberOfNights();
-
     resetMocks();
   }
 
@@ -45,6 +51,7 @@ class CohabitationLodgingModeTest {
   private void resetBed() {
     reset(bed);
     when(bed.getRemainingCapacityOnDate(any())).thenReturn(minCapacity);
+    when(bed.getCapacity()).thenReturn(minCapacity);
   }
 
   private void resetBooking() {
@@ -102,5 +109,26 @@ class CohabitationLodgingModeTest {
   @Test
   public void getName_shouldReturnCohabitation() {
     assertEquals(LodgingModes.COHABITATION, cohabitationLodgingMode.getName());
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideConditionsToApplyDiscount")
+  public void applyDiscount_shouldReturnCorrectTotal(
+      Integer colonySize, int capacity, Price expectedTotal) {
+    when(booking.getColonySize()).thenReturn(colonySize);
+    when(bed.getCapacity()).thenReturn(capacity);
+
+    Price discountedTotal = cohabitationLodgingMode.applyDiscount(total, bed, booking);
+
+    assertEquals(expectedTotal, discountedTotal);
+  }
+
+  private static Stream<Arguments> provideConditionsToApplyDiscount() {
+    return Stream.of(
+        Arguments.of(100, 100, new Price(BigDecimal.valueOf(100))),
+        Arguments.of(100, 1000, new Price(BigDecimal.valueOf(10))),
+        Arguments.of(1000, 100, new Price(BigDecimal.valueOf(1000))),
+        Arguments.of(525, 50, new Price(BigDecimal.valueOf(1050))),
+        Arguments.of(27, 89, new Price(BigDecimal.valueOf(30.34))));
   }
 }
