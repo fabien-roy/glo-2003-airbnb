@@ -6,11 +6,11 @@ import java.math.RoundingMode;
 
 public class CancelationRefundCalculator {
 
-  public BigDecimal calculateOwnerRefund(Price total) {
-    return total.getValue().divide(BigDecimal.valueOf(2), RoundingMode.UP);
+  public Price calculateOwnerRefund(Price total) {
+    return total.divide(BigDecimal.valueOf(2), RoundingMode.UP);
   }
 
-  public BigDecimal calculateTenantRefund(Price total) {
-    return total.getValue().divide(BigDecimal.valueOf(2), RoundingMode.DOWN);
+  public Price calculateTenantRefund(Price total) {
+    return total.divide(BigDecimal.valueOf(2), RoundingMode.DOWN);
   }
 }
