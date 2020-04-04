@@ -11,12 +11,10 @@ public class TransactionFactory {
   }
 
   public Transaction createStayCanceled(String from, String to, Price total) {
-    // TODO
-    return null;
+    return new Transaction(Timestamp.now(), from, to, total, TransactionReasons.STAY_CANCELED);
   }
 
   public Transaction createStayRefunded(String from, String to, Price total, Timestamp timestamp) {
-    // TODO
-    return null;
+    return new Transaction(timestamp, from, to, total, TransactionReasons.STAY_CANCELED);
   }
 }
