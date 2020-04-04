@@ -5,6 +5,9 @@ import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CohabitationLodgingMode implements LodgingMode {
 
@@ -28,6 +31,15 @@ public class CohabitationLodgingMode implements LodgingMode {
     }
 
     return true;
+  }
+
+  @Override
+  public Price applyDiscount(Price total, Bed bed, Booking booking) {
+    BigDecimal colonySize = BigDecimal.valueOf(booking.getColonySize());
+    BigDecimal capacity = BigDecimal.valueOf(bed.getCapacity());
+    BigDecimal factor = colonySize.divide(capacity, 4, RoundingMode.HALF_EVEN);
+
+    return total.multiply(factor);
   }
 
   @Override

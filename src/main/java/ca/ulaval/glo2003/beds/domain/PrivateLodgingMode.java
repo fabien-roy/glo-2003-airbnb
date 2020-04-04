@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.beds.domain;
 import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.transactions.domain.Price;
 
 public class PrivateLodgingMode implements LodgingMode {
 
@@ -23,5 +24,10 @@ public class PrivateLodgingMode implements LodgingMode {
   @Override
   public LodgingModes getName() {
     return LodgingModes.PRIVATE;
+  }
+
+  @Override
+  public Price applyDiscount(Price total, Bed bed, Booking booking) {
+    return total;
   }
 }
