@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.transactions.domain;
 
+import static ca.ulaval.glo2003.transactions.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,7 @@ class TransactionFactoryTest {
   private static String from = createFrom();
   private static String to = createTo();
   private static Price total = createTotal();
-  private static int numberOfDays = 2;
+  private static Timestamp timestamp = aTimestamp().build();
 
   @BeforeAll
   public static void setUpFactory() {
@@ -59,28 +61,28 @@ class TransactionFactoryTest {
 
   @Test
   public void createStayCompleted_shouldSetTimestamp() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
 
-    assertNotNull(transaction.getTimestamp());
+    assertEquals(timestamp, transaction.getTimestamp());
   }
 
   @Test
   public void createStayCompleted_shouldSetFrom() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
 
     assertEquals(from, transaction.getFrom());
   }
 
   @Test
   public void createStayCompleted_shouldSetTo() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
 
     assertEquals(to, transaction.getTo());
   }
 
   @Test
   public void createStayCompleted_shouldSetTotal() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
 
     assertEquals(total, transaction.getTotal());
   }
@@ -89,7 +91,7 @@ class TransactionFactoryTest {
   public void createStayCompleted_shouldSetReasonAsStayCompleted() {
     TransactionReasons expectedReason = TransactionReasons.STAY_COMPLETED;
 
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, numberOfDays);
+    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
 
     assertEquals(expectedReason, transaction.getReason());
   }

@@ -49,6 +49,10 @@ public class Booking {
     return arrivalDate;
   }
 
+  public BookingDate getDepartureDate() {
+    return arrivalDate.plusDays(numberOfNights - 1);
+  }
+
   public int getNumberOfNights() {
     return numberOfNights;
   }
