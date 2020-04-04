@@ -56,8 +56,10 @@ class CancelationServiceTest {
     reset(cancelationConverter, cancelationRefundCalculator);
     when(cancelationConverter.toResponse(tenantRefund)).thenReturn(cancelationResponse);
     when(cancelationConverter.toResponse(total)).thenReturn(cancelationResponse);
-    when(cancelationRefundCalculator.calculateTenantRefund(total)).thenReturn(tenantRefund.getValue());
-    when(cancelationRefundCalculator.calculateOwnerRefund(total)).thenReturn(ownerRefund.getValue());
+    when(cancelationRefundCalculator.calculateTenantRefund(total))
+        .thenReturn(tenantRefund.getValue());
+    when(cancelationRefundCalculator.calculateOwnerRefund(total))
+        .thenReturn(ownerRefund.getValue());
   }
 
   private static Booking buildBooking() {

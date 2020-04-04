@@ -23,28 +23,24 @@ public class CancelationRefundCalculatorTest {
   @Test
   public void calculateOwnerRefund_shouldReturnHalfOfTotal() {
     assertEquals(
-        BigDecimal.valueOf(10.00),
-        cancelationRefundCalculator.calculateOwnerRefund(totalEven));
+        BigDecimal.valueOf(10.00), cancelationRefundCalculator.calculateOwnerRefund(totalEven));
   }
 
   @Test
   public void calculateOwnerRefund_shouldReturnHigherHalfOfTotal() {
     assertEquals(
-        BigDecimal.valueOf(20.06),
-        cancelationRefundCalculator.calculateOwnerRefund(totalOdd));
+        BigDecimal.valueOf(20.06), cancelationRefundCalculator.calculateOwnerRefund(totalOdd));
   }
 
   @Test
   public void calculateTenantRefund_shouldReturnHalfOfTotal() {
     assertEquals(
-        BigDecimal.valueOf(10.00),
-        cancelationRefundCalculator.calculateTenantRefund(totalEven));
+        BigDecimal.valueOf(10.00), cancelationRefundCalculator.calculateTenantRefund(totalEven));
   }
 
   @Test
   public void calculateTenantRefund_shouldReturnLowerHalfOfTotal() {
     assertEquals(
-        BigDecimal.valueOf(20.05),
-        cancelationRefundCalculator.calculateTenantRefund(totalOdd));
+        BigDecimal.valueOf(20.05), cancelationRefundCalculator.calculateTenantRefund(totalOdd));
   }
 }
