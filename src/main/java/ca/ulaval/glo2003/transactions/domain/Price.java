@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.transactions.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 
 public class Price implements Comparable<Price> {
@@ -20,6 +21,12 @@ public class Price implements Comparable<Price> {
     BigDecimal multipliedValue = value.multiply(factor);
 
     return new Price(multipliedValue);
+  }
+
+  public Price divide(BigDecimal divisor, RoundingMode roundingMode) {
+    BigDecimal dividedValue = value.divide(divisor, roundingMode);
+
+    return new Price(dividedValue);
   }
 
   @Override
