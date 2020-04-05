@@ -76,7 +76,7 @@ public class BedRequestBuilder {
         cleaningFrequency,
         bloodTypes.toArray(new String[0]),
         capacity,
-        lodgingMode,
-        packages.toArray(new PackageRequest[0]));
+        packages.toArray(new PackageRequest[0]),
+        lodgingMode);
   }
 }
