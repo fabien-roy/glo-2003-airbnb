@@ -1,10 +1,1106 @@
 {
 	"info": {
-		"_postman_id": "0e65b397-ed42-4f61-9b50-03c87fb48d29",
+		"_postman_id": "f82faf75-fcb2-4d28-9ad2-69350879812f",
 		"name": "PROC - AirbnbTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Set up",
+			"item": [
+				{
+					"name": "Add bed",
+					"item": [
+						{
+							"name": "Bed 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"    var bedNumber = responseBody.split('/')[2]",
+											"    postman.setEnvironmentVariable(\"beds.1.bedNumber\", bedNumber)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"O+\",\"B-\",\"A-\",\"A-\",\"B-\",\"O+\"],\"capacity\":338,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"58912A016CD522708ED8A58D9A767846F590B4C21EE2E86E0AF8491186385226\",\"zipCode\":\"32068\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"O+\",\"B-\",\"A-\",\"A-\",\"B-\",\"O+\"],\"capacity\":338,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"58912A016CD522708ED8A58D9A767846F590B4C21EE2E86E0AF8491186385226\",\"zipCode\":\"32068\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 5",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"O-\",\"A-\"],\"capacity\":21,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"312BFB1BFA253F836EF0D680D38B924A08CC67996D40EBE6857B8580A166A006\",\"zipCode\":\"50401\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 6",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\",\"A+\",\"O+\",\"B+\",\"B+\"],\"capacity\":378,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"E99A0BC8D9C676A2EFF0BC994D7E38481B571ABCD92F4F591DF0543BE246F09C\",\"zipCode\":\"55311\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 7",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\",\"A+\",\"O+\",\"B+\",\"B+\"],\"capacity\":378,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"E99A0BC8D9C676A2EFF0BC994D7E38481B571ABCD92F4F591DF0543BE246F09C\",\"zipCode\":\"55311\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 8",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\"],\"capacity\":120,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"644D0DE00B3E6978FC072FD94EA87F62248848140421F41AAB90DA01AEAE0720\",\"zipCode\":\"50023\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 9",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"B-\",\"AB+\",\"O-\",\"O+\"],\"capacity\":172,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"64D5ED59450F66F410B44E06ACACDA8928D6552417262F2A5284F4522E1A76D1\",\"zipCode\":\"30040\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 10",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"latex\",\"bloodTypes\":[\"O-\",\"O+\"],\"capacity\":56,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"A22A0015DF83162B4BC3EF3E1E1A581349A316CB346D581EAA37C28A6516988D\",\"zipCode\":\"20874\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 11",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"AB+\",\"B-\"],\"capacity\":68,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"BF1F08C7D49355F9E684D15F11CA05C7000F324C5AAEAD9B4DAE1820F7410E7E\",\"zipCode\":\"28115\"} create-bed.feature:12 - status code was: 400, expected: 201, response time: 145, url: https://glo2003-h2020-eq08.herokuapp.com/beds, response: {\"description\":\"packages should be an array of package name with its corresponding price per night\",\"error\":\"INVALID_PACKAGES\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 12",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"O-\",\"O-\",\"A+\"],\"capacity\":262,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"7642C5F4F346F63D01BD94D91743533FB2D56B12012F3FEB8B967E040250FDF0\",\"zipCode\":\"56001\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 13",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"B+\"],\"capacity\":381,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"10157F58F73DC6B972E01585424BF20F8B62BBDD0EE12081533ADC2F5BA271D1\",\"zipCode\":\"55033\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 14",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"AB+\",\"O+\",\"O+\",\"AB-\"],\"capacity\":70,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"D092ED9FE936F87639E73C54092E78C95450DCCA57C58FA2FF9DEF8F89F19D80\",\"zipCode\":\"07087\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 15",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\"],\"capacity\":236,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"EA38CC9DC9EFD3792BE682B02672E38FC8939EDB14327FA041C6B24051ECA754\",\"zipCode\":\"06106\"} create-bed.feature:12 - status code was: 400, expected: 201, response time: 162, url: https://glo2003-h2020-eq08.herokuapp.com/beds, response: {\"description\":\"packages should be an array of package name with its corresponding price per night\",\"error\":\"INVALID_PACKAGES\"} ------- feature call (loop) failed at index: 11 caller: classpath:shared/request/create-bed.feature arg: {\"bedType\":\"springs\",\"bloodTypes\":[\"O+\",\"B+\",\"B-\",\"AB+\",\"O+\",\"B+\"],\"capacity\":64,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"072C2C64C1CDE37AC5A9CAFEA14533EBCABDDEBB6C46BF91F6167F96F8C2C841\",\"zipCode\":\"02920\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 16",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"latex\",\"bloodTypes\":[\"AB-\",\"A-\"],\"capacity\":114,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"2CA3A38F07EBB031262632B24D4C233E4D9F63C8D27893FCAD6D08122B7E4141\",\"zipCode\":\"38655\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"AB+\",\"A-\",\"B-\",\"A+\",\"A-\",\"A-\"],\"capacity\":385,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"D2EE48DB4C549A45FC337A1F00D8F24CDEAF4F0B4F46A48C6FD22688F9BBA64E\",\"zipCode\":\"19468\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 18",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"AB-\",\"AB+\",\"O+\"],\"capacity\":339,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"E1E5E838268C0A8E51D254E0CC41CAE304BA56BF2E9875B343F6A54F10517987\",\"zipCode\":\"01970\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 19",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"B-\",\"O+\",\"O+\"],\"capacity\":395,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"0CF8B7087ADFF28409A566F5FC6840B47AB5796FFB4905A068F90108501DF0CF\",\"zipCode\":\"60035\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\",\"AB-\",\"O-\"],\"capacity\":169,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"15D26513DD96B28E8A447258157A78C1111342C00FF9903862F78BC7804E0009\",\"zipCode\":\"20164\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 21",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"AB+\",\"O+\",\"B-\"],\"capacity\":98,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"E7553F83579A532C52D374772C073585685E9EB5CB194438F0E3E8EDC9762A80\",\"zipCode\":\"60046\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 22",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"latex\",\"bloodTypes\":[\"AB-\",\"O+\",\"B-\",\"B+\"],\"capacity\":373,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"A8353DBB521F799A5DAF121EF7CC6B72E5E709677F6F010DDD7D15CE50CCE568\",\"zipCode\":\"21208\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Bed 23",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"AB+\"],\"capacity\":352,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"18C2E8F239B0E440D8952B16DE26354659211B30233B935808F20281205F84D7\",\"zipCode\":\"44012\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
 		{
 			"name": "Test",
 			"item": [
@@ -3098,12 +4194,10 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:4567/beds?cleaningFreq=invalid",
-											"protocol": "http",
+											"raw": "{{host}}/beds?cleaningFreq=invalid",
 											"host": [
-												"localhost"
+												"{{host}}"
 											],
-											"port": "4567",
 											"path": [
 												"beds"
 											],
@@ -3772,7 +4866,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -3916,7 +5009,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -3987,7 +5079,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -4058,7 +5149,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -4129,7 +5219,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -4200,7 +5289,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -6204,1102 +7292,6 @@
 							],
 							"protocolProfileBehavior": {},
 							"_postman_isSubFolder": true
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Set up",
-			"item": [
-				{
-					"name": "Add bed",
-					"item": [
-						{
-							"name": "Bed 1",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"    var bedNumber = responseBody.split('/')[2]",
-											"    postman.setEnvironmentVariable(\"beds.1.bedNumber\", bedNumber)",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 2",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"ownerPublicKey\": \"8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E\",\r\n  \"zipCode\": \"12345\",\r\n  \"bedType\": \"latex\",\r\n  \"cleaningFrequency\": \"weekly\",\r\n  \"bloodTypes\": [\r\n    \"O-\", \r\n    \"O+\"\r\n  ],\r\n  \"capacity\": 234,\r\n  \"packages\": [\r\n    { \r\n      \"name\": \"bloodthirsty\",\r\n      \"pricePerNight\": 100.00\r\n    },\r\n    { \r\n      \"name\": \"allYouCanDrink\",\r\n      \"pricePerNight\": 200.00\r\n    }\r\n  ]\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 3",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"O+\",\"B-\",\"A-\",\"A-\",\"B-\",\"O+\"],\"capacity\":338,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"58912A016CD522708ED8A58D9A767846F590B4C21EE2E86E0AF8491186385226\",\"zipCode\":\"32068\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 4",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"O+\",\"B-\",\"A-\",\"A-\",\"B-\",\"O+\"],\"capacity\":338,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"58912A016CD522708ED8A58D9A767846F590B4C21EE2E86E0AF8491186385226\",\"zipCode\":\"32068\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 5",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"O-\",\"A-\"],\"capacity\":21,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"312BFB1BFA253F836EF0D680D38B924A08CC67996D40EBE6857B8580A166A006\",\"zipCode\":\"50401\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 6",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\",\"A+\",\"O+\",\"B+\",\"B+\"],\"capacity\":378,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"E99A0BC8D9C676A2EFF0BC994D7E38481B571ABCD92F4F591DF0543BE246F09C\",\"zipCode\":\"55311\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 7",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\",\"A+\",\"O+\",\"B+\",\"B+\"],\"capacity\":378,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"E99A0BC8D9C676A2EFF0BC994D7E38481B571ABCD92F4F591DF0543BE246F09C\",\"zipCode\":\"55311\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 8",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\"],\"capacity\":120,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"644D0DE00B3E6978FC072FD94EA87F62248848140421F41AAB90DA01AEAE0720\",\"zipCode\":\"50023\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 9",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"B-\",\"AB+\",\"O-\",\"O+\"],\"capacity\":172,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"64D5ED59450F66F410B44E06ACACDA8928D6552417262F2A5284F4522E1A76D1\",\"zipCode\":\"30040\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 10",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"latex\",\"bloodTypes\":[\"O-\",\"O+\"],\"capacity\":56,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"A22A0015DF83162B4BC3EF3E1E1A581349A316CB346D581EAA37C28A6516988D\",\"zipCode\":\"20874\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 11",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"AB+\",\"B-\"],\"capacity\":68,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"BF1F08C7D49355F9E684D15F11CA05C7000F324C5AAEAD9B4DAE1820F7410E7E\",\"zipCode\":\"28115\"} create-bed.feature:12 - status code was: 400, expected: 201, response time: 145, url: https://glo2003-h2020-eq08.herokuapp.com/beds, response: {\"description\":\"packages should be an array of package name with its corresponding price per night\",\"error\":\"INVALID_PACKAGES\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 12",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"O-\",\"O-\",\"A+\"],\"capacity\":262,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"7642C5F4F346F63D01BD94D91743533FB2D56B12012F3FEB8B967E040250FDF0\",\"zipCode\":\"56001\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 13",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"B+\"],\"capacity\":381,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"10157F58F73DC6B972E01585424BF20F8B62BBDD0EE12081533ADC2F5BA271D1\",\"zipCode\":\"55033\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 14",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"AB+\",\"O+\",\"O+\",\"AB-\"],\"capacity\":70,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"D092ED9FE936F87639E73C54092E78C95450DCCA57C58FA2FF9DEF8F89F19D80\",\"zipCode\":\"07087\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 15",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\"],\"capacity\":236,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"EA38CC9DC9EFD3792BE682B02672E38FC8939EDB14327FA041C6B24051ECA754\",\"zipCode\":\"06106\"} create-bed.feature:12 - status code was: 400, expected: 201, response time: 162, url: https://glo2003-h2020-eq08.herokuapp.com/beds, response: {\"description\":\"packages should be an array of package name with its corresponding price per night\",\"error\":\"INVALID_PACKAGES\"} ------- feature call (loop) failed at index: 11 caller: classpath:shared/request/create-bed.feature arg: {\"bedType\":\"springs\",\"bloodTypes\":[\"O+\",\"B+\",\"B-\",\"AB+\",\"O+\",\"B+\"],\"capacity\":64,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"072C2C64C1CDE37AC5A9CAFEA14533EBCABDDEBB6C46BF91F6167F96F8C2C841\",\"zipCode\":\"02920\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 16",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"latex\",\"bloodTypes\":[\"AB-\",\"A-\"],\"capacity\":114,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45}],\"ownerPublicKey\":\"2CA3A38F07EBB031262632B24D4C233E4D9F63C8D27893FCAD6D08122B7E4141\",\"zipCode\":\"38655\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 17",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"AB+\",\"A-\",\"B-\",\"A+\",\"A-\",\"A-\"],\"capacity\":385,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"D2EE48DB4C549A45FC337A1F00D8F24CDEAF4F0B4F46A48C6FD22688F9BBA64E\",\"zipCode\":\"19468\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 18",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"AB-\",\"AB+\",\"O+\"],\"capacity\":339,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"E1E5E838268C0A8E51D254E0CC41CAE304BA56BF2E9875B343F6A54F10517987\",\"zipCode\":\"01970\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 19",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"B-\",\"O+\",\"O+\"],\"capacity\":395,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"0CF8B7087ADFF28409A566F5FC6840B47AB5796FFB4905A068F90108501DF0CF\",\"zipCode\":\"60035\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 20",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"B-\",\"AB-\",\"O-\"],\"capacity\":169,\"cleaningFrequency\":\"monthly\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"15D26513DD96B28E8A447258157A78C1111342C00FF9903862F78BC7804E0009\",\"zipCode\":\"20164\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 21",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"springs\",\"bloodTypes\":[\"AB+\",\"O+\",\"B-\"],\"capacity\":98,\"cleaningFrequency\":\"annual\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99}],\"ownerPublicKey\":\"E7553F83579A532C52D374772C073585685E9EB5CB194438F0E3E8EDC9762A80\",\"zipCode\":\"60046\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 22",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"latex\",\"bloodTypes\":[\"AB-\",\"O+\",\"B-\",\"B+\"],\"capacity\":373,\"cleaningFrequency\":\"never\",\"lodgingMode\":\"private\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"A8353DBB521F799A5DAF121EF7CC6B72E5E709677F6F010DDD7D15CE50CCE568\",\"zipCode\":\"21208\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bed 23",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
-										"exec": [
-											"pm.test(\"response is ok\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"bedType\":\"memoryFoam\",\"bloodTypes\":[\"AB+\"],\"capacity\":352,\"cleaningFrequency\":\"weekly\",\"lodgingMode\":\"cohabitation\",\"packages\":[{\"name\":\"bloodthirsty\",\"pricePerNight\":849.99},{\"name\":\"allYouCanDrink\",\"pricePerNight\":326.45},{\"name\":\"sweetTooth\",\"pricePerNight\":464.8}],\"ownerPublicKey\":\"18C2E8F239B0E440D8952B16DE26354659211B30233B935808F20281205F84D7\",\"zipCode\":\"44012\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}/beds",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"beds"
-									]
-								}
-							},
-							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
