@@ -127,6 +127,8 @@ class PackageConverterTest {
   @Test
   public void fromRequests_withoutRequest_shouldThrowInvalidPackagesException() {
     requests = Collections.emptyList();
+
+    assertThrows(InvalidPackagesException.class, () -> packageConverter.fromRequests(requests));
   }
 
   @Test
