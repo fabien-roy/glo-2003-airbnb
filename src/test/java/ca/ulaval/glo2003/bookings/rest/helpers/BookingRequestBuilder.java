@@ -53,7 +53,12 @@ public class BookingRequestBuilder {
   }
 
   public BookingRequest build() {
-    return new BookingRequest(
-        tenantPublicKey, arrivalDate, numberOfNights, packageName, colonySize);
+    BookingRequest bookingRequest = new BookingRequest();
+    bookingRequest.setTenantPublicKey(tenantPublicKey);
+    bookingRequest.setArrivalDate(arrivalDate);
+    bookingRequest.setNumberOfNights(numberOfNights);
+    bookingRequest.setBookingPackage(packageName);
+    bookingRequest.setColonySize(colonySize);
+    return bookingRequest;
   }
 }

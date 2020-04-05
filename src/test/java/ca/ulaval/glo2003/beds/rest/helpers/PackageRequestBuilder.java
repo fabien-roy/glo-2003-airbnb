@@ -30,6 +30,9 @@ public class PackageRequestBuilder {
   }
 
   public PackageRequest build() {
-    return new PackageRequest(name, pricePerNight);
+    PackageRequest packageRequest = new PackageRequest();
+    packageRequest.setName(name);
+    packageRequest.setPricePerNight(pricePerNight);
+    return packageRequest;
   }
 }
