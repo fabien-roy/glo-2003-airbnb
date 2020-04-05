@@ -78,16 +78,16 @@ public class PackageConverter {
   }
 
   private void validatePackagesDependencies(List<PackageRequest> requests) {
-    Set<Packages> presentPackages =
+    List<Packages> presentPackages =
         requests.stream()
             .map(packageRequest -> parsePackageName(packageRequest.getName()))
-            .collect(Collectors.toSet());
+            .collect(Collectors.toList());
 
     presentPackages.forEach(
         packageName -> validatePackageDependencies(packageName, presentPackages));
   }
 
-  private void validatePackageDependencies(Packages packageName, Set<Packages> presentPackages) {
+  private void validatePackageDependencies(Packages packageName, List<Packages> presentPackages) {
     Optional<PackageValidator> foundValidator = findValidator(packageName);
     if (foundValidator.isPresent()) {
       PackageValidator validator = foundValidator.get();

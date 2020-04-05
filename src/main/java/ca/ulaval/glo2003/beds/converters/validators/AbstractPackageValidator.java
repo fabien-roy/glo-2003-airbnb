@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.beds.converters.validators;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import java.util.List;
-import java.util.Set;
 
 public abstract class AbstractPackageValidator implements PackageValidator {
 
@@ -11,7 +10,7 @@ public abstract class AbstractPackageValidator implements PackageValidator {
   protected abstract void throwException();
 
   @Override
-  public void validate(Set<Packages> packages) {
+  public void validate(List<Packages> packages) {
     if (!packages.containsAll(dependencies())) throwException();
   }
 }
