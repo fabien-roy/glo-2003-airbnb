@@ -4,6 +4,7 @@ import ca.ulaval.glo2003.beds.rest.serializers.*;
 import ca.ulaval.glo2003.locations.rest.serializers.ZipCodeDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BedRequest {
@@ -11,10 +12,10 @@ public class BedRequest {
   private String zipCode;
   private String bedType;
   private String cleaningFrequency;
-  private List<String> bloodTypes;
+  private List<String> bloodTypes = new ArrayList<>();
   private int capacity = 0;
   private String lodgingMode;
-  private List<PackageRequest> packages;
+  private List<PackageRequest> packages = new ArrayList<>();
 
   public String getOwnerPublicKey() {
     return ownerPublicKey;
@@ -63,7 +64,7 @@ public class BedRequest {
   @JsonProperty("bloodTypes")
   @JsonDeserialize(using = BloodTypesDeserializer.class)
   public void setBloodTypes(List<String> bloodTypes) {
-    this.bloodTypes = bloodTypes;
+    if (bloodTypes != null) this.bloodTypes = bloodTypes;
   }
 
   public int getCapacity() {
@@ -92,6 +93,6 @@ public class BedRequest {
   @JsonProperty("packages")
   @JsonDeserialize(using = PackagesDeserializer.class)
   public void setPackages(List<PackageRequest> packages) {
-    this.packages = packages;
+    if (packages != null) this.packages = packages;
   }
 }
