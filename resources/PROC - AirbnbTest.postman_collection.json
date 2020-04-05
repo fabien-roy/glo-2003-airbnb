@@ -6256,12 +6256,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6305,12 +6303,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6354,12 +6350,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6403,12 +6397,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6452,12 +6444,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6501,12 +6491,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6550,12 +6538,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6599,12 +6585,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6648,12 +6632,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6697,12 +6679,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6746,12 +6726,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6795,12 +6773,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6844,12 +6820,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6893,12 +6867,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6942,12 +6914,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -6991,12 +6961,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7040,12 +7008,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7089,12 +7055,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7138,12 +7102,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7187,12 +7149,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7236,12 +7196,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7285,12 +7243,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
@@ -7334,12 +7290,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:4567/beds",
-									"protocol": "http",
+									"raw": "{{host}}/beds",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "4567",
 									"path": [
 										"beds"
 									]
