@@ -43,7 +43,6 @@ public class BedRequest {
       String cleaningFrequency,
       String[] bloodTypes,
       Integer capacity,
-      String lodgingMode,
       PackageRequest[] packages) {
     this.ownerPublicKey = ownerPublicKey;
     this.zipCode = zipCode;
@@ -54,9 +53,21 @@ public class BedRequest {
 
     if (capacity != null) this.capacity = capacity;
 
-    this.lodgingMode = lodgingMode;
-
     if (packages != null) this.packages = Arrays.asList(packages);
+  }
+
+  public BedRequest(
+      String ownerPublicKey,
+      String zipCode,
+      String bedType,
+      String cleaningFrequency,
+      String[] bloodTypes,
+      Integer capacity,
+      PackageRequest[] packages,
+      String lodgingMode) {
+    this(ownerPublicKey, zipCode, bedType, cleaningFrequency, bloodTypes, capacity, packages);
+
+    this.lodgingMode = lodgingMode;
   }
 
   public String getOwnerPublicKey() {

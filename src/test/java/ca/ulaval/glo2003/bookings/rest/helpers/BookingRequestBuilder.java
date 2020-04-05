@@ -54,6 +54,6 @@ public class BookingRequestBuilder {
 
   public BookingRequest build() {
     return new BookingRequest(
-        tenantPublicKey, arrivalDate, numberOfNights, colonySize, packageName);
+        tenantPublicKey, arrivalDate, numberOfNights, packageName, colonySize);
   }
 }

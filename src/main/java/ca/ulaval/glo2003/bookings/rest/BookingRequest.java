@@ -19,31 +19,36 @@ public class BookingRequest {
   @JsonDeserialize(using = NumberOfNightsDeserializer.class)
   private int numberOfNights = 0;
 
-  @JsonDeserialize(using = ColonySizeDeserializer.class)
-  private Integer colonySize;
-
   @JsonProperty("package")
   @JsonDeserialize(using = PackageNameDeserializer.class)
   private String bookingPackage;
+
+  @JsonDeserialize(using = ColonySizeDeserializer.class)
+  private Integer colonySize;
 
   public BookingRequest() {
     // Empty constructor for parsing
   }
 
   public BookingRequest(
-      String tenantPublicKey,
-      String arrivalDate,
-      Integer numberOfNights,
-      Integer colonySize,
-      String bookingPackage) {
+      String tenantPublicKey, String arrivalDate, Integer numberOfNights, String bookingPackage) {
     this.tenantPublicKey = tenantPublicKey;
     this.arrivalDate = arrivalDate;
 
     if (numberOfNights != null) this.numberOfNights = numberOfNights;
 
-    this.colonySize = colonySize;
-
     this.bookingPackage = bookingPackage;
+  }
+
+  public BookingRequest(
+      String tenantPublicKey,
+      String arrivalDate,
+      Integer numberOfNights,
+      String bookingPackage,
+      Integer colonySize) {
+    this(tenantPublicKey, arrivalDate, numberOfNights, bookingPackage);
+
+    this.colonySize = colonySize;
   }
 
   public String getTenantPublicKey() {
@@ -58,11 +63,11 @@ public class BookingRequest {
     return numberOfNights;
   }
 
-  public Integer getColonySize() {
-    return colonySize;
-  }
-
   public String getBookingPackage() {
     return bookingPackage;
+  }
+
+  public Integer getColonySize() {
+    return colonySize;
   }
 }
