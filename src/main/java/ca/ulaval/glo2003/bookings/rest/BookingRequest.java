@@ -10,64 +10,59 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class BookingRequest {
 
-  @JsonDeserialize(using = PublicKeyDeserializer.class)
   private String tenantPublicKey;
-
-  @JsonDeserialize(using = ArrivalDateDeserializer.class)
   private String arrivalDate;
-
-  @JsonDeserialize(using = NumberOfNightsDeserializer.class)
   private int numberOfNights = 0;
-
-  @JsonProperty("package")
-  @JsonDeserialize(using = PackageNameDeserializer.class)
   private String bookingPackage;
-
-  @JsonDeserialize(using = ColonySizeDeserializer.class)
   private Integer colonySize;
-
-  public BookingRequest() {
-    // Empty constructor for parsing
-  }
-
-  public BookingRequest(
-      String tenantPublicKey, String arrivalDate, Integer numberOfNights, String bookingPackage) {
-    this.tenantPublicKey = tenantPublicKey;
-    this.arrivalDate = arrivalDate;
-
-    if (numberOfNights != null) this.numberOfNights = numberOfNights;
-
-    this.bookingPackage = bookingPackage;
-  }
-
-  public BookingRequest(
-      String tenantPublicKey,
-      String arrivalDate,
-      Integer numberOfNights,
-      String bookingPackage,
-      Integer colonySize) {
-    this(tenantPublicKey, arrivalDate, numberOfNights, bookingPackage);
-
-    this.colonySize = colonySize;
-  }
 
   public String getTenantPublicKey() {
     return tenantPublicKey;
+  }
+
+  @JsonProperty("tenantPublicKey")
+  @JsonDeserialize(using = PublicKeyDeserializer.class)
+  public void setTenantPublicKey(String tenantPublicKey) {
+    this.tenantPublicKey = tenantPublicKey;
   }
 
   public String getArrivalDate() {
     return arrivalDate;
   }
 
+  @JsonProperty("arrivalDate")
+  @JsonDeserialize(using = ArrivalDateDeserializer.class)
+  public void setArrivalDate(String arrivalDate) {
+    this.arrivalDate = arrivalDate;
+  }
+
   public int getNumberOfNights() {
     return numberOfNights;
+  }
+
+  @JsonProperty("numberOfNights")
+  @JsonDeserialize(using = NumberOfNightsDeserializer.class)
+  public void setNumberOfNights(Integer numberOfNights) {
+    if (numberOfNights != null) this.numberOfNights = numberOfNights;
   }
 
   public String getBookingPackage() {
     return bookingPackage;
   }
 
+  @JsonProperty("package")
+  @JsonDeserialize(using = PackageNameDeserializer.class)
+  public void setBookingPackage(String bookingPackage) {
+    this.bookingPackage = bookingPackage;
+  }
+
   public Integer getColonySize() {
     return colonySize;
+  }
+
+  @JsonProperty("colonySize")
+  @JsonDeserialize(using = ColonySizeDeserializer.class)
+  public void setColonySize(Integer colonySize) {
+    this.colonySize = colonySize;
   }
 }
