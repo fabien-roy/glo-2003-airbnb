@@ -27,6 +27,13 @@ class PositiveDoubleQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withNotANumberValue_shouldThrowException() {
+    params.put(POSITIVE_DOUBLE_PARAM, Collections.singletonList("NaN"));
+
+    assertThrows(TestingException.class, () -> queryAssembler.assemble(queryBuilder, params));
+  }
+
+  @Test
   public void assemble_withInvalidValue_shouldThrowException() {
     params.put(POSITIVE_DOUBLE_PARAM, Collections.singletonList("invalidValue"));
 

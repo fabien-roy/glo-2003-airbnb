@@ -7,6 +7,10 @@ public abstract class PositiveDoubleQueryParamAssembler
 
   @Override
   protected Double parseValue(String value) {
-    return Double.parseDouble(value);
+    Double doubleValue = Double.parseDouble(value);
+
+    if (doubleValue.isNaN()) throwException();
+
+    return doubleValue;
   }
 }
