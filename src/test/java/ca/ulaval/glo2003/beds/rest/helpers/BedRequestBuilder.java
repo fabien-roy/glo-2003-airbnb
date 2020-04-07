@@ -1,9 +1,11 @@
 package ca.ulaval.glo2003.beds.rest.helpers;
 
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestObjectMother.*;
+import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
+import java.util.Collections;
 import java.util.List;
 
 public class BedRequestBuilder {
@@ -31,7 +33,8 @@ public class BedRequestBuilder {
   private String DEFAULT_LODGING_MODE = createLodgingMode();
   private String lodgingMode = DEFAULT_LODGING_MODE;
 
-  private List<PackageRequest> DEFAULT_PACKAGES = createPackages();
+  private List<PackageRequest> DEFAULT_PACKAGES =
+      Collections.singletonList(aPackageRequest().build());
   private List<PackageRequest> packages = DEFAULT_PACKAGES;
 
   public static BedRequestBuilder aBedRequest() {
@@ -69,14 +72,15 @@ public class BedRequestBuilder {
   }
 
   public BedRequest build() {
-    return new BedRequest(
-        ownerPublicKey,
-        zipCode,
-        bedType,
-        cleaningFrequency,
-        bloodTypes.toArray(new String[0]),
-        capacity,
-        packages.toArray(new PackageRequest[0]),
-        lodgingMode);
+    BedRequest bedRequest = new BedRequest();
+    bedRequest.setOwnerPublicKey(ownerPublicKey);
+    bedRequest.setZipCode(zipCode);
+    bedRequest.setBedType(bedType);
+    bedRequest.setCleaningFrequency(cleaningFrequency);
+    bedRequest.setBloodTypes(bloodTypes);
+    bedRequest.setCapacity(capacity);
+    bedRequest.setLodgingMode(lodgingMode);
+    bedRequest.setPackages(packages);
+    return bedRequest;
   }
 }

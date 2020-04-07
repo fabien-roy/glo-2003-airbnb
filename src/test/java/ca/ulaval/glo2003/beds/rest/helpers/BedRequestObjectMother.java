@@ -3,8 +3,10 @@ package ca.ulaval.glo2003.beds.rest.helpers;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 
-import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.rest.PackageRequest;
+import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.BloodTypes;
+import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
+import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import com.github.javafaker.Faker;
 import java.util.Collections;
 import java.util.List;
@@ -37,19 +39,6 @@ public class BedRequestObjectMother {
 
   public static int createCapacity() {
     return Faker.instance().number().numberBetween(1, minMaximalCapacity);
-  }
-
-  public static List<PackageRequest> createPackages() {
-    return Collections.singletonList(
-        new PackageRequest(createPackageName(), createPackagePricePerNight()));
-  }
-
-  private static String createPackageName() {
-    return randomEnum(Packages.class).toString();
-  }
-
-  private static double createPackagePricePerNight() {
-    return Faker.instance().number().randomDouble(2, 100, 1000);
   }
 
   public static String createLodgingMode() {

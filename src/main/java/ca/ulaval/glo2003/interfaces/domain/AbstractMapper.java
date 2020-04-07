@@ -12,5 +12,6 @@ public abstract class AbstractMapper extends ObjectMapper {
     registerModule(serializingModule);
     registerModule(deserializingModule);
     disable(DeserializationFeature.WRAP_EXCEPTIONS);
+    disable(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES);
   }
 }

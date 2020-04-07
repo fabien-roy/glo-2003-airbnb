@@ -35,6 +35,8 @@ public class CohabitationLodgingMode implements LodgingMode {
 
   @Override
   public Price applyDiscount(Price total, Bed bed, Booking booking) {
+    if (booking.getColonySize() == null) throw new MissingColonySizeException();
+
     BigDecimal colonySize = BigDecimal.valueOf(booking.getColonySize());
     BigDecimal capacity = BigDecimal.valueOf(bed.getCapacity());
     BigDecimal factor = colonySize.divide(capacity, 4, RoundingMode.HALF_EVEN);

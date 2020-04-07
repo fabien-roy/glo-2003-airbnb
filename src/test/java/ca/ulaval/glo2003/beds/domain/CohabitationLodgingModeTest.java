@@ -131,4 +131,12 @@ class CohabitationLodgingModeTest {
         Arguments.of(525, 50, new Price(BigDecimal.valueOf(1050))),
         Arguments.of(27, 89, new Price(BigDecimal.valueOf(30.34))));
   }
+
+  public void applyDiscount_withoutColonySize_shouldThrowMissingColonySizeException() {
+    when(booking.getColonySize()).thenReturn(null);
+
+    assertThrows(
+        MissingColonySizeException.class,
+        () -> cohabitationLodgingMode.applyDiscount(total, bed, booking));
+  }
 }
