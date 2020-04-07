@@ -110,11 +110,11 @@ public class Bed {
   }
 
   public int getResidualCapacityOnDate(BookingDate date) {
-    int remainingCapacity = capacity;
+    int residualCapacity = capacity;
 
-    for (Booking booking : getBookingsOnDate(date)) remainingCapacity -= booking.getColonySize();
+    for (Booking booking : getBookingsOnDate(date)) residualCapacity -= booking.getColonySize();
 
-    return remainingCapacity;
+    return residualCapacity;
   }
 
   public void book(Booking booking) {
