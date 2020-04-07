@@ -112,8 +112,7 @@ public class Bed {
   public int getRemainingCapacityOnDate(BookingDate date) {
     int remainingCapacity = capacity;
 
-    for (Booking booking : getBookingsOnDate(date))
-      remainingCapacity = remainingCapacity - booking.getColonySize();
+    for (Booking booking : getBookingsOnDate(date)) remainingCapacity -= booking.getColonySize();
 
     return remainingCapacity;
   }
@@ -128,7 +127,7 @@ public class Bed {
   }
 
   public boolean isAvailable(Integer minCapacity, BookingDate arrivalData, int numberOfNights) {
-    if (isExceedingCapacity(minCapacity)) return false;
+    if (isExceedingAccommodationCapacity(minCapacity)) return false;
 
     return lodgingMode.isAvailable(this, minCapacity, arrivalData, numberOfNights);
   }
@@ -143,7 +142,8 @@ public class Bed {
 
   private List<Booking> getBookingsOnDate(BookingDate date) {
     return bookings.stream()
-        .filter(booking -> booking.isOverlapping(date, 1))
+        .filter(booking -> !booking.isCanceled())
+        .filter(booking -> booking.isOverlapping(date))
         .collect(Collectors.toList());
   }
 
@@ -156,10 +156,11 @@ public class Bed {
   }
 
   private void validateMinCapacity(Integer minCapacity) {
-    if (isExceedingCapacity(minCapacity)) throw new ExceedingAccommodationCapacityException();
+    if (isExceedingAccommodationCapacity(minCapacity))
+      throw new ExceedingAccommodationCapacityException();
   }
 
-  private boolean isExceedingCapacity(Integer minCapacity) {
+  private boolean isExceedingAccommodationCapacity(Integer minCapacity) {
     return minCapacity != null && minCapacity > capacity;
   }
 }

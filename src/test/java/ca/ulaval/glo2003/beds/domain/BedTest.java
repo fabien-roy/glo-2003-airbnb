@@ -38,20 +38,22 @@ class BedTest {
   private static PublicKey tenantPublicKey;
   private static BookingDate arrivalDate;
   private static Integer colonySize;
+  private static Integer otherColonySize;
   private static int numberOfNights;
 
   @BeforeEach
   public void setUpBed() {
     ownerPublicKey = createOwnerPublicKey();
     bedPackage = createPackageName();
-    capacity = createCapacity();
+    capacity = 100;
     bookings = Collections.emptyList();
     bookingNumber = createBookingNumber();
     otherBookingNumber = createBookingNumber();
     bookingPackage = bedPackage;
     tenantPublicKey = createTenantPublicKey();
     arrivalDate = createArrivalDate();
-    colonySize = capacity;
+    colonySize = 20;
+    otherColonySize = 30;
     numberOfNights = createNumberOfNights();
 
     resetBooking();
@@ -79,15 +81,18 @@ class BedTest {
     when(booking.getArrivalDate()).thenReturn(arrivalDate);
     when(booking.getNumberOfNights()).thenReturn(numberOfNights);
     when(booking.isOverlapping(otherBooking)).thenReturn(false);
-    when(booking.isOverlapping(arrivalDate, 1)).thenReturn(true);
+    when(booking.isOverlapping(arrivalDate)).thenReturn(true);
     when(booking.getColonySize()).thenReturn(colonySize);
+    when(booking.isCanceled()).thenReturn(false);
   }
 
   private void resetOtherBooking() {
     reset(otherBooking);
     when(otherBooking.getNumber()).thenReturn(otherBookingNumber);
     when(otherBooking.getPackage()).thenReturn(bookingPackage);
-    when(otherBooking.isOverlapping(arrivalDate, 1)).thenReturn(false);
+    when(otherBooking.isOverlapping(arrivalDate)).thenReturn(true);
+    when(otherBooking.getColonySize()).thenReturn(otherColonySize);
+    when(otherBooking.isCanceled()).thenReturn(false);
   }
 
   private void resetLodgingMode() {
@@ -144,7 +149,19 @@ class BedTest {
   public void getRemainingCapacity_withMultipleBookings_shouldReturnCapacityMinusColonySizes() {
     int expectedCapacity =
         bed.getCapacity() - booking.getColonySize() - otherBooking.getColonySize();
-    when(otherBooking.isOverlapping(arrivalDate, 0)).thenReturn(true);
+    bookings = Arrays.asList(booking, otherBooking);
+    bed = buildBed();
+
+    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+
+    assertEquals(expectedCapacity, remainingCapacity);
+  }
+
+  @Test
+  public void
+      getRemainingCapacity_withCanceledBookings_shouldReturnCapacityMinusBookedColonySizes() {
+    int expectedCapacity = bed.getCapacity() - booking.getColonySize();
+    when(otherBooking.isCanceled()).thenReturn(true);
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
@@ -157,6 +174,7 @@ class BedTest {
   public void
       getRemainingCapacity_withBookingsOnDifferentDates_shouldReturnCapacityMinusColonySizesOnDate() {
     int expectedCapacity = bed.getCapacity() - booking.getColonySize();
+    when(otherBooking.isOverlapping(arrivalDate)).thenReturn(false);
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
