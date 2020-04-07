@@ -64,7 +64,7 @@ Example request body :
 
 - `ownerPublicKey` must be a 64 characters long hexadecimal string.
 - `zipCode` must be a valid 5-digit US zip code.
-- `bloodTypes` must be a non-empty array with no duplicate blood type.
+- `bloodTypes` must be a non-empty array.
 - `capacity` must a positive integer not exceeding bed type's maximal capacity.
 - `lodgingMode` is optional. Default is `"private"`.
 - `packages` must be a non-empty array with no duplicate package names.
