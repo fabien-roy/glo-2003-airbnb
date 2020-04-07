@@ -1,7 +1,8 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
@@ -126,61 +127,61 @@ class BedTest {
   }
 
   @Test
-  public void getRemainingCapacity_withoutBooking_shouldReturnCapacity() {
+  public void getResidualCapacity_withoutBooking_shouldReturnCapacity() {
     int expectedCapacity = bed.getCapacity();
 
-    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
+    int residualCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
-    assertEquals(expectedCapacity, remainingCapacity);
+    assertEquals(expectedCapacity, residualCapacity);
   }
 
   @Test
-  public void getRemainingCapacity_withOneBooking_shouldReturnCapacityMinusColonySize() {
+  public void getResidualCapacity_withOneBooking_shouldReturnCapacityMinusColonySize() {
     int expectedCapacity = bed.getCapacity() - booking.getColonySize();
     bookings = Collections.singletonList(booking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
+    int residualCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
-    assertEquals(expectedCapacity, remainingCapacity);
+    assertEquals(expectedCapacity, residualCapacity);
   }
 
   @Test
-  public void getRemainingCapacity_withMultipleBookings_shouldReturnCapacityMinusColonySizes() {
+  public void getResidualCapacity_withMultipleBookings_shouldReturnCapacityMinusColonySizes() {
     int expectedCapacity =
         bed.getCapacity() - booking.getColonySize() - otherBooking.getColonySize();
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
+    int residualCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
-    assertEquals(expectedCapacity, remainingCapacity);
+    assertEquals(expectedCapacity, residualCapacity);
   }
 
   @Test
   public void
-      getRemainingCapacity_withCanceledBookings_shouldReturnCapacityMinusBookedColonySizes() {
+      getResidualCapacity_withCanceledBookings_shouldReturnCapacityMinusBookedColonySizes() {
     int expectedCapacity = bed.getCapacity() - booking.getColonySize();
     when(otherBooking.isCanceled()).thenReturn(true);
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
+    int residualCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
-    assertEquals(expectedCapacity, remainingCapacity);
+    assertEquals(expectedCapacity, residualCapacity);
   }
 
   @Test
   public void
-      getRemainingCapacity_withBookingsOnDifferentDates_shouldReturnCapacityMinusColonySizesOnDate() {
+      getResidualCapacity_withBookingsOnDifferentDates_shouldReturnCapacityMinusColonySizesOnDate() {
     int expectedCapacity = bed.getCapacity() - booking.getColonySize();
     when(otherBooking.isOverlapping(arrivalDate)).thenReturn(false);
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
+    int residualCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
-    assertEquals(expectedCapacity, remainingCapacity);
+    assertEquals(expectedCapacity, residualCapacity);
   }
 
   @Test
