@@ -129,7 +129,7 @@ class BedTest {
   public void getRemainingCapacity_withoutBooking_shouldReturnCapacity() {
     int expectedCapacity = bed.getCapacity();
 
-    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
     assertEquals(expectedCapacity, remainingCapacity);
   }
@@ -140,7 +140,7 @@ class BedTest {
     bookings = Collections.singletonList(booking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
     assertEquals(expectedCapacity, remainingCapacity);
   }
@@ -152,7 +152,7 @@ class BedTest {
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
     assertEquals(expectedCapacity, remainingCapacity);
   }
@@ -165,7 +165,7 @@ class BedTest {
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
     assertEquals(expectedCapacity, remainingCapacity);
   }
@@ -178,7 +178,7 @@ class BedTest {
     bookings = Arrays.asList(booking, otherBooking);
     bed = buildBed();
 
-    int remainingCapacity = bed.getRemainingCapacityOnDate(arrivalDate);
+    int remainingCapacity = bed.getResidualCapacityOnDate(arrivalDate);
 
     assertEquals(expectedCapacity, remainingCapacity);
   }

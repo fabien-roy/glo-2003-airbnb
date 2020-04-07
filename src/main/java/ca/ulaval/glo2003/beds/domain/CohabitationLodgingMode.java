@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
+import ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
@@ -17,7 +17,7 @@ public class CohabitationLodgingMode implements LodgingMode {
 
     if (!isAvailable(
         bed, booking.getColonySize(), booking.getArrivalDate(), booking.getNumberOfNights()))
-      throw new ExceedingAccommodationCapacityException();
+      throw new ExceedingResidualCapacityException();
   }
 
   @Override
@@ -26,7 +26,7 @@ public class CohabitationLodgingMode implements LodgingMode {
     BookingPeriod period = arrivalDate.periodToDays(numberOfNights - 1);
 
     for (BookingDate date : period.getDates()) {
-      int remainingCapacity = bed.getRemainingCapacityOnDate(date);
+      int remainingCapacity = bed.getResidualCapacityOnDate(date);
       if (remainingCapacity < minCapacity) return false;
     }
 

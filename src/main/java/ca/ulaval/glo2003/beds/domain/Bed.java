@@ -109,7 +109,7 @@ public class Bed {
     return pricesPerNight.keySet();
   }
 
-  public int getRemainingCapacityOnDate(BookingDate date) {
+  public int getResidualCapacityOnDate(BookingDate date) {
     int remainingCapacity = capacity;
 
     for (Booking booking : getBookingsOnDate(date)) remainingCapacity -= booking.getColonySize();
