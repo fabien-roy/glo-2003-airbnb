@@ -18,7 +18,7 @@ public abstract class PositiveNumberQueryParamAssembler<T extends Number>
       throwException();
     }
 
-    if (parsedValue != null && parsedValue.doubleValue() <= 0) {
+    if (parsedValue == null || parsedValue.doubleValue() <= 0) {
       throwException();
     }
 
