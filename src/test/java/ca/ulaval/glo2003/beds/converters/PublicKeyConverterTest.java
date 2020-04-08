@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.converters;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -23,7 +23,7 @@ class PublicKeyConverterTest {
 
   @BeforeEach
   public void resetMock() {
-    publicKey = createOwnerPublicKey();
+    publicKey = createPublicKey();
   }
 
   @Test

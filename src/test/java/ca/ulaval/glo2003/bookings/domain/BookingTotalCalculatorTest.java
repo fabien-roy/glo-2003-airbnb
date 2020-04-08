@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.bookings.domain;
 
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

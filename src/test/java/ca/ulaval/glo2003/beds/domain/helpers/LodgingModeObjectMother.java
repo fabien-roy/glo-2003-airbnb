@@ -8,7 +8,7 @@ public class LodgingModeObjectMother {
 
   private LodgingModeObjectMother() {}
 
-  public static LodgingModes createLodgingModeType() {
+  public static LodgingModes createLodgingModeName() {
     return randomEnum(LodgingModes.class);
   }
 }

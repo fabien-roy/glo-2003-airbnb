@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeBuilder.aLodgingMode;
-import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocation;
 
-import ca.ulaval.glo2003.beds.domain.*;
+import ca.ulaval.glo2003.beds.domain.BedNumber;
+import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.BloodTypes;
+import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
 import ca.ulaval.glo2003.locations.domain.Location;
 import com.github.javafaker.Faker;
 import java.util.Collections;
@@ -18,10 +19,6 @@ public class BedObjectMother {
 
   public static BedNumber createBedNumber() {
     return new BedNumber(UUID.randomUUID());
-  }
-
-  public static PublicKey createOwnerPublicKey() {
-    return createPublicKey();
   }
 
   public static Location createLocation() {
@@ -42,9 +39,5 @@ public class BedObjectMother {
 
   public static int createCapacity() {
     return Faker.instance().number().numberBetween(1, 1000);
-  }
-
-  public static LodgingMode createLodgingMode() {
-    return aLodgingMode().build();
   }
 }

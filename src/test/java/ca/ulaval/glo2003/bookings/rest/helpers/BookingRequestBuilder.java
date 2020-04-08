@@ -1,6 +1,10 @@
 package ca.ulaval.glo2003.bookings.rest.helpers;
 
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 
@@ -8,10 +12,10 @@ public class BookingRequestBuilder {
 
   private BookingRequestBuilder() {}
 
-  private String DEFAULT_TENANT_PUBLIC_KEY = createTenantPublicKey().toString();
+  private String DEFAULT_TENANT_PUBLIC_KEY = createPublicKey().toString();
   private String tenantPublicKey = DEFAULT_TENANT_PUBLIC_KEY;
 
-  private String DEFAULT_ARRIVAL_DATE = createArrivalDate().toString();
+  private String DEFAULT_ARRIVAL_DATE = createBookingDate().toString();
   private String arrivalDate = DEFAULT_ARRIVAL_DATE;
 
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();

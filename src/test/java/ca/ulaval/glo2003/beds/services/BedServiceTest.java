@@ -4,7 +4,6 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createLocation;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
-import static ca.ulaval.glo2003.beds.rest.helpers.BedResponseBuilder.aBedResponse;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -43,8 +42,8 @@ public class BedServiceTest {
   private BedRequest bedRequest = aBedRequest().build();
   private int stars = 4;
   private int otherStars = 2;
-  private BedResponse bedResponse = aBedResponse().withStars(stars).build();
-  private BedResponse otherBedResponse = aBedResponse().withStars(otherStars).build();
+  private BedResponse bedResponse = mock(BedResponse.class);
+  private BedResponse otherBedResponse = mock(BedResponse.class);
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll

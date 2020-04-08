@@ -1,6 +1,8 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
@@ -18,7 +20,7 @@ class InMemoryAvailabilityFilterTest {
 
   private static InMemoryBedFilter filter;
   private static int minCapacity = createColonySize();
-  private static BookingDate arrivalDate = createArrivalDate();
+  private static BookingDate arrivalDate = createBookingDate();
   private static int numberOfNights = createNumberOfNights();
 
   private Bed bedThatIsAvailable = mock(Bed.class);

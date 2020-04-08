@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.bookings.services;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createTenantPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.services.CancelationService.MINIMUM_DAYS_FOR_FULL_REFUND;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -47,7 +47,7 @@ class CancelationServiceTest {
 
   @BeforeEach
   public void resetBooking() {
-    arrivalDate = createArrivalDate();
+    arrivalDate = createBookingDate();
     total = createPrice();
     booking = buildBooking();
     resetMocks();
@@ -129,7 +129,7 @@ class CancelationServiceTest {
   @Test
   public void cancel_shouldCancelBooking() {
     booking = mock(Booking.class);
-    when(booking.getTenantPublicKey()).thenReturn(createTenantPublicKey());
+    when(booking.getTenantPublicKey()).thenReturn(createPublicKey());
     when(booking.getArrivalDate()).thenReturn(arrivalDate);
     when(booking.getDepartureDate()).thenReturn(arrivalDate);
     when(booking.getTotal()).thenReturn(total);
