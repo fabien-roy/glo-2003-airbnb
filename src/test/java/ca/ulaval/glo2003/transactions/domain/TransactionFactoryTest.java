@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.transactions.domain;
 
-import static ca.ulaval.glo2003.transactions.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,10 +11,10 @@ class TransactionFactoryTest {
 
   private static TransactionFactory transactionFactory;
 
+  private static Timestamp timestamp = createTimestamp();
   private static String from = createFrom();
   private static String to = createTo();
   private static Price total = createTotal();
-  private static Timestamp timestamp = aTimestamp().build();
 
   @BeforeAll
   public static void setUpFactory() {
