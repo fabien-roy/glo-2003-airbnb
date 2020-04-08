@@ -6,13 +6,13 @@ import ca.ulaval.glo2003.bookings.converters.BookingConverter;
 import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingFactory;
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
-import java.util.UUID;
 import javax.inject.Inject;
 
 public class BookingService {
@@ -53,12 +53,12 @@ public class BookingService {
     transactionService.addStayCompleted(
         bed.getOwnerPublicKey().toString(), total, booking.getDepartureDate().toTimestamp());
     bedService.update(bed);
-    return bookingNumberConverter.toString(booking.getNumber());
+    return booking.getNumber().toString();
   }
 
   public BookingResponse getResponse(String bedNumber, String bookingNumber) {
     Bed bed = bedService.get(bedNumber);
-    UUID parsedBookingNumber = bookingNumberConverter.fromString(bookingNumber);
+    BookingNumber parsedBookingNumber = bookingNumberConverter.fromString(bookingNumber);
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
@@ -67,7 +67,7 @@ public class BookingService {
 
   public CancelationResponse cancel(String bedNumber, String bookingNumber) {
     Bed bed = bedService.get(bedNumber);
-    UUID parsedBookingNumber = bookingNumberConverter.fromString(bookingNumber);
+    BookingNumber parsedBookingNumber = bookingNumberConverter.fromString(bookingNumber);
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 

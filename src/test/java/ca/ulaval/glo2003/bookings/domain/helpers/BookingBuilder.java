@@ -6,16 +6,16 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.util.UUID;
 
 public class BookingBuilder {
 
   private BookingBuilder() {}
 
-  private UUID DEFAULT_BOOKING_NUMBER = createBookingNumber();
-  private UUID bookingNumber = DEFAULT_BOOKING_NUMBER;
+  private BookingNumber DEFAULT_BOOKING_NUMBER = createBookingNumber();
+  private BookingNumber bookingNumber = DEFAULT_BOOKING_NUMBER;
 
   private PublicKey DEFAULT_TENANT_PUBLIC_KEY = createTenantPublicKey();
   private PublicKey tenantPublicKey = DEFAULT_TENANT_PUBLIC_KEY;

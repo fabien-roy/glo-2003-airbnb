@@ -15,16 +15,12 @@ import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.converters.BookingConverter;
 import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
-import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.bookings.domain.BookingFactory;
-import ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator;
+import ca.ulaval.glo2003.bookings.domain.*;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +38,7 @@ public class BookingServiceTest {
   private static BedNumber bedNumber = createBedNumber();
   private static Bed bed = buildBed();
   private static PublicKey ownerPublicKey = createOwnerPublicKey();
-  private static UUID bookingNumber = createBookingNumber();
+  private static BookingNumber bookingNumber = createBookingNumber();
   private static Booking booking = buildBooking();
   private static PublicKey tenantPublicKey = createTenantPublicKey();
   private static BookingDate departureDate = createArrivalDate();
@@ -70,7 +66,6 @@ public class BookingServiceTest {
     when(bookingConverter.fromRequest(bookingRequest)).thenReturn(booking);
     when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
     when(bookingFactory.create(booking, total)).thenReturn(booking);
-    when(bookingNumberConverter.toString(bookingNumber)).thenReturn(bookingNumber.toString());
   }
 
   private void setUpMocksForGetResponse() {

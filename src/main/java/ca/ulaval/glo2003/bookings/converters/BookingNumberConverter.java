@@ -1,19 +1,20 @@
 package ca.ulaval.glo2003.bookings.converters;
 
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import java.util.UUID;
 
 public class BookingNumberConverter {
 
-  public UUID fromString(String number) {
+  public BookingNumber fromString(String number) {
+    UUID value;
+
     try {
-      return UUID.fromString(number);
+      value = UUID.fromString(number);
     } catch (IllegalArgumentException exception) {
       throw new BookingNotFoundException(number);
     }
-  }
 
-  public String toString(UUID number) {
-    return number.toString();
+    return new BookingNumber(value);
   }
 }

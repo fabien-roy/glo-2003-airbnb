@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import com.github.javafaker.Faker;
 import java.sql.Date;
@@ -17,8 +18,8 @@ public class BookingObjectMother {
 
   private BookingObjectMother() {}
 
-  public static UUID createBookingNumber() {
-    return UUID.randomUUID();
+  public static BookingNumber createBookingNumber() {
+    return new BookingNumber(UUID.randomUUID());
   }
 
   public static PublicKey createTenantPublicKey() {

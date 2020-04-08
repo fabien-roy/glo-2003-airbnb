@@ -5,6 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -94,7 +95,7 @@ public class Bed {
     return bookings;
   }
 
-  public Booking getBookingByNumber(UUID number) {
+  public Booking getBookingByNumber(BookingNumber number) {
     Optional<Booking> foundBooking =
         bookings.stream().filter(booking -> booking.getNumber().equals(number)).findAny();
 

@@ -52,7 +52,7 @@ class TimestampTest {
 
   @Test
   public void toString_shouldReturnValueToString() {
-    assertEquals(instant.toString(), timestamp.toString());
+    assertEquals(timestamp.toInstant().toString(), timestamp.toString());
   }
 
   @Test
