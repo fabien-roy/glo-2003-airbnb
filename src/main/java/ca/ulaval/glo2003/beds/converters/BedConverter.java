@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 public class BedConverter {
 
-  private final BedNumberConverter bedNumberConverter;
   private final PublicKeyConverter publicKeyConverter;
   private final BloodTypeConverter bloodTypeConverter;
   private final LodgingModeConverter lodgingModeConverter;
@@ -20,12 +19,10 @@ public class BedConverter {
 
   @Inject
   public BedConverter(
-      BedNumberConverter bedNumberConverter,
       PublicKeyConverter publicKeyConverter,
       BloodTypeConverter bloodTypeConverter,
       LodgingModeConverter lodgingModeConverter,
       PackageConverter packageConverter) {
-    this.bedNumberConverter = bedNumberConverter;
     this.publicKeyConverter = publicKeyConverter;
     this.bloodTypeConverter = bloodTypeConverter;
     this.lodgingModeConverter = lodgingModeConverter;
@@ -60,8 +57,7 @@ public class BedConverter {
 
   public BedResponse toResponseWithNumber(Bed bed, int stars) {
     BedResponse bedResponse = toResponseWithoutNumber(bed, stars);
-    String bedNumber = bedNumberConverter.toString(bed.getNumber());
-    bedResponse.setBedNumber(bedNumber);
+    bedResponse.setBedNumber(bed.getNumber().toString());
     return bedResponse;
   }
 

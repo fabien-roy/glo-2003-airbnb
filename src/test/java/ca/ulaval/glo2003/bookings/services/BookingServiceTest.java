@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.BedNumber;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.converters.BookingConverter;
@@ -38,7 +39,7 @@ public class BookingServiceTest {
   private static BookingFactory bookingFactory = mock(BookingFactory.class);
   private static BookingTotalCalculator bookingTotalCalculator = mock(BookingTotalCalculator.class);
 
-  private static UUID bedNumber = createBedNumber();
+  private static BedNumber bedNumber = createBedNumber();
   private static Bed bed = buildBed();
   private static PublicKey ownerPublicKey = createOwnerPublicKey();
   private static UUID bookingNumber = createBookingNumber();

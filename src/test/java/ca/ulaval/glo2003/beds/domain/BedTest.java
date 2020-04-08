@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
@@ -308,7 +307,7 @@ class BedTest {
       getBookingByNumber_withNonExistentBookingNumber_shouldThrowBookingNotFoundException() {
     bookings = Collections.singletonList(booking);
     bed = buildBed();
-    UUID nonExistentBookingNumber = createBedNumber();
+    UUID nonExistentBookingNumber = createBookingNumber();
 
     assertThrows(
         BookingNotFoundException.class, () -> bed.getBookingByNumber(nonExistentBookingNumber));

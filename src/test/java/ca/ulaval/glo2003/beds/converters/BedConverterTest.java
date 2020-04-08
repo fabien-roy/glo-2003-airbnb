@@ -34,7 +34,7 @@ class BedConverterTest {
   private static PackageConverter packageConverter = mock(PackageConverter.class);
 
   private static Bed bed;
-  private static UUID bedNumber;
+  private static BedNumber bedNumber;
   private static PublicKey ownerPublicKey;
   private static Location location;
   private static BedTypes bedType;
@@ -58,17 +58,12 @@ class BedConverterTest {
   public static void setUpConverter() {
     bedConverter =
         new BedConverter(
-            bedNumberConverter,
-            publicKeyConverter,
-            bloodTypeConverter,
-            lodgingModeConverter,
-            packageConverter);
+            publicKeyConverter, bloodTypeConverter, lodgingModeConverter, packageConverter);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
-    when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
     when(publicKeyConverter.fromString(ownerPublicKey.toString())).thenReturn(ownerPublicKey);
     when(bloodTypeConverter.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
     when(bloodTypeConverter.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);

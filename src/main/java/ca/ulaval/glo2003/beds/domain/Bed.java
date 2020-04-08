@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Bed {
 
-  private UUID number;
+  private BedNumber number;
   private PublicKey ownerPublicKey;
   private Location location;
   private BedTypes bedType;
@@ -41,11 +41,11 @@ public class Bed {
     this.pricesPerNight = pricesPerNight;
   }
 
-  public UUID getNumber() {
+  public BedNumber getNumber() {
     return number;
   }
 
-  public void setNumber(UUID number) {
+  public void setNumber(BedNumber number) {
     this.number = number;
   }
 

@@ -2,15 +2,16 @@ package ca.ulaval.glo2003.beds.infrastructure;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.BedNumber;
 import ca.ulaval.glo2003.beds.domain.BedRepository;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +23,8 @@ public class InMemoryBedRepositoryTest {
   private Bed bed;
   private Bed otherBed;
   private Bed nonExistentBed;
-  private UUID bedNumber;
-  private UUID nonExistentBedNumber;
+  private BedNumber bedNumber;
+  private BedNumber nonExistentBedNumber;
   private InMemoryBedQuery bedQuery;
 
   @BeforeEach

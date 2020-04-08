@@ -16,7 +16,10 @@ import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.services.LocationService;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +35,7 @@ public class BedServiceTest {
   private static BedStarsCalculator bedStarsCalculator = mock(BedStarsCalculator.class);
   private static LocationService locationService = mock(LocationService.class);
 
-  private UUID bedNumber = createBedNumber();
+  private BedNumber bedNumber = createBedNumber();
   private Location origin = createLocation();
   private Location validatedLocation = createLocation();
   private Bed bed = aBed().withBedNumber(bedNumber).build();
@@ -74,7 +77,6 @@ public class BedServiceTest {
     when(locationService.getLocation(origin.getZipCode().toString())).thenReturn(validatedLocation);
     when(bedConverter.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedConverter.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
-    when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
   }
 
   @BeforeEach

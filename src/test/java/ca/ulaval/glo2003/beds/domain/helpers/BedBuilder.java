@@ -12,14 +12,13 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class BedBuilder {
 
   private BedBuilder() {}
 
-  private UUID DEFAULT_BED_NUMBER = createBedNumber();
-  private UUID bedNumber = DEFAULT_BED_NUMBER;
+  private BedNumber DEFAULT_BED_NUMBER = createBedNumber();
+  private BedNumber bedNumber = DEFAULT_BED_NUMBER;
 
   private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
   private PublicKey ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
@@ -54,7 +53,7 @@ public class BedBuilder {
     return new BedBuilder();
   }
 
-  public BedBuilder withBedNumber(UUID bedNumber) {
+  public BedBuilder withBedNumber(BedNumber bedNumber) {
     this.bedNumber = bedNumber;
     return this;
   }

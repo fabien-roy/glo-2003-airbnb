@@ -48,7 +48,7 @@ public class BedService {
 
     bedRepository.add(bed);
 
-    return bedNumberConverter.toString(bed.getNumber());
+    return bed.getNumber().toString();
   }
 
   public List<BedResponse> getAll(Map<String, List<String>> params) {
@@ -66,7 +66,7 @@ public class BedService {
   }
 
   public Bed get(String number) {
-    UUID bedNumber = bedNumberConverter.fromString(number);
+    BedNumber bedNumber = bedNumberConverter.fromString(number);
 
     return bedRepository.getByNumber(bedNumber);
   }

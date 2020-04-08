@@ -4,8 +4,8 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNum
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import ca.ulaval.glo2003.beds.domain.BedNumber;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class BedNumberConverterTest {
 
   private static BedNumberConverter bedNumberConverter;
 
-  private UUID bedNumber = createBedNumber();
+  private BedNumber bedNumber = createBedNumber();
 
   @BeforeAll
   public static void setUpConverter() {
@@ -22,7 +22,7 @@ class BedNumberConverterTest {
 
   @Test
   public void fromString_shouldConvertBedNumber() {
-    UUID actualBedNumber = bedNumberConverter.fromString(bedNumber.toString());
+    BedNumber actualBedNumber = bedNumberConverter.fromString(bedNumber.toString());
 
     assertEquals(bedNumber, actualBedNumber);
   }
@@ -32,12 +32,5 @@ class BedNumberConverterTest {
     String invalidNumber = "invalidNumber";
 
     assertThrows(BedNotFoundException.class, () -> bedNumberConverter.fromString(invalidNumber));
-  }
-
-  @Test
-  public void toString_shouldConvertBedNumber() {
-    String actualString = bedNumberConverter.toString(bedNumber);
-
-    assertEquals(bedNumber.toString(), actualString);
   }
 }

@@ -16,8 +16,8 @@ public class BedObjectMother {
 
   private BedObjectMother() {}
 
-  public static UUID createBedNumber() {
-    return UUID.randomUUID();
+  public static BedNumber createBedNumber() {
+    return new BedNumber(UUID.randomUUID());
   }
 
   public static PublicKey createOwnerPublicKey() {
