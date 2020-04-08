@@ -22,7 +22,7 @@ class ZipCodeConverterTest {
 
   @Test
   void fromString_shouldConvertZipCode() {
-    ZipCode actualZipCode = zipCodeConverter.fromString(zipCode.getValue());
+    ZipCode actualZipCode = zipCodeConverter.fromString(zipCode.toString());
 
     assertEquals(zipCode, actualZipCode);
   }

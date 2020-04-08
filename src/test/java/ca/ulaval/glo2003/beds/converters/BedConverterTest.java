@@ -223,7 +223,7 @@ class BedConverterTest {
   public void toResponseWithoutNumber_shouldConvertLocation() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
-    assertEquals(location.getZipCode().getValue(), bedResponse.getZipCode());
+    assertEquals(location.getZipCode().toString(), bedResponse.getZipCode());
   }
 
   @Test

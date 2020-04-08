@@ -34,13 +34,13 @@ class OriginQueryParamAssemblerTest {
 
   @BeforeEach
   public void setUpMocks() {
-    when(locationService.getLocation(origin.getZipCode().getValue())).thenReturn(origin);
+    when(locationService.getLocation(origin.getZipCode().toString())).thenReturn(origin);
     when(queryBuilder.withOrigin(origin)).thenReturn(assembledQueryBuilder);
   }
 
   @Test
   public void assemble_withOrigin_shouldAssembleBuilder() {
-    params.put(ORIGIN_PARAM, Collections.singletonList(origin.getZipCode().getValue()));
+    params.put(ORIGIN_PARAM, Collections.singletonList(origin.getZipCode().toString()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 

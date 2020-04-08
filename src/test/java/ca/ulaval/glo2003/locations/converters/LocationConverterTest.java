@@ -40,7 +40,7 @@ class LocationConverterTest {
     PlaceResponse placeResponse = aPlaceResponse().build();
     List<PlaceResponse> placeResponses = Collections.singletonList(placeResponse);
     locationResponse =
-        aLocationResponse().withPostCode(zipCode.getValue()).withPlaces(placeResponses).build();
+        aLocationResponse().withPostCode(zipCode.toString()).withPlaces(placeResponses).build();
     when(coordinatesConverter.fromResponse(placeResponse)).thenReturn(coordinates);
   }
 

@@ -26,7 +26,7 @@ public class ZippopotamusClient implements LocationClient {
 
   @Override
   public Location getLocation(ZipCode zipCode) {
-    LocationResponse locationResponse = tryGetLocationFromServer(zipCode.getValue());
+    LocationResponse locationResponse = tryGetLocationFromServer(zipCode.toString());
     return locationConverter.fromResponse(locationResponse);
   }
 

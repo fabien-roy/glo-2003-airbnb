@@ -71,7 +71,7 @@ public class BedServiceTest {
     when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
     when(bedStarsCalculator.calculateStars(otherBed)).thenReturn(otherStars);
-    when(locationService.getLocation(origin.getZipCode().getValue())).thenReturn(validatedLocation);
+    when(locationService.getLocation(origin.getZipCode().toString())).thenReturn(validatedLocation);
     when(bedConverter.toResponseWithNumber(bed, stars)).thenReturn(bedResponse);
     when(bedConverter.toResponseWithNumber(otherBed, otherStars)).thenReturn(otherBedResponse);
     when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());

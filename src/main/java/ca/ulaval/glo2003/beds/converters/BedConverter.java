@@ -48,7 +48,7 @@ public class BedConverter {
 
   public BedResponse toResponseWithoutNumber(Bed bed, int stars) {
     return new BedResponse(
-        bed.getLocation().getZipCode().getValue(),
+        bed.getLocation().getZipCode().toString(),
         bed.getBedType().toString(),
         bed.getCleaningFrequency().toString(),
         bloodTypeConverter.toStrings(bed.getBloodTypes()),
