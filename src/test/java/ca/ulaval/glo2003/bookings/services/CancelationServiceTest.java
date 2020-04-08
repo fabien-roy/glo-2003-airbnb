@@ -103,7 +103,7 @@ class CancelationServiceTest {
 
     verify(transactionService)
         .addStayCanceledHalfRefund(
-            eq(booking.getTenantPublicKey().getValue()),
+            eq(booking.getTenantPublicKey().toString()),
             eq(bedOwner),
             eq(tenantRefund),
             eq(ownerRefund),
@@ -119,7 +119,7 @@ class CancelationServiceTest {
 
     verify(transactionService)
         .addStayCanceledFullRefund(
-            eq(booking.getTenantPublicKey().getValue()),
+            eq(booking.getTenantPublicKey().toString()),
             eq(bedOwner),
             eq(total),
             eq(booking.getDepartureDate().toTimestamp()));

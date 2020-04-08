@@ -18,7 +18,7 @@ public class BedRequestObjectMother {
   private BedRequestObjectMother() {}
 
   public static String createOwnerPublicKey() {
-    return createPublicKey().getValue();
+    return createPublicKey().toString();
   }
 
   public static String createZipCode() {

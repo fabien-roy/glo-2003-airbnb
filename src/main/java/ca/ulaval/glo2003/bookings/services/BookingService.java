@@ -49,9 +49,9 @@ public class BookingService {
     Price total = bookingTotalCalculator.calculateTotal(bed, booking);
     booking = bookingFactory.create(booking, total);
     bed.book(booking);
-    transactionService.addStayBooked(booking.getTenantPublicKey().getValue(), total);
+    transactionService.addStayBooked(booking.getTenantPublicKey().toString(), total);
     transactionService.addStayCompleted(
-        bed.getOwnerPublicKey().getValue(), total, booking.getDepartureDate().toTimestamp());
+        bed.getOwnerPublicKey().toString(), total, booking.getDepartureDate().toTimestamp());
     bedService.update(bed);
     return bookingNumberConverter.toString(booking.getNumber());
   }
@@ -71,6 +71,6 @@ public class BookingService {
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
-    return cancelationService.cancel(booking, bed.getOwnerPublicKey().getValue());
+    return cancelationService.cancel(booking, bed.getOwnerPublicKey().toString());
   }
 }

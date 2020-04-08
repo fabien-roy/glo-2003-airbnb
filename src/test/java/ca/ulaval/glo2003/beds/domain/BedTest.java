@@ -220,7 +220,7 @@ class BedTest {
 
   @Test
   public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
-    tenantPublicKey = new PublicKey(ownerPublicKey.getValue());
+    tenantPublicKey = new PublicKey(ownerPublicKey.toString());
     resetBooking();
 
     assertThrows(BookingNotAllowedException.class, () -> bed.book(booking));

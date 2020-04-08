@@ -69,7 +69,7 @@ class BedConverterTest {
   public void setUpMocks() {
     resetMocks();
     when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
-    when(publicKeyConverter.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
+    when(publicKeyConverter.fromString(ownerPublicKey.toString())).thenReturn(ownerPublicKey);
     when(bloodTypeConverter.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
     when(bloodTypeConverter.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
     when(lodgingModeConverter.fromString(lodgingMode.getName().toString())).thenReturn(lodgingMode);
@@ -107,7 +107,7 @@ class BedConverterTest {
 
   private static BedRequest buildBedRequest() {
     return aBedRequest()
-        .withOwnerPublicKey(ownerPublicKey.getValue())
+        .withOwnerPublicKey(ownerPublicKey.toString())
         .withBedType(bedType.toString())
         .withCleaningFrequency(cleaningFrequency.toString())
         .withBloodTypes(convertToStrings(bloodTypes))

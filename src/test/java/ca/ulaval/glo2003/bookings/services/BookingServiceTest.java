@@ -85,7 +85,7 @@ public class BookingServiceTest {
     when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
     when(bookingNumberConverter.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
-    when(cancelationService.cancel(booking, bed.getOwnerPublicKey().getValue()))
+    when(cancelationService.cancel(booking, bed.getOwnerPublicKey().toString()))
         .thenReturn(cancelationResponse);
   }
 
@@ -143,7 +143,7 @@ public class BookingServiceTest {
 
     bookingService.add(bedNumber.toString(), bookingRequest);
 
-    verify(transactionService).addStayBooked(booking.getTenantPublicKey().getValue(), total);
+    verify(transactionService).addStayBooked(booking.getTenantPublicKey().toString(), total);
   }
 
   @Test
@@ -154,7 +154,7 @@ public class BookingServiceTest {
 
     verify(transactionService)
         .addStayCompleted(
-            bed.getOwnerPublicKey().getValue(), total, booking.getDepartureDate().toTimestamp());
+            bed.getOwnerPublicKey().toString(), total, booking.getDepartureDate().toTimestamp());
   }
 
   @Test

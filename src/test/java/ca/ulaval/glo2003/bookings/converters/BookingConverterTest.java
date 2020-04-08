@@ -56,8 +56,7 @@ class BookingConverterTest {
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
-    when(publicKeyConverter.fromString(tenantPublicKey.getValue())).thenReturn(tenantPublicKey);
-    when(publicKeyConverter.toString(tenantPublicKey)).thenReturn(tenantPublicKey.getValue());
+    when(publicKeyConverter.fromString(tenantPublicKey.toString())).thenReturn(tenantPublicKey);
     when(bookingDateConverter.fromString(arrivalDate.getValue().toString()))
         .thenReturn(arrivalDate);
     when(bookingDateConverter.toString(arrivalDate)).thenReturn(arrivalDate.getValue().toString());
@@ -92,7 +91,7 @@ class BookingConverterTest {
 
   private BookingRequest buildBookingRequest() {
     return aBookingRequest()
-        .withTenantPublicKey(tenantPublicKey.getValue())
+        .withTenantPublicKey(tenantPublicKey.toString())
         .withArrivalDate(arrivalDate.getValue().toString())
         .withNumberOfNights(numberOfNights)
         .withColonySize(colonySize)

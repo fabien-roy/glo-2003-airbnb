@@ -8,7 +8,8 @@ public class PublicKey {
     this.value = value;
   }
 
-  public String getValue() {
+  @Override
+  public String toString() {
     return value;
   }
 
@@ -18,7 +19,7 @@ public class PublicKey {
 
     PublicKey publicKey = (PublicKey) object;
 
-    return value.equals(publicKey.getValue());
+    return value.equals(publicKey.toString());
   }
 
   @Override

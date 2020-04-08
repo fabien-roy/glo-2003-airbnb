@@ -28,14 +28,14 @@ class PublicKeyConverterTest {
 
   @Test
   public void fromString_shouldConvertPublicKey() {
-    PublicKey actualPublicKey = publicKeyConverter.fromString(publicKey.getValue());
+    PublicKey actualPublicKey = publicKeyConverter.fromString(publicKey.toString());
 
     assertEquals(publicKey, actualPublicKey);
   }
 
   @Test
   public void fromString_withLowerCaseString_shouldConvertPublicKey() {
-    String lowerCaseString = publicKey.getValue().toLowerCase();
+    String lowerCaseString = publicKey.toString().toLowerCase();
 
     PublicKey actualPublicKey = publicKeyConverter.fromString(lowerCaseString);
 
@@ -56,12 +56,5 @@ class PublicKeyConverterTest {
 
     assertThrows(
         InvalidPublicKeyException.class, () -> publicKeyConverter.fromString(invalidPublicKey));
-  }
-
-  @Test
-  public void toString_shouldConvertPublicKey() {
-    String value = publicKeyConverter.toString(publicKey);
-
-    assertEquals(publicKey.getValue(), value);
   }
 }

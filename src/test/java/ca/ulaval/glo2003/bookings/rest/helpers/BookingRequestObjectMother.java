@@ -20,7 +20,7 @@ public class BookingRequestObjectMother {
   }
 
   public static String createTenantPublicKey() {
-    return createPublicKey().getValue();
+    return createPublicKey().toString();
   }
 
   public static String createArrivalDate() {
