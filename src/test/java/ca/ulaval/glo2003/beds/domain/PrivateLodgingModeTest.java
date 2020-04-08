@@ -9,7 +9,6 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -97,7 +96,7 @@ class PrivateLodgingModeTest {
 
   @Test
   public void applyDiscount_shouldReturnSameTotal() {
-    Price total = new Price(BigDecimal.valueOf(100));
+    Price total = new Price(100);
 
     Price discountedTotal = privateLodgingMode.applyDiscount(total, bed, booking);
 

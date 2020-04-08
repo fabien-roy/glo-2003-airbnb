@@ -8,7 +8,6 @@ import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import com.github.javafaker.Faker;
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -28,7 +27,7 @@ public class BookingObjectMother {
 
   public static Price createTotal() {
     double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return new Price(BigDecimal.valueOf(randomDouble));
+    return new Price(randomDouble);
   }
 
   public static BookingDate createArrivalDate() {

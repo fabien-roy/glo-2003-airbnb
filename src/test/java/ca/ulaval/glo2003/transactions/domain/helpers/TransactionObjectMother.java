@@ -5,7 +5,6 @@ import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import com.github.javafaker.Faker;
-import java.math.BigDecimal;
 
 public class TransactionObjectMother {
 
@@ -21,7 +20,7 @@ public class TransactionObjectMother {
 
   public static Price createTotal() {
     double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return new Price(BigDecimal.valueOf(randomDouble));
+    return new Price(randomDouble);
   }
 
   public static TransactionReasons createReason() {

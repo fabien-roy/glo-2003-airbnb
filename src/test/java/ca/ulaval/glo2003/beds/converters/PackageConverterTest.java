@@ -4,14 +4,12 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +19,6 @@ import org.junit.jupiter.api.Test;
 class PackageConverterTest {
 
   private static PackageConverter packageConverter;
-  private static PriceConverter priceConverter = mock(PriceConverter.class);
   private static PackageValidator validator = mock(PackageValidator.class);
 
   private static Map<Packages, Price> pricesPerNight;
@@ -40,7 +37,7 @@ class PackageConverterTest {
   @BeforeAll
   public static void setUpConverter() {
     Set<PackageValidator> validators = Collections.singleton(validator);
-    packageConverter = new PackageConverter(priceConverter, validators);
+    packageConverter = new PackageConverter(validators);
   }
 
   @BeforeEach
@@ -51,20 +48,11 @@ class PackageConverterTest {
     otherPackageName = Packages.ALL_YOU_CAN_DRINK;
     packageNameValue = packageName.toString();
     otherPackageNameValue = otherPackageName.toString();
-    priceValue = price.getValue().doubleValue();
-    otherPriceValue = otherPrice.getValue().doubleValue();
+    priceValue = price.toDouble();
+    otherPriceValue = otherPrice.toDouble();
 
     pricesPerNight = buildPricesPerNight();
     requests = buildPackageRequests();
-
-    resetMocks();
-  }
-
-  private void resetMocks() {
-    when(priceConverter.fromDouble(priceValue)).thenReturn(price);
-    when(priceConverter.fromDouble(otherPriceValue)).thenReturn(otherPrice);
-    when(priceConverter.toDouble(price)).thenReturn(priceValue);
-    when(priceConverter.toDouble(otherPrice)).thenReturn(otherPriceValue);
   }
 
   private Map<Packages, Price> buildPricesPerNight() {

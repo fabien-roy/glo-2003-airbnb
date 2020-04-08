@@ -19,7 +19,6 @@ import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
-import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +31,6 @@ class BookingConverterTest {
   private static BookingConverter bookingConverter;
   private static BookingDateConverter bookingDateConverter = mock(BookingDateConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
-  private static PriceConverter priceConverter = mock(PriceConverter.class);
 
   private static Booking booking;
   private static PublicKey tenantPublicKey;
@@ -49,8 +47,7 @@ class BookingConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    bookingConverter =
-        new BookingConverter(publicKeyConverter, bookingDateConverter, priceConverter);
+    bookingConverter = new BookingConverter(publicKeyConverter, bookingDateConverter);
   }
 
   @BeforeEach
@@ -58,7 +55,6 @@ class BookingConverterTest {
     resetMocks();
     when(publicKeyConverter.fromString(tenantPublicKey.toString())).thenReturn(tenantPublicKey);
     when(bookingDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
-    when(priceConverter.toDouble(total)).thenReturn(total.getValue().doubleValue());
   }
 
   private void resetMocks() {
@@ -204,7 +200,7 @@ class BookingConverterTest {
   public void toResponse_shouldConvertTotal() {
     bookingResponse = bookingConverter.toResponse(booking);
 
-    assertEquals(total.getValue().doubleValue(), bookingResponse.getTotal());
+    assertEquals(total.toDouble(), bookingResponse.getTotal());
   }
 
   @Test

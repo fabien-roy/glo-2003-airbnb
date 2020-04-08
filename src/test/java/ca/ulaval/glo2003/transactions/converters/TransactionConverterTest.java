@@ -19,7 +19,6 @@ public class TransactionConverterTest {
 
   private static TransactionConverter transactionConverter;
   private static TimestampConverter timestampConverter = mock(TimestampConverter.class);
-  private static PriceConverter priceConverter = mock(PriceConverter.class);
 
   private static Timestamp timestamp = aTimestamp().build();
   private static Price total = createTotal();
@@ -37,13 +36,12 @@ public class TransactionConverterTest {
 
   @BeforeEach
   public void setUpMapper() {
-    transactionConverter = new TransactionConverter(timestampConverter, priceConverter);
+    transactionConverter = new TransactionConverter(timestampConverter);
   }
 
   @BeforeEach
   public void setUpMock() {
     when(timestampConverter.toString(timestamp)).thenReturn(timestamp.getValue().toString());
-    when(priceConverter.toDouble(total)).thenReturn(total.getValue().doubleValue());
   }
 
   @Test
@@ -57,7 +55,7 @@ public class TransactionConverterTest {
   public void toResponse_shouldMapTotal() {
     TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
-    assertEquals(total.getValue().doubleValue(), transactionResponse.getTotal());
+    assertEquals(total.toDouble(), transactionResponse.getTotal());
   }
 
   @Test

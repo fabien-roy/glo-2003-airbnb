@@ -7,24 +7,20 @@ import javax.inject.Inject;
 public class TransactionConverter {
 
   private final TimestampConverter timestampConverter;
-  private final PriceConverter priceConverter;
 
   @Inject
-  public TransactionConverter(
-      TimestampConverter timestampConverter, PriceConverter priceConverter) {
+  public TransactionConverter(TimestampConverter timestampConverter) {
     this.timestampConverter = timestampConverter;
-    this.priceConverter = priceConverter;
   }
 
   public TransactionResponse toResponse(Transaction transaction) {
     String timestamp = timestampConverter.toString(transaction.getTimestamp());
-    Double total = priceConverter.toDouble(transaction.getTotal());
 
     return new TransactionResponse(
         timestamp,
         transaction.getFrom(),
         transaction.getTo(),
-        total,
+        transaction.getTotal().toDouble(),
         transaction.getReason().toString());
   }
 }
