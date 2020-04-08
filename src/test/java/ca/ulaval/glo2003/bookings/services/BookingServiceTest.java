@@ -85,7 +85,7 @@ public class BookingServiceTest {
     when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
     when(bookingNumberConverter.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
-    when(cancelationService.cancel(booking, bed.getOwnerPublicKey().toString()))
+    when(cancelationService.cancel(booking, bed.getOwnerPublicKey().getValue()))
         .thenReturn(cancelationResponse);
   }
 
