@@ -1,9 +1,10 @@
 package ca.ulaval.glo2003.bookings.services;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
-import static ca.ulaval.glo2003.bookings.rest.helpers.CancelationResponseBuilder.aCancelationResponse;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createTenantPublicKey;
 import static ca.ulaval.glo2003.bookings.services.CancelationService.MINIMUM_DAYS_FOR_FULL_REFUND;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -32,10 +33,10 @@ class CancelationServiceTest {
   private static Booking booking;
   private static BookingDate arrivalDate;
   private static Price total;
-  private static Price tenantRefund = createTotal();
-  private static Price ownerRefund = createTotal();
+  private static Price tenantRefund = createPrice();
+  private static Price ownerRefund = createPrice();
   private static String bedOwner = "bedOwner";
-  private CancelationResponse cancelationResponse = aCancelationResponse().build();
+  private CancelationResponse cancelationResponse = mock(CancelationResponse.class);
 
   @BeforeAll
   public static void setUpService() {
@@ -47,7 +48,7 @@ class CancelationServiceTest {
   @BeforeEach
   public void resetBooking() {
     arrivalDate = createArrivalDate();
-    total = createTotal();
+    total = createPrice();
     booking = buildBooking();
     resetMocks();
   }

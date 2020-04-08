@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.bookings.domain.helpers;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
@@ -29,7 +30,7 @@ public class BookingBuilder {
   private Integer DEFAULT_COLONY_SIZE = createColonySize();
   private Integer colonySize = DEFAULT_COLONY_SIZE;
 
-  private Price DEFAULT_TOTAL = createTotal();
+  private Price DEFAULT_TOTAL = createPrice();
   private Price total = DEFAULT_TOTAL;
 
   private Packages DEFAULT_PACKAGE = createPackageName();

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.bookings.domain;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createTotal;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -40,7 +40,7 @@ public class BookingFactoryTest {
 
   @Test
   public void create_shouldSetTotal() {
-    Price expectedTotal = createTotal();
+    Price expectedTotal = createPrice();
     Booking booking = aBooking().build();
 
     booking = bookingFactory.create(booking, expectedTotal);
