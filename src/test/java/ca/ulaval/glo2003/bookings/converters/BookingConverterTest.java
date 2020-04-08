@@ -57,9 +57,7 @@ class BookingConverterTest {
   public void setUpMocks() {
     resetMocks();
     when(publicKeyConverter.fromString(tenantPublicKey.toString())).thenReturn(tenantPublicKey);
-    when(bookingDateConverter.fromString(arrivalDate.getValue().toString()))
-        .thenReturn(arrivalDate);
-    when(bookingDateConverter.toString(arrivalDate)).thenReturn(arrivalDate.getValue().toString());
+    when(bookingDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
     when(priceConverter.toDouble(total)).thenReturn(total.getValue().doubleValue());
   }
 
@@ -92,7 +90,7 @@ class BookingConverterTest {
   private BookingRequest buildBookingRequest() {
     return aBookingRequest()
         .withTenantPublicKey(tenantPublicKey.toString())
-        .withArrivalDate(arrivalDate.getValue().toString())
+        .withArrivalDate(arrivalDate.toString())
         .withNumberOfNights(numberOfNights)
         .withColonySize(colonySize)
         .withPackage(packageNameValue)
@@ -185,7 +183,7 @@ class BookingConverterTest {
   public void toResponse_shouldConvertArrivalDate() {
     bookingResponse = bookingConverter.toResponse(booking);
 
-    assertEquals(arrivalDate.getValue().toString(), bookingResponse.getArrivalDate());
+    assertEquals(arrivalDate.toString(), bookingResponse.getArrivalDate());
   }
 
   @Test

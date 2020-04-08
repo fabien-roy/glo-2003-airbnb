@@ -15,10 +15,6 @@ public class BookingDate {
     this.value = value;
   }
 
-  public LocalDate getValue() {
-    return value;
-  }
-
   public BookingDate minusDays(int days) {
     return new BookingDate(value.minusDays(days));
   }
@@ -28,11 +24,11 @@ public class BookingDate {
   }
 
   public boolean isBefore(BookingDate other) {
-    return value.isBefore(other.getValue());
+    return value.isBefore(other.toLocalDate());
   }
 
   public boolean isAfter(BookingDate other) {
-    return value.isAfter(other.getValue());
+    return value.isAfter(other.toLocalDate());
   }
 
   public BookingPeriod periodToDays(int days) {
@@ -47,13 +43,22 @@ public class BookingDate {
     return new Timestamp(value);
   }
 
+  public LocalDate toLocalDate() {
+    return value;
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
     BookingDate bookingDate = (BookingDate) object;
 
-    return value.equals(bookingDate.getValue());
+    return value.equals(bookingDate.toLocalDate());
   }
 
   @Override

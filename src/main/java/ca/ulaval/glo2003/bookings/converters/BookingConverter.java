@@ -44,11 +44,10 @@ public class BookingConverter {
   }
 
   public BookingResponse toResponse(Booking booking) {
-    String arrivalDate = bookingDateConverter.toString(booking.getArrivalDate());
     Double total = priceConverter.toDouble(booking.getTotal());
 
     return new BookingResponse(
-        arrivalDate,
+        booking.getArrivalDate().toString(),
         booking.getNumberOfNights(),
         booking.getPackage().toString(),
         total,

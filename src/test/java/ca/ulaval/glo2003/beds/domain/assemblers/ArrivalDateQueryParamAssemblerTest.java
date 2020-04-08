@@ -33,14 +33,13 @@ class ArrivalDateQueryParamAssemblerTest {
 
   @BeforeEach
   public void setUpMocks() {
-    when(bookingDateConverter.fromString(arrivalDate.getValue().toString()))
-        .thenReturn(arrivalDate);
+    when(bookingDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
     when(queryBuilder.withArrivalDate(arrivalDate)).thenReturn(assembledQueryBuilder);
   }
 
   @Test
   public void assemble_withArrivalDate_shouldAssembleBuilder() {
-    params.put(ARRIVAL_DATE_PARAM, Collections.singletonList(arrivalDate.getValue().toString()));
+    params.put(ARRIVAL_DATE_PARAM, Collections.singletonList(arrivalDate.toString()));
 
     BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
 
