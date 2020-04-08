@@ -10,7 +10,7 @@ public class Longitude {
     this.value = value;
   }
 
-  public double getValue() {
+  public double toDegrees() {
     return value;
   }
 
@@ -24,7 +24,7 @@ public class Longitude {
 
     Longitude longitude = (Longitude) object;
 
-    return value == longitude.getValue();
+    return value == longitude.toDegrees();
   }
 
   @Override

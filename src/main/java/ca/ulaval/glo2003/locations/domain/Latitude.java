@@ -10,7 +10,7 @@ public class Latitude {
     this.value = value;
   }
 
-  public double getValue() {
+  public double toDegrees() {
     return value;
   }
 
@@ -24,7 +24,7 @@ public class Latitude {
 
     Latitude latitude = (Latitude) object;
 
-    return value == latitude.getValue();
+    return value == latitude.toDegrees();
   }
 
   @Override

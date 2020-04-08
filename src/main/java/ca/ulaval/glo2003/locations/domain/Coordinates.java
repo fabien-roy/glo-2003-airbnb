@@ -19,9 +19,9 @@ public class Coordinates {
   }
 
   public double calculateDistance(Coordinates other) {
-    double flattenedLatitude1 = longitude.toKm() * Math.cos(Math.toRadians(latitude.getValue()));
+    double flattenedLatitude1 = longitude.toKm() * Math.cos(Math.toRadians(latitude.toDegrees()));
     double flattenedLongitude2 =
-        other.getLongitude().toKm() * Math.cos(Math.toRadians(other.getLatitude().getValue()));
+        other.getLongitude().toKm() * Math.cos(Math.toRadians(other.getLatitude().toDegrees()));
 
     return Math.sqrt(
         Math.pow(latitude.toKm() - other.getLatitude().toKm(), 2)
