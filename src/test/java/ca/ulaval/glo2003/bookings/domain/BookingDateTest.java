@@ -128,7 +128,7 @@ class BookingDateTest {
     Timestamp timestamp = bookingDate.toTimestamp();
 
     assertEquals(
-        bookingDate.toLocalDate(), timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
+        bookingDate.toLocalDate(), timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test

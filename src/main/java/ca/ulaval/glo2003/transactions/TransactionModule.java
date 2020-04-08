@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.transactions;
 
-import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
 import ca.ulaval.glo2003.transactions.infrastructure.InMemoryTransactionRepository;
 import ca.ulaval.glo2003.transactions.rest.TransactionMapper;
@@ -18,7 +17,6 @@ public class TransactionModule extends AbstractModule {
     bind(TransactionSerializingModule.class);
     bind(TransactionMapper.class);
     bind(TransactionService.class);
-    bind(TransactionConverter.class);
     bind(TransactionResource.class);
   }
 }

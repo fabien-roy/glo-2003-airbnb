@@ -4,8 +4,6 @@ import static ca.ulaval.glo2003.transactions.domain.helpers.TimestampBuilder.aTi
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Timestamp;
@@ -18,7 +16,6 @@ import org.junit.jupiter.api.Test;
 public class TransactionConverterTest {
 
   private static TransactionConverter transactionConverter;
-  private static TimestampConverter timestampConverter = mock(TimestampConverter.class);
 
   private static Timestamp timestamp = aTimestamp().build();
   private static Price total = createTotal();
@@ -36,19 +33,14 @@ public class TransactionConverterTest {
 
   @BeforeEach
   public void setUpMapper() {
-    transactionConverter = new TransactionConverter(timestampConverter);
-  }
-
-  @BeforeEach
-  public void setUpMock() {
-    when(timestampConverter.toString(timestamp)).thenReturn(timestamp.getValue().toString());
+    transactionConverter = new TransactionConverter();
   }
 
   @Test
   public void toResponse_shouldMapTimestamp() {
     TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
-    assertEquals(timestamp.getValue().toString(), transactionResponse.getTimestamp());
+    assertEquals(timestamp.toString(), transactionResponse.getTimestamp());
   }
 
   @Test

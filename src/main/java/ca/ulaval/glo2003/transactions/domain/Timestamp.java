@@ -21,8 +21,13 @@ public class Timestamp {
     value = localDate.atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
   }
 
-  public Instant getValue() {
+  public Instant toInstant() {
     return value;
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
   }
 
   @Override
@@ -31,7 +36,7 @@ public class Timestamp {
 
     Timestamp timestamp = (Timestamp) object;
 
-    return value.equals(timestamp.getValue());
+    return value.equals(timestamp.toInstant());
   }
 
   @Override

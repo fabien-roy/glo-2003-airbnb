@@ -41,16 +41,16 @@ class PriceTest {
   @ParameterizedTest
   @MethodSource("provideDividedValues")
   public void divide_shouldRoundValue(
-      BigDecimal divisor, RoundingMode roundingMode, Price dividedValue) {
+      BigDecimal divisor, RoundingMode roundingMode, BigDecimal dividedValue) {
     price = price.divide(divisor, roundingMode);
 
-    assertEquals(dividedValue, price);
+    assertEquals(dividedValue, price.toBigDecimal());
   }
 
   private static Stream<Arguments> provideDividedValues() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(3), RoundingMode.DOWN, new Price(33)),
-        Arguments.of(BigDecimal.valueOf(3), RoundingMode.UP, new Price(34)));
+        Arguments.of(BigDecimal.valueOf(3), RoundingMode.DOWN, BigDecimal.valueOf(33.3)),
+        Arguments.of(BigDecimal.valueOf(3), RoundingMode.UP, BigDecimal.valueOf(33.4)));
   }
 
   @Test
