@@ -71,6 +71,6 @@ public class BookingService {
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
-    return cancelationService.cancel(booking, bed.getOwnerPublicKey().toString());
+    return cancelationService.cancel(booking, bed.getOwnerPublicKey().getValue());
   }
 }
