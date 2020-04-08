@@ -100,6 +100,20 @@ class BookingTest {
   }
 
   @Test
+  public void isOverlapping_withOverlappingBookingDate_shouldReturnTrue() {
+    boolean result = booking.isOverlapping(booking.getArrivalDate());
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void isOverlapping_withNonOverlappingBookingDate_shouldReturnFalse() {
+    boolean result = booking.isOverlapping(otherBooking.getArrivalDate());
+
+    assertFalse(result);
+  }
+
+  @Test
   public void isOverlapping_withOverlappingPeriod_shouldReturnTrue() {
     boolean result = booking.isOverlapping(arrivalDate, numberOfNights);
 

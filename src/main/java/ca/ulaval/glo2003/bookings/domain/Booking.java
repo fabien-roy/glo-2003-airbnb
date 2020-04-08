@@ -93,6 +93,10 @@ public class Booking {
     return getPeriod().isOverlapping(otherBooking.getPeriod());
   }
 
+  public boolean isOverlapping(BookingDate otherDate) {
+    return isOverlapping(otherDate, 1);
+  }
+
   public boolean isOverlapping(BookingDate otherDate, int numberOfNights) {
     return getPeriod().isOverlapping(otherDate.periodToDays(numberOfNights - 1));
   }
