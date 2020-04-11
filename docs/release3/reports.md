@@ -37,6 +37,25 @@ This document serves as a draft for new classes in `reports` package. It is used
         value : int
         calculate(ReportPeriodData) : ReportPeriodData
 
+    /scopes
+
+      ReportScope
+        name : ReportScopes (enum)
+        bookingPeriod : BookingPeriod
+        getPeriods : List<ReportPeriod> (abstract)
+
+      WeeklyScope
+        getPeriods : List<ReportPeriod>
+
+      MonthlyScope
+        getPeriods : List<ReportPeriod>
+
+      QuaterlyScope
+        getPeriods : List<ReportPeriod>
+
+      AnnualScope
+        getPeriods : List<ReportPeriod>
+
     /assemblers
 
       ReportQueryParamAssembler
@@ -70,10 +89,6 @@ This document serves as a draft for new classes in `reports` package. It is used
     ReportQueryFactory
       create(Map<String>, List<String>) : ReportQuery
 
-    ReportPeriod
-      name : ReportPeriods (enum)
-      bookingPeriod : BookingPeriod
-
     ReportPeriodData
       dimensions : List<ReportDimension> (default = empty)
       metrics : List<ReportMetric> (default = empty)
@@ -84,6 +99,8 @@ This document serves as a draft for new classes in `reports` package. It is used
     ReportDimensions (enum)
 
     ReportMetrics (enum)
+
+    ReportPeriods (enum)
 
   /services
 
