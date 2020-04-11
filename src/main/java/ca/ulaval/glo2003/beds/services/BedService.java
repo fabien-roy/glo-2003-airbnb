@@ -3,13 +3,15 @@ package ca.ulaval.glo2003.beds.services;
 import ca.ulaval.glo2003.beds.converters.BedConverter;
 import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.services.LocationService;
 import com.google.inject.Inject;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class BedService {
@@ -52,7 +54,7 @@ public class BedService {
   }
 
   public List<BedResponse> getAll(Map<String, List<String>> params) {
-    InMemoryBedQuery bedQuery = bedQueryFactory.create(params);
+    BedQuery bedQuery = bedQueryFactory.create(params);
 
     List<Bed> beds = bedRepository.getAll(bedQuery);
 
