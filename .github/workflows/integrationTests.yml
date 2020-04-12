@@ -8,9 +8,8 @@ jobs:
   newman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: matt-ball/newman-action@master
       - name: Integration tests
-        uses: matt-ball/newman-action@master
         with:
           collection: resources/integrationTests.json
           environment: resources/integrationTestsEnv.json
