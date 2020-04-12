@@ -157,7 +157,7 @@ This document serves as a draft for new classes in `reports` package. It is used
         handle(BedException, Request, Response)
 
     ReportResource
-      getAll(Request, Response)
+      get(Request, Response)
 
     ReportPeriodResponse
       period : String
