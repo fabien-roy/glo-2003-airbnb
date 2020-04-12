@@ -4,6 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeBuilder.aLodgingMode;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.bookings.domain.Booking;
@@ -12,16 +13,15 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class BedBuilder {
 
   private BedBuilder() {}
 
-  private UUID DEFAULT_BED_NUMBER = createBedNumber();
-  private UUID bedNumber = DEFAULT_BED_NUMBER;
+  private BedNumber DEFAULT_BED_NUMBER = createBedNumber();
+  private BedNumber bedNumber = DEFAULT_BED_NUMBER;
 
-  private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
+  private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createPublicKey();
   private PublicKey ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
   private Location DEFAULT_LOCATION = createLocation();
@@ -54,7 +54,7 @@ public class BedBuilder {
     return new BedBuilder();
   }
 
-  public BedBuilder withBedNumber(UUID bedNumber) {
+  public BedBuilder withBedNumber(BedNumber bedNumber) {
     this.bedNumber = bedNumber;
     return this;
   }

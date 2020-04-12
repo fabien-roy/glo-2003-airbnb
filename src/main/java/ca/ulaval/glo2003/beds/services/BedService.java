@@ -11,7 +11,6 @@ import com.google.inject.Inject;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class BedService {
@@ -50,7 +49,7 @@ public class BedService {
 
     bedRepository.add(bed);
 
-    return bedNumberConverter.toString(bed.getNumber());
+    return bed.getNumber().toString();
   }
 
   public List<BedResponse> getAll(Map<String, List<String>> params) {
@@ -68,7 +67,7 @@ public class BedService {
   }
 
   public Bed get(String number) {
-    UUID bedNumber = bedNumberConverter.fromString(number);
+    BedNumber bedNumber = bedNumberConverter.fromString(number);
 
     return bedRepository.getByNumber(bedNumber);
   }

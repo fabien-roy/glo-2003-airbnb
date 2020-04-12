@@ -28,7 +28,7 @@ class BookingDateTest {
 
     bookingDate = BookingDate.now();
 
-    assertEquals(now, bookingDate.getValue());
+    assertEquals(now, bookingDate.toLocalDate());
   }
 
   @ParameterizedTest
@@ -38,7 +38,7 @@ class BookingDateTest {
 
     BookingDate actualBookingDate = bookingDate.minusDays(days);
 
-    assertEquals(minusDays, actualBookingDate.getValue());
+    assertEquals(minusDays, actualBookingDate.toLocalDate());
   }
 
   @ParameterizedTest
@@ -48,7 +48,7 @@ class BookingDateTest {
 
     BookingDate actualBookingDate = bookingDate.plusDays(days);
 
-    assertEquals(plusDays, actualBookingDate.getValue());
+    assertEquals(plusDays, actualBookingDate.toLocalDate());
   }
 
   @Test
@@ -127,7 +127,13 @@ class BookingDateTest {
   public void toTimestamp_shouldReturnTimestampWithSameValue() {
     Timestamp timestamp = bookingDate.toTimestamp();
 
-    assertEquals(bookingDate.getValue(), timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
+    assertEquals(
+        bookingDate.toLocalDate(), timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
+  }
+
+  @Test
+  public void toString_shouldReturnValueToString() {
+    assertEquals(date.toString(), bookingDate.toString());
   }
 
   @Test

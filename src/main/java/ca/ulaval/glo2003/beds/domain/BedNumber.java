@@ -1,25 +1,27 @@
 package ca.ulaval.glo2003.beds.domain;
 
-public class PublicKey {
+import java.util.UUID;
 
-  private String value;
+public class BedNumber {
 
-  public PublicKey(String value) {
+  private UUID value;
+
+  public BedNumber(UUID value) {
     this.value = value;
   }
 
   @Override
   public String toString() {
-    return value;
+    return value.toString();
   }
 
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    PublicKey publicKey = (PublicKey) object;
+    BedNumber bedNumber = (BedNumber) object;
 
-    return value.equals(publicKey.toString());
+    return value.toString().equals(bedNumber.toString());
   }
 
   @Override

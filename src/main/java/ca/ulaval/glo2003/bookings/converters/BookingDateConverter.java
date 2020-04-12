@@ -23,8 +23,4 @@ public class BookingDateConverter {
 
     return new BookingDate(value);
   }
-
-  public String toString(BookingDate bookingDate) {
-    return bookingDate.getValue().toString();
-  }
 }

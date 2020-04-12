@@ -6,7 +6,6 @@ import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 import ca.ulaval.glo2003.beds.rest.PackageResponse;
-import ca.ulaval.glo2003.transactions.converters.PriceConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,12 +13,10 @@ import javax.inject.Inject;
 
 public class PackageConverter {
 
-  private final PriceConverter priceConverter;
   private final Set<PackageValidator> validators;
 
   @Inject
-  public PackageConverter(PriceConverter priceConverter, Set<PackageValidator> validators) {
-    this.priceConverter = priceConverter;
+  public PackageConverter(Set<PackageValidator> validators) {
     this.validators = validators;
   }
 
@@ -30,7 +27,7 @@ public class PackageConverter {
     packageRequests.forEach(
         packageRequest -> {
           Packages packageName = parsePackageName(packageRequest.getName());
-          Price price = priceConverter.fromDouble(packageRequest.getPricePerNight());
+          Price price = new Price(packageRequest.getPricePerNight());
           pricesPerNight.put(packageName, price);
         });
 
@@ -43,8 +40,7 @@ public class PackageConverter {
 
     pricesPerNight.forEach(
         (packageName, price) -> {
-          Double priceValue = priceConverter.toDouble(price);
-          packageResponses.add(new PackageResponse(packageName.toString(), priceValue));
+          packageResponses.add(new PackageResponse(packageName.toString(), price.toDouble()));
         });
 
     return packageResponses;

@@ -2,6 +2,8 @@ package ca.ulaval.glo2003.beds.converters;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeBuilder.aLodgingMode;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.beds.rest.helpers.BedRequestBuilder.aBedRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -27,14 +29,13 @@ import org.junit.jupiter.api.Test;
 class BedConverterTest {
 
   private static BedConverter bedConverter;
-  private static BedNumberConverter bedNumberConverter = mock(BedNumberConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
   private static BloodTypeConverter bloodTypeConverter = mock(BloodTypeConverter.class);
   private static LodgingModeConverter lodgingModeConverter = mock(LodgingModeConverter.class);
   private static PackageConverter packageConverter = mock(PackageConverter.class);
 
   private static Bed bed;
-  private static UUID bedNumber;
+  private static BedNumber bedNumber;
   private static PublicKey ownerPublicKey;
   private static Location location;
   private static BedTypes bedType;
@@ -42,7 +43,7 @@ class BedConverterTest {
   private static BloodTypes bloodType = createBloodTypes().get(0);
   private static List<BloodTypes> bloodTypes = Collections.singletonList(bloodType);
   private static int capacity;
-  private static LodgingMode lodgingMode = createLodgingMode();
+  private static LodgingMode lodgingMode = aLodgingMode().build();
   private static Map<Packages, Price> pricesPerNight = new EnumMap<>(Packages.class);
   private static int stars;
 
@@ -58,18 +59,13 @@ class BedConverterTest {
   public static void setUpConverter() {
     bedConverter =
         new BedConverter(
-            bedNumberConverter,
-            publicKeyConverter,
-            bloodTypeConverter,
-            lodgingModeConverter,
-            packageConverter);
+            publicKeyConverter, bloodTypeConverter, lodgingModeConverter, packageConverter);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
-    when(bedNumberConverter.toString(bedNumber)).thenReturn(bedNumber.toString());
-    when(publicKeyConverter.fromString(ownerPublicKey.getValue())).thenReturn(ownerPublicKey);
+    when(publicKeyConverter.fromString(ownerPublicKey.toString())).thenReturn(ownerPublicKey);
     when(bloodTypeConverter.fromStrings(bloodTypeStrings)).thenReturn(bloodTypes);
     when(bloodTypeConverter.toStrings(bloodTypes)).thenReturn(bloodTypeStrings);
     when(lodgingModeConverter.fromString(lodgingMode.getName().toString())).thenReturn(lodgingMode);
@@ -80,7 +76,7 @@ class BedConverterTest {
 
   private static void resetMocks() {
     bedNumber = createBedNumber();
-    ownerPublicKey = createOwnerPublicKey();
+    ownerPublicKey = createPublicKey();
     location = createLocation();
     bedType = createBedType();
     cleaningFrequency = createCleaningFrequency();
@@ -107,7 +103,7 @@ class BedConverterTest {
 
   private static BedRequest buildBedRequest() {
     return aBedRequest()
-        .withOwnerPublicKey(ownerPublicKey.getValue())
+        .withOwnerPublicKey(ownerPublicKey.toString())
         .withBedType(bedType.toString())
         .withCleaningFrequency(cleaningFrequency.toString())
         .withBloodTypes(convertToStrings(bloodTypes))
@@ -223,7 +219,7 @@ class BedConverterTest {
   public void toResponseWithoutNumber_shouldConvertLocation() {
     BedResponse bedResponse = bedConverter.toResponseWithoutNumber(bed, stars);
 
-    assertEquals(location.getZipCode().getValue(), bedResponse.getZipCode());
+    assertEquals(location.getZipCode().toString(), bedResponse.getZipCode());
   }
 
   @Test

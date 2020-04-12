@@ -54,7 +54,7 @@ public class CancelationService {
     Price tenantRefund = cancelationRefundCalculator.calculateTenantRefund(booking.getTotal());
     Price ownerRefund = cancelationRefundCalculator.calculateOwnerRefund(booking.getTotal());
     transactionService.addStayCanceledHalfRefund(
-        booking.getTenantPublicKey().getValue(),
+        booking.getTenantPublicKey().toString(),
         bedOwner,
         tenantRefund,
         ownerRefund,
@@ -65,7 +65,7 @@ public class CancelationService {
 
   private Price refundFullTotal(Booking booking, String bedOwner) {
     transactionService.addStayCanceledFullRefund(
-        booking.getTenantPublicKey().getValue(),
+        booking.getTenantPublicKey().toString(),
         bedOwner,
         booking.getTotal(),
         booking.getDepartureDate().toTimestamp());

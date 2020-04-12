@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.locations.services;
 
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocation;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createZipCode;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,14 +30,14 @@ class LocationServiceTest {
 
   @BeforeEach
   public void setUpMock() {
-    when(zipCodeConverter.fromString(zipCode.getValue())).thenReturn(zipCode);
+    when(zipCodeConverter.fromString(zipCode.toString())).thenReturn(zipCode);
     when(locationClient.getLocation(zipCode)).thenReturn(location);
     locationService = new LocationService(locationClient, zipCodeConverter);
   }
 
   @Test
   public void getLocation_shouldGetLocationFromClient() {
-    Location actualLocation = locationService.getLocation(zipCode.getValue());
+    Location actualLocation = locationService.getLocation(zipCode.toString());
 
     assertSame(location, actualLocation);
   }

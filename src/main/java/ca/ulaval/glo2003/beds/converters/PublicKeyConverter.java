@@ -16,8 +16,4 @@ public class PublicKeyConverter {
 
     return new PublicKey(upperCaseValue);
   }
-
-  public String toString(PublicKey publicKey) {
-    return publicKey.getValue();
-  }
 }

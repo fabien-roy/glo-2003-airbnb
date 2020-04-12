@@ -6,11 +6,10 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Booking {
 
-  private UUID number;
+  private BookingNumber number;
   private PublicKey tenantPublicKey;
   private BookingDate arrivalDate;
   private int numberOfNights;
@@ -33,11 +32,11 @@ public class Booking {
     this.packageName = packageName;
   }
 
-  public UUID getNumber() {
+  public BookingNumber getNumber() {
     return number;
   }
 
-  public void setNumber(UUID number) {
+  public void setNumber(BookingNumber number) {
     this.number = number;
   }
 

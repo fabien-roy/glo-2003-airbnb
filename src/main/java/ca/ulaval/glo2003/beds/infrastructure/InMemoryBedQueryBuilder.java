@@ -10,7 +10,7 @@ import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryBedQueryBuilder implements BedQueryBuilder {
+public class InMemoryBedQueryBuilder implements BedQueryBuilder<InMemoryBedQuery> {
 
   private List<InMemoryBedFilter> filters = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder {
   private double maxDistance = UNSET_NUMERIC;
 
   @Override
-  public BedQueryBuilder aBedQuery() {
+  public InMemoryBedQueryBuilder aBedQuery() {
     return new InMemoryBedQueryBuilder();
   }
 

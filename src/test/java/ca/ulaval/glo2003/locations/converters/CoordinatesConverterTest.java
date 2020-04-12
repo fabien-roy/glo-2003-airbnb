@@ -31,8 +31,8 @@ class CoordinatesConverterTest {
   public void setUpMocks() {
     placeResponse =
         aPlaceResponse()
-            .withLongitude(Double.toString(longitude.getValue()))
-            .withLatitude(Double.toString(latitude.getValue()))
+            .withLongitude(Double.toString(longitude.toDegrees()))
+            .withLatitude(Double.toString(latitude.toDegrees()))
             .build();
   }
 

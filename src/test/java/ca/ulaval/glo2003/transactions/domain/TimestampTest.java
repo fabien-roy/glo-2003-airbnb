@@ -28,17 +28,17 @@ class TimestampTest {
   public void construct_withLocalDate_shouldReturnTimestampAtZuluZoneOffset() {
     timestamp = new Timestamp(date);
 
-    assertEquals(date, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
+    assertEquals(date, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test
   public void construct_withLocalDate_shouldReturnTimestampAtMax() {
     LocalDateTime max =
-        timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate().atTime(LocalTime.MAX);
+        timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate().atTime(LocalTime.MAX);
 
     timestamp = new Timestamp(date);
 
-    assertEquals(max, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDateTime());
+    assertEquals(max, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDateTime());
   }
 
   @Test
@@ -47,7 +47,12 @@ class TimestampTest {
 
     timestamp = Timestamp.now();
 
-    assertEquals(now, timestamp.getValue().atOffset(ZONE_OFFSET).toLocalDate());
+    assertEquals(now, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
+  }
+
+  @Test
+  public void toString_shouldReturnValueToString() {
+    assertEquals(timestamp.toInstant().toString(), timestamp.toString());
   }
 
   @Test
@@ -70,7 +75,7 @@ class TimestampTest {
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    Timestamp otherTimestamp = new Timestamp(timestamp.getValue());
+    Timestamp otherTimestamp = new Timestamp(timestamp.toInstant());
 
     boolean result = timestamp.equals(otherTimestamp);
 

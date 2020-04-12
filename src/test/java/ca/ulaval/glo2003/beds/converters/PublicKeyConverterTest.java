@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.converters;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -23,19 +23,19 @@ class PublicKeyConverterTest {
 
   @BeforeEach
   public void resetMock() {
-    publicKey = createOwnerPublicKey();
+    publicKey = createPublicKey();
   }
 
   @Test
   public void fromString_shouldConvertPublicKey() {
-    PublicKey actualPublicKey = publicKeyConverter.fromString(publicKey.getValue());
+    PublicKey actualPublicKey = publicKeyConverter.fromString(publicKey.toString());
 
     assertEquals(publicKey, actualPublicKey);
   }
 
   @Test
   public void fromString_withLowerCaseString_shouldConvertPublicKey() {
-    String lowerCaseString = publicKey.getValue().toLowerCase();
+    String lowerCaseString = publicKey.toString().toLowerCase();
 
     PublicKey actualPublicKey = publicKeyConverter.fromString(lowerCaseString);
 
@@ -56,12 +56,5 @@ class PublicKeyConverterTest {
 
     assertThrows(
         InvalidPublicKeyException.class, () -> publicKeyConverter.fromString(invalidPublicKey));
-  }
-
-  @Test
-  public void toString_shouldConvertPublicKey() {
-    String value = publicKeyConverter.toString(publicKey);
-
-    assertEquals(publicKey.getValue(), value);
   }
 }

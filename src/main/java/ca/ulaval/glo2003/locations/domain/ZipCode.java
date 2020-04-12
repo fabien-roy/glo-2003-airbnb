@@ -8,7 +8,8 @@ public class ZipCode {
     this.value = value;
   }
 
-  public String getValue() {
+  @Override
+  public String toString() {
     return value;
   }
 
@@ -18,7 +19,7 @@ public class ZipCode {
 
     ZipCode zipCode = (ZipCode) object;
 
-    return value.equals(zipCode.getValue());
+    return value.equals(zipCode.toString());
   }
 
   @Override

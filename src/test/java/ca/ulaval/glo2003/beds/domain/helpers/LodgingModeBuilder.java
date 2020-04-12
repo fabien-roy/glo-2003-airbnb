@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeType;
+import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
 
 import ca.ulaval.glo2003.beds.domain.CohabitationLodgingMode;
 import ca.ulaval.glo2003.beds.domain.LodgingMode;
@@ -11,7 +11,7 @@ public class LodgingModeBuilder {
 
   private LodgingModeBuilder() {}
 
-  private LodgingModes DEFAULT_LODGING_MODE_TYPE = createLodgingModeType();
+  private LodgingModes DEFAULT_LODGING_MODE_TYPE = createLodgingModeName();
   private LodgingModes lodgingModeType = DEFAULT_LODGING_MODE_TYPE;
 
   public static LodgingModeBuilder aLodgingMode() {

@@ -6,9 +6,12 @@ import java.util.UUID;
 public class BedFactory {
 
   public Bed create(Bed bed, Location location) {
-    UUID bedNumber = UUID.randomUUID();
-    bed.setNumber(bedNumber);
+    bed.setNumber(createNumber());
     bed.setLocation(location);
     return bed;
+  }
+
+  private BedNumber createNumber() {
+    return new BedNumber(UUID.randomUUID());
   }
 }

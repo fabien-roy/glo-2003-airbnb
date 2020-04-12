@@ -6,10 +6,13 @@ import java.util.UUID;
 public class BookingFactory {
 
   public Booking create(Booking booking, Price total) {
-    UUID bookingNumber = UUID.randomUUID();
-    booking.setNumber(bookingNumber);
+    booking.setNumber(createNumber());
     booking.setTotal(total);
     booking.setStatus(BookingStatuses.BOOKED);
     return booking;
+  }
+
+  private BookingNumber createNumber() {
+    return new BookingNumber(UUID.randomUUID());
   }
 }

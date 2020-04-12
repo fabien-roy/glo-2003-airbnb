@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.bookings.domain;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ class BookingTest {
   @BeforeEach
   public void setUpBooking() {
     numberOfNights = 3;
-    arrivalDate = createArrivalDate();
+    arrivalDate = createBookingDate();
     otherArrivalDate = arrivalDate.plusDays(numberOfNights);
 
     booking = buildBooking();

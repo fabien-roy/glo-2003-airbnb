@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -14,11 +15,11 @@ import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +34,8 @@ class BedTest {
 
   private static Booking booking = mock(Booking.class);
   private static Booking otherBooking = mock(Booking.class);
-  private static UUID bookingNumber;
-  private static UUID otherBookingNumber;
+  private static BookingNumber bookingNumber;
+  private static BookingNumber otherBookingNumber;
   private static Packages bookingPackage;
   private static PublicKey tenantPublicKey;
   private static BookingDate arrivalDate;
@@ -44,15 +45,15 @@ class BedTest {
 
   @BeforeEach
   public void setUpBed() {
-    ownerPublicKey = createOwnerPublicKey();
+    ownerPublicKey = createPublicKey();
     bedPackage = createPackageName();
     capacity = 100;
     bookings = Collections.emptyList();
     bookingNumber = createBookingNumber();
     otherBookingNumber = createBookingNumber();
     bookingPackage = bedPackage;
-    tenantPublicKey = createTenantPublicKey();
-    arrivalDate = createArrivalDate();
+    tenantPublicKey = createPublicKey();
+    arrivalDate = createBookingDate();
     colonySize = 20;
     otherColonySize = 30;
     numberOfNights = createNumberOfNights();
@@ -220,7 +221,7 @@ class BedTest {
 
   @Test
   public void book_withSameTenantAsBedOwner_shouldThrowBookingNotAllowedException() {
-    tenantPublicKey = new PublicKey(ownerPublicKey.getValue());
+    tenantPublicKey = new PublicKey(ownerPublicKey.toString());
     resetBooking();
 
     assertThrows(BookingNotAllowedException.class, () -> bed.book(booking));
@@ -308,7 +309,7 @@ class BedTest {
       getBookingByNumber_withNonExistentBookingNumber_shouldThrowBookingNotFoundException() {
     bookings = Collections.singletonList(booking);
     bed = buildBed();
-    UUID nonExistentBookingNumber = createBedNumber();
+    BookingNumber nonExistentBookingNumber = createBookingNumber();
 
     assertThrows(
         BookingNotFoundException.class, () -> bed.getBookingByNumber(nonExistentBookingNumber));

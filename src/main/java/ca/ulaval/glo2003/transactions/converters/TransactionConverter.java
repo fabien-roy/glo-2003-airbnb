@@ -2,29 +2,15 @@ package ca.ulaval.glo2003.transactions.converters;
 
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
-import javax.inject.Inject;
 
 public class TransactionConverter {
 
-  private final TimestampConverter timestampConverter;
-  private final PriceConverter priceConverter;
-
-  @Inject
-  public TransactionConverter(
-      TimestampConverter timestampConverter, PriceConverter priceConverter) {
-    this.timestampConverter = timestampConverter;
-    this.priceConverter = priceConverter;
-  }
-
   public TransactionResponse toResponse(Transaction transaction) {
-    String timestamp = timestampConverter.toString(transaction.getTimestamp());
-    Double total = priceConverter.toDouble(transaction.getTotal());
-
     return new TransactionResponse(
-        timestamp,
+        transaction.getTimestamp().toString(),
         transaction.getFrom(),
         transaction.getTo(),
-        total,
+        transaction.getTotal().toDouble(),
         transaction.getReason().toString());
   }
 }

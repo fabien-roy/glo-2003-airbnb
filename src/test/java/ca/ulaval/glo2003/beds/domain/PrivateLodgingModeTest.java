@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -9,7 +9,6 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +33,7 @@ class PrivateLodgingModeTest {
   @BeforeEach
   public void setUpMocks() {
     minCapacity = createCapacity();
-    arrivalDate = createArrivalDate();
+    arrivalDate = createBookingDate();
     numberOfNights = createNumberOfNights();
     bookings = Collections.emptyList();
 
@@ -97,7 +96,7 @@ class PrivateLodgingModeTest {
 
   @Test
   public void applyDiscount_shouldReturnSameTotal() {
-    Price total = new Price(BigDecimal.valueOf(100));
+    Price total = new Price(100);
 
     Price discountedTotal = privateLodgingMode.applyDiscount(total, bed, booking);
 

@@ -17,25 +17,25 @@ class PriceTest {
 
   @BeforeEach
   public void setUpPrice() {
-    price = new Price(BigDecimal.valueOf(100));
+    price = new Price(100);
   }
 
   @Test
   public void multiply_shouldMultiplyValue() {
-    BigDecimal multipliedValue = BigDecimal.valueOf(500);
+    Price multipliedValue = new Price(500);
 
     price = price.multiply(BigDecimal.valueOf(5));
 
-    assertEquals(multipliedValue, price.getValue());
+    assertEquals(multipliedValue, price);
   }
 
   @Test
   public void divide_shouldDivideValue() {
-    BigDecimal expectedMultipliedValue = BigDecimal.valueOf(20);
+    Price dividedValue = new Price(20);
 
     price = price.divide(BigDecimal.valueOf(5), RoundingMode.DOWN);
 
-    assertEquals(expectedMultipliedValue, price.getValue());
+    assertEquals(dividedValue, price);
   }
 
   @ParameterizedTest
@@ -44,13 +44,13 @@ class PriceTest {
       BigDecimal divisor, RoundingMode roundingMode, BigDecimal dividedValue) {
     price = price.divide(divisor, roundingMode);
 
-    assertEquals(dividedValue, price.getValue());
+    assertEquals(dividedValue, price.toBigDecimal());
   }
 
   private static Stream<Arguments> provideDividedValues() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(3), RoundingMode.DOWN, BigDecimal.valueOf(33)),
-        Arguments.of(BigDecimal.valueOf(3), RoundingMode.UP, BigDecimal.valueOf(34)));
+        Arguments.of(BigDecimal.valueOf(3), RoundingMode.DOWN, BigDecimal.valueOf(33.3)),
+        Arguments.of(BigDecimal.valueOf(3), RoundingMode.UP, BigDecimal.valueOf(33.4)));
   }
 
   @Test
@@ -64,7 +64,7 @@ class PriceTest {
 
   @Test
   public void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    Price otherPrice = new Price(BigDecimal.ONE);
+    Price otherPrice = new Price(50);
 
     boolean result = price.equals(otherPrice);
 
@@ -73,7 +73,7 @@ class PriceTest {
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    Price otherPrice = new Price(price.getValue());
+    Price otherPrice = new Price(price.toDouble());
 
     boolean result = price.equals(otherPrice);
 

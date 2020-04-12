@@ -7,14 +7,14 @@ import java.util.Comparator;
 public class Price implements Comparable<Price> {
 
   private BigDecimal value;
-  private final Comparator<Price> comparator = Comparator.comparing(Price::getValue);
+  private final Comparator<Price> comparator = Comparator.comparing(Price::toBigDecimal);
 
-  public Price(BigDecimal value) {
-    this.value = value;
+  public Price(double price) {
+    this.value = BigDecimal.valueOf(price);
   }
 
-  public BigDecimal getValue() {
-    return value;
+  private Price(BigDecimal value) {
+    this.value = value;
   }
 
   public Price multiply(BigDecimal factor) {
@@ -29,6 +29,14 @@ public class Price implements Comparable<Price> {
     return new Price(dividedValue);
   }
 
+  public BigDecimal toBigDecimal() {
+    return value;
+  }
+
+  public double toDouble() {
+    return value.doubleValue();
+  }
+
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
@@ -36,7 +44,7 @@ public class Price implements Comparable<Price> {
     Price money = (Price) object;
 
     // Using compareTo since BigDecimal.equals gives "0.0 != 0.00"
-    return value.compareTo(money.getValue()) == 0;
+    return value.compareTo(money.toBigDecimal()) == 0;
   }
 
   @Override

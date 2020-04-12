@@ -22,9 +22,8 @@ class BookingDateConverterTest {
   @Test
   public void fromString_shouldConvertBookingDate() {
     BookingDate expectedDate = new BookingDate(LocalDate.now());
-    String requestedDate = expectedDate.getValue().toString();
 
-    BookingDate bookingDate = bookingDateConverter.fromString(requestedDate);
+    BookingDate bookingDate = bookingDateConverter.fromString(expectedDate.toString());
 
     assertEquals(expectedDate, bookingDate);
   }
@@ -53,15 +52,5 @@ class BookingDateConverterTest {
 
     Assertions.assertThrows(
         InvalidArrivalDateException.class, () -> bookingDateConverter.fromString(nullArrivalDate));
-  }
-
-  @Test
-  public void toString_shouldConvertBookingDate() {
-    BookingDate bookingDate = new BookingDate(LocalDate.now());
-    String expectedValue = bookingDate.getValue().toString();
-
-    String value = bookingDateConverter.toString(bookingDate);
-
-    assertEquals(expectedValue, value);
   }
 }

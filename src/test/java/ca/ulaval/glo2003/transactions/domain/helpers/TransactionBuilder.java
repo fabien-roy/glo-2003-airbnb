@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.transactions.domain.helpers;
 
-import static ca.ulaval.glo2003.transactions.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -12,7 +11,7 @@ public class TransactionBuilder {
 
   private TransactionBuilder() {}
 
-  private Timestamp DEFAULT_TIMESTAMP = aTimestamp().build();
+  private Timestamp DEFAULT_TIMESTAMP = createTimestamp();
   private Timestamp timestamp = DEFAULT_TIMESTAMP;
 
   private String DEFAULT_FROM = createFrom();

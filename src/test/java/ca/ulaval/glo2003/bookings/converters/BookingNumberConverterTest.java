@@ -4,8 +4,8 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.crea
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class BookingNumberConverterTest {
 
   private static BookingNumberConverter bookingNumberConverter;
 
-  private UUID bookingNumber = createBookingNumber();
+  private BookingNumber bookingNumber = createBookingNumber();
 
   @BeforeAll
   public static void setUpConverter() {
@@ -22,7 +22,7 @@ class BookingNumberConverterTest {
 
   @Test
   public void fromString_shouldConvertBookingNumber() {
-    UUID actualBookingNumber = bookingNumberConverter.fromString(bookingNumber.toString());
+    BookingNumber actualBookingNumber = bookingNumberConverter.fromString(bookingNumber.toString());
 
     assertEquals(bookingNumber, actualBookingNumber);
   }
@@ -33,12 +33,5 @@ class BookingNumberConverterTest {
 
     assertThrows(
         BookingNotFoundException.class, () -> bookingNumberConverter.fromString(invalidNumber));
-  }
-
-  @Test
-  public void toString_shouldConvertBookingNumber() {
-    String actualString = bookingNumberConverter.toString(bookingNumber);
-
-    assertEquals(bookingNumber.toString(), actualString);
   }
 }

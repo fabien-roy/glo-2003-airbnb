@@ -36,7 +36,7 @@ class PublicKeyTest {
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    otherPublicKey = new PublicKey(publicKey.getValue());
+    otherPublicKey = new PublicKey(publicKey.toString());
 
     boolean result = publicKey.equals(otherPublicKey);
 
