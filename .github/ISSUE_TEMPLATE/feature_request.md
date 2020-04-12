@@ -1,6 +1,6 @@
 ---
 name: Feature to implement
-about: What is this new feature about?
+about: A new feature to add to the app
 title: ''
 labels: ''
 assignees: ''
