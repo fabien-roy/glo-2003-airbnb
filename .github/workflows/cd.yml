@@ -13,11 +13,6 @@ jobs:
         run: mvn clean install &&
           HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }}
           mvn clean heroku:deploy
-
-  newman:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
       - name: Integration tests
         uses: matt-ball/newman-action@master
         with:
