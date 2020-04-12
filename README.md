@@ -1,7 +1,7 @@
 # Air Bed and Bug (Airbnb)
 
-![Airbnb CI](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Airbnb%20CI/badge.svg)
-![Airbnb CD](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Airbnb%20CD/badge.svg)
+![Build](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Airbnb%20CI/badge.svg)
+![Deploy](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Airbnb%20CD/badge.svg)
 
 This is our project for course GLO-2003 at Laval University. We are team 8.
 
