@@ -14,8 +14,3 @@ jobs:
         run: mvn clean install &&
           HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }}
           mvn clean heroku:deploy
-      - uses: matt-ball/newman-action@master
-      - name: Integration tests
-        with:
-          collection: resources/integrationTests.json
-          environment: resources/integrationTestsEnv.json
