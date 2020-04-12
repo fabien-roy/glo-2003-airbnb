@@ -1,8 +1,13 @@
 package ca.ulaval.glo2003.bookings.converters;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
@@ -58,13 +63,13 @@ class BookingConverterTest {
   }
 
   private void resetMocks() {
-    tenantPublicKey = createTenantPublicKey();
-    arrivalDate = createArrivalDate();
+    tenantPublicKey = createPublicKey();
+    arrivalDate = createBookingDate();
     numberOfNights = createNumberOfNights();
     colonySize = createColonySize();
     packageName = createPackageName();
     packageNameValue = packageName.toString();
-    total = createTotal();
+    total = createPrice();
     status = BookingStatuses.BOOKED;
 
     booking = buildBooking();

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.rest.helpers;
 
-import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestObjectMother.createPackageName;
-import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestObjectMother.createPricePerNight;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
 
@@ -9,10 +9,10 @@ public class PackageRequestBuilder {
 
   private PackageRequestBuilder() {}
 
-  private String DEFAULT_NAME = createPackageName();
+  private String DEFAULT_NAME = createPackageName().toString();
   private String name = DEFAULT_NAME;
 
-  private double DEFAULT_PRICE_PER_NIGHT = createPricePerNight();
+  private double DEFAULT_PRICE_PER_NIGHT = createPrice().toDouble();
   private double pricePerNight = DEFAULT_PRICE_PER_NIGHT;
 
   public static PackageRequestBuilder aPackageRequest() {

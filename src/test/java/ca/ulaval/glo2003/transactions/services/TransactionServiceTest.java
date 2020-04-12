@@ -1,9 +1,7 @@
 package ca.ulaval.glo2003.transactions.services;
 
-import static ca.ulaval.glo2003.transactions.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
-import static ca.ulaval.glo2003.transactions.rest.helpers.TransactionResponseBuilder.aTransactionResponse;
 import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -26,14 +24,14 @@ class TransactionServiceTest {
   private static Transaction transaction = aTransaction().build();
   private static Transaction otherTransaction = aTransaction().build();
   private static Transaction anotherTransaction = aTransaction().build();
-  private static TransactionResponse transactionResponse = aTransactionResponse().build();
-  private static TransactionResponse otherTransactionResponse = aTransactionResponse().build();
+  private static TransactionResponse transactionResponse = mock(TransactionResponse.class);
+  private static TransactionResponse otherTransactionResponse = mock(TransactionResponse.class);
   private static String tenant = createFrom();
   private static String owner = createTo();
   private static Price tenantRefund = createTotal();
   private static Price ownerRefund = createTotal();
   private static Price total = createTotal();
-  private static Timestamp departureDate = aTimestamp().build();
+  private static Timestamp departureDate = createTimestamp();
 
   @BeforeAll
   public static void setUpService() {

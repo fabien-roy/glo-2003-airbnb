@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createArrivalDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -33,7 +33,7 @@ class PrivateLodgingModeTest {
   @BeforeEach
   public void setUpMocks() {
     minCapacity = createCapacity();
-    arrivalDate = createArrivalDate();
+    arrivalDate = createBookingDate();
     numberOfNights = createNumberOfNights();
     bookings = Collections.emptyList();
 

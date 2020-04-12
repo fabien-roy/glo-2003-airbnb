@@ -4,6 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeBuilder.aLodgingMode;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 
 import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.bookings.domain.Booking;
@@ -20,7 +21,7 @@ public class BedBuilder {
   private BedNumber DEFAULT_BED_NUMBER = createBedNumber();
   private BedNumber bedNumber = DEFAULT_BED_NUMBER;
 
-  private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createOwnerPublicKey();
+  private PublicKey DEFAULT_OWNER_PUBLIC_KEY = createPublicKey();
   private PublicKey ownerPublicKey = DEFAULT_OWNER_PUBLIC_KEY;
 
   private Location DEFAULT_LOCATION = createLocation();

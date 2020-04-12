@@ -1,10 +1,12 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createOwnerPublicKey;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -43,15 +45,15 @@ class BedTest {
 
   @BeforeEach
   public void setUpBed() {
-    ownerPublicKey = createOwnerPublicKey();
+    ownerPublicKey = createPublicKey();
     bedPackage = createPackageName();
     capacity = 100;
     bookings = Collections.emptyList();
     bookingNumber = createBookingNumber();
     otherBookingNumber = createBookingNumber();
     bookingPackage = bedPackage;
-    tenantPublicKey = createTenantPublicKey();
-    arrivalDate = createArrivalDate();
+    tenantPublicKey = createPublicKey();
+    arrivalDate = createBookingDate();
     colonySize = 20;
     otherColonySize = 30;
     numberOfNights = createNumberOfNights();
