@@ -8,7 +8,7 @@ jobs:
   newman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
       - name: Integration tests
         uses: matt-ball/newman-action@master
         with:
