@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f82faf75-fcb2-4d28-9ad2-69350879812f",
-		"name": "PROC - AirbnbTest",
+		"_postman_id": "0e65b397-ed42-4f61-9b50-03c87fb48d29",
+		"name": "Airbnb - Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1118,19 +1118,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -1347,19 +1345,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_ZIP_CODE\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"zip code should be a 5 digits number\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -1633,19 +1629,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_BED_TYPE\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"bed type should be one of latex, memoryFoam or springs\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -1807,19 +1801,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_CLEANING_FREQUENCY\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"cleaning frequency should be one of weekly, monthly, annual or never\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_CLEANING_FREQUENCY\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"cleaning frequency should be one of weekly, monthly, annual or never\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -1981,19 +1973,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -2258,19 +2248,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_BLOOD_TYPES\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"blood types should be one or many of O-, O+, AB-, AB+, B-, B+, A- or A+\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -2542,19 +2530,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_CAPACITY\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"capacity should be a positive number\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_CAPACITY\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"capacity should be a positive number\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -2891,19 +2877,17 @@
 													"script": {
 														"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 														"exec": [
-															"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-															"    pm.test(\"response is ok\", function () {",
-															"        pm.response.to.have.status(400);",
-															"    });",
-															"    ",
-															"    pm.test(\"contains right error\", function () {",
-															"        pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGES\");",
-															"    });",
-															"    ",
-															"    pm.test(\"contains right description\", function () {",
-															"        pm.expect(pm.response.text()).to.include(\"packages should be an array of package name with its corresponding price per night\");",
-															"    });",
-															"}"
+															"pm.test(\"response is ok\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"contains right error\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGES\");",
+															"});",
+															"",
+															"pm.test(\"contains right description\", function () {",
+															"    pm.expect(pm.response.text()).to.include(\"packages should be an array of package name with its corresponding price per night\");",
+															"});"
 														],
 														"type": "text/javascript"
 													}
@@ -3289,19 +3273,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGES\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"packages should be an array of package name with its corresponding price per night\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGES\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"packages should be an array of package name with its corresponding price per night\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -4194,10 +4176,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{host}}/beds?cleaningFreq=invalid",
+											"raw": "http://localhost:4567/beds?cleaningFreq=invalid",
+											"protocol": "http",
 											"host": [
-												"{{host}}"
+												"localhost"
 											],
+											"port": "4567",
 											"path": [
 												"beds"
 											],
@@ -4866,6 +4850,7 @@
 												"{{host}}"
 											],
 											"path": [
+												"",
 												"beds"
 											],
 											"query": [
@@ -5009,6 +4994,7 @@
 												"{{host}}"
 											],
 											"path": [
+												"",
 												"beds"
 											],
 											"query": [
@@ -5079,6 +5065,7 @@
 												"{{host}}"
 											],
 											"path": [
+												"",
 												"beds"
 											],
 											"query": [
@@ -5149,6 +5136,7 @@
 												"{{host}}"
 											],
 											"path": [
+												"",
 												"beds"
 											],
 											"query": [
@@ -5219,6 +5207,7 @@
 												"{{host}}"
 											],
 											"path": [
+												"",
 												"beds"
 											],
 											"query": [
@@ -5289,6 +5278,7 @@
 												"{{host}}"
 											],
 											"path": [
+												"",
 												"beds"
 											],
 											"query": [
@@ -7299,6 +7289,28 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "94320a73-9392-4a39-8d46-32bc549f8aa3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "52d0599c-7191-40a7-ae6c-b31fcab79827",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}

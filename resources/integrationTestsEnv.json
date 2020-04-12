@@ -1,6 +1,6 @@
 {
-	"id": "9ac96f6c-57e3-4174-90bc-7032d9625aea",
-	"name": "PROC - AirbnbTest (local)",
+	"id": "547ab860-8e42-4dfc-91e2-10b3a505c0b5",
+	"name": "Airbnb - Integration Tests",
 	"values": [
 		{
 			"key": "queryParam.bedType",
@@ -49,12 +49,12 @@
 		},
 		{
 			"key": "param.bedNumber",
-			"value": "b4b96c93-7298-4023-9b21-433845617e02",
+			"value": "c4e1a2a1-0a82-47b1-ab99-ec57826f3fa1",
 			"enabled": true
 		},
 		{
 			"key": "param.bookingNumber",
-			"value": "593cd373-c2a1-48a5-8b02-96808f991156",
+			"value": null,
 			"enabled": true
 		},
 		{
@@ -114,7 +114,7 @@
 		},
 		{
 			"key": "host",
-			"value": "http://localhost:4567",
+			"value": "https://glo2003-h2020-eq08.herokuapp.com",
 			"enabled": true
 		},
 		{
@@ -154,16 +154,16 @@
 		},
 		{
 			"key": "testFeatures.nullFields",
-			"value": "false",
+			"value": "true",
 			"enabled": true
 		},
 		{
 			"key": "beds.1.bedNumber",
-			"value": "3d019d08-4007-454f-a2d8-796e524442ca",
+			"value": "99a93a6f-24fe-43de-9c54-004af3ec5bcc",
 			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2020-04-05T16:50:50.292Z",
-	"_postman_exported_using": "Postman/7.21.2"
+	"_postman_exported_at": "2020-04-12T16:18:04.421Z",
+	"_postman_exported_using": "Postman/7.22.1"
 }

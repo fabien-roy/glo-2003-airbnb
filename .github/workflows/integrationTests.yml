@@ -1,4 +1,4 @@
-name: Airbnb CD
+name: Airbnb integration tests
 on:
   push:
     branches:
@@ -10,10 +10,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build & Deploy
-        run: mvn clean install &&
-          HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }}
-          mvn clean heroku:deploy
       - uses: matt-ball/newman-action@master
       - name: Integration tests
         with:
