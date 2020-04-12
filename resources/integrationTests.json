@@ -22,7 +22,7 @@
 											"pm.test(\"response is ok\", function () {",
 											"    pm.response.to.have.status(201);",
 											"    var bedNumber = responseBody.split('/')[2]",
-											"    postman.setEnvironmentVariable(\"beds.1.bedNumber\", bedNumber)",
+											"    pm.setEnvironmentVariable(\"beds.1.bedNumber\", bedNumber)",
 											"});"
 										],
 										"type": "text/javascript"
@@ -4176,12 +4176,10 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:4567/beds?cleaningFreq=invalid",
-											"protocol": "http",
+											"raw": "{{host}}/beds?cleaningFreq=invalid",
 											"host": [
-												"localhost"
+												"{{host}}"
 											],
-											"port": "4567",
 											"path": [
 												"beds"
 											],
