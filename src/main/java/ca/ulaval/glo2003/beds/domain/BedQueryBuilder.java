@@ -1,33 +1,32 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 
-public interface BedQueryBuilder {
+public interface BedQueryBuilder<Q extends BedQuery> {
 
-  BedQueryBuilder aBedQuery();
+  BedQueryBuilder<Q> aBedQuery();
 
-  BedQueryBuilder withBedType(BedTypes bedType);
+  BedQueryBuilder<Q> withBedType(BedTypes bedType);
 
-  BedQueryBuilder withCleaningFrequency(CleaningFrequencies cleaningFrequency);
+  BedQueryBuilder<Q> withCleaningFrequency(CleaningFrequencies cleaningFrequency);
 
-  BedQueryBuilder withBloodTypes(List<BloodTypes> parseBloodTypes);
+  BedQueryBuilder<Q> withBloodTypes(List<BloodTypes> parseBloodTypes);
 
-  BedQueryBuilder withPackage(Packages packageNames);
+  BedQueryBuilder<Q> withPackage(Packages packageNames);
 
-  BedQueryBuilder withMinCapacity(int minCapacity);
+  BedQueryBuilder<Q> withMinCapacity(int minCapacity);
 
-  BedQueryBuilder withArrivalDate(BookingDate arrivalDate);
+  BedQueryBuilder<Q> withArrivalDate(BookingDate arrivalDate);
 
-  BedQueryBuilder withNumberOfNights(int numberOfNights);
+  BedQueryBuilder<Q> withNumberOfNights(int numberOfNights);
 
-  BedQueryBuilder withLodgingMode(LodgingModes lodgingMode);
+  BedQueryBuilder<Q> withLodgingMode(LodgingModes lodgingMode);
 
-  BedQueryBuilder withOrigin(Location origin);
+  BedQueryBuilder<Q> withOrigin(Location origin);
 
-  BedQueryBuilder withMaxDistance(double maxDistance);
+  BedQueryBuilder<Q> withMaxDistance(double maxDistance);
 
-  InMemoryBedQuery build();
+  Q build();
 }

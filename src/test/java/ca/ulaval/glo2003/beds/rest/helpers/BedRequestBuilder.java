@@ -6,6 +6,8 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.create
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.createZipCode;
 
+import ca.ulaval.glo2003.beds.domain.BedTypes;
+import ca.ulaval.glo2003.beds.domain.BedTypesCapacities;
 import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.PackageRequest;
@@ -33,7 +35,7 @@ public class BedRequestBuilder {
       createBloodTypes().stream().map(BloodTypes::toString).collect(Collectors.toList());
   private List<String> bloodTypes = DEFAULT_BLOOD_TYPES;
 
-  private int DEFAULT_CAPACITY = createCapacity();
+  private int DEFAULT_CAPACITY = BedTypesCapacities.get(BedTypes.get(DEFAULT_BED_TYPE));
   private int capacity = DEFAULT_CAPACITY;
 
   private String DEFAULT_LODGING_MODE = createLodgingModeName().toString();

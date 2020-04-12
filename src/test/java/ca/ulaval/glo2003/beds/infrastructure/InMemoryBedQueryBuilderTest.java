@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 class InMemoryBedQueryBuilderTest {
 
-  private static BedQueryBuilder bedQueryBuilder;
+  private static InMemoryBedQueryBuilder bedQueryBuilder;
 
   private BedTypes bedType = createBedType();
   private CleaningFrequencies cleaningFrequency = createCleaningFrequency();
