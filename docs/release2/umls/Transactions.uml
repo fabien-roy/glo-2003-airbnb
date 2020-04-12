@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.transactions.TransactionModule</OriginalElement>
+  <nodes>
+    <node x="1331.3125" y="511.0">ca.ulaval.glo2003.transactions.rest.serializers.TransactionDeserializingModule</node>
+    <node x="475.0" y="245.0">ca.ulaval.glo2003.transactions.domain.Transaction</node>
+    <node x="548.375" y="66.0">ca.ulaval.glo2003.transactions.domain.TransactionReasons</node>
+    <node x="1418.5625" y="721.0">ca.ulaval.glo2003.transactions.rest.TransactionMapper</node>
+    <node x="0.0" y="698.0">ca.ulaval.glo2003.transactions.infrastructure.InMemoryTransactionRepository</node>
+    <node x="0.0" y="1065.0">ca.ulaval.glo2003.transactions.rest.serializers.PriceDeserializer</node>
+    <node x="510.9370817245819" y="466.0">ca.ulaval.glo2003.transactions.domain.TransactionFactory</node>
+    <node x="854.3458333333333" y="991.0">ca.ulaval.glo2003.transactions.TransactionModule</node>
+    <node x="1333.545415057915" y="55.0">ca.ulaval.glo2003.transactions.rest.serializers.PriceSerializer</node>
+    <node x="1146.3125" y="245.0">ca.ulaval.glo2003.transactions.rest.TransactionResponse</node>
+    <node x="1208.8125" y="856.0">ca.ulaval.glo2003.transactions.rest.TransactionResource</node>
+    <node x="742.375" y="0.0">ca.ulaval.glo2003.transactions.domain.Price</node>
+    <node x="1609.3125" y="511.0">ca.ulaval.glo2003.transactions.rest.serializers.TransactionSerializingModule</node>
+    <node x="489.28571428571445" y="665.0">ca.ulaval.glo2003.transactions.services.TransactionService</node>
+    <node x="356.375" y="22.0">ca.ulaval.glo2003.transactions.domain.Timestamp</node>
+    <node x="1006.3125" y="499.0">ca.ulaval.glo2003.transactions.converters.TransactionConverter</node>
+    <node x="188.375" y="488.0">ca.ulaval.glo2003.transactions.domain.TransactionRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ca.ulaval.glo2003.transactions.infrastructure.InMemoryTransactionRepository" target="ca.ulaval.glo2003.transactions.domain.TransactionRepository">
+      <point x="83.66666666666674" y="-37.5" />
+      <point x="209.16666666666674" y="645.0" />
+      <point x="212.75" y="645.0" />
+      <point x="-73.125" y="37.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6405172413793103" x="927.0" y="570.0" />
+  <SelectedNodes>
+    <node>ca.ulaval.glo2003.transactions.TransactionModule</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

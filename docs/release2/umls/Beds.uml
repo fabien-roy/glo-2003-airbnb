@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.beds.services.BedService</OriginalElement>
+  <nodes>
+    <node x="2822.0056372549006" y="4688.0">ca.ulaval.glo2003.beds.rest.BedMapper</node>
+    <node x="17234.616176470587" y="431.0">ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException</node>
+    <node x="17355.765988129024" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidBloodTypesErrorFactory</node>
+    <node x="19768.54420677362" y="4375.0">ca.ulaval.glo2003.beds.converters.validators.SweetToothValidator</node>
+    <node x="2978.1306372548997" y="4398.0">ca.ulaval.glo2003.beds.rest.serializers.BedSerializingModule</node>
+    <node x="4911.849988671883" y="2005.0">ca.ulaval.glo2003.beds.domain.CleaningFrequenciesDifferentials</node>
+    <node x="552.1764705882342" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.BedNotFoundErrorFactory</node>
+    <node x="8617.51128518561" y="2997.0">ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery</node>
+    <node x="2405.90737398314" y="3031.0">ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException</node>
+    <node x="5391.849988671883" y="2005.0">ca.ulaval.glo2003.beds.domain.BloodTypesDifferentials</node>
+    <node x="14918.817913198827" y="431.0">ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException</node>
+    <node x="0.0" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.MissingColonySizeErrorFactory</node>
+    <node x="5304.323251943643" y="2997.0">ca.ulaval.glo2003.beds.domain.LodgingModeBuilder</node>
+    <node x="16350.116176470587" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.MaxDistanceWithoutOriginErrorFactory</node>
+    <node x="804.1764705882342" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidPackagesErrorFactory</node>
+    <node x="4112.21100740784" y="2800.0">ca.ulaval.glo2003.beds.domain.BedStarsCalculator</node>
+    <node x="12794.317913198825" y="3008.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryLodgingModeFilter</node>
+    <node x="1772.3698739831398" y="3315.0">ca.ulaval.glo2003.beds.rest.serializers.PackagesDeserializer</node>
+    <node x="18017.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.BookingNotAllowedErrorFactory</node>
+    <node x="4199.113785185618" y="978.0">ca.ulaval.glo2003.beds.domain.BedNumber</node>
+    <node x="14044.317913198827" y="3008.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter</node>
+    <node x="18288.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.ExceedingAccommodationCapacityErrorFactory</node>
+    <node x="15523.817913198827" y="431.0">ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException</node>
+    <node x="7024.479677904709" y="685.0">ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException</node>
+    <node x="6414.365707316474" y="4353.0">ca.ulaval.glo2003.beds.converters.BedConverter</node>
+    <node x="4184.463970588234" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidCapacityErrorFactory</node>
+    <node x="14298.317913198827" y="1012.0">ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException</node>
+    <node x="12168.22967790471" y="4386.0">ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler</node>
+    <node x="3908.21100740784" y="2800.0">ca.ulaval.glo2003.beds.domain.BedFactory</node>
+    <node x="6129.323251943643" y="3326.0">ca.ulaval.glo2003.beds.converters.PublicKeyConverter</node>
+    <node x="6608.323251943643" y="2800.0">ca.ulaval.glo2003.beds.domain.BedQuery</node>
+    <node x="6806.323251943643" y="3874.0">ca.ulaval.glo2003.beds.converters.PackageConverter</node>
+    <node x="18900.171291159328" y="431.0">ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException</node>
+    <node x="1121.1823739831398" y="1000.0">ca.ulaval.glo2003.beds.rest.serializers.CleaningFrequencyDeserializer</node>
+    <node x="6795.479677904709" y="685.0">ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException</node>
+    <node x="15217.817913198827" y="431.0">ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException</node>
+    <node x="13317.239694554235" y="4375.0">ca.ulaval.glo2003.beds.domain.assemblers.MinimalCapacityQueryParamAssembler</node>
+    <node x="10803.22967790471" y="4375.0">ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler</node>
+    <node x="7573.299988671883" y="4643.0">ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository</node>
+    <node x="13490.217913198827" y="2800.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter</node>
+    <node x="3736.9639705882337" y="4632.0">ca.ulaval.glo2003.beds.services.BedService</node>
+    <node x="5625.323251943643" y="3786.0">ca.ulaval.glo2003.beds.rest.BedResponse</node>
+    <node x="15648.337957825996" y="0.0">ca.ulaval.glo2003.beds.exceptions.BedException</node>
+    <node x="19527.54420677362" y="4375.0">ca.ulaval.glo2003.beds.converters.validators.AllYouCanDrinkValidator</node>
+    <node x="2426.90737398314" y="1000.0">ca.ulaval.glo2003.beds.rest.serializers.BedTypeDeserializer</node>
+    <node x="13606.317913198827" y="2997.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryDistanceFilter</node>
+    <node x="2628.90737398314" y="989.0">ca.ulaval.glo2003.beds.rest.serializers.BloodTypesDeserializer</node>
+    <node x="14639.317913198827" y="989.0">ca.ulaval.glo2003.beds.domain.Packages</node>
+    <node x="17576.116176470587" y="4688.0">ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory</node>
+    <node x="13355.317913198825" y="2986.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryAvailabilityFilter</node>
+    <node x="11420.22967790471" y="5342.0">ca.ulaval.glo2003.beds.BedModule</node>
+    <node x="15570.38628518561" y="3315.0">ca.ulaval.glo2003.beds.converters.validators.PackageValidator</node>
+    <node x="2674.25112398314" y="3720.0">ca.ulaval.glo2003.beds.rest.BedRequest</node>
+    <node x="10163.008710407239" y="3885.0">ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler</node>
+    <node x="11329.712222531878" y="3205.0">ca.ulaval.glo2003.beds.domain.BedQueryBuilder</node>
+    <node x="18576.671291159328" y="431.0">ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException</node>
+    <node x="20504.37754010695" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.CantOfferSweetToothPackageErrorFactory</node>
+    <node x="1105.4323739831398" y="685.0">ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException</node>
+    <node x="13472.119585839213" y="3764.0">ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder</node>
+    <node x="2240.3698739831398" y="3326.0">ca.ulaval.glo2003.beds.rest.serializers.PublicKeyDeserializer</node>
+    <node x="18650.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.ExceedingResidualCapacityErrorFactory</node>
+    <node x="1425.1198739831398" y="431.0">ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException</node>
+    <node x="19241.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.PackageNotAvailableErrorFactory</node>
+    <node x="1358.9264705882342" y="2800.0">ca.ulaval.glo2003.beds.rest.serializers.PackageNameDeserializer</node>
+    <node x="14514.51200980392" y="3008.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter</node>
+    <node x="16266.616176470587" y="431.0">ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException</node>
+    <node x="21144.37754010695" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidMaxDistanceErrorFactory</node>
+    <node x="5217.838970588234" y="2767.0">ca.ulaval.glo2003.beds.domain.CohabitationLodgingMode</node>
+    <node x="11258.22967790471" y="4386.0">ca.ulaval.glo2003.beds.domain.assemblers.BloodTypesQueryParamAssembler</node>
+    <node x="18977.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.BedAlreadyBookedErrorFactory</node>
+    <node x="5204.849988671883" y="2005.0">ca.ulaval.glo2003.beds.domain.BedTypesBaseRates</node>
+    <node x="8757.47967790471" y="989.0">ca.ulaval.glo2003.beds.domain.BedTypes</node>
+    <node x="8327.47967790471" y="978.0">ca.ulaval.glo2003.beds.domain.PublicKey</node>
+    <node x="3731.71100740784" y="3031.0">ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException</node>
+    <node x="11713.22967790471" y="4375.0">ca.ulaval.glo2003.beds.domain.assemblers.OriginQueryParamAssembler</node>
+    <node x="5045.490707316473" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidBedTypeErrorFactory</node>
+    <node x="2176.5198739831394" y="2986.0">ca.ulaval.glo2003.beds.rest.PackageRequest</node>
+    <node x="16670.116176470587" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.NumberOfNightsWithoutMinimalCapacityErrorFactory</node>
+    <node x="20154.254624492663" y="431.0">ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException</node>
+    <node x="1284.3014705882342" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidCleaningFrequencyErrorFactory</node>
+    <node x="5553.838970588235" y="2767.0">ca.ulaval.glo2003.beds.domain.PrivateLodgingMode</node>
+    <node x="19655.12754010695" y="3885.0">ca.ulaval.glo2003.beds.converters.validators.AbstractPackageValidator</node>
+    <node x="5646.323251943643" y="3315.0">ca.ulaval.glo2003.beds.converters.LodgingModeConverter</node>
+    <node x="17634.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.ArrivalDateWithoutMinimalCapacityErrorFactory</node>
+    <node x="271.0" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidLodgingModeErrorFactory</node>
+    <node x="2379.051470588234" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidPublicKeyErrorFactory</node>
+    <node x="19716.046291159328" y="431.0">ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException</node>
+    <node x="10348.22967790471" y="4386.0">ca.ulaval.glo2003.beds.domain.assemblers.ArrivalDateQueryParamAssembler</node>
+    <node x="8935.47967790471" y="989.0">ca.ulaval.glo2003.beds.domain.BloodTypes</node>
+    <node x="20838.37754010695" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidMinimalCapacityErrorFactory</node>
+    <node x="3254.15737398314" y="3885.0">ca.ulaval.glo2003.beds.exceptions.BedNotFoundException</node>
+    <node x="19889.54420677362" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.CantOfferAllYouCanDrinkPackageErrorFactory</node>
+    <node x="7623.479677904709" y="662.0">ca.ulaval.glo2003.beds.domain.LodgingModes</node>
+    <node x="5151.740707316473" y="4353.0">ca.ulaval.glo2003.beds.domain.BedRepository</node>
+    <node x="8982.22967790471" y="4386.0">ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler</node>
+    <node x="13828.317913198827" y="3008.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter</node>
+    <node x="7139.805615250978" y="2005.0">ca.ulaval.glo2003.beds.domain.BedTypesCapacities</node>
+    <node x="5922.323251943643" y="3315.0">ca.ulaval.glo2003.beds.rest.PackageResponse</node>
+    <node x="7007.46665533855" y="4386.0">ca.ulaval.glo2003.beds.domain.BedQueryFactory</node>
+    <node x="1025.3073739831398" y="3897.0">ca.ulaval.glo2003.beds.rest.serializers.BedDeserializingModule</node>
+    <node x="7286.479677904709" y="967.0">ca.ulaval.glo2003.beds.domain.LodgingMode</node>
+    <node x="1115.9264705882342" y="2800.0">ca.ulaval.glo2003.beds.rest.serializers.PricePerNightDeserializer</node>
+    <node x="20252.37754010695" y="4954.0">ca.ulaval.glo2003.beds.rest.factories.InvalidPackageErrorFactory</node>
+    <node x="8734.76394858431" y="1796.0">ca.ulaval.glo2003.beds.domain.Bed</node>
+    <node x="3187.1306372548997" y="4386.0">ca.ulaval.glo2003.beds.converters.BedNumberConverter</node>
+    <node x="2841.6306372549006" y="4943.0">ca.ulaval.glo2003.beds.rest.BedResource</node>
+    <node x="3229.65737398314" y="431.0">ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException</node>
+    <node x="8519.47967790471" y="989.0">ca.ulaval.glo2003.beds.domain.CleaningFrequencies</node>
+    <node x="13046.317913198825" y="3008.0">ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter</node>
+    <node x="2975.40737398314" y="3326.0">ca.ulaval.glo2003.beds.rest.serializers.CapacityDeserializer</node>
+    <node x="15773.817913198827" y="431.0">ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException</node>
+    <node x="15744.88628518561" y="4375.0">ca.ulaval.glo2003.beds.domain.assemblers.MaximumDistanceQueryParamAssembler</node>
+    <node x="16872.616176470587" y="431.0">ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException</node>
+    <node x="7334.805615250978" y="1994.0">ca.ulaval.glo2003.beds.converters.BloodTypeConverter</node>
+    <node x="1301.1198739831398" y="2017.0">ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException</node>
+    <node x="9892.22967790471" y="4386.0">ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler</node>
+    <node x="21423.37754010695" y="419.0">ca.ulaval.glo2003.beds.rest.handlers.BedExceptionHandler</node>
+    <node x="10442.837222531878" y="685.0">ca.ulaval.glo2003.beds.exceptions.InvalidPackageException</node>
+    <node x="9437.22967790471" y="4386.0">ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.MinimalCapacityQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-145.0" y="-37.5" />
+      <point x="13389.739694554235" y="4283.0" />
+      <point x="10547.81640271493" y="4283.0" />
+      <point x="167.30769230769147" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.BedNotFoundErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="77.33333333333303" y="-48.5" />
+      <point x="745.5098039215663" y="4843.0" />
+      <point x="17593.50254010695" y="4843.0" />
+      <point x="-59.11363636363649" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.CohabitationLodgingMode" target="ca.ulaval.glo2003.beds.domain.LodgingMode">
+      <point x="63.20000000000073" y="-59.5" />
+      <point x="5439.038970588234" y="2427.0" />
+      <point x="6853.220749333281" y="2427.0" />
+      <point x="6853.220749333281" y="1426.0" />
+      <point x="7399.336820761852" y="1426.0" />
+      <point x="-45.14285714285688" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidMinimalCapacityErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-95.33333333333326" y="-48.5" />
+      <point x="20886.044206773615" y="4833.0" />
+      <point x="17718.684358288767" y="4833.0" />
+      <point x="66.06818181818198" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.CantOfferAllYouCanDrinkPackageErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-114.0" y="-48.5" />
+      <point x="19946.54420677362" y="4863.0" />
+      <point x="17697.820721925134" y="4863.0" />
+      <point x="45.204545454545496" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidBedTypeException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="52.25" y="-14.5" />
+      <point x="6952.229677904709" y="642.0" />
+      <point x="6905.479677904709" y="642.0" />
+      <point x="6905.479677904709" y="269.0" />
+      <point x="15690.766529254568" y="269.0" />
+      <point x="-23.57142857142844" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidMaxDistanceException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="59.25" y="-14.5" />
+      <point x="19077.921291159328" y="199.0" />
+      <point x="15752.99510068314" y="199.0" />
+      <point x="38.6571428571433" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBloodTypesFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="-87.375" y="-37.5" />
+      <point x="14073.442913198827" y="2946.0" />
+      <point x="13653.417913198828" y="2946.0" />
+      <point x="67.20000000000073" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="61.0" y="-14.5" />
+      <point x="17417.616176470587" y="299.0" />
+      <point x="15734.137957825995" y="299.0" />
+      <point x="19.800000000000182" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="71.5" y="-14.5" />
+      <point x="15432.317913198827" y="379.0" />
+      <point x="15711.509386397425" y="379.0" />
+      <point x="-2.8285714285711947" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryAvailabilityFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="57.5" y="-59.5" />
+      <point x="13527.817913198825" y="2966.0" />
+      <point x="13576.617913198826" y="2966.0" />
+      <point x="-9.600000000000364" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="55.75" y="-14.5" />
+      <point x="16433.866176470587" y="359.0" />
+      <point x="15722.82367211171" y="359.0" />
+      <point x="8.485714285714494" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidCleaningFrequencyException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-69.75" y="-14.5" />
+      <point x="1175.1823739831398" y="622.0" />
+      <point x="1239.4323739831398" y="622.0" />
+      <point x="1239.4323739831398" y="99.0" />
+      <point x="15658.709386397424" y="99.0" />
+      <point x="-55.62857142857138" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidPackageErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-77.33333333333303" y="-48.5" />
+      <point x="20291.04420677362" y="4853.0" />
+      <point x="17704.77526737968" y="4853.0" />
+      <point x="52.15909090909099" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.PrivateLodgingMode" target="ca.ulaval.glo2003.beds.domain.LodgingMode">
+      <point x="-118.5" y="-59.5" />
+      <point x="5593.338970588235" y="2437.0" />
+      <point x="6864.220749333281" y="2437.0" />
+      <point x="6864.220749333281" y="1436.0" />
+      <point x="7444.479677904709" y="1436.0" />
+      <point x="0.0" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryPackageFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="-73.125" y="-37.5" />
+      <point x="14538.88700980392" y="2936.0" />
+      <point x="13672.617913198826" y="2936.0" />
+      <point x="86.39999999999964" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidPublicKeyErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="81.33333333333348" y="-48.5" />
+      <point x="2582.384803921568" y="4873.0" />
+      <point x="17614.366176470587" y="4873.0" />
+      <point x="-38.25" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidPackageException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="52.25" y="-14.5" />
+      <point x="10599.587222531878" y="562.0" />
+      <point x="10552.837222531878" y="562.0" />
+      <point x="10552.837222531878" y="339.0" />
+      <point x="15703.966529254567" y="339.0" />
+      <point x="-10.371428571428623" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.converters.validators.AbstractPackageValidator" target="ca.ulaval.glo2003.beds.converters.validators.PackageValidator">
+      <point x="-54.0" y="-26.5" />
+      <point x="19709.12754010695" y="3520.0" />
+      <point x="15763.76128518561" y="3520.0" />
+      <point x="82.875" y="37.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidPackagesErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="79.0" y="-48.5" />
+      <point x="1001.6764705882342" y="4853.0" />
+      <point x="17600.457085561495" y="4853.0" />
+      <point x="-52.15909090909099" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.converters.validators.SweetToothValidator" target="ca.ulaval.glo2003.beds.converters.validators.AbstractPackageValidator">
+      <point x="-73.66666666666606" y="-37.5" />
+      <point x="19805.37754010695" y="4333.0" />
+      <point x="19817.12754010695" y="4333.0" />
+      <point x="54.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.ArrivalDateWithoutMinimalCapacityErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-121.0" y="-48.5" />
+      <point x="17695.04420677362" y="4923.0" />
+      <point x="17656.09344919786" y="4923.0" />
+      <point x="3.4772727272725206" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.MaximumDistanceQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-145.0" y="-37.5" />
+      <point x="15817.38628518561" y="4263.0" />
+      <point x="10581.27794117647" y="4263.0" />
+      <point x="200.7692307692305" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.ExceedingResidualCapacityErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-102.33333333333212" y="-48.5" />
+      <point x="18701.710873440286" y="4893.0" />
+      <point x="17676.957085561495" y="4893.0" />
+      <point x="24.34090909090901" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.BookingNotAllowedErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-83.66666666666674" y="-48.5" />
+      <point x="18059.37754010695" y="4913.0" />
+      <point x="17663.047994652406" y="4913.0" />
+      <point x="10.431818181818016" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.BedRepository" target="ca.ulaval.glo2003.beds.domain.BedQuery">
+      <point x="72.66666666666606" y="-59.5" />
+      <point x="5333.407373983139" y="4313.0" />
+      <point x="5614.823251943643" y="4313.0" />
+      <point x="5614.823251943643" y="2966.0" />
+      <point x="6647.073251943643" y="2966.0" />
+      <point x="-38.75" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.MissingColonySizeErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="83.66666666666788" y="-48.5" />
+      <point x="209.16666666666788" y="4823.0" />
+      <point x="17579.59344919786" y="4823.0" />
+      <point x="-73.02272727272748" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-54.0" y="-14.5" />
+      <point x="3785.71100740784" y="2966.0" />
+      <point x="3834.21100740784" y="2966.0" />
+      <point x="3834.21100740784" y="229.0" />
+      <point x="15683.22367211171" y="229.0" />
+      <point x="-31.11428571428587" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.converters.validators.AllYouCanDrinkValidator" target="ca.ulaval.glo2003.beds.converters.validators.AbstractPackageValidator">
+      <point x="73.66666666666788" y="-37.5" />
+      <point x="19711.710873440286" y="4333.0" />
+      <point x="19709.12754010695" y="4333.0" />
+      <point x="-54.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="69.75" y="-14.5" />
+      <point x="19925.296291159328" y="159.0" />
+      <point x="15760.537957825996" y="159.0" />
+      <point x="46.19999999999982" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-90.75" y="-14.5" />
+      <point x="15864.567913198827" y="389.0" />
+      <point x="15717.166529254566" y="389.0" />
+      <point x="2.8285714285711947" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.MaxDistanceWithoutOriginErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="100.0" y="-48.5" />
+      <point x="16600.116176470587" y="4903.0" />
+      <point x="17635.229812834223" y="4903.0" />
+      <point x="-17.386363636363512" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidBloodTypesErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="83.66666666666652" y="-48.5" />
+      <point x="17564.93265479569" y="4923.0" />
+      <point x="17649.138903743315" y="4923.0" />
+      <point x="-3.4772727272725206" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-80.25" y="-14.5" />
+      <point x="14378.567913198827" y="797.0" />
+      <point x="8865.780079674736" y="797.0" />
+      <point x="8865.780079674736" y="309.0" />
+      <point x="15698.309386397425" y="309.0" />
+      <point x="-16.028571428571013" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="62.75" y="-14.5" />
+      <point x="20342.504624492663" y="129.0" />
+      <point x="15766.195100683139" y="129.0" />
+      <point x="51.85714285714312" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryCleaningFrequencyFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="108.375" y="-37.5" />
+      <point x="13299.192913198825" y="2956.0" />
+      <point x="13557.417913198828" y="2956.0" />
+      <point x="-28.799999999999272" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidCleaningFrequencyErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="100.0" y="-48.5" />
+      <point x="1534.3014705882342" y="4863.0" />
+      <point x="17607.41163101604" y="4863.0" />
+      <point x="-45.204545454545496" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidCapacityErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="79.0" y="-48.5" />
+      <point x="4381.963970588234" y="4883.0" />
+      <point x="17621.320721925134" y="4883.0" />
+      <point x="-31.295454545454504" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.CantOfferSweetToothPackageErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-104.66666666666669" y="-48.5" />
+      <point x="20556.710873440286" y="4843.0" />
+      <point x="17711.729812834223" y="4843.0" />
+      <point x="59.11363636363649" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidBloodTypesException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-57.5" y="-14.5" />
+      <point x="7081.979677904709" y="642.0" />
+      <point x="7133.979677904709" y="642.0" />
+      <point x="7133.979677904709" y="279.0" />
+      <point x="15692.65224354028" y="279.0" />
+      <point x="-21.68571428571431" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-54.0" y="-14.5" />
+      <point x="1355.1198739831398" y="1756.0" />
+      <point x="1403.6198739831398" y="1756.0" />
+      <point x="1403.6198739831398" y="119.0" />
+      <point x="15662.480814968852" y="119.0" />
+      <point x="-51.85714285714312" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.BedNotFoundException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-47.0" y="-26.5" />
+      <point x="3301.15737398314" y="3660.0" />
+      <point x="3219.15737398314" y="3660.0" />
+      <point x="3219.15737398314" y="189.0" />
+      <point x="15675.680814968851" y="189.0" />
+      <point x="-38.6571428571433" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.ExceedingAccommodationCapacityErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-114.0" y="-48.5" />
+      <point x="18345.54420677362" y="4903.0" />
+      <point x="17670.00254010695" y="4903.0" />
+      <point x="17.386363636363512" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.PackageNotAvailableErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-88.33333333333212" y="-48.5" />
+      <point x="19285.710873440286" y="4873.0" />
+      <point x="17690.866176470587" y="4873.0" />
+      <point x="38.25" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BloodTypesQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-145.0" y="-26.5" />
+      <point x="11330.72967790471" y="4313.0" />
+      <point x="10447.431787330315" y="4313.0" />
+      <point x="66.92307692307622" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-59.25" y="-14.5" />
+      <point x="3288.90737398314" y="199.0" />
+      <point x="15677.566529254567" y="199.0" />
+      <point x="-36.77142857142826" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidLodgingModeErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="86.0" y="-48.5" />
+      <point x="486.0" y="4833.0" />
+      <point x="17586.547994652406" y="4833.0" />
+      <point x="-66.06818181818198" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.LodgingModeQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="145.0" y="-26.5" />
+      <point x="9344.72967790471" y="4313.0" />
+      <point x="10246.662556561085" y="4313.0" />
+      <point x="-133.84615384615427" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery" target="ca.ulaval.glo2003.beds.domain.BedQuery">
+      <point x="-97.20000000000073" y="-48.5" />
+      <point x="8641.81128518561" y="2966.0" />
+      <point x="6724.573251943643" y="2966.0" />
+      <point x="38.75" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="69.75" y="-14.5" />
+      <point x="15128.067913198827" y="359.0" />
+      <point x="15707.737957825995" y="359.0" />
+      <point x="-6.600000000000364" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.NumberOfNightsWithoutMinimalCapacityErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="128.0" y="-48.5" />
+      <point x="16990.116176470587" y="4913.0" />
+      <point x="17642.184358288767" y="4913.0" />
+      <point x="-10.431818181818016" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.PackageQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-145.0" y="-26.5" />
+      <point x="12240.72967790471" y="4293.0" />
+      <point x="10514.354864253393" y="4293.0" />
+      <point x="133.84615384615427" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.ArrivalDateQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-108.75" y="-26.5" />
+      <point x="10456.97967790471" y="4333.0" />
+      <point x="10380.508710407239" y="4333.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedRepository" target="ca.ulaval.glo2003.beds.domain.BedRepository">
+      <point x="-63.0" y="-59.5" />
+      <point x="7636.299988671883" y="4522.0" />
+      <point x="5342.490707316473" y="4522.0" />
+      <point x="81.75" y="59.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.NumberOfNightsQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-108.75" y="-37.5" />
+      <point x="10911.97967790471" y="4323.0" />
+      <point x="10413.970248868778" y="4323.0" />
+      <point x="33.46153846153902" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder" target="ca.ulaval.glo2003.beds.domain.BedQueryBuilder">
+      <point x="-208.52499999999964" y="-147.5" />
+      <point x="13483.094585839213" y="3640.0" />
+      <point x="11653.712222531878" y="3640.0" />
+      <point x="132.0" y="147.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.OriginQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="-108.75" y="-37.5" />
+      <point x="11821.97967790471" y="4303.0" />
+      <point x="10480.893325791854" y="4303.0" />
+      <point x="100.38461538461524" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-57.5" y="-14.5" />
+      <point x="1482.6198739831398" y="139.0" />
+      <point x="15666.252243540283" y="139.0" />
+      <point x="-48.08571428571395" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidBedTypeErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="77.33333333333394" y="-48.5" />
+      <point x="5238.824040649807" y="4893.0" />
+      <point x="17628.27526737968" y="4893.0" />
+      <point x="-24.34090909090901" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryLodgingModeFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="87.0" y="-37.5" />
+      <point x="12997.317913198825" y="2946.0" />
+      <point x="13538.217913198827" y="2946.0" />
+      <point x="-48.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryDistanceFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="-50.5" y="-48.5" />
+      <point x="13656.817913198827" y="2966.0" />
+      <point x="13615.017913198826" y="2966.0" />
+      <point x="28.799999999999272" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.BedTypeQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="145.0" y="-26.5" />
+      <point x="10254.72967790471" y="4333.0" />
+      <point x="10313.585633484163" y="4333.0" />
+      <point x="-66.92307692307622" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.InvalidMaxDistanceErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-86.0" y="-48.5" />
+      <point x="21187.37754010695" y="4823.0" />
+      <point x="17725.638903743315" y="4823.0" />
+      <point x="73.02272727272702" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-66.25" y="-14.5" />
+      <point x="18642.921291159328" y="239.0" />
+      <point x="15745.452243540281" y="239.0" />
+      <point x="31.11428571428587" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-57.5" y="-14.5" />
+      <point x="15581.317913198827" y="389.0" />
+      <point x="15713.395100683138" y="389.0" />
+      <point x="-0.9428571428570649" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.rest.factories.BedAlreadyBookedErrorFactory" target="ca.ulaval.glo2003.beds.rest.factories.BedErrorFactory">
+      <point x="-81.33333333333348" y="-48.5" />
+      <point x="19018.210873440286" y="4883.0" />
+      <point x="17683.91163101604" y="4883.0" />
+      <point x="31.295454545454504" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedTypeFilter" target="ca.ulaval.glo2003.beds.infrastructure.filters.InMemoryBedFilter">
+      <point x="-73.125" y="-37.5" />
+      <point x="13852.692913198827" y="2956.0" />
+      <point x="13634.217913198827" y="2956.0" />
+      <point x="48.0" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="85.5" y="-14.5" />
+      <point x="17129.116176470587" y="319.0" />
+      <point x="15730.366529254567" y="319.0" />
+      <point x="16.028571428571013" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.domain.assemblers.CleaningFrequencyQueryParamAssembler" target="ca.ulaval.glo2003.beds.domain.assemblers.BedQueryParamAssembler">
+      <point x="145.0" y="-26.5" />
+      <point x="9799.72967790471" y="4323.0" />
+      <point x="10280.124095022624" y="4323.0" />
+      <point x="-100.38461538461524" y="26.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException" target="ca.ulaval.glo2003.beds.exceptions.BedException">
+      <point x="-55.75" y="-14.5" />
+      <point x="2461.65737398314" y="2966.0" />
+      <point x="2416.40737398314" y="2966.0" />
+      <point x="2416.40737398314" y="169.0" />
+      <point x="15671.909386397423" y="169.0" />
+      <point x="-42.42857142857156" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.048622291733750406" x="10859.5" y="2685.5" />
+  <SelectedNodes>
+    <node>ca.ulaval.glo2003.beds.services.BedService</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ca.ulaval.glo2003.bookings.BookingModule</OriginalElement>
+  <nodes>
+    <node x="3119.450595238096" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.InvalidNumberOfNightsErrorFactory</node>
+    <node x="4046.6187193362175" y="1713.0">ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory</node>
+    <node x="36.5" y="602.0">ca.ulaval.glo2003.bookings.rest.serializers.NumberOfNightsDeserializer</node>
+    <node x="3336.105194805199" y="0.0">ca.ulaval.glo2003.bookings.exceptions.BookingException</node>
+    <node x="3418.6187193362175" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.InvalidColonySizeErrorFactory</node>
+    <node x="2265.721937229441" y="1505.0">ca.ulaval.glo2003.bookings.services.CancelationService</node>
+    <node x="329.49490981240797" y="1713.0">ca.ulaval.glo2003.bookings.rest.BookingMapper</node>
+    <node x="20.75" y="256.0">ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException</node>
+    <node x="1850.200595238096" y="1505.0">ca.ulaval.glo2003.bookings.domain.BookingFactory</node>
+    <node x="319.86990981240797" y="1517.0">ca.ulaval.glo2003.bookings.rest.serializers.BookingSerializingModule</node>
+    <node x="855.354166666667" y="1093.0">ca.ulaval.glo2003.bookings.converters.BookingDateConverter</node>
+    <node x="3262.742337662338" y="2075.0">ca.ulaval.glo2003.bookings.BookingModule</node>
+    <node x="522.0625000000005" y="602.0">ca.ulaval.glo2003.bookings.rest.serializers.ArrivalDateDeserializer</node>
+    <node x="3070.742337662338" y="256.0">ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException</node>
+    <node x="1627.4591955266937" y="1679.0">ca.ulaval.glo2003.bookings.services.BookingService</node>
+    <node x="286.5" y="602.0">ca.ulaval.glo2003.bookings.rest.serializers.ColonySizeDeserializer</node>
+    <node x="891.15500360751" y="1846.0">ca.ulaval.glo2003.bookings.rest.BookingResource</node>
+    <node x="482.875" y="994.0">ca.ulaval.glo2003.bookings.rest.BookingRequest</node>
+    <node x="4001.450595238096" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.InvalidArrivalDateErrorFactory</node>
+    <node x="1094.879166666667" y="1049.0">ca.ulaval.glo2003.bookings.rest.BookingResponse</node>
+    <node x="1481.129166666667" y="895.0">ca.ulaval.glo2003.bookings.domain.Booking</node>
+    <node x="1179.2615764790744" y="492.0">ca.ulaval.glo2003.bookings.domain.BookingDate</node>
+    <node x="2472.2020526695505" y="602.0">ca.ulaval.glo2003.bookings.rest.CancelationResponse</node>
+    <node x="3847.950595238096" y="256.0">ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException</node>
+    <node x="4847.450595238096" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.CancelationNotAllowedErrorFactory</node>
+    <node x="2785.742337662338" y="256.0">ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException</node>
+    <node x="1382.879166666667" y="1494.0">ca.ulaval.glo2003.bookings.domain.BookingTotalCalculator</node>
+    <node x="3365.2020526695505" y="244.0">ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException</node>
+    <node x="2216.192337662338" y="1082.0">ca.ulaval.glo2003.bookings.domain.CancelationRefundCalculator</node>
+    <node x="4279.450595238096" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.BookingNotFoundErrorFactory</node>
+    <node x="2473.192337662338" y="1093.0">ca.ulaval.glo2003.bookings.converters.CancelationConverter</node>
+    <node x="615.6926948051987" y="1494.0">ca.ulaval.glo2003.bookings.converters.BookingConverter</node>
+    <node x="1660.7377669552652" y="602.0">ca.ulaval.glo2003.bookings.domain.BookingStatuses</node>
+    <node x="696.2500000000005" y="256.0">ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException</node>
+    <node x="1833.7377669552652" y="580.0">ca.ulaval.glo2003.bookings.domain.BookingNumber</node>
+    <node x="222.0" y="1105.0">ca.ulaval.glo2003.bookings.rest.serializers.BookingDeserializingModule</node>
+    <node x="5049.450595238096" y="244.0">ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler</node>
+    <node x="1189.6615764790745" y="189.0">ca.ulaval.glo2003.bookings.domain.BookingPeriod</node>
+    <node x="4555.450595238096" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.ArrivalDateInThePastErrorFactory</node>
+    <node x="1854.700595238096" y="1093.0">ca.ulaval.glo2003.bookings.converters.BookingNumberConverter</node>
+    <node x="3694.6187193362175" y="1857.0">ca.ulaval.glo2003.bookings.rest.factories.BookingAlreadyCanceledErrorFactory</node>
+    <node x="446.25" y="256.0">ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="-64.5" y="-14.5" />
+      <point x="3912.450595238096" y="129.0" />
+      <point x="3441.705194805199" y="129.0" />
+      <point x="25.59999999999991" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.InvalidArrivalDateErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="0.0" y="-48.5" />
+      <point x="4130.450595238096" y="1826.0" />
+      <point x="4137.1187193362175" y="1826.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.BookingAlreadyCanceledErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="95.33333333333337" y="-48.5" />
+      <point x="3932.9520526695505" y="1826.0" />
+      <point x="4111.261576479074" y="1826.0" />
+      <point x="-25.85714285714289" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="-54.0" y="-26.5" />
+      <point x="3419.2020526695505" y="169.0" />
+      <point x="3416.105194805199" y="169.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="-59.25" y="-14.5" />
+      <point x="755.5000000000005" y="99.0" />
+      <point x="3364.9051948051992" y="99.0" />
+      <point x="-51.200000000000045" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.InvalidNumberOfNightsErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="93.0" y="-48.5" />
+      <point x="3351.950595238096" y="1806.0" />
+      <point x="4059.5472907647886" y="1806.0" />
+      <point x="-77.57142857142867" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="-64.5" y="-14.5" />
+      <point x="85.25" y="59.0" />
+      <point x="3339.305194805199" y="59.0" />
+      <point x="-76.79999999999995" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="62.75" y="-14.5" />
+      <point x="3258.992337662338" y="159.0" />
+      <point x="3403.305194805199" y="159.0" />
+      <point x="-12.800000000000182" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.ArrivalDateInThePastErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="-90.66666666666674" y="-48.5" />
+      <point x="4600.783928571429" y="1806.0" />
+      <point x="4188.833005050503" y="1806.0" />
+      <point x="51.71428571428578" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.InvalidColonySizeErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="85.33333333333303" y="-48.5" />
+      <point x="3631.9520526695505" y="1816.0" />
+      <point x="4085.4044336219313" y="1816.0" />
+      <point x="-51.71428571428578" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="66.25" y="-14.5" />
+      <point x="2984.492337662338" y="139.0" />
+      <point x="3390.505194805199" y="139.0" />
+      <point x="-25.59999999999991" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.CancelationNotAllowedErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="-93.0" y="-48.5" />
+      <point x="4893.950595238096" y="1796.0" />
+      <point x="4214.690147907646" y="1796.0" />
+      <point x="77.57142857142844" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.rest.factories.BookingNotFoundErrorFactory" target="ca.ulaval.glo2003.bookings.rest.factories.BookingErrorFactory">
+      <point x="-85.33333333333331" y="-48.5" />
+      <point x="4322.117261904763" y="1816.0" />
+      <point x="4162.97586219336" y="1816.0" />
+      <point x="25.85714285714289" y="14.5" />
+    </edge>
+    <edge source="ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException" target="ca.ulaval.glo2003.bookings.exceptions.BookingException">
+      <point x="-57.5" y="-14.5" />
+      <point x="503.75" y="79.0" />
+      <point x="3352.105194805199" y="79.0" />
+      <point x="-64.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.26857887874837033" x="2694.4999999999995" y="1052.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
