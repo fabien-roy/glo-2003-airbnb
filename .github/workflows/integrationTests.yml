@@ -7,10 +7,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: matt-ball/newman-action@master
+      - uses: actions/checkout@v2
       - name: Integration tests
+        uses: matt-ball/newman-action@master
         with:
           collection: resources/integrationTests.json
           environment: resources/integrationTestsEnv.json
