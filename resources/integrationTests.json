@@ -7828,6 +7828,639 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get report",
+					"item": [
+						{
+							"name": "Get report (null scope)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_REPORT_SCOPE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"report scope should be one of weekly, monthly, quaterly or annual\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds?scope=null",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "null"
+										},
+										{
+											"key": "metrics",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "dimensions",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get report (invalid scope)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_REPORT_SCOPE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"report scope should be one of weekly, monthly, quaterly or annual\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds?scope=badValue",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "badValue"
+										},
+										{
+											"key": "metrics",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "dimensions",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get report (null metric)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_REPORT_METRICS\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"report metrics should be one or many of incomes, reservations or cancelations\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds?metrics=null",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "metrics",
+											"value": "null"
+										},
+										{
+											"key": "dimensions",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get report (invalid metric)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_REPORT_METRICS\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"report metrics should be one or many of incomes, reservations or cancelations\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds?metrics=badValue",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "metrics",
+											"value": "badValue"
+										},
+										{
+											"key": "dimensions",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get report (null dimensions)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_REPORT_DIMENSIONS\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"report dimensions should be one or many of package or lodgingMode\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds?dimensions=null",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "metrics",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "dimensions",
+											"value": "null"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get report (invalid dimensions)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_REPORT_DIMENSIONS\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"report dimensions should be one or many of package or lodgingMode\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds?dimensions=badValue",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "metrics",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "dimensions",
+											"value": "badValue"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get report",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"    ",
+											"    ",
+											"    var Ajv = require('ajv'),",
+											"        ajv = new Ajv({logger: console}),",
+											"        schema = {",
+											"        \"items\": {",
+											"            \"required\": [",
+											"                \"period\",",
+											"                \"data\"",
+											"            ],",
+											"            \"properties\": {",
+											"                \"period\": {",
+											"                    \"$id\": \"#/items/properties/period\",",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"data\": {",
+											"                    \"items\": {",
+											"                        \"required\": [",
+											"                            \"dimensions\",",
+											"                            \"metrics\"",
+											"                        ],",
+											"                        \"properties\": {",
+											"                            \"dimensions\": {",
+											"                                \"items\": {",
+											"                                    \"required\": [",
+											"                                        \"name\",",
+											"                                        \"value\"",
+											"                                    ],",
+											"                                    \"properties\": {",
+											"                                        \"name\": {",
+											"                                            \"$id\": \"#/items/properties/data/items/properties/dimensions/items/properties/name\",",
+											"                                            \"type\": \"string\"",
+											"                                        },",
+											"                                        \"value\": {",
+											"                                            \"$id\": \"#/items/properties/data/items/properties/dimensions/items/properties/value\",",
+											"                                            \"type\": \"string\"",
+											"                                        }",
+											"                                    },",
+											"                                    \"$id\": \"#/items/properties/data/items/properties/dimensions/items\",",
+											"                                    \"type\": \"object\"",
+											"                                },",
+											"                                \"$id\": \"#/items/properties/data/items/properties/dimensions\",",
+											"                                \"type\": \"array\"",
+											"                            },",
+											"                            \"metrics\": {",
+											"                                \"items\": {",
+											"                                    \"required\": [",
+											"                                        \"name\",",
+											"                                        \"value\"",
+											"                                    ],",
+											"                                    \"properties\": {",
+											"                                        \"name\": {",
+											"                                            \"$id\": \"#/items/properties/data/items/properties/metrics/items/properties/name\",",
+											"                                            \"type\": \"string\"",
+											"                                        },",
+											"                                        \"value\": {",
+											"                                            \"$id\": \"#/items/properties/data/items/properties/metrics/items/properties/value\",",
+											"                                            \"type\": \"number\"",
+											"                                        }",
+											"                                    },",
+											"                                    \"$id\": \"#/items/properties/data/items/properties/metrics/items\",",
+											"                                    \"type\": \"object\"",
+											"                                },",
+											"                                \"$id\": \"#/items/properties/data/items/properties/metrics\",",
+											"                                \"type\": \"array\"",
+											"                            }",
+											"                        },",
+											"                        \"$id\": \"#/items/properties/data/items\",",
+											"                        \"type\": \"object\"",
+											"                    },",
+											"                    \"$id\": \"#/items/properties/data\",",
+											"                    \"type\": \"array\"",
+											"                }",
+											"            },",
+											"            \"$id\": \"#/items\",",
+											"            \"type\": \"object\"",
+											"        },",
+											"        \"$id\": \"http://example.org/root.json#\",",
+											"        \"type\": \"array\",",
+											"        \"definitions\": {},",
+											"        \"$schema\": \"http://json-schema.org/draft-07/schema#\"",
+											"    };",
+											" ",
+											"pm.test('Schema is valid', function() {",
+											"    var data = pm.response.json();",
+											"    pm.expect(ajv.validate(schema, data)).to.be.true;",
+											"});",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "badValue",
+											"disabled": true
+										},
+										{
+											"key": "metrics",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "dimensions",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
