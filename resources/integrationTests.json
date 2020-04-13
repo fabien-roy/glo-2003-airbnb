@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0e65b397-ed42-4f61-9b50-03c87fb48d29",
+		"_postman_id": "475d74e7-a547-4757-8489-75e75627f7ab",
 		"name": "Airbnb - Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4848,7 +4848,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -4992,7 +4991,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -5063,7 +5061,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -5134,7 +5131,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -5205,7 +5201,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -5276,7 +5271,6 @@
 												"{{host}}"
 											],
 											"path": [
-												"",
 												"beds"
 											],
 											"query": [
@@ -7280,6 +7274,556 @@
 							],
 							"protocolProfileBehavior": {},
 							"_postman_isSubFolder": true
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40d00745-721c-4d0b-bfbd-9e2ad3995117",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2ef5b34-fd05-4977-b7a0-50770d57c5f6",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Clear transactions",
+					"item": [
+						{
+							"name": "Clear all",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validate no beds present",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"    let beds = JSON.parse(responseBody)",
+											"  ",
+											"    let flag = (beds.length === 0);",
+											"",
+											"  pm.expect(flag).to.be.true;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Validate no transactions present",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"    let beds = JSON.parse(responseBody)",
+											"  ",
+											"    let flag = (beds.length === 0);",
+											"",
+											"  pm.expect(flag).to.be.true;",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Add transactions fees",
+					"item": [
+						{
+							"name": "Add transactions fees (No fees)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add transactions fees (Fees null)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"serviceFee\": \"8.125\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add transactions fees (Fees as string)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"serviceFee\": \"8.125\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add transactions fees (Fees too low)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"serviceFee\": -1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add transactions fees (Fees too high)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    let response = JSON.parse(responseBody);",
+											"    ",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(400);",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right error\", function () {",
+											"        pm.expect(response.error ===\"OUT_OF_BOUNDS_SERVICE_FEE\").to.be.true;",
+											"    });",
+											"    ",
+											"    pm.test(\"contains right description\", function () {",
+											"         pm.expect(response.description === \"service fee should be a value between 0 and 15 inclusively\").to.be.true;",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"serviceFee\": 15.1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add transactions fees",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
+										"exec": [
+											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
+											"    pm.test(\"response is ok\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"serviceFee\": 8.125\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/transactions",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"transactions"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
