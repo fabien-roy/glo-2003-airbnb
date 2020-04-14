@@ -11,30 +11,30 @@ This document lists all flows for release 3. Issues concerning new features are 
     - ...
     - Adds stay booked transaction with `TransactionService.addStayBooked(...)`
       - Calculates total using service fee fro `ConfigurationService.get()`
-      - If `Configuration.serviceFee` is null, returns same total (#1)
-      - Else, returns total + total * serviceFee (#1)
+      - If `Configuration.serviceFee` is null, returns same total ([#321](https://github.com/glo2003/glo2003-h2020-eq08/issues/321))
+      - Else, returns total + total * serviceFee ([#321](https://github.com/glo2003/glo2003-h2020-eq08/issues/321))
     - ...
   - Sets OK as response status
   - Sets header location
 
 ### `POST /admin/transactions`
 - `TransactionResource.configure(...)`
-  - Maps `ConfigurationRequest` with `ConfigurationMapper` (#2)
-    - Deserializes `ConfigurationRequest.serviceFee` using `ServiceFeeDeserializer` (#3)
-      - Throws `InvalidServiceFeeException` if not positive integer (#3)
-        - Responds associated `ErrorResponse` with `InvalidServiceFeeErrorFactory` (#3)
-      - Throws `OutOfBoundsServiceFeeException` if not in [0, 15] (#3)
-        - Responds associated `ErrorResponse` with `OutOfBoundsServiceFeeErrorFactory` (#3)
-  - Sends `ConfigurationRequest` to `ConfigurationService.configure(...)` (#2)
-      - Converts `ConfigurationRequest` to `Configuration` with `ConfigurationConverter.fromRequest(...)` (#4)
-        - Sets `serviceFee` (#5)
-      - Gets `Configuration` from `ConfigurationRepository.get()` (#4)
-        - Gets `Configuration` (#6)
-      - Updates `Configuration` with `Configuration.update(Configuration)` (#4)
-        - Sets `serviceFee` to new value if the updated fee is not null (#7)
-      - Sets `Configuration` with `ConfigurationRepository.set(Configuration)` (#4)
-        - Replaces `Configuration` with new one (#6)
-  - Sets OK as response status (#2)
+  - Maps `ConfigurationRequest` with `ConfigurationMapper` ([#322](https://github.com/glo2003/glo2003-h2020-eq08/issues/322))
+    - Deserializes `ConfigurationRequest.serviceFee` using `ServiceFeeDeserializer` ([#323](https://github.com/glo2003/glo2003-h2020-eq08/issues/323))
+      - Throws `InvalidServiceFeeException` if not positive integer ([#323](https://github.com/glo2003/glo2003-h2020-eq08/issues/323))
+        - Responds associated `ErrorResponse` with `InvalidServiceFeeErrorFactory` ([#323](https://github.com/glo2003/glo2003-h2020-eq08/issues/323))
+      - Throws `OutOfBoundsServiceFeeException` if not in [0, 15] ([#323](https://github.com/glo2003/glo2003-h2020-eq08/issues/323))
+        - Responds associated `ErrorResponse` with `OutOfBoundsServiceFeeErrorFactory` ([#323](https://github.com/glo2003/glo2003-h2020-eq08/issues/323))
+  - Sends `ConfigurationRequest` to `ConfigurationService.configure(...)` ([#322](https://github.com/glo2003/glo2003-h2020-eq08/issues/322))
+      - Converts `ConfigurationRequest` to `Configuration` with `ConfigurationConverter.fromRequest(...)` ([#324](https://github.com/glo2003/glo2003-h2020-eq08/issues/324))
+        - Sets `serviceFee` ([#325](https://github.com/glo2003/glo2003-h2020-eq08/issues/325))
+      - Gets `Configuration` from `ConfigurationRepository.get()` ([#324](https://github.com/glo2003/glo2003-h2020-eq08/issues/324))
+        - Gets `Configuration` ([#326](https://github.com/glo2003/glo2003-h2020-eq08/issues/326))
+      - Updates `Configuration` with `Configuration.update(Configuration)` ([#324](https://github.com/glo2003/glo2003-h2020-eq08/issues/324))
+        - Sets `serviceFee` to new value if the updated fee is not null ([#327](https://github.com/glo2003/glo2003-h2020-eq08/issues/327))
+      - Sets `Configuration` with `ConfigurationRepository.set(Configuration)` ([#324](https://github.com/glo2003/glo2003-h2020-eq08/issues/324))
+        - Replaces `Configuration` with new one ([#326](https://github.com/glo2003/glo2003-h2020-eq08/issues/326))
+  - Sets OK as response status ([#322](https://github.com/glo2003/glo2003-h2020-eq08/issues/322))
   
 ## E4S1 / CRT
 
@@ -46,19 +46,19 @@ See the [reports package draft](reports.md) for information about new classes,
 
 ### `GET /admin/reports`
 - `ReportResource.get(...)`
-  - Gets news query param map with `QueryParamMapConverter.fromString(...)` (#10)
-  - Gets all `ReportPeriodResponse` with `ReportService.getAll(...)` (#10)
-    - Creates `ReportQuery` with `ReportQueryFactory.create(...)` (#11)
-      - Gets new `ReportQueryBuilder` (#15)
-      - For each `ReportQueryParamAssembler`, assemble (see [reports.md](reports.md)) (#15)
-    - Gets report period with `Configuration.getReportPeriodForQuarters(scope)` (#11)
-      - Default is 2020, in quarters (#12)
-      - Default is 2020 (#12)
-    - Gets `List<Transactions>` from `TransactionRepository.getAll(period)` (#11)
-      - Return transactions with timestamp (or booking.arrivalDate?) within period (#13)
-    - Sets transactions for query with `ReportQuery.setTransactions(transactions)` (#11)
-    - Gets `List<ReportPeriod>` with `ReportQuery.execute()` (#11)
-      - For each `ReportPeriod` in `periods`  (#9, all nested)
+  - Gets news query param map with `QueryParamMapConverter.fromString(...)` ([#330](https://github.com/glo2003/glo2003-h2020-eq08/issues/330))
+  - Gets all `ReportPeriodResponse` with `ReportService.getAll(...)` ([#330](https://github.com/glo2003/glo2003-h2020-eq08/issues/330))
+    - Creates `ReportQuery` with `ReportQueryFactory.create(...)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+      - Gets new `ReportQueryBuilder` ([#335](https://github.com/glo2003/glo2003-h2020-eq08/issues/335))
+      - For each `ReportQueryParamAssembler`, assemble (see [reports.md](reports.md)) ([#335](https://github.com/glo2003/glo2003-h2020-eq08/issues/335))
+    - Gets report period with `Configuration.getReportPeriodForQuarters(scope)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+      - Default is 2020, in quarters ([#332](https://github.com/glo2003/glo2003-h2020-eq08/issues/332))
+      - Default is 2020 ([#332](https://github.com/glo2003/glo2003-h2020-eq08/issues/332))
+    - Gets `List<Transactions>` from `TransactionRepository.getAll(period)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+      - Return transactions with timestamp (or booking.arrivalDate?) within period ([#333](https://github.com/glo2003/glo2003-h2020-eq08/issues/333))
+    - Sets transactions for query with `ReportQuery.setTransactions(transactions)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+    - Gets `List<ReportPeriod>` with `ReportQuery.execute()` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+      - For each `ReportPeriod` in `periods`  ([#329](https://github.com/glo2003/glo2003-h2020-eq08/issues/329))
         - Get `List<Transaction>` from list, where timestamp is in `ReportPeriod`
         - Create `List<ReportPeriodData>` with a single item, containing all transactions for period
         - For each `ReportDimension` in `dimensions`
@@ -66,19 +66,19 @@ See the [reports package draft](reports.md) for information about new classes,
         - For each `ReportPeriodData` in `reportPeriodData`
             - For each `ReportMetric` in `metrics`
               - `ReportMetric.calculate(ReportPeriodData)`
-    - Converts all `ReportPeriod` to `ReportPeriodResponse` with `ReportConverter.toResponse(...)` (#11)
-      - Converts all fields from domain to REST response (#14)
-    - Returns all `ReportPeriodResponse` (#11)
-  - Sets OK as response status (#10)
-  - Returns all `ReportPeriodResponse` (#10)
+    - Converts all `ReportPeriod` to `ReportPeriodResponse` with `ReportConverter.toResponse(...)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+      - Converts all fields from domain to REST response ([#334](https://github.com/glo2003/glo2003-h2020-eq08/issues/334))
+    - Returns all `ReportPeriodResponse` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
+  - Sets OK as response status ([#330](https://github.com/glo2003/glo2003-h2020-eq08/issues/330))
+  - Returns all `ReportPeriodResponse` ([#330](https://github.com/glo2003/glo2003-h2020-eq08/issues/330))
   
 ### `DELETE /admin`
 - `AdminResource.delete(...)`
-  - Calls `AdminService.delete()` (#16)
-      - Calls `BedService.delete()` (#17)
-          - Calls `BedRepository.delete()` (#17)
-              - Flushes list of beds (#17)
-      - Calls `TransactionService.delete()` (#17)
-          - Calls `TransactionRepository.delete()` (#17)
-              - Flushes list of transactions (#17)
-  - Sets OK as response status (#16)
+  - Calls `AdminService.delete()` ([#336](https://github.com/glo2003/glo2003-h2020-eq08/issues/336))
+      - Calls `BedService.delete()` ([#337](https://github.com/glo2003/glo2003-h2020-eq08/issues/337))
+          - Calls `BedRepository.delete()` ([#337](https://github.com/glo2003/glo2003-h2020-eq08/issues/337))
+              - Flushes list of beds ([#337](https://github.com/glo2003/glo2003-h2020-eq08/issues/337))
+      - Calls `TransactionService.delete()` ([#337](https://github.com/glo2003/glo2003-h2020-eq08/issues/337))
+          - Calls `TransactionRepository.delete()` ([#337](https://github.com/glo2003/glo2003-h2020-eq08/issues/337))
+              - Flushes list of transactions ([#337](https://github.com/glo2003/glo2003-h2020-eq08/issues/337))
+  - Sets OK as response status ([#336](https://github.com/glo2003/glo2003-h2020-eq08/issues/336))
