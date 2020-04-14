@@ -143,8 +143,11 @@ reports
 └───rest
     └───factories
     |   └───ReportErrorFactory : AbstractErrorFactory<ReportException>
+    |
     |   └───InvalidReportScopeErrorFactory : ReportErrorFactory
+    |
     |   └───InvalidReportMetricsErrorFactory : ReportErrorFactory
+    |
     |   └───InvalidReportDimensionsErrorFactory : ReportErrorFactory
     |
     └───handlers
