@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import java.util.Arrays;
 import java.util.List;
 
-public class SweetToothValidator extends AbstractPackageValidator {
+public class SweetToothValidator extends PackageValidator {
 
   @Override
   public boolean isForPackage(Packages packages) {

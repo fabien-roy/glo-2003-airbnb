@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.AllYouCanDrinkDependencyException;
 import java.util.Collections;
 import java.util.List;
 
-public class AllYouCanDrinkValidator extends AbstractPackageValidator {
+public class AllYouCanDrinkValidator extends PackageValidator {
 
   @Override
   public boolean isForPackage(Packages packages) {

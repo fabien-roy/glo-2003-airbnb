@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.beds.converters;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPricePerNight;
 import static ca.ulaval.glo2003.beds.rest.helpers.PackageRequestBuilder.aPackageRequest;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.converters.validators.PackageValidator;
 import ca.ulaval.glo2003.beds.domain.Packages;
@@ -19,7 +19,8 @@ import org.junit.jupiter.api.Test;
 class PackageConverterTest {
 
   private static PackageConverter packageConverter;
-  private static PackageValidator validator = mock(PackageValidator.class);
+  private static PackageValidator packageValidator = mock(PackageValidator.class);
+  private static PackageValidator otherPackageValidator = mock(PackageValidator.class);
 
   private static Map<Packages, Price> pricesPerNight;
   private static Packages packageName;
@@ -36,8 +37,13 @@ class PackageConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    Set<PackageValidator> validators = Collections.singleton(validator);
-    packageConverter = new PackageConverter(validators);
+    resetConverter();
+  }
+
+  private static void resetConverter() {
+    Set<PackageValidator> packageValidators =
+        new HashSet<>(Arrays.asList(packageValidator, otherPackageValidator));
+    packageConverter = new PackageConverter(packageValidators);
   }
 
   @BeforeEach
@@ -53,6 +59,15 @@ class PackageConverterTest {
 
     pricesPerNight = buildPricesPerNight();
     requests = buildPackageRequests();
+  }
+
+  @BeforeEach
+  public void setUpMocks() {
+    reset(packageValidator, otherPackageValidator);
+    when(packageValidator.isForPackage(eq(packageName))).thenReturn(true);
+    when(otherPackageValidator.isForPackage(eq(otherPackageName))).thenReturn(true);
+
+    resetConverter();
   }
 
   private Map<Packages, Price> buildPricesPerNight() {
@@ -148,6 +163,16 @@ class PackageConverterTest {
 
     assertEquals(price, pricesPerNight.get(packageName));
     assertEquals(otherPrice, pricesPerNight.get(otherPackageName));
+  }
+
+  @Test
+  public void fromRequests_shouldValidatePackages() {
+    List<Packages> presentPackages = Arrays.asList(packageName, otherPackageName);
+
+    packageConverter.fromRequests(requests);
+
+    verify(packageValidator).validate(presentPackages);
+    verify(otherPackageValidator).validate(presentPackages);
   }
 
   @Test
