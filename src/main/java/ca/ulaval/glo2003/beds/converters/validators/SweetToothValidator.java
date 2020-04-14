@@ -13,7 +13,7 @@ public class SweetToothValidator extends PackageValidator {
   }
 
   @Override
-  protected List<Packages> dependencies() {
+  protected List<Packages> getDependencies() {
     return Arrays.asList(Packages.BLOODTHIRSTY, Packages.ALL_YOU_CAN_DRINK);
   }
 

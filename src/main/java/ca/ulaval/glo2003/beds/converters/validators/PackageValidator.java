@@ -7,11 +7,11 @@ public abstract class PackageValidator {
 
   public abstract boolean isForPackage(Packages packages);
 
-  protected abstract List<Packages> dependencies();
+  protected abstract List<Packages> getDependencies();
 
   protected abstract void throwException();
 
   public void validate(List<Packages> packages) {
-    if (!packages.containsAll(dependencies())) throwException();
+    if (!packages.containsAll(getDependencies())) throwException();
   }
 }

@@ -13,7 +13,7 @@ public class AllYouCanDrinkValidator extends PackageValidator {
   }
 
   @Override
-  protected List<Packages> dependencies() {
+  protected List<Packages> getDependencies() {
     return Collections.singletonList(Packages.BLOODTHIRSTY);
   }
 
