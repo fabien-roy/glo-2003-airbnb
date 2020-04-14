@@ -81,7 +81,4 @@ See the [reports package draft](reports.md) for information about new classes,
       - Calls `TransactionService.delete()` (#17)
           - Calls `TransactionRepository.delete()` (#17)
               - Flushes list of transactions (#17)
-      - Calls `ConfigurationService.delete()` (unsure : [#320](https://github.com/glo2003/glo2003-h2020-eq08/issues/320))
-          - Calls `ConfigurationRepository.delete()` (unsure)
-              - Flushes configuration (unsure)
   - Sets OK as response status (#16)
