@@ -8,6 +8,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   open target/site/jacoco/index.html
 else
-  echo "Please open target/site/jacoco/index.html
-      in your favorite browser - probably Microsoft Edge :O="
+  echo "Well, well, well. You use a weird OS for a programmer."
+  echo "Open 'target/site/jacoco/index.html'"
 fi
