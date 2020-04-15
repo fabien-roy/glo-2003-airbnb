@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.locations.rest.factories;
 
+import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class NonExistingZipCodeErrorFactory extends LocationErrorFactory {
 
   protected Class<?> getAssociatedException() {
-    return NonExistingZipCodeErrorFactory.class;
+    return NonExistingZipCodeException.class;
   }
 
   protected String getError() {
