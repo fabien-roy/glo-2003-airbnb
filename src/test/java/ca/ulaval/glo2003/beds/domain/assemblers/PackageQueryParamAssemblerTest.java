@@ -37,6 +37,13 @@ class PackageQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutPackage_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withPackageName_shouldAssembleBuilder() {
     params.put(PACKAGE_NAME_PARAM, Collections.singletonList(packageName.toString()));
 

@@ -32,6 +32,13 @@ class BloodTypesQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutBloodTypes_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withSingleBloodType_shouldAssembleBuilder() {
     params.put(BLOOD_TYPES_PARAM, toParam(singleBloodType));
     when(queryBuilder.withBloodTypes(singleBloodType)).thenReturn(assembledQueryBuilder);

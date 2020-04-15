@@ -39,6 +39,13 @@ class OriginQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutOrigin_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withOrigin_shouldAssembleBuilder() {
     params.put(ORIGIN_PARAM, Collections.singletonList(origin.getZipCode().toString()));
 

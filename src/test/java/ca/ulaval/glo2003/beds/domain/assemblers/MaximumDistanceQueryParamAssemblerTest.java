@@ -37,6 +37,13 @@ class MaximumDistanceQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutMaxDistance_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withMaxDistance_shouldAssembleBuilder() {
     params.put(MAX_DISTANCE_PARAM, Collections.singletonList(Double.toString(maxDistance)));
 

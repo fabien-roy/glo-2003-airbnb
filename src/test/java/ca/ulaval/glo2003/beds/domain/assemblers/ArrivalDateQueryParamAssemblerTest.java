@@ -38,6 +38,13 @@ class ArrivalDateQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutArrivalDate_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withArrivalDate_shouldAssembleBuilder() {
     params.put(ARRIVAL_DATE_PARAM, Collections.singletonList(arrivalDate.toString()));
 
