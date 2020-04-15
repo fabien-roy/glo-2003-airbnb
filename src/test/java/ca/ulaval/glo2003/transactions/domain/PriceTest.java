@@ -79,4 +79,13 @@ class PriceTest {
 
     assertTrue(result);
   }
+
+  @Test
+  public void hashCode_shouldValueHashCode() {
+    int valueHashCode = price.toBigDecimal().hashCode();
+
+    int hashCode = price.hashCode();
+
+    assertEquals(valueHashCode, hashCode);
+  }
 }

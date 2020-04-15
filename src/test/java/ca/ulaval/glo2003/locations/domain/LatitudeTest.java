@@ -51,4 +51,13 @@ class LatitudeTest {
 
     assertTrue(result);
   }
+
+  @Test
+  public void hashCode_shouldValueHashCode() {
+    int valueHashCode = Double.valueOf(latitude.toDegrees()).hashCode();
+
+    int hashCode = latitude.hashCode();
+
+    assertEquals(valueHashCode, hashCode);
+  }
 }
