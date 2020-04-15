@@ -136,6 +136,7 @@ class CohabitationLodgingModeTest {
         Arguments.of(27, 89, new Price(30.34)));
   }
 
+  @Test
   public void applyDiscount_withoutColonySize_shouldThrowMissingColonySizeException() {
     when(booking.getColonySize()).thenReturn(null);
 

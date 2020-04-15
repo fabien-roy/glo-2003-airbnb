@@ -1,8 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,5 +40,12 @@ class PublicKeyTest {
     boolean result = publicKey.equals(otherPublicKey);
 
     assertTrue(result);
+  }
+
+  @Test
+  public void hashCode_shouldReturnValueHashCode() {
+    int hashCode = publicKey.hashCode();
+
+    assertEquals(publicKey.toString().hashCode(), hashCode);
   }
 }
