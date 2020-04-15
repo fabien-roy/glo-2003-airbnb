@@ -1,24 +1,22 @@
 package ca.ulaval.glo2003.locations.rest.factories;
 
-import ca.ulaval.glo2003.locations.exceptions.LocationException;
-import ca.ulaval.glo2003.locations.exceptions.NonExistingZipCodeException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class NonExistingZipCodeErrorFactory extends LocationErrorFactory {
 
-  @Override
-  public boolean canHandle(LocationException exception) {
-    return exception instanceof NonExistingZipCodeException;
+  protected Class<?> getAssociatedException() {
+    return NonExistingZipCodeErrorFactory.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "NON_EXISTING_ZIP_CODE", "zip code is not an existing US postal code");
+  protected String getError() {
+    return "NON_EXISTING_ZIP_CODE";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "zip code is not an existing US postal code";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

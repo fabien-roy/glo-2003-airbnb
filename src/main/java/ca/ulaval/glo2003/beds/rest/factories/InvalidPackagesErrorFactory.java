@@ -1,25 +1,23 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidPackagesErrorFactory extends BedErrorFactory {
 
-  @Override
-  public boolean canHandle(BedException exception) {
-    return exception instanceof InvalidPackagesException;
+  protected Class<?> getAssociatedException() {
+    return InvalidPackagesException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "INVALID_PACKAGES",
-        "packages should be an array of package name with its corresponding price per night");
+  protected String getError() {
+    return "INVALID_PACKAGES";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "packages should be an array of package name with its corresponding price per night";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

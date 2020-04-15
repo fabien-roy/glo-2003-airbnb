@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.errors.rest.handlers;
 
 import ca.ulaval.glo2003.errors.rest.factories.DefaultErrorFactory;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Set;
 import javax.inject.Inject;
 import spark.Request;
@@ -13,8 +14,10 @@ public class FakeDefaultExceptionHandler extends DefaultExceptionHandler<Excepti
 
   @Inject
   public FakeDefaultExceptionHandler(
-      DefaultErrorFactory defaultFactory, Set<ErrorFactory<Exception>> factories) {
-    super(defaultFactory);
+      ObjectMapper objectMapper,
+      DefaultErrorFactory defaultFactory,
+      Set<ErrorFactory<Exception>> factories) {
+    super(objectMapper, defaultFactory);
     this.factories = factories;
   }
 

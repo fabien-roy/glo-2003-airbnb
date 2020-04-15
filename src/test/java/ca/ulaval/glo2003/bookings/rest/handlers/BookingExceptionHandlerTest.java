@@ -13,6 +13,6 @@ public class BookingExceptionHandlerTest extends AbstractExceptionHandlerTest<Bo
 
   @Override
   protected void resetFactories() {
-    exceptionHandler = new BookingExceptionHandler(factories);
+    exceptionHandler = new BookingExceptionHandler(objectMapper, factories);
   }
 }

@@ -1,24 +1,23 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class MissingColonySizeErrorFactory extends BedErrorFactory {
 
-  @Override
-  public boolean canHandle(BedException exception) {
-    return exception instanceof MissingColonySizeException;
+  protected Class<?> getAssociatedException() {
+    return MissingColonySizeException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "MISSING_COLONY_SIZE", "colony size is mandatory when booking a bed in cohabitation mode");
+  protected String getError() {
+    return "MISSING_COLONY_SIZE";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "colony size is mandatory when booking a bed in cohabitation mode";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

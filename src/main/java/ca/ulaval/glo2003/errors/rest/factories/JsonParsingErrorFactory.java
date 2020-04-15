@@ -5,18 +5,19 @@ import org.eclipse.jetty.http.HttpStatus;
 
 public class JsonParsingErrorFactory extends CatchallErrorFactory {
 
-  @Override
-  public boolean canHandle(Exception exception) {
-    return exception instanceof JsonProcessingException;
+  protected Class<?> getAssociatedException() {
+    return JsonProcessingException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString("BAD_REQUEST", "could not parse JSON");
+  protected String getError() {
+    return "BAD_REQUEST";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "could not parse JSON";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

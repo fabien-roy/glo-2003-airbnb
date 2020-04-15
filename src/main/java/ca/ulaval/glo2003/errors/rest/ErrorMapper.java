@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.errors.rest.mappers;
+package ca.ulaval.glo2003.errors.rest;
 
 import static spark.Spark.exception;
 

@@ -13,6 +13,6 @@ public class LocationExceptionHandlerTest extends AbstractExceptionHandlerTest<L
 
   @Override
   protected void resetFactories() {
-    exceptionHandler = new LocationExceptionHandler(factories);
+    exceptionHandler = new LocationExceptionHandler(objectMapper, factories);
   }
 }

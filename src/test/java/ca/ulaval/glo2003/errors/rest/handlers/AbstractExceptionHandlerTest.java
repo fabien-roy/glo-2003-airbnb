@@ -2,7 +2,10 @@ package ca.ulaval.glo2003.errors.rest.handlers;
 
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.errors.rest.ErrorResponse;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +17,7 @@ import spark.Response;
 public abstract class AbstractExceptionHandlerTest<E extends Exception> {
 
   protected AbstractExceptionHandler<E> exceptionHandler;
+  protected static ObjectMapper objectMapper = mock(ObjectMapper.class);
   private final E exception;
   private ErrorFactory<E> firstErrorFactory = mock(ErrorFactory.class);
   private ErrorFactory<E> secondErrorFactory = mock(ErrorFactory.class);
@@ -24,6 +28,8 @@ public abstract class AbstractExceptionHandlerTest<E extends Exception> {
   private static Response response = mock(Response.class);
   private static int firstStatus = 1;
   private static int secondStatus = 2;
+  private static ErrorResponse firstResponse = new ErrorResponse();
+  private static ErrorResponse secondResponse = new ErrorResponse();
   private static String firstBody = "firstBody";
   private static String secondBody = "secondBody";
 
@@ -32,12 +38,14 @@ public abstract class AbstractExceptionHandlerTest<E extends Exception> {
   }
 
   @BeforeEach
-  public void setUpMocks() {
+  public void setUpMocks() throws JsonProcessingException {
     when(firstErrorFactory.createStatus()).thenReturn(firstStatus);
-    when(firstErrorFactory.createResponse()).thenReturn(firstBody);
+    when(firstErrorFactory.createResponse()).thenReturn(firstResponse);
+    when(objectMapper.writeValueAsString(firstResponse)).thenReturn(firstBody);
     when(firstErrorFactory.canHandle(exception)).thenReturn(true);
     when(secondErrorFactory.createStatus()).thenReturn(secondStatus);
-    when(secondErrorFactory.createResponse()).thenReturn(secondBody);
+    when(secondErrorFactory.createResponse()).thenReturn(secondResponse);
+    when(objectMapper.writeValueAsString(secondResponse)).thenReturn(secondBody);
     when(secondErrorFactory.canHandle(exception)).thenReturn(false);
     reset(response);
     resetFactories();

@@ -13,6 +13,6 @@ public class BedExceptionHandlerTest extends AbstractExceptionHandlerTest<BedExc
 
   @Override
   protected void resetFactories() {
-    exceptionHandler = new BedExceptionHandler(factories);
+    exceptionHandler = new BedExceptionHandler(objectMapper, factories);
   }
 }
