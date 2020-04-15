@@ -8,25 +8,28 @@ import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
-class AbstractExceptionHandlerTest {
+public abstract class AbstractExceptionHandlerTest<E extends Exception> {
 
-  private static ExceptionHandler<Exception> abstractExceptionHandler;
-  private static ErrorFactory<Exception> firstErrorFactory = mock(ErrorFactory.class);
-  private static ErrorFactory<Exception> secondErrorFactory = mock(ErrorFactory.class);
-  private static Set<ErrorFactory<Exception>> factories =
+  protected AbstractExceptionHandler<E> exceptionHandler;
+  private final E exception;
+  private ErrorFactory<E> firstErrorFactory = mock(ErrorFactory.class);
+  private ErrorFactory<E> secondErrorFactory = mock(ErrorFactory.class);
+  protected Set<ErrorFactory<E>> factories =
       new HashSet<>(Arrays.asList(firstErrorFactory, secondErrorFactory));
 
-  private static Exception exception = new Exception();
   private static Request request = mock(Request.class);
   private static Response response = mock(Response.class);
   private static int firstStatus = 1;
   private static int secondStatus = 2;
   private static String firstBody = "firstBody";
   private static String secondBody = "secondBody";
+
+  public AbstractExceptionHandlerTest(E exception) {
+    this.exception = exception;
+  }
 
   @BeforeEach
   public void setUpMocks() {
@@ -36,17 +39,15 @@ class AbstractExceptionHandlerTest {
     when(secondErrorFactory.createStatus()).thenReturn(secondStatus);
     when(secondErrorFactory.createResponse()).thenReturn(secondBody);
     when(secondErrorFactory.canHandle(exception)).thenReturn(false);
-    resetMocks();
+    reset(response);
+    resetFactories();
   }
 
-  private void resetMocks() {
-    reset(response);
-    abstractExceptionHandler = new FakeAbstractExceptionHandler(factories);
-  }
+  protected abstract void resetFactories();
 
   @Test
   public void handle_shouldSetFirstStatus() {
-    abstractExceptionHandler.handle(exception, request, response);
+    exceptionHandler.handle(exception, request, response);
 
     verify(response).status(firstStatus);
   }
@@ -56,7 +57,7 @@ class AbstractExceptionHandlerTest {
     when(firstErrorFactory.canHandle(exception)).thenReturn(false);
     when(secondErrorFactory.canHandle(exception)).thenReturn(true);
 
-    abstractExceptionHandler.handle(exception, request, response);
+    exceptionHandler.handle(exception, request, response);
 
     verify(response).status(secondStatus);
   }
@@ -65,14 +66,14 @@ class AbstractExceptionHandlerTest {
   public void handle_withoutFactoryToHandle_shouldNotSetStatus() {
     when(firstErrorFactory.canHandle(exception)).thenReturn(false);
 
-    abstractExceptionHandler.handle(exception, request, response);
+    exceptionHandler.handle(exception, request, response);
 
     verify(response, never()).status();
   }
 
   @Test
   public void handle_shouldSetFirstBody() {
-    abstractExceptionHandler.handle(exception, request, response);
+    exceptionHandler.handle(exception, request, response);
 
     verify(response).body(firstBody);
   }
@@ -82,7 +83,7 @@ class AbstractExceptionHandlerTest {
     when(firstErrorFactory.canHandle(exception)).thenReturn(false);
     when(secondErrorFactory.canHandle(exception)).thenReturn(true);
 
-    abstractExceptionHandler.handle(exception, request, response);
+    exceptionHandler.handle(exception, request, response);
 
     verify(response).body(secondBody);
   }
@@ -91,7 +92,7 @@ class AbstractExceptionHandlerTest {
   public void handle_withoutFactoryToHandle_shouldNotSetBody() {
     when(firstErrorFactory.canHandle(exception)).thenReturn(false);
 
-    abstractExceptionHandler.handle(exception, request, response);
+    exceptionHandler.handle(exception, request, response);
 
     verify(response, never()).body();
   }
