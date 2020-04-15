@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.rest.serializers;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
+import ca.ulaval.glo2003.beds.exceptions.InvalidPackagesException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class PackageNameDeserializerTest {
   }
 
   @Test
-  public void throwException_shouldThrowInvalidPackageException() {
-    assertThrows(InvalidPackageException.class, () -> packageNameDeserializer.throwException());
+  public void throwException_shouldThrowInvalidPackagesException() {
+    assertThrows(InvalidPackagesException.class, () -> packageNameDeserializer.throwException());
   }
 }
