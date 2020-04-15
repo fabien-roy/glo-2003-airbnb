@@ -2,8 +2,11 @@ package ca.ulaval.glo2003.errors.rest.handlers;
 
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.errors.rest.ErrorResponse;
 import ca.ulaval.glo2003.errors.rest.factories.DefaultErrorFactory;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +18,7 @@ import spark.Response;
 class DefaultExceptionHandlerTest {
 
   private static DefaultExceptionHandler<Exception> defaultExceptionHandler;
+  private static ObjectMapper objectMapper = mock(ObjectMapper.class);
   private static DefaultErrorFactory defaultErrorFactory = mock(DefaultErrorFactory.class);
   private static ErrorFactory<Exception> firstErrorFactory = mock(ErrorFactory.class);
   private static Set<ErrorFactory<Exception>> factories =
@@ -25,22 +29,27 @@ class DefaultExceptionHandlerTest {
   private static Response response = mock(Response.class);
   private static int defaultStatus = 1;
   private static int firstStatus = 2;
+  private static ErrorResponse defaultResponse = new ErrorResponse();
+  private static ErrorResponse firstResponse = new ErrorResponse();
   private static String defaultBody = "defaultBody";
   private static String firstBody = "firstBody";
 
   @BeforeEach
-  public void setUpMocks() {
+  public void setUpMocks() throws JsonProcessingException {
     when(defaultErrorFactory.createStatus()).thenReturn(defaultStatus);
-    when(defaultErrorFactory.createResponse()).thenReturn(defaultBody);
+    when(defaultErrorFactory.createResponse()).thenReturn(defaultResponse);
+    when(objectMapper.writeValueAsString(defaultResponse)).thenReturn(defaultBody);
     when(firstErrorFactory.createStatus()).thenReturn(firstStatus);
-    when(firstErrorFactory.createResponse()).thenReturn(firstBody);
+    when(firstErrorFactory.createResponse()).thenReturn(firstResponse);
+    when(objectMapper.writeValueAsString(firstResponse)).thenReturn(firstBody);
     when(firstErrorFactory.canHandle(exception)).thenReturn(true);
     resetMocks();
   }
 
   private void resetMocks() {
     reset(response);
-    defaultExceptionHandler = new FakeDefaultExceptionHandler(defaultErrorFactory, factories);
+    defaultExceptionHandler =
+        new FakeDefaultExceptionHandler(objectMapper, defaultErrorFactory, factories);
   }
 
   @Test
@@ -53,7 +62,7 @@ class DefaultExceptionHandlerTest {
   @Test
   public void handle_withoutFactories_shouldSetDefaultStatus() {
     defaultExceptionHandler =
-        new FakeDefaultExceptionHandler(defaultErrorFactory, Collections.emptySet());
+        new FakeDefaultExceptionHandler(objectMapper, defaultErrorFactory, Collections.emptySet());
 
     defaultExceptionHandler.handle(exception, request, response);
 
@@ -79,7 +88,7 @@ class DefaultExceptionHandlerTest {
   @Test
   public void handle_withoutFactories_shouldSetDefaultBody() {
     defaultExceptionHandler =
-        new FakeDefaultExceptionHandler(defaultErrorFactory, Collections.emptySet());
+        new FakeDefaultExceptionHandler(objectMapper, defaultErrorFactory, Collections.emptySet());
 
     defaultExceptionHandler.handle(exception, request, response);
 

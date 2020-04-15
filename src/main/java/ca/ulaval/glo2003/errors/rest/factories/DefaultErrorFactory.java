@@ -4,18 +4,19 @@ import org.eclipse.jetty.http.HttpStatus;
 
 public class DefaultErrorFactory extends AbstractErrorFactory<Exception> {
 
-  @Override
-  public boolean canHandle(Exception exception) {
-    return true;
+  protected Class<?> getAssociatedException() {
+    return Exception.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString("BAD_REQUEST", "something went wrong");
+  protected String getError() {
+    return "BAD_REQUEST";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "something went wrong";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

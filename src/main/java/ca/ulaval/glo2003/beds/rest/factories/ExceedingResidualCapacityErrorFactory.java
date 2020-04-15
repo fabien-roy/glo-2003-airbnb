@@ -1,24 +1,23 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class ExceedingResidualCapacityErrorFactory extends BedErrorFactory {
 
-  @Override
-  public boolean canHandle(BedException exception) {
-    return exception instanceof ExceedingResidualCapacityException;
+  protected Class<?> getAssociatedException() {
+    return ExceedingResidualCapacityException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "EXCEEDING_RESIDUAL_CAPACITY", "colony size is exceeding residual bed capacity");
+  protected String getError() {
+    return "EXCEEDING_RESIDUAL_CAPACITY";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "colony size is exceeding residual bed capacity";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

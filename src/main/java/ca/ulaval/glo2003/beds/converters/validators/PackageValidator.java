@@ -3,9 +3,15 @@ package ca.ulaval.glo2003.beds.converters.validators;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import java.util.List;
 
-public interface PackageValidator {
+public abstract class PackageValidator {
 
-  boolean isForPackage(Packages packages);
+  public abstract boolean isForPackage(Packages packages);
 
-  void validate(List<Packages> packages);
+  protected abstract List<Packages> getDependencies();
+
+  protected abstract void throwException();
+
+  public void validate(List<Packages> packages) {
+    if (!packages.containsAll(getDependencies())) throwException();
+  }
 }

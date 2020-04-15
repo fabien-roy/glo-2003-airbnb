@@ -1,23 +1,23 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidCapacityException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidCapacityErrorFactory extends BedErrorFactory {
 
-  @Override
-  public boolean canHandle(BedException exception) {
-    return exception instanceof InvalidCapacityException;
+  protected Class<?> getAssociatedException() {
+    return InvalidCapacityException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString("INVALID_CAPACITY", "capacity should be a positive number");
+  protected String getError() {
+    return "INVALID_CAPACITY";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "capacity should be a positive number";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }
