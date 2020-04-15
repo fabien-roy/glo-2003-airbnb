@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
 import org.eclipse.jetty.http.HttpStatus;
@@ -20,7 +19,7 @@ public class BookingNotFoundErrorFactory extends BookingErrorFactory {
   }
 
   protected Class<?> getAssociatedException() {
-    return BedAlreadyBookedException.class;
+    return BookingNotFoundException.class;
   }
 
   protected String getError() {

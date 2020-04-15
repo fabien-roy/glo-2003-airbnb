@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
+import ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class BookingAlreadyCanceledErrorFactory extends BookingErrorFactory {
 
   protected Class<?> getAssociatedException() {
-    return BookingAlreadyCanceledErrorFactory.class;
+    return BookingAlreadyCanceledException.class;
   }
 
   protected String getError() {
