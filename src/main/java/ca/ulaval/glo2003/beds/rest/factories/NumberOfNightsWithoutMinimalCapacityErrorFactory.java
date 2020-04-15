@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
+import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class NumberOfNightsWithoutMinimalCapacityErrorFactory extends BedErrorFactory {
 
   protected Class<?> getAssociatedException() {
-    return NumberOfNightsWithoutMinimalCapacityErrorFactory.class;
+    return NumberOfNightsWithoutMinimalCapacityException.class;
   }
 
   protected String getError() {
