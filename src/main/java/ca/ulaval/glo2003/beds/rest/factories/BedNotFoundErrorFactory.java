@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.BedNotFoundException;
 import org.eclipse.jetty.http.HttpStatus;
@@ -20,7 +19,7 @@ public class BedNotFoundErrorFactory extends BedErrorFactory {
   }
 
   protected Class<?> getAssociatedException() {
-    return BedAlreadyBookedException.class;
+    return BedNotFoundException.class;
   }
 
   protected String getError() {

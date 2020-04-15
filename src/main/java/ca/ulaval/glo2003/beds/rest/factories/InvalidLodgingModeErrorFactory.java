@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
+import ca.ulaval.glo2003.beds.exceptions.InvalidLodgingModeException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidLodgingModeErrorFactory extends BedErrorFactory {
 
   protected Class<?> getAssociatedException() {
-    return InvalidLodgingModeErrorFactory.class;
+    return InvalidLodgingModeException.class;
   }
 
   protected String getError() {

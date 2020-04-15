@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
+import ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidPublicKeyErrorFactory extends BedErrorFactory {
 
   protected Class<?> getAssociatedException() {
-    return InvalidPublicKeyErrorFactory.class;
+    return InvalidPublicKeyException.class;
   }
 
   protected String getError() {
