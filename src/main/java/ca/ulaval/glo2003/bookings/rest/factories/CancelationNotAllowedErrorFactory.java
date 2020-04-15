@@ -1,24 +1,23 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
-import ca.ulaval.glo2003.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class CancelationNotAllowedErrorFactory extends BookingErrorFactory {
 
-  @Override
-  public boolean canHandle(BookingException exception) {
-    return exception instanceof CancelationNotAllowedException;
+  protected Class<?> getAssociatedException() {
+    return CancelationNotAllowedException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "CANCELATION_NOT_ALLOWED", "cancelation period for this booking is over");
+  protected String getError() {
+    return "CANCELATION_NOT_ALLOWED";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "cancelation period for this booking is over";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

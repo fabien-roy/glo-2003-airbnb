@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.SweetToothDependencyException;
 import java.util.Arrays;
 import java.util.List;
 
-public class SweetToothValidator extends AbstractPackageValidator {
+public class SweetToothValidator extends PackageValidator {
 
   @Override
   public boolean isForPackage(Packages packages) {
@@ -13,7 +13,7 @@ public class SweetToothValidator extends AbstractPackageValidator {
   }
 
   @Override
-  protected List<Packages> dependencies() {
+  protected List<Packages> getDependencies() {
     return Arrays.asList(Packages.BLOODTHIRSTY, Packages.ALL_YOU_CAN_DRINK);
   }
 

@@ -1,23 +1,23 @@
 package ca.ulaval.glo2003.locations.rest.factories;
 
 import ca.ulaval.glo2003.locations.exceptions.InvalidZipCodeException;
-import ca.ulaval.glo2003.locations.exceptions.LocationException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidZipCodeErrorFactory extends LocationErrorFactory {
 
-  @Override
-  public boolean canHandle(LocationException exception) {
-    return exception instanceof InvalidZipCodeException;
+  protected Class<?> getAssociatedException() {
+    return InvalidZipCodeException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString("INVALID_ZIP_CODE", "zip code should be a 5 digits number");
+  protected String getError() {
+    return "INVALID_ZIP_CODE";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "zip code should be a 5 digits number";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

@@ -1,24 +1,23 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidPackageErrorFactory extends BedErrorFactory {
 
-  @Override
-  public boolean canHandle(BedException exception) {
-    return exception instanceof InvalidPackageException;
+  protected Class<?> getAssociatedException() {
+    return InvalidPackageException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "INVALID_PACKAGE", "package should be one of bloodthirsty, allYouCanDrink, sweetTooth");
+  protected String getError() {
+    return "INVALID_PACKAGE";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "package should be one of bloodthirsty, allYouCanDrink, sweetTooth";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

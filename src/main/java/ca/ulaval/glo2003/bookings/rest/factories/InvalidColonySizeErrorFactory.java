@@ -1,23 +1,23 @@
 package ca.ulaval.glo2003.bookings.rest.factories;
 
-import ca.ulaval.glo2003.bookings.exceptions.BookingException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidColonySizeErrorFactory extends BookingErrorFactory {
 
-  @Override
-  public boolean canHandle(BookingException exception) {
-    return exception instanceof InvalidColonySizeException;
+  protected Class<?> getAssociatedException() {
+    return InvalidColonySizeException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString("INVALID_COLONY_SIZE", "colony size should be a positive number");
+  protected String getError() {
+    return "INVALID_COLONY_SIZE";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "colony size should be a positive number";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }

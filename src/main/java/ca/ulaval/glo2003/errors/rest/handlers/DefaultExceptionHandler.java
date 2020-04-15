@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.errors.rest.handlers;
 
+import ca.ulaval.glo2003.errors.rest.ErrorResponse;
 import ca.ulaval.glo2003.errors.rest.factories.DefaultErrorFactory;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import java.util.Set;
 import spark.Response;
@@ -11,7 +13,8 @@ public abstract class DefaultExceptionHandler<E extends Exception>
 
   private final DefaultErrorFactory defaultFactory;
 
-  public DefaultExceptionHandler(DefaultErrorFactory defaultFactory) {
+  public DefaultExceptionHandler(ObjectMapper objectMapper, DefaultErrorFactory defaultFactory) {
+    super(objectMapper);
     this.defaultFactory = defaultFactory;
   }
 
@@ -23,7 +26,7 @@ public abstract class DefaultExceptionHandler<E extends Exception>
       setResponse(response, foundFactory.get());
     } else {
       int status = defaultFactory.createStatus();
-      String errorResponse = defaultFactory.createResponse();
+      ErrorResponse errorResponse = defaultFactory.createResponse();
       setResponse(response, status, errorResponse);
     }
   }

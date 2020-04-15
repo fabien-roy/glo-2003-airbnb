@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.errors;
 
+import ca.ulaval.glo2003.errors.rest.ErrorMapper;
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import ca.ulaval.glo2003.errors.rest.factories.JsonParsingErrorFactory;
 import ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler;
-import ca.ulaval.glo2003.errors.rest.mappers.ErrorMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;

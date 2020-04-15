@@ -1,24 +1,23 @@
 package ca.ulaval.glo2003.beds.rest.factories;
 
-import ca.ulaval.glo2003.beds.exceptions.BedException;
 import ca.ulaval.glo2003.beds.exceptions.InvalidMinimalCapacityException;
 import org.eclipse.jetty.http.HttpStatus;
 
 public class InvalidMinimalCapacityErrorFactory extends BedErrorFactory {
 
-  @Override
-  public boolean canHandle(BedException exception) {
-    return exception instanceof InvalidMinimalCapacityException;
+  protected Class<?> getAssociatedException() {
+    return InvalidMinimalCapacityException.class;
   }
 
-  @Override
-  public String createResponse() {
-    return tryWriteValueAsString(
-        "INVALID_MINIMAL_CAPACITY", "minimal capacity should be a positive number");
+  protected String getError() {
+    return "INVALID_MINIMAL_CAPACITY";
   }
 
-  @Override
-  public int createStatus() {
+  protected String getDescription() {
+    return "minimal capacity should be a positive number";
+  }
+
+  protected int getStatus() {
     return HttpStatus.BAD_REQUEST_400;
   }
 }
