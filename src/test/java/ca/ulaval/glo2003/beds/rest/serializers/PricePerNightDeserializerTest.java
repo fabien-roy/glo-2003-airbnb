@@ -16,7 +16,7 @@ class PricePerNightDeserializerTest {
   }
 
   @Test
-  public void throwException_shouldThrowInvalidPackagesException() {
+  public void throwException_shouldThrowInvalidPricePerNightException() {
     assertThrows(InvalidPackagesException.class, () -> pricePerNightDeserializer.throwException());
   }
 }

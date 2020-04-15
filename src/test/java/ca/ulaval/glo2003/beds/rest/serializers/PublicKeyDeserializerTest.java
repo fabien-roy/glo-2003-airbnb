@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.rest.serializers;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ca.ulaval.glo2003.beds.exceptions.InvalidPublicKeyException;
 import org.junit.jupiter.api.BeforeAll;

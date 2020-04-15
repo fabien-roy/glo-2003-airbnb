@@ -16,7 +16,7 @@ class BedTypeDeserializerTest {
   }
 
   @Test
-  public void throwException_shouldThrowInvalidCapacityException() {
+  public void throwException_shouldThrowInvalidBedTypeException() {
     assertThrows(InvalidBedTypeException.class, () -> bedTypeDeserializer.throwException());
   }
 }
