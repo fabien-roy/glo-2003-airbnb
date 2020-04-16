@@ -17,7 +17,7 @@ public class PriceSerializer extends AbstractSerializer<Double> {
     super(Double.class);
     DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.US);
     otherSymbols.setDecimalSeparator('.');
-    decimalFormat = new DecimalFormat("#.00", otherSymbols);
+    decimalFormat = new DecimalFormat("0.00", otherSymbols);
   }
 
   @Override
