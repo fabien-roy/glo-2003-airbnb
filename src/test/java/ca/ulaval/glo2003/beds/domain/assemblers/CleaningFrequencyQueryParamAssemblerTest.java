@@ -32,6 +32,13 @@ class CleaningFrequencyQueryParamAssemblerTest {
     queryAssembler = new CleaningFrequencyQueryParamAssembler();
   }
 
+  @Test
+  public void assemble_withoutCleaningFrequency_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
   @BeforeEach
   public void setUpMocks() {
     when(queryBuilder.withCleaningFrequency(cleaningFrequency)).thenReturn(assembledQueryBuilder);

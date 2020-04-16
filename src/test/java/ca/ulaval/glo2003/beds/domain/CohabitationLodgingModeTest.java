@@ -87,6 +87,11 @@ class CohabitationLodgingModeTest {
   }
 
   @Test
+  public void validateAvailable_withNonOverlappingBooking_shouldNotThrowException() {
+    assertDoesNotThrow(() -> cohabitationLodgingMode.validateAvailable(bed, booking));
+  }
+
+  @Test
   public void
       validateAvailable_withoutUnavailableBed_shouldThrowExceedingResidualCapacityException() {
     when(bed.getResidualCapacityOnDate(arrivalDate)).thenReturn(minCapacity - 1);
@@ -131,6 +136,7 @@ class CohabitationLodgingModeTest {
         Arguments.of(27, 89, new Price(30.34)));
   }
 
+  @Test
   public void applyDiscount_withoutColonySize_shouldThrowMissingColonySizeException() {
     when(booking.getColonySize()).thenReturn(null);
 

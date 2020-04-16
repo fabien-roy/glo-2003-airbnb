@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.locations.domain;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -35,5 +34,14 @@ class ZipCodeTest {
     boolean result = zipCode.equals(other);
 
     assertTrue(result);
+  }
+
+  @Test
+  public void hashCode_shouldValueHashCode() {
+    int valueHashCode = zipCode.toString().hashCode();
+
+    int hashCode = zipCode.hashCode();
+
+    assertEquals(valueHashCode, hashCode);
   }
 }

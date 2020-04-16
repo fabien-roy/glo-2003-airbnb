@@ -38,6 +38,13 @@ class LodgingModeQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutLodgingMode_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withLodgingMode_shouldAssembleBuilder() {
     params.put(LODGING_MODE_PARAM, Collections.singletonList(lodgingMode.toString()));
 

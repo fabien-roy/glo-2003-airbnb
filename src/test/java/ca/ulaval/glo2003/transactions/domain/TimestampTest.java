@@ -81,4 +81,13 @@ class TimestampTest {
 
     assertTrue(result);
   }
+
+  @Test
+  public void hashCode_shouldValueHashCode() {
+    int valueHashCode = timestamp.toInstant().hashCode();
+
+    int hashCode = timestamp.hashCode();
+
+    assertEquals(valueHashCode, hashCode);
+  }
 }

@@ -17,7 +17,8 @@ jobs:
       - name: Unit tests
         run: mvn test && mvn jacoco:report
       - name: Code coverage
+        run: mvn jacoco:report
+      - name: Upload to codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          yml: ./codecov.yml

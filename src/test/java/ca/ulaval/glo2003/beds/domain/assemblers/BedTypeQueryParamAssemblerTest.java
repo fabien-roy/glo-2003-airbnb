@@ -38,6 +38,13 @@ class BedTypeQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutBedType_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withBedType_shouldAssembleBuilder() {
     params.put(BED_TYPE_PARAM, Collections.singletonList(bedType.toString()));
 

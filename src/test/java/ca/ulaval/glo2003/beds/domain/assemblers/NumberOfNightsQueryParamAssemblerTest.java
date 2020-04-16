@@ -38,6 +38,13 @@ class NumberOfNightsQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutNumberOfNights_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withNumberOfNights_shouldAssembleBuilder() {
     params.put(NUMBER_OF_NIGHTS_PARAM, Collections.singletonList(Integer.toString(numberOfNights)));
 

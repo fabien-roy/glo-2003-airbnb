@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.crea
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
@@ -45,6 +46,11 @@ class PrivateLodgingModeTest {
     resetMocks();
   }
 
+  private void setUpWithOverlappingBookings() {
+    setUpWithBookings();
+    when(booking.isOverlapping(arrivalDate, numberOfNights)).thenReturn(true);
+  }
+
   private void resetMocks() {
     resetBooking();
     resetBed();
@@ -81,12 +87,26 @@ class PrivateLodgingModeTest {
 
   @Test
   public void isAvailable_withOverlappingBooking_shouldReturnFalse() {
-    setUpWithBookings();
-    when(booking.isOverlapping(arrivalDate, numberOfNights)).thenReturn(true);
+    setUpWithOverlappingBookings();
 
     boolean result = privateLodgingMode.isAvailable(bed, minCapacity, arrivalDate, numberOfNights);
 
     assertFalse(result);
+  }
+
+  @Test
+  public void validateAvailable_withNonOverlappingBooking_shouldNotThrowException() {
+    setUpWithBookings();
+
+    assertDoesNotThrow(() -> privateLodgingMode.validateAvailable(bed, booking));
+  }
+
+  @Test
+  public void validateAvailable_withOverlappingBooking_shouldThrowBedAlreadyBookedException() {
+    setUpWithOverlappingBookings();
+
+    assertThrows(
+        BedAlreadyBookedException.class, () -> privateLodgingMode.validateAvailable(bed, booking));
   }
 
   @Test

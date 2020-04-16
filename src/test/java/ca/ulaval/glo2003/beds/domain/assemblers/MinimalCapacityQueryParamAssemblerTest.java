@@ -37,6 +37,13 @@ class MinimalCapacityQueryParamAssemblerTest {
   }
 
   @Test
+  public void assemble_withoutMinimalCapacity_shouldReturnSameBuilder() {
+    BedQueryBuilder actualQueryBuilder = queryAssembler.assemble(queryBuilder, params);
+
+    assertSame(queryBuilder, actualQueryBuilder);
+  }
+
+  @Test
   public void assemble_withMinCapacity_shouldAssembleBuilder() {
     params.put(MIN_CAPACITY_PARAM, Collections.singletonList(Integer.toString(minCapacity)));
 

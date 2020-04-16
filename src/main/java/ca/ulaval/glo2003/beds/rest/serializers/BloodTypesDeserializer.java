@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 public class BloodTypesDeserializer extends StringListDeserializer<InvalidBloodTypesException> {
 
+  // TODO : Check if can be deleted
   protected BloodTypesDeserializer() {
     super();
   }
