@@ -28,7 +28,7 @@
         <junit-jupiter-params.version>5.4.2</junit-jupiter-params.version>
         <maven-surefire.version>2.22.1</maven-surefire.version>
         <mockito-junit-jupiter.version>3.3.0</mockito-junit-jupiter.version>
-        <javafaker.version>1.0.1</javafaker.version>
+        <javafaker.version>1.0.2</javafaker.version>
         <!-- code coverage -->
         <jacoco-maven.version>0.8.5</jacoco-maven.version>
         <!-- logging -->
