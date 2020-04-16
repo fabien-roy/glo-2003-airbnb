@@ -3,6 +3,7 @@
 [![Build](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Airbnb%20CI/badge.svg)](https://github.com/glo2003/glo2003-h2020-eq08/actions?query=workflow%3A%22Airbnb+CI%22)
 [![Deploy](https://github.com/glo2003/glo2003-h2020-eq08/workflows/Airbnb%20CD/badge.svg)](https://github.com/glo2003/glo2003-h2020-eq08/actions?query=workflow%3A%22Airbnb+CD%22)
 [![Codecov](https://codecov.io/gh/glo2003/glo2003-h2020-eq08/branch/master/graph/badge.svg?token=SNtgyhzwAR)](https://codecov.io/gh/glo2003/glo2003-h2020-eq08)
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 This is our project for course GLO-2003 at Laval University. We are team 8.
 
