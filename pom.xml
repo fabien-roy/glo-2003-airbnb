@@ -18,7 +18,7 @@
         <main-class>ca.ulaval.glo2003.Main</main-class>
         <!-- injection -->
         <guice.version>4.2.3</guice.version>
-        <guice-multibings.version>4.2.3</guice-multibings.version>
+        <guice-multibindings.version>4.2.3</guice-multibindings.version>
         <!-- rest -->
         <spark-core.version>2.9.1</spark-core.version>
         <jackson-databind.version>2.10.1</jackson-databind.version>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-multibindings</artifactId>
-            <version>${guice-multibings.version}</version>
+            <version>${guice-multibindings.version}</version>
         </dependency>
         <!-- rest -->
         <dependency>
