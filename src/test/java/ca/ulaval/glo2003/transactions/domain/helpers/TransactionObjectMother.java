@@ -1,21 +1,14 @@
 package ca.ulaval.glo2003.transactions.domain.helpers;
 
-import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
-import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import com.github.javafaker.Faker;
-import java.time.Instant;
 
 public class TransactionObjectMother {
 
   private TransactionObjectMother() {}
-
-  public static Timestamp createTimestamp() {
-    Instant value = Faker.instance().date().birthday().toInstant();
-    return new Timestamp(value);
-  }
 
   public static String createFrom() {
     return Faker.instance().name().firstName();

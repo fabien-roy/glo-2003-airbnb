@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.reports.domain.assemblers;
 
-import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
+import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
 import ca.ulaval.glo2003.reports.domain.ReportQueryBuilder;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScopeBuilder;
@@ -24,7 +24,7 @@ public class ScopeQueryParamAssembler implements ReportQueryParamAssembler {
   public ReportQueryBuilder assemble(ReportQueryBuilder builder, Map<String, List<String>> params) {
     List<String> scope = params.get(SCOPE_PARAM);
     ReportScope reportScope;
-    BookingPeriod bookingPeriod = BookingPeriod.ofYear(2020);
+    ReservationPeriod reservationPeriod = ReservationPeriod.ofYear(2020);
 
     if (scope != null) {
       ReportScopes reportScopeType = ReportScopes.get(scope.get(0));
@@ -32,10 +32,10 @@ public class ScopeQueryParamAssembler implements ReportQueryParamAssembler {
           reportScopeBuilder
               .aReportScope()
               .withType(reportScopeType)
-              .withBookingPeriod(bookingPeriod)
+              .withBookingPeriod(reservationPeriod)
               .build();
     } else {
-      reportScope = reportScopeBuilder.aReportScope().withBookingPeriod(bookingPeriod).build();
+      reportScope = reportScopeBuilder.aReportScope().withBookingPeriod(reservationPeriod).build();
     }
 
     return builder.withPeriods(reportScope.getReportPeriods());

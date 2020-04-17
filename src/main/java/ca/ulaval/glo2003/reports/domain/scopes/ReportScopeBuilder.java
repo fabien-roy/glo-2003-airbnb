@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
+import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
 
 // TODO : Test ReportScopeBuilder
 public class ReportScopeBuilder {
@@ -9,8 +9,8 @@ public class ReportScopeBuilder {
   private ReportScopes reportScopeType = DEFAULT_REPORT_SCOPE_TYPE;
 
   // TODO : This information should not be here
-  private BookingPeriod DEFAULT_BOOKING_PERIOD = BookingPeriod.ofYear(2020);
-  private BookingPeriod bookingPeriod = DEFAULT_BOOKING_PERIOD;
+  private ReservationPeriod DEFAULT_BOOKING_PERIOD = ReservationPeriod.ofYear(2020);
+  private ReservationPeriod reservationPeriod = DEFAULT_BOOKING_PERIOD;
 
   public ReportScopeBuilder aReportScope() {
     return new ReportScopeBuilder();
@@ -21,22 +21,22 @@ public class ReportScopeBuilder {
     return this;
   }
 
-  public ReportScopeBuilder withBookingPeriod(BookingPeriod bookingPeriod) {
-    this.bookingPeriod = bookingPeriod;
+  public ReportScopeBuilder withBookingPeriod(ReservationPeriod reservationPeriod) {
+    this.reservationPeriod = reservationPeriod;
     return this;
   }
 
   public ReportScope build() {
     switch (reportScopeType) {
       case WEEKLY:
-        return new WeeklyReportScope(bookingPeriod);
+        return new WeeklyReportScope(reservationPeriod);
       case QUARTERLY:
-        return new QuarterlyReportScope(bookingPeriod);
+        return new QuarterlyReportScope(reservationPeriod);
       case ANNUAL:
-        return new AnnualReportScope(bookingPeriod);
+        return new AnnualReportScope(reservationPeriod);
       default:
       case MONTHLY:
-        return new MonthlyReportScope(bookingPeriod);
+        return new MonthlyReportScope(reservationPeriod);
     }
   }
 }

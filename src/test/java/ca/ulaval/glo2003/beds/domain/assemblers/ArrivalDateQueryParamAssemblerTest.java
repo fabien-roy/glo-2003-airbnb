@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.bookings.converters.BookingDateConverter;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ class ArrivalDateQueryParamAssemblerTest {
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private BookingDate arrivalDate = BookingDate.now();
+  private ReservationDate arrivalDate = ReservationDate.now();
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll

@@ -2,8 +2,8 @@ package ca.ulaval.glo2003.bookings.services;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.services.CancelationService.MINIMUM_DAYS_FOR_FULL_REFUND;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -11,11 +11,11 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.bookings.converters.CancelationConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.CancelationRefundCalculator;
 import ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException;
 import ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,7 +31,7 @@ class CancelationServiceTest {
   private static TransactionService transactionService = mock(TransactionService.class);
 
   private static Booking booking;
-  private static BookingDate arrivalDate;
+  private static ReservationDate arrivalDate;
   private static Price total;
   private static Price tenantRefund = createPrice();
   private static Price ownerRefund = createPrice();
@@ -66,17 +66,17 @@ class CancelationServiceTest {
   }
 
   private static void setBookingOnSameDay() {
-    arrivalDate = BookingDate.now();
+    arrivalDate = ReservationDate.now();
     booking = buildBooking();
   }
 
   private static void setBookingOnSameWeek() {
-    arrivalDate = BookingDate.now().plusDays(1);
+    arrivalDate = ReservationDate.now().plusDays(1);
     booking = buildBooking();
   }
 
   private static void setOlderBooking() {
-    arrivalDate = BookingDate.now().plusDays(MINIMUM_DAYS_FOR_FULL_REFUND);
+    arrivalDate = ReservationDate.now().plusDays(MINIMUM_DAYS_FOR_FULL_REFUND);
     booking = buildBooking();
   }
 

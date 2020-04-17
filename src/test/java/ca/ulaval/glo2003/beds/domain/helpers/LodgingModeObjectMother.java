@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
-import static ca.ulaval.glo2003.interfaces.helpers.Randomizer.randomEnum;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.Randomizer.randomEnum;
 
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 

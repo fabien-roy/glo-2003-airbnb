@@ -4,9 +4,9 @@ import ca.ulaval.glo2003.beds.exceptions.BookingNotAllowedException;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingAccommodationCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.*;
@@ -110,7 +110,7 @@ public class Bed {
     return pricesPerNight.keySet();
   }
 
-  public int getResidualCapacityOnDate(BookingDate date) {
+  public int getResidualCapacityOnDate(ReservationDate date) {
     int residualCapacity = capacity;
 
     for (Booking booking : getBookingsOnDate(date)) residualCapacity -= booking.getColonySize();
@@ -127,7 +127,7 @@ public class Bed {
     bookings.add(booking);
   }
 
-  public boolean isAvailable(Integer minCapacity, BookingDate arrivalData, int numberOfNights) {
+  public boolean isAvailable(Integer minCapacity, ReservationDate arrivalData, int numberOfNights) {
     if (isExceedingAccommodationCapacity(minCapacity)) return false;
 
     return lodgingMode.isAvailable(this, minCapacity, arrivalData, numberOfNights);
@@ -141,7 +141,7 @@ public class Bed {
     return bookings.stream().anyMatch(presentBooking -> presentBooking.isOverlapping(booking));
   }
 
-  private List<Booking> getBookingsOnDate(BookingDate date) {
+  private List<Booking> getBookingsOnDate(ReservationDate date) {
     return bookings.stream()
         .filter(booking -> !booking.isCanceled())
         .filter(booking -> booking.isOverlapping(date))

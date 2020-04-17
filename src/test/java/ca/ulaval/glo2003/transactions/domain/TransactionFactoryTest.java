@@ -1,9 +1,11 @@
 package ca.ulaval.glo2003.transactions.domain;
 
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationTimestampObjectMother.createTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ class TransactionFactoryTest {
 
   private static TransactionFactory transactionFactory;
 
-  private static Timestamp timestamp = createTimestamp();
+  private static ReservationTimestamp reservationTimestamp = createTimestamp();
   private static String from = createFrom();
   private static String to = createTo();
   private static Price total = createTotal();
@@ -25,7 +27,7 @@ class TransactionFactoryTest {
   public void createStayBooked_shouldSetTimestamp() {
     Transaction transaction = transactionFactory.createStayBooked(from, to, total);
 
-    assertNotNull(transaction.getTimestamp());
+    assertNotNull(transaction.getReservationTimestamp());
   }
 
   @Test
@@ -60,28 +62,32 @@ class TransactionFactoryTest {
 
   @Test
   public void createStayCompleted_shouldSetTimestamp() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayCompleted(from, to, total, reservationTimestamp);
 
-    assertEquals(timestamp, transaction.getTimestamp());
+    assertEquals(reservationTimestamp, transaction.getReservationTimestamp());
   }
 
   @Test
   public void createStayCompleted_shouldSetFrom() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayCompleted(from, to, total, reservationTimestamp);
 
     assertEquals(from, transaction.getFrom());
   }
 
   @Test
   public void createStayCompleted_shouldSetTo() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayCompleted(from, to, total, reservationTimestamp);
 
     assertEquals(to, transaction.getTo());
   }
 
   @Test
   public void createStayCompleted_shouldSetTotal() {
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayCompleted(from, to, total, reservationTimestamp);
 
     assertEquals(total, transaction.getTotal());
   }
@@ -90,7 +96,8 @@ class TransactionFactoryTest {
   public void createStayCompleted_shouldSetReasonAsStayCompleted() {
     TransactionReasons expectedReason = TransactionReasons.STAY_COMPLETED;
 
-    Transaction transaction = transactionFactory.createStayCompleted(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayCompleted(from, to, total, reservationTimestamp);
 
     assertEquals(expectedReason, transaction.getReason());
   }
@@ -99,7 +106,7 @@ class TransactionFactoryTest {
   public void createStayCanceled_shouldSetTimestamp() {
     Transaction transaction = transactionFactory.createStayCanceled(from, to, total);
 
-    assertNotNull(transaction.getTimestamp());
+    assertNotNull(transaction.getReservationTimestamp());
   }
 
   @Test
@@ -134,28 +141,32 @@ class TransactionFactoryTest {
 
   @Test
   public void createStayRefunded_shouldSetTimestamp() {
-    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayRefunded(from, to, total, reservationTimestamp);
 
-    assertEquals(timestamp, transaction.getTimestamp());
+    assertEquals(reservationTimestamp, transaction.getReservationTimestamp());
   }
 
   @Test
   public void createStayRefunded_shouldSetFrom() {
-    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayRefunded(from, to, total, reservationTimestamp);
 
     assertEquals(from, transaction.getFrom());
   }
 
   @Test
   public void createStayRefunded_shouldSetTo() {
-    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayRefunded(from, to, total, reservationTimestamp);
 
     assertEquals(to, transaction.getTo());
   }
 
   @Test
   public void createStayRefunded_shouldSetTotal() {
-    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayRefunded(from, to, total, reservationTimestamp);
 
     assertEquals(total, transaction.getTotal());
   }
@@ -164,7 +175,8 @@ class TransactionFactoryTest {
   public void createStayRefunded_shouldSetReasonAsStayCanceled() {
     TransactionReasons expectedReason = TransactionReasons.STAY_CANCELED;
 
-    Transaction transaction = transactionFactory.createStayRefunded(from, to, total, timestamp);
+    Transaction transaction =
+        transactionFactory.createStayRefunded(from, to, total, reservationTimestamp);
 
     assertEquals(expectedReason, transaction.getReason());
   }

@@ -1,23 +1,23 @@
-package ca.ulaval.glo2003.transactions.domain;
+package ca.ulaval.glo2003.interfaces.domain;
 
 import java.time.*;
 
-public class Timestamp {
+public class ReservationTimestamp {
 
   public static final LocalTime LOCAL_TIME = LocalTime.MAX;
   public static final ZoneOffset ZONE_OFFSET = ZoneOffset.UTC;
 
   private Instant value;
 
-  public static Timestamp now() {
-    return new Timestamp(LocalDateTime.now().toInstant(ZONE_OFFSET));
+  public static ReservationTimestamp now() {
+    return new ReservationTimestamp(LocalDateTime.now().toInstant(ZONE_OFFSET));
   }
 
-  public Timestamp(Instant value) {
+  public ReservationTimestamp(Instant value) {
     this.value = value;
   }
 
-  public Timestamp(LocalDate localDate) {
+  public ReservationTimestamp(LocalDate localDate) {
     value = localDate.atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
   }
 
@@ -30,8 +30,8 @@ public class Timestamp {
   }
 
   public boolean isMaxTime() {
-    Timestamp timestampAtMaxTime = new Timestamp(toLocalDate());
-    return equals(timestampAtMaxTime);
+    ReservationTimestamp reservationTimestampAtMaxTime = new ReservationTimestamp(toLocalDate());
+    return equals(reservationTimestampAtMaxTime);
   }
 
   @Override
@@ -43,9 +43,9 @@ public class Timestamp {
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    Timestamp timestamp = (Timestamp) object;
+    ReservationTimestamp reservationTimestamp = (ReservationTimestamp) object;
 
-    return value.equals(timestamp.toInstant());
+    return value.equals(reservationTimestamp.toInstant());
   }
 
   @Override

@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.transactions.domain;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
 
 public class Transaction {
 
@@ -10,15 +11,19 @@ public class Transaction {
   private Bed bed;
   private Booking booking;
 
-  private Timestamp timestamp;
+  private ReservationTimestamp reservationTimestamp;
   private String from;
   private String to;
   private Price total;
   private TransactionReasons reason;
 
   public Transaction(
-      Timestamp timestamp, String from, String to, Price total, TransactionReasons reason) {
-    this.timestamp = timestamp;
+      ReservationTimestamp reservationTimestamp,
+      String from,
+      String to,
+      Price total,
+      TransactionReasons reason) {
+    this.reservationTimestamp = reservationTimestamp;
     this.from = from;
     this.to = to;
     this.total = total;
@@ -33,8 +38,8 @@ public class Transaction {
     return booking;
   }
 
-  public Timestamp getTimestamp() {
-    return timestamp;
+  public ReservationTimestamp getReservationTimestamp() {
+    return reservationTimestamp;
   }
 
   public String getFrom() {
@@ -54,6 +59,6 @@ public class Transaction {
   }
 
   public boolean isRefund() {
-    return timestamp.isMaxTime();
+    return reservationTimestamp.isMaxTime();
   }
 }

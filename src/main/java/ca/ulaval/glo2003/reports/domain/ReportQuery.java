@@ -32,7 +32,7 @@ public class ReportQuery {
     for (ReportPeriod period : periods) {
       List<Transaction> periodTransactions =
           transactions.stream()
-              .filter(transaction -> period.contains(transaction.getTimestamp()))
+              .filter(transaction -> period.contains(transaction.getReservationTimestamp()))
               .collect(Collectors.toList());
       period.setSingleData(new ReportPeriodData(periodTransactions));
 

@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_MAX_DISTANCE;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_NUMBER_OF_NIGHTS;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -13,7 +13,7 @@ import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityExcept
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,7 +28,7 @@ class InMemoryBedQueryBuilderTest {
   private List<BloodTypes> bloodTypes = createBloodTypes();
   private Packages packageName = Packages.BLOODTHIRSTY;
   private int minCapacity = 100;
-  private BookingDate arrivalDate = createBookingDate();
+  private ReservationDate arrivalDate = createBookingDate();
   private int numberOfNights = 2;
   private LodgingModes lodgingMode = createLodgingModeName();
   private Location origin = createLocation();
@@ -104,7 +104,7 @@ class InMemoryBedQueryBuilderTest {
     InMemoryBedQuery bedQuery = bedQueryBuilder.aBedQuery().withMinCapacity(minCapacity).build();
 
     assertEquals(
-        BookingDate.now(),
+        ReservationDate.now(),
         ((InMemoryAvailabilityFilter) bedQuery.getFilters().get(0)).getArrivalDate());
   }
 

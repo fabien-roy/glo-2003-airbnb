@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.beds.domain;
 
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface BedQueryBuilder<Q extends BedQuery> {
 
   BedQueryBuilder<Q> withMinCapacity(int minCapacity);
 
-  BedQueryBuilder<Q> withArrivalDate(BookingDate arrivalDate);
+  BedQueryBuilder<Q> withArrivalDate(ReservationDate arrivalDate);
 
   BedQueryBuilder<Q> withNumberOfNights(int numberOfNights);
 

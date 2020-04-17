@@ -1,9 +1,8 @@
-package ca.ulaval.glo2003.beds.domain.helpers;
+package ca.ulaval.glo2003.reports.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.domain.helpers.Randomizer.randomEnum;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationBuilder.aLocation;
 
-import ca.ulaval.glo2003.beds.domain.BedNumber;
 import ca.ulaval.glo2003.beds.domain.BedTypes;
 import ca.ulaval.glo2003.beds.domain.BloodTypes;
 import ca.ulaval.glo2003.beds.domain.CleaningFrequencies;
@@ -11,15 +10,10 @@ import ca.ulaval.glo2003.locations.domain.Location;
 import com.github.javafaker.Faker;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
-public class BedObjectMother {
+public class ReportPeriodObjectMother {
 
-  private BedObjectMother() {}
-
-  public static BedNumber createBedNumber() {
-    return new BedNumber(UUID.randomUUID());
-  }
+  private ReportPeriodObjectMother() {}
 
   public static Location createLocation() {
     return aLocation().build();

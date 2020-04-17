@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.bookings.services;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -19,6 +19,7 @@ import ca.ulaval.glo2003.bookings.domain.*;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,7 +42,7 @@ public class BookingServiceTest {
   private static BookingNumber bookingNumber = createBookingNumber();
   private static Booking booking = buildBooking();
   private static PublicKey tenantPublicKey = createPublicKey();
-  private static BookingDate departureDate = createBookingDate();
+  private static ReservationDate departureDate = createBookingDate();
   private static BookingRequest bookingRequest = aBookingRequest().build();
   private static BookingResponse bookingResponse = mock(BookingResponse.class);
   private static CancelationResponse cancelationResponse = mock(CancelationResponse.class);

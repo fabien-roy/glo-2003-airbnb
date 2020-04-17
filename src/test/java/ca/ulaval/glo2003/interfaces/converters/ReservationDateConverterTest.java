@@ -1,16 +1,17 @@
-package ca.ulaval.glo2003.bookings.converters;
+package ca.ulaval.glo2003.interfaces.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.bookings.converters.BookingDateConverter;
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class BookingDateConverterTest {
+class ReservationDateConverterTest {
 
   private static BookingDateConverter bookingDateConverter;
 
@@ -21,11 +22,11 @@ class BookingDateConverterTest {
 
   @Test
   public void fromString_shouldConvertBookingDate() {
-    BookingDate expectedDate = new BookingDate(LocalDate.now());
+    ReservationDate expectedDate = new ReservationDate(LocalDate.now());
 
-    BookingDate bookingDate = bookingDateConverter.fromString(expectedDate.toString());
+    ReservationDate reservationDate = bookingDateConverter.fromString(expectedDate.toString());
 
-    assertEquals(expectedDate, bookingDate);
+    assertEquals(expectedDate, reservationDate);
   }
 
   @Test

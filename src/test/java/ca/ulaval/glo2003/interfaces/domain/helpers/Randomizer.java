@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.interfaces.helpers;
+package ca.ulaval.glo2003.interfaces.domain.helpers;
 
 import java.util.Random;
 

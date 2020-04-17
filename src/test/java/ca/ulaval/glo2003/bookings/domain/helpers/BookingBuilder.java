@@ -2,16 +2,16 @@ package ca.ulaval.glo2003.bookings.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 
 public class BookingBuilder {
@@ -24,8 +24,8 @@ public class BookingBuilder {
   private PublicKey DEFAULT_TENANT_PUBLIC_KEY = createPublicKey();
   private PublicKey tenantPublicKey = DEFAULT_TENANT_PUBLIC_KEY;
 
-  private BookingDate DEFAULT_ARRIVAL_DATE = createBookingDate();
-  private BookingDate arrivalDate = DEFAULT_ARRIVAL_DATE;
+  private ReservationDate DEFAULT_ARRIVAL_DATE = createBookingDate();
+  private ReservationDate arrivalDate = DEFAULT_ARRIVAL_DATE;
 
   private int DEFAULT_NUMBER_OF_NIGHTS = createNumberOfNights();
   private int numberOfNights = DEFAULT_NUMBER_OF_NIGHTS;
@@ -51,7 +51,7 @@ public class BookingBuilder {
     return this;
   }
 
-  public BookingBuilder withArrivalDate(BookingDate arrivalDate) {
+  public BookingBuilder withArrivalDate(ReservationDate arrivalDate) {
     this.arrivalDate = arrivalDate;
     return this;
   }

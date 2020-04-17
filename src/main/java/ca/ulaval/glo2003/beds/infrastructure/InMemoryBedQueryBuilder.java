@@ -5,7 +5,7 @@ import ca.ulaval.glo2003.beds.exceptions.ArrivalDateWithoutMinimalCapacityExcept
 import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.locations.domain.Location;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder<InMemoryBedQuery
   static final int DEFAULT_MAX_DISTANCE = 10;
 
   private int minCapacity = UNSET_NUMERIC;
-  private BookingDate arrivalDate = null;
+  private ReservationDate arrivalDate = null;
   private int numberOfNights = UNSET_NUMERIC;
   private Location origin = null;
   private double maxDistance = UNSET_NUMERIC;
@@ -60,7 +60,7 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder<InMemoryBedQuery
   }
 
   @Override
-  public InMemoryBedQueryBuilder withArrivalDate(BookingDate arrivalDate) {
+  public InMemoryBedQueryBuilder withArrivalDate(ReservationDate arrivalDate) {
     this.arrivalDate = arrivalDate;
     return this;
   }
@@ -116,8 +116,8 @@ public class InMemoryBedQueryBuilder implements BedQueryBuilder<InMemoryBedQuery
     }
   }
 
-  private BookingDate getArrivalDate() {
-    return arrivalDate == null ? BookingDate.now() : arrivalDate;
+  private ReservationDate getArrivalDate() {
+    return arrivalDate == null ? ReservationDate.now() : arrivalDate;
   }
 
   private int getNumberOfNights() {

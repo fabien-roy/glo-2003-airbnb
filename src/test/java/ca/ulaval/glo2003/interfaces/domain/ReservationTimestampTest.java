@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.transactions.domain;
+package ca.ulaval.glo2003.interfaces.domain;
 
-import static ca.ulaval.glo2003.transactions.domain.Timestamp.LOCAL_TIME;
-import static ca.ulaval.glo2003.transactions.domain.Timestamp.ZONE_OFFSET;
+import static ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp.LOCAL_TIME;
+import static ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Instant;
@@ -11,9 +11,9 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class TimestampTest {
+class ReservationTimestampTest {
 
-  private static Timestamp timestamp;
+  private static ReservationTimestamp reservationTimestamp;
 
   private static LocalDateTime dateTime = LocalDateTime.now();
   private static LocalDate date = LocalDate.now();
@@ -22,53 +22,53 @@ class TimestampTest {
 
   @BeforeAll
   public static void setUpTimestamp() {
-    timestamp = new Timestamp(instant);
+    reservationTimestamp = new ReservationTimestamp(instant);
   }
 
   @Test
   public void construct_withLocalDate_shouldReturnTimestampAtUTCZoneOffset() {
-    timestamp = new Timestamp(date);
+    reservationTimestamp = new ReservationTimestamp(date);
 
-    assertEquals(date, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
+    assertEquals(date, reservationTimestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test
   public void construct_withLocalDate_shouldReturnTimestampAtMax() {
     LocalDateTime max =
-        timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate().atTime(LocalTime.MAX);
+        reservationTimestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate().atTime(LocalTime.MAX);
 
-    timestamp = new Timestamp(date);
+    reservationTimestamp = new ReservationTimestamp(date);
 
-    assertEquals(max, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDateTime());
+    assertEquals(max, reservationTimestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDateTime());
   }
 
   @Test
   public void now_shouldSetValueToNow() {
     LocalDate now = LocalDateTime.now().toLocalDate();
 
-    timestamp = Timestamp.now();
+    reservationTimestamp = ReservationTimestamp.now();
 
-    assertEquals(now, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
+    assertEquals(now, reservationTimestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test
   public void toString_shouldReturnValueToString() {
-    assertEquals(timestamp.toInstant().toString(), timestamp.toString());
+    assertEquals(reservationTimestamp.toInstant().toString(), reservationTimestamp.toString());
   }
 
   @Test
   public void toLocalDate_shouldReturnLocalDateAtUTCZoneOffset() {
     LocalDate dateAtUTCZoneOffset = instant.atOffset(ZONE_OFFSET).toLocalDate();
 
-    assertEquals(dateAtUTCZoneOffset, timestamp.toLocalDate());
+    assertEquals(dateAtUTCZoneOffset, reservationTimestamp.toLocalDate());
   }
 
   @Test
   public void isMaxTime_withMaxTimeValue_shouldReturnTrue() {
     instant = date.atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
-    timestamp = new Timestamp(instant);
+    reservationTimestamp = new ReservationTimestamp(instant);
 
-    boolean result = timestamp.isMaxTime();
+    boolean result = reservationTimestamp.isMaxTime();
 
     assertTrue(result);
   }
@@ -76,9 +76,9 @@ class TimestampTest {
   @Test
   public void isMaxTime_withNonMaxTimeValue_shouldReturnFalse() {
     instant = date.atTime(LocalTime.NOON).toInstant(ZONE_OFFSET);
-    timestamp = new Timestamp(instant);
+    reservationTimestamp = new ReservationTimestamp(instant);
 
-    boolean result = timestamp.isMaxTime();
+    boolean result = reservationTimestamp.isMaxTime();
 
     assertFalse(result);
   }
@@ -87,34 +87,35 @@ class TimestampTest {
   public void equals_shouldReturnFalse_whenObjectIsNotTimestamp() {
     Object object = new Object();
 
-    boolean result = timestamp.equals(object);
+    boolean result = reservationTimestamp.equals(object);
 
     assertFalse(result);
   }
 
   @Test
   public void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    Timestamp otherTimestamp = new Timestamp(otherInstant);
+    ReservationTimestamp otherReservationTimestamp = new ReservationTimestamp(otherInstant);
 
-    boolean result = timestamp.equals(otherTimestamp);
+    boolean result = reservationTimestamp.equals(otherReservationTimestamp);
 
     assertFalse(result);
   }
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    Timestamp otherTimestamp = new Timestamp(timestamp.toInstant());
+    ReservationTimestamp otherReservationTimestamp =
+        new ReservationTimestamp(reservationTimestamp.toInstant());
 
-    boolean result = timestamp.equals(otherTimestamp);
+    boolean result = reservationTimestamp.equals(otherReservationTimestamp);
 
     assertTrue(result);
   }
 
   @Test
   public void hashCode_shouldValueHashCode() {
-    int valueHashCode = timestamp.toInstant().hashCode();
+    int valueHashCode = reservationTimestamp.toInstant().hashCode();
 
-    int hashCode = timestamp.hashCode();
+    int hashCode = reservationTimestamp.hashCode();
 
     assertEquals(valueHashCode, hashCode);
   }

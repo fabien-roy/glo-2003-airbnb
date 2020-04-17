@@ -2,11 +2,11 @@ package ca.ulaval.glo2003.bookings.services;
 
 import ca.ulaval.glo2003.bookings.converters.CancelationConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.CancelationRefundCalculator;
 import ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException;
 import ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import javax.inject.Inject;
@@ -34,7 +34,7 @@ public class CancelationService {
     if (booking.isCanceled()) throw new BookingAlreadyCanceledException();
 
     Price refund;
-    BookingDate now = BookingDate.now();
+    ReservationDate now = ReservationDate.now();
 
     if (now.plusDays(MINIMUM_DAYS_FOR_CANCELATION).isAfter(booking.getArrivalDate())) {
       throw new CancelationNotAllowedException();

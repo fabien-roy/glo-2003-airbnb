@@ -1,19 +1,18 @@
 package ca.ulaval.glo2003.reports.domain;
 
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
-import ca.ulaval.glo2003.bookings.domain.BookingPeriod;
-import ca.ulaval.glo2003.transactions.domain.Timestamp;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
+import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
 import java.util.Collections;
 import java.util.List;
 
-// TODO : Test ReportPeriod
 public class ReportPeriod {
 
-  private final BookingPeriod bookingPeriod;
+  private final ReservationPeriod reservationPeriod;
   private List<ReportPeriodData> data;
 
-  public ReportPeriod(BookingPeriod bookingPeriod) {
-    this.bookingPeriod = bookingPeriod;
+  public ReportPeriod(ReservationPeriod reservationPeriod) {
+    this.reservationPeriod = reservationPeriod;
   }
 
   public List<ReportPeriodData> getData() {
@@ -28,8 +27,8 @@ public class ReportPeriod {
     this.data = Collections.singletonList(data);
   }
 
-  public boolean contains(Timestamp timestamp) {
-    BookingDate date = new BookingDate(timestamp.toLocalDate());
-    return bookingPeriod.contains(date);
+  public boolean contains(ReservationTimestamp reservationTimestamp) {
+    ReservationDate date = new ReservationDate(reservationTimestamp.toLocalDate());
+    return reservationPeriod.contains(date);
   }
 }

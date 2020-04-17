@@ -1,15 +1,15 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,7 +26,7 @@ class CohabitationLodgingModeTest {
   private static Booking booking = mock(Booking.class);
   private static Price total = new Price(100);
   private static Integer minCapacity;
-  private static BookingDate arrivalDate;
+  private static ReservationDate arrivalDate;
   private static int numberOfNights;
 
   @BeforeAll

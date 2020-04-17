@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
 import ca.ulaval.glo2003.bookings.converters.BookingDateConverter;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ public class ArrivalDateQueryParamAssembler implements BedQueryParamAssembler {
         : builder;
   }
 
-  private BookingDate parseArrivalDate(String arrivalDate) {
+  private ReservationDate parseArrivalDate(String arrivalDate) {
     return bookingDateConverter.fromString(arrivalDate);
   }
 }

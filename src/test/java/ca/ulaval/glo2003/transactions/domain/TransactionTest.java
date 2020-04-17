@@ -5,31 +5,32 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TransactionTest {
 
   private static Transaction transaction;
-  private static Timestamp timestamp = mock(Timestamp.class);
+  private static ReservationTimestamp reservationTimestamp = mock(ReservationTimestamp.class);
 
   @BeforeEach
   public void resetMocks() {
-    reset(timestamp);
+    reset(reservationTimestamp);
   }
 
   private void setUpRefundTransaction() {
-    when(timestamp.isMaxTime()).thenReturn(true);
+    when(reservationTimestamp.isMaxTime()).thenReturn(true);
     setUpTransaction();
   }
 
   private void setUpNonRefundTransaction() {
-    when(timestamp.isMaxTime()).thenReturn(false);
+    when(reservationTimestamp.isMaxTime()).thenReturn(false);
     setUpTransaction();
   }
 
   private void setUpTransaction() {
-    transaction = aTransaction().withTimestamp(timestamp).build();
+    transaction = aTransaction().withTimestamp(reservationTimestamp).build();
   }
 
   @Test

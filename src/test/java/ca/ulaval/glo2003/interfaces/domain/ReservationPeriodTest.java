@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.domain;
+package ca.ulaval.glo2003.interfaces.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,63 +8,63 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class BookingPeriodTest {
+class ReservationPeriodTest {
 
   private static int numberOfDays = 5;
-  private static BookingDate start = BookingDate.now();
-  private static BookingDate end = start.plusDays(numberOfDays);
+  private static ReservationDate start = ReservationDate.now();
+  private static ReservationDate end = start.plusDays(numberOfDays);
 
-  private static BookingPeriod period;
-  private static BookingPeriod samePeriod;
-  private static BookingPeriod beforePeriod;
-  private static BookingPeriod afterPeriod;
-  private static BookingPeriod beforeOverlappingPeriod;
-  private static BookingPeriod afterOverlappingPeriod;
+  private static ReservationPeriod period;
+  private static ReservationPeriod samePeriod;
+  private static ReservationPeriod beforePeriod;
+  private static ReservationPeriod afterPeriod;
+  private static ReservationPeriod beforeOverlappingPeriod;
+  private static ReservationPeriod afterOverlappingPeriod;
 
   @BeforeEach
   public void setUpPeriod() {
-    period = new BookingPeriod(start, end);
+    period = new ReservationPeriod(start, end);
   }
 
   @BeforeEach
   public void setUpSamePeriod() {
-    samePeriod = new BookingPeriod(start, end);
+    samePeriod = new ReservationPeriod(start, end);
   }
 
   @BeforeEach
   public void setUpBeforePeriod() {
-    BookingDate beforeEnd = start.minusDays(1);
-    BookingDate beforeStart = beforeEnd.minusDays(numberOfDays);
-    beforePeriod = new BookingPeriod(beforeStart, beforeEnd);
+    ReservationDate beforeEnd = start.minusDays(1);
+    ReservationDate beforeStart = beforeEnd.minusDays(numberOfDays);
+    beforePeriod = new ReservationPeriod(beforeStart, beforeEnd);
   }
 
   @BeforeEach
   public void setUpAfterPeriod() {
-    BookingDate afterStart = end.plusDays(1);
-    BookingDate afterEnd = afterStart.plusDays(numberOfDays);
-    afterPeriod = new BookingPeriod(afterStart, afterEnd);
+    ReservationDate afterStart = end.plusDays(1);
+    ReservationDate afterEnd = afterStart.plusDays(numberOfDays);
+    afterPeriod = new ReservationPeriod(afterStart, afterEnd);
   }
 
   @BeforeEach
   public void setUpBeforeOverlappingPeriod() {
-    BookingDate beforeOverlappingEnd = start.plusDays(1);
-    BookingDate beforeOverlappingStart = beforeOverlappingEnd.minusDays(numberOfDays);
-    beforeOverlappingPeriod = new BookingPeriod(beforeOverlappingStart, beforeOverlappingEnd);
+    ReservationDate beforeOverlappingEnd = start.plusDays(1);
+    ReservationDate beforeOverlappingStart = beforeOverlappingEnd.minusDays(numberOfDays);
+    beforeOverlappingPeriod = new ReservationPeriod(beforeOverlappingStart, beforeOverlappingEnd);
   }
 
   @BeforeEach
   public void setUpAfterOverlappingPeriod() {
-    BookingDate afterOverlappingStart = end.minusDays(1);
-    BookingDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
-    afterOverlappingPeriod = new BookingPeriod(afterOverlappingStart, afterOverlappingEnd);
+    ReservationDate afterOverlappingStart = end.minusDays(1);
+    ReservationDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
+    afterOverlappingPeriod = new ReservationPeriod(afterOverlappingStart, afterOverlappingEnd);
   }
 
   @ParameterizedTest
   @ValueSource(ints = {2020, 2035, 1976})
   public void ofYear_shouldHaveFirstDayOfYearAsStart(int year) {
-    BookingDate firstDayOfYear = BookingDate.firstDayOfYear(year);
+    ReservationDate firstDayOfYear = ReservationDate.firstDayOfYear(year);
 
-    BookingPeriod period = BookingPeriod.ofYear(year);
+    ReservationPeriod period = ReservationPeriod.ofYear(year);
 
     assertEquals(firstDayOfYear, period.getStart());
   }
@@ -72,9 +72,9 @@ class BookingPeriodTest {
   @ParameterizedTest
   @ValueSource(ints = {2020, 2035, 1976})
   public void ofYear_shouldHaveLastDayOfYearAsEnd(int year) {
-    BookingDate lastDayOfYear = BookingDate.lastDayOfYear(year);
+    ReservationDate lastDayOfYear = ReservationDate.lastDayOfYear(year);
 
-    BookingPeriod period = BookingPeriod.ofYear(year);
+    ReservationPeriod period = ReservationPeriod.ofYear(year);
 
     assertEquals(lastDayOfYear, period.getEnd());
   }
@@ -151,16 +151,16 @@ class BookingPeriodTest {
 
   @Test
   public void getDates_withASingleDate_shouldGetDate() {
-    period = new BookingPeriod(start, start);
+    period = new ReservationPeriod(start, start);
 
-    List<BookingDate> dates = period.getDates();
+    List<ReservationDate> dates = period.getDates();
 
     assertEquals(start, dates.get(0));
   }
 
   @Test
   public void getDates_shouldGetDates() {
-    List<BookingDate> dates = period.getDates();
+    List<ReservationDate> dates = period.getDates();
 
     for (int i = 0; i < numberOfDays; i++) {
       assertEquals(start.plusDays(i), dates.get(i));
@@ -178,7 +178,7 @@ class BookingPeriodTest {
 
   @Test
   public void equals_shouldReturnFalse_whenStartsAreNotEqual() {
-    BookingPeriod otherPeriod = new BookingPeriod(start.plusDays(1), end);
+    ReservationPeriod otherPeriod = new ReservationPeriod(start.plusDays(1), end);
 
     boolean result = period.equals(otherPeriod);
 
@@ -187,7 +187,7 @@ class BookingPeriodTest {
 
   @Test
   public void equals_shouldReturnFalse_whenEndsAreNotEqual() {
-    BookingPeriod otherPeriod = new BookingPeriod(start, end.plusDays(1));
+    ReservationPeriod otherPeriod = new ReservationPeriod(start, end.plusDays(1));
 
     boolean result = period.equals(otherPeriod);
 
@@ -196,7 +196,7 @@ class BookingPeriodTest {
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    BookingPeriod otherPeriod = new BookingPeriod(start, end);
+    ReservationPeriod otherPeriod = new ReservationPeriod(start, end);
 
     boolean result = period.equals(otherPeriod);
 

@@ -1,9 +1,8 @@
-package ca.ulaval.glo2003.bookings.domain;
+package ca.ulaval.glo2003.interfaces.domain;
 
-import static ca.ulaval.glo2003.transactions.domain.Timestamp.ZONE_OFFSET;
+import static ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import java.time.LocalDate;
 import java.time.Month;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,31 +10,31 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class BookingDateTest {
+class ReservationDateTest {
 
-  private static BookingDate bookingDate;
+  private static ReservationDate reservationDate;
 
   private static LocalDate date = LocalDate.now();
   private static LocalDate otherDate = date.plusDays(1);
 
   @BeforeAll
   public static void setUpDate() {
-    bookingDate = new BookingDate(date);
+    reservationDate = new ReservationDate(date);
   }
 
   @Test
   public void now_shouldSetValueToNow() {
     LocalDate now = LocalDate.now();
 
-    bookingDate = BookingDate.now();
+    reservationDate = ReservationDate.now();
 
-    assertEquals(now, bookingDate.toLocalDate());
+    assertEquals(now, reservationDate.toLocalDate());
   }
 
   @ParameterizedTest
   @ValueSource(ints = {2020, 2030, 1976})
   public void firstDayOfYear_shouldReturnFirstDayOfYear(int year) {
-    BookingDate firstDayOfYear = BookingDate.firstDayOfYear(year);
+    ReservationDate firstDayOfYear = ReservationDate.firstDayOfYear(year);
 
     assertEquals(year, firstDayOfYear.toLocalDate().getYear());
     assertEquals(Month.JANUARY, firstDayOfYear.toLocalDate().getMonth());
@@ -45,7 +44,7 @@ class BookingDateTest {
   @ParameterizedTest
   @ValueSource(ints = {2020, 2030, 1976})
   public void lastDayOfYear_shouldReturnLastDayOfYear(int year) {
-    BookingDate lastDayOfYear = BookingDate.lastDayOfYear(year);
+    ReservationDate lastDayOfYear = ReservationDate.lastDayOfYear(year);
 
     assertEquals(year, lastDayOfYear.toLocalDate().getYear());
     assertEquals(Month.DECEMBER, lastDayOfYear.toLocalDate().getMonth());
@@ -57,9 +56,9 @@ class BookingDateTest {
   public void minusDays_shouldReturnBookingDateMinusDays(int days) {
     LocalDate minusDays = date.minusDays(days);
 
-    BookingDate actualBookingDate = bookingDate.minusDays(days);
+    ReservationDate actualReservationDate = reservationDate.minusDays(days);
 
-    assertEquals(minusDays, actualBookingDate.toLocalDate());
+    assertEquals(minusDays, actualReservationDate.toLocalDate());
   }
 
   @ParameterizedTest
@@ -67,61 +66,61 @@ class BookingDateTest {
   public void plusDays_shouldReturnBookingDatePlusDays(int days) {
     LocalDate plusDays = date.plusDays(days);
 
-    BookingDate actualBookingDate = bookingDate.plusDays(days);
+    ReservationDate actualReservationDate = reservationDate.plusDays(days);
 
-    assertEquals(plusDays, actualBookingDate.toLocalDate());
+    assertEquals(plusDays, actualReservationDate.toLocalDate());
   }
 
   @Test
   public void isAfter_withDateBefore_shouldReturnTrue() {
-    BookingDate dateBefore = new BookingDate(date.minusDays(1));
+    ReservationDate dateBefore = new ReservationDate(date.minusDays(1));
 
-    boolean result = bookingDate.isAfter(dateBefore);
+    boolean result = reservationDate.isAfter(dateBefore);
 
     assertTrue(result);
   }
 
   @Test
   public void isAfter_withDateEquals_shouldReturnFalse() {
-    BookingDate dateEqual = new BookingDate(date);
+    ReservationDate dateEqual = new ReservationDate(date);
 
-    boolean result = bookingDate.isAfter(dateEqual);
+    boolean result = reservationDate.isAfter(dateEqual);
 
     assertFalse(result);
   }
 
   @Test
   public void isAfter_withDateAfter_shouldReturnFalse() {
-    BookingDate dateAfter = new BookingDate(date.plusDays(1));
+    ReservationDate dateAfter = new ReservationDate(date.plusDays(1));
 
-    boolean result = bookingDate.isAfter(dateAfter);
+    boolean result = reservationDate.isAfter(dateAfter);
 
     assertFalse(result);
   }
 
   @Test
   public void isBefore_withDateBefore_shouldReturnFalse() {
-    BookingDate dateBefore = new BookingDate(date.minusDays(1));
+    ReservationDate dateBefore = new ReservationDate(date.minusDays(1));
 
-    boolean result = bookingDate.isBefore(dateBefore);
+    boolean result = reservationDate.isBefore(dateBefore);
 
     assertFalse(result);
   }
 
   @Test
   public void isBefore_withDateEquals_shouldReturnFalse() {
-    BookingDate dateEqual = new BookingDate(date);
+    ReservationDate dateEqual = new ReservationDate(date);
 
-    boolean result = bookingDate.isBefore(dateEqual);
+    boolean result = reservationDate.isBefore(dateEqual);
 
     assertFalse(result);
   }
 
   @Test
   public void isBefore_withDateAfter_shouldReturnTrue() {
-    BookingDate dateAfter = new BookingDate(date.plusDays(1));
+    ReservationDate dateAfter = new ReservationDate(date.plusDays(1));
 
-    boolean result = bookingDate.isBefore(dateAfter);
+    boolean result = reservationDate.isBefore(dateAfter);
 
     assertTrue(result);
   }
@@ -129,71 +128,72 @@ class BookingDateTest {
   @ParameterizedTest
   @ValueSource(ints = {1, 3, 5})
   public void periodTo_shouldReturnPeriodWithThisAsStart(int days) {
-    BookingPeriod period = bookingDate.periodToDays(days);
+    ReservationPeriod period = reservationDate.periodToDays(days);
 
-    assertEquals(bookingDate, period.getStart());
+    assertEquals(reservationDate, period.getStart());
   }
 
   @ParameterizedTest
   @ValueSource(ints = {1, 3, 5})
   public void periodTo_shouldReturnPeriodWithThisInDaysAsEnd(int days) {
-    BookingDate bookingDateInDays = bookingDate.plusDays(days);
+    ReservationDate reservationDateInDays = reservationDate.plusDays(days);
 
-    BookingPeriod period = bookingDate.periodToDays(days);
+    ReservationPeriod period = reservationDate.periodToDays(days);
 
-    assertEquals(bookingDateInDays, period.getEnd());
+    assertEquals(reservationDateInDays, period.getEnd());
   }
 
   @Test
   public void toPeriod_shouldHaveDateAsStart() {
-    BookingPeriod period = bookingDate.toPeriod();
+    ReservationPeriod period = reservationDate.toPeriod();
 
-    assertEquals(period.getStart(), bookingDate);
+    assertEquals(period.getStart(), reservationDate);
   }
 
   @Test
   public void toPeriod_shouldHaveDateAsEnd() {
-    BookingPeriod period = bookingDate.toPeriod();
+    ReservationPeriod period = reservationDate.toPeriod();
 
-    assertEquals(period.getEnd(), bookingDate);
+    assertEquals(period.getEnd(), reservationDate);
   }
 
   @Test
   public void toTimestamp_shouldReturnTimestampWithSameValue() {
-    Timestamp timestamp = bookingDate.toTimestamp();
+    ReservationTimestamp reservationTimestamp = reservationDate.toTimestamp();
 
     assertEquals(
-        bookingDate.toLocalDate(), timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
+        reservationDate.toLocalDate(),
+        reservationTimestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test
   public void toString_shouldReturnValueToString() {
-    assertEquals(date.toString(), bookingDate.toString());
+    assertEquals(date.toString(), reservationDate.toString());
   }
 
   @Test
   public void equals_shouldReturnFalse_whenObjectIsNotBookingDate() {
     Object object = new Object();
 
-    boolean result = bookingDate.equals(object);
+    boolean result = reservationDate.equals(object);
 
     assertFalse(result);
   }
 
   @Test
   public void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    BookingDate otherBookingDate = new BookingDate(otherDate);
+    ReservationDate otherReservationDate = new ReservationDate(otherDate);
 
-    boolean result = bookingDate.equals(otherBookingDate);
+    boolean result = reservationDate.equals(otherReservationDate);
 
     assertFalse(result);
   }
 
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    BookingDate otherBookingDate = new BookingDate(date);
+    ReservationDate otherReservationDate = new ReservationDate(date);
 
-    boolean result = bookingDate.equals(otherBookingDate);
+    boolean result = reservationDate.equals(otherReservationDate);
 
     assertTrue(result);
   }

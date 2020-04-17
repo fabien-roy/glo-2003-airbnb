@@ -7,7 +7,7 @@ public class TransactionConverter {
 
   public TransactionResponse toResponse(Transaction transaction) {
     return new TransactionResponse(
-        transaction.getTimestamp().toString(),
+        transaction.getReservationTimestamp().toString(),
         transaction.getFrom(),
         transaction.getTo(),
         transaction.getTotal().toDouble(),
