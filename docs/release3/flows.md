@@ -45,7 +45,7 @@ Tip : look at `InMemoryBedQuery`, its filters and queries. It's pretty similar.
 See the [reports package draft](reports.md) for information about new classes,
 
 ### `GET /admin/reports`
-- `ReportResource.get(...)`
+- `ReportResource.getAll(...)`
   - Gets news query param map with `QueryParamMapConverter.fromString(...)` ([#330](https://github.com/glo2003/glo2003-h2020-eq08/issues/330))
   - Gets all `ReportPeriodResponse` with `ReportService.getAll(...)` ([#330](https://github.com/glo2003/glo2003-h2020-eq08/issues/330))
     - Creates `ReportQuery` with `ReportQueryFactory.create(...)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
