@@ -13,6 +13,11 @@ public class BookingPeriod {
     this.end = end;
   }
 
+  // TODO : Test BookingPeriod.ofYear(...)
+  public static BookingPeriod ofYear(int year) {
+    return new BookingPeriod(BookingDate.firstDayOfYear(year), BookingDate.lastDayOfYear(year));
+  }
+
   public BookingDate getStart() {
     return start;
   }

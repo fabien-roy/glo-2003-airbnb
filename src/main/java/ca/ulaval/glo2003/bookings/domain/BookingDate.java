@@ -11,6 +11,16 @@ public class BookingDate {
     return new BookingDate(LocalDate.now());
   }
 
+  // TODO : Test BookingDate.firstDayOfYear(...)
+  public static BookingDate firstDayOfYear(int year) {
+    return new BookingDate(LocalDate.of(year, 1, 1));
+  }
+
+  // TODO : Test BookingDate.lastDayOfYear(...)
+  public static BookingDate lastDayOfYear(int year) {
+    return new BookingDate(LocalDate.of(year, 12, 31));
+  }
+
   public BookingDate(LocalDate value) {
     this.value = value;
   }
