@@ -25,6 +25,11 @@ public class Timestamp {
     return value;
   }
 
+  // TODO : Test Timestamp.toLocalDate()
+  public LocalDate toLocalDate() {
+    return value.atZone(ZONE_OFFSET).toLocalDate();
+  }
+
   @Override
   public String toString() {
     return value.toString();

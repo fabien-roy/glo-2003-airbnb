@@ -1,6 +1,13 @@
 package ca.ulaval.glo2003.transactions.domain;
 
+import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.bookings.domain.Booking;
+
 public class Transaction {
+
+  // TODO : Transaction should not know about bed and booking
+  private Bed bed;
+  private Booking booking;
 
   private Timestamp timestamp;
   private String from;
@@ -15,6 +22,14 @@ public class Transaction {
     this.to = to;
     this.total = total;
     this.reason = reason;
+  }
+
+  public Bed getBed() {
+    return bed;
+  }
+
+  public Booking getBooking() {
+    return booking;
   }
 
   public Timestamp getTimestamp() {

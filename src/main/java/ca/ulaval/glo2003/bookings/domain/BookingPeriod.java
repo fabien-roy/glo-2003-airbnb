@@ -30,6 +30,11 @@ public class BookingPeriod {
     return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
   }
 
+  // TODO : Test BookingPeriod.contains(...)
+  public boolean contains(BookingDate other) {
+    return isOverlapping(other.toPeriod());
+  }
+
   public List<BookingDate> getDates() {
     List<BookingDate> dates = new ArrayList<>();
 

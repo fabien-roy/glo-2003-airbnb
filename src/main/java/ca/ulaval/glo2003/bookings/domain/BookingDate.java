@@ -49,6 +49,11 @@ public class BookingDate {
     return new BookingPeriod(this, other);
   }
 
+  // TODO : Test BookingDate.toPeriod
+  public BookingPeriod toPeriod() {
+    return new BookingPeriod(this, this);
+  }
+
   public Timestamp toTimestamp() {
     return new Timestamp(value);
   }
