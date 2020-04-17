@@ -27,6 +27,12 @@ public class InMemoryBedRepository implements BedRepository<InMemoryBedQuery> {
     beds.set(beds.indexOf(bed), updatedBed);
   }
 
+  // TODO : Test InMemoryBedRepository.getAll()
+  @Override
+  public List<Bed> getAll() {
+    return beds;
+  }
+
   @Override
   public List<Bed> getAll(InMemoryBedQuery query) {
     query.setBeds(beds);

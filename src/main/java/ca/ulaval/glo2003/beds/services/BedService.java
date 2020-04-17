@@ -52,14 +52,6 @@ public class BedService {
     return bed.getNumber().toString();
   }
 
-  public List<BedResponse> getAll(Map<String, List<String>> params) {
-    BedQuery bedQuery = bedQueryFactory.create(params);
-
-    List<Bed> beds = bedRepository.getAll(bedQuery);
-
-    return orderByStars(toResponses(beds));
-  }
-
   public BedResponse getResponse(String number) {
     Bed bed = get(number);
 
@@ -70,6 +62,24 @@ public class BedService {
     BedNumber bedNumber = bedNumberConverter.fromString(number);
 
     return bedRepository.getByNumber(bedNumber);
+  }
+
+  // TODO : Test BedService.getAll()
+  public List<Bed> getAll() {
+    return bedRepository.getAll();
+  }
+
+  // TODO : Test BedService.getAll(...)
+  private List<Bed> getAll(Map<String, List<String>> params) {
+    BedQuery bedQuery = bedQueryFactory.create(params);
+
+    return bedRepository.getAll(bedQuery);
+  }
+
+  public List<BedResponse> getAllResponses(Map<String, List<String>> params) {
+    List<Bed> beds = getAll(params);
+
+    return orderByStars(toResponses(beds));
   }
 
   public void update(Bed bed) {

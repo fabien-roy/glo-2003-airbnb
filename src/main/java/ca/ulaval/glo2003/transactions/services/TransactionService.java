@@ -25,10 +25,13 @@ public class TransactionService {
     this.transactionConverter = transactionConverter;
   }
 
-  public List<TransactionResponse> getAll() {
-    List<Transaction> transactions = transactionRepository.getAll();
+  // TODO : Test TransactionService.getAll()
+  public List<Transaction> getAll() {
+    return transactionRepository.getAll();
+  }
 
-    return transactions.stream().map(transactionConverter::toResponse).collect(Collectors.toList());
+  public List<TransactionResponse> getAllResponses() {
+    return getAll().stream().map(transactionConverter::toResponse).collect(Collectors.toList());
   }
 
   public void addStayBooked(String tenant, Price total) {
