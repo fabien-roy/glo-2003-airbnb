@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_MAX_DISTANCE;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_NUMBER_OF_NIGHTS;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -28,7 +28,7 @@ class InMemoryBedQueryBuilderTest {
   private List<BloodTypes> bloodTypes = createBloodTypes();
   private Packages packageName = Packages.BLOODTHIRSTY;
   private int minCapacity = 100;
-  private ReservationDate arrivalDate = createBookingDate();
+  private ReservationDate arrivalDate = createDate();
   private int numberOfNights = 2;
   private LodgingModes lodgingMode = createLodgingModeName();
   private Location origin = createLocation();

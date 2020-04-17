@@ -6,13 +6,14 @@ import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
 import java.util.Collections;
 import java.util.List;
 
+// TODO : Test ReportPeriod
 public class ReportPeriod {
 
-  private final ReservationPeriod reservationPeriod;
+  private final ReservationPeriod period;
   private List<ReportPeriodData> data;
 
-  public ReportPeriod(ReservationPeriod reservationPeriod) {
-    this.reservationPeriod = reservationPeriod;
+  public ReportPeriod(ReservationPeriod period) {
+    this.period = period;
   }
 
   public List<ReportPeriodData> getData() {
@@ -29,6 +30,6 @@ public class ReportPeriod {
 
   public boolean contains(ReservationTimestamp reservationTimestamp) {
     ReservationDate date = new ReservationDate(reservationTimestamp.toLocalDate());
-    return reservationPeriod.contains(date);
+    return period.contains(date);
   }
 }

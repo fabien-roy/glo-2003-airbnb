@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.bookings.converters.BookingDateConverter;
+import ca.ulaval.glo2003.interfaces.converters.ReservationDateConverter;
 import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +11,11 @@ public class ArrivalDateQueryParamAssembler implements BedQueryParamAssembler {
 
   public static final String ARRIVAL_DATE_PARAM = "arrivalDate";
 
-  private final BookingDateConverter bookingDateConverter;
+  private final ReservationDateConverter reservationDateConverter;
 
   @Inject
-  public ArrivalDateQueryParamAssembler(BookingDateConverter bookingDateConverter) {
-    this.bookingDateConverter = bookingDateConverter;
+  public ArrivalDateQueryParamAssembler(ReservationDateConverter reservationDateConverter) {
+    this.reservationDateConverter = reservationDateConverter;
   }
 
   public BedQueryBuilder assemble(BedQueryBuilder builder, Map<String, List<String>> params) {
@@ -27,6 +27,6 @@ public class ArrivalDateQueryParamAssembler implements BedQueryParamAssembler {
   }
 
   private ReservationDate parseArrivalDate(String arrivalDate) {
-    return bookingDateConverter.fromString(arrivalDate);
+    return reservationDateConverter.fromString(arrivalDate);
   }
 }

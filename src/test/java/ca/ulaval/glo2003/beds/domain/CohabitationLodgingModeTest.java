@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -37,7 +37,7 @@ class CohabitationLodgingModeTest {
   @BeforeEach
   public void setUpMocks() {
     minCapacity = createCapacity();
-    arrivalDate = createBookingDate();
+    arrivalDate = createDate();
     numberOfNights = createNumberOfNights();
     resetMocks();
   }

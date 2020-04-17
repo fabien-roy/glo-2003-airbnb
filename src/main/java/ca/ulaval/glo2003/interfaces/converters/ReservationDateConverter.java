@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.bookings.converters;
+package ca.ulaval.glo2003.interfaces.converters;
 
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class BookingDateConverter {
+public class ReservationDateConverter {
 
   private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 

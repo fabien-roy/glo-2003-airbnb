@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.interfaces.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.bookings.converters.BookingDateConverter;
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
@@ -13,18 +12,18 @@ import org.junit.jupiter.api.Test;
 
 class ReservationDateConverterTest {
 
-  private static BookingDateConverter bookingDateConverter;
+  private static ReservationDateConverter reservationDateConverter;
 
   @BeforeAll
   public static void setUpConverter() {
-    bookingDateConverter = new BookingDateConverter();
+    reservationDateConverter = new ReservationDateConverter();
   }
 
   @Test
   public void fromString_shouldConvertBookingDate() {
     ReservationDate expectedDate = new ReservationDate(LocalDate.now());
 
-    ReservationDate reservationDate = bookingDateConverter.fromString(expectedDate.toString());
+    ReservationDate reservationDate = reservationDateConverter.fromString(expectedDate.toString());
 
     assertEquals(expectedDate, reservationDate);
   }
@@ -35,7 +34,7 @@ class ReservationDateConverterTest {
 
     Assertions.assertThrows(
         InvalidArrivalDateException.class,
-        () -> bookingDateConverter.fromString(invalidArrivalDate));
+        () -> reservationDateConverter.fromString(invalidArrivalDate));
   }
 
   @Test
@@ -44,7 +43,7 @@ class ReservationDateConverterTest {
 
     Assertions.assertThrows(
         ArrivalDateInThePastException.class,
-        () -> bookingDateConverter.fromString(arrivalDateInThePast));
+        () -> reservationDateConverter.fromString(arrivalDateInThePast));
   }
 
   @Test
@@ -52,6 +51,7 @@ class ReservationDateConverterTest {
     String nullArrivalDate = null;
 
     Assertions.assertThrows(
-        InvalidArrivalDateException.class, () -> bookingDateConverter.fromString(nullArrivalDate));
+        InvalidArrivalDateException.class,
+        () -> reservationDateConverter.fromString(nullArrivalDate));
   }
 }

@@ -8,19 +8,20 @@ import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.interfaces.converters.ReservationDateConverter;
 import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import javax.inject.Inject;
 
 public class BookingConverter {
 
   private final PublicKeyConverter publicKeyConverter;
-  private final BookingDateConverter bookingDateConverter;
+  private final ReservationDateConverter reservationDateConverter;
 
   @Inject
   public BookingConverter(
-      PublicKeyConverter publicKeyConverter, BookingDateConverter bookingDateConverter) {
+      PublicKeyConverter publicKeyConverter, ReservationDateConverter reservationDateConverter) {
     this.publicKeyConverter = publicKeyConverter;
-    this.bookingDateConverter = bookingDateConverter;
+    this.reservationDateConverter = reservationDateConverter;
   }
 
   public Booking fromRequest(BookingRequest bookingRequest) {
@@ -28,7 +29,8 @@ public class BookingConverter {
     validateColonySize(bookingRequest.getColonySize());
 
     PublicKey tenantPublicKey = publicKeyConverter.fromString(bookingRequest.getTenantPublicKey());
-    ReservationDate arrivalDate = bookingDateConverter.fromString(bookingRequest.getArrivalDate());
+    ReservationDate arrivalDate =
+        reservationDateConverter.fromString(bookingRequest.getArrivalDate());
 
     return new Booking(
         tenantPublicKey,

@@ -6,7 +6,7 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createBookingDate;
+import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,6 +23,7 @@ import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.interfaces.converters.ReservationDateConverter;
 import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +35,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BookingConverterTest {
 
   private static BookingConverter bookingConverter;
-  private static BookingDateConverter bookingDateConverter = mock(BookingDateConverter.class);
+  private static ReservationDateConverter reservationDateConverter =
+      mock(ReservationDateConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
 
   private static Booking booking;
@@ -52,19 +54,19 @@ class BookingConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    bookingConverter = new BookingConverter(publicKeyConverter, bookingDateConverter);
+    bookingConverter = new BookingConverter(publicKeyConverter, reservationDateConverter);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
     when(publicKeyConverter.fromString(tenantPublicKey.toString())).thenReturn(tenantPublicKey);
-    when(bookingDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
+    when(reservationDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
   }
 
   private void resetMocks() {
     tenantPublicKey = createPublicKey();
-    arrivalDate = createBookingDate();
+    arrivalDate = createDate();
     numberOfNights = createNumberOfNights();
     colonySize = createColonySize();
     packageName = createPackageName();

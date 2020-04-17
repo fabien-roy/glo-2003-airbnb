@@ -10,7 +10,7 @@ public class ReservationDateObjectMother {
 
   private ReservationDateObjectMother() {}
 
-  public static ReservationDate createBookingDate() {
+  public static ReservationDate createDate() {
     return new ReservationDate(
         Faker.instance()
             .date()
