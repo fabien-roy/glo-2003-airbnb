@@ -145,6 +145,20 @@ class BookingDateTest {
   }
 
   @Test
+  public void toPeriod_shouldHaveDateAsStart() {
+    BookingPeriod period = bookingDate.toPeriod();
+
+    assertEquals(period.getStart(), bookingDate);
+  }
+
+  @Test
+  public void toPeriod_shouldHaveDateAsEnd() {
+    BookingPeriod period = bookingDate.toPeriod();
+
+    assertEquals(period.getEnd(), bookingDate);
+  }
+
+  @Test
   public void toTimestamp_shouldReturnTimestampWithSameValue() {
     Timestamp timestamp = bookingDate.toTimestamp();
 
