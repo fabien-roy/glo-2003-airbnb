@@ -23,6 +23,10 @@ public class ReservationDate {
     this.value = value;
   }
 
+  public int getYear() {
+    return value.getYear();
+  }
+
   public ReservationDate minusDays(int days) {
     return new ReservationDate(value.minusDays(days));
   }

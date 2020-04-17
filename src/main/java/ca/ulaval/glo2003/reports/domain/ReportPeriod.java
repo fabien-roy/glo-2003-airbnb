@@ -9,11 +9,21 @@ import java.util.List;
 // TODO : Test ReportPeriod
 public class ReportPeriod {
 
+  private final String name;
   private final ReservationPeriod period;
   private List<ReportPeriodData> data;
 
-  public ReportPeriod(ReservationPeriod period) {
+  public ReportPeriod(String name, ReservationPeriod period) {
+    this.name = name;
     this.period = period;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public ReservationPeriod getPeriod() {
+    return period;
   }
 
   public List<ReportPeriodData> getData() {

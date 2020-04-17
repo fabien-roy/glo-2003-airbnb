@@ -23,6 +23,15 @@ class ReservationDateTest {
   }
 
   @Test
+  public void getYear_shouldGetYear() {
+    int year = date.getYear();
+
+    int actualYear = reservationDate.getYear();
+
+    assertEquals(year, actualYear);
+  }
+
+  @Test
   public void now_shouldSetValueToNow() {
     LocalDate now = LocalDate.now();
 

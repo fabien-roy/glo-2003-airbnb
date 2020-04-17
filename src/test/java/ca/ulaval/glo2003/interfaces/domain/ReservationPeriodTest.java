@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 class ReservationPeriodTest {
 
   private static int numberOfDays = 5;
+  private static int firstYear = 2020;
+  private static int secondYear = 2021;
   private static ReservationDate start = ReservationDate.now();
   private static ReservationDate end = start.plusDays(numberOfDays);
 
@@ -20,6 +22,8 @@ class ReservationPeriodTest {
   private static ReservationPeriod afterPeriod;
   private static ReservationPeriod beforeOverlappingPeriod;
   private static ReservationPeriod afterOverlappingPeriod;
+  private static ReservationPeriod singleYearPeriod;
+  private static ReservationPeriod multipleYearsPeriod;
 
   @BeforeEach
   public void setUpPeriod() {
@@ -57,6 +61,18 @@ class ReservationPeriodTest {
     ReservationDate afterOverlappingStart = end.minusDays(1);
     ReservationDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
     afterOverlappingPeriod = new ReservationPeriod(afterOverlappingStart, afterOverlappingEnd);
+  }
+
+  @BeforeEach
+  public void setUpSingleYearPeriod() {
+    singleYearPeriod = ReservationPeriod.ofYear(firstYear);
+  }
+
+  @BeforeEach
+  public void setUpMultipleYearsPeriod() {
+    multipleYearsPeriod =
+        new ReservationPeriod(
+            ReservationDate.firstDayOfYear(firstYear), ReservationDate.lastDayOfYear(secondYear));
   }
 
   @ParameterizedTest
@@ -165,6 +181,23 @@ class ReservationPeriodTest {
     for (int i = 0; i < numberOfDays; i++) {
       assertEquals(start.plusDays(i), dates.get(i));
     }
+  }
+
+  @Test
+  public void getYears_withOneYear_shouldSingleYear() {
+    List<Integer> years = singleYearPeriod.getYears();
+
+    assertEquals(1, years.size());
+    assertEquals(firstYear, years.get(0));
+  }
+
+  @Test
+  public void getYears_withMultipleYears_shouldMultipleYears() {
+    List<Integer> years = multipleYearsPeriod.getYears();
+
+    assertEquals(2, years.size());
+    assertEquals(firstYear, years.get(0));
+    assertEquals(secondYear, years.get(1));
   }
 
   @Test

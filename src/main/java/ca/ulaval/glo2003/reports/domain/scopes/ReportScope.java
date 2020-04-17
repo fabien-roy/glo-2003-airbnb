@@ -6,10 +6,10 @@ import java.util.List;
 
 public abstract class ReportScope {
 
-  private final ReservationPeriod reservationPeriod;
+  protected final ReservationPeriod period;
 
-  public ReportScope(ReservationPeriod reservationPeriod) {
-    this.reservationPeriod = reservationPeriod;
+  public ReportScope(ReservationPeriod period) {
+    this.period = period;
   }
 
   public abstract List<ReportPeriod> getReportPeriods();

@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.interfaces.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ReservationPeriod {
 
@@ -44,6 +46,14 @@ public class ReservationPeriod {
     } while (date.isBefore(end));
 
     return dates;
+  }
+
+  public List<Integer> getYears() {
+    Set<Integer> years = new HashSet<>();
+
+    getDates().forEach(date -> years.add(date.getYear()));
+
+    return new ArrayList<>(years);
   }
 
   @Override
