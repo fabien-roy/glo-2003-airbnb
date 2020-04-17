@@ -84,6 +84,16 @@ class TransactionServiceTest {
   public void getAll_shouldGetAllTransactions() {
     setUpMocksForGetAll();
 
+    List<Transaction> transactions = transactionService.getAll();
+
+    assertTrue(transactions.contains(transaction));
+    assertTrue(transactions.contains(otherTransaction));
+  }
+
+  @Test
+  public void getAllResponses_shouldGetAllTransactionsResponses() {
+    setUpMocksForGetAll();
+
     List<TransactionResponse> transactionResponses = transactionService.getAllResponses();
 
     assertTrue(transactionResponses.contains(transactionResponse));

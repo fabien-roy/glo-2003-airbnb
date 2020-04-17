@@ -25,7 +25,6 @@ public class TransactionService {
     this.transactionConverter = transactionConverter;
   }
 
-  // TODO : Test TransactionService.getAll()
   public List<Transaction> getAll() {
     return transactionRepository.getAll();
   }
