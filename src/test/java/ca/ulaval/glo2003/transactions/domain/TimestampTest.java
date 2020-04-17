@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.transactions.domain;
 
+import static ca.ulaval.glo2003.transactions.domain.Timestamp.LOCAL_TIME;
 import static ca.ulaval.glo2003.transactions.domain.Timestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +26,7 @@ class TimestampTest {
   }
 
   @Test
-  public void construct_withLocalDate_shouldReturnTimestampAtZuluZoneOffset() {
+  public void construct_withLocalDate_shouldReturnTimestampAtUTCZoneOffset() {
     timestamp = new Timestamp(date);
 
     assertEquals(date, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
@@ -53,6 +54,33 @@ class TimestampTest {
   @Test
   public void toString_shouldReturnValueToString() {
     assertEquals(timestamp.toInstant().toString(), timestamp.toString());
+  }
+
+  @Test
+  public void toLocalDate_shouldReturnLocalDateAtUTCZoneOffset() {
+    LocalDate dateAtUTCZoneOffset = instant.atOffset(ZONE_OFFSET).toLocalDate();
+
+    assertEquals(dateAtUTCZoneOffset, timestamp.toLocalDate());
+  }
+
+  @Test
+  public void isMaxTime_withMaxTimeValue_shouldReturnTrue() {
+    instant = date.atTime(LOCAL_TIME).toInstant(ZONE_OFFSET);
+    timestamp = new Timestamp(instant);
+
+    boolean result = timestamp.isMaxTime();
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void isMaxTime_withNonMaxTimeValue_shouldReturnFalse() {
+    instant = date.atTime(LocalTime.NOON).toInstant(ZONE_OFFSET);
+    timestamp = new Timestamp(instant);
+
+    boolean result = timestamp.isMaxTime();
+
+    assertFalse(result);
   }
 
   @Test

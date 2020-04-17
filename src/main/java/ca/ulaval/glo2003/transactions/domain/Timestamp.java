@@ -25,15 +25,13 @@ public class Timestamp {
     return value;
   }
 
-  // TODO : Test Timestamp.toLocalDate()
   public LocalDate toLocalDate() {
     return value.atZone(ZONE_OFFSET).toLocalDate();
   }
 
-  // TODO : Test Timestamp.isMaxTime
   public boolean isMaxTime() {
-    Timestamp timestampAtmaxTime = new Timestamp(toLocalDate());
-    return equals(timestampAtmaxTime);
+    Timestamp timestampAtMaxTime = new Timestamp(toLocalDate());
+    return equals(timestampAtMaxTime);
   }
 
   @Override
