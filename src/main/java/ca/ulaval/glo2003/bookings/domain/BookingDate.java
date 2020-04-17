@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.bookings.domain;
 
 import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import java.time.LocalDate;
+import java.time.Month;
 
 public class BookingDate {
 
@@ -11,14 +12,12 @@ public class BookingDate {
     return new BookingDate(LocalDate.now());
   }
 
-  // TODO : Test BookingDate.firstDayOfYear(...)
   public static BookingDate firstDayOfYear(int year) {
-    return new BookingDate(LocalDate.of(year, 1, 1));
+    return new BookingDate(LocalDate.of(year, Month.JANUARY, 1));
   }
 
-  // TODO : Test BookingDate.lastDayOfYear(...)
   public static BookingDate lastDayOfYear(int year) {
-    return new BookingDate(LocalDate.of(year, 12, 31));
+    return new BookingDate(LocalDate.of(year, Month.DECEMBER, 31));
   }
 
   public BookingDate(LocalDate value) {

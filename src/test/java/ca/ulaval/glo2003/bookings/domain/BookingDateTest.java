@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import java.time.LocalDate;
+import java.time.Month;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,6 +30,26 @@ class BookingDateTest {
     bookingDate = BookingDate.now();
 
     assertEquals(now, bookingDate.toLocalDate());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {2020, 2030, 1976})
+  public void firstDayOfYear_shouldReturnFirstDayOfYear(int year) {
+    BookingDate firstDayOfYear = BookingDate.firstDayOfYear(year);
+
+    assertEquals(year, firstDayOfYear.toLocalDate().getYear());
+    assertEquals(Month.JANUARY, firstDayOfYear.toLocalDate().getMonth());
+    assertEquals(1, firstDayOfYear.toLocalDate().getDayOfMonth());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {2020, 2030, 1976})
+  public void lastDayOfYear_shouldReturnLastDayOfYear(int year) {
+    BookingDate lastDayOfYear = BookingDate.lastDayOfYear(year);
+
+    assertEquals(year, lastDayOfYear.toLocalDate().getYear());
+    assertEquals(Month.DECEMBER, lastDayOfYear.toLocalDate().getMonth());
+    assertEquals(31, lastDayOfYear.toLocalDate().getDayOfMonth());
   }
 
   @ParameterizedTest
