@@ -5,7 +5,8 @@ import ca.ulaval.glo2003.bookings.domain.Booking;
 
 public class Transaction {
 
-  // TODO : Transaction should not know about bed and booking
+  // TODO : Transaction should not know about bed and booking (IMPROV)
+  // TODO : Always add bed and booking to transaction (CRT)
   private Bed bed;
   private Booking booking;
 
@@ -52,7 +53,6 @@ public class Transaction {
     return reason;
   }
 
-  // TODO : Test Transaction.isRefund()
   public boolean isRefund() {
     return timestamp.isMaxTime();
   }
