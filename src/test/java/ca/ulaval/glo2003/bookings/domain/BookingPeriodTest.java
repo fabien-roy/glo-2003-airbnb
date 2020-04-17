@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BookingPeriodTest {
 
@@ -57,6 +59,26 @@ class BookingPeriodTest {
     afterOverlappingPeriod = new BookingPeriod(afterOverlappingStart, afterOverlappingEnd);
   }
 
+  @ParameterizedTest
+  @ValueSource(ints = {2020, 2035, 1976})
+  public void ofYear_shouldHaveFirstDayOfYearAsStart(int year) {
+    BookingDate firstDayOfYear = BookingDate.firstDayOfYear(year);
+
+    BookingPeriod period = BookingPeriod.ofYear(year);
+
+    assertEquals(firstDayOfYear, period.getStart());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {2020, 2035, 1976})
+  public void ofYear_shouldHaveLastDayOfYearAsEnd(int year) {
+    BookingDate lastDayOfYear = BookingDate.lastDayOfYear(year);
+
+    BookingPeriod period = BookingPeriod.ofYear(year);
+
+    assertEquals(lastDayOfYear, period.getEnd());
+  }
+
   @Test
   public void isOverlapping_withSamePeriod_shouldReturnTrue() {
     boolean result = period.isOverlapping(samePeriod);
@@ -88,6 +110,41 @@ class BookingPeriodTest {
   @Test
   public void isOverlapping_withAfterPeriod_shouldReturnFalse() {
     boolean result = period.isOverlapping(afterPeriod);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void contains_withStartDate_shouldReturnTrue() {
+    boolean result = period.contains(period.getStart());
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void contains_withEndDate_shouldReturnTrue() {
+    boolean result = period.contains(period.getEnd());
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void contains_withContainedDate_shouldReturnTrue() {
+    boolean result = period.contains(period.getStart().plusDays(1));
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void contains_withDateBefore_shouldReturnFalse() {
+    boolean result = period.contains(period.getStart().minusDays(1));
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void contains_withDateAfter_shouldReturnFalse() {
+    boolean result = period.contains(period.getEnd().plusDays(1));
 
     assertFalse(result);
   }

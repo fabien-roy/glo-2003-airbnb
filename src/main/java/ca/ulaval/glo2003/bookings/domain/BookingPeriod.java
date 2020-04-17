@@ -8,14 +8,13 @@ public class BookingPeriod {
   private BookingDate start;
   private BookingDate end;
 
+  public static BookingPeriod ofYear(int year) {
+    return new BookingPeriod(BookingDate.firstDayOfYear(year), BookingDate.lastDayOfYear(year));
+  }
+
   public BookingPeriod(BookingDate start, BookingDate end) {
     this.start = start;
     this.end = end;
-  }
-
-  // TODO : Test BookingPeriod.ofYear(...)
-  public static BookingPeriod ofYear(int year) {
-    return new BookingPeriod(BookingDate.firstDayOfYear(year), BookingDate.lastDayOfYear(year));
   }
 
   public BookingDate getStart() {
@@ -30,7 +29,6 @@ public class BookingPeriod {
     return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
   }
 
-  // TODO : Test BookingPeriod.contains(...)
   public boolean contains(BookingDate other) {
     return isOverlapping(other.toPeriod());
   }
