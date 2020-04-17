@@ -30,6 +30,12 @@ public class Timestamp {
     return value.atZone(ZONE_OFFSET).toLocalDate();
   }
 
+  // TODO : Test Timestamp.isMaxTime
+  public boolean isMaxTime() {
+    Timestamp timestampAtmaxTime = new Timestamp(toLocalDate());
+    return equals(timestampAtmaxTime);
+  }
+
   @Override
   public String toString() {
     return value.toString();

@@ -51,4 +51,9 @@ public class Transaction {
   public TransactionReasons getReason() {
     return reason;
   }
+
+  // TODO : Test Transaction.isRefund()
+  public boolean isRefund() {
+    return timestamp.isMaxTime();
+  }
 }
