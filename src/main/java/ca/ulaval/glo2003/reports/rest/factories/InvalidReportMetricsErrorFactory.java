@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.rest.factories;
 import ca.ulaval.glo2003.reports.exceptions.InvalidReportMetricsException;
 import org.eclipse.jetty.http.HttpStatus;
 
-// TODO : Test InvalidReportMetricsErrorFactory
 public class InvalidReportMetricsErrorFactory extends ReportErrorFactory {
 
   protected Class<?> getAssociatedException() {

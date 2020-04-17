@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.rest.factories;
 import ca.ulaval.glo2003.reports.exceptions.InvalidReportScopeException;
 import org.eclipse.jetty.http.HttpStatus;
 
-// TODO : Test InvalidReportScopeErrorFactory
 public class InvalidReportScopeErrorFactory extends ReportErrorFactory {
 
   protected Class<?> getAssociatedException() {

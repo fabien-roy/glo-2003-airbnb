@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import spark.Request;
 import spark.Response;
 
-// TODO : Test ReportExceptionHandler
 public class ReportExceptionHandler extends AbstractExceptionHandler<ReportException> {
 
   private final Set<ErrorFactory<ReportException>> factories;

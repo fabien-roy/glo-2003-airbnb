@@ -1,12 +1,12 @@
 package ca.ulaval.glo2003.reports.rest.factories;
 
+import ca.ulaval.glo2003.reports.exceptions.InvalidReportDimensionsException;
 import org.eclipse.jetty.http.HttpStatus;
 
-// TODO : Test InvalidReportDimensionsErrorFactory
 public class InvalidReportDimensionsErrorFactory extends ReportErrorFactory {
 
   protected Class<?> getAssociatedException() {
-    return InvalidReportDimensionsErrorFactory.class;
+    return InvalidReportDimensionsException.class;
   }
 
   protected String getError() {
