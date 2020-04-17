@@ -8,7 +8,6 @@ public class BedNotFoundErrorFactory extends BedErrorFactory {
 
   String number;
 
-  // TODO : Test this thing
   @Override
   public boolean canHandle(BedException exception) {
     boolean possibleToHandle = super.canHandle(exception);

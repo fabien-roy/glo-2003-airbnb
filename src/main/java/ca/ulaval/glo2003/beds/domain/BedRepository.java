@@ -8,8 +8,6 @@ public interface BedRepository<Q extends BedQuery> {
 
   void update(Bed bed);
 
-  List<Bed> getAll();
-
   List<Bed> getAll(Q query);
 
   Bed getByNumber(BedNumber number);
