@@ -10,6 +10,14 @@ public class TimeDay {
   private int dayOfMonth;
   private int dayOfWeek;
 
+  public TimeDay(TimeMonth month, TimeWeek week, int dayOfYear, int dayOfMonth, int dayOfWeek) {
+    this.month = month;
+    this.week = week;
+    this.dayOfYear = dayOfYear;
+    this.dayOfMonth = dayOfMonth;
+    this.dayOfWeek = dayOfWeek;
+  }
+
   public TimeDay(LocalDate date) {
     month = new TimeMonth(date);
     week = new TimeWeek(date);
@@ -28,6 +36,18 @@ public class TimeDay {
 
   public TimeWeek getWeek() {
     return week;
+  }
+
+  public int getDayOfYear() {
+    return dayOfYear;
+  }
+
+  public int getDayOfMonth() {
+    return dayOfMonth;
+  }
+
+  public TimeDate toDate() {
+    return new TimeDate(LocalDate.of(month.getYear().toYear().getValue(), month.toMonth().getValue(), dayOfMonth));
   }
 
   @Override

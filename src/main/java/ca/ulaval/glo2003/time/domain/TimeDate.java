@@ -24,6 +24,14 @@ public class TimeDate {
     return day.getMonth();
   }
 
+  public int getDayOfYear() {
+    return day.getDayOfYear();
+  }
+
+  public int getDayOfMonth() {
+    return day.getDayOfMonth();
+  }
+
   public TimeDate minusDays(int days) {
     return new TimeDate(date.minusDays(days));
   }

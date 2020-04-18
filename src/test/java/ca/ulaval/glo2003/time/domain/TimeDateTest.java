@@ -1,14 +1,15 @@
 package ca.ulaval.glo2003.time.domain;
 
-import static ca.ulaval.glo2003.time.domain.Timestamp.ZONE_OFFSET;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-import java.time.Year;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.time.LocalDate;
+import java.time.Year;
+
+import static ca.ulaval.glo2003.time.domain.Timestamp.ZONE_OFFSET;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TimeDateTest {
 

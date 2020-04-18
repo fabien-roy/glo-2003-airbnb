@@ -1,7 +1,9 @@
 package ca.ulaval.glo2003.time.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TimePeriod {
 
@@ -41,26 +43,17 @@ public class TimePeriod {
     return dates;
   }
 
-  // TODO : Test TimePeriod.getYears()
   public List<TimeYear> getYears() {
-    List<TimeYear> years = new ArrayList<>();
-    getDates()
-        .forEach(
-            date -> {
-              if (!years.contains(date.getYear())) years.add(date.getYear());
-            });
-    return years;
+    Set<TimeYear> years = new HashSet<>();
+    getDates().forEach(date -> years.add(date.getYear()));
+    return new ArrayList<>(years);
   }
 
   // TODO : Test TimePeriod.getMonths()
   public List<TimeMonth> getMonths() {
-    List<TimeMonth> months = new ArrayList<>();
-    getDates()
-        .forEach(
-            date -> {
-              if (!months.contains(date.getMonth())) months.add(date.getMonth());
-            });
-    return months;
+    Set<TimeMonth> months = new HashSet<>();
+    getDates().forEach(date -> months.add(date.getMonth()));
+    return new ArrayList<>(months);
   }
 
   @Override

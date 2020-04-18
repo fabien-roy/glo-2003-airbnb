@@ -1,16 +1,21 @@
 package ca.ulaval.glo2003.time.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TimePeriodTest {
 
   private static int numberOfDays = 5;
   private static TimeDate start = TimeDate.now();
   private static TimeDate end = start.plusDays(numberOfDays);
+  private static TimeYear firstYear = aTimeYear().build();
+  private static TimeYear secondYear = aTimeYear().withYear(firstYear.toYear().plusYears(1)).build();
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -18,6 +23,8 @@ class TimePeriodTest {
   private static TimePeriod afterPeriod;
   private static TimePeriod beforeOverlappingPeriod;
   private static TimePeriod afterOverlappingPeriod;
+  private static TimePeriod singleYearPeriod;
+  private static TimePeriod multipleYearsPeriod;
 
   @BeforeEach
   public void setUpPeriod() {
@@ -55,6 +62,20 @@ class TimePeriodTest {
     TimeDate afterOverlappingStart = end.minusDays(1);
     TimeDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
     afterOverlappingPeriod = new TimePeriod(afterOverlappingStart, afterOverlappingEnd);
+  }
+
+  @BeforeEach
+  public void setUpSingleYearPeriod() {
+    TimeDate firstDate = aTimeDate().withYear(firstYear).build();
+    TimeDate secondDate = aTimeDate().withYear(firstYear).build();
+    singleYearPeriod = new TimePeriod(firstDate, secondDate);
+  }
+
+  @BeforeEach
+  public void setUpMultipleYearsPeriod() {
+    TimeDate firstDate = aTimeDate().withYear(firstYear).build();
+    TimeDate secondDate = aTimeDate().withYear(secondYear).build();
+    multipleYearsPeriod = new TimePeriod(firstDate, secondDate);
   }
 
   @Test
@@ -143,6 +164,23 @@ class TimePeriodTest {
     for (int i = 0; i < numberOfDays; i++) {
       assertEquals(start.plusDays(i), dates.get(i));
     }
+  }
+
+  @Test
+  public void getYears_withSingleYearPeriod_shouldGetYear() {
+    List<TimeYear> years = singleYearPeriod.getYears();
+
+    assertEquals(1, years.size());
+    assertEquals(firstYear, years.get(0));
+  }
+
+  @Test
+  public void getYears_withMultipleYearsPeriod_shouldGetYears() {
+    List<TimeYear> years = multipleYearsPeriod.getYears();
+
+    assertEquals(2, years.size());
+    assertEquals(firstYear, years.get(0));
+    assertEquals(secondYear, years.get(1));
   }
 
   @Test

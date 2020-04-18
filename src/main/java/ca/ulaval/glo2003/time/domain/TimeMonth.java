@@ -6,16 +6,17 @@ import java.time.Month;
 // TODO : Test TimeMonth
 public class TimeMonth {
 
-  private Month value;
   private TimeYear year;
+  private Month value;
 
-  public TimeMonth(Month month) {
-    this.value = month;
+  public TimeMonth(TimeYear year, Month value) {
+    this.year = year;
+    this.value = value;
   }
 
   public TimeMonth(LocalDate date) {
-    this.value = date.getMonth();
     this.year = new TimeYear(date);
+    this.value = date.getMonth();
   }
 
   public TimeYear getYear() {
