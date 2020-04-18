@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createQuarterOfYear;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
-
 import ca.ulaval.glo2003.time.domain.TimeQuarter;
 import ca.ulaval.glo2003.time.domain.TimeYear;
+
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createQuarterOfYear;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 
 public class TimeQuarterBuilder {
 
@@ -13,6 +13,11 @@ public class TimeQuarterBuilder {
 
   public static TimeQuarterBuilder aTimeQuarter() {
     return new TimeQuarterBuilder();
+  }
+
+  public TimeQuarterBuilder withQuarterOfYear(int quarterOfYear) {
+    this.quarterOfYear = quarterOfYear;
+    return this;
   }
 
   public TimeQuarterBuilder withYear(TimeYear year) {

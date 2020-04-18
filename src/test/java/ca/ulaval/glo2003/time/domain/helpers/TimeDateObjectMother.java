@@ -1,15 +1,18 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import static ca.ulaval.glo2003.time.domain.TimeQuarter.firstPossibleQuarter;
-import static ca.ulaval.glo2003.time.domain.TimeQuarter.lastPossibleQuarter;
-
 import ca.ulaval.glo2003.time.domain.TimeMonth;
 import ca.ulaval.glo2003.time.domain.TimeQuarter;
+import ca.ulaval.glo2003.time.domain.TimeWeek;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 import com.github.javafaker.Faker;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
+import java.util.Calendar;
+
+import static ca.ulaval.glo2003.time.domain.TimeQuarter.firstPossibleQuarter;
+import static ca.ulaval.glo2003.time.domain.TimeQuarter.lastPossibleQuarter;
 
 public class TimeDateObjectMother {
 
@@ -23,17 +26,26 @@ public class TimeDateObjectMother {
     return Faker.instance().random().nextInt(futureQuarter(year), lastPossibleQuarter());
   }
 
+  public static int createQuarterOfYear(TimeWeek week) {
+    return Faker.instance().random().nextInt(futureQuarter(week), week.lastQuarter());
+  }
+
   public static Month createMonth(TimeQuarter quarter) {
     return Month.of(
-        Faker.instance().random().nextInt(futureMonth(quarter), quarter.lastMonthOfQuarter()));
+        Faker.instance().random().nextInt(futureMonth(quarter), quarter.lastMonth()));
+  }
+
+  public static Month createMonth(TimeWeek week) {
+    return Month.of(
+            Faker.instance().random().nextInt(futureMonth(week), week.lastMonth()));
   }
 
   public static int createWeekOfYear(TimeYear year) {
-    return 0; // TODO
+    return Faker.instance().random().nextInt(1, year.getNumberOfWeeks());
   }
 
-  public static int createDayOfYear(TimeYear year) {
-    return Faker.instance().random().nextInt(futureDay(year), year.atLastDay().getDayOfYear());
+  public static int createWeekOfYear(TimeMonth month) {
+    return Faker.instance().random().nextInt(month.firstWeek(), month.lastWeek());
   }
 
   public static int createDayOfYear(TimeMonth month, int dayOfMonth) {
@@ -42,12 +54,14 @@ public class TimeDateObjectMother {
         .nextInt(thatDay(month, dayOfMonth), month.getYear().atLastDay().getDayOfYear());
   }
 
-  public static int createDayOfMonth(TimeMonth month) {
-    return Faker.instance().random().nextInt(futureDay(month), month.atLastDay().getDayOfMonth());
+  public static int createDayOfMonth(TimeMonth month, TimeWeek week) {
+    int lowerBound = Math.max(futureDay(month), futureDay(week));
+    int higherBound = Math.min(month.atLastDay().getDayOfMonth(), week.atLastDay().getDayOfMonth());
+    return Faker.instance().random().nextInt(Math.min(lowerBound, higherBound), Math.max(lowerBound, higherBound));
   }
 
-  public static int createDayOfMonth(TimeMonth month, int dayOfYear) {
-    return month.getYear().toYear().atDay(dayOfYear).getDayOfMonth();
+  public static int createDayOfWeek(TimeWeek week, int dayOfYear) {
+    return week.getYear().toYear().atDay(dayOfYear).getDayOfWeek().getValue();
   }
 
   private static LocalDate now() {
@@ -62,20 +76,29 @@ public class TimeDateObjectMother {
     return thisYear() + 30;
   }
 
-  private static int futureQuarter(TimeYear year) {
-    return isCurrentYear(year) ? now().getMonthValue() / 3 * 3 : firstPossibleQuarter();
-  }
-
   private static int thisMonth() {
     return now().getMonthValue();
   }
 
-  private static int futureMonth(TimeQuarter quarter) {
-    return isCurrentQuarter(quarter) ? now().getMonthValue() : quarter.firstMonthOfQuarter();
+  private static int thisWeek() {
+    Calendar calendar = Calendar.getInstance();
+    return calendar.get(Calendar.WEEK_OF_YEAR);
   }
 
-  private static int futureDay(TimeYear year) {
-    return isCurrentYear(year) ? now().getDayOfYear() : year.atFirstDay().getDayOfYear();
+  private static int futureQuarter(TimeYear year) {
+    return isCurrentYear(year) ? now().getMonthValue() / 3 * 3 : firstPossibleQuarter();
+  }
+
+  private static int futureQuarter(TimeWeek week) {
+    return isCurrentWeek(week) ? now().getMonthValue() / 3 * 3 : week.firstQuarter();
+  }
+
+  private static int futureMonth(TimeQuarter quarter) {
+    return isCurrentQuarter(quarter) ? now().getMonthValue() : quarter.firstMonth();
+  }
+
+  private static int futureMonth(TimeWeek week) {
+    return isCurrentWeek(week) ? now().getMonthValue() : week.firstMonth();
   }
 
   private static int thatDay(TimeMonth month, int dayOfMonth) {
@@ -86,12 +109,16 @@ public class TimeDateObjectMother {
     return isCurrentMonth(month) ? now().getDayOfMonth() : month.atFirstDay().getDayOfMonth();
   }
 
+  private static int futureDay(TimeWeek week) {
+    return isCurrentWeek(week) ? now().getDayOfMonth() : week.atFirstDay().getDayOfMonth();
+  }
+
   private static boolean isCurrentYear(TimeYear year) {
     return year.toYear().getValue() == thisYear();
   }
 
   private static boolean isCurrentQuarter(TimeQuarter quarter) {
-    return isCurrentYear(quarter.getYear()) && quarter.getQuarterOfYear() == (thisMonth() - 1) * 3;
+    return isCurrentYear(quarter.getYear()) && quarter.toQuarterOfYear() == (thisMonth() - 1) * 3;
   }
 
   private static boolean isCurrentMonth(TimeMonth month) {
@@ -100,5 +127,9 @@ public class TimeDateObjectMother {
 
   private static boolean isCurrentMonth(int month) {
     return month == thisMonth();
+  }
+
+  private static boolean isCurrentWeek(TimeWeek week) {
+    return isCurrentYear(week.getYear()) && week.toWeekOfYear() == thisWeek();
   }
 }

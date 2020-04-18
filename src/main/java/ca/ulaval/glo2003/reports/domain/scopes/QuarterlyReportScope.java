@@ -2,8 +2,10 @@ package ca.ulaval.glo2003.reports.domain.scopes;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
-import java.util.ArrayList;
+import ca.ulaval.glo2003.time.domain.TimeQuarter;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class QuarterlyReportScope extends ReportScope {
 
@@ -11,9 +13,12 @@ public class QuarterlyReportScope extends ReportScope {
     super(timePeriod);
   }
 
-  // TODO : QuarterlyReportScope.getReportPeriods()
   @Override
   public List<ReportPeriod> getReportPeriods() {
-    return new ArrayList<>();
+    return period.getQuarters().stream().map(this::createReportPeriod).collect(Collectors.toList());
+  }
+
+  private ReportPeriod createReportPeriod(TimeQuarter quarter) {
+    return new ReportPeriod(quarter.toString(), quarter.toPeriod());
   }
 }

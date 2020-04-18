@@ -1,9 +1,10 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createYear;
-
 import ca.ulaval.glo2003.time.domain.TimeYear;
+
 import java.time.Year;
+
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createYear;
 
 public class TimeYearBuilder {
 
@@ -12,11 +13,6 @@ public class TimeYearBuilder {
 
   public static TimeYearBuilder aTimeYear() {
     return new TimeYearBuilder();
-  }
-
-  public TimeYearBuilder withYear(Year year) {
-    this.year = year;
-    return this;
   }
 
   public TimeYear build() {

@@ -1,14 +1,16 @@
 package ca.ulaval.glo2003.time.domain;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
-import static ca.ulaval.glo2003.time.domain.helpers.TimePeriodBuilder.aTimePeriod;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
+import static ca.ulaval.glo2003.time.domain.helpers.TimePeriodBuilder.aTimePeriod;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeQuarterBuilder.aTimeQuarter;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeWeekBuilder.aTimeWeek;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TimePeriodTest {
 
@@ -17,8 +19,12 @@ class TimePeriodTest {
   private static TimeDate end = start.plusDays(numberOfDays);
   private static TimeYear firstYear = aTimeYear().build();
   private static TimeYear secondYear = firstYear.plusYears(1);
-  private static TimeMonth firstMonth = aTimeMonth().withYear(firstYear).build();
+  private static TimeQuarter firstQuarter = aTimeQuarter().withYear(firstYear).build();
+  private static TimeQuarter secondQuarter = firstQuarter.plusQuarters(1);
+  private static TimeMonth firstMonth = aTimeMonth().withQuarter(firstQuarter).build();
   private static TimeMonth secondMonth = firstMonth.plusMonths(1);
+  private static TimeWeek firstWeek = aTimeWeek().withYear(firstYear).build();
+  private static TimeWeek secondWeek = firstWeek.plusWeeks(1);
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -29,9 +35,15 @@ class TimePeriodTest {
   private static TimePeriod singleYearPeriod = aTimePeriod().withinYear(firstYear).build();
   private static TimePeriod multipleYearsPeriod =
       aTimePeriod().withinYears(firstYear, secondYear).build();
+  private static TimePeriod singleQuarterPeriod = aTimePeriod().withinQuarter(firstQuarter).build();
+  private static TimePeriod multipleQuartersPeriod =
+          aTimePeriod().withinQuarters(firstQuarter, secondQuarter).build();
   private static TimePeriod singleMonthPeriod = aTimePeriod().withinMonth(firstMonth).build();
   private static TimePeriod multipleMonthsPeriod =
       aTimePeriod().withinMonths(firstMonth, secondMonth).build();
+  private static TimePeriod singleWeekPeriod = aTimePeriod().withinWeek(firstWeek).build();
+  private static TimePeriod multipleWeeksPeriod =
+          aTimePeriod().withinWeeks(firstWeek, secondWeek).build();
 
   @BeforeEach
   public void setUpPeriod() {
@@ -69,13 +81,6 @@ class TimePeriodTest {
     TimeDate afterOverlappingStart = end.minusDays(1);
     TimeDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
     afterOverlappingPeriod = new TimePeriod(afterOverlappingStart, afterOverlappingEnd);
-  }
-
-  @BeforeEach
-  public void setUpSingleYearPeriod() {
-    TimeDate firstDate = aTimeDate().withYear(firstYear).build();
-    TimeDate secondDate = aTimeDate().withYear(firstYear).build();
-    singleYearPeriod = new TimePeriod(firstDate, secondDate);
   }
 
   @Test
@@ -184,6 +189,23 @@ class TimePeriodTest {
   }
 
   @Test
+  public void getQuarters_withSingleQuarterPeriod_shouldGetQuarter() {
+    List<TimeQuarter> quarters = singleQuarterPeriod.getQuarters();
+
+    assertEquals(1, quarters.size());
+    assertEquals(firstQuarter, quarters.get(0));
+  }
+
+  @Test
+  public void getQuarters_withMultipleQuartersPeriod_shouldGetQuarters() {
+    List<TimeQuarter> quarters = multipleQuartersPeriod.getQuarters();
+
+    assertEquals(2, quarters.size());
+    assertEquals(firstQuarter, quarters.get(0));
+    assertEquals(secondQuarter, quarters.get(1));
+  }
+
+  @Test
   public void getMonths_withSingleMonthPeriod_shouldGetMonth() {
     List<TimeMonth> months = singleMonthPeriod.getMonths();
 
@@ -198,6 +220,23 @@ class TimePeriodTest {
     assertEquals(2, months.size());
     assertEquals(firstMonth, months.get(0));
     assertEquals(secondMonth, months.get(1));
+  }
+
+  @Test
+  public void getWeeks_withSingleWeekPeriod_shouldGetWeek() {
+    List<TimeWeek> weeks = singleWeekPeriod.getWeeks();
+
+    assertEquals(1, weeks.size());
+    assertEquals(firstWeek, weeks.get(0));
+  }
+
+  @Test
+  public void getWeeks_withMultipleWeeksPeriod_shouldGetWeeks() {
+    List<TimeWeek> weeks = multipleWeeksPeriod.getWeeks();
+
+    assertEquals(2, weeks.size());
+    assertEquals(firstWeek, weeks.get(0));
+    assertEquals(secondWeek, weeks.get(1));
   }
 
   @Test

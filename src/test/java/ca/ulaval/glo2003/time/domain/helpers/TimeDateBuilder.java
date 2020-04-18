@@ -1,10 +1,8 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDayBuilder.aTimeDay;
+import ca.ulaval.glo2003.time.domain.*;
 
-import ca.ulaval.glo2003.time.domain.TimeDate;
-import ca.ulaval.glo2003.time.domain.TimeMonth;
-import ca.ulaval.glo2003.time.domain.TimeYear;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDayBuilder.aTimeDay;
 
 public class TimeDateBuilder {
 
@@ -19,8 +17,18 @@ public class TimeDateBuilder {
     return this;
   }
 
+  public TimeDateBuilder withQuarter(TimeQuarter quarter) {
+    timeDayBuilder = timeDayBuilder.withQuarter(quarter);
+    return this;
+  }
+
   public TimeDateBuilder withMonth(TimeMonth month) {
     timeDayBuilder = timeDayBuilder.withMonth(month);
+    return this;
+  }
+
+  public TimeDateBuilder withWeek(TimeWeek week) {
+    timeDayBuilder = timeDayBuilder.withWeek(week);
     return this;
   }
 

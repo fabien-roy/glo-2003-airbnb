@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.time.domain;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Calendar;
 
 // TODO : Test TimeMonth
 public class TimeMonth implements Comparable<TimeMonth> {
@@ -45,9 +46,24 @@ public class TimeMonth implements Comparable<TimeMonth> {
 
   // TODO : What if there is more that one month added?
   public TimeMonth plusMonths(int months) {
-    return month.getValue() == quarter.lastMonthOfQuarter() + 1
+    return month.getValue() == quarter.lastMonth() + 1
         ? new TimeMonth(quarter.plusQuarters(1), month.plus(months))
         : new TimeMonth(quarter, month.plus(months));
+  }
+
+  public int firstWeek() {
+    return weekCalendar().getMinimum(Calendar.WEEK_OF_YEAR);
+  }
+
+  public int lastWeek() {
+    return weekCalendar().getMaximum(Calendar.WEEK_OF_YEAR);
+  }
+
+  private Calendar weekCalendar() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, quarter.getYear().toYear().getValue());
+    calendar.set(Calendar.MONTH, month.getValue());
+    return calendar;
   }
 
   @Override

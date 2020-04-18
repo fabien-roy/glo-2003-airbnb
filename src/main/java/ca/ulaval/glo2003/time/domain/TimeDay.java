@@ -31,6 +31,10 @@ public class TimeDay {
     return month.getYear();
   }
 
+  public TimeQuarter getQuarter() {
+    return month.getQuarter();
+  }
+
   public TimeMonth getMonth() {
     return month;
   }

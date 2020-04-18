@@ -5,7 +5,7 @@ import java.time.temporal.IsoFields;
 import java.util.Calendar;
 
 // TODO : Test TimeWeek
-public class TimeWeek {
+public class TimeWeek implements Comparable<TimeWeek> {
 
   private TimeYear year;
   private int weekOfYear;
@@ -18,6 +18,10 @@ public class TimeWeek {
   public TimeWeek(LocalDate date) {
     this.year = new TimeYear(date);
     this.weekOfYear = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+  }
+
+  public TimeYear getYear() {
+    return year;
   }
 
   public int toWeekOfYear() {
@@ -46,9 +50,36 @@ public class TimeWeek {
 
   // TODO : What if there is more that one week added?
   public TimeWeek plusWeeks(int weeks) {
-    return year.getWeeks() == weekOfYear
-        ? new TimeWeek(year.plusYears(1), 0)
+    return year.getNumberOfWeeks() == weekOfYear
+        ? new TimeWeek(year.plusYears(1), 1)
         : new TimeWeek(year, weekOfYear + weeks);
+  }
+
+  public int firstMonth() {
+    Calendar calendar = weekCalendar();
+    calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+    return calendar.get(Calendar.MONTH) + 1;
+  }
+
+  public int lastMonth() {
+    Calendar calendar = weekCalendar();
+    calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+    return calendar.get(Calendar.MONTH) + 1;
+  }
+
+  public int firstQuarter() {
+    return firstMonth() / 3;
+  }
+
+  public int lastQuarter() {
+    return lastMonth() / 3;
+  }
+
+  private Calendar weekCalendar() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, year.toYear().getValue());
+    calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+    return calendar;
   }
 
   @Override
@@ -68,5 +99,10 @@ public class TimeWeek {
   @Override
   public int hashCode() {
     return Integer.hashCode(weekOfYear);
+  }
+
+  @Override
+  public int compareTo(TimeWeek other) {
+    return weekOfYear - other.toWeekOfYear();
   }
 }

@@ -42,12 +42,21 @@ public class TimePeriod {
   }
 
   // TODO : Getting years, months, quarters, ... is pretty similar.
+  // TODO : Also, what if quarters, months, ... surpasses superior calendar entity? Does sorting still work?
   public List<TimeYear> getYears() {
     Set<TimeYear> years = new HashSet<>();
     getDates().forEach(date -> years.add(date.getYear()));
     List<TimeYear> uniqueYears = new ArrayList<>(years);
     Collections.sort(uniqueYears);
     return uniqueYears;
+  }
+
+  public List<TimeQuarter> getQuarters() {
+    Set<TimeQuarter> quarters = new HashSet<>();
+    getDates().forEach(date -> quarters.add(date.getQuarter()));
+    List<TimeQuarter> uniqueQuarters = new ArrayList<>(quarters);
+    Collections.sort(uniqueQuarters);
+    return uniqueQuarters;
   }
 
   public List<TimeMonth> getMonths() {
@@ -61,7 +70,9 @@ public class TimePeriod {
   public List<TimeWeek> getWeeks() {
     Set<TimeWeek> weeks = new HashSet<>();
     getDates().forEach(date -> weeks.add(date.getWeek()));
-    return new ArrayList<>(weeks);
+    List<TimeWeek> uniqueWeeks = new ArrayList<>(weeks);
+    Collections.sort(uniqueWeeks);
+    return uniqueWeeks;
   }
 
   @Override

@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 
 // TODO : Test TimeQuarter
-public class TimeQuarter {
+public class TimeQuarter implements Comparable<TimeQuarter> {
 
   private static List<Integer> POSSIBLE_QUARTERS = Arrays.asList(1, 2, 3, 4);
 
@@ -37,7 +37,7 @@ public class TimeQuarter {
     return year;
   }
 
-  public int getQuarterOfYear() {
+  public int toQuarterOfYear() {
     return quarterOfYear;
   }
 
@@ -52,7 +52,7 @@ public class TimeQuarter {
   public TimeDate atFirstDay() {
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, year.toYear().getValue());
-    calendar.set(Calendar.MONTH, firstMonthOfQuarter());
+    calendar.set(Calendar.MONTH, firstMonth());
     calendar.set(Calendar.DAY_OF_MONTH, 1);
     return new TimeDate(calendar);
   }
@@ -60,22 +60,22 @@ public class TimeQuarter {
   public TimeDate atLastDay() {
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, year.toYear().getValue());
-    calendar.set(Calendar.MONTH, lastMonthOfQuarter());
+    calendar.set(Calendar.MONTH, lastMonth());
     calendar.set(Calendar.DAY_OF_MONTH, calendar.getMaximum(Calendar.DAY_OF_MONTH));
     return new TimeDate(calendar);
   }
 
-  public int firstMonthOfQuarter() {
+  public int firstMonth() {
     return ((quarterOfYear - 1) * 3) + 1;
   }
 
-  public int lastMonthOfQuarter() {
+  public int lastMonth() {
     return ((quarterOfYear - 1) * 3) + 3;
   }
 
   // TODO : What if there is more that one quarter added?
   public TimeQuarter plusQuarters(int quarters) {
-    return quarters == lastPossibleQuarter()
+    return quarterOfYear == lastPossibleQuarter()
         ? new TimeQuarter(year.plusYears(1), firstPossibleQuarter())
         : new TimeQuarter(year, quarterOfYear + quarters);
   }
@@ -91,11 +91,16 @@ public class TimeQuarter {
 
     TimeQuarter other = (TimeQuarter) object;
 
-    return quarterOfYear == other.getQuarterOfYear() && year.equals(other.getYear());
+    return quarterOfYear == other.toQuarterOfYear() && year.equals(other.getYear());
   }
 
   @Override
   public int hashCode() {
     return Integer.hashCode(quarterOfYear);
+  }
+
+  @Override
+  public int compareTo(TimeQuarter other) {
+    return quarterOfYear - other.toQuarterOfYear();
   }
 }

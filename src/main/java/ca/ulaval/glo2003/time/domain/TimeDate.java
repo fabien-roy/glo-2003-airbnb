@@ -25,6 +25,10 @@ public class TimeDate {
     return day.getYear();
   }
 
+  public TimeQuarter getQuarter() {
+    return day.getQuarter();
+  }
+
   public TimeMonth getMonth() {
     return day.getMonth();
   }

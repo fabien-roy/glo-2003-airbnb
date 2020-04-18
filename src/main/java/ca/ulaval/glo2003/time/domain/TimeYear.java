@@ -19,7 +19,7 @@ public class TimeYear implements Comparable<TimeYear> {
     this.year = Year.of(date.getYear());
   }
 
-  public int getWeeks() {
+  public int getNumberOfWeeks() {
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, year.getValue());
     return calendar.getMaximum(Calendar.WEEK_OF_YEAR);
