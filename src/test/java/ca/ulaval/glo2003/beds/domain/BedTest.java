@@ -6,7 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -53,7 +53,7 @@ class BedTest {
     otherBookingNumber = createBookingNumber();
     bookingPackage = bedPackage;
     tenantPublicKey = createPublicKey();
-    arrivalDate = createDate();
+    arrivalDate = aTimeDate().build();
     colonySize = 20;
     otherColonySize = 30;
     numberOfNights = createNumberOfNights();

@@ -6,7 +6,7 @@ import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,7 +65,7 @@ class BookingConverterTest {
 
   private void resetMocks() {
     tenantPublicKey = createPublicKey();
-    arrivalDate = createDate();
+    arrivalDate = aTimeDate().build();
     numberOfNights = createNumberOfNights();
     colonySize = createColonySize();
     packageName = createPackageName();

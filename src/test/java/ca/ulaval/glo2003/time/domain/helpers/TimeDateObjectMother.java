@@ -1,28 +1,15 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimeMonth;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 import com.github.javafaker.Faker;
-import java.sql.Date;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 
 public class TimeDateObjectMother {
 
   private TimeDateObjectMother() {}
-
-  // TODO : Remove TimeDateObjectMother.createDate()
-  public static TimeDate createDate() {
-    return new TimeDate(
-        Faker.instance()
-            .date()
-            .between(
-                Date.valueOf(LocalDate.now().plusDays(1)),
-                Date.valueOf(LocalDate.now().plusDays(31)))
-            .toInstant()
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate());
-  }
 
   public static Year createYear() {
     return Year.of(Faker.instance().random().nextInt(thisYear(), inManyYears()));
