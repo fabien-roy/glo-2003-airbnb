@@ -4,23 +4,27 @@ import java.time.LocalDate;
 import java.time.Month;
 
 // TODO : Test TimeMonth
-public class TimeMonth {
+public class TimeMonth implements Comparable<TimeMonth> {
 
-  private TimeYear year;
+  private TimeQuarter quarter;
   private Month month;
 
-  public TimeMonth(TimeYear year, Month month) {
-    this.year = year;
+  public TimeMonth(TimeQuarter quarter, Month month) {
+    this.quarter = quarter;
     this.month = month;
   }
 
   public TimeMonth(LocalDate date) {
-    this.year = new TimeYear(date);
+    this.quarter = new TimeQuarter(date);
     this.month = date.getMonth();
   }
 
   public TimeYear getYear() {
-    return year;
+    return quarter.getYear();
+  }
+
+  public TimeQuarter getQuarter() {
+    return quarter;
   }
 
   public Month toMonth() {
@@ -32,18 +36,18 @@ public class TimeMonth {
   }
 
   public TimeDate atFirstDay() {
-    return new TimeDate(year.atMonth(this).atDay(1));
+    return new TimeDate(quarter.atMonth(this).atDay(1));
   }
 
   public TimeDate atLastDay() {
-    return new TimeDate(year.atMonth(this).atEndOfMonth());
+    return new TimeDate(quarter.atMonth(this).atEndOfMonth());
   }
 
   // TODO : What if there is more that one month added?
   public TimeMonth plusMonths(int months) {
-    TimeYear newYear = month.equals(Month.DECEMBER) ? year.plusYears(1) : year;
-    Month newValue = this.month.plus(months);
-    return new TimeMonth(newYear, newValue);
+    return month.getValue() == quarter.lastMonthOfQuarter() + 1
+        ? new TimeMonth(quarter.plusQuarters(1), month.plus(months))
+        : new TimeMonth(quarter, month.plus(months));
   }
 
   @Override
@@ -57,11 +61,16 @@ public class TimeMonth {
 
     TimeMonth other = (TimeMonth) object;
 
-    return month.equals(other.toMonth()) && year.equals(other.getYear());
+    return month.equals(other.toMonth()) && quarter.equals(other.getQuarter());
   }
 
   @Override
   public int hashCode() {
     return month.hashCode();
+  }
+
+  @Override
+  public int compareTo(TimeMonth other) {
+    return month.getValue() - other.toMonth().getValue();
   }
 }

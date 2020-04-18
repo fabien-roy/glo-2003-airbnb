@@ -7,7 +7,7 @@ import java.time.YearMonth;
 import java.util.Calendar;
 
 // TODO : Test TimeYear
-public class TimeYear {
+public class TimeYear implements Comparable<TimeYear> {
 
   private Year year;
 
@@ -67,5 +67,10 @@ public class TimeYear {
   @Override
   public int hashCode() {
     return year.hashCode();
+  }
+
+  @Override
+  public int compareTo(TimeYear other) {
+    return year.getValue() - other.toYear().getValue();
   }
 }

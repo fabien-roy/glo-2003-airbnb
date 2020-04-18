@@ -1,15 +1,11 @@
 package ca.ulaval.glo2003.time.domain;
 
 import java.time.LocalDate;
-import java.time.temporal.WeekFields;
+import java.time.temporal.IsoFields;
 import java.util.Calendar;
-import java.util.Locale;
 
 // TODO : Test TimeWeek
 public class TimeWeek {
-
-  WeekFields weekFields =
-      WeekFields.of(Locale.CANADA_FRENCH); // TODO : With a converter, this wouldn't be a problem.
 
   private TimeYear year;
   private int weekOfYear;
@@ -21,7 +17,7 @@ public class TimeWeek {
 
   public TimeWeek(LocalDate date) {
     this.year = new TimeYear(date);
-    this.weekOfYear = date.get(weekFields.weekOfWeekBasedYear());
+    this.weekOfYear = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
   }
 
   public int toWeekOfYear() {
@@ -42,6 +38,7 @@ public class TimeWeek {
 
   private TimeDate atDay(int dayOfWeek) {
     Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, year.toYear().getValue());
     calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear);
     calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
     return new TimeDate(calendar);

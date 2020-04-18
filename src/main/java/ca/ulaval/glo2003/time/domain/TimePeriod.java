@@ -1,9 +1,6 @@
 package ca.ulaval.glo2003.time.domain;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TimePeriod {
 
@@ -44,16 +41,21 @@ public class TimePeriod {
     return dates;
   }
 
+  // TODO : Getting years, months, quarters, ... is pretty similar.
   public List<TimeYear> getYears() {
     Set<TimeYear> years = new HashSet<>();
     getDates().forEach(date -> years.add(date.getYear()));
-    return new ArrayList<>(years);
+    List<TimeYear> uniqueYears = new ArrayList<>(years);
+    Collections.sort(uniqueYears);
+    return uniqueYears;
   }
 
   public List<TimeMonth> getMonths() {
     Set<TimeMonth> months = new HashSet<>();
     getDates().forEach(date -> months.add(date.getMonth()));
-    return new ArrayList<>(months);
+    List<TimeMonth> uniqueMonths = new ArrayList<>(months);
+    Collections.sort(uniqueMonths);
+    return uniqueMonths;
   }
 
   public List<TimeWeek> getWeeks() {

@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.time.domain;
 
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
+import static ca.ulaval.glo2003.time.domain.helpers.TimePeriodBuilder.aTimePeriod;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,10 +26,12 @@ class TimePeriodTest {
   private static TimePeriod afterPeriod;
   private static TimePeriod beforeOverlappingPeriod;
   private static TimePeriod afterOverlappingPeriod;
-  private static TimePeriod singleYearPeriod;
-  private static TimePeriod multipleYearsPeriod;
-  private static TimePeriod singleMonthPeriod;
-  private static TimePeriod multipleMonthsPeriod;
+  private static TimePeriod singleYearPeriod = aTimePeriod().withinYear(firstYear).build();
+  private static TimePeriod multipleYearsPeriod =
+      aTimePeriod().withinYears(firstYear, secondYear).build();
+  private static TimePeriod singleMonthPeriod = aTimePeriod().withinMonth(firstMonth).build();
+  private static TimePeriod multipleMonthsPeriod =
+      aTimePeriod().withinMonths(firstMonth, secondMonth).build();
 
   @BeforeEach
   public void setUpPeriod() {
@@ -69,31 +72,10 @@ class TimePeriodTest {
   }
 
   @BeforeEach
-  public void setUpSingleMonthPeriod() {
-    TimeDate firstDate = aTimeDate().withMonth(firstMonth).build();
-    TimeDate secondDate = aTimeDate().withMonth(firstMonth).build();
-    singleMonthPeriod = new TimePeriod(firstDate, secondDate);
-  }
-
-  @BeforeEach
-  public void setUpMultipleMonthsPeriod() {
-    TimeDate firstDate = aTimeDate().withMonth(firstMonth).build();
-    TimeDate secondDate = aTimeDate().withMonth(secondMonth).build();
-    multipleMonthsPeriod = new TimePeriod(firstDate, secondDate);
-  }
-
-  @BeforeEach
   public void setUpSingleYearPeriod() {
     TimeDate firstDate = aTimeDate().withYear(firstYear).build();
     TimeDate secondDate = aTimeDate().withYear(firstYear).build();
     singleYearPeriod = new TimePeriod(firstDate, secondDate);
-  }
-
-  @BeforeEach
-  public void setUpMultipleYearsPeriod() {
-    TimeDate firstDate = aTimeDate().withYear(firstYear).build();
-    TimeDate secondDate = aTimeDate().withYear(secondYear).build();
-    multipleYearsPeriod = new TimePeriod(firstDate, secondDate);
   }
 
   @Test
