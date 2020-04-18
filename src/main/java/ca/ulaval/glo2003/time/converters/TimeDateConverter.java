@@ -1,16 +1,16 @@
-package ca.ulaval.glo2003.interfaces.converters;
+package ca.ulaval.glo2003.time.converters;
 
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class ReservationDateConverter {
+public class TimeDateConverter {
 
   private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
-  public ReservationDate fromString(String bookingDate) {
+  public TimeDate fromString(String bookingDate) {
     LocalDate value;
 
     try {
@@ -21,6 +21,6 @@ public class ReservationDateConverter {
 
     if (value.isBefore(LocalDate.now())) throw new ArrivalDateInThePastException();
 
-    return new ReservationDate(value);
+    return new TimeDate(value);
   }
 }

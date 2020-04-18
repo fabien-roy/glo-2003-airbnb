@@ -3,29 +3,41 @@ package ca.ulaval.glo2003.reports.domain.scopes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
+import ca.ulaval.glo2003.time.domain.TimeYear;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class AnnualReportScopeTest {
 
   private static AnnualReportScope reportScope;
-  private static ReservationPeriod period = mock(ReservationPeriod.class);
-  private static int firstYear = 2020;
-  private static int secondYear = 2021;
-  private static ReservationPeriod firstYearPeriod = ReservationPeriod.ofYear(firstYear);
-  private static ReservationPeriod secondYearPeriod = ReservationPeriod.ofYear(secondYear);
+  private static TimePeriod period = mock(TimePeriod.class);
+  private static TimeYear firstYear = mock(TimeYear.class);
+  private static String firstYearName = "firstYear";
+  private static TimePeriod firstYearPeriod = mock(TimePeriod.class);
+  private static TimeYear secondYear = mock(TimeYear.class);
+  private static String secondYearName = "secondYear";
+  private static TimePeriod secondYearPeriod = mock(TimePeriod.class);
+
+  @BeforeAll
+  public static void setUpMocks() {
+    when(firstYear.toString()).thenReturn(firstYearName);
+    when(firstYear.toPeriod()).thenReturn(firstYearPeriod);
+    when(secondYear.toString()).thenReturn(secondYearName);
+    when(secondYear.toPeriod()).thenReturn(secondYearPeriod);
+  }
 
   @BeforeEach
   public void resetMocks() {
     reset(period);
   }
 
-  private void setUpReportScopeWithOneYear() {
+  private void setUpReportScopeWithSingleYear() {
     when(period.getYears()).thenReturn(Collections.singletonList(firstYear));
     setUpReportScope();
   }
@@ -40,8 +52,8 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withOneYear_shouldHaveSingleReport() {
-    setUpReportScopeWithOneYear();
+  public void getReportPeriod_withSingleYear_shouldHaveSingleReport() {
+    setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
@@ -49,21 +61,21 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withOneYear_shouldSetPeriodNamesToThatYear() {
-    setUpReportScopeWithOneYear();
+  public void getReportPeriod_withSingleYear_shouldSetPeriodNamesToThatYear() {
+    setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
-    assertEquals(String.valueOf(firstYear), reportPeriods.get(0).getName());
+    assertEquals(firstYear.toString(), reportPeriods.get(0).getName());
   }
 
   @Test
   public void getReportPeriod_withSingleYear_shouldSetPeriodToThatYear() {
-    setUpReportScopeWithOneYear();
+    setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
-    assertEquals(firstYearPeriod, reportPeriods.get(0).getPeriod());
+    assertEquals(firstYear.toPeriod(), reportPeriods.get(0).getPeriod());
   }
 
   @Test
@@ -81,8 +93,8 @@ class AnnualReportScopeTest {
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
-    assertEquals(String.valueOf(firstYear), reportPeriods.get(0).getName());
-    assertEquals(String.valueOf(secondYear), reportPeriods.get(1).getName());
+    assertEquals(firstYear.toString(), reportPeriods.get(0).getName());
+    assertEquals(secondYear.toString(), reportPeriods.get(1).getName());
   }
 
   @Test
@@ -91,7 +103,7 @@ class AnnualReportScopeTest {
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
-    assertEquals(firstYearPeriod, reportPeriods.get(0).getPeriod());
-    assertEquals(secondYearPeriod, reportPeriods.get(1).getPeriod());
+    assertEquals(firstYear.toPeriod(), reportPeriods.get(0).getPeriod());
+    assertEquals(secondYear.toPeriod(), reportPeriods.get(1).getPeriod());
   }
 }

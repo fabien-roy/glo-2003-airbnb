@@ -1,14 +1,14 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WeeklyReportScope extends ReportScope {
 
-  public WeeklyReportScope(ReservationPeriod reservationPeriod) {
-    super(reservationPeriod);
+  public WeeklyReportScope(TimePeriod timePeriod) {
+    super(timePeriod);
   }
 
   // TODO : WeeklyReportScope.getReportPeriods()

@@ -56,11 +56,11 @@ See the [reports package draft](reports.md) for information about new classes,
       - If scope is weekly, return periods in weeks ([#332](https://github.com/glo2003/glo2003-h2020-eq08/issues/332))
       - Else, return period ([#332](https://github.com/glo2003/glo2003-h2020-eq08/issues/332))
     - Gets `List<Transactions>` from `TransactionRepository.getAll(period)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
-      - Return transactions with reservationTimestamp (or booking.arrivalDate?) within period ([#333](https://github.com/glo2003/glo2003-h2020-eq08/issues/333))
+      - Return transactions with timestamp (or booking.arrivalDate?) within period ([#333](https://github.com/glo2003/glo2003-h2020-eq08/issues/333))
     - Sets transactions for query with `ReportQuery.setTransactions(transactions)` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
     - Gets `List<ReportPeriod>` with `ReportQuery.execute()` ([#331](https://github.com/glo2003/glo2003-h2020-eq08/issues/331))
       - For each `ReportPeriod` in `periods`  ([#329](https://github.com/glo2003/glo2003-h2020-eq08/issues/329))
-        - Get `List<Transaction>` from list, where reservationTimestamp is in `ReportPeriod`
+        - Get `List<Transaction>` from list, where timestamp is in `ReportPeriod`
         - Create `List<ReportPeriodData>` with a single item, containing all transactions for period
         - For each `ReportDimension` in `dimensions`
           - `List<ReportPeriodData>` equals `ReportDimension.split(List<ReportPeriodData>)`

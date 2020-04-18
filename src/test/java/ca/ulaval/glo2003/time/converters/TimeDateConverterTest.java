@@ -1,31 +1,31 @@
-package ca.ulaval.glo2003.interfaces.converters;
+package ca.ulaval.glo2003.time.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ReservationDateConverterTest {
+class TimeDateConverterTest {
 
-  private static ReservationDateConverter reservationDateConverter;
+  private static TimeDateConverter timeDateConverter;
 
   @BeforeAll
   public static void setUpConverter() {
-    reservationDateConverter = new ReservationDateConverter();
+    timeDateConverter = new TimeDateConverter();
   }
 
   @Test
   public void fromString_shouldConvertBookingDate() {
-    ReservationDate expectedDate = new ReservationDate(LocalDate.now());
+    TimeDate expectedDate = new TimeDate(LocalDate.now());
 
-    ReservationDate reservationDate = reservationDateConverter.fromString(expectedDate.toString());
+    TimeDate timeDate = timeDateConverter.fromString(expectedDate.toString());
 
-    assertEquals(expectedDate, reservationDate);
+    assertEquals(expectedDate, timeDate);
   }
 
   @Test
@@ -33,8 +33,7 @@ class ReservationDateConverterTest {
     String invalidArrivalDate = "invalidArrivalDate";
 
     Assertions.assertThrows(
-        InvalidArrivalDateException.class,
-        () -> reservationDateConverter.fromString(invalidArrivalDate));
+        InvalidArrivalDateException.class, () -> timeDateConverter.fromString(invalidArrivalDate));
   }
 
   @Test
@@ -43,7 +42,7 @@ class ReservationDateConverterTest {
 
     Assertions.assertThrows(
         ArrivalDateInThePastException.class,
-        () -> reservationDateConverter.fromString(arrivalDateInThePast));
+        () -> timeDateConverter.fromString(arrivalDateInThePast));
   }
 
   @Test
@@ -51,7 +50,6 @@ class ReservationDateConverterTest {
     String nullArrivalDate = null;
 
     Assertions.assertThrows(
-        InvalidArrivalDateException.class,
-        () -> reservationDateConverter.fromString(nullArrivalDate));
+        InvalidArrivalDateException.class, () -> timeDateConverter.fromString(nullArrivalDate));
   }
 }

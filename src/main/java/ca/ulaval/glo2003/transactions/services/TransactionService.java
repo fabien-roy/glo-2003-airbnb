@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.services;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.*;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
@@ -39,7 +39,7 @@ public class TransactionService {
     transactionRepository.add(transaction);
   }
 
-  public void addStayCompleted(String owner, Price total, ReservationTimestamp departureDate) {
+  public void addStayCompleted(String owner, Price total, Timestamp departureDate) {
     Transaction transaction =
         transactionFactory.createStayCompleted(AIRBNB, owner, total, departureDate);
     transactionRepository.add(transaction);
@@ -51,7 +51,7 @@ public class TransactionService {
       Price tenantRefund,
       Price ownerRefund,
       Price total,
-      ReservationTimestamp departureDate) {
+      Timestamp departureDate) {
     Transaction transactionCancelTenant =
         transactionFactory.createStayCanceled(AIRBNB, tenant, tenantRefund);
     Transaction transactionCancelOwner =
@@ -64,7 +64,7 @@ public class TransactionService {
   }
 
   public void addStayCanceledFullRefund(
-      String tenant, String owner, Price total, ReservationTimestamp departureDate) {
+      String tenant, String owner, Price total, Timestamp departureDate) {
     Transaction transactionCancel = transactionFactory.createStayCanceled(AIRBNB, tenant, total);
     Transaction transactionRefund =
         transactionFactory.createStayRefunded(owner, AIRBNB, total, departureDate);

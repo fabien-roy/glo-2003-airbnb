@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import java.util.HashMap;
@@ -29,10 +29,9 @@ public class CancelationsReportMetric extends ReportMetric<Integer> {
   }
 
   private Integer calculateUniqueCancelations(List<Transaction> transactions) {
-    Map<ReservationTimestamp, Transaction> uniqueCancelations = new HashMap<>();
+    Map<Timestamp, Transaction> uniqueCancelations = new HashMap<>();
     transactions.forEach(
-        transaction ->
-            uniqueCancelations.putIfAbsent(transaction.getReservationTimestamp(), transaction));
+        transaction -> uniqueCancelations.putIfAbsent(transaction.getTimestamp(), transaction));
     return uniqueCancelations.values().size();
   }
 

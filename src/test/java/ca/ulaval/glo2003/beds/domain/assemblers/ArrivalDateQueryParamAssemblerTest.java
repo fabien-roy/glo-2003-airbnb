@@ -6,8 +6,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.interfaces.converters.ReservationDateConverter;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.converters.TimeDateConverter;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,22 +19,21 @@ import org.junit.jupiter.api.Test;
 class ArrivalDateQueryParamAssemblerTest {
 
   private static BedQueryParamAssembler queryAssembler;
-  private static ReservationDateConverter reservationDateConverter =
-      mock(ReservationDateConverter.class);
+  private static TimeDateConverter timeDateConverter = mock(TimeDateConverter.class);
   private static BedQueryBuilder queryBuilder = mock(BedQueryBuilder.class);
   private static BedQueryBuilder assembledQueryBuilder = mock(BedQueryBuilder.class);
 
-  private ReservationDate arrivalDate = ReservationDate.now();
+  private TimeDate arrivalDate = TimeDate.now();
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
   public static void setUpAssembler() {
-    queryAssembler = new ArrivalDateQueryParamAssembler(reservationDateConverter);
+    queryAssembler = new ArrivalDateQueryParamAssembler(timeDateConverter);
   }
 
   @BeforeEach
   public void setUpMocks() {
-    when(reservationDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
+    when(timeDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
     when(queryBuilder.withArrivalDate(arrivalDate)).thenReturn(assembledQueryBuilder);
   }
 

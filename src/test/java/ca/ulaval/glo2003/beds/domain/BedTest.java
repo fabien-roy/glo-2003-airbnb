@@ -6,7 +6,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPr
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -16,7 +16,7 @@ import ca.ulaval.glo2003.beds.exceptions.PackageNotAvailableException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.exceptions.BookingNotFoundException;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +38,7 @@ class BedTest {
   private static BookingNumber otherBookingNumber;
   private static Packages bookingPackage;
   private static PublicKey tenantPublicKey;
-  private static ReservationDate arrivalDate;
+  private static TimeDate arrivalDate;
   private static Integer colonySize;
   private static Integer otherColonySize;
   private static int numberOfNights;

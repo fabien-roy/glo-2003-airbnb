@@ -1,13 +1,14 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
+import ca.ulaval.glo2003.time.domain.TimeYear;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class AnnualReportScope extends ReportScope {
 
-  public AnnualReportScope(ReservationPeriod period) {
+  public AnnualReportScope(TimePeriod period) {
     super(period);
   }
 
@@ -16,7 +17,7 @@ public class AnnualReportScope extends ReportScope {
     return period.getYears().stream().map(this::createReportPeriod).collect(Collectors.toList());
   }
 
-  private ReportPeriod createReportPeriod(int year) {
-    return new ReportPeriod(String.valueOf(year), ReservationPeriod.ofYear(year));
+  private ReportPeriod createReportPeriod(TimeYear year) {
+    return new ReportPeriod(year.toString(), year.toPeriod());
   }
 }

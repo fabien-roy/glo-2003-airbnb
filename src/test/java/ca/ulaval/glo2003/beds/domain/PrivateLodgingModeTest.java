@@ -2,13 +2,13 @@ package ca.ulaval.glo2003.beds.domain;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createCapacity;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +22,7 @@ class PrivateLodgingModeTest {
   private static Bed bed = mock(Bed.class);
   private static Booking booking = mock(Booking.class);
   private static Integer minCapacity;
-  private static ReservationDate arrivalDate;
+  private static TimeDate arrivalDate;
   private static int numberOfNights;
   private static List<Booking> bookings;
 

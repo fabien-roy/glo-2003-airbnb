@@ -1,17 +1,17 @@
-package ca.ulaval.glo2003.interfaces.domain.helpers;
+package ca.ulaval.glo2003.time.domain.helpers;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import com.github.javafaker.Faker;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
-public class ReservationDateObjectMother {
+public class TimeDateObjectMother {
 
-  private ReservationDateObjectMother() {}
+  private TimeDateObjectMother() {}
 
-  public static ReservationDate createDate() {
-    return new ReservationDate(
+  public static TimeDate createDate() {
+    return new TimeDate(
         Faker.instance()
             .date()
             .between(

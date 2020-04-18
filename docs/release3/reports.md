@@ -49,7 +49,7 @@ reports
 |   └───scopes
 |   |   └───ReportScope
 |   |   |   |   name : ReportScopes (enum)
-|   |   |   |   reservationPeriod : BookingPeriod
+|   |   |   |   timePeriod : BookingPeriod
 |   |   |   └───getPeriods : List<ReportPeriod> (abstract)
 |   |   |
 |   |   └───WeeklyScope

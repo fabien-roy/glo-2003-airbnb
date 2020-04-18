@@ -1,19 +1,23 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
-import java.util.ArrayList;
+import ca.ulaval.glo2003.time.domain.TimeMonth;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MonthlyReportScope extends ReportScope {
 
-  public MonthlyReportScope(ReservationPeriod reservationPeriod) {
-    super(reservationPeriod);
+  public MonthlyReportScope(TimePeriod timePeriod) {
+    super(timePeriod);
   }
 
-  // TODO : MonthlyReportScope.getReportPeriods()
   @Override
   public List<ReportPeriod> getReportPeriods() {
-    return new ArrayList<>();
+    return period.getMonths().stream().map(this::createReportPeriod).collect(Collectors.toList());
+  }
+
+  private ReportPeriod createReportPeriod(TimeMonth month) {
+    return new ReportPeriod(month.toString(), month.toPeriod());
   }
 }

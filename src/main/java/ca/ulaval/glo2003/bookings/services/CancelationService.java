@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.bookings.domain.CancelationRefundCalculator;
 import ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException;
 import ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import javax.inject.Inject;
@@ -34,7 +34,7 @@ public class CancelationService {
     if (booking.isCanceled()) throw new BookingAlreadyCanceledException();
 
     Price refund;
-    ReservationDate now = ReservationDate.now();
+    TimeDate now = TimeDate.now();
 
     if (now.plusDays(MINIMUM_DAYS_FOR_CANCELATION).isAfter(booking.getArrivalDate())) {
       throw new CancelationNotAllowedException();

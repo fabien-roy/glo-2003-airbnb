@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.transactions.domain.helpers;
 
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationTimestampObjectMother.createTimestamp;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampObjectMother.createTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
@@ -12,8 +12,8 @@ public class TransactionBuilder {
 
   private TransactionBuilder() {}
 
-  private ReservationTimestamp DEFAULT_TIMESTAMP = createTimestamp();
-  private ReservationTimestamp timestamp = DEFAULT_TIMESTAMP;
+  private Timestamp DEFAULT_TIMESTAMP = createTimestamp();
+  private Timestamp timestamp = DEFAULT_TIMESTAMP;
 
   private String DEFAULT_FROM = createFrom();
   private String from = DEFAULT_FROM;
@@ -51,8 +51,8 @@ public class TransactionBuilder {
     return this;
   }
 
-  public TransactionBuilder withTimestamp(ReservationTimestamp reservationTimestamp) {
-    this.timestamp = reservationTimestamp;
+  public TransactionBuilder withTimestamp(Timestamp timestamp) {
+    this.timestamp = timestamp;
     return this;
   }
 

@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.bookings.domain;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
-import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +13,8 @@ class BookingTest {
 
   private static Booking booking;
   private static Booking otherBooking;
-  private static ReservationDate arrivalDate;
-  private static ReservationDate otherArrivalDate;
+  private static TimeDate arrivalDate;
+  private static TimeDate otherArrivalDate;
   private static int numberOfNights;
 
   @BeforeEach
@@ -37,9 +37,9 @@ class BookingTest {
 
   @Test
   public void getDepartureDate_shouldReturnArrivalDatePlusNumberOfNights() {
-    ReservationDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
+    TimeDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
 
-    ReservationDate date = booking.getDepartureDate();
+    TimeDate date = booking.getDepartureDate();
 
     assertEquals(departureDate, date);
   }
@@ -53,16 +53,16 @@ class BookingTest {
 
   @Test
   public void getPeriod_shouldReturnPeriodWithArrivalAsStart() {
-    ReservationPeriod period = booking.getPeriod();
+    TimePeriod period = booking.getPeriod();
 
     assertEquals(arrivalDate, period.getStart());
   }
 
   @Test
   public void getPeriod_shouldReturnPeriodWithDepartureAsEnd() {
-    ReservationDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
+    TimeDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
 
-    ReservationPeriod period = booking.getPeriod();
+    TimePeriod period = booking.getPeriod();
 
     assertEquals(departureDate, period.getEnd());
   }
@@ -72,7 +72,7 @@ class BookingTest {
     numberOfNights = 1;
     booking = buildBooking();
 
-    ReservationPeriod period = booking.getPeriod();
+    TimePeriod period = booking.getPeriod();
 
     assertEquals(arrivalDate, period.getStart());
   }
@@ -82,7 +82,7 @@ class BookingTest {
     numberOfNights = 1;
     booking = buildBooking();
 
-    ReservationPeriod period = booking.getPeriod();
+    TimePeriod period = booking.getPeriod();
 
     assertEquals(arrivalDate, period.getEnd());
   }

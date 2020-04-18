@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.beds.exceptions.BedAlreadyBookedException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 
 public class PrivateLodgingMode implements LodgingMode {
@@ -16,7 +16,7 @@ public class PrivateLodgingMode implements LodgingMode {
 
   @Override
   public boolean isAvailable(
-      Bed bed, Integer minCapacity, ReservationDate arrivalDate, int numberOfNights) {
+      Bed bed, Integer minCapacity, TimeDate arrivalDate, int numberOfNights) {
     return bed.getBookings().stream()
         .noneMatch(booking -> booking.isOverlapping(arrivalDate, numberOfNights));
   }

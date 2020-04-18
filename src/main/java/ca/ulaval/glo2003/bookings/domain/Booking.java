@@ -2,8 +2,8 @@ package ca.ulaval.glo2003.bookings.domain;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.interfaces.domain.ReservationDate;
-import ca.ulaval.glo2003.interfaces.domain.ReservationPeriod;
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Booking {
 
   private BookingNumber number;
   private PublicKey tenantPublicKey;
-  private ReservationDate arrivalDate;
+  private TimeDate arrivalDate;
   private int numberOfNights;
   private Integer colonySize;
   private Packages packageName;
@@ -23,7 +23,7 @@ public class Booking {
 
   public Booking(
       PublicKey tenantPublicKey,
-      ReservationDate arrivalDate,
+      TimeDate arrivalDate,
       int numberOfNights,
       Integer colonySize,
       Packages packageName) {
@@ -46,11 +46,11 @@ public class Booking {
     return tenantPublicKey;
   }
 
-  public ReservationDate getArrivalDate() {
+  public TimeDate getArrivalDate() {
     return arrivalDate;
   }
 
-  public ReservationDate getDepartureDate() {
+  public TimeDate getDepartureDate() {
     return arrivalDate.plusDays(numberOfNights - 1);
   }
 
@@ -94,15 +94,15 @@ public class Booking {
     return getPeriod().isOverlapping(otherBooking.getPeriod());
   }
 
-  public boolean isOverlapping(ReservationDate otherDate) {
+  public boolean isOverlapping(TimeDate otherDate) {
     return isOverlapping(otherDate, 1);
   }
 
-  public boolean isOverlapping(ReservationDate otherDate, int numberOfNights) {
+  public boolean isOverlapping(TimeDate otherDate, int numberOfNights) {
     return getPeriod().isOverlapping(otherDate.periodToDays(numberOfNights - 1));
   }
 
-  public ReservationPeriod getPeriod() {
+  public TimePeriod getPeriod() {
     return arrivalDate.periodToDays(numberOfNights - 1);
   }
 

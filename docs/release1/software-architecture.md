@@ -100,14 +100,14 @@ This is the planned software architecture / file structure for release 1 :
       /transactions
         /domain
           /Transaction.java
-            - reservationTimestamp : DateTime
+            - timestamp : DateTime
             - from : String
             - to : String
             - total : double
             - reason : TransactionReasons
           /TransactionFactory.java
             - createWithBooking(Booking, String) : Transaction
-              Creates new Transaction with reservationTimestamp and information
+              Creates new Transaction with timestamp and information
           /TransactionReasons.java (enum : StayBooked, StayCompleted)
           /TransactionRepository.java -> Interface
             - add(Transaction)

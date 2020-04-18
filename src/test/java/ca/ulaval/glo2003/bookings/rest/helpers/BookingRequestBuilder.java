@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPa
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationDateObjectMother.createDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
 
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 

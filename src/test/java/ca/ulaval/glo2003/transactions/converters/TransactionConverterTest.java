@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.transactions.converters;
 
-import static ca.ulaval.glo2003.interfaces.domain.helpers.ReservationTimestampObjectMother.createTimestamp;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampObjectMother.createTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.interfaces.domain.ReservationTimestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
@@ -17,14 +17,14 @@ public class TransactionConverterTest {
 
   private static TransactionConverter transactionConverter;
 
-  private static ReservationTimestamp reservationTimestamp = createTimestamp();
+  private static Timestamp timestamp = createTimestamp();
   private static Price total = createTotal();
   private static TransactionReasons reason = createReason();
   private static String from = createFrom();
   private static String to = createTo();
   private static Transaction transaction =
       aTransaction()
-          .withTimestamp(reservationTimestamp)
+          .withTimestamp(timestamp)
           .withTotal(total)
           .withReason(reason)
           .withFrom(from)
@@ -40,7 +40,7 @@ public class TransactionConverterTest {
   public void toResponse_shouldMapTimestamp() {
     TransactionResponse transactionResponse = transactionConverter.toResponse(transaction);
 
-    assertEquals(reservationTimestamp.toString(), transactionResponse.getTimestamp());
+    assertEquals(timestamp.toString(), transactionResponse.getTimestamp());
   }
 
   @Test
