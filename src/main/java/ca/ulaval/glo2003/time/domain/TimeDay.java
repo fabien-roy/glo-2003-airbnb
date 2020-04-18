@@ -47,7 +47,8 @@ public class TimeDay {
   }
 
   public TimeDate toDate() {
-    return new TimeDate(LocalDate.of(month.getYear().toYear().getValue(), month.toMonth().getValue(), dayOfMonth));
+    return new TimeDate(
+        LocalDate.of(month.getYear().toYear().getValue(), month.toMonth().getValue(), dayOfMonth));
   }
 
   @Override

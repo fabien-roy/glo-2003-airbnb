@@ -1,12 +1,11 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import ca.ulaval.glo2003.time.domain.TimeMonth;
-import ca.ulaval.glo2003.time.domain.TimeYear;
-
-import java.time.Month;
-
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createMonth;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
+
+import ca.ulaval.glo2003.time.domain.TimeMonth;
+import ca.ulaval.glo2003.time.domain.TimeYear;
+import java.time.Month;
 
 public class TimeMonthBuilder {
 

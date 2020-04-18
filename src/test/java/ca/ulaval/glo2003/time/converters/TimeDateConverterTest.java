@@ -1,15 +1,14 @@
 package ca.ulaval.glo2003.time.converters;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import ca.ulaval.glo2003.bookings.exceptions.ArrivalDateInThePastException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidArrivalDateException;
 import ca.ulaval.glo2003.time.domain.TimeDate;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TimeDateConverterTest {
 

@@ -1,13 +1,12 @@
 package ca.ulaval.glo2003.time.domain;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class TimePeriodTest {
 
@@ -15,7 +14,8 @@ class TimePeriodTest {
   private static TimeDate start = TimeDate.now();
   private static TimeDate end = start.plusDays(numberOfDays);
   private static TimeYear firstYear = aTimeYear().build();
-  private static TimeYear secondYear = aTimeYear().withYear(firstYear.toYear().plusYears(1)).build();
+  private static TimeYear secondYear =
+      aTimeYear().withYear(firstYear.toYear().plusYears(1)).build();
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;

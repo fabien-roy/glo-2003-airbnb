@@ -4,7 +4,6 @@ import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimeMonth;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 import com.github.javafaker.Faker;
-
 import java.sql.Date;
 import java.time.*;
 
@@ -30,7 +29,8 @@ public class TimeDateObjectMother {
   }
 
   public static Month createMonth(TimeYear year) {
-    return Month.of(Faker.instance().random().nextInt(futureMonth(year), Month.DECEMBER.getValue()));
+    return Month.of(
+        Faker.instance().random().nextInt(futureMonth(year), Month.DECEMBER.getValue()));
   }
 
   // TODO : Is this used?
@@ -39,7 +39,9 @@ public class TimeDateObjectMother {
   }
 
   public static int createDayOfYear(TimeMonth month, int dayOfMonth) {
-    return Faker.instance().random().nextInt(thatDay(month, dayOfMonth), month.getYear().atLastDay().getDayOfYear());
+    return Faker.instance()
+        .random()
+        .nextInt(thatDay(month, dayOfMonth), month.getYear().atLastDay().getDayOfYear());
   }
 
   public static int createDayOfMonth(TimeMonth month) {
@@ -72,7 +74,7 @@ public class TimeDateObjectMother {
   }
 
   private static int futureDay(TimeYear year) {
-    return isCurrentYear(year) ? now().getDayOfYear() : year.atLastDay().getDayOfYear();
+    return isCurrentYear(year) ? now().getDayOfYear() : year.atFirstDay().getDayOfYear();
   }
 
   private static int thatDay(TimeMonth month, int dayOfMonth) {
@@ -80,7 +82,7 @@ public class TimeDateObjectMother {
   }
 
   private static int futureDay(TimeMonth month) {
-    return isCurrentMonth(month) ? now().getDayOfMonth() : month.atLastDay().getDayOfYear();
+    return isCurrentMonth(month) ? now().getDayOfMonth() : month.atFirstDay().getDayOfMonth();
   }
 
   private static boolean isCurrentYear(TimeYear year) {
