@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
+import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -9,7 +10,6 @@ import ca.ulaval.glo2003.time.domain.TimeYear;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,20 +17,8 @@ class AnnualReportScopeTest {
 
   private static AnnualReportScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
-  private static TimeYear firstYear = mock(TimeYear.class);
-  private static String firstYearName = "firstYear";
-  private static TimePeriod firstYearPeriod = mock(TimePeriod.class);
-  private static TimeYear secondYear = mock(TimeYear.class);
-  private static String secondYearName = "secondYear";
-  private static TimePeriod secondYearPeriod = mock(TimePeriod.class);
-
-  @BeforeAll
-  public static void setUpMocks() {
-    when(firstYear.toString()).thenReturn(firstYearName);
-    when(firstYear.toPeriod()).thenReturn(firstYearPeriod);
-    when(secondYear.toString()).thenReturn(secondYearName);
-    when(secondYear.toPeriod()).thenReturn(secondYearPeriod);
-  }
+  private static TimeYear firstYear = aTimeYear().build();
+  private static TimeYear secondYear = firstYear.plusYears(1);
 
   @BeforeEach
   public void resetMocks() {

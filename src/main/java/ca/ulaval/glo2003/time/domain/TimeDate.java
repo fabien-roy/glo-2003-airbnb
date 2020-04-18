@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.time.domain;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 
 public class TimeDate {
 
@@ -16,12 +17,20 @@ public class TimeDate {
     this.day = new TimeDay(date);
   }
 
+  public TimeDate(Calendar calendar) {
+    this(new Timestamp(calendar.toInstant()).toLocalDate());
+  }
+
   public TimeYear getYear() {
     return day.getYear();
   }
 
   public TimeMonth getMonth() {
     return day.getMonth();
+  }
+
+  public TimeWeek getWeek() {
+    return day.getWeek();
   }
 
   public int getDayOfYear() {

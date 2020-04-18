@@ -40,6 +40,11 @@ public class TimeDateObjectMother {
     return month.getYear().toYear().atDay(dayOfYear).getDayOfMonth();
   }
 
+  // TODO
+  public static int createWeekOfYear(TimeYear year) {
+    return 0;
+  }
+
   private static LocalDate now() {
     return LocalDate.now();
   }

@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.Calendar;
 
+// TODO : Test TimeYear
 public class TimeYear {
 
   private Year year;
@@ -15,6 +17,12 @@ public class TimeYear {
 
   public TimeYear(LocalDate date) {
     this.year = Year.of(date.getYear());
+  }
+
+  public int getWeeks() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, year.getValue());
+    return calendar.getMaximum(Calendar.WEEK_OF_YEAR);
   }
 
   public Year toYear() {
@@ -44,7 +52,7 @@ public class TimeYear {
 
   @Override
   public String toString() {
-    return ""; // TODO
+    return year.toString();
   }
 
   @Override

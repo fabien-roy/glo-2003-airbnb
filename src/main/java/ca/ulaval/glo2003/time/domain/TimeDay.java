@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.time.domain;
 
 import java.time.LocalDate;
 
+// TODO : Test TimeDay
 public class TimeDay {
 
   private TimeMonth month;
@@ -53,7 +54,7 @@ public class TimeDay {
 
   @Override
   public String toString() {
-    return ""; // TODO
+    return Integer.toString(dayOfYear);
   }
 
   @Override

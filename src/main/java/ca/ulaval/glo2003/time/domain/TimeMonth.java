@@ -39,6 +39,7 @@ public class TimeMonth {
     return new TimeDate(year.atMonth(this).atEndOfMonth());
   }
 
+  // TODO : What if there is more that one month added?
   public TimeMonth plusMonths(int months) {
     TimeYear newYear = month.equals(Month.DECEMBER) ? year.plusYears(1) : year;
     Month newValue = this.month.plus(months);
@@ -47,7 +48,7 @@ public class TimeMonth {
 
   @Override
   public String toString() {
-    return ""; // TODO
+    return month.toString();
   }
 
   @Override

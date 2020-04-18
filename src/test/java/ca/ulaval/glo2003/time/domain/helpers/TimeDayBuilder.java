@@ -13,7 +13,7 @@ import ca.ulaval.glo2003.time.domain.TimeYear;
 public class TimeDayBuilder {
 
   private TimeMonth month = null;
-  private TimeWeek week = mock(TimeWeek.class); // TODO : TimeDayBuilder.week
+  private TimeWeek week = mock(TimeWeek.class);
   private int dayOfYear = -1;
   private int dayOfMonth = -1;
   private int dayOfWeek = 1; // TODO : TimeDayBuilder.dayOfWeek

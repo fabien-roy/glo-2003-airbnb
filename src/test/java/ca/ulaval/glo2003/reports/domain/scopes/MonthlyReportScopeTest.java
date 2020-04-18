@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
+import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -9,7 +10,6 @@ import ca.ulaval.glo2003.time.domain.TimePeriod;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,20 +17,8 @@ class MonthlyReportScopeTest {
 
   private static MonthlyReportScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
-  private static TimeMonth firstMonth = mock(TimeMonth.class);
-  private static String firstMonthName = "firstMonth";
-  private static TimePeriod firstMonthPeriod = mock(TimePeriod.class);
-  private static TimeMonth secondMonth = mock(TimeMonth.class);
-  private static String secondMonthName = "secondMonth";
-  private static TimePeriod secondMonthPeriod = mock(TimePeriod.class);
-
-  @BeforeAll
-  public static void setUpMocks() {
-    when(firstMonth.toString()).thenReturn(firstMonthName);
-    when(firstMonth.toPeriod()).thenReturn(firstMonthPeriod);
-    when(secondMonth.toString()).thenReturn(secondMonthName);
-    when(secondMonth.toPeriod()).thenReturn(secondMonthPeriod);
-  }
+  private static TimeMonth firstMonth = aTimeMonth().build();
+  private static TimeMonth secondMonth = firstMonth.plusMonths(1);
 
   @BeforeEach
   public void resetMocks() {

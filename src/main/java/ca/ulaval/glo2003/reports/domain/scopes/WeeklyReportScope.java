@@ -2,8 +2,9 @@ package ca.ulaval.glo2003.reports.domain.scopes;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
-import java.util.ArrayList;
+import ca.ulaval.glo2003.time.domain.TimeWeek;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WeeklyReportScope extends ReportScope {
 
@@ -11,9 +12,12 @@ public class WeeklyReportScope extends ReportScope {
     super(timePeriod);
   }
 
-  // TODO : WeeklyReportScope.getReportPeriods()
   @Override
   public List<ReportPeriod> getReportPeriods() {
-    return new ArrayList<>();
+    return period.getWeeks().stream().map(this::createReportPeriod).collect(Collectors.toList());
+  }
+
+  private ReportPeriod createReportPeriod(TimeWeek week) {
+    return new ReportPeriod(week.toString(), week.toPeriod());
   }
 }
