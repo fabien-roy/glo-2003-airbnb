@@ -21,11 +21,6 @@ public class TimeMonthBuilder {
     return this;
   }
 
-  public TimeMonthBuilder withMonth(Month month) {
-    this.month = month;
-    return this;
-  }
-
   public TimeMonth build() {
     if (year == null) year = aTimeYear().build();
     if (month == null) month = createMonth(year);

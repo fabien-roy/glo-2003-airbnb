@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.time.domain;
 
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,8 +15,9 @@ class TimePeriodTest {
   private static TimeDate start = TimeDate.now();
   private static TimeDate end = start.plusDays(numberOfDays);
   private static TimeYear firstYear = aTimeYear().build();
-  private static TimeYear secondYear =
-      aTimeYear().withYear(firstYear.toYear().plusYears(1)).build();
+  private static TimeYear secondYear = firstYear.plusYears(1);
+  private static TimeMonth firstMonth = aTimeMonth().withYear(firstYear).build();
+  private static TimeMonth secondMonth = firstMonth.plusMonths(1);
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -25,6 +27,8 @@ class TimePeriodTest {
   private static TimePeriod afterOverlappingPeriod;
   private static TimePeriod singleYearPeriod;
   private static TimePeriod multipleYearsPeriod;
+  private static TimePeriod singleMonthPeriod;
+  private static TimePeriod multipleMonthsPeriod;
 
   @BeforeEach
   public void setUpPeriod() {
@@ -62,6 +66,20 @@ class TimePeriodTest {
     TimeDate afterOverlappingStart = end.minusDays(1);
     TimeDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
     afterOverlappingPeriod = new TimePeriod(afterOverlappingStart, afterOverlappingEnd);
+  }
+
+  @BeforeEach
+  public void setUpSingleMonthPeriod() {
+    TimeDate firstDate = aTimeDate().withMonth(firstMonth).build();
+    TimeDate secondDate = aTimeDate().withMonth(firstMonth).build();
+    singleMonthPeriod = new TimePeriod(firstDate, secondDate);
+  }
+
+  @BeforeEach
+  public void setUpMultipleMonthsPeriod() {
+    TimeDate firstDate = aTimeDate().withMonth(firstMonth).build();
+    TimeDate secondDate = aTimeDate().withMonth(secondMonth).build();
+    multipleMonthsPeriod = new TimePeriod(firstDate, secondDate);
   }
 
   @BeforeEach
@@ -181,6 +199,23 @@ class TimePeriodTest {
     assertEquals(2, years.size());
     assertEquals(firstYear, years.get(0));
     assertEquals(secondYear, years.get(1));
+  }
+
+  @Test
+  public void getMonths_withSingleMonthPeriod_shouldGetMonth() {
+    List<TimeMonth> months = singleMonthPeriod.getMonths();
+
+    assertEquals(1, months.size());
+    assertEquals(firstMonth, months.get(0));
+  }
+
+  @Test
+  public void getMonths_withMultipleMonthsPeriod_shouldGetMonths() {
+    List<TimeMonth> months = multipleMonthsPeriod.getMonths();
+
+    assertEquals(2, months.size());
+    assertEquals(firstMonth, months.get(0));
+    assertEquals(secondMonth, months.get(1));
   }
 
   @Test

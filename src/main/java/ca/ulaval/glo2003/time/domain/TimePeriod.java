@@ -39,6 +39,7 @@ public class TimePeriod {
       dates.add(date);
       date = date.plusDays(1);
     } while (date.isBefore(end));
+    dates.add(end);
 
     return dates;
   }
@@ -49,7 +50,6 @@ public class TimePeriod {
     return new ArrayList<>(years);
   }
 
-  // TODO : Test TimePeriod.getMonths()
   public List<TimeMonth> getMonths() {
     Set<TimeMonth> months = new HashSet<>();
     getDates().forEach(date -> months.add(date.getMonth()));

@@ -7,16 +7,16 @@ import java.time.Month;
 public class TimeMonth {
 
   private TimeYear year;
-  private Month value;
+  private Month month;
 
-  public TimeMonth(TimeYear year, Month value) {
+  public TimeMonth(TimeYear year, Month month) {
     this.year = year;
-    this.value = value;
+    this.month = month;
   }
 
   public TimeMonth(LocalDate date) {
     this.year = new TimeYear(date);
-    this.value = date.getMonth();
+    this.month = date.getMonth();
   }
 
   public TimeYear getYear() {
@@ -24,7 +24,7 @@ public class TimeMonth {
   }
 
   public Month toMonth() {
-    return value;
+    return month;
   }
 
   public TimePeriod toPeriod() {
@@ -39,6 +39,12 @@ public class TimeMonth {
     return new TimeDate(year.atMonth(this).atEndOfMonth());
   }
 
+  public TimeMonth plusMonths(int months) {
+    TimeYear newYear = month.equals(Month.DECEMBER) ? year.plusYears(1) : year;
+    Month newValue = this.month.plus(months);
+    return new TimeMonth(newYear, newValue);
+  }
+
   @Override
   public String toString() {
     return ""; // TODO
@@ -50,11 +56,11 @@ public class TimeMonth {
 
     TimeMonth other = (TimeMonth) object;
 
-    return value.equals(other.toMonth()) && year.equals(other.getYear());
+    return month.equals(other.toMonth()) && year.equals(other.getYear());
   }
 
   @Override
   public int hashCode() {
-    return value.hashCode();
+    return month.hashCode();
   }
 }

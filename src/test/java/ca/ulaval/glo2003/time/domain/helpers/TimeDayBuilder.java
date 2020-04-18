@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.*;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDayOfMonth;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDayOfYear;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
 import static org.mockito.Mockito.mock;
 
@@ -23,6 +24,11 @@ public class TimeDayBuilder {
 
   public TimeDayBuilder withYear(TimeYear year) {
     month = aTimeMonth().withYear(year).build();
+    return this;
+  }
+
+  public TimeDayBuilder withMonth(TimeMonth month) {
+    this.month = month;
     return this;
   }
 

@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.time.domain.helpers;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDayBuilder.aTimeDay;
 
 import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimeMonth;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 
 public class TimeDateBuilder {
@@ -15,6 +16,11 @@ public class TimeDateBuilder {
 
   public TimeDateBuilder withYear(TimeYear year) {
     timeDayBuilder = timeDayBuilder.withYear(year);
+    return this;
+  }
+
+  public TimeDateBuilder withMonth(TimeMonth month) {
+    timeDayBuilder = timeDayBuilder.withMonth(month);
     return this;
   }
 

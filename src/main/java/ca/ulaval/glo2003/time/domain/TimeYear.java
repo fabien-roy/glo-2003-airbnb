@@ -7,18 +7,18 @@ import java.time.YearMonth;
 
 public class TimeYear {
 
-  private Year value;
+  private Year year;
 
-  public TimeYear(Year value) {
-    this.value = value;
+  public TimeYear(Year year) {
+    this.year = year;
   }
 
   public TimeYear(LocalDate date) {
-    this.value = Year.of(date.getYear());
+    this.year = Year.of(date.getYear());
   }
 
   public Year toYear() {
-    return value;
+    return year;
   }
 
   public TimePeriod toPeriod() {
@@ -26,15 +26,20 @@ public class TimeYear {
   }
 
   public YearMonth atMonth(TimeMonth month) {
-    return value.atMonth(month.toMonth());
+    return year.atMonth(month.toMonth());
   }
 
   public TimeDate atFirstDay() {
-    return new TimeDate(value.atMonth(Month.JANUARY).atDay(1));
+    return new TimeDate(year.atMonth(Month.JANUARY).atDay(1));
   }
 
   public TimeDate atLastDay() {
-    return new TimeDate(value.atMonth(Month.DECEMBER).atEndOfMonth());
+    return new TimeDate(year.atMonth(Month.DECEMBER).atEndOfMonth());
+  }
+
+  public TimeYear plusYears(int years) {
+    Year newYear = this.year.plusYears(years);
+    return new TimeYear(newYear);
   }
 
   @Override
@@ -48,11 +53,11 @@ public class TimeYear {
 
     TimeYear other = (TimeYear) object;
 
-    return value.equals(other.toYear());
+    return year.equals(other.toYear());
   }
 
   @Override
   public int hashCode() {
-    return value.hashCode();
+    return year.hashCode();
   }
 }
