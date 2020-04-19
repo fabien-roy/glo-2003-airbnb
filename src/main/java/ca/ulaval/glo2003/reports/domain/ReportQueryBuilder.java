@@ -1,12 +1,17 @@
 package ca.ulaval.glo2003.reports.domain;
 
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
+import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionBuilder;
+import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensions;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 // TODO : Test ReportQueryBuilder
 public class ReportQueryBuilder {
+
+  private final ReportDimensionBuilder dimensionBuilder;
 
   private List<ReportPeriod> DEFAULT_PERIODS = new ArrayList<>();
   private List<ReportPeriod> periods = DEFAULT_PERIODS;
@@ -17,8 +22,13 @@ public class ReportQueryBuilder {
   private List<ReportDimension> DEFAULT_DIMENSIONS = new ArrayList<>();
   private List<ReportDimension> dimensions = DEFAULT_DIMENSIONS;
 
+  @Inject
+  public ReportQueryBuilder(ReportDimensionBuilder dimensionBuilder) {
+    this.dimensionBuilder = dimensionBuilder;
+  }
+
   public ReportQueryBuilder aReportQuery() {
-    return new ReportQueryBuilder();
+    return new ReportQueryBuilder(dimensionBuilder);
   }
 
   public ReportQueryBuilder withPeriods(List<ReportPeriod> periods) {
@@ -31,8 +41,8 @@ public class ReportQueryBuilder {
     return this;
   }
 
-  public ReportQueryBuilder withDimensions(List<ReportDimension> dimensions) {
-    this.dimensions = dimensions;
+  public ReportQueryBuilder withDimensions(List<ReportDimensions> dimensions) {
+    this.dimensions = dimensionBuilder.someDimensions().withTypes(dimensions).buildMany();
     return this;
   }
 
