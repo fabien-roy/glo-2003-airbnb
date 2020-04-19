@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.reports.domain.metrics;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
@@ -27,7 +28,8 @@ public class IncomesMetricTest extends ReservationFilteringMetricTest {
     reset(serviceFee);
     when(serviceFee.toBigDecimal()).thenReturn(BigDecimal.ZERO);
     when(serviceFee.isSet()).thenReturn(true);
-    metric = new IncomesMetric(serviceFee);
+    Configuration.instance().setServiceFee(serviceFee);
+    metric = new IncomesMetric();
   }
 
   @Test

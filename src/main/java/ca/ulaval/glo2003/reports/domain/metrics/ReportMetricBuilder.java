@@ -19,12 +19,6 @@ public class ReportMetricBuilder {
     return this;
   }
 
-  // TODO : Test ReportMetricBuilder.withServiceFee()
-  public ReportMetricBuilder withServiceFee(ServiceFee serviceFee) {
-    this.serviceFee = serviceFee;
-    return this;
-  }
-
   public List<ReportMetric> buildMany() {
     return metricTypes.stream().map(this::buildOne).collect(Collectors.toList());
   }
@@ -37,7 +31,7 @@ public class ReportMetricBuilder {
         return new CancelationsMetric();
       default:
       case INCOMES:
-        return new IncomesMetric(serviceFee);
+        return new IncomesMetric();
     }
   }
 }
