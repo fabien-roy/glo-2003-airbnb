@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.domain.scopes;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.time.domain.TimeQuarter;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

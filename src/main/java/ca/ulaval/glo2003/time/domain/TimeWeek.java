@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.time.domain;
 
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.temporal.IsoFields;
 import java.util.Calendar;
 
 // TODO : Test TimeWeek
@@ -17,7 +17,10 @@ public class TimeWeek implements Comparable<TimeWeek> {
 
   public TimeWeek(LocalDate date) {
     this.year = new TimeYear(date);
-    this.weekOfYear = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+    Calendar calendar = Calendar.getInstance();
+    calendar.setFirstDayOfWeek(Calendar.MONDAY);
+    calendar.setTime(Date.valueOf(date));
+    this.weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
   }
 
   public TimeYear getYear() {
@@ -58,12 +61,14 @@ public class TimeWeek implements Comparable<TimeWeek> {
 
   public int firstMonth() {
     Calendar calendar = weekCalendar();
+    calendar.setFirstDayOfWeek(Calendar.MONDAY);
     calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
     return calendar.get(Calendar.MONTH) + 1;
   }
 
   public int lastMonth() {
     Calendar calendar = weekCalendar();
+    calendar.setFirstDayOfWeek(Calendar.MONDAY);
     calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
     return calendar.get(Calendar.MONTH) + 1;
   }

@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import ca.ulaval.glo2003.time.domain.*;
-
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.*;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeWeekBuilder.aTimeWeek;
+
+import ca.ulaval.glo2003.time.domain.*;
 
 public class TimeDayBuilder {
 

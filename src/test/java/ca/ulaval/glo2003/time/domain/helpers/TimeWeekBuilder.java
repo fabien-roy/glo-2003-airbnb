@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createWeekOfYear;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
+
 import ca.ulaval.glo2003.time.domain.TimeMonth;
 import ca.ulaval.glo2003.time.domain.TimeWeek;
 import ca.ulaval.glo2003.time.domain.TimeYear;
-
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createWeekOfYear;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 
 public class TimeWeekBuilder {
 

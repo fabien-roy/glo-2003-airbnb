@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import ca.ulaval.glo2003.time.domain.*;
-
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.time.domain.helpers.TimePeriodObjectMother.createNumberOfDays;
+
+import ca.ulaval.glo2003.time.domain.*;
 
 public class TimePeriodBuilder {
 

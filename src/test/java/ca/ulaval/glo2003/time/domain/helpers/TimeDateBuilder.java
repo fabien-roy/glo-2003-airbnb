@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
-import ca.ulaval.glo2003.time.domain.*;
-
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDayBuilder.aTimeDay;
+
+import ca.ulaval.glo2003.time.domain.*;
 
 public class TimeDateBuilder {
 

@@ -42,7 +42,8 @@ public class TimePeriod {
   }
 
   // TODO : Getting years, months, quarters, ... is pretty similar.
-  // TODO : Also, what if quarters, months, ... surpasses superior calendar entity? Does sorting still work?
+  // TODO : Also, what if quarters, months, ... surpasses superior calendar entity? Does sorting
+  // still work?
   public List<TimeYear> getYears() {
     Set<TimeYear> years = new HashSet<>();
     getDates().forEach(date -> years.add(date.getYear()));

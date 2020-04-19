@@ -1,18 +1,17 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
+import static ca.ulaval.glo2003.time.domain.TimeQuarter.firstPossibleQuarter;
+import static ca.ulaval.glo2003.time.domain.TimeQuarter.lastPossibleQuarter;
+
 import ca.ulaval.glo2003.time.domain.TimeMonth;
 import ca.ulaval.glo2003.time.domain.TimeQuarter;
 import ca.ulaval.glo2003.time.domain.TimeWeek;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 import com.github.javafaker.Faker;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.util.Calendar;
-
-import static ca.ulaval.glo2003.time.domain.TimeQuarter.firstPossibleQuarter;
-import static ca.ulaval.glo2003.time.domain.TimeQuarter.lastPossibleQuarter;
 
 public class TimeDateObjectMother {
 
