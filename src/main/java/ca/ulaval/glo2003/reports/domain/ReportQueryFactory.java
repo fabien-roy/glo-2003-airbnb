@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 
-// TODO : Test ReportQueryFactory
 public class ReportQueryFactory {
 
   private final ReportQueryBuilder reportQueryBuilder;
