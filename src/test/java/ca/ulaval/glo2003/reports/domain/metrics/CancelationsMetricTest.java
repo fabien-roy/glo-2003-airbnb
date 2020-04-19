@@ -4,22 +4,15 @@ import static ca.ulaval.glo2003.time.domain.helpers.TimestampObjectMother.create
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CancelationsMetricTest {
-
-  private static ReportMetric metric;
-
-  private static ReportPeriodData data;
+class CancelationsMetricTest extends ReportMetricTest {
 
   private static Timestamp cancelationTimestamp = createTimestamp();
   private static Timestamp otherCancelationTimestamp = createTimestamp();
@@ -44,18 +37,14 @@ class CancelationsMetricTest {
   private static Transaction refundTransaction =
       aTransaction().withReason(TransactionReasons.STAY_CANCELED).forRefund().build();
 
+  @Override
+  protected ReportMetrics metricName() {
+    return ReportMetrics.CANCELATIONS;
+  }
+
   @BeforeAll
   public static void setUpMetric() {
     metric = new CancelationsMetric();
-  }
-
-  @BeforeEach
-  public void setUpData() {
-    setUpData(Collections.emptyList());
-  }
-
-  private static void setUpData(List<Transaction> transactions) {
-    data = new ReportPeriodData(transactions);
   }
 
   private static void setUpDataWithoutCancelation() {
@@ -72,14 +61,6 @@ class CancelationsMetricTest {
 
   private static void setUpDataWithMultiPartedCancelation() {
     setUpData(Arrays.asList(cancelationTransaction, sameCancelationTransaction));
-  }
-
-  @Test
-  public void calculate_shouldCalculateWithMetricName() {
-    metric.calculate(data);
-
-    assertEquals(1, data.getMetrics().size());
-    assertEquals(ReportMetrics.CANCELATIONS, data.getMetrics().get(0).getName());
   }
 
   @Test

@@ -6,7 +6,6 @@ import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : Test ReservationsReportMetric
 public class ReservationsMetric extends ReportMetric<Integer> {
 
   @Override
