@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : Test ReportQuery
 public class ReportQuery {
 
   private List<Transaction> transactions;
@@ -47,7 +46,7 @@ public class ReportQuery {
           transactions.stream()
               .filter(transaction -> period.contains(transaction.getTimestamp()))
               .collect(Collectors.toList());
-      period.setSingleData(new ReportPeriodData(periodTransactions));
+      period.setSingleData(periodTransactions);
 
       List<ReportPeriodData> data = splitDataInDimensions(period.getData());
       calculateMetrics(data);

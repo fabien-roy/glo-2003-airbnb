@@ -8,7 +8,8 @@ import java.util.List;
 
 public class ReportPeriodData {
 
-  private List<Transaction> transactions; // TODO : ReportPeriodData should not have transactions
+  private List<Transaction>
+      transactions; // TODO : ReportPeriodData should not have transactions (IMPROV)
   private List<ReportMetricData> metrics = new ArrayList<>();
   private List<ReportDimensionData> dimensions = new ArrayList<>();
 

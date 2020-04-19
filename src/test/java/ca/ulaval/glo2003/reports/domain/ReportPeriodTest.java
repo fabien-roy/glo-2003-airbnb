@@ -9,6 +9,9 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.time.domain.Timestamp;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +25,8 @@ public class ReportPeriodTest {
   private static TimePeriod timePeriod = mock(TimePeriod.class);
   private static ReportPeriodData singleData = mock(ReportPeriodData.class);
   private static Timestamp timestamp = createTimestamp();
+  private static List<Transaction> transactions =
+      Collections.singletonList(mock(Transaction.class));
 
   @BeforeEach
   public void setUpPeriod() {
@@ -37,11 +42,12 @@ public class ReportPeriodTest {
   }
 
   @Test
-  public void setSingleData_shouldSetDataAsSingleData() {
-    reportPeriod.setSingleData(singleData);
+  public void setSingleData_shouldSetTransactionsAsSingleData() {
+    reportPeriod.setSingleData(transactions);
+    List<ReportPeriodData> data = reportPeriod.getData();
 
-    assertEquals(1, reportPeriod.getData().size());
-    assertSame(singleData, reportPeriod.getData().get(0));
+    assertEquals(1, data.size());
+    assertSame(transactions.get(0), data.get(0).getTransactions().get(0));
   }
 
   @ParameterizedTest
