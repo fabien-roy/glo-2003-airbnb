@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : Test ReportDimension
 public abstract class ReportDimension<T> {
 
-  public abstract ReportDimensions getName();
+  protected abstract ReportDimensions getName();
 
-  public abstract List<T> getValues();
+  protected abstract List<T> getValues();
 
   protected abstract boolean filter(Transaction transaction, T value);
 

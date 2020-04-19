@@ -5,11 +5,10 @@ import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO : Test PackageReportDimension
 public class PackageDimension extends ReportDimension<Packages> {
 
   @Override
-  public ReportDimensions getName() {
+  protected ReportDimensions getName() {
     return ReportDimensions.PACKAGE;
   }
 

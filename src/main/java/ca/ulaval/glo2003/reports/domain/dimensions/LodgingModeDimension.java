@@ -5,16 +5,15 @@ import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO : Test LodgingModeReportDimension
 public class LodgingModeDimension extends ReportDimension<LodgingModes> {
 
   @Override
-  public ReportDimensions getName() {
+  protected ReportDimensions getName() {
     return ReportDimensions.LODGING_MODE;
   }
 
   @Override
-  public List<LodgingModes> getValues() {
+  protected List<LodgingModes> getValues() {
     return Arrays.asList(LodgingModes.values());
   }
 

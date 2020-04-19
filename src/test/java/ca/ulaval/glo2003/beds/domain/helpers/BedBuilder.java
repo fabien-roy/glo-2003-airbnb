@@ -94,6 +94,11 @@ public class BedBuilder {
     return this;
   }
 
+  public BedBuilder withLodgingModeType(LodgingModes lodgingMode) {
+    this.lodgingMode = aLodgingMode().withType(lodgingMode).build();
+    return this;
+  }
+
   public BedBuilder withPricesPerNights(Map<Packages, Price> pricesPerNight) {
     this.pricesPerNight = pricesPerNight;
     return this;

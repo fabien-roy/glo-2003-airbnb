@@ -20,6 +20,14 @@ public class ReportPeriodData {
     return transactions;
   }
 
+  public List<ReportMetricData> getMetrics() {
+    return metrics;
+  }
+
+  public List<ReportDimensionData> getDimensions() {
+    return dimensions;
+  }
+
   public void addMetrics(ReportMetricData metric) {
     metrics.add(metric);
   }
