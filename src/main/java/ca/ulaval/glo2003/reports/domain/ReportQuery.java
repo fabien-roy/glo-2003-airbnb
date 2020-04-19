@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.reports.domain;
 
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
+import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.stream.Collectors;
 public class ReportQuery {
 
   private List<Transaction> transactions;
-  private List<ReportPeriod> periods;
+  private ReportScope scope;
   private List<ReportMetric> metrics;
   private List<ReportDimension> dimensions;
 
   public ReportQuery(
-      List<ReportPeriod> periods, List<ReportMetric> metrics, List<ReportDimension> dimensions) {
-    this.periods = periods;
+      ReportScope scope, List<ReportMetric> metrics, List<ReportDimension> dimensions) {
+    this.scope = scope;
     this.metrics = metrics;
     this.dimensions = dimensions;
   }
@@ -29,7 +30,7 @@ public class ReportQuery {
   public List<ReportPeriod> execute() {
     List<ReportPeriod> queriedPeriods = new ArrayList<>();
 
-    for (ReportPeriod period : periods) {
+    for (ReportPeriod period : scope.getPeriods()) {
       List<Transaction> periodTransactions =
           transactions.stream()
               .filter(transaction -> period.contains(transaction.getTimestamp()))

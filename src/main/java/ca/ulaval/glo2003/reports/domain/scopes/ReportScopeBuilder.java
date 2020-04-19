@@ -1,44 +1,39 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
-import ca.ulaval.glo2003.time.domain.TimeYear;
-import java.time.Year;
 
 // TODO : Test ReportScopeBuilder
 public class ReportScopeBuilder {
 
-  private ReportScopes DEFAULT_REPORT_SCOPE_TYPE = ReportScopes.MONTHLY;
-  private ReportScopes reportScopeType = DEFAULT_REPORT_SCOPE_TYPE;
+  private ReportScopes scopeType = ReportScopes.MONTHLY;
+  private TimePeriod period = TimeDate.now().toPeriod();
 
-  // TODO : This information should not be here
-  private TimePeriod DEFAULT_BOOKING_PERIOD = new TimeYear(Year.of(2020)).toPeriod();
-  private TimePeriod timePeriod = DEFAULT_BOOKING_PERIOD;
-
-  public ReportScopeBuilder aReportScope() {
+  public ReportScopeBuilder aScope() {
     return new ReportScopeBuilder();
   }
 
   public ReportScopeBuilder withType(ReportScopes reportScopeType) {
-    this.reportScopeType = reportScopeType;
+    this.scopeType = reportScopeType;
     return this;
   }
 
-  public ReportScopeBuilder withBookingPeriod(TimePeriod timePeriod) {
-    this.timePeriod = timePeriod;
+  public ReportScopeBuilder withPeriod(TimePeriod timePeriod) {
+    this.period = timePeriod;
     return this;
   }
 
   public ReportScope build() {
-    switch (reportScopeType) {
+    switch (scopeType) {
       case WEEKLY:
-        return new WeeklyReportScope(timePeriod);
+        return new WeeklyReportScope(period);
       case QUARTERLY:
-        return new QuarterlyReportScope(timePeriod);
+        return new QuarterlyReportScope(period);
       case ANNUAL:
-        return new AnnualReportScope(timePeriod);
+        return new AnnualReportScope(period);
       default:
       case MONTHLY:
-        return new MonthlyReportScope(timePeriod);
+        return new MonthlyReportScope(period);
     }
   }
 }

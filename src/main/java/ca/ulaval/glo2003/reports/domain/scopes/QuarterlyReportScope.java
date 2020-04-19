@@ -13,7 +13,7 @@ public class QuarterlyReportScope extends ReportScope {
   }
 
   @Override
-  public List<ReportPeriod> getReportPeriods() {
+  public List<ReportPeriod> getPeriods() {
     return period.getQuarters().stream().map(this::createReportPeriod).collect(Collectors.toList());
   }
 

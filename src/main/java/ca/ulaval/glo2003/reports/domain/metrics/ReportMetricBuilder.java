@@ -1,15 +1,13 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO : Test ReportMetricBuilder
 public class ReportMetricBuilder {
 
-  private List<ReportMetrics> DEFAULT_METRIC_TYPES =
-      Collections.singletonList(ReportMetrics.INCOMES);
-  private List<ReportMetrics> metricTypes = DEFAULT_METRIC_TYPES;
+  private List<ReportMetrics> metricTypes = new ArrayList<>();
 
   public ReportMetricBuilder someMetrics() {
     return new ReportMetricBuilder();

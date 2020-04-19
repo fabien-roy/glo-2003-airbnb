@@ -13,7 +13,7 @@ public class WeeklyReportScope extends ReportScope {
   }
 
   @Override
-  public List<ReportPeriod> getReportPeriods() {
+  public List<ReportPeriod> getPeriods() {
     return period.getWeeks().stream().map(this::createReportPeriod).collect(Collectors.toList());
   }
 

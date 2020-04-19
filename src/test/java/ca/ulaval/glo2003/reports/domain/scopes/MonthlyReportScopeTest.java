@@ -43,7 +43,7 @@ class MonthlyReportScopeTest {
   public void getReportPeriod_withSingleMonth_shouldHaveSingleReport() {
     setUpReportScopeWithSingleMonth();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
@@ -52,7 +52,7 @@ class MonthlyReportScopeTest {
   public void getReportPeriod_withSingleMonth_shouldSetPeriodNamesToThatMonth() {
     setUpReportScopeWithSingleMonth();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstMonth.toString(), reportPeriods.get(0).getName());
   }
@@ -61,7 +61,7 @@ class MonthlyReportScopeTest {
   public void getReportPeriod_withSingleMonth_shouldSetPeriodToThatMonth() {
     setUpReportScopeWithSingleMonth();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstMonth.toPeriod(), reportPeriods.get(0).getPeriod());
   }
@@ -70,7 +70,7 @@ class MonthlyReportScopeTest {
   public void getReportPeriod_withMultipleMonthsInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleMonths();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
@@ -79,7 +79,7 @@ class MonthlyReportScopeTest {
   public void getReportPeriod_withMultipleMonthsInSameYear_shouldSetPeriodNamesToThoseMonths() {
     setUpReportScopeWithMultipleMonths();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstMonth.toString(), reportPeriods.get(0).getName());
     assertEquals(secondMonth.toString(), reportPeriods.get(1).getName());

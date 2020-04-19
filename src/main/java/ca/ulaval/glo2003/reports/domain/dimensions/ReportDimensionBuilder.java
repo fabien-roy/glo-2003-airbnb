@@ -1,14 +1,13 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO : Test ReportDimensionBuilder
 public class ReportDimensionBuilder {
 
-  private List<ReportDimensions> DEFAULT_DIMENSION_TYPES = Collections.emptyList();
-  private List<ReportDimensions> dimensionTypes = DEFAULT_DIMENSION_TYPES;
+  private List<ReportDimensions> dimensionTypes = new ArrayList<>();
 
   public ReportDimensionBuilder someDimensions() {
     return new ReportDimensionBuilder();

@@ -43,7 +43,7 @@ class WeeklyReportScopeTest {
   public void getReportPeriod_withSingleWeek_shouldHaveSingleReport() {
     setUpReportScopeWithSingleWeek();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
@@ -52,7 +52,7 @@ class WeeklyReportScopeTest {
   public void getReportPeriod_withSingleWeek_shouldSetPeriodNamesToThatWeek() {
     setUpReportScopeWithSingleWeek();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstWeek.toString(), reportPeriods.get(0).getName());
   }
@@ -61,7 +61,7 @@ class WeeklyReportScopeTest {
   public void getReportPeriod_withSingleWeek_shouldSetPeriodToThatWeek() {
     setUpReportScopeWithSingleWeek();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstWeek.toPeriod(), reportPeriods.get(0).getPeriod());
   }
@@ -70,7 +70,7 @@ class WeeklyReportScopeTest {
   public void getReportPeriod_withMultipleWeeksInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleWeeks();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
@@ -79,7 +79,7 @@ class WeeklyReportScopeTest {
   public void getReportPeriod_withMultipleWeeksInSameYear_shouldSetPeriodNamesToThoseWeeks() {
     setUpReportScopeWithMultipleWeeks();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstWeek.toString(), reportPeriods.get(0).getName());
     assertEquals(secondWeek.toString(), reportPeriods.get(1).getName());

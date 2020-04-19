@@ -43,7 +43,7 @@ class QuarterlyReportScopeTest {
   public void getReportPeriod_withSingleQuarter_shouldHaveSingleReport() {
     setUpReportScopeWithSingleQuarter();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
@@ -52,7 +52,7 @@ class QuarterlyReportScopeTest {
   public void getReportPeriod_withSingleQuarter_shouldSetPeriodNamesToThatQuarter() {
     setUpReportScopeWithSingleQuarter();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstQuarter.toString(), reportPeriods.get(0).getName());
   }
@@ -61,7 +61,7 @@ class QuarterlyReportScopeTest {
   public void getReportPeriod_withSingleQuarter_shouldSetPeriodToThatQuarter() {
     setUpReportScopeWithSingleQuarter();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstQuarter.toPeriod(), reportPeriods.get(0).getPeriod());
   }
@@ -70,7 +70,7 @@ class QuarterlyReportScopeTest {
   public void getReportPeriod_withMultipleQuartersInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleQuarters();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
@@ -79,7 +79,7 @@ class QuarterlyReportScopeTest {
   public void getReportPeriod_withMultipleQuartersInSameYear_shouldSetPeriodNamesToThoseQuarters() {
     setUpReportScopeWithMultipleQuarters();
 
-    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
 
     assertEquals(firstQuarter.toString(), reportPeriods.get(0).getName());
     assertEquals(secondQuarter.toString(), reportPeriods.get(1).getName());
