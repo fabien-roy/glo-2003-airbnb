@@ -9,6 +9,10 @@ public class Price implements Comparable<Price> {
   private BigDecimal value;
   private final Comparator<Price> comparator = Comparator.comparing(Price::toBigDecimal);
 
+  public static Price zero() {
+    return new Price(BigDecimal.ZERO);
+  }
+
   public Price(double price) {
     this.value = BigDecimal.valueOf(price);
   }

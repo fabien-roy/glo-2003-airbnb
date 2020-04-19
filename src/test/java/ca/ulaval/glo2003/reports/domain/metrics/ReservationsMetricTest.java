@@ -1,25 +1,11 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
-import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
-import java.util.Arrays;
-import java.util.Collections;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ReservationsMetricTest extends ReportMetricTest {
-
-  private static Transaction reservationTransaction =
-      aTransaction().withReason(TransactionReasons.STAY_BOOKED).build();
-  private static Transaction otherReservationTransaction =
-      aTransaction().withReason(TransactionReasons.STAY_BOOKED).build();
-  private static Transaction cancelationTransaction =
-      aTransaction().withReason(TransactionReasons.STAY_CANCELED).build();
-  private static Transaction completionTransaction =
-      aTransaction().withReason(TransactionReasons.STAY_COMPLETED).build();
+class ReservationsMetricTest extends ReservationFilteringMetricTest {
 
   @Override
   protected ReportMetrics metricName() {
@@ -29,18 +15,6 @@ class ReservationsMetricTest extends ReportMetricTest {
   @BeforeAll
   public static void setUpMetric() {
     metric = new ReservationsMetric();
-  }
-
-  private void setUpDataWithoutReservation() {
-    setUpData(Arrays.asList(cancelationTransaction, completionTransaction));
-  }
-
-  private void setUpDataWithSingleReservation() {
-    setUpData(Collections.singletonList(reservationTransaction));
-  }
-
-  private void setUpDataWithMultipleReservations() {
-    setUpData(Arrays.asList(reservationTransaction, otherReservationTransaction));
   }
 
   @Test

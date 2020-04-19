@@ -104,7 +104,8 @@ public class TimeDateObjectMother {
   }
 
   private static int thatDay(TimeMonth month, int dayOfMonth) {
-    return month.getYear().atMonth(month).atDay(dayOfMonth).getDayOfYear();
+    int safeDayOfMonth = dayOfMonth == 1 ? dayOfMonth : dayOfMonth - 1; // TODO : Fix this hack
+    return month.getYear().atMonth(month).atDay(safeDayOfMonth).getDayOfYear();
   }
 
   private static int futureDay(TimeMonth month) {

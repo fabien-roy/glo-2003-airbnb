@@ -21,6 +21,15 @@ class PriceTest {
   }
 
   @Test
+  public void zero_shouldReturnPriceWithZeroValue() {
+    Price zeroPrice = new Price(0);
+
+    price = Price.zero();
+
+    assertEquals(zeroPrice, price);
+  }
+
+  @Test
   public void multiply_shouldMultiplyValue() {
     Price multipliedValue = new Price(500);
 
