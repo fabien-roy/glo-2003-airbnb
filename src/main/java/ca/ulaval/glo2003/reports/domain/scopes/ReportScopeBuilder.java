@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.domain.scopes;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 
-// TODO : Test ReportScopeBuilder
 public class ReportScopeBuilder {
 
   private ReportScopes scopeType = ReportScopes.MONTHLY;
@@ -26,14 +25,14 @@ public class ReportScopeBuilder {
   public ReportScope build() {
     switch (scopeType) {
       case WEEKLY:
-        return new WeeklyReportScope(period);
+        return new WeeklyScope(period);
       case QUARTERLY:
-        return new QuarterlyReportScope(period);
+        return new QuarterlyScope(period);
       case ANNUAL:
-        return new AnnualReportScope(period);
+        return new AnnualScope(period);
       default:
       case MONTHLY:
-        return new MonthlyReportScope(period);
+        return new MonthlyScope(period);
     }
   }
 }

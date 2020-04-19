@@ -12,5 +12,9 @@ public abstract class ReportScope {
     this.period = period;
   }
 
-  public abstract List<ReportPeriod> getPeriods();
+  public TimePeriod getPeriod() {
+    return period;
+  }
+
+  public abstract List<ReportPeriod> getReportPeriods();
 }

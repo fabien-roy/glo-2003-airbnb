@@ -1,12 +1,17 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ReportMetricBuilderTest {
 
@@ -24,34 +29,23 @@ class ReportMetricBuilderTest {
     assertEquals(0, metrics.size());
   }
 
-  @Test
-  public void buildMany_withIncomesMetric_shouldBuildIncomesMetric() {
-    List<ReportMetrics> metricTypes = Collections.singletonList(ReportMetrics.INCOMES);
+  @ParameterizedTest
+  @MethodSource("provideMetrics")
+  public void buildMany_withMetric_shouldBuildMetric(
+      ReportMetrics metricType, Class<? extends ReportMetric> metricClass) {
+    List<ReportMetrics> metricTypes = Collections.singletonList(metricType);
 
     List<ReportMetric> metrics = metricBuilder.someMetrics().withTypes(metricTypes).buildMany();
 
     assertEquals(1, metrics.size());
-    assertTrue(metrics.get(0) instanceof IncomesMetric);
+    assertTrue(metricClass.isInstance(metrics.get(0)));
   }
 
-  @Test
-  public void buildMany_withReservationsMetric_shouldBuildReservationsMetric() {
-    List<ReportMetrics> metricTypes = Collections.singletonList(ReportMetrics.RESERVATIONS);
-
-    List<ReportMetric> metrics = metricBuilder.someMetrics().withTypes(metricTypes).buildMany();
-
-    assertEquals(1, metrics.size());
-    assertTrue(metrics.get(0) instanceof ReservationsMetric);
-  }
-
-  @Test
-  public void buildMany_withCancelationsMetric_shouldBuildCancelationsMetric() {
-    List<ReportMetrics> metricTypes = Collections.singletonList(ReportMetrics.CANCELATIONS);
-
-    List<ReportMetric> metrics = metricBuilder.someMetrics().withTypes(metricTypes).buildMany();
-
-    assertEquals(1, metrics.size());
-    assertTrue(metrics.get(0) instanceof CancelationsMetric);
+  private static Stream<Arguments> provideMetrics() {
+    return Stream.of(
+        Arguments.of(ReportMetrics.INCOMES, IncomesMetric.class),
+        Arguments.of(ReportMetrics.RESERVATIONS, ReservationsMetric.class),
+        Arguments.of(ReportMetrics.CANCELATIONS, CancelationsMetric.class));
   }
 
   @Test

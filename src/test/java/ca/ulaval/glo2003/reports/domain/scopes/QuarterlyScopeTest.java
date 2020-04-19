@@ -13,9 +13,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class QuarterlyReportScopeTest {
+class QuarterlyScopeTest {
 
-  private static QuarterlyReportScope reportScope;
+  private static QuarterlyScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
   private static TimeQuarter firstQuarter = aTimeQuarter().build();
   private static TimeQuarter secondQuarter = firstQuarter.plusQuarters(1);
@@ -36,52 +36,63 @@ class QuarterlyReportScopeTest {
   }
 
   private void setUpReportScope() {
-    reportScope = new QuarterlyReportScope(period);
+    reportScope = new QuarterlyScope(period);
   }
 
   @Test
-  public void getPeriods_withSingleQuarter_shouldHaveSingleReport() {
+  public void getReportPeriods_withSingleQuarter_shouldHaveSingleReport() {
     setUpReportScopeWithSingleQuarter();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withSingleQuarter_shouldSetPeriodNamesToThatQuarter() {
+  public void getReportPeriods_withSingleQuarter_shouldSetPeriodNamesToThatQuarter() {
     setUpReportScopeWithSingleQuarter();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstQuarter.toString(), reportPeriods.get(0).getName());
   }
 
   @Test
-  public void getPeriods_withSingleQuarter_shouldSetPeriodToThatQuarter() {
+  public void getReportPeriods_withSingleQuarter_shouldSetPeriodToThatQuarter() {
     setUpReportScopeWithSingleQuarter();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstQuarter.toPeriod(), reportPeriods.get(0).getPeriod());
   }
 
   @Test
-  public void getPeriods_withMultipleQuartersInSameYear_shouldHaveSingleReport() {
+  public void getReportPeriods_withMultipleQuartersInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleQuarters();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withMultipleQuartersInSameYear_shouldSetPeriodNamesToThoseQuarters() {
+  public void
+      getReportPeriods_withMultipleQuartersInSameYear_shouldSetPeriodNamesToThoseQuarters() {
     setUpReportScopeWithMultipleQuarters();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstQuarter.toString(), reportPeriods.get(0).getName());
     assertEquals(secondQuarter.toString(), reportPeriods.get(1).getName());
+  }
+
+  @Test
+  public void getReportPeriods_withMultipleQuarters_shouldSetPeriodToThoseQuarters() {
+    setUpReportScopeWithMultipleQuarters();
+
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+
+    assertEquals(firstQuarter.toPeriod(), reportPeriods.get(0).getPeriod());
+    assertEquals(secondQuarter.toPeriod(), reportPeriods.get(1).getPeriod());
   }
 }

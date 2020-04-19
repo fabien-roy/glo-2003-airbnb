@@ -13,9 +13,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class WeeklyReportScopeTest {
+class WeeklyScopeTest {
 
-  private static WeeklyReportScope reportScope;
+  private static WeeklyScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
   private static TimeWeek firstWeek = aTimeWeek().build();
   private static TimeWeek secondWeek = firstWeek.plusWeeks(1);
@@ -36,52 +36,62 @@ class WeeklyReportScopeTest {
   }
 
   private void setUpReportScope() {
-    reportScope = new WeeklyReportScope(period);
+    reportScope = new WeeklyScope(period);
   }
 
   @Test
-  public void getPeriods_withSingleWeek_shouldHaveSingleReport() {
+  public void getReportPeriodss_withSingleWeek_shouldHaveSingleReport() {
     setUpReportScopeWithSingleWeek();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withSingleWeek_shouldSetPeriodNamesToThatWeek() {
+  public void getReportPeriodss_withSingleWeek_shouldSetPeriodNamesToThatWeek() {
     setUpReportScopeWithSingleWeek();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstWeek.toString(), reportPeriods.get(0).getName());
   }
 
   @Test
-  public void getPeriods_withSingleWeek_shouldSetPeriodToThatWeek() {
+  public void getReportPeriodss_withSingleWeek_shouldSetPeriodToThatWeek() {
     setUpReportScopeWithSingleWeek();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstWeek.toPeriod(), reportPeriods.get(0).getPeriod());
   }
 
   @Test
-  public void getPeriods_withMultipleWeeksInSameYear_shouldHaveSingleReport() {
+  public void getReportPeriodss_withMultipleWeeksInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleWeeks();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withMultipleWeeksInSameYear_shouldSetPeriodNamesToThoseWeeks() {
+  public void getReportPeriodss_withMultipleWeeksInSameYear_shouldSetPeriodNamesToThoseWeeks() {
     setUpReportScopeWithMultipleWeeks();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstWeek.toString(), reportPeriods.get(0).getName());
     assertEquals(secondWeek.toString(), reportPeriods.get(1).getName());
+  }
+
+  @Test
+  public void getReportPeriods_withMultipleWeeks_shouldSetPeriodToThoseWeeks() {
+    setUpReportScopeWithMultipleWeeks();
+
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+
+    assertEquals(firstWeek.toPeriod(), reportPeriods.get(0).getPeriod());
+    assertEquals(secondWeek.toPeriod(), reportPeriods.get(1).getPeriod());
   }
 }

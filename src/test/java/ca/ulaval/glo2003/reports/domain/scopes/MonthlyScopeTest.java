@@ -13,9 +13,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MonthlyReportScopeTest {
+class MonthlyScopeTest {
 
-  private static MonthlyReportScope reportScope;
+  private static MonthlyScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
   private static TimeMonth firstMonth = aTimeMonth().build();
   private static TimeMonth secondMonth = firstMonth.plusMonths(1);
@@ -36,52 +36,62 @@ class MonthlyReportScopeTest {
   }
 
   private void setUpReportScope() {
-    reportScope = new MonthlyReportScope(period);
+    reportScope = new MonthlyScope(period);
   }
 
   @Test
-  public void getPeriods_withSingleMonth_shouldHaveSingleReport() {
+  public void getReportPeriods_withSingleMonth_shouldHaveSingleReport() {
     setUpReportScopeWithSingleMonth();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withSingleMonth_shouldSetPeriodNamesToThatMonth() {
+  public void getReportPeriods_withSingleMonth_shouldSetPeriodNamesToThatMonth() {
     setUpReportScopeWithSingleMonth();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstMonth.toString(), reportPeriods.get(0).getName());
   }
 
   @Test
-  public void getPeriods_withSingleMonth_shouldSetPeriodToThatMonth() {
+  public void getReportPeriods_withSingleMonth_shouldSetPeriodToThatMonth() {
     setUpReportScopeWithSingleMonth();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstMonth.toPeriod(), reportPeriods.get(0).getPeriod());
   }
 
   @Test
-  public void getPeriods_withMultipleMonthsInSameYear_shouldHaveSingleReport() {
+  public void getReportPeriods_withMultipleMonthsInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleMonths();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withMultipleMonthsInSameYear_shouldSetPeriodNamesToThoseMonths() {
+  public void getReportPeriods_withMultipleMonthsInSameYear_shouldSetPeriodNamesToThoseMonths() {
     setUpReportScopeWithMultipleMonths();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstMonth.toString(), reportPeriods.get(0).getName());
     assertEquals(secondMonth.toString(), reportPeriods.get(1).getName());
+  }
+
+  @Test
+  public void getReportPeriods_withMultipleMonths_shouldSetPeriodToThoseMonths() {
+    setUpReportScopeWithMultipleMonths();
+
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
+
+    assertEquals(firstMonth.toPeriod(), reportPeriods.get(0).getPeriod());
+    assertEquals(secondMonth.toPeriod(), reportPeriods.get(1).getPeriod());
   }
 }

@@ -13,9 +13,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AnnualReportScopeTest {
+class AnnualScopeTest {
 
-  private static AnnualReportScope reportScope;
+  private static AnnualScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
   private static TimeYear firstYear = aTimeYear().build();
   private static TimeYear secondYear = firstYear.plusYears(1);
@@ -36,60 +36,60 @@ class AnnualReportScopeTest {
   }
 
   private void setUpReportScope() {
-    reportScope = new AnnualReportScope(period);
+    reportScope = new AnnualScope(period);
   }
 
   @Test
-  public void getPeriods_withSingleYear_shouldHaveSingleReport() {
+  public void getReportPeriodss_withSingleYear_shouldHaveSingleReport() {
     setUpReportScopeWithSingleYear();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(1, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withSingleYear_shouldSetPeriodNamesToThatYear() {
+  public void getReportPeriodss_withSingleYear_shouldSetPeriodNamesToThatYear() {
     setUpReportScopeWithSingleYear();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstYear.toString(), reportPeriods.get(0).getName());
   }
 
   @Test
-  public void getPeriods_withSingleYear_shouldSetPeriodToThatYear() {
+  public void getReportPeriodss_withSingleYear_shouldSetPeriodToThatYear() {
     setUpReportScopeWithSingleYear();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstYear.toPeriod(), reportPeriods.get(0).getPeriod());
   }
 
   @Test
-  public void getPeriods_withMultipleYears_shouldHaveMultipleReports() {
+  public void getReportPeriodss_withMultipleYears_shouldHaveMultipleReports() {
     setUpReportScopeWithMultipleYears();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(2, reportPeriods.size());
   }
 
   @Test
-  public void getPeriods_withMultipleYears_shouldSetPeriodNamesToThoseYears() {
+  public void getReportPeriods_withMultipleYears_shouldSetPeriodNamesToThoseYears() {
     setUpReportScopeWithMultipleYears();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstYear.toString(), reportPeriods.get(0).getName());
     assertEquals(secondYear.toString(), reportPeriods.get(1).getName());
   }
 
   @Test
-  public void getPeriods_withMultipleYears_shouldSetPeriodToThoseYears() {
+  public void getReportPeriods_withMultipleYears_shouldSetPeriodToThoseYears() {
     setUpReportScopeWithMultipleYears();
 
-    List<ReportPeriod> reportPeriods = reportScope.getPeriods();
+    List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
 
     assertEquals(firstYear.toPeriod(), reportPeriods.get(0).getPeriod());
     assertEquals(secondYear.toPeriod(), reportPeriods.get(1).getPeriod());

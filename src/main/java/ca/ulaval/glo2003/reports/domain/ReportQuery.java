@@ -42,7 +42,7 @@ public class ReportQuery {
   public List<ReportPeriod> execute() {
     List<ReportPeriod> queriedPeriods = new ArrayList<>();
 
-    for (ReportPeriod period : scope.getPeriods()) {
+    for (ReportPeriod period : scope.getReportPeriods()) {
       List<Transaction> periodTransactions =
           transactions.stream()
               .filter(transaction -> period.contains(transaction.getTimestamp()))

@@ -6,14 +6,14 @@ import ca.ulaval.glo2003.time.domain.TimeYear;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AnnualReportScope extends ReportScope {
+public class AnnualScope extends ReportScope {
 
-  public AnnualReportScope(TimePeriod period) {
+  public AnnualScope(TimePeriod period) {
     super(period);
   }
 
   @Override
-  public List<ReportPeriod> getPeriods() {
+  public List<ReportPeriod> getReportPeriods() {
     return period.getYears().stream().map(this::createReportPeriod).collect(Collectors.toList());
   }
 

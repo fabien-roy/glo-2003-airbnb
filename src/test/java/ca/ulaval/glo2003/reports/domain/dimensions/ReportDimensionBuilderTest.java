@@ -6,8 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ReportDimensionBuilderTest {
 
@@ -25,27 +29,23 @@ class ReportDimensionBuilderTest {
     assertEquals(0, dimensions.size());
   }
 
-  @Test
-  public void buildMany_withPackageDimension_shouldBuildPackageDimension() {
-    List<ReportDimensions> dimensionTypes = Collections.singletonList(ReportDimensions.PACKAGE);
+  @ParameterizedTest
+  @MethodSource("provideDimensions")
+  public void buildMany_withDimension_shouldBuildDimension(
+      ReportDimensions dimensionType, Class<? extends ReportDimensions> dimensionClass) {
+    List<ReportDimensions> dimensionTypes = Collections.singletonList(dimensionType);
 
     List<ReportDimension> dimensions =
         dimensionBuilder.someDimensions().withTypes(dimensionTypes).buildMany();
 
     assertEquals(1, dimensions.size());
-    assertTrue(dimensions.get(0) instanceof PackageDimension);
+    assertTrue(dimensionClass.isInstance(dimensions.get(0)));
   }
 
-  @Test
-  public void buildMany_withLodgingModeDimension_shouldBuildLodgingModeDimension() {
-    List<ReportDimensions> dimensionTypes =
-        Collections.singletonList(ReportDimensions.LODGING_MODE);
-
-    List<ReportDimension> dimensions =
-        dimensionBuilder.someDimensions().withTypes(dimensionTypes).buildMany();
-
-    assertEquals(1, dimensions.size());
-    assertTrue(dimensions.get(0) instanceof LodgingModeDimension);
+  private static Stream<Arguments> provideDimensions() {
+    return Stream.of(
+        Arguments.of(ReportDimensions.PACKAGE, PackageDimension.class),
+        Arguments.of(ReportDimensions.LODGING_MODE, LodgingModeDimension.class));
   }
 
   @Test
