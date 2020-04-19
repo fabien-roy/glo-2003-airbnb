@@ -31,7 +31,7 @@ public class TimeMonthBuilder {
 
   public TimeMonthBuilder withWeek(TimeWeek week) {
     month = createMonth(week);
-    quarter = aTimeQuarter().withYear(week.getYear()).withQuarterOfYear(month.getValue() / 3 * 3).build();
+    quarter = aTimeQuarter().withYear(week.getYear()).withQuarterOfYear(((month.getValue() - 1) / 3) + 1).build();
     return this;
   }
 

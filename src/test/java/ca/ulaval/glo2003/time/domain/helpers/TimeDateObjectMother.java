@@ -18,26 +18,31 @@ public class TimeDateObjectMother {
 
   private TimeDateObjectMother() {}
 
+  private static int randomBetween(int firstBound, int secondBound) {
+    if (firstBound == secondBound) return firstBound;
+    int lowerBound = Math.min(firstBound, secondBound);
+    int higherBound = Math.max(firstBound, secondBound);
+    return Faker.instance().random().nextInt(lowerBound, higherBound);
+  }
+
   public static Year createYear() {
     return Year.of(Faker.instance().random().nextInt(thisYear(), inManyYears()));
   }
 
   public static int createQuarterOfYear(TimeYear year) {
-    return Faker.instance().random().nextInt(futureQuarter(year), lastPossibleQuarter());
+    return randomBetween(futureQuarter(year), lastPossibleQuarter());
   }
 
   public static int createQuarterOfYear(TimeWeek week) {
-    return Faker.instance().random().nextInt(futureQuarter(week), week.lastQuarter());
+    return randomBetween(futureQuarter(week), week.lastQuarter());
   }
 
   public static Month createMonth(TimeQuarter quarter) {
-    return Month.of(
-        Faker.instance().random().nextInt(futureMonth(quarter), quarter.lastMonth()));
+    return Month.of(randomBetween(futureMonth(quarter), quarter.lastMonth()));
   }
 
   public static Month createMonth(TimeWeek week) {
-    return Month.of(
-            Faker.instance().random().nextInt(futureMonth(week), week.lastMonth()));
+    return Month.of(randomBetween(futureMonth(week), week.lastMonth()));
   }
 
   public static int createWeekOfYear(TimeYear year) {
@@ -45,19 +50,17 @@ public class TimeDateObjectMother {
   }
 
   public static int createWeekOfYear(TimeMonth month) {
-    return Faker.instance().random().nextInt(month.firstWeek(), month.lastWeek());
+    return randomBetween(month.firstWeek(), month.lastWeek());
   }
 
   public static int createDayOfYear(TimeMonth month, int dayOfMonth) {
-    return Faker.instance()
-        .random()
-        .nextInt(thatDay(month, dayOfMonth), month.getYear().atLastDay().getDayOfYear());
+    return randomBetween(thatDay(month, dayOfMonth), month.getYear().atLastDay().getDayOfYear());
   }
 
   public static int createDayOfMonth(TimeMonth month, TimeWeek week) {
     int lowerBound = Math.max(futureDay(month), futureDay(week));
     int higherBound = Math.min(month.atLastDay().getDayOfMonth(), week.atLastDay().getDayOfMonth());
-    return Faker.instance().random().nextInt(Math.min(lowerBound, higherBound), Math.max(lowerBound, higherBound));
+    return randomBetween(lowerBound, higherBound);
   }
 
   public static int createDayOfWeek(TimeWeek week, int dayOfYear) {
@@ -110,7 +113,7 @@ public class TimeDateObjectMother {
   }
 
   private static int futureDay(TimeWeek week) {
-    return isCurrentWeek(week) ? now().getDayOfMonth() : week.atFirstDay().getDayOfMonth();
+    return isCurrentWeek(week) ? now().getDayOfMonth() : week.atFirstDay().getDayOfMonth() - 1;
   }
 
   private static boolean isCurrentYear(TimeYear year) {

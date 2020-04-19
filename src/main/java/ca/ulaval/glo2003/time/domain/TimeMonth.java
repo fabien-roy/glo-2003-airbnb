@@ -52,17 +52,21 @@ public class TimeMonth implements Comparable<TimeMonth> {
   }
 
   public int firstWeek() {
-    return weekCalendar().getMinimum(Calendar.WEEK_OF_YEAR);
+    Calendar calendar = weekCalendar();
+    calendar.set(Calendar.DAY_OF_MONTH, 1);
+    return calendar.get(Calendar.WEEK_OF_YEAR);
   }
 
   public int lastWeek() {
-    return weekCalendar().getMaximum(Calendar.WEEK_OF_YEAR);
+    Calendar calendar = weekCalendar();
+    calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+    return calendar.get(Calendar.WEEK_OF_YEAR);
   }
 
   private Calendar weekCalendar() {
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, quarter.getYear().toYear().getValue());
-    calendar.set(Calendar.MONTH, month.getValue());
+    calendar.set(Calendar.MONTH, month.getValue() - 1);
     return calendar;
   }
 
