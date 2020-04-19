@@ -6,7 +6,6 @@ import ca.ulaval.glo2003.time.domain.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
-// TODO : Test ReportPeriod
 public class ReportPeriod {
 
   private final String name;
