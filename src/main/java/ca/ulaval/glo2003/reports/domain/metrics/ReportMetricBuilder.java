@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : Test ReportMetricBuilder
 public class ReportMetricBuilder {
 
   private List<ReportMetrics> metricTypes = new ArrayList<>();
@@ -25,12 +24,12 @@ public class ReportMetricBuilder {
   private ReportMetric buildOne(ReportMetrics metricType) {
     switch (metricType) {
       case RESERVATIONS:
-        return new ReservationsReportMetric();
+        return new ReservationsMetric();
       case CANCELATIONS:
-        return new CancelationsReportMetric();
+        return new CancelationsMetric();
       default:
       case INCOMES:
-        return new IncomesReportMetric();
+        return new IncomesMetric();
     }
   }
 }

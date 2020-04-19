@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO : Test ReservationsReportMetric
-public class ReservationsReportMetric extends ReportMetric<Integer> {
+public class ReservationsMetric extends ReportMetric<Integer> {
 
   @Override
   public ReportMetrics getMetricName() {

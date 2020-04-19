@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 // TODO : Test CancelationsReportMetric
-public class CancelationsReportMetric extends ReportMetric<Integer> {
+public class CancelationsMetric extends ReportMetric<Integer> {
 
   @Override
   public ReportMetrics getMetricName() {
