@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO : Test PackageReportDimension
-public class PackageReportDimension extends ReportDimension<Packages> {
+public class PackageDimension extends ReportDimension<Packages> {
 
   @Override
   public ReportDimensions getDimensionName() {

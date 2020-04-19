@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : Test ReportDimensionBuilder
 public class ReportDimensionBuilder {
 
   private List<ReportDimensions> dimensionTypes = new ArrayList<>();
@@ -25,10 +24,10 @@ public class ReportDimensionBuilder {
   private ReportDimension buildOne(ReportDimensions metricType) {
     switch (metricType) {
       case PACKAGE:
-        return new PackageReportDimension();
+        return new PackageDimension();
       default:
       case LODGING_MODE:
-        return new LodgingModeReportDimension();
+        return new LodgingModeDimension();
     }
   }
 }

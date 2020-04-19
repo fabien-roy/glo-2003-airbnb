@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // TODO : Test LodgingModeReportDimension
-public class LodgingModeReportDimension extends ReportDimension<LodgingModes> {
+public class LodgingModeDimension extends ReportDimension<LodgingModes> {
 
   @Override
   public ReportDimensions getDimensionName() {
