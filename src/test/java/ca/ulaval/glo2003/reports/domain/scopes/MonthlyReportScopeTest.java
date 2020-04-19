@@ -40,7 +40,7 @@ class MonthlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleMonth_shouldHaveSingleReport() {
+  public void getPeriods_withSingleMonth_shouldHaveSingleReport() {
     setUpReportScopeWithSingleMonth();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -49,7 +49,7 @@ class MonthlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleMonth_shouldSetPeriodNamesToThatMonth() {
+  public void getPeriods_withSingleMonth_shouldSetPeriodNamesToThatMonth() {
     setUpReportScopeWithSingleMonth();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -58,7 +58,7 @@ class MonthlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleMonth_shouldSetPeriodToThatMonth() {
+  public void getPeriods_withSingleMonth_shouldSetPeriodToThatMonth() {
     setUpReportScopeWithSingleMonth();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -67,7 +67,7 @@ class MonthlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleMonthsInSameYear_shouldHaveSingleReport() {
+  public void getPeriods_withMultipleMonthsInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleMonths();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -76,7 +76,7 @@ class MonthlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleMonthsInSameYear_shouldSetPeriodNamesToThoseMonths() {
+  public void getPeriods_withMultipleMonthsInSameYear_shouldSetPeriodNamesToThoseMonths() {
     setUpReportScopeWithMultipleMonths();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();

@@ -27,6 +27,18 @@ public class ReportQuery {
     this.transactions = transactions;
   }
 
+  public ReportScope getScope() {
+    return scope;
+  }
+
+  public List<ReportMetric> getMetrics() {
+    return metrics;
+  }
+
+  public List<ReportDimension> getDimensions() {
+    return dimensions;
+  }
+
   public List<ReportPeriod> execute() {
     List<ReportPeriod> queriedPeriods = new ArrayList<>();
 

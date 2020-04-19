@@ -40,7 +40,7 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleYear_shouldHaveSingleReport() {
+  public void getPeriods_withSingleYear_shouldHaveSingleReport() {
     setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -49,7 +49,7 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleYear_shouldSetPeriodNamesToThatYear() {
+  public void getPeriods_withSingleYear_shouldSetPeriodNamesToThatYear() {
     setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -58,7 +58,7 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleYear_shouldSetPeriodToThatYear() {
+  public void getPeriods_withSingleYear_shouldSetPeriodToThatYear() {
     setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -67,7 +67,7 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleYears_shouldHaveMultipleReports() {
+  public void getPeriods_withMultipleYears_shouldHaveMultipleReports() {
     setUpReportScopeWithMultipleYears();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -76,7 +76,7 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleYears_shouldSetPeriodNamesToThoseYears() {
+  public void getPeriods_withMultipleYears_shouldSetPeriodNamesToThoseYears() {
     setUpReportScopeWithMultipleYears();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -86,7 +86,7 @@ class AnnualReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleYears_shouldSetPeriodToThoseYears() {
+  public void getPeriods_withMultipleYears_shouldSetPeriodToThoseYears() {
     setUpReportScopeWithMultipleYears();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();

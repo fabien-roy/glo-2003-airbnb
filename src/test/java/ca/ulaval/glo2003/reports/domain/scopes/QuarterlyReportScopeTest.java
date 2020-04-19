@@ -40,7 +40,7 @@ class QuarterlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleQuarter_shouldHaveSingleReport() {
+  public void getPeriods_withSingleQuarter_shouldHaveSingleReport() {
     setUpReportScopeWithSingleQuarter();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -49,7 +49,7 @@ class QuarterlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleQuarter_shouldSetPeriodNamesToThatQuarter() {
+  public void getPeriods_withSingleQuarter_shouldSetPeriodNamesToThatQuarter() {
     setUpReportScopeWithSingleQuarter();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -58,7 +58,7 @@ class QuarterlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleQuarter_shouldSetPeriodToThatQuarter() {
+  public void getPeriods_withSingleQuarter_shouldSetPeriodToThatQuarter() {
     setUpReportScopeWithSingleQuarter();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -67,7 +67,7 @@ class QuarterlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleQuartersInSameYear_shouldHaveSingleReport() {
+  public void getPeriods_withMultipleQuartersInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleQuarters();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -76,7 +76,7 @@ class QuarterlyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleQuartersInSameYear_shouldSetPeriodNamesToThoseQuarters() {
+  public void getPeriods_withMultipleQuartersInSameYear_shouldSetPeriodNamesToThoseQuarters() {
     setUpReportScopeWithMultipleQuarters();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();

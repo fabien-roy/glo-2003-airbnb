@@ -40,7 +40,7 @@ class WeeklyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleWeek_shouldHaveSingleReport() {
+  public void getPeriods_withSingleWeek_shouldHaveSingleReport() {
     setUpReportScopeWithSingleWeek();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -49,7 +49,7 @@ class WeeklyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleWeek_shouldSetPeriodNamesToThatWeek() {
+  public void getPeriods_withSingleWeek_shouldSetPeriodNamesToThatWeek() {
     setUpReportScopeWithSingleWeek();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -58,7 +58,7 @@ class WeeklyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withSingleWeek_shouldSetPeriodToThatWeek() {
+  public void getPeriods_withSingleWeek_shouldSetPeriodToThatWeek() {
     setUpReportScopeWithSingleWeek();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -67,7 +67,7 @@ class WeeklyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleWeeksInSameYear_shouldHaveSingleReport() {
+  public void getPeriods_withMultipleWeeksInSameYear_shouldHaveSingleReport() {
     setUpReportScopeWithMultipleWeeks();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();
@@ -76,7 +76,7 @@ class WeeklyReportScopeTest {
   }
 
   @Test
-  public void getReportPeriod_withMultipleWeeksInSameYear_shouldSetPeriodNamesToThoseWeeks() {
+  public void getPeriods_withMultipleWeeksInSameYear_shouldSetPeriodNamesToThoseWeeks() {
     setUpReportScopeWithMultipleWeeks();
 
     List<ReportPeriod> reportPeriods = reportScope.getPeriods();

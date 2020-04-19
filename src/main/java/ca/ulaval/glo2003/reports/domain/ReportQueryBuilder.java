@@ -9,17 +9,15 @@ import ca.ulaval.glo2003.reports.domain.scopes.ReportScopes;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
-// TODO : Test ReportQueryBuilder
 public class ReportQueryBuilder {
 
   private final ReportScopeBuilder scopeBuilder;
-  private final ReportDimensionBuilder dimensionBuilder;
   private final ReportMetricBuilder metricBuilder;
+  private final ReportDimensionBuilder dimensionBuilder;
 
   private ReportScopes DEFAULT_SCOPE = ReportScopes.MONTHLY;
   private ReportScopes scope = DEFAULT_SCOPE;
@@ -30,7 +28,7 @@ public class ReportQueryBuilder {
   private List<ReportMetrics> DEFAULT_METRICS = Collections.singletonList(ReportMetrics.INCOMES);
   private List<ReportMetrics> metrics = DEFAULT_METRICS;
 
-  private List<ReportDimensions> DEFAULT_DIMENSIONS = new ArrayList<>();
+  private List<ReportDimensions> DEFAULT_DIMENSIONS = Collections.emptyList();
   private List<ReportDimensions> dimensions = DEFAULT_DIMENSIONS;
 
   @Inject
