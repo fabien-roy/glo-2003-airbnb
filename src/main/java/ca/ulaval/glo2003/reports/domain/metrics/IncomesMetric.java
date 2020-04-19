@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 public class IncomesMetric extends ReportMetric<Price> {
 
   @Override
-  public ReportMetrics getMetricName() {
+  public ReportMetrics getName() {
     return ReportMetrics.CANCELATIONS;
   }
 

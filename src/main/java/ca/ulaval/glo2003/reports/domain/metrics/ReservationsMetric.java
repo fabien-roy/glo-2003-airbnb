@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class ReservationsMetric extends ReportMetric<Integer> {
 
   @Override
-  public ReportMetrics getMetricName() {
+  public ReportMetrics getName() {
     return ReportMetrics.RESERVATIONS;
   }
 

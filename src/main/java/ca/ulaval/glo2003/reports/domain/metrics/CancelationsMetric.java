@@ -9,11 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// TODO : Test CancelationsReportMetric
 public class CancelationsMetric extends ReportMetric<Integer> {
 
   @Override
-  public ReportMetrics getMetricName() {
+  public ReportMetrics getName() {
     return ReportMetrics.CANCELATIONS;
   }
 

@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
+import java.time.LocalDate;
 
 public class TransactionBuilder {
 
@@ -53,6 +54,11 @@ public class TransactionBuilder {
 
   public TransactionBuilder withTimestamp(Timestamp timestamp) {
     this.timestamp = timestamp;
+    return this;
+  }
+
+  public TransactionBuilder forRefund() {
+    this.timestamp = new Timestamp(LocalDate.now());
     return this;
   }
 

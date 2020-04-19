@@ -2,10 +2,9 @@ package ca.ulaval.glo2003.reports.domain.metrics;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 
-// TODO : Test ReportMetric
 public abstract class ReportMetric<T> {
 
-  public abstract ReportMetrics getMetricName();
+  public abstract ReportMetrics getName();
 
   public abstract void calculate(ReportPeriodData data);
 
@@ -13,7 +12,7 @@ public abstract class ReportMetric<T> {
     return new ReportMetricData<T>() {
       @Override
       public ReportMetrics getName() {
-        return getMetricName();
+        return ReportMetric.this.getName();
       }
 
       @Override
