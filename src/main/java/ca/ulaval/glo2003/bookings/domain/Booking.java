@@ -70,11 +70,6 @@ public class Booking {
     return price;
   }
 
-  // TODO : Test Booking.getTotal()
-  public Price getTotal() {
-    return price.getTotal();
-  }
-
   public void setPrice(Price price) {
     this.price = price;
   }
@@ -85,6 +80,10 @@ public class Booking {
 
   public BookingStatuses getStatus() {
     return status;
+  }
+
+  public Price getTotal() {
+    return price.getTotal();
   }
 
   public void cancel() {

@@ -25,7 +25,6 @@ public class CohabitationLodgingMode implements LodgingMode {
       Bed bed, Integer minCapacity, TimeDate arrivalDate, int numberOfNights) {
     TimePeriod period = arrivalDate.periodToDays(numberOfNights - 1);
 
-    // TODO : Pretty sure you want to remove the last date
     for (TimeDate date : period.getDates()) {
       int remainingCapacity = bed.getResidualCapacityOnDate(date);
       if (remainingCapacity < minCapacity) return false;

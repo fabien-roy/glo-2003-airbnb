@@ -2,10 +2,12 @@ package ca.ulaval.glo2003.bookings.domain;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
+import ca.ulaval.glo2003.transactions.domain.Price;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +15,14 @@ class BookingTest {
 
   private static Booking booking;
   private static Booking otherBooking;
+  private static Price price;
   private static TimeDate arrivalDate;
   private static TimeDate otherArrivalDate;
   private static int numberOfNights;
 
   @BeforeEach
   public void setUpBooking() {
+    price = createPrice();
     numberOfNights = 3;
     arrivalDate = aTimeDate().build();
     otherArrivalDate = arrivalDate.plusDays(numberOfNights);
@@ -28,7 +32,11 @@ class BookingTest {
   }
 
   private Booking buildBooking() {
-    return aBooking().withArrivalDate(arrivalDate).withNumberOfNights(numberOfNights).build();
+    return aBooking()
+        .withPrice(price)
+        .withArrivalDate(arrivalDate)
+        .withNumberOfNights(numberOfNights)
+        .build();
   }
 
   private Booking buildOtherBooking() {
@@ -42,6 +50,13 @@ class BookingTest {
     TimeDate date = booking.getDepartureDate();
 
     assertEquals(departureDate, date);
+  }
+
+  @Test
+  public void getTotal_shouldGetPriceTotal() {
+    Price total = booking.getTotal();
+
+    assertEquals(price.getTotal(), total);
   }
 
   @Test
