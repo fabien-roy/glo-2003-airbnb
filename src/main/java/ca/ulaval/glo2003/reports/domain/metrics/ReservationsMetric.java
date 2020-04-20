@@ -12,6 +12,6 @@ public class ReservationsMetric extends ReservationFilteringMetric<Integer> {
   @Override
   public void calculate(ReportPeriodData data) {
     Integer reservations = filterReservations(data).size();
-    data.addMetrics(toMetricData(reservations));
+    data.addMetric(toMetricData(reservations));
   }
 }

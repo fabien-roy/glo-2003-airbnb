@@ -1,19 +1,8 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,30 +10,37 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 class PackageDimensionTest extends ReportDimensionTest {
 
-  private static Transaction bloodthirstyTransaction = mock(Transaction.class);
-  private static Transaction allYouCanDrinkTransaction = mock(Transaction.class);
-  private static Transaction sweetToothTransaction = mock(Transaction.class);
+  private static ReportEvent bloodthirstyEvent = mock(ReportEvent.class);
+  private static ReportEvent allYouCanDrinkEvent = mock(ReportEvent.class);
+  private static ReportEvent sweetToothEvent = mock(ReportEvent.class);
 
   @BeforeAll
   public static void setUpDimension() {
     dimension = new PackageDimension();
-    setUpTransactions();
+    setUpEvents();
   }
 
-  private static void setUpTransactions() {
-    Booking bloodthirstyBooking = aBooking().withPackage(Packages.BLOODTHIRSTY).build();
-    Booking allYouCanDrinkBooking = aBooking().withPackage(Packages.ALL_YOU_CAN_DRINK).build();
-    Booking sweetToothBooking = aBooking().withPackage(Packages.SWEET_TOOTH).build();
-    when(bloodthirstyTransaction.getBooking()).thenReturn(bloodthirstyBooking);
-    when(allYouCanDrinkTransaction.getBooking()).thenReturn(allYouCanDrinkBooking);
-    when(sweetToothTransaction.getBooking()).thenReturn(sweetToothBooking);
+  private static void setUpEvents() {
+    when(bloodthirstyEvent.getPackage()).thenReturn(Packages.BLOODTHIRSTY);
+    when(allYouCanDrinkEvent.getPackage()).thenReturn(Packages.ALL_YOU_CAN_DRINK);
+    when(sweetToothEvent.getPackage()).thenReturn(Packages.SWEET_TOOTH);
   }
 
   @Override
-  protected List<Transaction> buildTransactions() {
-    return Arrays.asList(bloodthirstyTransaction, allYouCanDrinkTransaction, sweetToothTransaction);
+  protected List<ReportEvent> buildEvents() {
+    return Arrays.asList(bloodthirstyEvent, allYouCanDrinkEvent, sweetToothEvent);
   }
 
   @Override
@@ -73,22 +69,22 @@ class PackageDimensionTest extends ReportDimensionTest {
   }
 
   @ParameterizedTest
-  @MethodSource("providePackageTransactions")
-  public void splitAll_withSingleTransactionPerPackage_shouldSplitTransactionsByPackage(
-      Packages value, Transaction transaction) {
+  @MethodSource("providePackageEvents")
+  public void splitAll_withSingleEventPerPackage_shouldSplitEventsByPackage(
+      Packages value, ReportEvent event) {
     List<ReportPeriodData> splitData = dimension.splitAll(singleData);
     List<ReportPeriodData> filteredData = filterData(splitData, value);
 
     assertEquals(1, filteredData.size());
-    assertEquals(1, filteredData.get(0).getTransactions().size());
-    assertEquals(transaction, filteredData.get(0).getTransactions().get(0));
+    assertEquals(1, filteredData.get(0).getEvents().size());
+    assertEquals(event, filteredData.get(0).getEvents().get(0));
   }
 
-  private static Stream<Arguments> providePackageTransactions() {
+  private static Stream<Arguments> providePackageEvents() {
     return Stream.of(
-        Arguments.of(Packages.BLOODTHIRSTY, bloodthirstyTransaction),
-        Arguments.of(Packages.ALL_YOU_CAN_DRINK, allYouCanDrinkTransaction),
-        Arguments.of(Packages.SWEET_TOOTH, sweetToothTransaction));
+        Arguments.of(Packages.BLOODTHIRSTY, bloodthirstyEvent),
+        Arguments.of(Packages.ALL_YOU_CAN_DRINK, allYouCanDrinkEvent),
+        Arguments.of(Packages.SWEET_TOOTH, sweetToothEvent));
   }
 
   private List<ReportPeriodData> filterData(List<ReportPeriodData> data, Packages value) {

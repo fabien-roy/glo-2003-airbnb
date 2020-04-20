@@ -2,8 +2,7 @@ package ca.ulaval.glo2003.reports.domain;
 
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
-import ca.ulaval.glo2003.time.domain.Timestamp;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -34,13 +33,12 @@ public class ReportPeriod {
     this.data = data;
   }
 
-  public void setSingleData(List<Transaction> transactions) {
-    ReportPeriodData singleData = new ReportPeriodData(transactions);
+  public void setSingleData(List<ReportEvent> events) {
+    ReportPeriodData singleData = new ReportPeriodData(events);
     this.data = Collections.singletonList(singleData);
   }
 
-  public boolean contains(Timestamp timestamp) {
-    TimeDate date = new TimeDate(timestamp.toLocalDate());
+  public boolean contains(TimeDate date) {
     return period.contains(date);
   }
 }

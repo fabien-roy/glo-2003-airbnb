@@ -2,23 +2,22 @@ package ca.ulaval.glo2003.reports.domain;
 
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionData;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricData;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportPeriodData {
 
-  private List<Transaction>
-      transactions; // TODO : ReportPeriodData should not have transactions (IMPROV)
+  private List<ReportEvent> events;
   private List<ReportMetricData> metrics = new ArrayList<>();
   private List<ReportDimensionData> dimensions = new ArrayList<>();
 
-  public ReportPeriodData(List<Transaction> transactions) {
-    this.transactions = transactions;
+  public ReportPeriodData(List<ReportEvent> events) {
+    this.events = events;
   }
 
-  public List<Transaction> getTransactions() {
-    return transactions;
+  public List<ReportEvent> getEvents() {
+    return events;
   }
 
   public List<ReportMetricData> getMetrics() {
@@ -29,7 +28,7 @@ public class ReportPeriodData {
     return dimensions;
   }
 
-  public void addMetrics(ReportMetricData metric) {
+  public void addMetric(ReportMetricData metric) {
     metrics.add(metric);
   }
 

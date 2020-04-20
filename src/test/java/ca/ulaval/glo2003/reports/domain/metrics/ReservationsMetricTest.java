@@ -1,11 +1,13 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static ca.ulaval.glo2003.reports.domain.helpers.ReportPeriodDataBuilder.aReportPeriodData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-class ReservationsMetricTest extends ReservationFilteringMetricTest {
+class ReservationsMetricTest extends ReportMetricTest {
 
   @Override
   protected ReportMetrics metricName() {
@@ -17,30 +19,23 @@ class ReservationsMetricTest extends ReservationFilteringMetricTest {
     metric = new ReservationsMetric();
   }
 
-  @Test
-  public void calculate_withoutReservation_shouldCalculateZero() {
-    setUpDataWithoutReservation();
+  @ParameterizedTest
+  @ValueSource(ints = { 0, 3, 5, 10 })
+  public void calculate_withReservations_shouldCalculateNumberOfReservations(int numberOfReservations) {
+    data = aReportPeriodData().withANumberOfReservations(numberOfReservations).build();
 
     metric.calculate(data);
 
-    assertEquals(0, data.getMetrics().get(0).getValue());
+    assertEquals(numberOfReservations, data.getMetrics().get(0).getValue());
   }
 
-  @Test
-  public void calculate_withSingleReservation_shouldCalculateOne() {
-    setUpDataWithSingleReservation();
+  @ParameterizedTest
+  @ValueSource(ints = { 0, 3, 5, 10 })
+  public void calculate_withReservationsAndCancelations_shouldCalculateNumberOfReservations(int numberOfType) {
+    data = aReportPeriodData().withANumberOfReservations(numberOfType).withANumberOfCancelations(numberOfType).build();
 
     metric.calculate(data);
 
-    assertEquals(1, data.getMetrics().get(0).getValue());
-  }
-
-  @Test
-  public void calculate_withMultipleReservations_shouldCalculateNumberOfReservations() {
-    setUpDataWithMultipleReservations();
-
-    metric.calculate(data);
-
-    assertEquals(2, data.getMetrics().get(0).getValue());
+    assertEquals(numberOfType, data.getMetrics().get(0).getValue());
   }
 }

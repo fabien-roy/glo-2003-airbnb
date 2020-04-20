@@ -1,40 +1,50 @@
 package ca.ulaval.glo2003.reports.services;
 
+import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.reports.converters.ReportConverter;
-import ca.ulaval.glo2003.reports.domain.ReportPeriod;
-import ca.ulaval.glo2003.reports.domain.ReportQuery;
-import ca.ulaval.glo2003.reports.domain.ReportQueryFactory;
+import ca.ulaval.glo2003.reports.domain.*;
 import ca.ulaval.glo2003.reports.rest.ReportPeriodResponse;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import ca.ulaval.glo2003.transactions.services.TransactionService;
 import com.google.inject.Inject;
+
 import java.util.List;
 import java.util.Map;
 
 public class ReportService {
 
   private final ReportQueryFactory reportQueryFactory;
+  private final ReportEventFactory reportEventFactory;
   private final ReportConverter reportConverter;
-  private final TransactionService transactionService;
+  private final ReportRepository reportRepository;
 
   @Inject
   public ReportService(
       ReportQueryFactory reportQueryFactory,
+      ReportEventFactory reportEventFactory,
       ReportConverter reportConverter,
-      TransactionService transactionService) {
+      ReportRepository reportRepository) {
     this.reportQueryFactory = reportQueryFactory;
+    this.reportEventFactory = reportEventFactory;
     this.reportConverter = reportConverter;
-    this.transactionService = transactionService;
+    this.reportRepository = reportRepository;
   }
 
   // TODO : Logic and tests of ReportService.getAll(...) (#331)
   public List<ReportPeriodResponse> getAll(Map<String, List<String>> params) {
     ReportQuery reportQuery = reportQueryFactory.create(params);
+    List<ReportPeriod> periods = reportRepository.getPeriods(reportQuery);
+    return reportConverter.toResponses(periods);
+  }
 
-    List<Transaction> transactions = transactionService.getAll();
-    reportQuery.setTransactions(transactions);
+  // TODO : Test ReportService.addReservation
+  public void addReservation(Bed bed, Booking booking) {
+    ReportEvent event = reportEventFactory.create(ReportEventTypes.RESERVATION, bed, booking);
+    reportRepository.add(event);
+  }
 
-    List<ReportPeriod> reportPeriods = reportQuery.execute();
-    return reportConverter.toResponses(reportPeriods);
+  // TODO : Test ReportService.addCancelation
+  public void addCancelation(Bed bed, Booking booking) {
+    ReportEvent event = reportEventFactory.create(ReportEventTypes.CANCELATION, bed, booking);
+    reportRepository.add(event);
   }
 }

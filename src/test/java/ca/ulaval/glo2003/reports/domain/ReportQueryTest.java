@@ -1,21 +1,21 @@
 package ca.ulaval.glo2003.reports.domain;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimestampObjectMother.createTimestamp;
-import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
-import ca.ulaval.glo2003.time.domain.Timestamp;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventBuilder.aReportEvent;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class ReportQueryTest {
 
@@ -30,24 +30,23 @@ class ReportQueryTest {
   private static List<ReportDimension> dimensions;
   private static ReportDimension firstDimension = mock(ReportDimension.class);
   private static ReportDimension secondDimension = mock(ReportDimension.class);
-  private static List<Transaction> transactions;
-  private static Timestamp timestamp = createTimestamp();
-  private static Timestamp otherTimestamp = createTimestamp();
-  private static Transaction firstTransaction = aTransaction().withTimestamp(timestamp).build();
-  private static Transaction secondTransaction =
-      aTransaction().withTimestamp(otherTimestamp).build();
+  private static List<ReportEvent> events;
+  private static TimeDate date = aTimeDate().build();
+  private static TimeDate otherDate = aTimeDate().build();
+  private static ReportEvent firstEvent = aReportEvent().withDate(date).build();
+  private static ReportEvent secondEvent = aReportEvent().withDate(otherDate).build();
 
   @BeforeAll
   private static void setUpPeriods() {
-    when(firstPeriod.contains(timestamp)).thenReturn(true);
-    when(firstPeriod.contains(otherTimestamp)).thenReturn(false);
-    when(secondPeriod.contains(timestamp)).thenReturn(false);
-    when(secondPeriod.contains(otherTimestamp)).thenReturn(true);
+    when(firstPeriod.contains(date)).thenReturn(true);
+    when(firstPeriod.contains(otherDate)).thenReturn(false);
+    when(secondPeriod.contains(date)).thenReturn(false);
+    when(secondPeriod.contains(otherDate)).thenReturn(true);
   }
 
   private void setUpQuery() {
     query = new ReportQuery(scope, metrics, dimensions);
-    query.setTransactions(transactions);
+    query.setEvents(events);
   }
 
   @BeforeEach
@@ -56,7 +55,7 @@ class ReportQueryTest {
 
     setUpScopeWithSinglePeriod();
     setUpScopeWithSingleDimension();
-    setUpScopeWithSingleTransaction();
+    setUpScopeWithSingleEvent();
   }
 
   private void setUpScopeWithSinglePeriod() {
@@ -74,13 +73,13 @@ class ReportQueryTest {
     setUpQuery();
   }
 
-  private void setUpScopeWithSingleTransaction() {
-    transactions = Collections.singletonList(firstTransaction);
+  private void setUpScopeWithSingleEvent() {
+    events = Collections.singletonList(firstEvent);
     setUpQuery();
   }
 
-  private void setUpScopeWithMultipleTransactions() {
-    transactions = Arrays.asList(firstTransaction, secondTransaction);
+  private void setUpScopeWithMultipleEvents() {
+    events = Arrays.asList(firstEvent, secondEvent);
     setUpQuery();
   }
 
@@ -105,12 +104,12 @@ class ReportQueryTest {
   @Test
   public void execute_shouldUseTransactionsWithinPeriods() {
     setUpScopeWithMultiplePeriods();
-    setUpScopeWithMultipleTransactions();
+    setUpScopeWithMultipleEvents();
 
     query.execute();
 
-    verify(firstPeriod).setSingleData(eq(Collections.singletonList(firstTransaction)));
-    verify(secondPeriod).setSingleData(eq(Collections.singletonList(secondTransaction)));
+    verify(firstPeriod).setSingleData(eq(Collections.singletonList(firstEvent)));
+    verify(secondPeriod).setSingleData(eq(Collections.singletonList(secondEvent)));
   }
 
   // TODO : Testing isn't done yet.

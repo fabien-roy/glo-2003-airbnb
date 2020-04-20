@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public abstract class ReportDimension<T> {
 
   protected abstract List<T> getValues();
 
-  protected abstract boolean filter(Transaction transaction, T value);
+  protected abstract boolean filter(ReportEvent reportEvent, T value);
 
   public List<ReportPeriodData> splitAll(List<ReportPeriodData> data) {
     List<ReportPeriodData> splitData = new ArrayList<>();
@@ -27,11 +28,11 @@ public abstract class ReportDimension<T> {
   }
 
   protected ReportPeriodData filterAll(ReportPeriodData data, T value) {
-    List<Transaction> splitTransactions =
-        data.getTransactions().stream()
-            .filter(transaction -> filter(transaction, value))
+    List<ReportEvent> splitEvents =
+        data.getEvents().stream()
+            .filter(event -> filter(event, value))
             .collect(Collectors.toList());
-    ReportPeriodData filteredData = new ReportPeriodData(splitTransactions);
+    ReportPeriodData filteredData = new ReportPeriodData(splitEvents);
     filteredData.addDimension(toDimensionData(value));
     return filteredData;
   }

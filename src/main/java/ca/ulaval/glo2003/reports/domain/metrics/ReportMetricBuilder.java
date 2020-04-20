@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
-import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +7,6 @@ import java.util.stream.Collectors;
 public class ReportMetricBuilder {
 
   private List<ReportMetrics> metricTypes = new ArrayList<>();
-  private ServiceFee serviceFee = null;
 
   public ReportMetricBuilder someMetrics() {
     return new ReportMetricBuilder();

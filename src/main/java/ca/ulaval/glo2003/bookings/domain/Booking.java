@@ -17,7 +17,7 @@ public class Booking {
   private int numberOfNights;
   private Integer colonySize;
   private Packages packageName;
-  private Price total;
+  private Price price;
   private List<Transaction> transactions = new ArrayList<>();
   private BookingStatuses status;
 
@@ -66,12 +66,17 @@ public class Booking {
     return packageName;
   }
 
-  public Price getTotal() {
-    return total;
+  public Price getPrice() {
+    return price;
   }
 
-  public void setTotal(Price total) {
-    this.total = total;
+  // TODO : Test Booking.getTotal()
+  public Price getTotal() {
+    return price.getTotal();
+  }
+
+  public void setPrice(Price price) {
+    this.price = price;
   }
 
   public List<Transaction> getTransactions() {

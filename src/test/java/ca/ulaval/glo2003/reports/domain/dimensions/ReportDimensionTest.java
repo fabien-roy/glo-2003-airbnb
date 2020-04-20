@@ -1,16 +1,17 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
-
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 public abstract class ReportDimensionTest {
 
@@ -22,7 +23,7 @@ public abstract class ReportDimensionTest {
   protected static List<ReportPeriodData> singleData;
   private static List<ReportPeriodData> multipleData;
 
-  protected abstract List<Transaction> buildTransactions();
+  protected abstract List<ReportEvent> buildEvents();
 
   protected abstract int numberOfValues();
 
@@ -30,11 +31,11 @@ public abstract class ReportDimensionTest {
   public void setUpMocks() {
     singleData = Collections.singletonList(data);
     multipleData = Arrays.asList(data, otherData);
-    List<Transaction> transactions = buildTransactions();
+    List<ReportEvent> events = buildEvents();
 
     reset(data, otherData);
-    when(data.getTransactions()).thenReturn(transactions);
-    when(otherData.getTransactions()).thenReturn(Collections.emptyList());
+    when(data.getEvents()).thenReturn(events);
+    when(otherData.getEvents()).thenReturn(Collections.emptyList());
   }
 
   @Test
@@ -53,8 +54,6 @@ public abstract class ReportDimensionTest {
 
   @Test
   public void splitAll_withMultipleData_shouldSplitDataInValues() {
-    int expectedValues = 2 * numberOfValues();
-
     List<ReportPeriodData> splitData = dimension.splitAll(multipleData);
 
     assertEquals(numberOfValues() * 2, splitData.size());

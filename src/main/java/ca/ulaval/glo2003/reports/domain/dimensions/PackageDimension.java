@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +18,7 @@ public class PackageDimension extends ReportDimension<Packages> {
     return Arrays.asList(Packages.values());
   }
 
-  protected boolean filter(Transaction transaction, Packages value) {
-    return transaction.getBooking().getPackage().equals(value);
+  protected boolean filter(ReportEvent event, Packages value) {
+    return event.getPackage().equals(value);
   }
 }

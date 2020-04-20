@@ -85,7 +85,7 @@ public class BookingBuilder {
     Booking booking =
         new Booking(tenantPublicKey, arrivalDate, numberOfNights, colonySize, packageName);
     booking.setNumber(bookingNumber);
-    booking.setTotal(total);
+    booking.setPrice(total);
     booking.setStatus(bookingStatus);
     return booking;
   }

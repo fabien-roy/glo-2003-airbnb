@@ -3,14 +3,14 @@ package ca.ulaval.glo2003.reports.domain;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReportQuery {
 
-  private List<Transaction> transactions;
+  private List<ReportEvent> events;
   private ReportScope scope;
   private List<ReportMetric> metrics;
   private List<ReportDimension> dimensions;
@@ -22,8 +22,8 @@ public class ReportQuery {
     this.dimensions = dimensions;
   }
 
-  public void setTransactions(List<Transaction> transactions) {
-    this.transactions = transactions;
+  public void setEvents(List<ReportEvent> events) {
+    this.events = events;
   }
 
   public ReportScope getScope() {
@@ -42,11 +42,11 @@ public class ReportQuery {
     List<ReportPeriod> queriedPeriods = new ArrayList<>();
 
     for (ReportPeriod period : scope.getReportPeriods()) {
-      List<Transaction> periodTransactions =
-          transactions.stream()
-              .filter(transaction -> period.contains(transaction.getTimestamp()))
+      List<ReportEvent> periodEvents =
+          events.stream()
+              .filter(event -> period.contains(event.getDate()))
               .collect(Collectors.toList());
-      period.setSingleData(periodTransactions);
+      period.setSingleData(periodEvents);
 
       List<ReportPeriodData> data = splitDataInDimensions(period.getData());
       calculateMetrics(data);

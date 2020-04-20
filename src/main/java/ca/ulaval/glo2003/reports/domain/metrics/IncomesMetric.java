@@ -1,9 +1,10 @@
 package ca.ulaval.glo2003.reports.domain.metrics;
 
-import ca.ulaval.glo2003.admin.domain.Configuration;
-import ca.ulaval.glo2003.admin.domain.ServiceFee;
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.transactions.domain.Price;
+
+import java.util.List;
 
 public class IncomesMetric extends ReservationFilteringMetric<Price> {
 
@@ -14,14 +15,13 @@ public class IncomesMetric extends ReservationFilteringMetric<Price> {
 
   @Override
   public void calculate(ReportPeriodData data) {
-    ServiceFee serviceFee = Configuration.instance().getServiceFee();
+    List<ReportEvent> reservations = filterReservations(data);
+    data.addMetric(toMetricData(sumIncomes(reservations)));
+  }
 
-    if (serviceFee.isSet()) {
-      int reservations = filterReservations(data).size();
-      Price incomes = new Price(reservations).multiply(serviceFee.toBigDecimal());
-      data.addMetrics(toMetricData(incomes));
-    } else {
-      data.addMetrics(toMetricData(Price.zero()));
-    }
+  private Price sumIncomes(List<ReportEvent> reservations) {
+    Price incomes = Price.zero();
+    reservations.forEach(reservation -> incomes.add(reservation.getIncomes()));
+    return incomes;
   }
 }

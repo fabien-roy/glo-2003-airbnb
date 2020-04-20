@@ -1,19 +1,8 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,27 +10,35 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 class LodgingModeDimensionTest extends ReportDimensionTest {
 
-  private static Transaction privateTransaction = mock(Transaction.class);
-  private static Transaction cohabitationTransaction = mock(Transaction.class);
+  private static ReportEvent privateEvent = mock(ReportEvent.class);
+  private static ReportEvent cohabitationEvent = mock(ReportEvent.class);
 
   @BeforeAll
   public static void setUpDimension() {
     dimension = new LodgingModeDimension();
-    setUpTransactions();
+    setUpEvents();
   }
 
-  private static void setUpTransactions() {
-    Bed privateBed = aBed().withLodgingModeType(LodgingModes.PRIVATE).build();
-    Bed cohabitationBed = aBed().withLodgingModeType(LodgingModes.COHABITATION).build();
-    when(privateTransaction.getBed()).thenReturn(privateBed);
-    when(cohabitationTransaction.getBed()).thenReturn(cohabitationBed);
+  private static void setUpEvents() {
+    when(privateEvent.getLodgingMode()).thenReturn(LodgingModes.PRIVATE);
+    when(cohabitationEvent.getLodgingMode()).thenReturn(LodgingModes.COHABITATION);
   }
 
   @Override
-  protected List<Transaction> buildTransactions() {
-    return Arrays.asList(privateTransaction, cohabitationTransaction);
+  protected List<ReportEvent> buildEvents() {
+    return Arrays.asList(privateEvent, cohabitationEvent);
   }
 
   @Override
@@ -71,21 +68,21 @@ class LodgingModeDimensionTest extends ReportDimensionTest {
   }
 
   @ParameterizedTest
-  @MethodSource("provideLodgingModeTransactions")
-  public void splitAll_withSingleTransactionPerPackage_shouldSplitTransactionsByPackage(
-      LodgingModes value, Transaction transaction) {
+  @MethodSource("provideLodgingModeEvents")
+  public void splitAll_withSingleEventPerPackage_shouldSplitEventsByPackage(
+      LodgingModes value, ReportEvent event) {
     List<ReportPeriodData> splitData = dimension.splitAll(singleData);
     List<ReportPeriodData> filteredData = filterData(splitData, value);
 
     assertEquals(1, filteredData.size());
-    assertEquals(1, filteredData.get(0).getTransactions().size());
-    assertEquals(transaction, filteredData.get(0).getTransactions().get(0));
+    assertEquals(1, filteredData.get(0).getEvents().size());
+    assertEquals(event, filteredData.get(0).getEvents().get(0));
   }
 
-  private static Stream<Arguments> provideLodgingModeTransactions() {
+  private static Stream<Arguments> provideLodgingModeEvents() {
     return Stream.of(
-        Arguments.of(LodgingModes.PRIVATE, privateTransaction),
-        Arguments.of(LodgingModes.COHABITATION, cohabitationTransaction));
+        Arguments.of(LodgingModes.PRIVATE, privateEvent),
+        Arguments.of(LodgingModes.COHABITATION, cohabitationEvent));
   }
 
   private List<ReportPeriodData> filterData(List<ReportPeriodData> data, LodgingModes value) {

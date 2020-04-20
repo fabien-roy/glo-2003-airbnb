@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public class BookingFactory {
 
-  public Booking create(Booking booking, Price total) {
+  public Booking create(Booking booking, Price price) {
     booking.setNumber(createNumber());
-    booking.setTotal(total);
+    booking.setPrice(price);
     booking.setStatus(BookingStatuses.BOOKED);
     return booking;
   }

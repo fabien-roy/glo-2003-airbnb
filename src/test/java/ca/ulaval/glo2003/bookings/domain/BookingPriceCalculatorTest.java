@@ -1,24 +1,25 @@
 package ca.ulaval.glo2003.bookings.domain;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.LodgingMode;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import java.math.BigDecimal;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class BookingTotalCalculatorTest {
+import java.math.BigDecimal;
+import java.util.stream.Stream;
 
-  private static BookingTotalCalculator bookingTotalCalculator;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+class BookingPriceCalculatorTest {
+
+  private static BookingPriceCalculator bookingPriceCalculator;
 
   private static Price total = new Price(100);
   private static Price pricePerNight = mock(Price.class);
@@ -29,7 +30,7 @@ class BookingTotalCalculatorTest {
 
   @BeforeAll
   public static void setUpCalculator() {
-    bookingTotalCalculator = new BookingTotalCalculator();
+    bookingPriceCalculator = new BookingPriceCalculator();
   }
 
   public void resetMocks(int numberOfNights) {
@@ -46,7 +47,7 @@ class BookingTotalCalculatorTest {
   public void calculateTotal_shouldApplyCorrectDiscount(int numberOfNights, Price total) {
     resetMocks(numberOfNights);
 
-    Price actualTotal = bookingTotalCalculator.calculateTotal(bed, booking);
+    Price actualTotal = bookingPriceCalculator.calculatePrice(bed, booking);
 
     assertEquals(total, actualTotal);
   }
