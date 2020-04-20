@@ -41,6 +41,8 @@ class InMemoryReportQueryTest {
   private static ReportPeriodData firstData = aReportPeriodData().build();
   private static ReportPeriodData secondData = aReportPeriodData().build();
   private static ReportPeriodData dimensionedData = aReportPeriodData().build();
+  private static int numberOfFirstDimensions = 2;
+  private static int numberOfSecondDimensions = 6;
 
   private void setUpQuery() {
     query = new InMemoryReportQuery(scope, metrics, dimensions);
@@ -49,12 +51,13 @@ class InMemoryReportQueryTest {
 
   @BeforeEach
   public void setUpMocks() {
-    reset(scope, firstPeriod);
+    reset(scope, firstPeriod, firstMetric, secondMetric);
 
     setUpPeriods();
     setUpDimensions();
 
     setUpScopeWithSinglePeriod();
+    setUpScopeWithSingleMetric();
     setUpScopeWithNoDimension();
     setUpScopeWithSingleEvent();
   }
@@ -69,8 +72,10 @@ class InMemoryReportQueryTest {
   }
 
   private void setUpDimensions() {
-    when(firstDimension.splitAll(anyList())).thenReturn(Collections.nCopies(2, dimensionedData));
-    when(secondDimension.splitAll(anyList())).thenReturn(Collections.nCopies(6, dimensionedData));
+    when(firstDimension.splitAll(anyList()))
+        .thenReturn(Collections.nCopies(numberOfFirstDimensions, dimensionedData));
+    when(secondDimension.splitAll(anyList()))
+        .thenReturn(Collections.nCopies(numberOfSecondDimensions, dimensionedData));
   }
 
   private void setUpScopeWithSinglePeriod() {
@@ -80,6 +85,16 @@ class InMemoryReportQueryTest {
 
   private void setUpScopeWithMultiplePeriods() {
     when(scope.getReportPeriods()).thenReturn(Arrays.asList(firstPeriod, secondPeriod));
+    setUpQuery();
+  }
+
+  private void setUpScopeWithSingleMetric() {
+    metrics = Collections.singletonList(firstMetric);
+    setUpQuery();
+  }
+
+  private void setUpScopeWithMultipleMetrics() {
+    metrics = Arrays.asList(firstMetric, secondMetric);
     setUpQuery();
   }
 
@@ -143,7 +158,7 @@ class InMemoryReportQueryTest {
 
     query.execute();
 
-    verify(firstPeriod).setData(argThat(data -> data.size() == 2));
+    verify(firstPeriod).setData(argThat(data -> data.size() == numberOfFirstDimensions));
   }
 
   @Test
@@ -152,21 +167,27 @@ class InMemoryReportQueryTest {
 
     query.execute();
 
-    verify(firstPeriod).setData(argThat(data -> data.size() == 6));
+    verify(firstPeriod).setData(argThat(data -> data.size() == numberOfSecondDimensions));
   }
 
   @Test
   public void execute_withSingleMetric_shouldCalculateMetricForEachDimensionedData() {
-    // TODO
+    setUpScopeWithMultipleDimensions();
+
+    query.execute();
+
+    verify(firstMetric, times(numberOfSecondDimensions)).calculate(any());
+    verify(secondMetric, never()).calculate(any());
   }
 
   @Test
   public void execute_withMultipleMetrics_shouldCalculateMetricsForEachDimensionedData() {
-    // TODO
-  }
+    setUpScopeWithMultipleDimensions();
+    setUpScopeWithMultipleMetrics();
 
-  @Test
-  public void execute_shouldSetDataToEachDimensioned() {
-    // TODO
+    query.execute();
+
+    verify(firstMetric, times(numberOfSecondDimensions)).calculate(any());
+    verify(secondMetric, times(numberOfSecondDimensions)).calculate(any());
   }
 }
