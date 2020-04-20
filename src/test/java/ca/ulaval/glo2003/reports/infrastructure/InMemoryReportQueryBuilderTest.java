@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.reports.domain;
+package ca.ulaval.glo2003.reports.infrastructure;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-class ReportQueryBuilderTest {
+class InMemoryReportQueryBuilderTest {
 
-  private static ReportQueryBuilder queryBuilder;
+  private static InMemoryReportQueryBuilder queryBuilder;
 
   private static ReportScopeBuilder scopeBuilder = mock(ReportScopeBuilder.class);
   private static ReportMetricBuilder metricBuilder = mock(ReportMetricBuilder.class);
@@ -42,7 +42,7 @@ class ReportQueryBuilderTest {
 
   @BeforeAll
   public static void setUpBuilder() {
-    queryBuilder = new ReportQueryBuilder(scopeBuilder, metricBuilder, dimensionBuilder);
+    queryBuilder = new InMemoryReportQueryBuilder(scopeBuilder, metricBuilder, dimensionBuilder);
   }
 
   @BeforeEach
@@ -76,7 +76,7 @@ class ReportQueryBuilderTest {
 
   @Test
   public void build_withoutScope_shouldSetMonthlyScopeOfYear() {
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(monthlyScopeOfYear, query.getScope());
   }
@@ -86,14 +86,14 @@ class ReportQueryBuilderTest {
   public void build_withScope_shouldSetScopeOfYear(ReportScopes scopeType) {
     setUpScopeBuilder(scopeType, scopeOfYear);
 
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(scopeOfYear, query.getScope());
   }
 
   @Test
   public void build_withoutMetric_shouldSetMetricToIncomes() {
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(1, query.getMetrics().size());
     assertEquals(incomesMetric, query.getMetrics().get(0));
@@ -104,7 +104,7 @@ class ReportQueryBuilderTest {
     List<ReportMetrics> metricTypes = Collections.singletonList(ReportMetrics.RESERVATIONS);
     setUpMetricBuilder(metricTypes, metrics);
 
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(metrics, query.getMetrics());
   }
@@ -115,14 +115,14 @@ class ReportQueryBuilderTest {
         Arrays.asList(ReportMetrics.RESERVATIONS, ReportMetrics.CANCELATIONS);
     setUpMetricBuilder(metricTypes, metrics);
 
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(metrics, query.getMetrics());
   }
 
   @Test
   public void build_withoutDimension_shouldSetNoDimension() {
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(0, query.getDimensions().size());
   }
@@ -132,7 +132,7 @@ class ReportQueryBuilderTest {
     List<ReportDimensions> dimensionTypes = Collections.singletonList(ReportDimensions.PACKAGE);
     setUpDimensionBuilder(dimensionTypes, dimensions);
 
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(dimensions, query.getDimensions());
   }
@@ -143,7 +143,7 @@ class ReportQueryBuilderTest {
         Arrays.asList(ReportDimensions.PACKAGE, ReportDimensions.LODGING_MODE);
     setUpDimensionBuilder(dimensionTypes, dimensions);
 
-    ReportQuery query = queryBuilder.build();
+    InMemoryReportQuery query = queryBuilder.build();
 
     assertEquals(dimensions, query.getDimensions());
   }

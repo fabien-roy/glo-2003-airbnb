@@ -2,13 +2,12 @@ package ca.ulaval.glo2003.reports.infrastructure;
 
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
-import ca.ulaval.glo2003.reports.domain.ReportQuery;
 import ca.ulaval.glo2003.reports.domain.ReportRepository;
 import java.util.ArrayList;
 import java.util.List;
 
 // TODO : Test InMemoryReportRepository
-public class InMemoryReportRepository implements ReportRepository<ReportQuery> {
+public class InMemoryReportRepository implements ReportRepository<InMemoryReportQuery> {
 
   private List<ReportEvent> events = new ArrayList<>();
 
@@ -18,7 +17,7 @@ public class InMemoryReportRepository implements ReportRepository<ReportQuery> {
   }
 
   @Override
-  public List<ReportPeriod> getPeriods(ReportQuery query) {
+  public List<ReportPeriod> getPeriods(InMemoryReportQuery query) {
     query.setEvents(events);
     return query.execute();
   }

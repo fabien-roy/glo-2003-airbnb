@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.reports;
 
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.reports.domain.ReportQueryBuilder;
 import ca.ulaval.glo2003.reports.domain.ReportQueryFactory;
 import ca.ulaval.glo2003.reports.domain.ReportRepository;
 import ca.ulaval.glo2003.reports.domain.assemblers.DimensionsQueryParamAssembler;
@@ -10,6 +11,7 @@ import ca.ulaval.glo2003.reports.domain.assemblers.ScopeQueryParamAssembler;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionBuilder;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricBuilder;
 import ca.ulaval.glo2003.reports.exceptions.ReportException;
+import ca.ulaval.glo2003.reports.infrastructure.InMemoryReportQueryBuilder;
 import ca.ulaval.glo2003.reports.infrastructure.InMemoryReportRepository;
 import ca.ulaval.glo2003.reports.infrastructure.dimensions.InMemoryReportDimensionBuilder;
 import ca.ulaval.glo2003.reports.infrastructure.metrics.InMemoryReportMetricBuilder;
@@ -34,6 +36,7 @@ public class ReportModule extends AbstractModule {
     bind(ReportRepository.class).to(InMemoryReportRepository.class).in(Singleton.class);
     bind(ReportMetricBuilder.class).to(InMemoryReportMetricBuilder.class);
     bind(ReportDimensionBuilder.class).to(InMemoryReportDimensionBuilder.class);
+    bind(ReportQueryBuilder.class).to(InMemoryReportQueryBuilder.class);
     bind(ReportQueryFactory.class);
     bind(ReportMapper.class);
     bind(ReportService.class);

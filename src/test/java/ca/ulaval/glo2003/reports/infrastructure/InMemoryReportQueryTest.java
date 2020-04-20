@@ -1,10 +1,12 @@
-package ca.ulaval.glo2003.reports.domain;
+package ca.ulaval.glo2003.reports.infrastructure;
 
 import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventBuilder.aReportEvent;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.reports.domain.ReportEvent;
+import ca.ulaval.glo2003.reports.domain.ReportPeriod;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
@@ -16,9 +18,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ReportQueryTest {
+class InMemoryReportQueryTest {
 
-  private static ReportQuery query;
+  private static InMemoryReportQuery query;
 
   private static ReportScope scope = mock(ReportScope.class);
   private static ReportPeriod firstPeriod = mock(ReportPeriod.class);
@@ -44,7 +46,7 @@ class ReportQueryTest {
   }
 
   private void setUpQuery() {
-    query = new ReportQuery(scope, metrics, dimensions);
+    query = new InMemoryReportQuery(scope, metrics, dimensions);
     query.setEvents(events);
   }
 
