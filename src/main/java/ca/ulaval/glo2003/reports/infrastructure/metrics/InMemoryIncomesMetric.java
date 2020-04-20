@@ -1,11 +1,12 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.List;
 
-public class IncomesMetric extends ReservationFilteringMetric<Price> {
+public class InMemoryIncomesMetric extends InMemoryReservationFilteringMetric<Price> {
 
   @Override
   public ReportMetrics getName() {

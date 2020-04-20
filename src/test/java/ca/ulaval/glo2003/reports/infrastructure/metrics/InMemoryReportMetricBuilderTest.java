@@ -1,8 +1,9 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ca.ulaval.glo2003.reports.domain.metrics.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +14,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class ReportMetricBuilderTest {
+class InMemoryReportMetricBuilderTest {
 
   private static ReportMetricBuilder metricBuilder;
 
   @BeforeAll
   public static void setUpBuilder() {
-    metricBuilder = new ReportMetricBuilder();
+    metricBuilder = new InMemoryReportMetricBuilder();
   }
 
   @Test
@@ -43,9 +44,9 @@ class ReportMetricBuilderTest {
 
   private static Stream<Arguments> provideMetrics() {
     return Stream.of(
-        Arguments.of(ReportMetrics.INCOMES, IncomesMetric.class),
-        Arguments.of(ReportMetrics.RESERVATIONS, ReservationsMetric.class),
-        Arguments.of(ReportMetrics.CANCELATIONS, CancelationsMetric.class));
+        Arguments.of(ReportMetrics.INCOMES, InMemoryIncomesMetric.class),
+        Arguments.of(ReportMetrics.RESERVATIONS, InMemoryReservationsMetric.class),
+        Arguments.of(ReportMetrics.CANCELATIONS, InMemoryCancelationsMetric.class));
   }
 
   @Test
@@ -57,8 +58,8 @@ class ReportMetricBuilderTest {
     List<ReportMetric> metrics = metricBuilder.someMetrics().withTypes(metricTypes).buildMany();
 
     assertEquals(3, metrics.size());
-    assertTrue(metrics.stream().anyMatch(metric -> metric instanceof IncomesMetric));
-    assertTrue(metrics.stream().anyMatch(metric -> metric instanceof ReservationsMetric));
-    assertTrue(metrics.stream().anyMatch(metric -> metric instanceof CancelationsMetric));
+    assertTrue(metrics.stream().anyMatch(metric -> metric instanceof InMemoryIncomesMetric));
+    assertTrue(metrics.stream().anyMatch(metric -> metric instanceof InMemoryReservationsMetric));
+    assertTrue(metrics.stream().anyMatch(metric -> metric instanceof InMemoryCancelationsMetric));
   }
 }

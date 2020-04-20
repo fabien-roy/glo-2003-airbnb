@@ -1,8 +1,9 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 
-public class ReservationsMetric extends ReservationFilteringMetric<Integer> {
+public class InMemoryReservationsMetric extends InMemoryReservationFilteringMetric<Integer> {
 
   @Override
   public ReportMetrics getName() {

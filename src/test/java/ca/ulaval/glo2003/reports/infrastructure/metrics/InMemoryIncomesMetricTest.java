@@ -1,8 +1,9 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import static ca.ulaval.glo2003.reports.domain.helpers.ReportPeriodDataBuilder.aReportPeriodData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,7 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class IncomesMetricTest extends ReportMetricTest {
+public class InMemoryIncomesMetricTest extends InMemoryReportMetricTest {
 
   @Override
   protected ReportMetrics metricName() {
@@ -20,7 +21,7 @@ public class IncomesMetricTest extends ReportMetricTest {
 
   @BeforeAll
   public static void setUpMetric() {
-    metric = new IncomesMetric();
+    metric = new InMemoryIncomesMetric();
   }
 
   @ParameterizedTest

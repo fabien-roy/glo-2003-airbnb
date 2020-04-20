@@ -1,12 +1,14 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CancelationsMetric extends ReportMetric<Integer> {
+public class InMemoryCancelationsMetric extends ReportMetric<Integer> {
 
   @Override
   public ReportMetrics getName() {

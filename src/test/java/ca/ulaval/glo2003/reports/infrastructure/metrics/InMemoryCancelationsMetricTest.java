@@ -1,14 +1,15 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import static ca.ulaval.glo2003.reports.domain.helpers.ReportPeriodDataBuilder.aReportPeriodData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class CancelationsMetricTest extends ReportMetricTest {
+class InMemoryCancelationsMetricTest extends InMemoryReportMetricTest {
 
   @Override
   protected ReportMetrics metricName() {
@@ -17,7 +18,7 @@ class CancelationsMetricTest extends ReportMetricTest {
 
   @BeforeAll
   public static void setUpMetric() {
-    metric = new CancelationsMetric();
+    metric = new InMemoryCancelationsMetric();
   }
 
   @ParameterizedTest

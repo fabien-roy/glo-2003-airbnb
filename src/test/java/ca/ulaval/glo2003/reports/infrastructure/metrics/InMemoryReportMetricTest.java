@@ -1,13 +1,15 @@
-package ca.ulaval.glo2003.reports.domain.metrics;
+package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import static ca.ulaval.glo2003.reports.domain.helpers.ReportPeriodDataBuilder.aReportPeriodData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public abstract class ReportMetricTest {
+public abstract class InMemoryReportMetricTest {
 
   protected static ReportMetric metric;
   protected static ReportPeriodData data;
