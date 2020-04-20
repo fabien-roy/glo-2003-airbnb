@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.domain;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

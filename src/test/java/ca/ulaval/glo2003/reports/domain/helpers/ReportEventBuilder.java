@@ -1,17 +1,17 @@
 package ca.ulaval.glo2003.reports.domain.helpers;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
+import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
+import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventObjectMother.createEventType;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
+
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
 import ca.ulaval.glo2003.time.domain.*;
 import ca.ulaval.glo2003.transactions.domain.Price;
-
-import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
-import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
-import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventObjectMother.createEventType;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
-import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 public class ReportEventBuilder {
 

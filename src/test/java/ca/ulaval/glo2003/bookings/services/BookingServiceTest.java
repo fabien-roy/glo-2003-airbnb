@@ -1,5 +1,14 @@
 package ca.ulaval.glo2003.bookings.services;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
+import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.beds.domain.BedNumber;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
@@ -20,15 +29,6 @@ import ca.ulaval.glo2003.transactions.services.TransactionService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
-import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
-import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 public class BookingServiceTest {
 
   private static BookingService bookingService;
@@ -45,13 +45,13 @@ public class BookingServiceTest {
   private static Bed bed = buildBed();
   private static PublicKey ownerPublicKey = createPublicKey();
   private static BookingNumber bookingNumber = createBookingNumber();
+  private static Price price = createPrice();
   private static Booking booking = buildBooking();
   private static PublicKey tenantPublicKey = createPublicKey();
   private static TimeDate departureDate = aTimeDate().build();
   private static BookingRequest bookingRequest = aBookingRequest().build();
   private static BookingResponse bookingResponse = mock(BookingResponse.class);
   private static CancelationResponse cancelationResponse = mock(CancelationResponse.class);
-  private static Price total = createPrice();
 
   @BeforeAll
   public static void setUpService() {
@@ -71,8 +71,8 @@ public class BookingServiceTest {
     resetMocks();
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
     when(bookingConverter.fromRequest(bookingRequest)).thenReturn(booking);
-    when(bookingPriceCalculator.calculatePrice(bed, booking)).thenReturn(total);
-    when(bookingFactory.create(booking, total)).thenReturn(booking);
+    when(bookingPriceCalculator.calculatePrice(bed, booking)).thenReturn(price);
+    when(bookingFactory.create(booking, price)).thenReturn(booking);
   }
 
   private void setUpMocksForGetResponse() {
@@ -109,6 +109,7 @@ public class BookingServiceTest {
     when(booking.getNumber()).thenReturn(bookingNumber);
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
     when(booking.getDepartureDate()).thenReturn(departureDate);
+    when(booking.getTotal()).thenReturn(price.getTotal());
     return booking;
   }
 
@@ -145,7 +146,8 @@ public class BookingServiceTest {
 
     bookingService.add(bedNumber.toString(), bookingRequest);
 
-    verify(transactionService).addStayBooked(booking.getTenantPublicKey().toString(), total);
+    verify(transactionService)
+        .addStayBooked(booking.getTenantPublicKey().toString(), price.getTotal());
   }
 
   @Test
@@ -156,7 +158,9 @@ public class BookingServiceTest {
 
     verify(transactionService)
         .addStayCompleted(
-            bed.getOwnerPublicKey().toString(), total, booking.getDepartureDate().toTimestamp());
+            bed.getOwnerPublicKey().toString(),
+            price.getTotal(),
+            booking.getDepartureDate().toTimestamp());
   }
 
   @Test

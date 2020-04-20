@@ -8,6 +8,11 @@ import ca.ulaval.glo2003.time.domain.TimeDate;
 public class ReportEventFactory {
 
   public ReportEvent create(ReportEventTypes event, Bed bed, Booking booking) {
-    return new ReportEvent(event, TimeDate.now(), bed.getLodgingMode().getName(), booking.getPackage(), booking.getPrice().getServiceFees());
+    return new ReportEvent(
+        event,
+        TimeDate.now(),
+        bed.getLodgingMode().getName(),
+        booking.getPackage(),
+        booking.getPrice().getServiceFees());
   }
 }

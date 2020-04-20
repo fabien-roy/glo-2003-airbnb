@@ -15,7 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class InMemoryBedRepositoryTest {
+public class InMemoryReportRepositoryTest {
 
   private BedRepository bedRepository;
 

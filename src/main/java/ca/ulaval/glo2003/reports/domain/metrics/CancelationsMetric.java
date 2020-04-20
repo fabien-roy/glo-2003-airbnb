@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.domain.metrics;
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

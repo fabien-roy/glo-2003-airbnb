@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.reports.domain;
 
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionData;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricData;
-
 import java.util.ArrayList;
 import java.util.List;
 

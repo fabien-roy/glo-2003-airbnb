@@ -104,7 +104,7 @@ public class TimeDateObjectMother {
   }
 
   private static int thatDay(TimeMonth month, int dayOfMonth) {
-    int safeDayOfMonth = dayOfMonth == 1 ? dayOfMonth : dayOfMonth - 1; // TODO : Fix this hack
+    int safeDayOfMonth = dayOfMonth <= 3 ? dayOfMonth : dayOfMonth - 3; // TODO : Fix this hack
     return month.getYear().atMonth(month).atDay(safeDayOfMonth).getDayOfYear();
   }
 

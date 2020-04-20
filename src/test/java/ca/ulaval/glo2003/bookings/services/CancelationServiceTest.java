@@ -1,5 +1,15 @@
 package ca.ulaval.glo2003.bookings.services;
 
+import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
+import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
+import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
+import static ca.ulaval.glo2003.bookings.services.CancelationService.MINIMUM_DAYS_FOR_FULL_REFUND;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.bookings.converters.CancelationConverter;
 import ca.ulaval.glo2003.bookings.domain.Booking;
@@ -15,15 +25,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.services.CancelationService.MINIMUM_DAYS_FOR_FULL_REFUND;
-import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
-import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-
 class CancelationServiceTest {
 
   private static CancelationService cancelationService;
@@ -33,7 +34,7 @@ class CancelationServiceTest {
   private static TransactionService transactionService = mock(TransactionService.class);
   private static ReportService reportService = mock(ReportService.class);
 
-  private static Bed bed;
+  private static Bed bed = aBed().build();
   private static Booking booking;
   private static TimeDate arrivalDate;
   private static Price total;
@@ -57,7 +58,7 @@ class CancelationServiceTest {
   }
 
   private void resetMocks() {
-    reset(cancelationConverter, cancelationRefundCalculator);
+    reset(cancelationConverter, cancelationRefundCalculator, reportService);
     when(cancelationConverter.toResponse(tenantRefund)).thenReturn(cancelationResponse);
     when(cancelationConverter.toResponse(total)).thenReturn(cancelationResponse);
     when(cancelationRefundCalculator.calculateTenantRefund(total)).thenReturn(tenantRefund);
@@ -65,7 +66,7 @@ class CancelationServiceTest {
   }
 
   private static Booking buildBooking() {
-    return aBooking().withArrivalDate(arrivalDate).withTotal(total).build();
+    return aBooking().withArrivalDate(arrivalDate).withPrice(total).build();
   }
 
   private static void setBookingOnSameDay() {
@@ -143,10 +144,10 @@ class CancelationServiceTest {
   }
 
   @Test
-  public void add_shouldReportReservation() {
+  public void add_shouldReportCancelation() {
     cancelationService.cancel(bed, booking);
 
-    verify(reportService).addReservation(bed, booking);
+    verify(reportService).addCancelation(bed, booking);
   }
 
   @Test

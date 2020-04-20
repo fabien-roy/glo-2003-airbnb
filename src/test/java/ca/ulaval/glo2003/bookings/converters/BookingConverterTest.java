@@ -44,7 +44,7 @@ class BookingConverterTest {
   private static int numberOfNights;
   private static Integer colonySize;
   private static Packages packageName;
-  private static Price total;
+  private static Price price;
   private static BookingStatuses status;
 
   private static BookingRequest bookingRequest;
@@ -70,7 +70,7 @@ class BookingConverterTest {
     colonySize = createColonySize();
     packageName = createPackageName();
     packageNameValue = packageName.toString();
-    total = createPrice();
+    price = createPrice();
     status = BookingStatuses.BOOKED;
 
     booking = buildBooking();
@@ -84,7 +84,7 @@ class BookingConverterTest {
         .withNumberOfNights(numberOfNights)
         .withColonySize(colonySize)
         .withPackage(packageName)
-        .withTotal(total)
+        .withPrice(price)
         .withStatus(status)
         .build();
   }
@@ -206,7 +206,7 @@ class BookingConverterTest {
   public void toResponse_shouldConvertTotal() {
     bookingResponse = bookingConverter.toResponse(booking);
 
-    assertEquals(total.toDouble(), bookingResponse.getTotal());
+    assertEquals(price.getTotal().toDouble(), bookingResponse.getTotal());
   }
 
   @Test

@@ -1,21 +1,20 @@
 package ca.ulaval.glo2003.reports.domain;
 
-import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
-import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
-import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
-import ca.ulaval.glo2003.time.domain.TimeDate;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventBuilder.aReportEvent;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+
+import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
+import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class ReportQueryTest {
 

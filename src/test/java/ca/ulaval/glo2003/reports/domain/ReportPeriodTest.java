@@ -1,20 +1,19 @@
 package ca.ulaval.glo2003.reports.domain;
 
-import ca.ulaval.glo2003.time.domain.TimeDate;
-import ca.ulaval.glo2003.time.domain.TimePeriod;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.Collections;
-import java.util.List;
-
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
+import java.util.Collections;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class ReportPeriodTest {
 
@@ -23,8 +22,7 @@ public class ReportPeriodTest {
   private static String name = "name";
   private static TimePeriod timePeriod = mock(TimePeriod.class);
   private static TimeDate date = aTimeDate().build();
-  private static List<ReportEvent> events =
-      Collections.singletonList(mock(ReportEvent.class));
+  private static List<ReportEvent> events = Collections.singletonList(mock(ReportEvent.class));
 
   @BeforeEach
   public void setUpPeriod() {

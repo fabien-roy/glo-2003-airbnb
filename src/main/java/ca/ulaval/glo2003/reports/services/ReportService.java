@@ -6,7 +6,6 @@ import ca.ulaval.glo2003.reports.converters.ReportConverter;
 import ca.ulaval.glo2003.reports.domain.*;
 import ca.ulaval.glo2003.reports.rest.ReportPeriodResponse;
 import com.google.inject.Inject;
-
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +38,12 @@ public class ReportService {
   // TODO : Test ReportService.addReservation
   public void addReservation(Bed bed, Booking booking) {
     ReportEvent event = reportEventFactory.create(ReportEventTypes.RESERVATION, bed, booking);
-    reportRepository.add(event);
+    reportRepository.addEvent(event);
   }
 
   // TODO : Test ReportService.addCancelation
   public void addCancelation(Bed bed, Booking booking) {
     ReportEvent event = reportEventFactory.create(ReportEventTypes.CANCELATION, bed, booking);
-    reportRepository.add(event);
+    reportRepository.addEvent(event);
   }
 }

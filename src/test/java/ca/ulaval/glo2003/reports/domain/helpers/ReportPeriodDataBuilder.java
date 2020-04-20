@@ -1,16 +1,16 @@
 package ca.ulaval.glo2003.reports.domain.helpers;
 
+import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventBuilder.aReportEvent;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
+
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionData;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricData;
 import ca.ulaval.glo2003.transactions.domain.Price;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventBuilder.aReportEvent;
 
 public class ReportPeriodDataBuilder {
 
@@ -23,8 +23,16 @@ public class ReportPeriodDataBuilder {
   private List<ReportDimensionData> DEFAULT_DIMENSIONS = new ArrayList<>();
   private List<ReportDimensionData> dimensions = DEFAULT_DIMENSIONS;
 
+  private Price DEFAULT_INCOMES = createPrice();
+  private Price incomes = DEFAULT_INCOMES;
+
   public static ReportPeriodDataBuilder aReportPeriodData() {
     return new ReportPeriodDataBuilder();
+  }
+
+  public ReportPeriodDataBuilder withIncomes(Price incomes) {
+    this.incomes = incomes;
+    return this;
   }
 
   public ReportPeriodDataBuilder withANumberOfCancelations(int numberOfCancelations) {
@@ -37,17 +45,11 @@ public class ReportPeriodDataBuilder {
     return this;
   }
 
-  private ReportPeriodDataBuilder addANumberOfType(int numberOfType, ReportEventTypes type) {
+  private void addANumberOfType(int numberOfType, ReportEventTypes type) {
     for (int i = 0; i < numberOfType; i++) {
-      ReportEvent event = aReportEvent().withType(type).build();
+      ReportEvent event = aReportEvent().withType(type).withIncomes(incomes).build();
       events.add(event);
     }
-    return this;
-  }
-
-  public ReportPeriodDataBuilder withIncomes(Price incomes) {
-    events.forEach(event -> event = aReportEvent().withType(event.getType()).withDate(event.getDate()).withIncomes(incomes).build());
-    return this;
   }
 
   public ReportPeriodData build() {

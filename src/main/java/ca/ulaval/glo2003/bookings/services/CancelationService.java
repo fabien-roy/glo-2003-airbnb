@@ -11,7 +11,6 @@ import ca.ulaval.glo2003.reports.services.ReportService;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
-
 import javax.inject.Inject;
 
 public class CancelationService {

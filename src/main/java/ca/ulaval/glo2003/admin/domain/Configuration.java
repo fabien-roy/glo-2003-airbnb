@@ -5,7 +5,9 @@ public class Configuration {
   private static Configuration instance;
   private ServiceFee serviceFee;
 
-  private Configuration() {}
+  private Configuration() {
+    serviceFee = new ServiceFee(null);
+  }
 
   public static Configuration instance() {
     if (instance == null) instance = new Configuration();

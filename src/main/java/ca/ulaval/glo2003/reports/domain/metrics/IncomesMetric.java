@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.domain.metrics;
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.transactions.domain.Price;
-
 import java.util.List;
 
 public class IncomesMetric extends ReservationFilteringMetric<Price> {
@@ -21,7 +20,7 @@ public class IncomesMetric extends ReservationFilteringMetric<Price> {
 
   private Price sumIncomes(List<ReportEvent> reservations) {
     Price incomes = Price.zero();
-    reservations.forEach(reservation -> incomes.add(reservation.getIncomes()));
+    for (ReportEvent reservation : reservations) incomes = incomes.add(reservation.getIncomes());
     return incomes;
   }
 }

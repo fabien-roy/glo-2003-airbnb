@@ -14,7 +14,6 @@ import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.reports.services.ReportService;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
-
 import javax.inject.Inject;
 
 public class BookingService {
@@ -63,7 +62,9 @@ public class BookingService {
   private void addTransactions(Bed bed, Booking booking) {
     transactionService.addStayBooked(booking.getTenantPublicKey().toString(), booking.getTotal());
     transactionService.addStayCompleted(
-        bed.getOwnerPublicKey().toString(), booking.getTotal(), booking.getDepartureDate().toTimestamp());
+        bed.getOwnerPublicKey().toString(),
+        booking.getTotal(),
+        booking.getDepartureDate().toTimestamp());
   }
 
   public BookingResponse getResponse(String bedNumber, String bookingNumber) {

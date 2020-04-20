@@ -2,11 +2,13 @@ package ca.ulaval.glo2003.reports;
 
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
 import ca.ulaval.glo2003.reports.domain.ReportQueryFactory;
+import ca.ulaval.glo2003.reports.domain.ReportRepository;
 import ca.ulaval.glo2003.reports.domain.assemblers.DimensionsQueryParamAssembler;
 import ca.ulaval.glo2003.reports.domain.assemblers.MetricsQueryParamAssembler;
 import ca.ulaval.glo2003.reports.domain.assemblers.ReportQueryParamAssembler;
 import ca.ulaval.glo2003.reports.domain.assemblers.ScopeQueryParamAssembler;
 import ca.ulaval.glo2003.reports.exceptions.ReportException;
+import ca.ulaval.glo2003.reports.infrastructure.InMemoryReportRepository;
 import ca.ulaval.glo2003.reports.rest.ReportMapper;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportDimensionsErrorFactory;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportMetricsErrorFactory;
@@ -14,6 +16,7 @@ import ca.ulaval.glo2003.reports.rest.factories.InvalidReportScopeErrorFactory;
 import ca.ulaval.glo2003.reports.rest.handlers.ReportExceptionHandler;
 import ca.ulaval.glo2003.reports.services.ReportService;
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
@@ -24,6 +27,7 @@ public class ReportModule extends AbstractModule {
     configureQueryParamAssemblers();
     configureErrorFactories();
 
+    bind(ReportRepository.class).to(InMemoryReportRepository.class).in(Singleton.class);
     bind(ReportQueryFactory.class);
     bind(ReportMapper.class);
     bind(ReportService.class);

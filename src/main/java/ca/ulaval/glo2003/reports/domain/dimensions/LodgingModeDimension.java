@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.reports.domain.dimensions;
 
 import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
-
 import java.util.Arrays;
 import java.util.List;
 

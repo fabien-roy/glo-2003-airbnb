@@ -33,8 +33,8 @@ public class BookingBuilder {
   private Integer DEFAULT_COLONY_SIZE = createColonySize();
   private Integer colonySize = DEFAULT_COLONY_SIZE;
 
-  private Price DEFAULT_TOTAL = createPrice();
-  private Price total = DEFAULT_TOTAL;
+  private Price DEFAULT_PRICE = createPrice();
+  private Price price = DEFAULT_PRICE;
 
   private Packages DEFAULT_PACKAGE = createPackageName();
   private Packages packageName = DEFAULT_PACKAGE;
@@ -71,8 +71,8 @@ public class BookingBuilder {
     return this;
   }
 
-  public BookingBuilder withTotal(Price total) {
-    this.total = total;
+  public BookingBuilder withPrice(Price total) {
+    this.price = total;
     return this;
   }
 
@@ -85,7 +85,7 @@ public class BookingBuilder {
     Booking booking =
         new Booking(tenantPublicKey, arrivalDate, numberOfNights, colonySize, packageName);
     booking.setNumber(bookingNumber);
-    booking.setPrice(total);
+    booking.setPrice(price);
     booking.setStatus(bookingStatus);
     return booking;
   }

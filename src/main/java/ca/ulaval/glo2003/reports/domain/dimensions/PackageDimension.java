@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.reports.domain.dimensions;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.Arrays;
 import java.util.List;
 

@@ -13,7 +13,12 @@ public class ReportEvent {
   public final Packages packageName;
   public final Price incomes;
 
-  public ReportEvent(ReportEventTypes type, TimeDate date, LodgingModes lodgingMode, Packages packageName, Price incomes) {
+  public ReportEvent(
+      ReportEventTypes type,
+      TimeDate date,
+      LodgingModes lodgingMode,
+      Packages packageName,
+      Price incomes) {
     this.date = date;
     this.lodgingMode = lodgingMode;
     this.packageName = packageName;

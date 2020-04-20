@@ -1,21 +1,20 @@
 package ca.ulaval.glo2003.bookings.domain;
 
-import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.beds.domain.LodgingMode;
-import ca.ulaval.glo2003.beds.domain.Packages;
-import ca.ulaval.glo2003.transactions.domain.Price;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.math.BigDecimal;
-import java.util.stream.Stream;
-
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import ca.ulaval.glo2003.beds.domain.Bed;
+import ca.ulaval.glo2003.beds.domain.LodgingMode;
+import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import java.math.BigDecimal;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BookingPriceCalculatorTest {
 

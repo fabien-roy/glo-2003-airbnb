@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.reports.domain;
 
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
-
 import java.util.Collections;
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.reports.domain.helpers;
 
-import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
-
 import static ca.ulaval.glo2003.interfaces.domain.helpers.Randomizer.randomEnum;
+
+import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
 
 public class ReportEventObjectMother {
 
