@@ -6,9 +6,9 @@ import ca.ulaval.glo2003.time.domain.TimeDate;
 
 public class ReportEventFactory {
 
-  public ReportEvent create(ReportEventTypes event, Bed bed, Booking booking) {
+  public ReportEvent create(ReportEventTypes type, Bed bed, Booking booking) {
     return new ReportEvent(
-        event,
+        type,
         TimeDate.now(),
         bed.getLodgingMode().getName(),
         booking.getPackage(),
