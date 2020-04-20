@@ -1,33 +1,12 @@
 package ca.ulaval.glo2003.reports.domain.dimensions;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ReportDimensionBuilder {
+public interface ReportDimensionBuilder {
 
-  private List<ReportDimensions> dimensionTypes = new ArrayList<>();
+  ReportDimensionBuilder someDimensions();
 
-  public ReportDimensionBuilder someDimensions() {
-    return new ReportDimensionBuilder();
-  }
+  ReportDimensionBuilder withTypes(List<ReportDimensions> dimensionTypes);
 
-  public ReportDimensionBuilder withTypes(List<ReportDimensions> dimensionTypes) {
-    this.dimensionTypes = dimensionTypes;
-    return this;
-  }
-
-  public List<ReportDimension> buildMany() {
-    return dimensionTypes.stream().map(this::buildOne).collect(Collectors.toList());
-  }
-
-  private ReportDimension buildOne(ReportDimensions metricType) {
-    switch (metricType) {
-      case PACKAGE:
-        return new PackageDimension();
-      default:
-      case LODGING_MODE:
-        return new LodgingModeDimension();
-    }
-  }
+  List<ReportDimension> buildMany();
 }

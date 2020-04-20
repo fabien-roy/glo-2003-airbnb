@@ -1,8 +1,9 @@
-package ca.ulaval.glo2003.reports.domain.dimensions;
+package ca.ulaval.glo2003.reports.infrastructure.dimensions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ca.ulaval.glo2003.reports.domain.dimensions.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +14,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class ReportDimensionBuilderTest {
+class InMemoryReportDimensionBuilderTest {
 
   private static ReportDimensionBuilder dimensionBuilder;
 
   @BeforeAll
   public static void setUpBuilder() {
-    dimensionBuilder = new ReportDimensionBuilder();
+    dimensionBuilder = new InMemoryReportDimensionBuilder();
   }
 
   @Test
@@ -44,8 +45,8 @@ class ReportDimensionBuilderTest {
 
   private static Stream<Arguments> provideDimensions() {
     return Stream.of(
-        Arguments.of(ReportDimensions.PACKAGE, PackageDimension.class),
-        Arguments.of(ReportDimensions.LODGING_MODE, LodgingModeDimension.class));
+        Arguments.of(ReportDimensions.PACKAGE, InMemoryPackageDimension.class),
+        Arguments.of(ReportDimensions.LODGING_MODE, InMemoryLodgingModeDimension.class));
   }
 
   @Test
@@ -57,8 +58,10 @@ class ReportDimensionBuilderTest {
         dimensionBuilder.someDimensions().withTypes(dimensionTypes).buildMany();
 
     assertEquals(2, dimensions.size());
-    assertTrue(dimensions.stream().anyMatch(dimension -> dimension instanceof PackageDimension));
     assertTrue(
-        dimensions.stream().anyMatch(dimension -> dimension instanceof LodgingModeDimension));
+        dimensions.stream().anyMatch(dimension -> dimension instanceof InMemoryPackageDimension));
+    assertTrue(
+        dimensions.stream()
+            .anyMatch(dimension -> dimension instanceof InMemoryLodgingModeDimension));
   }
 }

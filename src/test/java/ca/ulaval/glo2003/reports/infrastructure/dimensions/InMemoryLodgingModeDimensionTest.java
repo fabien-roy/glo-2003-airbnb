@@ -1,13 +1,14 @@
-package ca.ulaval.glo2003.reports.domain.dimensions;
+package ca.ulaval.glo2003.reports.infrastructure.dimensions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo2003.beds.domain.Packages;
+import ca.ulaval.glo2003.beds.domain.LodgingModes;
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensions;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,58 +20,57 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class PackageDimensionTest extends ReportDimensionTest {
+class InMemoryLodgingModeDimensionTest extends InMemoryReportDimensionTest {
 
-  private static ReportEvent bloodthirstyEvent = mock(ReportEvent.class);
-  private static ReportEvent allYouCanDrinkEvent = mock(ReportEvent.class);
-  private static ReportEvent sweetToothEvent = mock(ReportEvent.class);
+  private static ReportEvent privateEvent = mock(ReportEvent.class);
+  private static ReportEvent cohabitationEvent = mock(ReportEvent.class);
 
   @BeforeAll
   public static void setUpDimension() {
-    dimension = new PackageDimension();
+    dimension = new InMemoryLodgingModeDimension();
     setUpEvents();
   }
 
   private static void setUpEvents() {
-    when(bloodthirstyEvent.getPackage()).thenReturn(Packages.BLOODTHIRSTY);
-    when(allYouCanDrinkEvent.getPackage()).thenReturn(Packages.ALL_YOU_CAN_DRINK);
-    when(sweetToothEvent.getPackage()).thenReturn(Packages.SWEET_TOOTH);
+    when(privateEvent.getLodgingMode()).thenReturn(LodgingModes.PRIVATE);
+    when(cohabitationEvent.getLodgingMode()).thenReturn(LodgingModes.COHABITATION);
   }
 
   @Override
   protected List<ReportEvent> buildEvents() {
-    return Arrays.asList(bloodthirstyEvent, allYouCanDrinkEvent, sweetToothEvent);
+    return Arrays.asList(privateEvent, cohabitationEvent);
   }
 
   @Override
   protected int numberOfValues() {
-    return Packages.values().length;
+    return LodgingModes.values().length;
   }
 
   @ParameterizedTest
-  @EnumSource(Packages.class)
-  public void splitAll_shouldSplitWithPackageValues(Packages packageName) {
+  @EnumSource(LodgingModes.class)
+  public void splitAll_shouldSplitWithLodgingModeValues(LodgingModes lodgingMode) {
     List<ReportPeriodData> splitData = dimension.splitAll(singleData);
 
     assertTrue(
         splitData.stream()
-            .anyMatch(data -> data.getDimensions().get(0).getValue().equals(packageName)));
+            .anyMatch(data -> data.getDimensions().get(0).getValue().equals(lodgingMode)));
   }
 
   @Test
-  public void splitAll_shouldSplitWithPackageDimensionName() {
+  public void splitAll_shouldSplitWithLodgingModeDimensionName() {
     List<ReportPeriodData> splitData = dimension.splitAll(singleData);
 
     assertTrue(
         splitData.stream()
             .allMatch(
-                data -> data.getDimensions().get(0).getName().equals(ReportDimensions.PACKAGE)));
+                data ->
+                    data.getDimensions().get(0).getName().equals(ReportDimensions.LODGING_MODE)));
   }
 
   @ParameterizedTest
-  @MethodSource("providePackageEvents")
+  @MethodSource("provideLodgingModeEvents")
   public void splitAll_withSingleEventPerPackage_shouldSplitEventsByPackage(
-      Packages value, ReportEvent event) {
+      LodgingModes value, ReportEvent event) {
     List<ReportPeriodData> splitData = dimension.splitAll(singleData);
     List<ReportPeriodData> filteredData = filterData(splitData, value);
 
@@ -79,14 +79,13 @@ class PackageDimensionTest extends ReportDimensionTest {
     assertEquals(event, filteredData.get(0).getEvents().get(0));
   }
 
-  private static Stream<Arguments> providePackageEvents() {
+  private static Stream<Arguments> provideLodgingModeEvents() {
     return Stream.of(
-        Arguments.of(Packages.BLOODTHIRSTY, bloodthirstyEvent),
-        Arguments.of(Packages.ALL_YOU_CAN_DRINK, allYouCanDrinkEvent),
-        Arguments.of(Packages.SWEET_TOOTH, sweetToothEvent));
+        Arguments.of(LodgingModes.PRIVATE, privateEvent),
+        Arguments.of(LodgingModes.COHABITATION, cohabitationEvent));
   }
 
-  private List<ReportPeriodData> filterData(List<ReportPeriodData> data, Packages value) {
+  private List<ReportPeriodData> filterData(List<ReportPeriodData> data, LodgingModes value) {
     return data.stream()
         .filter(datum -> datum.getDimensions().get(0).getValue().equals(value))
         .collect(Collectors.toList());

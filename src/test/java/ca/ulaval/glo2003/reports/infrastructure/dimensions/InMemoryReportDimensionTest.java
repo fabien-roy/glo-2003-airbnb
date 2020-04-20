@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.reports.domain.dimensions;
+package ca.ulaval.glo2003.reports.infrastructure.dimensions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -6,13 +6,14 @@ import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public abstract class ReportDimensionTest {
+public abstract class InMemoryReportDimensionTest {
 
   protected static ReportDimension dimension;
 
