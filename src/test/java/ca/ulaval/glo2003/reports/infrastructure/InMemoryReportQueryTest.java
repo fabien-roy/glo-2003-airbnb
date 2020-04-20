@@ -1,20 +1,22 @@
 package ca.ulaval.glo2003.reports.infrastructure;
 
 import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventBuilder.aReportEvent;
+import static ca.ulaval.glo2003.reports.domain.helpers.ReportPeriodDataBuilder.aReportPeriodData;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportPeriod;
+import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScope;
 import ca.ulaval.glo2003.time.domain.TimeDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,25 +27,20 @@ class InMemoryReportQueryTest {
   private static ReportScope scope = mock(ReportScope.class);
   private static ReportPeriod firstPeriod = mock(ReportPeriod.class);
   private static ReportPeriod secondPeriod = mock(ReportPeriod.class);
-  private static List<ReportMetric> metrics;
+  private static List<ReportMetric> metrics = new ArrayList<>();
   private static ReportMetric firstMetric = mock(ReportMetric.class);
   private static ReportMetric secondMetric = mock(ReportMetric.class);
-  private static List<ReportDimension> dimensions;
+  private static List<ReportDimension> dimensions = new ArrayList<>();
   private static ReportDimension firstDimension = mock(ReportDimension.class);
   private static ReportDimension secondDimension = mock(ReportDimension.class);
-  private static List<ReportEvent> events;
+  private static List<ReportEvent> events = new ArrayList<>();
   private static TimeDate date = aTimeDate().build();
   private static TimeDate otherDate = aTimeDate().build();
   private static ReportEvent firstEvent = aReportEvent().withDate(date).build();
   private static ReportEvent secondEvent = aReportEvent().withDate(otherDate).build();
-
-  @BeforeAll
-  private static void setUpPeriods() {
-    when(firstPeriod.contains(date)).thenReturn(true);
-    when(firstPeriod.contains(otherDate)).thenReturn(false);
-    when(secondPeriod.contains(date)).thenReturn(false);
-    when(secondPeriod.contains(otherDate)).thenReturn(true);
-  }
+  private static ReportPeriodData firstData = aReportPeriodData().build();
+  private static ReportPeriodData secondData = aReportPeriodData().build();
+  private static ReportPeriodData dimensionedData = aReportPeriodData().build();
 
   private void setUpQuery() {
     query = new InMemoryReportQuery(scope, metrics, dimensions);
@@ -52,11 +49,28 @@ class InMemoryReportQueryTest {
 
   @BeforeEach
   public void setUpMocks() {
-    reset(scope);
+    reset(scope, firstPeriod);
+
+    setUpPeriods();
+    setUpDimensions();
 
     setUpScopeWithSinglePeriod();
-    setUpScopeWithSingleDimension();
+    setUpScopeWithNoDimension();
     setUpScopeWithSingleEvent();
+  }
+
+  private void setUpPeriods() {
+    when(firstPeriod.contains(date)).thenReturn(true);
+    when(firstPeriod.contains(otherDate)).thenReturn(false);
+    when(firstPeriod.getData()).thenReturn(Collections.singletonList(firstData));
+    when(secondPeriod.contains(date)).thenReturn(false);
+    when(secondPeriod.contains(otherDate)).thenReturn(true);
+    when(secondPeriod.getData()).thenReturn(Collections.singletonList(secondData));
+  }
+
+  private void setUpDimensions() {
+    when(firstDimension.splitAll(anyList())).thenReturn(Collections.nCopies(2, dimensionedData));
+    when(secondDimension.splitAll(anyList())).thenReturn(Collections.nCopies(6, dimensionedData));
   }
 
   private void setUpScopeWithSinglePeriod() {
@@ -69,8 +83,18 @@ class InMemoryReportQueryTest {
     setUpQuery();
   }
 
+  private void setUpScopeWithNoDimension() {
+    dimensions = Collections.emptyList();
+    setUpQuery();
+  }
+
   private void setUpScopeWithSingleDimension() {
     dimensions = Collections.singletonList(firstDimension);
+    setUpQuery();
+  }
+
+  private void setUpScopeWithMultipleDimensions() {
+    dimensions = Arrays.asList(firstDimension, secondDimension);
     setUpQuery();
   }
 
@@ -113,5 +137,36 @@ class InMemoryReportQueryTest {
     verify(secondPeriod).setSingleData(eq(Collections.singletonList(secondEvent)));
   }
 
-  // TODO : Testing isn't done yet.
+  @Test
+  public void execute_withSingleDimension_shouldSplitDataAccordingToDimension() {
+    setUpScopeWithSingleDimension();
+
+    query.execute();
+
+    verify(firstPeriod).setData(argThat(data -> data.size() == 2));
+  }
+
+  @Test
+  public void execute_withMultipleDimensions_shouldSplitDataAccordingToDimension() {
+    setUpScopeWithMultipleDimensions();
+
+    query.execute();
+
+    verify(firstPeriod).setData(argThat(data -> data.size() == 6));
+  }
+
+  @Test
+  public void execute_withSingleMetric_shouldCalculateMetricForEachDimensionedData() {
+    // TODO
+  }
+
+  @Test
+  public void execute_withMultipleMetrics_shouldCalculateMetricsForEachDimensionedData() {
+    // TODO
+  }
+
+  @Test
+  public void execute_shouldSetDataToEachDimensioned() {
+    // TODO
+  }
 }
