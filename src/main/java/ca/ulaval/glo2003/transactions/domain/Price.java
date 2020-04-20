@@ -23,15 +23,13 @@ public class Price implements Comparable<Price> {
     this.bigDecimal = bigDecimal;
   }
 
-  // TODO : Test Price.getServiceFees()
   public Price getTotal() {
     return add(getServiceFees());
   }
 
-  // TODO : Test Price.getServiceFees()
   public Price getServiceFees() {
     ServiceFee serviceFee = Configuration.instance().getServiceFee();
-    return serviceFee.apply(this);
+    return serviceFee.getFor(this);
   }
 
   public Price add(Price price) {

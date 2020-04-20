@@ -1,7 +1,11 @@
 package ca.ulaval.glo2003.transactions.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.stream.Stream;
@@ -14,10 +18,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 class PriceTest {
 
   private static Price price;
+  private static ServiceFee serviceFee = mock(ServiceFee.class);
+  private static Price serviceFeePrice = new Price(15);
 
   @BeforeEach
   public void setUpPrice() {
     price = new Price(100);
+    when(serviceFee.getFor(price)).thenReturn(serviceFeePrice);
+    Configuration.instance().setServiceFee(serviceFee);
   }
 
   @Test
@@ -27,6 +35,31 @@ class PriceTest {
     price = Price.zero();
 
     assertEquals(zeroPrice, price);
+  }
+
+  @Test
+  public void getTotal_shouldGetValuePlusServiceFee() {
+    Price total = new Price(115);
+
+    price = price.getTotal();
+
+    assertEquals(total, price);
+  }
+
+  @Test
+  public void getServiceFee_shouldGetServiceFee() {
+    price = price.getServiceFees();
+
+    assertEquals(serviceFeePrice, price);
+  }
+
+  @Test
+  public void add_shouldAddValue() {
+    Price addedValue = new Price(200);
+
+    price = price.add(new Price(100));
+
+    assertEquals(addedValue, price);
   }
 
   @Test

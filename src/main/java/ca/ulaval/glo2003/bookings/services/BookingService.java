@@ -82,6 +82,6 @@ public class BookingService {
 
     Booking booking = bed.getBookingByNumber(parsedBookingNumber);
 
-    return cancelationService.cancel(bed, booking); // TODO : Modify tests
+    return cancelationService.cancel(bed, booking);
   }
 }

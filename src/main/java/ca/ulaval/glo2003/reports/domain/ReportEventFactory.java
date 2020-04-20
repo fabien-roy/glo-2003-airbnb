@@ -4,7 +4,6 @@ import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 
-// TODO : Test ReportEventFactory
 public class ReportEventFactory {
 
   public ReportEvent create(ReportEventTypes event, Bed bed, Booking booking) {

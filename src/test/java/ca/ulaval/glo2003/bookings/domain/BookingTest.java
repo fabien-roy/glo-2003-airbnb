@@ -40,7 +40,11 @@ class BookingTest {
   }
 
   private Booking buildOtherBooking() {
-    return aBooking().withArrivalDate(otherArrivalDate).withNumberOfNights(numberOfNights).build();
+    return aBooking()
+        .withPrice(price)
+        .withArrivalDate(otherArrivalDate)
+        .withNumberOfNights(numberOfNights)
+        .build();
   }
 
   @Test

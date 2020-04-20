@@ -13,12 +13,12 @@ class ServiceFeeTest {
 
   @ParameterizedTest
   @MethodSource("provideNullFees")
-  public void apply_withNoFee_shouldReturnPrice(Price price) {
+  public void getFor_withNoFee_shouldReturnZero(Price price) {
     ServiceFee serviceFee = new ServiceFee(null);
 
-    Price actualTotal = serviceFee.apply(price);
+    Price actualTotal = serviceFee.getFor(price);
 
-    assertEquals(price, actualTotal);
+    assertEquals(Price.zero(), actualTotal);
   }
 
   private static Stream<Arguments> provideNullFees() {
@@ -30,18 +30,18 @@ class ServiceFeeTest {
 
   @ParameterizedTest
   @MethodSource("provideFees")
-  public void isSet_withoutValue_shouldReturnFalse(BigDecimal fee, Price price, Price total) {
-    ServiceFee serviceFee = new ServiceFee(fee);
+  public void getFor_withFees_shouldReturnFees(BigDecimal feeFactor, Price price, Price fees) {
+    ServiceFee serviceFee = new ServiceFee(feeFactor);
 
-    Price actualTotal = serviceFee.apply(price);
+    Price actualFees = serviceFee.getFor(price);
 
-    assertEquals(total, actualTotal);
+    assertEquals(fees, actualFees);
   }
 
   private static Stream<Arguments> provideFees() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(0), new Price(123.123), new Price(123.123)),
-        Arguments.of(BigDecimal.valueOf(15), new Price(100.0), new Price(115.00)),
-        Arguments.of(BigDecimal.valueOf(15.15), new Price(100.0), new Price(115.15)));
+        Arguments.of(BigDecimal.valueOf(0), new Price(123.123), Price.zero()),
+        Arguments.of(BigDecimal.valueOf(15), new Price(100.0), new Price(15.00)),
+        Arguments.of(BigDecimal.valueOf(15.15), new Price(100.0), new Price(15.15)));
   }
 }

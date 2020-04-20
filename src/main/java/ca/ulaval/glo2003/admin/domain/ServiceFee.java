@@ -11,11 +11,11 @@ public class ServiceFee {
     this.serviceFee = serviceFee;
   }
 
-  public Price apply(Price price) {
-    return serviceFee == null ? price : price.multiply(factorOfPrice());
+  public Price getFor(Price price) {
+    return serviceFee == null ? Price.zero() : price.multiply(factorOfPrice());
   }
 
   private BigDecimal factorOfPrice() {
-    return serviceFee.divide(BigDecimal.valueOf(100)).add(BigDecimal.ONE);
+    return serviceFee.divide(BigDecimal.valueOf(100));
   }
 }

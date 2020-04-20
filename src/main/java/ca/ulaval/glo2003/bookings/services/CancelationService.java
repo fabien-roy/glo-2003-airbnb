@@ -35,7 +35,6 @@ public class CancelationService {
     this.reportService = reportService;
   }
 
-  // TODO : Modify tests with new logic
   public CancelationResponse cancel(Bed bed, Booking booking) {
     if (booking.isCanceled()) throw new BookingAlreadyCanceledException();
 
