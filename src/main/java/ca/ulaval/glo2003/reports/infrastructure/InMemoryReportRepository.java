@@ -6,7 +6,6 @@ import ca.ulaval.glo2003.reports.domain.ReportRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : Test InMemoryReportRepository
 public class InMemoryReportRepository implements ReportRepository<InMemoryReportQuery> {
 
   private List<ReportEvent> events = new ArrayList<>();
