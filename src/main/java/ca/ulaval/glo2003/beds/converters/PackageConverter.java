@@ -39,9 +39,8 @@ public class PackageConverter {
     List<PackageResponse> packageResponses = new ArrayList<>();
 
     pricesPerNight.forEach(
-        (packageName, price) -> {
-          packageResponses.add(new PackageResponse(packageName.toString(), price.toDouble()));
-        });
+        (packageName, price) ->
+            packageResponses.add(new PackageResponse(packageName.toString(), price.toDouble())));
 
     return packageResponses;
   }
