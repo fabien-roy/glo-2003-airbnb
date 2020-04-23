@@ -1,12 +1,10 @@
-package ca.ulaval.glo2003.time.domain;
+package ca.ulaval.glo2003.time2.domain;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 public class TimeDate {
 
   private LocalDate date;
-  private TimeDay day;
 
   public static TimeDate now() {
     return new TimeDate(LocalDate.now());
@@ -14,35 +12,6 @@ public class TimeDate {
 
   public TimeDate(LocalDate date) {
     this.date = date;
-    this.day = new TimeDay(date);
-  }
-
-  public TimeDate(Calendar calendar) {
-    this(new Timestamp(calendar.toInstant()).toLocalDate());
-  }
-
-  public TimeYear getYear() {
-    return day.getYear();
-  }
-
-  public TimeQuarter getQuarter() {
-    return day.getQuarter();
-  }
-
-  public TimeMonth getMonth() {
-    return day.getMonth();
-  }
-
-  public TimeWeek getWeek() {
-    return day.getWeek();
-  }
-
-  public int getDayOfYear() {
-    return day.getDayOfYear();
-  }
-
-  public int getDayOfMonth() {
-    return day.getDayOfMonth();
   }
 
   public TimeDate minusDays(int days) {
@@ -65,16 +34,8 @@ public class TimeDate {
     return new TimePeriod(this, this);
   }
 
-  private TimePeriod periodTo(TimeDate other) {
-    return new TimePeriod(this, other);
-  }
-
-  public TimePeriod periodToDays(int days) {
-    return periodTo(plusDays(days));
-  }
-
-  public Timestamp toTimestamp() {
-    return new Timestamp(date);
+  public TimePeriod toPeriod(int days) {
+    return new TimePeriod(this, plusDays(days));
   }
 
   public LocalDate toLocalDate() {
