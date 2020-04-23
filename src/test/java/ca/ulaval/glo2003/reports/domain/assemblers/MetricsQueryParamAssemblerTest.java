@@ -24,6 +24,7 @@ class MetricsQueryParamAssemblerTest {
   private ReportMetrics otherMetric = ReportMetrics.CANCELATIONS;
   private List<ReportMetrics> singleMetric = Collections.singletonList(metric);
   private List<ReportMetrics> multipleMetrics = Arrays.asList(metric, otherMetric);
+  private List<ReportMetrics> duplicatedMetrics = Arrays.asList(metric, metric);
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
@@ -61,6 +62,14 @@ class MetricsQueryParamAssemblerTest {
   @Test
   public void assemble_withInvalidMetric_shouldThrowInvalidReportMetricException() {
     params.put(METRICS_PARAM, Collections.singletonList("invalidMetrics"));
+
+    assertThrows(
+        InvalidReportMetricsException.class, () -> queryAssembler.assemble(queryBuilder, params));
+  }
+
+  @Test
+  public void assemble_withDuplicatedMetrics_shouldThrowInvalidReportMetricException() {
+    params.put(METRICS_PARAM, toParam(duplicatedMetrics));
 
     assertThrows(
         InvalidReportMetricsException.class, () -> queryAssembler.assemble(queryBuilder, params));
