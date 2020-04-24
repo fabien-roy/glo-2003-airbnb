@@ -5,30 +5,26 @@ import java.util.Calendar;
 
 public class TimeQuarter extends TimeCalendar {
 
-  TimePeriod period;
-  int firstMonthOfQuarter;
-  int lastMonthOfQuarter;
+  private int firstMonthOfQuarter;
+  private int lastMonthOfQuarter;
 
   public TimeQuarter(ZonedDateTime zonedDateTime) {
     super(zonedDateTime);
-    calendar.set(Calendar.YEAR, getYear());
     firstMonthOfQuarter = (getMonth() / 3) * 3;
     lastMonthOfQuarter = firstMonthOfQuarter + 2;
     period = new TimePeriod(firstDate(), lastDate());
   }
 
-  public TimePeriod toPeriod() {
-    return period;
-  }
-
-  private TimeDate firstDate() {
+  @Override
+  protected TimeDate firstDate() {
     Calendar firstMonth = Calendar.getInstance();
     firstMonth.set(Calendar.MONTH, firstMonthOfQuarter);
     int firstDayOfMonth = firstMonth.getActualMinimum(Calendar.DAY_OF_MONTH);
     return thatDate(firstMonthOfQuarter, firstDayOfMonth);
   }
 
-  private TimeDate lastDate() {
+  @Override
+  protected TimeDate lastDate() {
     Calendar lastMonth = Calendar.getInstance();
     lastMonth.set(Calendar.MONTH, lastMonthOfQuarter);
     int lastDayOfMonth = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);

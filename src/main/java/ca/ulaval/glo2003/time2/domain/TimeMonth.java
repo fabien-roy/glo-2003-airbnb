@@ -6,25 +6,18 @@ import java.util.Calendar;
 
 public class TimeMonth extends TimeCalendar {
 
-  TimePeriod period;
-
   public TimeMonth(ZonedDateTime zonedDateTime) {
     super(zonedDateTime);
-    calendar.set(Calendar.YEAR, getYear());
-    calendar.set(Calendar.MONTH, getMonth());
-    period = new TimePeriod(firstDate(), lastDate());
   }
 
-  public TimePeriod toPeriod() {
-    return period;
-  }
-
-  private TimeDate firstDate() {
+  @Override
+  protected TimeDate firstDate() {
     int firstDayOfMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
     return thatDate(firstDayOfMonth);
   }
 
-  private TimeDate lastDate() {
+  @Override
+  protected TimeDate lastDate() {
     int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     return thatDate(lastDayOfMonth);
   }

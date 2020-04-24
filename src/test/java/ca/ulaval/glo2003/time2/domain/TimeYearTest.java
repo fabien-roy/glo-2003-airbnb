@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class TimeYearTest {
+class TimeYearTest extends TimeCalendarTest {
 
   private static Stream<Arguments> provideYearStarts() {
     return Stream.of(

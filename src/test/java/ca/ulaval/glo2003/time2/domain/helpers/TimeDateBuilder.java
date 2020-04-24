@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.time2.domain.helpers;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.validDayOfMonth;
+import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.*;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateObjectMother.createDate;
 
 import ca.ulaval.glo2003.time2.domain.TimeDate;
@@ -42,6 +42,14 @@ public class TimeDateBuilder {
   public TimeDateBuilder withMonth(int month) {
     this.month = month;
     this.dayOfMonth = validDayOfMonth(year, month - 1);
+    return this;
+  }
+
+  public TimeDateBuilder withWeekOfYear(int weekOfYear) {
+    int firstMonthOfWeekOfYear = firstMonthOfWeekOfYear(year, weekOfYear) + 1;
+    int lastMonthOfWeekOfYear = lastMonthOfWeekOfYear(year, weekOfYear) + 1;
+    this.month = Faker.instance().random().nextInt(firstMonthOfWeekOfYear, lastMonthOfWeekOfYear);
+    this.dayOfMonth = validDayOfMonthOfWeekOfYear(year, month - 1, weekOfYear);
     return this;
   }
 

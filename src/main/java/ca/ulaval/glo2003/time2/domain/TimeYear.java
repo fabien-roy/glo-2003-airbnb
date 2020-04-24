@@ -5,24 +5,18 @@ import java.util.Calendar;
 
 public class TimeYear extends TimeCalendar {
 
-  TimePeriod period;
-
   public TimeYear(ZonedDateTime zonedDateTime) {
     super(zonedDateTime);
-    calendar.set(Calendar.YEAR, getYear());
-    period = new TimePeriod(firstDate(), lastDate());
   }
 
-  public TimePeriod toPeriod() {
-    return period;
-  }
-
-  private TimeDate firstDate() {
+  @Override
+  protected TimeDate firstDate() {
     int firstDayOfYear = calendar.getActualMinimum(Calendar.DAY_OF_YEAR);
     return thatDate(firstDayOfYear);
   }
 
-  private TimeDate lastDate() {
+  @Override
+  protected TimeDate lastDate() {
     int lastDayOfYear = calendar.getActualMaximum(Calendar.DAY_OF_YEAR);
     return thatDate(lastDayOfYear);
   }
