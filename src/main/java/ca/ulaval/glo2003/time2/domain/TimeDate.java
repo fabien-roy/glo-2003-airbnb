@@ -23,6 +23,10 @@ public class TimeDate {
     return new TimeYear(toTimestamp().toZonedDateTime());
   }
 
+  public TimeMonth getMonth() {
+    return new TimeMonth(toTimestamp().toZonedDateTime());
+  }
+
   public TimeDate minusDays(int days) {
     return new TimeDate(date.minusDays(days));
   }

@@ -15,6 +15,8 @@ class TimePeriodTest {
   private static TimeDate end = start.plusDays(numberOfDays);
   private static int firstYear = 2020;
   private static int secondYear = 2021;
+  private static int firstMonth = 1;
+  private static int secondMonth = 2;
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -27,6 +29,12 @@ class TimePeriodTest {
       aTimePeriod().withYears(firstYear, firstYear).build();
   private static TimePeriod multipleYearsPeriod =
       aTimePeriod().withYears(firstYear, secondYear).build();
+  private static TimePeriod singleMonthPeriod =
+      aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, firstMonth).build();
+  private static TimePeriod multipleMonthsPeriod =
+      aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, secondMonth).build();
+  private static TimePeriod multipleYearMonthsPeriod =
+      aTimePeriod().withYears(firstYear, secondYear).withMonths(firstMonth, secondMonth).build();
 
   @BeforeAll
   public static void setUpPeriodsForOverlapping() {
@@ -86,6 +94,37 @@ class TimePeriodTest {
     assertEquals(2, years.size());
     assertEquals(firstYear, years.get(0).getYear());
     assertEquals(secondYear, years.get(1).getYear());
+  }
+
+  @Test
+  public void getMonths_withSingleMonthPeriod_shouldGetMonth() {
+    List<TimeCalendar> months = singleMonthPeriod.getMonths();
+
+    assertEquals(1, months.size());
+    assertEquals(firstYear, months.get(0).getYear());
+    assertEquals(firstMonth, months.get(0).getMonth() + 1);
+  }
+
+  @Test
+  public void getMonths_withMultipleMonthsPeriod_shouldGetMonths() {
+    List<TimeCalendar> months = multipleMonthsPeriod.getMonths();
+
+    assertEquals(2, months.size());
+    assertEquals(firstYear, months.get(0).getYear());
+    assertEquals(firstMonth, months.get(0).getMonth() + 1);
+    assertEquals(firstYear, months.get(1).getYear());
+    assertEquals(secondMonth, months.get(1).getMonth() + 1);
+  }
+
+  @Test
+  public void getMonths_withMultipleYearMonthsPeriod_shouldGetMonths() {
+    List<TimeCalendar> months = multipleYearMonthsPeriod.getMonths();
+
+    assertEquals(14, months.size());
+    assertEquals(firstYear, months.get(0).getYear());
+    assertEquals(firstMonth, months.get(0).getMonth() + 1);
+    assertEquals(secondYear, months.get(13).getYear());
+    assertEquals(secondMonth, months.get(13).getMonth() + 1);
   }
 
   @Test

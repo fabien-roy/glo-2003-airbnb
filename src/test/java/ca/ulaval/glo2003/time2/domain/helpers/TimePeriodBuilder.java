@@ -6,6 +6,7 @@ import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateObjectMother.create
 import ca.ulaval.glo2003.time2.domain.TimeDate;
 import ca.ulaval.glo2003.time2.domain.TimePeriod;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 public class TimePeriodBuilder {
 
@@ -30,6 +31,13 @@ public class TimePeriodBuilder {
     return this;
   }
 
+  public TimePeriodBuilder withMonths(int startMonth, int endMonth) {
+    this.startMonth = startMonth;
+    this.endMonth = endMonth;
+    this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth);
+    return this;
+  }
+
   public TimePeriod build() {
     TimeDate start =
         aTimeDate()
@@ -40,5 +48,13 @@ public class TimePeriodBuilder {
     TimeDate end =
         aTimeDate().withYear(endYear).withMonth(endMonth).withDayOfMonth(dayOfMonthEnd).build();
     return start.isBefore(end) ? new TimePeriod(start, end) : new TimePeriod(end, start);
+  }
+
+  // TODO : This is duplicated in TimeMonthTest
+  private static int lastDayOfMonth(int year, int month) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, month);
+    return calendar.getLeastMaximum(Calendar.DAY_OF_MONTH);
   }
 }

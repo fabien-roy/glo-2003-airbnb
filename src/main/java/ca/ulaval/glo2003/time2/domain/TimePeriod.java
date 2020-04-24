@@ -37,6 +37,10 @@ public class TimePeriod {
     return getCalendars(TimeDate::getYear);
   }
 
+  public List<TimeCalendar> getMonths() {
+    return getCalendars(TimeDate::getMonth);
+  }
+
   private List<TimeCalendar> getCalendars(GetCalendarOperator getCalendar) {
     List<TimeCalendar> calendars = new ArrayList<>();
     getDates()
