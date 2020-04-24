@@ -9,7 +9,7 @@ public class TimeYear extends TimeCalendar {
 
   public TimeYear(ZonedDateTime zonedDateTime) {
     super(zonedDateTime);
-    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+    calendar.set(Calendar.YEAR, getYear());
     period = new TimePeriod(firstDate(), lastDate());
   }
 
@@ -45,6 +45,7 @@ public class TimeYear extends TimeCalendar {
     return getYear() - other.getYear();
   }
 
+  // TODO : Test equals and hashCode (can't TimeCalendar do that?)
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;

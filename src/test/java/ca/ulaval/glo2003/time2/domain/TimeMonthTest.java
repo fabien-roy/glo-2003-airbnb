@@ -1,12 +1,12 @@
 package ca.ulaval.glo2003.time2.domain;
 
+import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.lastDayOfMonth;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.admin.domain.Configuration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
@@ -71,15 +71,8 @@ class TimeMonthTest {
   }
 
   private static TimeDate lastDateOfMonth(int year, int month) {
-    int lastDayOfMonth = lastDayOfMonth(year, month);
+    int lastDayOfMonth = lastDayOfMonth(year, month - 1);
     return aTimeDate().withDate(LocalDate.of(year, month, lastDayOfMonth)).build();
-  }
-
-  private static int lastDayOfMonth(int year, int month) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.YEAR, year);
-    calendar.set(Calendar.MONTH, month);
-    return calendar.getLeastMaximum(Calendar.DAY_OF_MONTH);
   }
 
   @ParameterizedTest
@@ -92,10 +85,10 @@ class TimeMonthTest {
 
   @ParameterizedTest
   @MethodSource("provideMonthEnds")
-  public void construct_shouldSetPeriodStartToMonthEnd(ZonedDateTime date, TimeDate yearEnd) {
+  public void construct_shouldSetPeriodStartToMonthEnd(ZonedDateTime date, TimeDate monthEnd) {
     TimeMonth month = new TimeMonth(date);
 
-    assertEquals(yearEnd, month.toPeriod().getEnd());
+    assertEquals(monthEnd, month.toPeriod().getEnd());
   }
 
   @ParameterizedTest

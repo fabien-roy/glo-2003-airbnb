@@ -24,6 +24,10 @@ public abstract class TimeCalendar implements Comparable<TimeCalendar> {
     return getYear() * 12 + getMonth();
   }
 
+  protected int getYearQuarter() {
+    return getYearMonth() / 3;
+  }
+
   public abstract TimePeriod toPeriod();
 
   protected void setAtMidnight(Calendar date) {

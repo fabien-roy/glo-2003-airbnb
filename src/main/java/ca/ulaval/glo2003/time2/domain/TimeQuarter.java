@@ -1,17 +1,19 @@
 package ca.ulaval.glo2003.time2.domain;
 
-import ca.ulaval.glo2003.admin.domain.Configuration;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 
-public class TimeMonth extends TimeCalendar {
+public class TimeQuarter extends TimeCalendar {
 
   TimePeriod period;
+  int firstMonthOfQuarter;
+  int lastMonthOfQuarter;
 
-  public TimeMonth(ZonedDateTime zonedDateTime) {
+  public TimeQuarter(ZonedDateTime zonedDateTime) {
     super(zonedDateTime);
     calendar.set(Calendar.YEAR, getYear());
-    calendar.set(Calendar.MONTH, getMonth());
+    firstMonthOfQuarter = (getMonth() / 3) * 3;
+    lastMonthOfQuarter = firstMonthOfQuarter + 2;
     period = new TimePeriod(firstDate(), lastDate());
   }
 
@@ -20,34 +22,38 @@ public class TimeMonth extends TimeCalendar {
   }
 
   private TimeDate firstDate() {
+    calendar.set(Calendar.MONTH, firstMonthOfQuarter);
     int firstDayOfMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
-    return thatDate(firstDayOfMonth);
+    return thatDate(firstMonthOfQuarter, firstDayOfMonth);
   }
 
   private TimeDate lastDate() {
+    calendar.set(Calendar.MONTH, lastMonthOfQuarter);
     int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-    return thatDate(lastDayOfMonth);
+    return thatDate(lastMonthOfQuarter, lastDayOfMonth);
   }
 
-  private TimeDate thatDate(int dayOfMonth) {
+  private TimeDate thatDate(int month, int dayOfMonth) {
     Calendar date = Calendar.getInstance();
     date.set(Calendar.YEAR, getYear());
-    date.set(Calendar.MONTH, getMonth());
+    date.set(Calendar.MONTH, month);
     date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
     setAtMidnight(date);
     return new TimeDate(date.getTime());
   }
 
+  private int getQuarter() {
+    return (firstMonthOfQuarter / 3) + 1;
+  }
+
   @Override
   public String toString() {
-    return calendar
-        .getDisplayName(Calendar.MONTH, Calendar.LONG, Configuration.instance().getLocale())
-        .toLowerCase();
+    return "q".concat(Integer.toString(getQuarter()));
   }
 
   @Override
   public int compareTo(TimeCalendar other) {
-    return getYearMonth() - other.getYearMonth();
+    return getYearQuarter() - other.getYearQuarter();
   }
 
   // TODO : Test equals and hashCode (can't TimeCalendar do that?)
@@ -57,11 +63,11 @@ public class TimeMonth extends TimeCalendar {
 
     TimeCalendar other = (TimeCalendar) object;
 
-    return getYearMonth() == other.getYearMonth();
+    return getYearQuarter() == other.getYearQuarter();
   }
 
   @Override
   public int hashCode() {
-    return Integer.hashCode(getYearMonth());
+    return Integer.hashCode(getYearQuarter());
   }
 }

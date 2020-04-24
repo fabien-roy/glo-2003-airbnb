@@ -1,8 +1,10 @@
 package ca.ulaval.glo2003.time2.domain.helpers;
 
+import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.validDayOfMonth;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateObjectMother.createDate;
 
 import ca.ulaval.glo2003.time2.domain.TimeDate;
+import com.github.javafaker.Faker;
 import java.time.LocalDate;
 
 public class TimeDateBuilder {
@@ -29,8 +31,17 @@ public class TimeDateBuilder {
     return this;
   }
 
+  public TimeDateBuilder withQuarter(int quarter) {
+    int firstMonthOfQuarter = quarter * 3 - 2;
+    int lastMonthOfQuarter = quarter * 3;
+    this.month = Faker.instance().random().nextInt(firstMonthOfQuarter, lastMonthOfQuarter);
+    this.dayOfMonth = validDayOfMonth(year, month - 1);
+    return this;
+  }
+
   public TimeDateBuilder withMonth(int month) {
     this.month = month;
+    this.dayOfMonth = validDayOfMonth(year, month - 1);
     return this;
   }
 
