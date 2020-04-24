@@ -33,17 +33,20 @@ public class TimePeriod {
     return dates;
   }
 
-  // TODO : Test TimePeriod.getYears
   public List<TimeCalendar> getYears() {
-    return getCalendars((calendars, date) -> calendars.add(date.getYear()));
+    return getCalendars(TimeDate::getYear);
   }
 
-  private List<TimeCalendar> getCalendars(CalendarsAddOperator addOperator) {
-    Set<TimeCalendar> calendars = new HashSet<>();
-    getDates().forEach(date -> addOperator.operation(calendars, date));
-    List<TimeCalendar> uniqueCalendars = new ArrayList<>(calendars);
-    Collections.sort(uniqueCalendars);
-    return uniqueCalendars;
+  private List<TimeCalendar> getCalendars(GetCalendarOperator getCalendar) {
+    List<TimeCalendar> calendars = new ArrayList<>();
+    getDates()
+        .forEach(
+            date -> {
+              if (!calendars.contains(getCalendar.operation(date)))
+                calendars.add(getCalendar.operation(date));
+            });
+    Collections.sort(calendars);
+    return calendars;
   }
 
   public boolean isOverlapping(TimePeriod other) {

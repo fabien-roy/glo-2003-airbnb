@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.time2.domain;
 
+import static ca.ulaval.glo2003.time2.domain.helpers.TimePeriodBuilder.aTimePeriod;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.time.domain.TimeDate;
-import ca.ulaval.glo2003.time.domain.TimePeriod;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +13,8 @@ class TimePeriodTest {
   private static int numberOfDays = 5;
   private static TimeDate start = TimeDate.now();
   private static TimeDate end = start.plusDays(numberOfDays);
+  private static int firstYear = 2020;
+  private static int secondYear = 2021;
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -21,42 +23,34 @@ class TimePeriodTest {
   private static TimePeriod beforeOverlappingPeriod;
   private static TimePeriod afterOverlappingPeriod;
 
-  @BeforeEach
-  public void setUpPeriod() {
-    period = new TimePeriod(start, end);
-  }
+  private static TimePeriod singleYearPeriod =
+      aTimePeriod().withYears(firstYear, firstYear).build();
+  private static TimePeriod multipleYearsPeriod =
+      aTimePeriod().withYears(firstYear, secondYear).build();
 
-  @BeforeEach
-  public void setUpSamePeriod() {
-    samePeriod = new TimePeriod(start, end);
-  }
-
-  @BeforeEach
-  public void setUpBeforePeriod() {
+  @BeforeAll
+  public static void setUpPeriodsForOverlapping() {
     TimeDate beforeEnd = start.minusDays(1);
     TimeDate beforeStart = beforeEnd.minusDays(numberOfDays);
     beforePeriod = new TimePeriod(beforeStart, beforeEnd);
-  }
 
-  @BeforeEach
-  public void setUpAfterPeriod() {
     TimeDate afterStart = end.plusDays(1);
     TimeDate afterEnd = afterStart.plusDays(numberOfDays);
     afterPeriod = new TimePeriod(afterStart, afterEnd);
-  }
 
-  @BeforeEach
-  public void setUpBeforeOverlappingPeriod() {
     TimeDate beforeOverlappingEnd = start.plusDays(1);
     TimeDate beforeOverlappingStart = beforeOverlappingEnd.minusDays(numberOfDays);
     beforeOverlappingPeriod = new TimePeriod(beforeOverlappingStart, beforeOverlappingEnd);
-  }
 
-  @BeforeEach
-  public void setUpAfterOverlappingPeriod() {
     TimeDate afterOverlappingStart = end.minusDays(1);
     TimeDate afterOverlappingEnd = afterOverlappingStart.plusDays(numberOfDays);
     afterOverlappingPeriod = new TimePeriod(afterOverlappingStart, afterOverlappingEnd);
+  }
+
+  @BeforeEach
+  public void setUpPeriods() {
+    period = new TimePeriod(start, end);
+    samePeriod = new TimePeriod(start, end);
   }
 
   @Test
@@ -75,6 +69,23 @@ class TimePeriodTest {
     for (int i = 0; i < numberOfDays; i++) {
       assertEquals(start.plusDays(i), dates.get(i));
     }
+  }
+
+  @Test
+  public void getYears_withSingleYearPeriod_shouldGetYear() {
+    List<TimeCalendar> years = singleYearPeriod.getYears();
+
+    assertEquals(1, years.size());
+    assertEquals(firstYear, years.get(0).getYear());
+  }
+
+  @Test
+  public void getYears_withMultipleYearsPeriod_shouldGetYears() {
+    List<TimeCalendar> years = multipleYearsPeriod.getYears();
+
+    assertEquals(2, years.size());
+    assertEquals(firstYear, years.get(0).getYear());
+    assertEquals(secondYear, years.get(1).getYear());
   }
 
   @Test

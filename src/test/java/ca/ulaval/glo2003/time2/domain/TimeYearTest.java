@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.time2.domain;
 
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
-import static ca.ulaval.glo2003.time2.domain.helpers.ZonedDateTimeBuilder.aZonedDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
@@ -44,7 +43,7 @@ class TimeYearTest {
   }
 
   private static ZonedDateTime zonedDateTimeOfYear(int year) {
-    return aZonedDateTime().withYear(year).build();
+    return aTimeDate().withYear(year).build().toTimestamp().toZonedDateTime();
   }
 
   private static TimeDate firstDateOfYear(int year) {
