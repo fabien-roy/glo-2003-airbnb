@@ -16,6 +16,14 @@ public abstract class TimeCalendar implements Comparable<TimeCalendar> {
     return calendar.get(Calendar.YEAR);
   }
 
+  protected int getMonth() {
+    return calendar.get(Calendar.MONTH);
+  }
+
+  protected int getYearMonth() {
+    return getYear() * 12 + getMonth();
+  }
+
   public abstract TimePeriod toPeriod();
 
   protected void setAtMidnight(Calendar date) {

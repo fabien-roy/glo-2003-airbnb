@@ -12,37 +12,36 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class TimeYearTest {
 
-  @ParameterizedTest
-  @MethodSource("provideYearStarts")
-  public void construct_shouldSetPeriodStartToYearStart(ZonedDateTime date, TimeDate yearStart) {
-    TimeYear year = new TimeYear(date);
-
-    assertEquals(yearStart, year.toPeriod().getStart());
-  }
-
   private static Stream<Arguments> provideYearStarts() {
     return Stream.of(
-        Arguments.of(zonedDateTimeOfYear(2020), firstDateOfYear(2020)),
-        Arguments.of(zonedDateTimeOfYear(1937), firstDateOfYear(1937)),
-        Arguments.of(zonedDateTimeOfYear(2034), firstDateOfYear(2034)));
-  }
-
-  @ParameterizedTest
-  @MethodSource("provideYearEnds")
-  public void construct_shouldSetPeriodStartToYearEnd(ZonedDateTime date, TimeDate yearEnd) {
-    TimeYear year = new TimeYear(date);
-
-    assertEquals(yearEnd, year.toPeriod().getEnd());
+        Arguments.of(buildZonedDateTime(2020), firstDateOfYear(2020)),
+        Arguments.of(buildZonedDateTime(1937), firstDateOfYear(1937)),
+        Arguments.of(buildZonedDateTime(2034), firstDateOfYear(2034)));
   }
 
   private static Stream<Arguments> provideYearEnds() {
     return Stream.of(
-        Arguments.of(zonedDateTimeOfYear(2020), lastDateOfYear(2020)),
-        Arguments.of(zonedDateTimeOfYear(1937), lastDateOfYear(1937)),
-        Arguments.of(zonedDateTimeOfYear(2034), lastDateOfYear(2034)));
+        Arguments.of(buildZonedDateTime(2020), lastDateOfYear(2020)),
+        Arguments.of(buildZonedDateTime(1937), lastDateOfYear(1937)),
+        Arguments.of(buildZonedDateTime(2034), lastDateOfYear(2034)));
   }
 
-  private static ZonedDateTime zonedDateTimeOfYear(int year) {
+  private static Stream<Arguments> provideYearStrings() {
+    return Stream.of(
+        Arguments.of(buildZonedDateTime(2020), "2020"),
+        Arguments.of(buildZonedDateTime(1937), "1937"),
+        Arguments.of(buildZonedDateTime(2034), "2034"));
+  }
+
+  private static Stream<Arguments> provideYearComparisons() {
+    return Stream.of(
+        Arguments.of(buildZonedDateTime(2023), buildZonedDateTime(2020), 3),
+        Arguments.of(buildZonedDateTime(2000), buildZonedDateTime(1937), 63),
+        Arguments.of(buildZonedDateTime(2000), buildZonedDateTime(2000), 0),
+        Arguments.of(buildZonedDateTime(2000), buildZonedDateTime(2034), -34));
+  }
+
+  private static ZonedDateTime buildZonedDateTime(int year) {
     return aTimeDate().withYear(year).build().toTimestamp().toZonedDateTime();
   }
 
@@ -55,18 +54,27 @@ class TimeYearTest {
   }
 
   @ParameterizedTest
+  @MethodSource("provideYearStarts")
+  public void construct_shouldSetPeriodStartToYearStart(ZonedDateTime date, TimeDate yearStart) {
+    TimeYear year = new TimeYear(date);
+
+    assertEquals(yearStart, year.toPeriod().getStart());
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideYearEnds")
+  public void construct_shouldSetPeriodStartToYearEnd(ZonedDateTime date, TimeDate yearEnd) {
+    TimeYear year = new TimeYear(date);
+
+    assertEquals(yearEnd, year.toPeriod().getEnd());
+  }
+
+  @ParameterizedTest
   @MethodSource("provideYearStrings")
   public void toString_shouldReturnYearToString(ZonedDateTime date, String yearString) {
     TimeYear year = new TimeYear(date);
 
     assertEquals(yearString, year.toString());
-  }
-
-  private static Stream<Arguments> provideYearStrings() {
-    return Stream.of(
-        Arguments.of(zonedDateTimeOfYear(2020), "2020"),
-        Arguments.of(zonedDateTimeOfYear(1937), "1937"),
-        Arguments.of(zonedDateTimeOfYear(2034), "2034"));
   }
 
   @ParameterizedTest
@@ -79,13 +87,5 @@ class TimeYearTest {
     int comparison = year.compareTo(otherYear);
 
     assertEquals(difference, comparison);
-  }
-
-  private static Stream<Arguments> provideYearComparisons() {
-    return Stream.of(
-        Arguments.of(zonedDateTimeOfYear(2023), zonedDateTimeOfYear(2020), 3),
-        Arguments.of(zonedDateTimeOfYear(2000), zonedDateTimeOfYear(1937), 63),
-        Arguments.of(zonedDateTimeOfYear(2000), zonedDateTimeOfYear(2000), 0),
-        Arguments.of(zonedDateTimeOfYear(2000), zonedDateTimeOfYear(2034), -34));
   }
 }

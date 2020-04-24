@@ -3,13 +3,14 @@ package ca.ulaval.glo2003.time2.domain;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 
-public class TimeYear extends TimeCalendar {
+public class TimeMonth extends TimeCalendar {
 
   TimePeriod period;
 
-  public TimeYear(ZonedDateTime zonedDateTime) {
+  public TimeMonth(ZonedDateTime zonedDateTime) {
     super(zonedDateTime);
     calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+    calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
     period = new TimePeriod(firstDate(), lastDate());
   }
 
@@ -18,31 +19,32 @@ public class TimeYear extends TimeCalendar {
   }
 
   private TimeDate firstDate() {
-    int firstDayOfYear = calendar.getActualMinimum(Calendar.DAY_OF_YEAR);
-    return thatDate(firstDayOfYear);
+    int firstDayOfMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+    return thatDate(firstDayOfMonth);
   }
 
   private TimeDate lastDate() {
-    int lastDayOfYear = calendar.getActualMaximum(Calendar.DAY_OF_YEAR);
-    return thatDate(lastDayOfYear);
+    int lastDayOfMonth = calendar.getLeastMaximum(Calendar.DAY_OF_MONTH);
+    return thatDate(lastDayOfMonth);
   }
 
-  private TimeDate thatDate(int dayOfYear) {
+  private TimeDate thatDate(int dayOfMonth) {
     Calendar date = Calendar.getInstance();
     date.set(Calendar.YEAR, getYear());
-    date.set(Calendar.DAY_OF_YEAR, dayOfYear);
+    date.set(Calendar.MONTH, getMonth());
+    date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
     setAtMidnight(date);
     return new TimeDate(date.getTime());
   }
 
   @Override
   public String toString() {
-    return Integer.toString(calendar.get(Calendar.YEAR));
+    return Integer.toString(calendar.get(Calendar.MONTH)); // TODO
   }
 
   @Override
   public int compareTo(TimeCalendar other) {
-    return getYear() - other.getYear();
+    return getYearMonth() - other.getYearMonth();
   }
 
   @Override
@@ -51,11 +53,11 @@ public class TimeYear extends TimeCalendar {
 
     TimeCalendar other = (TimeCalendar) object;
 
-    return getYear() == other.getYear();
+    return getYearMonth() == other.getYearMonth();
   }
 
   @Override
   public int hashCode() {
-    return Integer.hashCode(getYear());
+    return Integer.hashCode(getYearMonth());
   }
 }
