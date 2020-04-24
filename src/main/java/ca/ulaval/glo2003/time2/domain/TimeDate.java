@@ -19,7 +19,6 @@ public class TimeDate {
     this.date = new Timestamp(date.toInstant()).toLocalDate();
   }
 
-  // TODO : Test TimeDate.getYear
   public TimeYear getYear() {
     return new TimeYear(toTimestamp().toZonedDateTime());
   }

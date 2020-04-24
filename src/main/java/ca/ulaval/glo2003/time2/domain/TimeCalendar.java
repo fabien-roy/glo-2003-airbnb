@@ -29,7 +29,6 @@ public abstract class TimeCalendar implements Comparable<TimeCalendar> {
     date.set(Calendar.MILLISECOND, 0);
   }
 
-  // TODO : Move TimeDay.equals tests here
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
