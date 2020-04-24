@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeYearBuilder.aTimeYear;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -17,8 +16,8 @@ class AnnualScopeTest {
 
   private static AnnualScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
-  private static TimeYear firstYear = aTimeYear().build();
-  private static TimeYear secondYear = firstYear.plusYears(1);
+  private static TimeYear firstYear = mock(TimeYear.class);
+  private static TimeYear secondYear = mock(TimeYear.class);
 
   @BeforeEach
   public void resetMocks() {
@@ -40,7 +39,7 @@ class AnnualScopeTest {
   }
 
   @Test
-  public void getReportPeriodss_withSingleYear_shouldHaveSingleReport() {
+  public void getReportPeriods_withSingleYear_shouldHaveSingleReport() {
     setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
@@ -49,7 +48,7 @@ class AnnualScopeTest {
   }
 
   @Test
-  public void getReportPeriodss_withSingleYear_shouldSetPeriodNamesToThatYear() {
+  public void getReportPeriods_withSingleYear_shouldSetPeriodNamesToThatYear() {
     setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
@@ -58,7 +57,7 @@ class AnnualScopeTest {
   }
 
   @Test
-  public void getReportPeriodss_withSingleYear_shouldSetPeriodToThatYear() {
+  public void getReportPeriods_withSingleYear_shouldSetPeriodToThatYear() {
     setUpReportScopeWithSingleYear();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();
@@ -67,7 +66,7 @@ class AnnualScopeTest {
   }
 
   @Test
-  public void getReportPeriodss_withMultipleYears_shouldHaveMultipleReports() {
+  public void getReportPeriods_withMultipleYears_shouldHaveMultipleReports() {
     setUpReportScopeWithMultipleYears();
 
     List<ReportPeriod> reportPeriods = reportScope.getReportPeriods();

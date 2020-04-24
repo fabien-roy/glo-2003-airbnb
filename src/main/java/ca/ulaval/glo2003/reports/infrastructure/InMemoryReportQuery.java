@@ -45,10 +45,7 @@ public class InMemoryReportQuery implements ReportQuery {
     List<ReportPeriod> queriedPeriods = new ArrayList<>();
 
     for (ReportPeriod period : scope.getReportPeriods()) {
-      List<ReportEvent> periodEvents =
-          events.stream()
-              .filter(event -> period.contains(event.getDate()))
-              .collect(Collectors.toList());
+      List<ReportEvent> periodEvents = getEventsForPeriod(period);
       period.setSingleData(periodEvents);
 
       List<ReportPeriodData> data = splitDataInDimensions(period.getData());
@@ -59,6 +56,12 @@ public class InMemoryReportQuery implements ReportQuery {
     }
 
     return queriedPeriods;
+  }
+
+  private List<ReportEvent> getEventsForPeriod(ReportPeriod period) {
+    return events.stream()
+        .filter(event -> period.contains(event.getDate()))
+        .collect(Collectors.toList());
   }
 
   private List<ReportPeriodData> splitDataInDimensions(List<ReportPeriodData> data) {

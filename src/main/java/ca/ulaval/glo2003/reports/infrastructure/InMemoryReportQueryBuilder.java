@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.reports.infrastructure;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import ca.ulaval.glo2003.reports.domain.ReportQueryBuilder;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionBuilder;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensions;
@@ -8,8 +9,6 @@ import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScopeBuilder;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScopes;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
-import ca.ulaval.glo2003.time.domain.TimeYear;
-import java.time.Year;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
@@ -23,7 +22,7 @@ public class InMemoryReportQueryBuilder implements ReportQueryBuilder<InMemoryRe
   private ReportScopes DEFAULT_SCOPE = ReportScopes.MONTHLY;
   private ReportScopes scope = DEFAULT_SCOPE;
 
-  private TimePeriod DEFAULT_PERIOD = new TimeYear(Year.of(2020)).toPeriod();
+  private TimePeriod DEFAULT_PERIOD = Configuration.instance().getDefaultReportPeriod();
   private TimePeriod period = DEFAULT_PERIOD;
 
   private List<ReportMetrics> DEFAULT_METRICS = Collections.singletonList(ReportMetrics.INCOMES);

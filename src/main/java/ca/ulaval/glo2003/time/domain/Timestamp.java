@@ -29,9 +29,8 @@ public class Timestamp {
     return value.atZone(ZONE_OFFSET).toLocalDate();
   }
 
-  public boolean isMaxTime() {
-    Timestamp timestampAtMaxTime = new Timestamp(toLocalDate());
-    return equals(timestampAtMaxTime);
+  public ZonedDateTime toZonedDateTime() {
+    return value.atZone(ZONE_OFFSET);
   }
 
   @Override

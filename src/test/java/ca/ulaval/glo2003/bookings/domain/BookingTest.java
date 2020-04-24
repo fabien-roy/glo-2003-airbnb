@@ -5,9 +5,12 @@ import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +22,11 @@ class BookingTest {
   private static TimeDate arrivalDate;
   private static TimeDate otherArrivalDate;
   private static int numberOfNights;
+
+  @BeforeAll
+  public static void setUpConfiguration() {
+    Configuration.instance().setServiceFee(new ServiceFee(null));
+  }
 
   @BeforeEach
   public void setUpBooking() {
@@ -71,37 +79,37 @@ class BookingTest {
   }
 
   @Test
-  public void getPeriod_shouldReturnPeriodWithArrivalAsStart() {
-    TimePeriod period = booking.getPeriod();
+  public void toPeriod_shouldReturnPeriodWithArrivalAsStart() {
+    TimePeriod period = booking.toPeriod();
 
     assertEquals(arrivalDate, period.getStart());
   }
 
   @Test
-  public void getPeriod_shouldReturnPeriodWithDepartureAsEnd() {
+  public void toPeriod_shouldReturnPeriodWithDepartureAsEnd() {
     TimeDate departureDate = arrivalDate.plusDays(numberOfNights - 1);
 
-    TimePeriod period = booking.getPeriod();
+    TimePeriod period = booking.toPeriod();
 
     assertEquals(departureDate, period.getEnd());
   }
 
   @Test
-  public void getPeriod_withOneNight_shouldReturnPeriodWithArrivalAsStart() {
+  public void toPeriod_withOneNight_shouldReturnPeriodWithArrivalAsStart() {
     numberOfNights = 1;
     booking = buildBooking();
 
-    TimePeriod period = booking.getPeriod();
+    TimePeriod period = booking.toPeriod();
 
     assertEquals(arrivalDate, period.getStart());
   }
 
   @Test
-  public void getPeriod_withOneNight_shouldReturnPeriodWithArrivalAsEnd() {
+  public void toPeriod_withOneNight_shouldReturnPeriodWithArrivalAsEnd() {
     numberOfNights = 1;
     booking = buildBooking();
 
-    TimePeriod period = booking.getPeriod();
+    TimePeriod period = booking.toPeriod();
 
     assertEquals(arrivalDate, period.getEnd());
   }

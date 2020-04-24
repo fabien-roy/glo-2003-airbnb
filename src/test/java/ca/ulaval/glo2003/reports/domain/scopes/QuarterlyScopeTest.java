@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeQuarterBuilder.aTimeQuarter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -17,8 +16,8 @@ class QuarterlyScopeTest {
 
   private static QuarterlyScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
-  private static TimeQuarter firstQuarter = aTimeQuarter().build();
-  private static TimeQuarter secondQuarter = firstQuarter.plusQuarters(1);
+  private static TimeQuarter firstQuarter = mock(TimeQuarter.class);
+  private static TimeQuarter secondQuarter = mock(TimeQuarter.class);
 
   @BeforeEach
   public void resetMocks() {

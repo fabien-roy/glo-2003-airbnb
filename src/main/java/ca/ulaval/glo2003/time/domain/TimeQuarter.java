@@ -1,106 +1,52 @@
 package ca.ulaval.glo2003.time.domain;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.temporal.IsoFields;
-import java.util.Arrays;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
-import java.util.List;
 
-// TODO : Test TimeQuarter
-public class TimeQuarter implements Comparable<TimeQuarter> {
+public class TimeQuarter extends TimeCalendar {
 
-  private static List<Integer> POSSIBLE_QUARTERS = Arrays.asList(1, 2, 3, 4);
+  private int firstMonthOfQuarter;
+  private int lastMonthOfQuarter;
 
-  public static int firstPossibleQuarter() {
-    return POSSIBLE_QUARTERS.get(0);
+  public TimeQuarter(ZonedDateTime zonedDateTime) {
+    super(zonedDateTime);
+    firstMonthOfQuarter = (getMonth() / 3) * 3;
+    lastMonthOfQuarter = firstMonthOfQuarter + 2;
+    period = new TimePeriod(firstDate(), lastDate());
   }
 
-  public static int lastPossibleQuarter() {
-    return POSSIBLE_QUARTERS.get(POSSIBLE_QUARTERS.size() - 1);
+  @Override
+  protected TimeDate firstDate() {
+    Calendar firstMonth = Calendar.getInstance();
+    firstMonth.set(Calendar.MONTH, firstMonthOfQuarter);
+    int firstDayOfMonth = firstMonth.getActualMinimum(Calendar.DAY_OF_MONTH);
+    return thatDate(firstMonthOfQuarter, firstDayOfMonth);
   }
 
-  private TimeYear year;
-  private int quarterOfYear;
-
-  public TimeQuarter(TimeYear year, int quarterOfYear) {
-    this.year = year;
-    this.quarterOfYear = quarterOfYear;
+  @Override
+  protected TimeDate lastDate() {
+    Calendar lastMonth = Calendar.getInstance();
+    lastMonth.set(Calendar.MONTH, lastMonthOfQuarter);
+    int lastDayOfMonth = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
+    return thatDate(lastMonthOfQuarter, lastDayOfMonth);
   }
 
-  public TimeQuarter(LocalDate date) {
-    this.year = new TimeYear(date);
-    this.quarterOfYear = date.get(IsoFields.QUARTER_OF_YEAR);
-  }
-
-  public TimeYear getYear() {
-    return year;
-  }
-
-  public int toQuarterOfYear() {
-    return quarterOfYear;
-  }
-
-  public TimePeriod toPeriod() {
-    return new TimePeriod(atFirstDay(), atLastDay());
-  }
-
-  public YearMonth atMonth(TimeMonth timeMonth) {
-    return year.atMonth(timeMonth);
-  }
-
-  public TimeDate atFirstDay() {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.YEAR, year.toYear().getValue());
-    calendar.set(Calendar.MONTH, firstMonth());
-    calendar.set(Calendar.DAY_OF_MONTH, 1);
-    return new TimeDate(calendar);
-  }
-
-  public TimeDate atLastDay() {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.YEAR, year.toYear().getValue());
-    calendar.set(Calendar.MONTH, lastMonth());
-    calendar.set(Calendar.DAY_OF_MONTH, calendar.getMaximum(Calendar.DAY_OF_MONTH));
-    return new TimeDate(calendar);
-  }
-
-  public int firstMonth() {
-    return ((quarterOfYear - 1) * 3) + 1;
-  }
-
-  public int lastMonth() {
-    return ((quarterOfYear - 1) * 3) + 3;
-  }
-
-  // TODO : What if there is more that one quarter added?
-  public TimeQuarter plusQuarters(int quarters) {
-    return quarterOfYear == lastPossibleQuarter()
-        ? new TimeQuarter(year.plusYears(1), firstPossibleQuarter())
-        : new TimeQuarter(year, quarterOfYear + quarters);
+  private TimeDate thatDate(int month, int dayOfMonth) {
+    Calendar date = Calendar.getInstance();
+    date.set(Calendar.YEAR, getYear());
+    date.set(Calendar.MONTH, month);
+    date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+    setAtMidnight(date);
+    return new TimeDate(date.getTime());
   }
 
   @Override
   public String toString() {
-    return "q" + quarterOfYear;
+    return "q".concat(Integer.toString(getQuarter()));
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-
-    TimeQuarter other = (TimeQuarter) object;
-
-    return quarterOfYear == other.toQuarterOfYear() && year.equals(other.getYear());
-  }
-
-  @Override
-  public int hashCode() {
-    return Integer.hashCode(quarterOfYear);
-  }
-
-  @Override
-  public int compareTo(TimeQuarter other) {
-    return quarterOfYear - other.toQuarterOfYear();
+  public int compareTo(TimeCalendar other) {
+    return getYearQuarter() - other.getYearQuarter();
   }
 }

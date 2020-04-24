@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.services;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimestampObjectMother.createTimestamp;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
@@ -36,7 +36,7 @@ class TransactionServiceTest {
   private static Price tenantRefund = createTotal();
   private static Price ownerRefund = createTotal();
   private static Price total = createTotal();
-  private static Timestamp departureDate = createTimestamp();
+  private static Timestamp departureDate = aTimestamp().build();
 
   @BeforeAll
   public static void setUpService() {

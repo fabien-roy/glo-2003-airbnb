@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeWeekBuilder.aTimeWeek;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -17,8 +16,8 @@ class WeeklyScopeTest {
 
   private static WeeklyScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
-  private static TimeWeek firstWeek = aTimeWeek().build();
-  private static TimeWeek secondWeek = firstWeek.plusWeeks(1);
+  private static TimeWeek firstWeek = mock(TimeWeek.class);
+  private static TimeWeek secondWeek = mock(TimeWeek.class);
 
   @BeforeEach
   public void resetMocks() {

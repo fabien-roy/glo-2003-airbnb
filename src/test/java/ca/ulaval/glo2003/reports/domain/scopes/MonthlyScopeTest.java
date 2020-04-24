@@ -1,6 +1,5 @@
 package ca.ulaval.glo2003.reports.domain.scopes;
 
-import static ca.ulaval.glo2003.time.domain.helpers.TimeMonthBuilder.aTimeMonth;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -17,8 +16,8 @@ class MonthlyScopeTest {
 
   private static MonthlyScope reportScope;
   private static TimePeriod period = mock(TimePeriod.class);
-  private static TimeMonth firstMonth = aTimeMonth().build();
-  private static TimeMonth secondMonth = firstMonth.plusMonths(1);
+  private static TimeMonth firstMonth = mock(TimeMonth.class);
+  private static TimeMonth secondMonth = mock(TimeMonth.class);
 
   @BeforeEach
   public void resetMocks() {

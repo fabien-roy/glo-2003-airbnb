@@ -95,7 +95,7 @@ public class Booking {
   }
 
   public boolean isOverlapping(Booking otherBooking) {
-    return getPeriod().isOverlapping(otherBooking.getPeriod());
+    return toPeriod().isOverlapping(otherBooking.toPeriod());
   }
 
   public boolean isOverlapping(TimeDate otherDate) {
@@ -103,11 +103,11 @@ public class Booking {
   }
 
   public boolean isOverlapping(TimeDate otherDate, int numberOfNights) {
-    return getPeriod().isOverlapping(otherDate.periodToDays(numberOfNights - 1));
+    return toPeriod().isOverlapping(otherDate.toPeriod(numberOfNights - 1));
   }
 
-  public TimePeriod getPeriod() {
-    return arrivalDate.periodToDays(numberOfNights - 1);
+  public TimePeriod toPeriod() {
+    return arrivalDate.toPeriod(numberOfNights - 1);
   }
 
   public void setStatus(BookingStatuses bookingStatus) {

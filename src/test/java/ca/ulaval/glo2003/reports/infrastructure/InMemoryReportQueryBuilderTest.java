@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.reports.infrastructure;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimension;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensionBuilder;
 import ca.ulaval.glo2003.reports.domain.dimensions.ReportDimensions;
@@ -14,7 +15,7 @@ import ca.ulaval.glo2003.reports.domain.scopes.ReportScopeBuilder;
 import ca.ulaval.glo2003.reports.domain.scopes.ReportScopes;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.time.domain.TimeYear;
-import java.time.Year;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,7 @@ class InMemoryReportQueryBuilderTest {
   private static ReportMetricBuilder metricBuilder = mock(ReportMetricBuilder.class);
   private static ReportDimensionBuilder dimensionBuilder = mock(ReportDimensionBuilder.class);
 
-  private static TimePeriod yearPeriod = new TimeYear(Year.of(2020)).toPeriod();
+  private static TimePeriod yearPeriod = new TimeYear(ZonedDateTime.now()).toPeriod();
   private static ReportScope monthlyScopeOfYear = mock(ReportScope.class);
   private static ReportScope scopeOfYear = mock(ReportScope.class);
   private static ReportMetric incomesMetric = mock(ReportMetric.class);
@@ -42,6 +43,7 @@ class InMemoryReportQueryBuilderTest {
 
   @BeforeAll
   public static void setUpBuilder() {
+    Configuration.instance().setDefaultReportPeriod(yearPeriod);
     queryBuilder = new InMemoryReportQueryBuilder(scopeBuilder, metricBuilder, dimensionBuilder);
   }
 

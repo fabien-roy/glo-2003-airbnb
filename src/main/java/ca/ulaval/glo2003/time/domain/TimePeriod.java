@@ -1,6 +1,8 @@
 package ca.ulaval.glo2003.time.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TimePeriod {
 
@@ -20,14 +22,6 @@ public class TimePeriod {
     return end;
   }
 
-  public boolean isOverlapping(TimePeriod other) {
-    return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
-  }
-
-  public boolean contains(TimeDate other) {
-    return isOverlapping(other.toPeriod());
-  }
-
   public List<TimeDate> getDates() {
     List<TimeDate> dates = new ArrayList<>();
 
@@ -41,48 +35,49 @@ public class TimePeriod {
     return dates;
   }
 
-  // TODO : Getting years, months, quarters, ... is pretty similar.
-  // TODO : Also, what if quarters, months, ... surpasses superior calendar entity? Does sorting
-  // still work?
-  public List<TimeYear> getYears() {
-    Set<TimeYear> years = new HashSet<>();
-    getDates().forEach(date -> years.add(date.getYear()));
-    List<TimeYear> uniqueYears = new ArrayList<>(years);
-    Collections.sort(uniqueYears);
-    return uniqueYears;
+  public List<TimeCalendar> getYears() {
+    return getCalendars(TimeDate::getYear);
   }
 
-  public List<TimeQuarter> getQuarters() {
-    Set<TimeQuarter> quarters = new HashSet<>();
-    getDates().forEach(date -> quarters.add(date.getQuarter()));
-    List<TimeQuarter> uniqueQuarters = new ArrayList<>(quarters);
-    Collections.sort(uniqueQuarters);
-    return uniqueQuarters;
+  public List<TimeCalendar> getQuarters() {
+    return getCalendars(TimeDate::getQuarter);
   }
 
-  public List<TimeMonth> getMonths() {
-    Set<TimeMonth> months = new HashSet<>();
-    getDates().forEach(date -> months.add(date.getMonth()));
-    List<TimeMonth> uniqueMonths = new ArrayList<>(months);
-    Collections.sort(uniqueMonths);
-    return uniqueMonths;
+  public List<TimeCalendar> getMonths() {
+    return getCalendars(TimeDate::getMonth);
   }
 
-  public List<TimeWeek> getWeeks() {
-    Set<TimeWeek> weeks = new HashSet<>();
-    getDates().forEach(date -> weeks.add(date.getWeek()));
-    List<TimeWeek> uniqueWeeks = new ArrayList<>(weeks);
-    Collections.sort(uniqueWeeks);
-    return uniqueWeeks;
+  public List<TimeCalendar> getWeeks() {
+    return getCalendars(TimeDate::getWeek);
+  }
+
+  private List<TimeCalendar> getCalendars(GetCalendarOperator getCalendar) {
+    List<TimeCalendar> calendars = new ArrayList<>();
+    getDates()
+        .forEach(
+            date -> {
+              if (!calendars.contains(getCalendar.operation(date)))
+                calendars.add(getCalendar.operation(date));
+            });
+    Collections.sort(calendars);
+    return calendars;
+  }
+
+  public boolean isOverlapping(TimePeriod other) {
+    return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
+  }
+
+  public boolean contains(TimeDate other) {
+    return isOverlapping(other.toPeriod());
   }
 
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    TimePeriod timePeriod = (TimePeriod) object;
+    TimePeriod period = (TimePeriod) object;
 
-    return start.equals(timePeriod.getStart()) && end.equals(timePeriod.getEnd());
+    return start.equals(period.getStart()) && end.equals(period.getEnd());
   }
 
   @Override
