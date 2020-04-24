@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.time2.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TimePeriod {
 
@@ -32,6 +31,19 @@ public class TimePeriod {
     dates.add(end);
 
     return dates;
+  }
+
+  // TODO : Test TimePeriod.getYears
+  public List<TimeCalendar> getYears() {
+    return getCalendars((calendars, date) -> calendars.add(date.getYear()));
+  }
+
+  private List<TimeCalendar> getCalendars(CalendarsAddOperator addOperator) {
+    Set<TimeCalendar> calendars = new HashSet<>();
+    getDates().forEach(date -> addOperator.operation(calendars, date));
+    List<TimeCalendar> uniqueCalendars = new ArrayList<>(calendars);
+    Collections.sort(uniqueCalendars);
+    return uniqueCalendars;
   }
 
   public boolean isOverlapping(TimePeriod other) {

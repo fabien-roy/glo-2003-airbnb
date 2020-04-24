@@ -39,4 +39,10 @@ public class TimeYear extends TimeCalendar {
   public String toString() {
     return Integer.toString(calendar.get(Calendar.YEAR));
   }
+
+  // TODO : Test TimeYear.compareTo()
+  @Override
+  public int compareTo(TimeCalendar other) {
+    return getYear() - other.getYear();
+  }
 }

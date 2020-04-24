@@ -29,7 +29,7 @@ public class Timestamp {
     return value.atZone(ZONE_OFFSET).toLocalDate();
   }
 
-  private ZonedDateTime toZonedDateTime() {
+  public ZonedDateTime toZonedDateTime() {
     return value.atZone(ZONE_OFFSET);
   }
 

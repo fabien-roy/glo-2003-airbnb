@@ -19,6 +19,11 @@ public class TimeDate {
     this.date = new Timestamp(date.toInstant()).toLocalDate();
   }
 
+  // TODO : Test TimeDate.getYear
+  public TimeYear getYear() {
+    return new TimeYear(toTimestamp().toZonedDateTime());
+  }
+
   public TimeDate minusDays(int days) {
     return new TimeDate(date.minusDays(days));
   }
