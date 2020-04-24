@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -56,8 +55,18 @@ class TimeYearTest {
     return aTimeDate().withDate(LocalDate.of(year, 12, 31)).build();
   }
 
-  @Test
-  public void toString_shouldReturnYearToString() {
-    // TODO
+  @ParameterizedTest
+  @MethodSource("provideYearStrings")
+  public void toString_shouldReturnYearToString(ZonedDateTime date, String yearString) {
+    TimeYear year = new TimeYear(date);
+
+    assertEquals(yearString, year.toString());
+  }
+
+  private static Stream<Arguments> provideYearStrings() {
+    return Stream.of(
+        Arguments.of(zonedDateTimeOfYear(2020), "2020"),
+        Arguments.of(zonedDateTimeOfYear(1937), "1937"),
+        Arguments.of(zonedDateTimeOfYear(2034), "2034"));
   }
 }
