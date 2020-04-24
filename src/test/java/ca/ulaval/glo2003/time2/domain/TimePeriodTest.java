@@ -19,6 +19,8 @@ class TimePeriodTest {
   private static int secondMonth = 2;
   private static int firstQuarter = 2;
   private static int secondQuarter = 3;
+  private static int firstWeek = 3;
+  private static int secondWeek = 4;
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -31,12 +33,6 @@ class TimePeriodTest {
       aTimePeriod().withYears(firstYear, firstYear).build();
   private static TimePeriod multipleYearsPeriod =
       aTimePeriod().withYears(firstYear, secondYear).build();
-  private static TimePeriod singleMonthPeriod =
-      aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, firstMonth).build();
-  private static TimePeriod multipleMonthsPeriod =
-      aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, secondMonth).build();
-  private static TimePeriod multipleYearMonthsPeriod =
-      aTimePeriod().withYears(firstYear, secondYear).withMonths(firstMonth, secondMonth).build();
   private static TimePeriod singleQuarterPeriod =
       aTimePeriod()
           .withYears(firstYear, firstYear)
@@ -51,6 +47,24 @@ class TimePeriodTest {
       aTimePeriod()
           .withYears(firstYear, secondYear)
           .withQuarters(firstQuarter, secondQuarter)
+          .build();
+  private static TimePeriod singleMonthPeriod =
+      aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, firstMonth).build();
+  private static TimePeriod multipleMonthsPeriod =
+      aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, secondMonth).build();
+  private static TimePeriod multipleYearMonthsPeriod =
+      aTimePeriod().withYears(firstYear, secondYear).withMonths(firstMonth, secondMonth).build();
+  private static TimePeriod singleWeekPeriod =
+      aTimePeriod()
+          .withYears(firstYear, firstYear)
+          .withMonth(firstMonth)
+          .withWeeks(firstWeek, firstWeek)
+          .build();
+  private static TimePeriod multipleWeeksPeriod =
+      aTimePeriod()
+          .withYears(firstYear, firstYear)
+          .withMonth(firstMonth)
+          .withWeeks(firstWeek, secondWeek)
           .build();
 
   @BeforeAll
@@ -114,6 +128,37 @@ class TimePeriodTest {
   }
 
   @Test
+  public void getQuarters_withSingleQuarterPeriod_shouldGetQuarter() {
+    List<TimeCalendar> quarters = singleQuarterPeriod.getQuarters();
+
+    assertEquals(1, quarters.size());
+    assertEquals(firstYear, quarters.get(0).getYear());
+    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+  }
+
+  @Test
+  public void getQuarters_withMultipleQuartersPeriod_shouldGetQuarters() {
+    List<TimeCalendar> quarters = multipleQuartersPeriod.getQuarters();
+
+    assertEquals(2, quarters.size());
+    assertEquals(firstYear, quarters.get(0).getYear());
+    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+    assertEquals(firstYear, quarters.get(1).getYear());
+    assertEquals(secondQuarter, quarters.get(1).getQuarter());
+  }
+
+  @Test
+  public void getQuarters_withMultipleYearQuartersPeriod_shouldGetQuarters() {
+    List<TimeCalendar> quarters = multipleYearQuartersPeriod.getQuarters();
+
+    assertEquals(6, quarters.size());
+    assertEquals(firstYear, quarters.get(0).getYear());
+    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+    assertEquals(secondYear, quarters.get(5).getYear());
+    assertEquals(secondQuarter, quarters.get(5).getQuarter());
+  }
+
+  @Test
   public void getMonths_withSingleMonthPeriod_shouldGetMonth() {
     List<TimeCalendar> months = singleMonthPeriod.getMonths();
 
@@ -145,34 +190,23 @@ class TimePeriodTest {
   }
 
   @Test
-  public void getQuarters_withSingleQuarterPeriod_shouldGetQuarter() {
-    List<TimeCalendar> quarters = singleQuarterPeriod.getQuarters();
+  public void getWeeks_withSingleWeekPeriod_shouldGetWeek() {
+    List<TimeCalendar> weeks = singleWeekPeriod.getWeeks();
 
-    assertEquals(1, quarters.size());
-    assertEquals(firstYear, quarters.get(0).getYear());
-    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+    assertEquals(1, weeks.size());
+    assertEquals(firstYear, weeks.get(0).getYear());
+    assertEquals(firstWeek, weeks.get(0).getWeekOfYear());
   }
 
   @Test
-  public void getQuarters_withMultipleQuartersPeriod_shouldGetQuarters() {
-    List<TimeCalendar> quarters = multipleQuartersPeriod.getQuarters();
+  public void getWeeks_withMultipleWeeksPeriod_shouldGetWeeks() {
+    List<TimeCalendar> weeks = multipleWeeksPeriod.getWeeks();
 
-    assertEquals(2, quarters.size());
-    assertEquals(firstYear, quarters.get(0).getYear());
-    assertEquals(firstQuarter, quarters.get(0).getQuarter());
-    assertEquals(firstYear, quarters.get(1).getYear());
-    assertEquals(secondQuarter, quarters.get(1).getQuarter());
-  }
-
-  @Test
-  public void getQuarters_withMultipleYearQuartersPeriod_shouldGetQuarters() {
-    List<TimeCalendar> quarters = multipleYearQuartersPeriod.getQuarters();
-
-    assertEquals(6, quarters.size());
-    assertEquals(firstYear, quarters.get(0).getYear());
-    assertEquals(firstQuarter, quarters.get(0).getQuarter());
-    assertEquals(secondYear, quarters.get(5).getYear());
-    assertEquals(secondQuarter, quarters.get(5).getQuarter());
+    assertEquals(2, weeks.size());
+    assertEquals(firstYear, weeks.get(0).getYear());
+    assertEquals(firstWeek, weeks.get(0).getWeekOfYear());
+    assertEquals(firstYear, weeks.get(1).getYear());
+    assertEquals(secondWeek, weeks.get(1).getWeekOfYear());
   }
 
   @Test

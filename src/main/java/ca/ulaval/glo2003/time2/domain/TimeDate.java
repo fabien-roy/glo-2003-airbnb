@@ -31,6 +31,10 @@ public class TimeDate {
     return new TimeMonth(toTimestamp().toZonedDateTime());
   }
 
+  public TimeWeek getWeek() {
+    return new TimeWeek(toTimestamp().toZonedDateTime());
+  }
+
   public TimeDate minusDays(int days) {
     return new TimeDate(date.minusDays(days));
   }

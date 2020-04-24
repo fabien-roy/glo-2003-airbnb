@@ -45,6 +45,10 @@ public class TimePeriod {
     return getCalendars(TimeDate::getMonth);
   }
 
+  public List<TimeCalendar> getWeeks() {
+    return getCalendars(TimeDate::getWeek);
+  }
+
   private List<TimeCalendar> getCalendars(GetCalendarOperator getCalendar) {
     List<TimeCalendar> calendars = new ArrayList<>();
     getDates()

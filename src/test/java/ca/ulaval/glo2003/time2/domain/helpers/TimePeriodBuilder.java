@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.time2.domain.helpers;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.lastDayOfMonth;
-import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.validMonthOfQuarter;
+import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.*;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateObjectMother.createDate;
 
@@ -35,14 +34,26 @@ public class TimePeriodBuilder {
   public TimePeriodBuilder withQuarters(int firstQuarter, int secondQuarter) {
     this.startMonth = validMonthOfQuarter(firstQuarter) + 1;
     this.endMonth = validMonthOfQuarter(secondQuarter) + 1;
+    this.dayOfMonthStart = firstDayOfMonth(endYear, endMonth - 1);
     this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
     return this;
+  }
+
+  public TimePeriodBuilder withMonth(int month) {
+    return withMonths(month, month);
   }
 
   public TimePeriodBuilder withMonths(int startMonth, int endMonth) {
     this.startMonth = startMonth;
     this.endMonth = endMonth;
+    this.dayOfMonthStart = firstDayOfMonth(endYear, endMonth - 1);
     this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
+    return this;
+  }
+
+  public TimePeriodBuilder withWeeks(int startWeekOfYear, int endWeekOfYear) {
+    this.dayOfMonthStart = validDayOfMonthOfWeekOfYear(startYear, startMonth - 1, startWeekOfYear);
+    this.dayOfMonthEnd = validDayOfMonthOfWeekOfYear(endYear, endMonth - 1, endWeekOfYear);
     return this;
   }
 
