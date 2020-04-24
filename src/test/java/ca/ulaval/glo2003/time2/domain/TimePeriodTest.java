@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.time2.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
@@ -109,6 +108,41 @@ class TimePeriodTest {
   @Test
   public void isOverlapping_withAfterPeriod_shouldReturnFalse() {
     boolean result = period.isOverlapping(afterPeriod);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void contains_withStartDate_shouldReturnTrue() {
+    boolean result = period.contains(period.getStart());
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void contains_withEndDate_shouldReturnTrue() {
+    boolean result = period.contains(period.getEnd());
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void contains_withContainedDate_shouldReturnTrue() {
+    boolean result = period.contains(period.getStart().plusDays(1));
+
+    assertTrue(result);
+  }
+
+  @Test
+  public void contains_withDateBefore_shouldReturnFalse() {
+    boolean result = period.contains(period.getStart().minusDays(1));
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void contains_withDateAfter_shouldReturnFalse() {
+    boolean result = period.contains(period.getEnd().plusDays(1));
 
     assertFalse(result);
   }

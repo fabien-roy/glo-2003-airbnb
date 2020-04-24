@@ -37,4 +37,8 @@ public class TimePeriod {
   public boolean isOverlapping(TimePeriod other) {
     return !(start.isAfter(other.getEnd()) || end.isBefore(other.getStart()));
   }
+
+  public boolean contains(TimeDate other) {
+    return isOverlapping(other.toPeriod());
+  }
 }
