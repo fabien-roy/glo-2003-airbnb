@@ -3,14 +3,22 @@ package ca.ulaval.glo2003.time2.domain;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Locale;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class TimeYearTest {
+
+  @BeforeAll
+  public static void setUpConfiguration() {
+    Configuration.instance().setLocale(Locale.US);
+  }
 
   private static Stream<Arguments> provideYearStarts() {
     return Stream.of(

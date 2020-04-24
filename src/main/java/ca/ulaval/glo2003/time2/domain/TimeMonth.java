@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.time2.domain;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 
@@ -39,7 +40,9 @@ public class TimeMonth extends TimeCalendar {
 
   @Override
   public String toString() {
-    return Integer.toString(calendar.get(Calendar.MONTH)); // TODO
+    return calendar
+        .getDisplayName(Calendar.MONTH, Calendar.LONG, Configuration.instance().getLocale())
+        .toLowerCase();
   }
 
   @Override
