@@ -42,6 +42,10 @@ public class TimeDate {
     return date;
   }
 
+  public Timestamp toTimestamp() {
+    return new Timestamp(date);
+  }
+
   @Override
   public String toString() {
     return date.toString();

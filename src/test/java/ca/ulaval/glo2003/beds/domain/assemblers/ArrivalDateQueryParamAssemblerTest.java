@@ -6,8 +6,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.time.converters.TimeDateConverter;
-import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time2.converters.TimeDateConverter;
+import ca.ulaval.glo2003.time2.domain.TimeDate;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

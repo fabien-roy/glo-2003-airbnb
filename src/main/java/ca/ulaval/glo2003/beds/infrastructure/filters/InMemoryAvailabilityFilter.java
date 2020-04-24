@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time2.domain.TimeDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

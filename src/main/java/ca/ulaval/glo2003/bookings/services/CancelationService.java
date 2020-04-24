@@ -8,7 +8,7 @@ import ca.ulaval.glo2003.bookings.exceptions.BookingAlreadyCanceledException;
 import ca.ulaval.glo2003.bookings.exceptions.CancelationNotAllowedException;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
 import ca.ulaval.glo2003.reports.services.ReportService;
-import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time2.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import javax.inject.Inject;

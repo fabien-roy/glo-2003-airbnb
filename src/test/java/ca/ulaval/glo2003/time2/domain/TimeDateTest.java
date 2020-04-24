@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.time2.domain;
 
+import static ca.ulaval.glo2003.time2.domain.Timestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
@@ -140,6 +141,13 @@ class TimeDateTest {
   @Test
   public void toLocalDate_shouldReturnValueToLocalDate() {
     assertEquals(date, timeDate.toLocalDate());
+  }
+
+  @Test
+  public void toTimestamp_shouldReturnTimestampWithSameValue() {
+    Timestamp timestamp = timeDate.toTimestamp();
+
+    assertEquals(timeDate.toLocalDate(), timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDate());
   }
 
   @Test

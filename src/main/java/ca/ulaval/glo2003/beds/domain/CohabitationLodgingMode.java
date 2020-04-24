@@ -3,8 +3,8 @@ package ca.ulaval.glo2003.beds.domain;
 import ca.ulaval.glo2003.beds.exceptions.ExceedingResidualCapacityException;
 import ca.ulaval.glo2003.beds.exceptions.MissingColonySizeException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.time.domain.TimeDate;
-import ca.ulaval.glo2003.time.domain.TimePeriod;
+import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time2.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,7 +23,7 @@ public class CohabitationLodgingMode implements LodgingMode {
   @Override
   public boolean isAvailable(
       Bed bed, Integer minCapacity, TimeDate arrivalDate, int numberOfNights) {
-    TimePeriod period = arrivalDate.periodToDays(numberOfNights - 1);
+    TimePeriod period = arrivalDate.toPeriod(numberOfNights - 1);
 
     for (TimeDate date : period.getDates()) {
       int remainingCapacity = bed.getResidualCapacityOnDate(date);

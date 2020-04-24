@@ -2,8 +2,8 @@ package ca.ulaval.glo2003.bookings.domain;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
-import ca.ulaval.glo2003.time.domain.TimeDate;
-import ca.ulaval.glo2003.time.domain.TimePeriod;
+import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time2.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.ArrayList;
@@ -95,7 +95,7 @@ public class Booking {
   }
 
   public boolean isOverlapping(Booking otherBooking) {
-    return getPeriod().isOverlapping(otherBooking.getPeriod());
+    return toPeriod().isOverlapping(otherBooking.toPeriod());
   }
 
   public boolean isOverlapping(TimeDate otherDate) {
@@ -103,11 +103,11 @@ public class Booking {
   }
 
   public boolean isOverlapping(TimeDate otherDate, int numberOfNights) {
-    return getPeriod().isOverlapping(otherDate.periodToDays(numberOfNights - 1));
+    return toPeriod().isOverlapping(otherDate.toPeriod(numberOfNights - 1));
   }
 
-  public TimePeriod getPeriod() {
-    return arrivalDate.periodToDays(numberOfNights - 1);
+  public TimePeriod toPeriod() {
+    return arrivalDate.toPeriod(numberOfNights - 1);
   }
 
   public void setStatus(BookingStatuses bookingStatus) {

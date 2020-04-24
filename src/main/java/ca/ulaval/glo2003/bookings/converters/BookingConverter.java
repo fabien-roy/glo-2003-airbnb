@@ -8,8 +8,8 @@ import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
-import ca.ulaval.glo2003.time.converters.TimeDateConverter;
-import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time2.converters.TimeDateConverter;
+import ca.ulaval.glo2003.time2.domain.TimeDate;
 import javax.inject.Inject;
 
 public class BookingConverter {
