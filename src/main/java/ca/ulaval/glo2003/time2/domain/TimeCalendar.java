@@ -16,6 +16,10 @@ public abstract class TimeCalendar implements Comparable<TimeCalendar> {
     return calendar.get(Calendar.YEAR);
   }
 
+  public int getQuarter() {
+    return (getMonth() / 3) + 1;
+  }
+
   protected int getMonth() {
     return calendar.get(Calendar.MONTH);
   }
@@ -25,7 +29,7 @@ public abstract class TimeCalendar implements Comparable<TimeCalendar> {
   }
 
   protected int getYearQuarter() {
-    return getYearMonth() / 3;
+    return getYear() * 4 + getQuarter();
   }
 
   public abstract TimePeriod toPeriod();

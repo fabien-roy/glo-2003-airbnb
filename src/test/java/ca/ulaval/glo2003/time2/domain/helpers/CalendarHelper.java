@@ -5,6 +5,20 @@ import java.util.Calendar;
 
 public class CalendarHelper {
 
+  public static int validMonthOfQuarter(int quarter) {
+    return Faker.instance()
+        .random()
+        .nextInt(firstMonthOfQuarter(quarter), lastMonthOfQuarter(quarter));
+  }
+
+  private static int firstMonthOfQuarter(int quarter) {
+    return (quarter * 3) - 3;
+  }
+
+  private static int lastMonthOfQuarter(int quarter) {
+    return (quarter * 3) - 1;
+  }
+
   public static int validDayOfMonth(int year, int month) {
     return Faker.instance()
         .random()

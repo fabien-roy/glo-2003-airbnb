@@ -37,6 +37,10 @@ public class TimePeriod {
     return getCalendars(TimeDate::getYear);
   }
 
+  public List<TimeCalendar> getQuarters() {
+    return getCalendars(TimeDate::getQuarter);
+  }
+
   public List<TimeCalendar> getMonths() {
     return getCalendars(TimeDate::getMonth);
   }

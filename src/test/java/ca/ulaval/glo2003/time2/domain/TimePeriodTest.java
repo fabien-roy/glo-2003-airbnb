@@ -17,6 +17,8 @@ class TimePeriodTest {
   private static int secondYear = 2021;
   private static int firstMonth = 1;
   private static int secondMonth = 2;
+  private static int firstQuarter = 2;
+  private static int secondQuarter = 3;
 
   private static TimePeriod period;
   private static TimePeriod samePeriod;
@@ -35,6 +37,21 @@ class TimePeriodTest {
       aTimePeriod().withYears(firstYear, firstYear).withMonths(firstMonth, secondMonth).build();
   private static TimePeriod multipleYearMonthsPeriod =
       aTimePeriod().withYears(firstYear, secondYear).withMonths(firstMonth, secondMonth).build();
+  private static TimePeriod singleQuarterPeriod =
+      aTimePeriod()
+          .withYears(firstYear, firstYear)
+          .withQuarters(firstQuarter, firstQuarter)
+          .build();
+  private static TimePeriod multipleQuartersPeriod =
+      aTimePeriod()
+          .withYears(firstYear, firstYear)
+          .withQuarters(firstQuarter, secondQuarter)
+          .build();
+  private static TimePeriod multipleYearQuartersPeriod =
+      aTimePeriod()
+          .withYears(firstYear, secondYear)
+          .withQuarters(firstQuarter, secondQuarter)
+          .build();
 
   @BeforeAll
   public static void setUpPeriodsForOverlapping() {
@@ -125,6 +142,37 @@ class TimePeriodTest {
     assertEquals(firstMonth, months.get(0).getMonth() + 1);
     assertEquals(secondYear, months.get(13).getYear());
     assertEquals(secondMonth, months.get(13).getMonth() + 1);
+  }
+
+  @Test
+  public void getQuarters_withSingleQuarterPeriod_shouldGetQuarter() {
+    List<TimeCalendar> quarters = singleQuarterPeriod.getQuarters();
+
+    assertEquals(1, quarters.size());
+    assertEquals(firstYear, quarters.get(0).getYear());
+    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+  }
+
+  @Test
+  public void getQuarters_withMultipleQuartersPeriod_shouldGetQuarters() {
+    List<TimeCalendar> quarters = multipleQuartersPeriod.getQuarters();
+
+    assertEquals(2, quarters.size());
+    assertEquals(firstYear, quarters.get(0).getYear());
+    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+    assertEquals(firstYear, quarters.get(1).getYear());
+    assertEquals(secondQuarter, quarters.get(1).getQuarter());
+  }
+
+  @Test
+  public void getQuarters_withMultipleYearQuartersPeriod_shouldGetQuarters() {
+    List<TimeCalendar> quarters = multipleYearQuartersPeriod.getQuarters();
+
+    assertEquals(6, quarters.size());
+    assertEquals(firstYear, quarters.get(0).getYear());
+    assertEquals(firstQuarter, quarters.get(0).getQuarter());
+    assertEquals(secondYear, quarters.get(5).getYear());
+    assertEquals(secondQuarter, quarters.get(5).getQuarter());
   }
 
   @Test

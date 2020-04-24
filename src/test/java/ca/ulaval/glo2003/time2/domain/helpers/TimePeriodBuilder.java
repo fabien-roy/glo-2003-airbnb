@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.time2.domain.helpers;
 
 import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.lastDayOfMonth;
+import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.validMonthOfQuarter;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateObjectMother.createDate;
 
@@ -28,6 +29,13 @@ public class TimePeriodBuilder {
   public TimePeriodBuilder withYears(int startYear, int endYear) {
     this.startYear = startYear;
     this.endYear = endYear;
+    return this;
+  }
+
+  public TimePeriodBuilder withQuarters(int firstQuarter, int secondQuarter) {
+    this.startMonth = validMonthOfQuarter(firstQuarter) + 1;
+    this.endMonth = validMonthOfQuarter(secondQuarter) + 1;
+    this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
     return this;
   }
 

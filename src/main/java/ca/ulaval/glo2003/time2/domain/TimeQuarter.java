@@ -22,14 +22,16 @@ public class TimeQuarter extends TimeCalendar {
   }
 
   private TimeDate firstDate() {
-    calendar.set(Calendar.MONTH, firstMonthOfQuarter);
-    int firstDayOfMonth = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+    Calendar firstMonth = Calendar.getInstance();
+    firstMonth.set(Calendar.MONTH, firstMonthOfQuarter);
+    int firstDayOfMonth = firstMonth.getActualMinimum(Calendar.DAY_OF_MONTH);
     return thatDate(firstMonthOfQuarter, firstDayOfMonth);
   }
 
   private TimeDate lastDate() {
-    calendar.set(Calendar.MONTH, lastMonthOfQuarter);
-    int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    Calendar lastMonth = Calendar.getInstance();
+    lastMonth.set(Calendar.MONTH, lastMonthOfQuarter);
+    int lastDayOfMonth = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
     return thatDate(lastMonthOfQuarter, lastDayOfMonth);
   }
 
@@ -40,10 +42,6 @@ public class TimeQuarter extends TimeCalendar {
     date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
     setAtMidnight(date);
     return new TimeDate(date.getTime());
-  }
-
-  private int getQuarter() {
-    return (firstMonthOfQuarter / 3) + 1;
   }
 
   @Override

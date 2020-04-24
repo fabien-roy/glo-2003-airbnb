@@ -23,6 +23,10 @@ public class TimeDate {
     return new TimeYear(toTimestamp().toZonedDateTime());
   }
 
+  public TimeQuarter getQuarter() {
+    return new TimeQuarter(toTimestamp().toZonedDateTime());
+  }
+
   public TimeMonth getMonth() {
     return new TimeMonth(toTimestamp().toZonedDateTime());
   }
