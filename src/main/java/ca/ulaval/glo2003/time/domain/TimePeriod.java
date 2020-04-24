@@ -70,4 +70,18 @@ public class TimePeriod {
   public boolean contains(TimeDate other) {
     return isOverlapping(other.toPeriod());
   }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || getClass() != object.getClass()) return false;
+
+    TimePeriod period = (TimePeriod) object;
+
+    return start.equals(period.getStart()) && end.equals(period.getEnd());
+  }
+
+  @Override
+  public int hashCode() {
+    return start.hashCode() + end.hashCode();
+  }
 }

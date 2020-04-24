@@ -11,6 +11,10 @@ public class ServiceFee {
     this.serviceFee = serviceFee;
   }
 
+  public BigDecimal toBigDecimal() {
+    return serviceFee;
+  }
+
   public Price getFor(Price price) {
     return serviceFee == null ? Price.zero() : price.multiply(factorOfPrice());
   }
