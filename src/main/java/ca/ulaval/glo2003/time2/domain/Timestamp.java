@@ -25,10 +25,6 @@ public class Timestamp {
     return value;
   }
 
-  public TimeDay toDay() {
-    return new TimeDay(toZonedDateTime());
-  }
-
   public LocalDate toLocalDate() {
     return value.atZone(ZONE_OFFSET).toLocalDate();
   }

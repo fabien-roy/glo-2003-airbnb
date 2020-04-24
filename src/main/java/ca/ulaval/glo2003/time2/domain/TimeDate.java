@@ -47,10 +47,6 @@ public class TimeDate {
     return new Timestamp(date);
   }
 
-  public TimeDay toDay() {
-    return toTimestamp().toDay();
-  }
-
   public LocalDate toLocalDate() {
     return date;
   }
