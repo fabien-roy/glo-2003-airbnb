@@ -30,7 +30,7 @@ class TimeDayTest {
   // TODO : Can't we produce a same TimeDay in a better way?
   @Test
   public void equals_shouldReturnTrue_whenValuesAreEqual() {
-    TimeDay otherDay = new TimeDay(day.toCalendar().toInstant().atZone(ZoneOffset.UTC));
+    TimeDay otherDay = new TimeDay(day.toDay().toInstant().atZone(ZoneOffset.UTC));
 
     boolean result = day.equals(otherDay);
 

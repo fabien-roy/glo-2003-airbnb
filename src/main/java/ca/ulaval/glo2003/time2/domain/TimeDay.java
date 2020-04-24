@@ -12,7 +12,7 @@ public class TimeDay {
     day = GregorianCalendar.from(zonedDateTime);
   }
 
-  public Calendar toCalendar() {
+  public Calendar toDay() {
     return day;
   }
 
@@ -22,7 +22,7 @@ public class TimeDay {
 
     TimeDay other = (TimeDay) object;
 
-    return day.equals(other.toCalendar());
+    return day.equals(other.toDay());
   }
 
   @Override

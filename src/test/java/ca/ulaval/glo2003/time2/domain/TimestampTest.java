@@ -59,6 +59,13 @@ class TimestampTest {
   }
 
   @Test
+  public void toLocalDate_shouldReturnDateAtUTCZoneOffset() {
+    LocalDate date = instant.atZone(ZONE_OFFSET).toLocalDate();
+
+    assertEquals(date, timestamp.toLocalDate());
+  }
+
+  @Test
   public void toString_shouldReturnValueToString() {
     assertEquals(timestamp.toInstant().toString(), timestamp.toString());
   }

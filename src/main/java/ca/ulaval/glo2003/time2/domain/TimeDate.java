@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.time2.domain;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class TimeDate {
 
@@ -12,6 +13,10 @@ public class TimeDate {
 
   public TimeDate(LocalDate date) {
     this.date = date;
+  }
+
+  public TimeDate(Date date) {
+    this.date = new Timestamp(date.toInstant()).toLocalDate();
   }
 
   public TimeDate minusDays(int days) {

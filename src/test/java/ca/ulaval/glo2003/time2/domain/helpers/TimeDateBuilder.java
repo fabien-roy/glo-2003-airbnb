@@ -7,11 +7,16 @@ import java.time.LocalDate;
 
 public class TimeDateBuilder {
 
-  public static LocalDate DEFAULT_DATE = createDate();
-  public static LocalDate date = DEFAULT_DATE;
+  public LocalDate DEFAULT_DATE = createDate();
+  public LocalDate date = DEFAULT_DATE;
 
   public static TimeDateBuilder aTimeDate() {
     return new TimeDateBuilder();
+  }
+
+  public TimeDateBuilder withDate(LocalDate date) {
+    this.date = date;
+    return this;
   }
 
   public TimeDate build() {
