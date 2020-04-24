@@ -42,19 +42,4 @@ public class TimeMonth extends TimeCalendar {
   public int compareTo(TimeCalendar other) {
     return getYearMonth() - other.getYearMonth();
   }
-
-  // TODO : Test equals and hashCode (can't TimeCalendar do that?)
-  @Override
-  public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-
-    TimeCalendar other = (TimeCalendar) object;
-
-    return getYearMonth() == other.getYearMonth();
-  }
-
-  @Override
-  public int hashCode() {
-    return Integer.hashCode(getYearMonth());
-  }
 }

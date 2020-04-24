@@ -49,19 +49,4 @@ public class TimeQuarter extends TimeCalendar {
   public int compareTo(TimeCalendar other) {
     return getYearQuarter() - other.getYearQuarter();
   }
-
-  // TODO : Test equals and hashCode (can't TimeCalendar do that?)
-  @Override
-  public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-
-    TimeCalendar other = (TimeCalendar) object;
-
-    return getYearQuarter() == other.getYearQuarter();
-  }
-
-  @Override
-  public int hashCode() {
-    return Integer.hashCode(getYearQuarter());
-  }
 }

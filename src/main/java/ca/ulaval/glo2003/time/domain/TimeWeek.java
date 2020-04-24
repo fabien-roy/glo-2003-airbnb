@@ -47,19 +47,4 @@ public class TimeWeek extends TimeCalendar {
   public int compareTo(TimeCalendar other) {
     return getYearWeekOfYear() - other.getYearWeekOfYear();
   }
-
-  // TODO : Test equals and hashCode (can't TimeCalendar do that?)
-  @Override
-  public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-
-    TimeCalendar other = (TimeCalendar) object;
-
-    return getYearWeekOfYear() == other.getYearWeekOfYear();
-  }
-
-  @Override
-  public int hashCode() {
-    return Integer.hashCode(getYearWeekOfYear());
-  }
 }

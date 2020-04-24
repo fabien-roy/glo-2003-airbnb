@@ -57,4 +57,18 @@ public abstract class TimeCalendar implements Comparable<TimeCalendar> {
     date.clear(Calendar.SECOND);
     date.clear(Calendar.MILLISECOND);
   }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || getClass() != object.getClass()) return false;
+
+    TimeCalendar other = (TimeCalendar) object;
+
+    return toPeriod().equals(other.toPeriod());
+  }
+
+  @Override
+  public int hashCode() {
+    return period.hashCode();
+  }
 }
