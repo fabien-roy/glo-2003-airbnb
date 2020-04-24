@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.beds.domain.assemblers;
 
 import ca.ulaval.glo2003.beds.domain.BedQueryBuilder;
-import ca.ulaval.glo2003.time2.converters.TimeDateConverter;
-import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time.converters.TimeDateConverter;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;

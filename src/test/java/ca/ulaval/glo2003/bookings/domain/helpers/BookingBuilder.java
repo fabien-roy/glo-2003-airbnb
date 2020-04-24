@@ -3,7 +3,7 @@ package ca.ulaval.glo2003.bookings.domain.helpers;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.*;
-import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
@@ -11,7 +11,7 @@ import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
 import ca.ulaval.glo2003.bookings.domain.BookingNumber;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
-import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 
 public class BookingBuilder {

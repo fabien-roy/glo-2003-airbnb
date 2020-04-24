@@ -1,8 +1,8 @@
-package ca.ulaval.glo2003.time2.domain.helpers;
+package ca.ulaval.glo2003.time.domain.helpers;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.TimestampObjectMother.createInstant;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampObjectMother.createInstant;
 
-import ca.ulaval.glo2003.time2.domain.Timestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import java.time.Instant;
 
 public class TimestampBuilder {

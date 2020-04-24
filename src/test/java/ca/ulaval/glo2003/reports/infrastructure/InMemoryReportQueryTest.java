@@ -51,7 +51,7 @@ class InMemoryReportQueryTest {
 
   @BeforeEach
   public void setUpMocks() {
-    reset(scope, firstPeriod, firstMetric, secondMetric);
+    reset(scope, firstPeriod, secondPeriod, firstMetric, secondMetric);
 
     setUpPeriods();
     setUpDimensions();

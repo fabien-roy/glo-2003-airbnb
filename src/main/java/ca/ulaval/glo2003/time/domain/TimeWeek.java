@@ -1,114 +1,65 @@
 package ca.ulaval.glo2003.time.domain;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import java.time.ZonedDateTime;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 
-// TODO : Test TimeWeek
-public class TimeWeek implements Comparable<TimeWeek> {
+public class TimeWeek extends TimeCalendar {
 
-  private TimeYear year;
-  private int weekOfYear;
-
-  public TimeWeek(TimeYear year, int weekOfYear) {
-    this.year = year;
-    this.weekOfYear = weekOfYear;
-  }
-
-  public TimeWeek(LocalDate date) {
-    this.year = new TimeYear(date);
-    Calendar calendar = Calendar.getInstance();
-    calendar.setFirstDayOfWeek(Calendar.MONDAY);
-    calendar.setTime(Date.valueOf(date));
-    this.weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
-  }
-
-  public TimeYear getYear() {
-    return year;
-  }
-
-  public int toWeekOfYear() {
-    return weekOfYear;
-  }
-
-  public TimePeriod toPeriod() {
-    return new TimePeriod(atFirstDay(), atLastDay());
-  }
-
-  public TimeDate atFirstDay() {
-    return atDay(Calendar.MONDAY);
-  }
-
-  public TimeDate atLastDay() {
-    return atDay(Calendar.SUNDAY);
-  }
-
-  private TimeDate atDay(int dayOfWeek) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.setFirstDayOfWeek(Calendar.MONDAY);
-    calendar.set(Calendar.YEAR, year.toYear().getValue());
+  public TimeWeek(ZonedDateTime zonedDateTime) {
+    super(zonedDateTime);
+    int weekOfYear =
+        zonedDateTime.get(
+            WeekFields.of(Configuration.instance().getLocale()).weekOfWeekBasedYear());
     calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear);
-    calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
-    return new TimeDate(calendar);
   }
 
-  // TODO : What if there is more that one week added?
-  public TimeWeek plusWeeks(int weeks) {
-    return year.getNumberOfWeeks() == weekOfYear
-        ? new TimeWeek(year.plusYears(1), 1)
-        : new TimeWeek(year, weekOfYear + weeks);
+  @Override
+  protected TimeDate firstDate() {
+    Calendar firstDate = weekDate();
+    firstDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+    return new TimeDate(firstDate.getTime());
   }
 
-  public int firstMonth() {
-    Calendar calendar = weekCalendar();
-    calendar.setFirstDayOfWeek(Calendar.MONDAY);
-    calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-    return calendar.get(Calendar.MONTH) + 1;
+  @Override
+  protected TimeDate lastDate() {
+    Calendar lastDate = weekDate();
+    lastDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+    return new TimeDate(lastDate.getTime());
   }
 
-  public int lastMonth() {
-    Calendar calendar = weekCalendar();
-    calendar.setFirstDayOfWeek(Calendar.MONDAY);
-    calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-    return calendar.get(Calendar.MONTH) + 1;
-  }
-
-  public int firstQuarter() {
-    return firstMonth() / 3;
-  }
-
-  public int lastQuarter() {
-    return lastMonth() / 3;
-  }
-
-  private Calendar weekCalendar() {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.YEAR, year.toYear().getValue());
-    calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear);
-    return calendar;
+  private Calendar weekDate() {
+    Calendar date = Calendar.getInstance();
+    date.setFirstDayOfWeek(Calendar.MONDAY);
+    date.set(Calendar.YEAR, getYear());
+    date.set(Calendar.WEEK_OF_YEAR, getWeekOfYear());
+    setAtMidnight(date);
+    return date;
   }
 
   @Override
   public String toString() {
-    return Integer.toString(weekOfYear);
+    return "week#".concat(Integer.toString(getWeekOfYear()));
   }
 
+  @Override
+  public int compareTo(TimeCalendar other) {
+    return getYearWeekOfYear() - other.getYearWeekOfYear();
+  }
+
+  // TODO : Test equals and hashCode (can't TimeCalendar do that?)
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    TimeWeek other = (TimeWeek) object;
+    TimeCalendar other = (TimeCalendar) object;
 
-    return weekOfYear == other.toWeekOfYear();
+    return getYearWeekOfYear() == other.getYearWeekOfYear();
   }
 
   @Override
   public int hashCode() {
-    return Integer.hashCode(weekOfYear);
-  }
-
-  @Override
-  public int compareTo(TimeWeek other) {
-    return weekOfYear - other.toWeekOfYear();
+    return Integer.hashCode(getYearWeekOfYear());
   }
 }

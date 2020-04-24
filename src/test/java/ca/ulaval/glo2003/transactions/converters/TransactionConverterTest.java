@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.transactions.converters;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.TimestampBuilder.aTimestamp;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import ca.ulaval.glo2003.time2.domain.Timestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;

@@ -4,7 +4,7 @@ import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_MAX_DISTANCE;
 import static ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQueryBuilder.DEFAULT_NUMBER_OF_NIGHTS;
-import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -14,7 +14,7 @@ import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

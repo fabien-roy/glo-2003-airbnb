@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.time2.domain.helpers;
+package ca.ulaval.glo2003.time.domain.helpers;
 
 import com.github.javafaker.Faker;
 import java.util.*;

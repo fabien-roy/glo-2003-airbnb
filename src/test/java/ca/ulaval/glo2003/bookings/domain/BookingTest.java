@@ -1,13 +1,16 @@
 package ca.ulaval.glo2003.bookings.domain;
 
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ca.ulaval.glo2003.time2.domain.TimeDate;
-import ca.ulaval.glo2003.time2.domain.TimePeriod;
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +22,11 @@ class BookingTest {
   private static TimeDate arrivalDate;
   private static TimeDate otherArrivalDate;
   private static int numberOfNights;
+
+  @BeforeAll
+  public static void setUpConfiguration() {
+    Configuration.instance().setServiceFee(new ServiceFee(null));
+  }
 
   @BeforeEach
   public void setUpBooking() {

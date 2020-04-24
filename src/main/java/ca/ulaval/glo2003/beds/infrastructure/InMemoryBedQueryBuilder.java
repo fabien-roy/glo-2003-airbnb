@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.beds.exceptions.MaxDistanceWithoutOriginException;
 import ca.ulaval.glo2003.beds.exceptions.NumberOfNightsWithoutMinimalCapacityException;
 import ca.ulaval.glo2003.beds.infrastructure.filters.*;
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,11 +1,11 @@
 package ca.ulaval.glo2003.transactions.domain;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.TimestampBuilder.aTimestamp;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import ca.ulaval.glo2003.time2.domain.Timestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

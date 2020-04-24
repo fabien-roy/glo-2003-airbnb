@@ -4,7 +4,6 @@ import static ca.ulaval.glo2003.time.domain.Timestamp.ZONE_OFFSET;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
-import java.time.Year;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class TimeDateTest {
 
   private static TimeDate timeDate;
+  private static TimeDate otherTimeDate;
 
   private static LocalDate date = LocalDate.now();
   private static LocalDate otherDate = date.plusDays(1);
@@ -20,15 +20,7 @@ class TimeDateTest {
   @BeforeAll
   public static void setUpDate() {
     timeDate = new TimeDate(date);
-  }
-
-  @Test
-  public void getYear_shouldGetYear() {
-    TimeYear year = new TimeYear(Year.of(date.getYear()));
-
-    TimeYear actualYear = timeDate.getYear();
-
-    assertEquals(year, actualYear);
+    otherTimeDate = new TimeDate(otherDate);
   }
 
   @Test
@@ -61,6 +53,33 @@ class TimeDateTest {
   }
 
   @Test
+  public void isBefore_withDateBefore_shouldReturnFalse() {
+    TimeDate dateBefore = new TimeDate(date.minusDays(1));
+
+    boolean result = timeDate.isBefore(dateBefore);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateEquals_shouldReturnFalse() {
+    TimeDate dateEqual = new TimeDate(date);
+
+    boolean result = timeDate.isBefore(dateEqual);
+
+    assertFalse(result);
+  }
+
+  @Test
+  public void isBefore_withDateAfter_shouldReturnTrue() {
+    TimeDate dateAfter = new TimeDate(date.plusDays(1));
+
+    boolean result = timeDate.isBefore(dateAfter);
+
+    assertTrue(result);
+  }
+
+  @Test
   public void isAfter_withDateBefore_shouldReturnTrue() {
     TimeDate dateBefore = new TimeDate(date.minusDays(1));
 
@@ -88,51 +107,6 @@ class TimeDateTest {
   }
 
   @Test
-  public void isBefore_withDateBefore_shouldReturnFalse() {
-    TimeDate dateBefore = new TimeDate(date.minusDays(1));
-
-    boolean result = timeDate.isBefore(dateBefore);
-
-    assertFalse(result);
-  }
-
-  @Test
-  public void isBefore_withDateEquals_shouldReturnFalse() {
-    TimeDate dateEqual = new TimeDate(date);
-
-    boolean result = timeDate.isBefore(dateEqual);
-
-    assertFalse(result);
-  }
-
-  @Test
-  public void isBefore_withDateAfter_shouldReturnTrue() {
-    TimeDate dateAfter = new TimeDate(date.plusDays(1));
-
-    boolean result = timeDate.isBefore(dateAfter);
-
-    assertTrue(result);
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {1, 3, 5})
-  public void periodTo_shouldReturnPeriodWithThisAsStart(int days) {
-    TimePeriod period = timeDate.periodToDays(days);
-
-    assertEquals(timeDate, period.getStart());
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {1, 3, 5})
-  public void periodTo_shouldReturnPeriodWithThisInDaysAsEnd(int days) {
-    TimeDate timeDateInDays = timeDate.plusDays(days);
-
-    TimePeriod period = timeDate.periodToDays(days);
-
-    assertEquals(timeDateInDays, period.getEnd());
-  }
-
-  @Test
   public void toPeriod_shouldHaveDateAsStart() {
     TimePeriod period = timeDate.toPeriod();
 
@@ -144,6 +118,29 @@ class TimeDateTest {
     TimePeriod period = timeDate.toPeriod();
 
     assertEquals(period.getEnd(), timeDate);
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
+  public void toPeriod_withDays_shouldReturnPeriodWithThisAsStart(int days) {
+    TimePeriod period = timeDate.toPeriod(days);
+
+    assertEquals(timeDate, period.getStart());
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 3, 5})
+  public void toPeriod_withDays_shouldReturnPeriodWithThisInDaysAsEnd(int days) {
+    TimeDate timeDateInDays = timeDate.plusDays(days);
+
+    TimePeriod period = timeDate.toPeriod(days);
+
+    assertEquals(timeDateInDays, period.getEnd());
+  }
+
+  @Test
+  public void toLocalDate_shouldReturnValueToLocalDate() {
+    assertEquals(date, timeDate.toLocalDate());
   }
 
   @Test
@@ -169,8 +166,6 @@ class TimeDateTest {
 
   @Test
   public void equals_shouldReturnFalse_whenValuesAreNotEqual() {
-    TimeDate otherTimeDate = new TimeDate(otherDate);
-
     boolean result = timeDate.equals(otherTimeDate);
 
     assertFalse(result);

@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.transactions.services;
 
-import ca.ulaval.glo2003.time2.domain.Timestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.*;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo2003.beds.domain;
 
 import ca.ulaval.glo2003.locations.domain.Location;
-import ca.ulaval.glo2003.time2.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.List;
 
 public interface BedQueryBuilder<Q extends BedQuery> {

@@ -1,9 +1,9 @@
 package ca.ulaval.glo2003.transactions.domain.helpers;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.TimestampBuilder.aTimestamp;
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 
-import ca.ulaval.glo2003.time2.domain.Timestamp;
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;

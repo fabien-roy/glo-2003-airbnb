@@ -1,76 +1,56 @@
 package ca.ulaval.glo2003.time.domain;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
-// TODO : Test TimeYear
-public class TimeYear implements Comparable<TimeYear> {
+public class TimeYear extends TimeCalendar {
 
-  private Year year;
-
-  public TimeYear(Year year) {
-    this.year = year;
+  public TimeYear(ZonedDateTime zonedDateTime) {
+    super(zonedDateTime);
   }
 
-  public TimeYear(LocalDate date) {
-    this.year = Year.of(date.getYear());
+  @Override
+  protected TimeDate firstDate() {
+    int firstDayOfYear = calendar.getActualMinimum(Calendar.DAY_OF_YEAR);
+    return thatDate(firstDayOfYear);
   }
 
-  public int getNumberOfWeeks() {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.YEAR, year.getValue());
-    return calendar.getMaximum(Calendar.WEEK_OF_YEAR);
+  @Override
+  protected TimeDate lastDate() {
+    int lastDayOfYear = calendar.getActualMaximum(Calendar.DAY_OF_YEAR);
+    return thatDate(lastDayOfYear);
   }
 
-  public Year toYear() {
-    return year;
-  }
-
-  public TimePeriod toPeriod() {
-    return new TimePeriod(atFirstDay(), atLastDay());
-  }
-
-  public YearMonth atMonth(TimeMonth month) {
-    return year.atMonth(month.toMonth());
-  }
-
-  public TimeDate atFirstDay() {
-    return new TimeDate(year.atMonth(Month.JANUARY).atDay(1));
-  }
-
-  public TimeDate atLastDay() {
-    return new TimeDate(year.atMonth(Month.DECEMBER).atEndOfMonth());
-  }
-
-  public TimeYear plusYears(int years) {
-    Year newYear = this.year.plusYears(years);
-    return new TimeYear(newYear);
+  private TimeDate thatDate(int dayOfYear) {
+    Calendar date = Calendar.getInstance();
+    date.set(Calendar.YEAR, getYear());
+    date.set(Calendar.DAY_OF_YEAR, dayOfYear);
+    setAtMidnight(date);
+    return new TimeDate(date.getTime());
   }
 
   @Override
   public String toString() {
-    return year.toString();
+    return Integer.toString(calendar.get(Calendar.YEAR));
   }
 
+  @Override
+  public int compareTo(TimeCalendar other) {
+    return getYear() - other.getYear();
+  }
+
+  // TODO : Test equals and hashCode (can't TimeCalendar do that?)
   @Override
   public boolean equals(Object object) {
     if (object == null || getClass() != object.getClass()) return false;
 
-    TimeYear other = (TimeYear) object;
+    TimeCalendar other = (TimeCalendar) object;
 
-    return year.equals(other.toYear());
+    return getYear() == other.getYear();
   }
 
   @Override
   public int hashCode() {
-    return year.hashCode();
-  }
-
-  @Override
-  public int compareTo(TimeYear other) {
-    return year.getValue() - other.toYear().getValue();
+    return Integer.hashCode(getYear());
   }
 }

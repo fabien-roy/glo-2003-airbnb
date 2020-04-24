@@ -1,7 +1,7 @@
-package ca.ulaval.glo2003.time2.domain;
+package ca.ulaval.glo2003.time.domain;
 
-import static ca.ulaval.glo2003.time2.domain.helpers.CalendarHelper.*;
-import static ca.ulaval.glo2003.time2.domain.helpers.TimeDateBuilder.aTimeDate;
+import static ca.ulaval.glo2003.time.domain.helpers.CalendarHelper.*;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.admin.domain.Configuration;

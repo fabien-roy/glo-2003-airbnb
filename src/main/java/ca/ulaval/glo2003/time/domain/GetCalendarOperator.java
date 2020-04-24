@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.time2.domain;
+package ca.ulaval.glo2003.time.domain;
 
 public interface GetCalendarOperator {
 

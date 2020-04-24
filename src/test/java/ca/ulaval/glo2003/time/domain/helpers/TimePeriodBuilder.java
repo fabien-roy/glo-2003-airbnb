@@ -1,75 +1,71 @@
 package ca.ulaval.glo2003.time.domain.helpers;
 
+import static ca.ulaval.glo2003.time.domain.helpers.CalendarHelper.*;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
-import static ca.ulaval.glo2003.time.domain.helpers.TimePeriodObjectMother.createNumberOfDays;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateObjectMother.createDate;
 
-import ca.ulaval.glo2003.time.domain.*;
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
+import java.time.LocalDate;
 
 public class TimePeriodBuilder {
 
-  private TimeDate start = aTimeDate().build();
-  private int numberOfDays = createNumberOfDays();
-  private TimeDate end = start.plusDays(numberOfDays);
+  public LocalDate DEFAULT_ZONED_DATE_TIME_START = createDate();
+  public LocalDate DEFAULT_ZONED_DATE_TIME_END = createDate();
+
+  public int startYear = DEFAULT_ZONED_DATE_TIME_START.getYear();
+  public int startMonth = DEFAULT_ZONED_DATE_TIME_START.getMonthValue();
+  public int dayOfMonthStart = DEFAULT_ZONED_DATE_TIME_START.getDayOfMonth();
+
+  public int endYear = DEFAULT_ZONED_DATE_TIME_END.getYear();
+  public int endMonth = DEFAULT_ZONED_DATE_TIME_END.getMonthValue();
+  public int dayOfMonthEnd = DEFAULT_ZONED_DATE_TIME_END.getDayOfMonth();
 
   public static TimePeriodBuilder aTimePeriod() {
     return new TimePeriodBuilder();
   }
 
-  public TimePeriodBuilder withinYear(TimeYear year) {
-    return withinYears(year, year);
-  }
-
-  public TimePeriodBuilder withinYears(TimeYear firstYear, TimeYear secondYear) {
-    TimeDate firstDate = aTimeDate().withYear(firstYear).build();
-    TimeDate secondDate = aTimeDate().withYear(secondYear).build();
-    setPeriodDates(firstDate, secondDate);
+  public TimePeriodBuilder withYears(int startYear, int endYear) {
+    this.startYear = startYear;
+    this.endYear = endYear;
     return this;
   }
 
-  public TimePeriodBuilder withinQuarter(TimeQuarter quarter) {
-    return withinQuarters(quarter, quarter);
-  }
-
-  public TimePeriodBuilder withinQuarters(TimeQuarter firstQuarter, TimeQuarter secondQuarter) {
-    TimeDate firstDate = aTimeDate().withQuarter(firstQuarter).build();
-    TimeDate secondDate = aTimeDate().withQuarter(secondQuarter).build();
-    setPeriodDates(firstDate, secondDate);
+  public TimePeriodBuilder withQuarters(int firstQuarter, int secondQuarter) {
+    this.startMonth = validMonthOfQuarter(firstQuarter) + 1;
+    this.endMonth = validMonthOfQuarter(secondQuarter) + 1;
+    this.dayOfMonthStart = firstDayOfMonth(endYear, endMonth - 1);
+    this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
     return this;
   }
 
-  public TimePeriodBuilder withinMonth(TimeMonth month) {
-    return withinMonths(month, month);
+  public TimePeriodBuilder withMonth(int month) {
+    return withMonths(month, month);
   }
 
-  public TimePeriodBuilder withinMonths(TimeMonth firstMonth, TimeMonth secondMonth) {
-    TimeDate firstDate = aTimeDate().withMonth(firstMonth).build();
-    TimeDate secondDate = aTimeDate().withMonth(secondMonth).build();
-    setPeriodDates(firstDate, secondDate);
+  public TimePeriodBuilder withMonths(int startMonth, int endMonth) {
+    this.startMonth = startMonth;
+    this.endMonth = endMonth;
+    this.dayOfMonthStart = firstDayOfMonth(endYear, endMonth - 1);
+    this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
     return this;
   }
 
-  public TimePeriodBuilder withinWeek(TimeWeek week) {
-    return withinWeeks(week, week);
-  }
-
-  public TimePeriodBuilder withinWeeks(TimeWeek firstWeek, TimeWeek secondWeek) {
-    TimeDate firstDate = aTimeDate().withWeek(firstWeek).build();
-    TimeDate secondDate = aTimeDate().withWeek(secondWeek).build();
-    setPeriodDates(firstDate, secondDate);
+  public TimePeriodBuilder withWeeks(int startWeekOfYear, int endWeekOfYear) {
+    this.dayOfMonthStart = validDayOfMonthOfWeekOfYear(startYear, startMonth - 1, startWeekOfYear);
+    this.dayOfMonthEnd = validDayOfMonthOfWeekOfYear(endYear, endMonth - 1, endWeekOfYear);
     return this;
   }
 
   public TimePeriod build() {
-    return new TimePeriod(start, end);
-  }
-
-  private void setPeriodDates(TimeDate firstDate, TimeDate secondDate) {
-    if (firstDate.isBefore(secondDate)) {
-      start = firstDate;
-      end = secondDate;
-    } else {
-      start = secondDate;
-      end = firstDate;
-    }
+    TimeDate start =
+        aTimeDate()
+            .withYear(startYear)
+            .withMonth(startMonth)
+            .withDayOfMonth(dayOfMonthStart)
+            .build();
+    TimeDate end =
+        aTimeDate().withYear(endYear).withMonth(endMonth).withDayOfMonth(dayOfMonthEnd).build();
+    return start.isBefore(end) ? new TimePeriod(start, end) : new TimePeriod(end, start);
   }
 }

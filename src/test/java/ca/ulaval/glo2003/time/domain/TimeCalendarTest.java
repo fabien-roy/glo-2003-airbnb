@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.time2.domain;
+package ca.ulaval.glo2003.time.domain;
 
 import ca.ulaval.glo2003.admin.domain.Configuration;
 import java.util.Locale;
