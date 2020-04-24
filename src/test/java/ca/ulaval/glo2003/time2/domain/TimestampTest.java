@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.time2.domain;
 
 import static ca.ulaval.glo2003.time2.domain.Timestamp.ZONE_OFFSET;
+import static ca.ulaval.glo2003.time2.domain.helpers.TimeDayBuilder.aDay;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Instant;
@@ -48,6 +49,13 @@ class TimestampTest {
     timestamp = new Timestamp(date);
 
     assertEquals(max, timestamp.toInstant().atOffset(ZONE_OFFSET).toLocalDateTime());
+  }
+
+  @Test
+  public void toDay_shouldReturnDayAtUTCZoneOffset() {
+    TimeDay day = aDay().withZonedDateTime(instant.atZone(ZONE_OFFSET)).build();
+
+    assertEquals(day, timestamp.toDay());
   }
 
   @Test

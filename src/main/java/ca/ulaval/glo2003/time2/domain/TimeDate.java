@@ -38,12 +38,16 @@ public class TimeDate {
     return new TimePeriod(this, plusDays(days));
   }
 
-  public LocalDate toLocalDate() {
-    return date;
-  }
-
   public Timestamp toTimestamp() {
     return new Timestamp(date);
+  }
+
+  public TimeDay toDay() {
+    return toTimestamp().toDay();
+  }
+
+  public LocalDate toLocalDate() {
+    return date;
   }
 
   @Override

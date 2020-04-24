@@ -139,6 +139,11 @@ class TimeDateTest {
   }
 
   @Test
+  public void toLocalDate_shouldReturnValueToDay() {
+    assertEquals(timeDate.toTimestamp().toDay(), timeDate.toDay());
+  }
+
+  @Test
   public void toLocalDate_shouldReturnValueToLocalDate() {
     assertEquals(date, timeDate.toLocalDate());
   }

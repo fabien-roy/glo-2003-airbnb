@@ -25,6 +25,14 @@ public class Timestamp {
     return value;
   }
 
+  public TimeDay toDay() {
+    return new TimeDay(toZonedDateTime());
+  }
+
+  private ZonedDateTime toZonedDateTime() {
+    return value.atZone(ZONE_OFFSET);
+  }
+
   @Override
   public String toString() {
     return value.toString();
