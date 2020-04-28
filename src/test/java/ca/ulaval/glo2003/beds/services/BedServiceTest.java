@@ -108,7 +108,7 @@ public class BedServiceTest {
 
   @Test
   public void getAll_shouldGetBedsWithQuery() {
-    List<BedResponse> bedResponses = bedService.getAll(params);
+    List<BedResponse> bedResponses = bedService.getAllResponses(params);
 
     assertTrue(bedResponses.contains(bedResponse));
     assertTrue(bedResponses.contains(otherBedResponse));
@@ -116,7 +116,7 @@ public class BedServiceTest {
 
   @Test
   public void getAll_shouldOrderInDecreasingOrderOfStars() {
-    List<BedResponse> bedResponses = bedService.getAll(params);
+    List<BedResponse> bedResponses = bedService.getAllResponses(params);
 
     assertSame(bedResponse, bedResponses.get(0));
     assertSame(otherBedResponse, bedResponses.get(1));

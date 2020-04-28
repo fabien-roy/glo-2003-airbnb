@@ -2,8 +2,7 @@ package ca.ulaval.glo2003.beds.domain;
 
 public class LodgingModeBuilder {
 
-  private static LodgingModes DEFAULT_LODGING_MODE_TYPE = LodgingModes.PRIVATE;
-
+  private static final LodgingModes DEFAULT_LODGING_MODE_TYPE = LodgingModes.PRIVATE;
   private LodgingModes lodgingModeType = DEFAULT_LODGING_MODE_TYPE;
 
   public LodgingModeBuilder aLodgingMode() {

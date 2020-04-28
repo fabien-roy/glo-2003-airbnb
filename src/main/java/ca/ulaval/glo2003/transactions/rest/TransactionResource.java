@@ -30,7 +30,7 @@ public class TransactionResource implements RouteGroup {
   }
 
   public Object getAll(Request request, Response response) {
-    List<TransactionResponse> transactionResponses = transactionService.getAll();
+    List<TransactionResponse> transactionResponses = transactionService.getAllResponses();
     response.status(HttpStatus.OK_200);
     return transactionResponses;
   }

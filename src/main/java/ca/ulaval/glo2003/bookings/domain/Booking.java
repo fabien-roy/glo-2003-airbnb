@@ -2,6 +2,8 @@ package ca.ulaval.glo2003.bookings.domain;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
+import ca.ulaval.glo2003.time.domain.TimeDate;
+import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import java.util.ArrayList;
@@ -11,17 +13,17 @@ public class Booking {
 
   private BookingNumber number;
   private PublicKey tenantPublicKey;
-  private BookingDate arrivalDate;
+  private TimeDate arrivalDate;
   private int numberOfNights;
   private Integer colonySize;
   private Packages packageName;
-  private Price total;
+  private Price price;
   private List<Transaction> transactions = new ArrayList<>();
   private BookingStatuses status;
 
   public Booking(
       PublicKey tenantPublicKey,
-      BookingDate arrivalDate,
+      TimeDate arrivalDate,
       int numberOfNights,
       Integer colonySize,
       Packages packageName) {
@@ -44,11 +46,11 @@ public class Booking {
     return tenantPublicKey;
   }
 
-  public BookingDate getArrivalDate() {
+  public TimeDate getArrivalDate() {
     return arrivalDate;
   }
 
-  public BookingDate getDepartureDate() {
+  public TimeDate getDepartureDate() {
     return arrivalDate.plusDays(numberOfNights - 1);
   }
 
@@ -64,12 +66,12 @@ public class Booking {
     return packageName;
   }
 
-  public Price getTotal() {
-    return total;
+  public Price getPrice() {
+    return price;
   }
 
-  public void setTotal(Price total) {
-    this.total = total;
+  public void setPrice(Price price) {
+    this.price = price;
   }
 
   public List<Transaction> getTransactions() {
@@ -78,6 +80,10 @@ public class Booking {
 
   public BookingStatuses getStatus() {
     return status;
+  }
+
+  public Price getTotal() {
+    return price.getTotal();
   }
 
   public void cancel() {
@@ -89,19 +95,19 @@ public class Booking {
   }
 
   public boolean isOverlapping(Booking otherBooking) {
-    return getPeriod().isOverlapping(otherBooking.getPeriod());
+    return toPeriod().isOverlapping(otherBooking.toPeriod());
   }
 
-  public boolean isOverlapping(BookingDate otherDate) {
+  public boolean isOverlapping(TimeDate otherDate) {
     return isOverlapping(otherDate, 1);
   }
 
-  public boolean isOverlapping(BookingDate otherDate, int numberOfNights) {
-    return getPeriod().isOverlapping(otherDate.periodToDays(numberOfNights - 1));
+  public boolean isOverlapping(TimeDate otherDate, int numberOfNights) {
+    return toPeriod().isOverlapping(otherDate.toPeriod(numberOfNights - 1));
   }
 
-  public BookingPeriod getPeriod() {
-    return arrivalDate.periodToDays(numberOfNights - 1);
+  public TimePeriod toPeriod() {
+    return arrivalDate.toPeriod(numberOfNights - 1);
   }
 
   public void setStatus(BookingStatuses bookingStatus) {

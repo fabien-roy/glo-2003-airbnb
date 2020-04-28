@@ -4,23 +4,24 @@ import ca.ulaval.glo2003.beds.converters.PublicKeyConverter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.time.converters.TimeDateConverter;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import javax.inject.Inject;
 
 public class BookingConverter {
 
   private final PublicKeyConverter publicKeyConverter;
-  private final BookingDateConverter bookingDateConverter;
+  private final TimeDateConverter timeDateConverter;
 
   @Inject
   public BookingConverter(
-      PublicKeyConverter publicKeyConverter, BookingDateConverter bookingDateConverter) {
+      PublicKeyConverter publicKeyConverter, TimeDateConverter timeDateConverter) {
     this.publicKeyConverter = publicKeyConverter;
-    this.bookingDateConverter = bookingDateConverter;
+    this.timeDateConverter = timeDateConverter;
   }
 
   public Booking fromRequest(BookingRequest bookingRequest) {
@@ -28,7 +29,7 @@ public class BookingConverter {
     validateColonySize(bookingRequest.getColonySize());
 
     PublicKey tenantPublicKey = publicKeyConverter.fromString(bookingRequest.getTenantPublicKey());
-    BookingDate arrivalDate = bookingDateConverter.fromString(bookingRequest.getArrivalDate());
+    TimeDate arrivalDate = timeDateConverter.fromString(bookingRequest.getArrivalDate());
 
     return new Booking(
         tenantPublicKey,

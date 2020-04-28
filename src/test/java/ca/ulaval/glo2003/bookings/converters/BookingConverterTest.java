@@ -3,10 +3,10 @@ package ca.ulaval.glo2003.bookings.converters;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingBuilder.aBooking;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createColonySize;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createNumberOfNights;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,12 +18,13 @@ import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.exceptions.InvalidPackageException;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
 import ca.ulaval.glo2003.bookings.domain.BookingStatuses;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidColonySizeException;
 import ca.ulaval.glo2003.bookings.exceptions.InvalidNumberOfNightsException;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
+import ca.ulaval.glo2003.time.converters.TimeDateConverter;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,16 +35,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BookingConverterTest {
 
   private static BookingConverter bookingConverter;
-  private static BookingDateConverter bookingDateConverter = mock(BookingDateConverter.class);
+  private static TimeDateConverter timeDateConverter = mock(TimeDateConverter.class);
   private static PublicKeyConverter publicKeyConverter = mock(PublicKeyConverter.class);
 
   private static Booking booking;
   private static PublicKey tenantPublicKey;
-  private static BookingDate arrivalDate;
+  private static TimeDate arrivalDate;
   private static int numberOfNights;
   private static Integer colonySize;
   private static Packages packageName;
-  private static Price total;
+  private static Price price;
   private static BookingStatuses status;
 
   private static BookingRequest bookingRequest;
@@ -52,24 +53,24 @@ class BookingConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
-    bookingConverter = new BookingConverter(publicKeyConverter, bookingDateConverter);
+    bookingConverter = new BookingConverter(publicKeyConverter, timeDateConverter);
   }
 
   @BeforeEach
   public void setUpMocks() {
     resetMocks();
     when(publicKeyConverter.fromString(tenantPublicKey.toString())).thenReturn(tenantPublicKey);
-    when(bookingDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
+    when(timeDateConverter.fromString(arrivalDate.toString())).thenReturn(arrivalDate);
   }
 
   private void resetMocks() {
     tenantPublicKey = createPublicKey();
-    arrivalDate = createBookingDate();
+    arrivalDate = aTimeDate().build();
     numberOfNights = createNumberOfNights();
     colonySize = createColonySize();
     packageName = createPackageName();
     packageNameValue = packageName.toString();
-    total = createPrice();
+    price = createPrice();
     status = BookingStatuses.BOOKED;
 
     booking = buildBooking();
@@ -83,7 +84,7 @@ class BookingConverterTest {
         .withNumberOfNights(numberOfNights)
         .withColonySize(colonySize)
         .withPackage(packageName)
-        .withTotal(total)
+        .withPrice(price)
         .withStatus(status)
         .build();
   }
@@ -205,7 +206,7 @@ class BookingConverterTest {
   public void toResponse_shouldConvertTotal() {
     bookingResponse = bookingConverter.toResponse(booking);
 
-    assertEquals(total.toDouble(), bookingResponse.getTotal());
+    assertEquals(price.getTotal().toDouble(), bookingResponse.getTotal());
   }
 
   @Test

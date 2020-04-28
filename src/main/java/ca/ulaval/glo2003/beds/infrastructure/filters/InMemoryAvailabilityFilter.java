@@ -1,17 +1,17 @@
 package ca.ulaval.glo2003.beds.infrastructure.filters;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
-import ca.ulaval.glo2003.bookings.domain.BookingDate;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class InMemoryAvailabilityFilter implements InMemoryBedFilter {
 
   private final int minCapacity;
-  private final BookingDate arrivalDate;
+  private final TimeDate arrivalDate;
   private final int numberOfNights;
 
-  public InMemoryAvailabilityFilter(int minCapacity, BookingDate arrivalDate, int numberOfNights) {
+  public InMemoryAvailabilityFilter(int minCapacity, TimeDate arrivalDate, int numberOfNights) {
     this.minCapacity = minCapacity;
     this.arrivalDate = arrivalDate;
     this.numberOfNights = numberOfNights;
@@ -21,7 +21,7 @@ public class InMemoryAvailabilityFilter implements InMemoryBedFilter {
     return minCapacity;
   }
 
-  public BookingDate getArrivalDate() {
+  public TimeDate getArrivalDate() {
     return arrivalDate;
   }
 

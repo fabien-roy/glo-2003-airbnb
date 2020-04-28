@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.transactions.converters;
 
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import ca.ulaval.glo2003.transactions.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
@@ -16,7 +17,7 @@ public class TransactionConverterTest {
 
   private static TransactionConverter transactionConverter;
 
-  private static Timestamp timestamp = createTimestamp();
+  private static Timestamp timestamp = aTimestamp().build();
   private static Price total = createTotal();
   private static TransactionReasons reason = createReason();
   private static String from = createFrom();

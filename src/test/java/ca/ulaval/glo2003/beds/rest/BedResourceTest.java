@@ -51,7 +51,7 @@ public class BedResourceTest {
     when(request.raw()).thenReturn(httpServletRequest);
     when(httpServletRequest.getQueryString()).thenReturn(queryString);
     when(queryParamMapConverter.fromString(queryString)).thenReturn(queryParamsMap);
-    when(bedService.getAll(queryParamsMap))
+    when(bedService.getAllResponses(queryParamsMap))
         .thenReturn(Arrays.asList(bedResponse, otherBedResponse));
     when(bedService.add(bedRequest)).thenReturn(bedNumber);
     when(bedService.getResponse(bedNumber)).thenReturn(bedResponse);

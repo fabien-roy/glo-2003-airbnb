@@ -53,7 +53,7 @@ public class BedResource implements RouteGroup {
   public Object getAll(Request request, Response response) {
     Map<String, List<String>> queryParamMap =
         queryParamMapConverter.fromString(request.raw().getQueryString());
-    List<BedResponse> bedResponses = bedService.getAll(queryParamMap);
+    List<BedResponse> bedResponses = bedService.getAllResponses(queryParamMap);
 
     response.status(HttpStatus.OK_200);
     return bedResponses;

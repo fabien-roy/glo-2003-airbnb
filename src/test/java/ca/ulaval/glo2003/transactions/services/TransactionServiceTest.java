@@ -1,13 +1,18 @@
 package ca.ulaval.glo2003.transactions.services;
 
+import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
-import ca.ulaval.glo2003.transactions.domain.*;
+import ca.ulaval.glo2003.transactions.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.Transaction;
+import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
+import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +36,7 @@ class TransactionServiceTest {
   private static Price tenantRefund = createTotal();
   private static Price ownerRefund = createTotal();
   private static Price total = createTotal();
-  private static Timestamp departureDate = createTimestamp();
+  private static Timestamp departureDate = aTimestamp().build();
 
   @BeforeAll
   public static void setUpService() {
@@ -84,7 +89,17 @@ class TransactionServiceTest {
   public void getAll_shouldGetAllTransactions() {
     setUpMocksForGetAll();
 
-    List<TransactionResponse> transactionResponses = transactionService.getAll();
+    List<Transaction> transactions = transactionService.getAll();
+
+    assertTrue(transactions.contains(transaction));
+    assertTrue(transactions.contains(otherTransaction));
+  }
+
+  @Test
+  public void getAllResponses_shouldGetAllTransactionsResponses() {
+    setUpMocksForGetAll();
+
+    List<TransactionResponse> transactionResponses = transactionService.getAllResponses();
 
     assertTrue(transactionResponses.contains(transactionResponse));
     assertTrue(transactionResponses.contains(otherTransactionResponse));

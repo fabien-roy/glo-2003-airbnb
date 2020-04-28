@@ -2,9 +2,9 @@ package ca.ulaval.glo2003.bookings.services;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
 import static ca.ulaval.glo2003.beds.domain.helpers.PublicKeyObjectMother.createPublicKey;
-import static ca.ulaval.glo2003.bookings.domain.helpers.BookingDateObjectMother.createBookingDate;
 import static ca.ulaval.glo2003.bookings.domain.helpers.BookingObjectMother.createBookingNumber;
 import static ca.ulaval.glo2003.bookings.rest.helpers.BookingRequestBuilder.aBookingRequest;
+import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -15,10 +15,15 @@ import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.bookings.converters.BookingConverter;
 import ca.ulaval.glo2003.bookings.converters.BookingNumberConverter;
-import ca.ulaval.glo2003.bookings.domain.*;
+import ca.ulaval.glo2003.bookings.domain.Booking;
+import ca.ulaval.glo2003.bookings.domain.BookingFactory;
+import ca.ulaval.glo2003.bookings.domain.BookingNumber;
+import ca.ulaval.glo2003.bookings.domain.BookingPriceCalculator;
 import ca.ulaval.glo2003.bookings.rest.BookingRequest;
 import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.bookings.rest.CancelationResponse;
+import ca.ulaval.glo2003.reports.services.ReportService;
+import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,25 +32,26 @@ import org.junit.jupiter.api.Test;
 public class BookingServiceTest {
 
   private static BookingService bookingService;
+  private static TransactionService transactionService = mock(TransactionService.class);
   private static BedService bedService = mock(BedService.class);
   private static CancelationService cancelationService = mock(CancelationService.class);
-  private static TransactionService transactionService = mock(TransactionService.class);
+  private static ReportService reportService = mock(ReportService.class);
   private static BookingConverter bookingConverter = mock(BookingConverter.class);
   private static BookingNumberConverter bookingNumberConverter = mock(BookingNumberConverter.class);
   private static BookingFactory bookingFactory = mock(BookingFactory.class);
-  private static BookingTotalCalculator bookingTotalCalculator = mock(BookingTotalCalculator.class);
+  private static BookingPriceCalculator bookingPriceCalculator = mock(BookingPriceCalculator.class);
 
   private static BedNumber bedNumber = createBedNumber();
   private static Bed bed = buildBed();
   private static PublicKey ownerPublicKey = createPublicKey();
   private static BookingNumber bookingNumber = createBookingNumber();
+  private static Price price = createPrice();
   private static Booking booking = buildBooking();
   private static PublicKey tenantPublicKey = createPublicKey();
-  private static BookingDate departureDate = createBookingDate();
+  private static TimeDate departureDate = aTimeDate().build();
   private static BookingRequest bookingRequest = aBookingRequest().build();
   private static BookingResponse bookingResponse = mock(BookingResponse.class);
   private static CancelationResponse cancelationResponse = mock(CancelationResponse.class);
-  private static Price total = createPrice();
 
   @BeforeAll
   public static void setUpService() {
@@ -54,18 +60,19 @@ public class BookingServiceTest {
             bookingConverter,
             bookingNumberConverter,
             bookingFactory,
-            bookingTotalCalculator,
+            bookingPriceCalculator,
             transactionService,
             bedService,
-            cancelationService);
+            cancelationService,
+            reportService);
   }
 
   private void setUpMocksForAdd() {
     resetMocks();
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
     when(bookingConverter.fromRequest(bookingRequest)).thenReturn(booking);
-    when(bookingTotalCalculator.calculateTotal(bed, booking)).thenReturn(total);
-    when(bookingFactory.create(booking, total)).thenReturn(booking);
+    when(bookingPriceCalculator.calculatePrice(bed, booking)).thenReturn(price);
+    when(bookingFactory.create(booking, price)).thenReturn(booking);
   }
 
   private void setUpMocksForGetResponse() {
@@ -81,8 +88,7 @@ public class BookingServiceTest {
     when(bed.getBookingByNumber(bookingNumber)).thenReturn(booking);
     when(bookingNumberConverter.fromString(bookingNumber.toString())).thenReturn(bookingNumber);
     when(bedService.get(bedNumber.toString())).thenReturn(bed);
-    when(cancelationService.cancel(booking, bed.getOwnerPublicKey().toString()))
-        .thenReturn(cancelationResponse);
+    when(cancelationService.cancel(bed, booking)).thenReturn(cancelationResponse);
   }
 
   private void resetMocks() {
@@ -103,6 +109,7 @@ public class BookingServiceTest {
     when(booking.getNumber()).thenReturn(bookingNumber);
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
     when(booking.getDepartureDate()).thenReturn(departureDate);
+    when(booking.getTotal()).thenReturn(price.getTotal());
     return booking;
   }
 
@@ -139,7 +146,8 @@ public class BookingServiceTest {
 
     bookingService.add(bedNumber.toString(), bookingRequest);
 
-    verify(transactionService).addStayBooked(booking.getTenantPublicKey().toString(), total);
+    verify(transactionService)
+        .addStayBooked(booking.getTenantPublicKey().toString(), price.getTotal());
   }
 
   @Test
@@ -150,7 +158,18 @@ public class BookingServiceTest {
 
     verify(transactionService)
         .addStayCompleted(
-            bed.getOwnerPublicKey().toString(), total, booking.getDepartureDate().toTimestamp());
+            bed.getOwnerPublicKey().toString(),
+            price.getTotal(),
+            booking.getDepartureDate().toTimestamp());
+  }
+
+  @Test
+  public void add_shouldReportReservation() {
+    setUpMocksForAdd();
+
+    bookingService.add(bedNumber.toString(), bookingRequest);
+
+    verify(reportService).addReservation(bed, booking);
   }
 
   @Test

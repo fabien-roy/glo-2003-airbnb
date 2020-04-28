@@ -8,7 +8,6 @@ public class BookingNotFoundErrorFactory extends BookingErrorFactory {
 
   String number;
 
-  // TODO : Test this thing
   @Override
   public boolean canHandle(BookingException exception) {
     boolean possibleToHandle = super.canHandle(exception);

@@ -11,7 +11,7 @@ class CancelationConverterTest {
 
   private static CancelationConverter cancelationConverter;
 
-  private static Price refundAmount = new Price(100);
+  private static Price refundAmount = Price.valueOf(100);
 
   @BeforeEach
   public void setUpMapper() {

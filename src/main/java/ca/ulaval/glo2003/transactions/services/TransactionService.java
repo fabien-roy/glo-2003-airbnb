@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003.transactions.services;
 
+import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.*;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
@@ -25,10 +26,12 @@ public class TransactionService {
     this.transactionConverter = transactionConverter;
   }
 
-  public List<TransactionResponse> getAll() {
-    List<Transaction> transactions = transactionRepository.getAll();
+  public List<Transaction> getAll() {
+    return transactionRepository.getAll();
+  }
 
-    return transactions.stream().map(transactionConverter::toResponse).collect(Collectors.toList());
+  public List<TransactionResponse> getAllResponses() {
+    return getAll().stream().map(transactionConverter::toResponse).collect(Collectors.toList());
   }
 
   public void addStayBooked(String tenant, Price total) {

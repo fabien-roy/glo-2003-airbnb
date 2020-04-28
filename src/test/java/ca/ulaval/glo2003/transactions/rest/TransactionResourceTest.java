@@ -33,7 +33,7 @@ class TransactionResourceTest {
   @BeforeEach
   public void setUpMocks() {
     reset(response);
-    when(transactionService.getAll())
+    when(transactionService.getAllResponses())
         .thenReturn(Arrays.asList(transactionResponse, otherTransactionResponse));
   }
 

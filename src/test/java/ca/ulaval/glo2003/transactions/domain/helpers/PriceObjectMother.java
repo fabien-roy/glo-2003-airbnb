@@ -8,7 +8,6 @@ public class PriceObjectMother {
   private PriceObjectMother() {}
 
   public static Price createPrice() {
-    double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return new Price(randomDouble);
+    return Price.valueOf(Faker.instance().number().randomDouble(2, 100, 1000));
   }
 }

@@ -45,7 +45,7 @@ public class BookingFactoryTest {
 
     booking = bookingFactory.create(booking, expectedTotal);
 
-    assertEquals(expectedTotal, booking.getTotal());
+    assertEquals(expectedTotal, booking.getPrice());
   }
 
   @Test

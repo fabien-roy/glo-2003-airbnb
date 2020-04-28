@@ -27,7 +27,7 @@ public class PackageConverter {
     packageRequests.forEach(
         packageRequest -> {
           Packages packageName = parsePackageName(packageRequest.getName());
-          Price price = new Price(packageRequest.getPricePerNight());
+          Price price = Price.valueOf(packageRequest.getPricePerNight());
           pricesPerNight.put(packageName, price);
         });
 
@@ -39,9 +39,8 @@ public class PackageConverter {
     List<PackageResponse> packageResponses = new ArrayList<>();
 
     pricesPerNight.forEach(
-        (packageName, price) -> {
-          packageResponses.add(new PackageResponse(packageName.toString(), price.toDouble()));
-        });
+        (packageName, price) ->
+            packageResponses.add(new PackageResponse(packageName.toString(), price.toDouble())));
 
     return packageResponses;
   }
