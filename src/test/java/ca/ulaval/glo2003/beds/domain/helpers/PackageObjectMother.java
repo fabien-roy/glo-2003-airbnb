@@ -1,10 +1,10 @@
 package ca.ulaval.glo2003.beds.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.domain.helpers.Randomizer.randomEnum;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import com.github.javafaker.Faker;
 
 public class PackageObjectMother {
 
@@ -15,7 +15,6 @@ public class PackageObjectMother {
   }
 
   public static Price createPricePerNight() {
-    double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return new Price(randomDouble);
+    return createPrice();
   }
 }

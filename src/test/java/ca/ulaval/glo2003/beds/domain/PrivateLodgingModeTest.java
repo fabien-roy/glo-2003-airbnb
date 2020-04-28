@@ -116,7 +116,7 @@ class PrivateLodgingModeTest {
 
   @Test
   public void applyDiscount_shouldReturnSameTotal() {
-    Price total = new Price(100);
+    Price total = Price.valueOf(100);
 
     Price discountedTotal = privateLodgingMode.applyDiscount(total, bed, booking);
 

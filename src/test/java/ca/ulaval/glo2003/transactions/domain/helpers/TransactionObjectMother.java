@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.transactions.domain.helpers;
 
 import static ca.ulaval.glo2003.interfaces.domain.helpers.Randomizer.randomEnum;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.TransactionReasons;
@@ -19,8 +20,7 @@ public class TransactionObjectMother {
   }
 
   public static Price createTotal() {
-    double randomDouble = Faker.instance().number().randomDouble(2, 100, 1000);
-    return new Price(randomDouble);
+    return createPrice();
   }
 
   public static TransactionReasons createReason() {

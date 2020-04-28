@@ -58,8 +58,8 @@ public class InMemoryIncomesMetricTest extends InMemoryReportMetricTest {
   private static Stream<Arguments> provideIncomes() {
     return Stream.of(
         Arguments.of(0, Price.zero(), Price.zero()),
-        Arguments.of(3, new Price(123.123), new Price(369.369)),
-        Arguments.of(5, new Price(49.99), new Price(249.95)));
+        Arguments.of(3, Price.valueOf(123.123), Price.valueOf(369.369)),
+        Arguments.of(5, Price.valueOf(49.99), Price.valueOf(249.95)));
   }
 
   @Test

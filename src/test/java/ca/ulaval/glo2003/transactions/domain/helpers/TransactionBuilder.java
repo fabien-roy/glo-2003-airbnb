@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.transactions.domain.helpers;
 
 import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
+import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 
 import ca.ulaval.glo2003.time.domain.Timestamp;
@@ -22,7 +23,7 @@ public class TransactionBuilder {
   private String DEFAULT_TO = createTo();
   private String to = DEFAULT_TO;
 
-  private Price DEFAULT_TOTAL = createTotal();
+  private Price DEFAULT_TOTAL = createPrice();
   private Price total = DEFAULT_TOTAL;
 
   private TransactionReasons DEFAULT_REASON = createReason();

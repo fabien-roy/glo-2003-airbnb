@@ -23,9 +23,9 @@ class ServiceFeeTest {
 
   private static Stream<Arguments> provideNullFees() {
     return Stream.of(
-        Arguments.of(new Price(123.123)),
-        Arguments.of(new Price(100.0)),
-        Arguments.of(new Price(100.0)));
+        Arguments.of(Price.valueOf(123.123)),
+        Arguments.of(Price.valueOf(100.0)),
+        Arguments.of(Price.valueOf(100.0)));
   }
 
   @ParameterizedTest
@@ -40,8 +40,8 @@ class ServiceFeeTest {
 
   private static Stream<Arguments> provideFees() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(0), new Price(123.123), Price.zero()),
-        Arguments.of(BigDecimal.valueOf(15), new Price(100.0), new Price(15.00)),
-        Arguments.of(BigDecimal.valueOf(15.15), new Price(100.0), new Price(15.15)));
+        Arguments.of(BigDecimal.valueOf(0), Price.valueOf(123.123), Price.zero()),
+        Arguments.of(BigDecimal.valueOf(15), Price.valueOf(100.0), Price.valueOf(15.00)),
+        Arguments.of(BigDecimal.valueOf(15.15), Price.valueOf(100.0), Price.valueOf(15.15)));
   }
 }

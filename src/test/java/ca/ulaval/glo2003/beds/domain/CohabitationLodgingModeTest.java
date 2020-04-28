@@ -24,7 +24,7 @@ class CohabitationLodgingModeTest {
   private static LodgingMode cohabitationLodgingMode;
   private static Bed bed = mock(Bed.class);
   private static Booking booking = mock(Booking.class);
-  private static Price total = new Price(100);
+  private static Price total = Price.valueOf(100);
   private static Integer minCapacity;
   private static TimeDate arrivalDate;
   private static int numberOfNights;
@@ -129,11 +129,11 @@ class CohabitationLodgingModeTest {
 
   private static Stream<Arguments> provideConditionsToApplyDiscount() {
     return Stream.of(
-        Arguments.of(100, 100, new Price(100)),
-        Arguments.of(100, 1000, new Price(10)),
-        Arguments.of(1000, 100, new Price(1000)),
-        Arguments.of(525, 50, new Price(1050)),
-        Arguments.of(27, 89, new Price(30.34)));
+        Arguments.of(100, 100, Price.valueOf(100)),
+        Arguments.of(100, 1000, Price.valueOf(10)),
+        Arguments.of(1000, 100, Price.valueOf(1000)),
+        Arguments.of(525, 50, Price.valueOf(1050)),
+        Arguments.of(27, 89, Price.valueOf(30.34)));
   }
 
   @Test

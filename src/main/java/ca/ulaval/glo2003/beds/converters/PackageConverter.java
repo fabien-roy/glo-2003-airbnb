@@ -27,7 +27,7 @@ public class PackageConverter {
     packageRequests.forEach(
         packageRequest -> {
           Packages packageName = parsePackageName(packageRequest.getName());
-          Price price = new Price(packageRequest.getPricePerNight());
+          Price price = Price.valueOf(packageRequest.getPricePerNight());
           pricesPerNight.put(packageName, price);
         });
 

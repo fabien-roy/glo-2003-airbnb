@@ -20,7 +20,7 @@ class BookingPriceCalculatorTest {
 
   private static BookingPriceCalculator bookingPriceCalculator;
 
-  private static Price total = new Price(100);
+  private static Price total = Price.valueOf(100);
   private static Price pricePerNight = mock(Price.class);
   private static Bed bed = mock(Bed.class);
   private static Packages bedPackage = createPackageName();
@@ -53,9 +53,9 @@ class BookingPriceCalculatorTest {
 
   private static Stream<Arguments> provideConditionsToCalculateTotal() {
     return Stream.of(
-        Arguments.of(1, new Price(100)),
-        Arguments.of(3, new Price(95)),
-        Arguments.of(10, new Price(90)),
-        Arguments.of(30, new Price(75)));
+        Arguments.of(1, Price.valueOf(100)),
+        Arguments.of(3, Price.valueOf(95)),
+        Arguments.of(10, Price.valueOf(90)),
+        Arguments.of(30, Price.valueOf(75)));
   }
 }

@@ -15,8 +15,8 @@ public class Price implements Comparable<Price> {
     return new Price(BigDecimal.ZERO);
   }
 
-  public Price(double price) {
-    this.bigDecimal = BigDecimal.valueOf(price);
+  public static Price valueOf(double price) {
+    return new Price(BigDecimal.valueOf(price));
   }
 
   private Price(BigDecimal bigDecimal) {
