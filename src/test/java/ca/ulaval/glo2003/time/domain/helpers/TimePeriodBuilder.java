@@ -46,7 +46,7 @@ public class TimePeriodBuilder {
   public TimePeriodBuilder withMonths(int startMonth, int endMonth) {
     this.startMonth = startMonth;
     this.endMonth = endMonth;
-    this.dayOfMonthStart = firstDayOfMonth(endYear, endMonth - 1);
+    this.dayOfMonthStart = firstDayOfMonth(endYear, startMonth - 1);
     this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
     return this;
   }
