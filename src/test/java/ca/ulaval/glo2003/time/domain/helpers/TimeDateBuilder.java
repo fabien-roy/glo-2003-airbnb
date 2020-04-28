@@ -35,21 +35,21 @@ public class TimeDateBuilder {
     int firstMonthOfQuarter = quarter * 3 - 2;
     int lastMonthOfQuarter = quarter * 3;
     this.month = Faker.instance().random().nextInt(firstMonthOfQuarter, lastMonthOfQuarter);
-    this.dayOfMonth = validDayOfMonth(year, month - 1);
+    this.dayOfMonth = validDayOfMonth(year, toJavaCalendarMonth(month));
     return this;
   }
 
   public TimeDateBuilder withMonth(int month) {
     this.month = month;
-    this.dayOfMonth = validDayOfMonth(year, month - 1);
+    this.dayOfMonth = validDayOfMonth(year, toJavaCalendarMonth(month));
     return this;
   }
 
   public TimeDateBuilder withWeekOfYear(int weekOfYear) {
-    int firstMonthOfWeekOfYear = firstMonthOfWeekOfYear(year, weekOfYear) + 1;
-    int lastMonthOfWeekOfYear = lastMonthOfWeekOfYear(year, weekOfYear) + 1;
+    int firstMonthOfWeekOfYear = toJavaTimeMonth(firstMonthOfWeekOfYear(year, weekOfYear));
+    int lastMonthOfWeekOfYear = toJavaTimeMonth(lastMonthOfWeekOfYear(year, weekOfYear));
     this.month = Faker.instance().random().nextInt(firstMonthOfWeekOfYear, lastMonthOfWeekOfYear);
-    this.dayOfMonth = validDayOfMonthOfWeekOfYear(year, month - 1, weekOfYear);
+    this.dayOfMonth = validDayOfMonthOfWeekOfYear(year, toJavaCalendarMonth(month), weekOfYear);
     return this;
   }
 

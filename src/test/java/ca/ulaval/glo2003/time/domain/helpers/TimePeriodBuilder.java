@@ -32,10 +32,10 @@ public class TimePeriodBuilder {
   }
 
   public TimePeriodBuilder withQuarters(int firstQuarter, int secondQuarter) {
-    this.startMonth = validMonthOfQuarter(firstQuarter) + 1;
-    this.endMonth = validMonthOfQuarter(secondQuarter) + 1;
-    this.dayOfMonthStart = firstDayOfMonth(endYear, endMonth - 1);
-    this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
+    this.startMonth = toJavaTimeMonth(validMonthOfQuarter(firstQuarter));
+    this.endMonth = toJavaTimeMonth(validMonthOfQuarter(secondQuarter));
+    this.dayOfMonthStart = firstDayOfMonth(endYear, toJavaCalendarMonth(startMonth));
+    this.dayOfMonthEnd = lastDayOfMonth(endYear, toJavaCalendarMonth(endMonth));
     return this;
   }
 
@@ -46,14 +46,16 @@ public class TimePeriodBuilder {
   public TimePeriodBuilder withMonths(int startMonth, int endMonth) {
     this.startMonth = startMonth;
     this.endMonth = endMonth;
-    this.dayOfMonthStart = firstDayOfMonth(endYear, startMonth - 1);
-    this.dayOfMonthEnd = lastDayOfMonth(endYear, endMonth - 1);
+    this.dayOfMonthStart = firstDayOfMonth(endYear, toJavaCalendarMonth(startMonth));
+    this.dayOfMonthEnd = lastDayOfMonth(endYear, toJavaCalendarMonth(endMonth));
     return this;
   }
 
   public TimePeriodBuilder withWeeks(int startWeekOfYear, int endWeekOfYear) {
-    this.dayOfMonthStart = validDayOfMonthOfWeekOfYear(startYear, startMonth - 1, startWeekOfYear);
-    this.dayOfMonthEnd = validDayOfMonthOfWeekOfYear(endYear, endMonth - 1, endWeekOfYear);
+    this.dayOfMonthStart =
+        validDayOfMonthOfWeekOfYear(startYear, toJavaCalendarMonth(startMonth), startWeekOfYear);
+    this.dayOfMonthEnd =
+        validDayOfMonthOfWeekOfYear(endYear, toJavaCalendarMonth(endMonth), endWeekOfYear);
     return this;
   }
 

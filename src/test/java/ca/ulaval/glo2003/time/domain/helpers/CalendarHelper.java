@@ -84,4 +84,12 @@ public class CalendarHelper {
     calendar.set(Calendar.MONTH, month);
     return calendar;
   }
+
+  public static int toJavaCalendarMonth(int month) {
+    return month - 1;
+  }
+
+  public static int toJavaTimeMonth(int month) {
+    return month + 1;
+  }
 }
