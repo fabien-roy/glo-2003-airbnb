@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.reports.services;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
 import ca.ulaval.glo2003.bookings.domain.Booking;
-import ca.ulaval.glo2003.reports.converters.ReportConverter;
+import ca.ulaval.glo2003.reports.converters.ReportPeriodConverter;
 import ca.ulaval.glo2003.reports.domain.*;
 import ca.ulaval.glo2003.reports.rest.ReportPeriodResponse;
 import com.google.inject.Inject;
@@ -13,18 +13,18 @@ public class ReportService {
 
   private final ReportQueryFactory reportQueryFactory;
   private final ReportEventFactory reportEventFactory;
-  private final ReportConverter reportConverter;
+  private final ReportPeriodConverter reportPeriodConverter;
   private final ReportRepository reportRepository;
 
   @Inject
   public ReportService(
       ReportQueryFactory reportQueryFactory,
       ReportEventFactory reportEventFactory,
-      ReportConverter reportConverter,
+      ReportPeriodConverter reportPeriodConverter,
       ReportRepository reportRepository) {
     this.reportQueryFactory = reportQueryFactory;
     this.reportEventFactory = reportEventFactory;
-    this.reportConverter = reportConverter;
+    this.reportPeriodConverter = reportPeriodConverter;
     this.reportRepository = reportRepository;
   }
 
@@ -32,7 +32,7 @@ public class ReportService {
   public List<ReportPeriodResponse> getAll(Map<String, List<String>> params) {
     ReportQuery reportQuery = reportQueryFactory.create(params);
     List<ReportPeriod> periods = reportRepository.getPeriods(reportQuery);
-    return reportConverter.toResponses(periods);
+    return reportPeriodConverter.toResponses(periods);
   }
 
   // TODO : Test ReportService.addReservation

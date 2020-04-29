@@ -1,6 +1,8 @@
 package ca.ulaval.glo2003.reports;
 
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.reports.converters.ReportPeriodConverter;
+import ca.ulaval.glo2003.reports.converters.ReportPeriodDataConverter;
 import ca.ulaval.glo2003.reports.domain.ReportQueryBuilder;
 import ca.ulaval.glo2003.reports.domain.ReportQueryFactory;
 import ca.ulaval.glo2003.reports.domain.ReportRepository;
@@ -43,6 +45,8 @@ public class ReportModule extends AbstractModule {
     bind(ReportSerializingModule.class);
     bind(ReportMapper.class);
     bind(ReportService.class);
+    bind(ReportPeriodConverter.class);
+    bind(ReportPeriodDataConverter.class);
     bind(ReportResource.class);
     bind(ReportExceptionHandler.class);
   }
