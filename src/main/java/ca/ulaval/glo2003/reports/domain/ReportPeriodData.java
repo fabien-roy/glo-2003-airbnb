@@ -27,6 +27,10 @@ public class ReportPeriodData {
     return dimensions;
   }
 
+  public void setDimensions(List<ReportDimensionData> dimensions) {
+    this.dimensions = dimensions;
+  }
+
   public void addMetric(ReportMetricData metric) {
     metrics.add(metric);
   }

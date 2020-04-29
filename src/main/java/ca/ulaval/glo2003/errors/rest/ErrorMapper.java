@@ -9,6 +9,8 @@ import ca.ulaval.glo2003.bookings.rest.handlers.BookingExceptionHandler;
 import ca.ulaval.glo2003.errors.rest.handlers.CatchallExceptionHandler;
 import ca.ulaval.glo2003.locations.exceptions.LocationException;
 import ca.ulaval.glo2003.locations.rest.handlers.LocationExceptionHandler;
+import ca.ulaval.glo2003.reports.exceptions.ReportException;
+import ca.ulaval.glo2003.reports.rest.handlers.ReportExceptionHandler;
 import com.google.inject.Inject;
 import spark.RouteGroup;
 
@@ -20,17 +22,20 @@ public class ErrorMapper implements RouteGroup {
   private final LocationExceptionHandler locationExceptionHandler;
   private final BedExceptionHandler bedExceptionHandler;
   private final BookingExceptionHandler bookingExceptionHandler;
+  private final ReportExceptionHandler reportExceptionHandler;
 
   @Inject
   public ErrorMapper(
       CatchallExceptionHandler catchallExceptionHandler,
       LocationExceptionHandler locationExceptionHandler,
       BedExceptionHandler bedExceptionHandler,
-      BookingExceptionHandler bookingExceptionHandler) {
+      BookingExceptionHandler bookingExceptionHandler,
+      ReportExceptionHandler reportExceptionHandler) {
     this.catchallExceptionHandler = catchallExceptionHandler;
     this.locationExceptionHandler = locationExceptionHandler;
     this.bedExceptionHandler = bedExceptionHandler;
     this.bookingExceptionHandler = bookingExceptionHandler;
+    this.reportExceptionHandler = reportExceptionHandler;
   }
 
   @Override
@@ -39,5 +44,6 @@ public class ErrorMapper implements RouteGroup {
     exception(LocationException.class, locationExceptionHandler);
     exception(BedException.class, bedExceptionHandler);
     exception(BookingException.class, bookingExceptionHandler);
+    exception(ReportException.class, reportExceptionHandler);
   }
 }

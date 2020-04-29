@@ -32,6 +32,7 @@ public abstract class ReportDimension<T> {
             .filter(event -> filter(event, value))
             .collect(Collectors.toList());
     ReportPeriodData filteredData = new ReportPeriodData(splitEvents);
+    filteredData.setDimensions(new ArrayList<>(data.getDimensions()));
     filteredData.addDimension(toDimensionData(value));
     return filteredData;
   }
