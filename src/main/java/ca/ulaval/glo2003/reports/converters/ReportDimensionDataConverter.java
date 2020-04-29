@@ -5,7 +5,6 @@ import ca.ulaval.glo2003.reports.rest.ReportDimensionDataResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : Test this!
 public class ReportDimensionDataConverter {
 
   public List<ReportDimensionDataResponse> toResponses(List<ReportDimensionData> dimensions) {
@@ -15,6 +14,6 @@ public class ReportDimensionDataConverter {
   }
 
   private ReportDimensionDataResponse toResponse(ReportDimensionData data) {
-    return null; // TODO
+    return new ReportDimensionDataResponse(data.getName().toString(), data.getValue().toString());
   }
 }
