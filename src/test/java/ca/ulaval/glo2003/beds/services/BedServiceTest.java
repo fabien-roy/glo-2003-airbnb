@@ -142,4 +142,11 @@ public class BedServiceTest {
 
     verify(bedRepository).update(bed);
   }
+
+  @Test
+  public void deleteAll_shouldCallBedRepositoryDeleteAll() {
+    bedService.deleteAll();
+
+    verify(bedRepository).deleteAll();
+  }
 }
