@@ -1,7 +1,9 @@
-package ca.ulaval.glo2003.admin.domain;
+package ca.ulaval.glo2003.admin;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.time.domain.TimeYear;
 import java.time.ZonedDateTime;
