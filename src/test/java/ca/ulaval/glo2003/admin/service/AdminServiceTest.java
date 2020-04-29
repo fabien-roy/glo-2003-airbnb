@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
+import ca.ulaval.glo2003.reports.services.ReportService;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,10 +15,11 @@ class AdminServiceTest {
   private static AdminService adminService;
   private static BedService bedService = mock(BedService.class);
   public static TransactionService transactionService = mock(TransactionService.class);
+  public static ReportService reportService = mock(ReportService.class);
 
   @BeforeAll
   public static void setUpResource() {
-    adminService = new AdminService(bedService, transactionService);
+    adminService = new AdminService(bedService, transactionService, reportService);
   }
 
   @BeforeEach
@@ -37,5 +39,12 @@ class AdminServiceTest {
     adminService.deleteAll();
 
     verify(transactionService).deleteAll();
+  }
+
+  @Test
+  public void deleteAll_shouldCallReportServiceDeleteAll() {
+    adminService.deleteAll();
+
+    verify(reportService).deleteAll();
   }
 }
