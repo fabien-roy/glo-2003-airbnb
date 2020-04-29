@@ -16,6 +16,7 @@ import ca.ulaval.glo2003.reports.infrastructure.InMemoryReportRepository;
 import ca.ulaval.glo2003.reports.infrastructure.dimensions.InMemoryReportDimensionBuilder;
 import ca.ulaval.glo2003.reports.infrastructure.metrics.InMemoryReportMetricBuilder;
 import ca.ulaval.glo2003.reports.rest.ReportMapper;
+import ca.ulaval.glo2003.reports.rest.ReportResource;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportDimensionsErrorFactory;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportMetricsErrorFactory;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportScopeErrorFactory;
@@ -40,6 +41,7 @@ public class ReportModule extends AbstractModule {
     bind(ReportQueryFactory.class);
     bind(ReportMapper.class);
     bind(ReportService.class);
+    bind(ReportResource.class);
     bind(ReportExceptionHandler.class);
   }
 
