@@ -71,4 +71,6 @@ public class TransactionService {
     transactionRepository.add(transactionCancel);
     transactionRepository.add(transactionRefund);
   }
+
+  public void deleteAll() {}
 }
