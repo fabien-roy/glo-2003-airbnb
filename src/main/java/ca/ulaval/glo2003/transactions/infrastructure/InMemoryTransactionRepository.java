@@ -22,4 +22,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
   public List<Transaction> getAll() {
     return transactions;
   }
+
+  @Override
+  public void deleteAll() {}
 }
