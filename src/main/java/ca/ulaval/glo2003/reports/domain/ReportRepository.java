@@ -7,4 +7,6 @@ public interface ReportRepository<Q extends ReportQuery> {
   void addEvent(ReportEvent event);
 
   List<ReportPeriod> getPeriods(Q query);
+
+  void deleteAll();
 }
