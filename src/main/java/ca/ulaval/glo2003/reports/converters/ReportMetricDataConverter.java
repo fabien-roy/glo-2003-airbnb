@@ -1,11 +1,12 @@
 package ca.ulaval.glo2003.reports.converters;
 
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricData;
+import ca.ulaval.glo2003.reports.rest.DoubleReportMetricDataResponse;
+import ca.ulaval.glo2003.reports.rest.IntegerReportMetricDataResponse;
 import ca.ulaval.glo2003.reports.rest.ReportMetricDataResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : Test this!
 public class ReportMetricDataConverter {
 
   public List<ReportMetricDataResponse> toResponses(List<ReportMetricData> metrics) {
@@ -15,6 +16,15 @@ public class ReportMetricDataConverter {
   }
 
   private ReportMetricDataResponse toResponse(ReportMetricData data) {
-    return null; // TODO
+    String name = data.getName().toString();
+    double value = data.getValue().doubleValue();
+
+    switch (data.getFormat()) {
+      case DOUBLE:
+        return new DoubleReportMetricDataResponse(name, value);
+      default:
+      case INTEGER:
+        return new IntegerReportMetricDataResponse(name, value);
+    }
   }
 }

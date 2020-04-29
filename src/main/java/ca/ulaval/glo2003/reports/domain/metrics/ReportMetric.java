@@ -2,9 +2,11 @@ package ca.ulaval.glo2003.reports.domain.metrics;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 
-public abstract class ReportMetric<T> {
+public abstract class ReportMetric<T extends Number> {
 
   public abstract ReportMetrics getName();
+
+  public abstract ReportMetricFormats getFormat();
 
   public abstract void calculate(ReportPeriodData data);
 
@@ -18,6 +20,11 @@ public abstract class ReportMetric<T> {
       @Override
       public T getValue() {
         return value;
+      }
+
+      @Override
+      public ReportMetricFormats getFormat() {
+        return ReportMetric.this.getFormat();
       }
     };
   }

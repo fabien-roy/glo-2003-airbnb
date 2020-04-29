@@ -4,6 +4,7 @@ import ca.ulaval.glo2003.reports.domain.ReportEvent;
 import ca.ulaval.glo2003.reports.domain.ReportEventTypes;
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetric;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricFormats;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,11 @@ public class InMemoryCancelationsMetric extends ReportMetric<Integer> {
   @Override
   public ReportMetrics getName() {
     return ReportMetrics.CANCELATIONS;
+  }
+
+  @Override
+  public ReportMetricFormats getFormat() {
+    return ReportMetricFormats.INTEGER;
   }
 
   @Override

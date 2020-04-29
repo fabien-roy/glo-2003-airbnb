@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.reports.infrastructure.metrics;
 
 import ca.ulaval.glo2003.reports.domain.ReportPeriodData;
+import ca.ulaval.glo2003.reports.domain.metrics.ReportMetricFormats;
 import ca.ulaval.glo2003.reports.domain.metrics.ReportMetrics;
 
 public class InMemoryReservationsMetric extends InMemoryReservationFilteringMetric<Integer> {
@@ -8,6 +9,11 @@ public class InMemoryReservationsMetric extends InMemoryReservationFilteringMetr
   @Override
   public ReportMetrics getName() {
     return ReportMetrics.RESERVATIONS;
+  }
+
+  @Override
+  public ReportMetricFormats getFormat() {
+    return ReportMetricFormats.INTEGER;
   }
 
   @Override

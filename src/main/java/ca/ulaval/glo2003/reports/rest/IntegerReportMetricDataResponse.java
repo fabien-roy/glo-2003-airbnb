@@ -13,6 +13,7 @@ public class IntegerReportMetricDataResponse extends ReportMetricDataResponse {
     this.value = value;
   }
 
+  @Override
   public double getValue() {
     return value;
   }

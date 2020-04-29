@@ -1,6 +1,6 @@
 package ca.ulaval.glo2003.reports.rest;
 
-public abstract class ReportMetricDataResponse {
+public abstract class ReportMetricDataResponse<T> {
 
   private String name;
 
@@ -11,4 +11,6 @@ public abstract class ReportMetricDataResponse {
   public String getName() {
     return name;
   }
+
+  public abstract double getValue();
 }
