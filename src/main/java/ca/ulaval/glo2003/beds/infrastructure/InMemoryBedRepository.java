@@ -43,4 +43,9 @@ public class InMemoryBedRepository implements BedRepository<InMemoryBedQuery> {
 
     return foundBed.get();
   }
+
+  @Override
+  public void deleteAll() {
+    beds.clear();
+  }
 }
