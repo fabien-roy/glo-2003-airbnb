@@ -72,5 +72,7 @@ public class TransactionService {
     transactionRepository.add(transactionRefund);
   }
 
-  public void deleteAll() {}
+  public void deleteAll() {
+    transactionRepository.deleteAll();
+  }
 }
