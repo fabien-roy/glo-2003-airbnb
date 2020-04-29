@@ -8,6 +8,7 @@ import ca.ulaval.glo2003.transactions.rest.TransactionMapper;
 import ca.ulaval.glo2003.transactions.rest.TransactionResource;
 import ca.ulaval.glo2003.transactions.rest.factories.InvalidServiceFeeErrorFactory;
 import ca.ulaval.glo2003.transactions.rest.handlers.TransactionExceptionHandler;
+import ca.ulaval.glo2003.transactions.rest.serializers.TransactionDeserializingModule;
 import ca.ulaval.glo2003.transactions.rest.serializers.TransactionSerializingModule;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import com.google.inject.AbstractModule;
@@ -23,6 +24,7 @@ public class TransactionModule extends AbstractModule {
 
     bind(TransactionRepository.class).to(InMemoryTransactionRepository.class).in(Singleton.class);
     bind(TransactionSerializingModule.class);
+    bind(TransactionDeserializingModule.class);
     bind(TransactionMapper.class);
     bind(TransactionService.class);
     bind(TransactionResource.class);
