@@ -24,5 +24,7 @@ public class InMemoryTransactionRepository implements TransactionRepository {
   }
 
   @Override
-  public void deleteAll() {}
+  public void deleteAll() {
+    transactions.clear();
+  }
 }
