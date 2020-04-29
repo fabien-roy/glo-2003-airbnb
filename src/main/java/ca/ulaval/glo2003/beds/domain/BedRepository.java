@@ -11,4 +11,6 @@ public interface BedRepository<Q extends BedQuery> {
   List<Bed> getAll(Q query);
 
   Bed getByNumber(BedNumber number);
+
+  void deleteAll();
 }
