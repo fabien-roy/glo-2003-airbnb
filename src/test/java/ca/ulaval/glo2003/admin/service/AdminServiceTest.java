@@ -25,6 +25,8 @@ class AdminServiceTest {
   @BeforeEach
   public void setUpMocks() {
     reset(bedService);
+    reset(transactionService);
+    reset(reportService);
   }
 
   @Test
