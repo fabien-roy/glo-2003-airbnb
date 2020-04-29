@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+// TODO : Formatting of doubles (and other numbers) could be placed in XFormat classes
 class PriceSerializerTest {
 
   private static PriceSerializer priceSerializer;
@@ -17,7 +18,7 @@ class PriceSerializerTest {
   private static SerializerProvider serializerProvider = mock(SerializerProvider.class);
 
   @BeforeAll
-  public static void setUpDeserializer() {
+  public static void setUpSerializer() {
     priceSerializer = new PriceSerializer();
   }
 

@@ -21,6 +21,7 @@ import ca.ulaval.glo2003.reports.rest.factories.InvalidReportDimensionsErrorFact
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportMetricsErrorFactory;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportScopeErrorFactory;
 import ca.ulaval.glo2003.reports.rest.handlers.ReportExceptionHandler;
+import ca.ulaval.glo2003.reports.rest.serializers.ReportSerializingModule;
 import ca.ulaval.glo2003.reports.services.ReportService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
@@ -39,6 +40,7 @@ public class ReportModule extends AbstractModule {
     bind(ReportDimensionBuilder.class).to(InMemoryReportDimensionBuilder.class);
     bind(ReportQueryBuilder.class).to(InMemoryReportQueryBuilder.class);
     bind(ReportQueryFactory.class);
+    bind(ReportSerializingModule.class);
     bind(ReportMapper.class);
     bind(ReportService.class);
     bind(ReportResource.class);
