@@ -5,7 +5,6 @@ import ca.ulaval.glo2003.transactions.exceptions.OutOfBoundsServiceFeeException;
 import ca.ulaval.glo2003.transactions.rest.ServiceFeeRequest;
 import java.math.BigDecimal;
 
-// TODO : Test ServiceFeeConverter
 public class ServiceFeeConverter {
 
   private static final int MINIMUM = 0;
