@@ -47,5 +47,7 @@ public class ReportService {
     reportRepository.addEvent(event);
   }
 
-  public void deleteAll() {}
+  public void deleteAll() {
+    reportRepository.deleteAll();
+  }
 }
