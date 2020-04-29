@@ -7,6 +7,7 @@ import ca.ulaval.glo2003.transactions.infrastructure.InMemoryTransactionReposito
 import ca.ulaval.glo2003.transactions.rest.TransactionMapper;
 import ca.ulaval.glo2003.transactions.rest.TransactionResource;
 import ca.ulaval.glo2003.transactions.rest.factories.InvalidServiceFeeErrorFactory;
+import ca.ulaval.glo2003.transactions.rest.factories.OutOfBoundsServiceFeeErrorFactory;
 import ca.ulaval.glo2003.transactions.rest.handlers.TransactionExceptionHandler;
 import ca.ulaval.glo2003.transactions.rest.serializers.TransactionDeserializingModule;
 import ca.ulaval.glo2003.transactions.rest.serializers.TransactionSerializingModule;
@@ -36,5 +37,6 @@ public class TransactionModule extends AbstractModule {
         Multibinder.newSetBinder(
             binder(), new TypeLiteral<ErrorFactory<TransactionException>>() {});
     multibinder.addBinding().to(InvalidServiceFeeErrorFactory.class);
+    multibinder.addBinding().to(OutOfBoundsServiceFeeErrorFactory.class);
   }
 }

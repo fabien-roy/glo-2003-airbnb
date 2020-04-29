@@ -17,7 +17,7 @@ public class ServiceFeeConverter {
   }
 
   private void validateServiceFee(double serviceFee) {
-    if (serviceFee <= MINIMUM && serviceFee >= MAXIMUM) {
+    if (serviceFee <= MINIMUM || serviceFee >= MAXIMUM) {
       throw new OutOfBoundsServiceFeeException();
     }
   }
