@@ -3,6 +3,7 @@ package ca.ulaval.glo2003.admin.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.ulaval.glo2003.transactions.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.ServiceFee;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;

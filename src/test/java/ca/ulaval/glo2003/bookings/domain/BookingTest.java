@@ -6,10 +6,10 @@ import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.cr
 import static org.junit.jupiter.api.Assertions.*;
 
 import ca.ulaval.glo2003.admin.domain.Configuration;
-import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.ServiceFee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

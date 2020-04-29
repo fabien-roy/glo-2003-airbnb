@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.time.domain.Timestamp;
+import ca.ulaval.glo2003.transactions.converters.ServiceFeeConverter;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
@@ -22,9 +23,10 @@ import org.junit.jupiter.api.Test;
 class TransactionServiceTest {
 
   private static TransactionService transactionService;
-  private static TransactionFactory transactionFactory;
-  private static TransactionRepository transactionRepository;
-  private static TransactionConverter transactionConverter;
+  private static TransactionFactory transactionFactory = mock(TransactionFactory.class);
+  private static TransactionRepository transactionRepository = mock(TransactionRepository.class);
+  private static TransactionConverter transactionConverter = mock(TransactionConverter.class);
+  private static ServiceFeeConverter serviceFeeConverter = mock(ServiceFeeConverter.class);
 
   private static Transaction transaction = aTransaction().build();
   private static Transaction otherTransaction = aTransaction().build();
@@ -40,11 +42,9 @@ class TransactionServiceTest {
 
   @BeforeAll
   public static void setUpService() {
-    transactionFactory = mock(TransactionFactory.class);
-    transactionRepository = mock(TransactionRepository.class);
-    transactionConverter = mock(TransactionConverter.class);
     transactionService =
-        new TransactionService(transactionFactory, transactionRepository, transactionConverter);
+        new TransactionService(
+            transactionFactory, transactionRepository, transactionConverter, serviceFeeConverter);
   }
 
   private void resetMocks() {
