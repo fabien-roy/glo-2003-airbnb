@@ -32,7 +32,6 @@ public class TransactionResource implements RouteGroup {
     get("", this::getAll, transactionMapper::writeValueAsString);
   }
 
-  // TODO : Test TransactionResource.updateServiceFee
   public Object updateServiceFee(Request request, Response response) throws IOException {
     ServiceFeeRequest serviceFeeRequest =
         transactionMapper.readValue(request.body(), ServiceFeeRequest.class);
