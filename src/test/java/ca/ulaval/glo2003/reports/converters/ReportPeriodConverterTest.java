@@ -23,6 +23,8 @@ class ReportPeriodConverterTest {
 
   private static ReportPeriod period = mock(ReportPeriod.class);
   private static ReportPeriod otherPeriod = mock(ReportPeriod.class);
+  private static String periodName = "periodName";
+  private static String otherPeriodName = "otherPeriodName";
   private static List<ReportPeriod> singlePeriod = Collections.singletonList(period);
   private static List<ReportPeriod> multiplePeriods = Arrays.asList(period, otherPeriod);
   private static List<ReportPeriodData> data =
@@ -42,6 +44,8 @@ class ReportPeriodConverterTest {
 
   @BeforeEach
   public void setUpMocks() {
+    when(period.getName()).thenReturn(periodName);
+    when(otherPeriod.getName()).thenReturn(otherPeriodName);
     when(period.getData()).thenReturn(data);
     when(otherPeriod.getData()).thenReturn(otherData);
     when(reportPeriodDataConverter.toResponses(data)).thenReturn(dataResponses);
@@ -60,6 +64,21 @@ class ReportPeriodConverterTest {
     responses = reportPeriodConverter.toResponses(multiplePeriods);
 
     assertEquals(2, responses.size());
+  }
+
+  @Test
+  public void toResponses_withSinglePeriod_shouldMapName() {
+    responses = reportPeriodConverter.toResponses(singlePeriod);
+
+    assertEquals(periodName, responses.get(0).getPeriod());
+  }
+
+  @Test
+  public void toResponses_withMultiplePeriods_shouldMapNames() {
+    responses = reportPeriodConverter.toResponses(multiplePeriods);
+
+    assertEquals(periodName, responses.get(0).getPeriod());
+    assertEquals(otherPeriodName, responses.get(1).getPeriod());
   }
 
   @Test
