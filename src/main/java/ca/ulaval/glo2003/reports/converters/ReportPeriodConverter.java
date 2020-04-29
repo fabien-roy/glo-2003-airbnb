@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-// TODO : Test this!
 public class ReportPeriodConverter {
 
   private final ReportPeriodDataConverter reportPeriodDataConverter;
