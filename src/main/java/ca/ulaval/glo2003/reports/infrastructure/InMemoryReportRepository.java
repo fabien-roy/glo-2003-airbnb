@@ -20,4 +20,10 @@ public class InMemoryReportRepository implements ReportRepository<InMemoryReport
     query.setEvents(events);
     return query.execute();
   }
+
+  // TODO add test for deleteAll
+  @Override
+  public void deleteAll() {
+    events.clear();
+  }
 }
