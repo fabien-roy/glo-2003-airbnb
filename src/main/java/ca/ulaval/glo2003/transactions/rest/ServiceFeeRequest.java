@@ -12,7 +12,7 @@ public class ServiceFeeRequest {
     return serviceFee;
   }
 
-  @JsonProperty("pricePerNight")
+  @JsonProperty("serviceFee")
   @JsonDeserialize(using = ServiceFeeDeserializer.class)
   public void setServiceFee(Double serviceFee) {
     if (serviceFee != null) this.serviceFee = serviceFee;
