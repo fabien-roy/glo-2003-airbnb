@@ -2,8 +2,7 @@ package ca.ulaval.glo2003.beds.infrastructure;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.BedBuilder.aBed;
 import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.createBedNumber;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.domain.Bed;
@@ -121,5 +120,16 @@ public class InMemoryBedRepositoryTest {
     Bed actualBed = bedRepository.getByNumber(bedNumber);
 
     assertSame(bed, actualBed);
+  }
+
+  @Test
+  public void deleteAll_shouldDeleteAllBeds() {
+    bedRepository.add(bed);
+    bedRepository.add(otherBed);
+
+    bedRepository.deleteAll();
+
+    assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(bed.getNumber()));
+    assertThrows(BedNotFoundException.class, () -> bedRepository.getByNumber(otherBed.getNumber()));
   }
 }
