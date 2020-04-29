@@ -26,9 +26,9 @@ public class AdminResource implements RouteGroup {
   }
 
   public Object deleteAll(Request request, Response response) {
-    adminService.delete();
+    adminService.deleteAll();
     response.status(HttpStatus.OK_200);
 
-    return "";
+    return 0;
   }
 }

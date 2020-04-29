@@ -32,7 +32,7 @@ class AdminResourceTest {
   public void getAll_shouldCallAdminServiceDelete() {
     adminResource.deleteAll(request, response);
 
-    verify(adminService).delete();
+    verify(adminService).deleteAll();
   }
 
   @Test
