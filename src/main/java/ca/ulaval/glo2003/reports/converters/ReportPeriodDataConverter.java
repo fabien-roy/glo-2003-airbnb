@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
-// TODO : Test this!
 public class ReportPeriodDataConverter {
 
   private final ReportDimensionDataConverter reportDimensionDataConverter;
