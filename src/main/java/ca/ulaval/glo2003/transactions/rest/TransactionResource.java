@@ -2,8 +2,7 @@ package ca.ulaval.glo2003.transactions.rest;
 
 import static spark.Spark.get;
 
-import ca.ulaval.glo2003.admin.rest.ConfigurationRequest;
-import ca.ulaval.glo2003.transactions.services.ConfigurationService;
+import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.io.IOException;
 import java.util.List;
@@ -19,19 +18,12 @@ public class TransactionResource implements RouteGroup {
 
   private final TransactionService transactionService;
   private final TransactionMapper transactionMapper;
-  private final ConfigurationService configurationService;
-  private final ConfigurationMapper configurationMapper;
 
   @Inject
   public TransactionResource(
-      TransactionService transactionService,
-      TransactionMapper transactionMapper,
-      ConfigurationService configurationService,
-      ConfigurationMapper configurationMapper) {
+      TransactionService transactionService, TransactionMapper transactionMapper) {
     this.transactionService = transactionService;
     this.transactionMapper = transactionMapper;
-    this.configurationService = configurationService;
-    this.configurationMapper = configurationMapper;
   }
 
   @Override
@@ -45,10 +37,11 @@ public class TransactionResource implements RouteGroup {
     return transactionResponses;
   }
 
-  public Response configure(Request request, Response response) throws IOException {
-    ConfigurationRequest configureRequest =
-        configurationMapper.readValue(request.body(), ConfigurationRequest.class);
-    configurationService.configure(configureRequest);
+  public Response configureServiceFee(Request request, Response response) throws IOException {
+    ServiceFeeRequest serviceFeeRequest =
+        transactionMapper.readValue(request.body(), ServiceFeeRequest.class);
+
+    transactionService.updateServiceFee(serviceFeeRequest);
     response.status(HttpStatus.OK_200);
     return response;
   }
