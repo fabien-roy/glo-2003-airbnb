@@ -1,4 +1,4 @@
-package ca.ulaval.glo2003.admin.service;
+package ca.ulaval.glo2003.admin.services;
 
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.reports.services.ReportService;

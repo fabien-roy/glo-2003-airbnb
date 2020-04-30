@@ -1,6 +1,5 @@
-package ca.ulaval.glo2003.admin.service;
+package ca.ulaval.glo2003.admin.services;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.beds.services.BedService;
