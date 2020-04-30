@@ -22,5 +22,5 @@ public class AdminService {
     bedService.deleteAll();
     transactionService.deleteAll();
     reportService.deleteAll();
-  };
+  }
 }

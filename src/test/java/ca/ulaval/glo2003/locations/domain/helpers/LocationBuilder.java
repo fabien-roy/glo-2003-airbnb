@@ -1,10 +1,8 @@
 package ca.ulaval.glo2003.locations.domain.helpers;
 
-import static ca.ulaval.glo2003.beds.domain.helpers.BedObjectMother.*;
 import static ca.ulaval.glo2003.locations.domain.helpers.CoordinatesBuilder.someCoordinates;
 import static ca.ulaval.glo2003.locations.domain.helpers.LocationObjectMother.*;
 
-import ca.ulaval.glo2003.beds.domain.*;
 import ca.ulaval.glo2003.locations.domain.Coordinates;
 import ca.ulaval.glo2003.locations.domain.Location;
 import ca.ulaval.glo2003.locations.domain.ZipCode;

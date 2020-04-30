@@ -3,7 +3,6 @@ package ca.ulaval.glo2003.reports.domain;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo2003.time.domain.TimeDate;

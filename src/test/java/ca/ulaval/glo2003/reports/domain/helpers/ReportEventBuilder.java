@@ -2,7 +2,6 @@ package ca.ulaval.glo2003.reports.domain.helpers;
 
 import static ca.ulaval.glo2003.beds.domain.helpers.LodgingModeObjectMother.createLodgingModeName;
 import static ca.ulaval.glo2003.beds.domain.helpers.PackageObjectMother.createPackageName;
-import static ca.ulaval.glo2003.reports.domain.helpers.ReportEventObjectMother.createEventType;
 import static ca.ulaval.glo2003.time.domain.helpers.TimeDateBuilder.aTimeDate;
 import static ca.ulaval.glo2003.transactions.domain.helpers.PriceObjectMother.createPrice;
 
@@ -15,7 +14,6 @@ import ca.ulaval.glo2003.transactions.domain.Price;
 
 public class ReportEventBuilder {
 
-  private ReportEventTypes DEFAULT_TYPE = createEventType();
   private ReportEventTypes type;
 
   private TimeDate DEFAULT_DATE = aTimeDate().build();

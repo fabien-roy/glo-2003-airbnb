@@ -106,10 +106,6 @@ public class Bed {
     return foundBooking.get();
   }
 
-  public Set<Packages> getPackages() {
-    return pricesPerNight.keySet();
-  }
-
   public int getResidualCapacityOnDate(TimeDate date) {
     int residualCapacity = capacity;
 

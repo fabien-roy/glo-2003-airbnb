@@ -20,7 +20,7 @@ public class InMemoryReportRepositoryTest {
 
   private List<ReportPeriod> filteredPeriods;
   private ReportEvent event;
-  private InMemoryReportQuery reportQuery = mock(InMemoryReportQuery.class);;
+  private InMemoryReportQuery reportQuery = mock(InMemoryReportQuery.class);
 
   @BeforeEach
   public void setUpRepository() {
@@ -59,7 +59,6 @@ public class InMemoryReportRepositoryTest {
     reportRepository.addEvent(reportEvent);
 
     reportRepository.deleteAll();
-    List<ReportPeriod> periods = reportRepository.getPeriods(reportQuery);
 
     verify(reportQuery).setEvents(eq(Collections.emptyList()));
   }

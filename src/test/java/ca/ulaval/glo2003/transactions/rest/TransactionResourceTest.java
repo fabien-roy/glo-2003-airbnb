@@ -70,14 +70,14 @@ class TransactionResourceTest {
 
   @Test
   public void updateServiceFee_shouldUpdateServiceFee() throws IOException {
-    transactionResource.configureServiceFee(request, response);
+    transactionResource.updateServiceFee(request, response);
 
     verify(transactionService).updateServiceFee(serviceFeeRequest);
   }
 
   @Test
   public void updateServiceFee_shouldSetOkAsHttpStatus() throws IOException {
-    transactionResource.configureServiceFee(request, response);
+    transactionResource.updateServiceFee(request, response);
 
     verify(response).status(HttpStatus.OK_200);
   }

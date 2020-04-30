@@ -5,9 +5,6 @@ import ca.ulaval.glo2003.beds.domain.PublicKey;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.transactions.domain.Price;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Booking {
 
@@ -18,7 +15,6 @@ public class Booking {
   private Integer colonySize;
   private Packages packageName;
   private Price price;
-  private List<Transaction> transactions = new ArrayList<>();
   private BookingStatuses status;
 
   public Booking(
@@ -72,10 +68,6 @@ public class Booking {
 
   public void setPrice(Price price) {
     this.price = price;
-  }
-
-  public List<Transaction> getTransactions() {
-    return transactions;
   }
 
   public BookingStatuses getStatus() {

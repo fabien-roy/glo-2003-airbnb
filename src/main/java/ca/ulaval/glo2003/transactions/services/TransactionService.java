@@ -5,7 +5,6 @@ import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.converters.ServiceFeeConverter;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.*;
-import ca.ulaval.glo2003.transactions.domain.ServiceFee;
 import ca.ulaval.glo2003.transactions.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.List;
