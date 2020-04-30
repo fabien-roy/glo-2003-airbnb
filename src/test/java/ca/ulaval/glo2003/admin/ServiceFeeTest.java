@@ -1,7 +1,8 @@
-package ca.ulaval.glo2003.admin.domain;
+package ca.ulaval.glo2003.admin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 import java.util.stream.Stream;

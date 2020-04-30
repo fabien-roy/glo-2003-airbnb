@@ -1,6 +1,10 @@
 package ca.ulaval.glo2003.transactions.services;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
+import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.time.domain.Timestamp;
+import ca.ulaval.glo2003.transactions.converters.ServiceFeeConverter;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.*;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
@@ -15,15 +19,18 @@ public class TransactionService {
   private final TransactionFactory transactionFactory;
   private final TransactionRepository transactionRepository;
   private final TransactionConverter transactionConverter;
+  private final ServiceFeeConverter serviceFeeConverter;
 
   @Inject
   public TransactionService(
       TransactionFactory transactionFactory,
       TransactionRepository transactionRepository,
-      TransactionConverter transactionConverter) {
+      TransactionConverter transactionConverter,
+      ServiceFeeConverter serviceFeeConverter) {
     this.transactionFactory = transactionFactory;
     this.transactionRepository = transactionRepository;
     this.transactionConverter = transactionConverter;
+    this.serviceFeeConverter = serviceFeeConverter;
   }
 
   public List<Transaction> getAll() {
@@ -74,5 +81,10 @@ public class TransactionService {
 
   public void deleteAll() {
     transactionRepository.deleteAll();
+  }
+
+  public void updateServiceFee(ServiceFeeRequest serviceFeeRequest) {
+    ServiceFee serviceFee = serviceFeeConverter.fromRequest(serviceFeeRequest);
+    Configuration.instance().setServiceFee(serviceFee);
   }
 }
