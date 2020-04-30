@@ -35,7 +35,6 @@ class TransactionResourceTest {
   @BeforeEach
   public void setUpMocks() throws IOException {
     setUpMocksForUpdateServiceFee();
-    ;
     setUpMocksForGetAll();
   }
 
@@ -53,20 +52,6 @@ class TransactionResourceTest {
   }
 
   @Test
-  public void updateServiceFee_shouldUpdateServiceFee() throws IOException {
-    transactionResource.updateServiceFee(request, response);
-
-    verify(transactionService).updateServiceFee(serviceFeeRequest);
-  }
-
-  @Test
-  public void updateServiceFee_shouldSetOkAsHttpStatus() throws IOException {
-    transactionResource.updateServiceFee(request, response);
-
-    verify(response).status(HttpStatus.OK_200);
-  }
-
-  @Test
   public void getAll_shouldReturnTransactions() {
     List<TransactionResponse> transactionResponses =
         (List<TransactionResponse>) transactionResource.getAll(request, response);
@@ -79,6 +64,20 @@ class TransactionResourceTest {
   @Test
   public void getAll_shouldSetOKAsHttpStatus() {
     transactionResource.getAll(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
+  }
+
+  @Test
+  public void updateServiceFee_shouldUpdateServiceFee() throws IOException {
+    transactionResource.configureServiceFee(request, response);
+
+    verify(transactionService).updateServiceFee(serviceFeeRequest);
+  }
+
+  @Test
+  public void updateServiceFee_shouldSetOkAsHttpStatus() throws IOException {
+    transactionResource.configureServiceFee(request, response);
 
     verify(response).status(HttpStatus.OK_200);
   }

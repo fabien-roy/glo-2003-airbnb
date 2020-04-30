@@ -43,6 +43,8 @@ class ServiceFeeConverterTest {
 
   private static Stream<Arguments> provideServiceFeeValues() {
     return Stream.of(
+        Arguments.of(BigDecimal.valueOf(0.0)),
+        Arguments.of(BigDecimal.valueOf(15.0)),
         Arguments.of(BigDecimal.valueOf(1.0)),
         Arguments.of(BigDecimal.valueOf(12.123), Arguments.of(BigDecimal.valueOf(0.01))));
   }
@@ -60,7 +62,7 @@ class ServiceFeeConverterTest {
 
   private static Stream<Arguments> provideLowerThanMinimumServiceFeeValues() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(0)),
+        Arguments.of(BigDecimal.valueOf(-1)),
         Arguments.of(BigDecimal.valueOf(-12), Arguments.of(BigDecimal.valueOf(-0.01))));
   }
 
@@ -77,7 +79,7 @@ class ServiceFeeConverterTest {
 
   private static Stream<Arguments> provideHigherThanMinimumServiceFeeValues() {
     return Stream.of(
-        Arguments.of(BigDecimal.valueOf(15)),
+        Arguments.of(BigDecimal.valueOf(100.13)),
         Arguments.of(BigDecimal.valueOf(55.55), Arguments.of(BigDecimal.valueOf(15.01))));
   }
 }

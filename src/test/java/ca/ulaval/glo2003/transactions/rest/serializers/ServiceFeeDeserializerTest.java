@@ -6,7 +6,7 @@ import ca.ulaval.glo2003.transactions.exceptions.InvalidServiceFeeException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ServiceFeeDeserializerTest {
+public class ServiceFeeDeserializerTest {
 
   private static ServiceFeeDeserializer serviceFeeDeserializer;
 

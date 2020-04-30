@@ -30,6 +30,7 @@ public class TransactionResource implements RouteGroup {
   public void addRoutes() {
     post("", this::updateServiceFee);
     get("", this::getAll, transactionMapper::writeValueAsString);
+    post("", this::configureServiceFee);
   }
 
   public Object updateServiceFee(Request request, Response response) throws IOException {
@@ -44,5 +45,14 @@ public class TransactionResource implements RouteGroup {
     List<TransactionResponse> transactionResponses = transactionService.getAllResponses();
     response.status(HttpStatus.OK_200);
     return transactionResponses;
+  }
+
+  public Response configureServiceFee(Request request, Response response) throws IOException {
+    ServiceFeeRequest serviceFeeRequest =
+        transactionMapper.readValue(request.body(), ServiceFeeRequest.class);
+
+    transactionService.updateServiceFee(serviceFeeRequest);
+    response.status(HttpStatus.OK_200);
+    return response;
   }
 }

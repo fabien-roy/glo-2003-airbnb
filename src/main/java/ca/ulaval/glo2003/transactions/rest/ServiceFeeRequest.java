@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class ServiceFeeRequest {
 
-  private double serviceFee = 0;
+  private double serviceFee;
 
   public double getServiceFee() {
     return serviceFee;
@@ -15,6 +15,6 @@ public class ServiceFeeRequest {
   @JsonProperty("serviceFee")
   @JsonDeserialize(using = ServiceFeeDeserializer.class)
   public void setServiceFee(Double serviceFee) {
-    if (serviceFee != null) this.serviceFee = serviceFee;
+    this.serviceFee = serviceFee;
   }
 }

@@ -83,8 +83,8 @@ public class TransactionService {
     transactionRepository.deleteAll();
   }
 
-  public void updateServiceFee(ServiceFeeRequest request) {
-    ServiceFee serviceFee = serviceFeeConverter.fromRequest(request);
+  public void updateServiceFee(ServiceFeeRequest serviceFeeRequest) {
+    ServiceFee serviceFee = serviceFeeConverter.fromRequest(serviceFeeRequest);
     Configuration.instance().setServiceFee(serviceFee);
   }
 }
