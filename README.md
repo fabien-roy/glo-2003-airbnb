@@ -5,13 +5,13 @@
 [![Codecov](https://codecov.io/gh/glo2003/glo2003-h2020-eq08/branch/master/graph/badge.svg?token=SNtgyhzwAR)](https://codecov.io/gh/glo2003/glo2003-h2020-eq08)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
-This is our project for course GLO-2003 at Laval University. We are team 8.
+**This is our project for course GLO-2003 at Laval University. We are team 8.**
 
-Requests supported by the Airbnb API are specified on [this project's GitHub Pages](https://glo2003.github.io/glo2003-h2020-eq08/).
+**Requests supported by the Airbnb API are specified on [this project's GitHub Pages](https://glo2003.github.io/glo2003-h2020-eq08/).**
 
-Documentation about what must be achieved by this app is documented in [/resources](/resources).
+**Documentation about what must be achieved by this app is documented in [/resources](/resources).**
 
-Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2003-h2020-eq08.herokuapp.com).
+**Our project is hosted on [https://glo2003-h2020-eq08.herokuapp.com](https://glo2003-h2020-eq08.herokuapp.com).**
 
 ## Project setup
 
