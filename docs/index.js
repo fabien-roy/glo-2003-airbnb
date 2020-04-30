@@ -13,7 +13,7 @@ const logError = (error) => console.log('error : ' + error);
 
 raml2html.render(ramlFile, config).then(
   result => {
-    let htmlFile = path.join(__dirname, 'api.html');
+    let htmlFile = path.join(__dirname, 'index.html');
     fs.writeFile(htmlFile, result, error => {
       if (error) logError(error);
     })
