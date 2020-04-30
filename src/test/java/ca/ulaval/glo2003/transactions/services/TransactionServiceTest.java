@@ -4,10 +4,15 @@ import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
+import ca.ulaval.glo2003.admin.domain.ServiceFee;
+import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.time.domain.Timestamp;
+import ca.ulaval.glo2003.transactions.converters.ServiceFeeConverter;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
 import ca.ulaval.glo2003.transactions.domain.Price;
 import ca.ulaval.glo2003.transactions.domain.Transaction;
@@ -25,12 +30,15 @@ class TransactionServiceTest {
   private static TransactionFactory transactionFactory;
   private static TransactionRepository transactionRepository;
   private static TransactionConverter transactionConverter;
+  private static ServiceFeeConverter serviceFeeConverter;
 
   private static Transaction transaction = aTransaction().build();
   private static Transaction otherTransaction = aTransaction().build();
   private static Transaction anotherTransaction = aTransaction().build();
   private static TransactionResponse transactionResponse = mock(TransactionResponse.class);
   private static TransactionResponse otherTransactionResponse = mock(TransactionResponse.class);
+  private static ServiceFeeRequest serviceFeeRequest = mock(ServiceFeeRequest.class);
+  private static ServiceFee updatedServiceFee = mock(ServiceFee.class);
   private static String tenant = createFrom();
   private static String owner = createTo();
   private static Price tenantRefund = createTotal();
@@ -43,8 +51,10 @@ class TransactionServiceTest {
     transactionFactory = mock(TransactionFactory.class);
     transactionRepository = mock(TransactionRepository.class);
     transactionConverter = mock(TransactionConverter.class);
+    serviceFeeConverter = mock(ServiceFeeConverter.class);
     transactionService =
-        new TransactionService(transactionFactory, transactionRepository, transactionConverter);
+        new TransactionService(
+            transactionFactory, transactionRepository, transactionConverter, serviceFeeConverter);
   }
 
   private void resetMocks() {
@@ -176,5 +186,15 @@ class TransactionServiceTest {
     transactionService.deleteAll();
 
     verify(transactionRepository).deleteAll();
+  }
+
+  @Test
+  public void updateServiceFee_shouldUpdateServiceFeeOfConfiguration() {
+    when(serviceFeeConverter.fromRequest(serviceFeeRequest)).thenReturn(updatedServiceFee);
+
+    transactionService.updateServiceFee(serviceFeeRequest);
+    ServiceFee serviceFee = Configuration.instance().getServiceFee();
+
+    assertSame(serviceFee, updatedServiceFee);
   }
 }

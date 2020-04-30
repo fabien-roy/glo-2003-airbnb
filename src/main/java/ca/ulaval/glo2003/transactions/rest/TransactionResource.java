@@ -1,6 +1,7 @@
 package ca.ulaval.glo2003.transactions.rest;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
@@ -29,6 +30,7 @@ public class TransactionResource implements RouteGroup {
   @Override
   public void addRoutes() {
     get("", this::getAll, transactionMapper::writeValueAsString);
+    post("", this::configureServiceFee);
   }
 
   public Object getAll(Request request, Response response) {

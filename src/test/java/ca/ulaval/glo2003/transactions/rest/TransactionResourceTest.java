@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.eclipse.jetty.http.HttpStatus;
@@ -22,6 +24,7 @@ class TransactionResourceTest {
 
   private static Request request = mock(Request.class);
   private static Response response = mock(Response.class);
+  private static ServiceFeeRequest serviceFeeRequest = mock(ServiceFeeRequest.class);
   private static TransactionResponse transactionResponse = mock(TransactionResponse.class);
   private static TransactionResponse otherTransactionResponse = mock(TransactionResponse.class);
 
@@ -31,10 +34,22 @@ class TransactionResourceTest {
   }
 
   @BeforeEach
-  public void setUpMocks() {
+  public void setUpMocks() throws IOException {
+    setUpMocksForGetAll();
+    setUpMocksForUpdateServiceFee();
+  }
+
+  public void setUpMocksForGetAll() {
     reset(response);
     when(transactionService.getAllResponses())
         .thenReturn(Arrays.asList(transactionResponse, otherTransactionResponse));
+  }
+
+  public void setUpMocksForUpdateServiceFee() throws IOException {
+    String requestBody = "requestBody";
+    when(request.body()).thenReturn(requestBody);
+    when(transactionParser.readValue(requestBody, ServiceFeeRequest.class))
+        .thenReturn(serviceFeeRequest);
   }
 
   @Test
@@ -50,6 +65,20 @@ class TransactionResourceTest {
   @Test
   public void getAll_shouldSetOKAsHttpStatus() {
     transactionResource.getAll(request, response);
+
+    verify(response).status(HttpStatus.OK_200);
+  }
+
+  @Test
+  public void updateServiceFee_shouldUpdateServiceFee() throws IOException {
+    transactionResource.configureServiceFee(request, response);
+
+    verify(transactionService).updateServiceFee(serviceFeeRequest);
+  }
+
+  @Test
+  public void updateServiceFee_shouldSetOkAsHttpStatus() throws IOException {
+    transactionResource.configureServiceFee(request, response);
 
     verify(response).status(HttpStatus.OK_200);
   }
