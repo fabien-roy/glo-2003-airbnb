@@ -145,6 +145,11 @@ uses:
                              description: Bed or booking not found
 /admin:
   description: Secured operations
+  delete:
+    description: Delete everything (beds, bookings, transactions, report events)
+    responses:
+      200:
+        description: Deletion was successful
   /transactions:
     description: Collection of transactions
     get:
@@ -166,11 +171,6 @@ uses:
           description: Configuration of service fee was successful
         400:
           description: Error while configuring service fee
-    delete:
-      description: Delete everything (beds, bookings, transactions, report events)
-      responses:
-        200:
-          description: Deletion was successful
   /reports:
     description: Collection of report periods
     get:
