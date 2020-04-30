@@ -5,6 +5,7 @@ import static spark.Spark.get;
 import ca.ulaval.glo2003.admin.rest.ConfigurationRequest;
 import ca.ulaval.glo2003.transactions.services.ConfigurationService;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpStatus;
@@ -44,7 +45,7 @@ public class TransactionResource implements RouteGroup {
     return transactionResponses;
   }
 
-  public Response configure(Request request, Response response) {
+  public Response configure(Request request, Response response) throws IOException {
     ConfigurationRequest configureRequest =
         configurationMapper.readValue(request.body(), ConfigurationRequest.class);
     configurationService.configure(configureRequest);
