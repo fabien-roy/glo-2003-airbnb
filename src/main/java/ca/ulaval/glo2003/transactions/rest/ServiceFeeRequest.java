@@ -1,5 +1,6 @@
-package ca.ulaval.glo2003.admin.rest;
+package ca.ulaval.glo2003.transactions.rest;
 
+import ca.ulaval.glo2003.transactions.rest.serializers.ServiceFeeDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 

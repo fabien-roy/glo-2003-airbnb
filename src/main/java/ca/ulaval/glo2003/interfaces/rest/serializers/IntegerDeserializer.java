@@ -23,6 +23,8 @@ public abstract class IntegerDeserializer<E extends RuntimeException>
     int integer = 0;
 
     try {
+      if (jsonParser.isNaN()) throwException();
+
       integer = jsonParser.getIntValue();
     } catch (IOException e) {
       throwException();

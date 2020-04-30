@@ -2,8 +2,7 @@ package ca.ulaval.glo2003.transactions.rest.serializers;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import ca.ulaval.glo2003.admin.rest.InvalidServiceFeeException;
-import ca.ulaval.glo2003.admin.rest.ServiceFeeDeserializer;
+import ca.ulaval.glo2003.transactions.exceptions.InvalidServiceFeeException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

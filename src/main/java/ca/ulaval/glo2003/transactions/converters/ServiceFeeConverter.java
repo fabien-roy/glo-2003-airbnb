@@ -1,8 +1,8 @@
 package ca.ulaval.glo2003.transactions.converters;
 
-import ca.ulaval.glo2003.admin.domain.ServiceFee;
-import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
+import ca.ulaval.glo2003.transactions.domain.ServiceFee;
 import ca.ulaval.glo2003.transactions.exceptions.OutOfBoundsServiceFeeException;
+import ca.ulaval.glo2003.transactions.rest.ServiceFeeRequest;
 import java.math.BigDecimal;
 
 public class ServiceFeeConverter {

@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import ca.ulaval.glo2003.admin.domain.Configuration;
-import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.stream.Stream;

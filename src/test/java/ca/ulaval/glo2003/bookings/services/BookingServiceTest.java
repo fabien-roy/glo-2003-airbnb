@@ -109,7 +109,7 @@ public class BookingServiceTest {
     when(booking.getNumber()).thenReturn(bookingNumber);
     when(booking.getTenantPublicKey()).thenReturn(tenantPublicKey);
     when(booking.getDepartureDate()).thenReturn(departureDate);
-    when(booking.getTotal()).thenReturn(price.getTotal());
+    when(booking.getTotal()).thenReturn(price);
     return booking;
   }
 

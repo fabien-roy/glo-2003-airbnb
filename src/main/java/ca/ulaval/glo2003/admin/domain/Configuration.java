@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.admin.domain;
 
 import ca.ulaval.glo2003.time.domain.TimePeriod;
 import ca.ulaval.glo2003.time.domain.TimeYear;
+import ca.ulaval.glo2003.transactions.domain.ServiceFee;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 

@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.admin.rest;
 
 import static spark.Spark.delete;
 
-import ca.ulaval.glo2003.admin.services.AdminService;
+import ca.ulaval.glo2003.admin.service.AdminService;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
@@ -28,7 +28,6 @@ public class AdminResource implements RouteGroup {
   public Object deleteAll(Request request, Response response) {
     adminService.deleteAll();
     response.status(HttpStatus.OK_200);
-
     return "";
   }
 }

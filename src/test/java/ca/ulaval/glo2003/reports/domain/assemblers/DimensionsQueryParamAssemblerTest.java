@@ -24,6 +24,7 @@ class DimensionsQueryParamAssemblerTest {
   private ReportDimensions otherDimension = ReportDimensions.LODGING_MODE;
   private List<ReportDimensions> singleDimension = Collections.singletonList(dimension);
   private List<ReportDimensions> multipleDimensions = Arrays.asList(dimension, otherDimension);
+  private List<ReportDimensions> duplicatedDimensions = Arrays.asList(dimension, dimension);
   private Map<String, List<String>> params = new HashMap<>();
 
   @BeforeAll
@@ -61,6 +62,15 @@ class DimensionsQueryParamAssemblerTest {
   @Test
   public void assemble_withInvalidDimension_shouldThrowInvalidReportDimensionException() {
     params.put(DIMENSIONS_PARAM, Collections.singletonList("invalidDimensions"));
+
+    assertThrows(
+        InvalidReportDimensionsException.class,
+        () -> queryAssembler.assemble(queryBuilder, params));
+  }
+
+  @Test
+  public void assemble_withDuplicatedDimensions_shouldThrowInvalidReportDimensionException() {
+    params.put(DIMENSIONS_PARAM, toParam(duplicatedDimensions));
 
     assertThrows(
         InvalidReportDimensionsException.class,

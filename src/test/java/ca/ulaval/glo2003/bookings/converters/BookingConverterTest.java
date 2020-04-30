@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import ca.ulaval.glo2003.beds.converters.PublicKeyConverter;
 import ca.ulaval.glo2003.beds.domain.Packages;
 import ca.ulaval.glo2003.beds.domain.PublicKey;
@@ -26,6 +27,7 @@ import ca.ulaval.glo2003.bookings.rest.BookingResponse;
 import ca.ulaval.glo2003.time.converters.TimeDateConverter;
 import ca.ulaval.glo2003.time.domain.TimeDate;
 import ca.ulaval.glo2003.transactions.domain.Price;
+import ca.ulaval.glo2003.transactions.domain.ServiceFee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +55,7 @@ class BookingConverterTest {
 
   @BeforeAll
   public static void setUpConverter() {
+    Configuration.instance().setServiceFee(new ServiceFee(null));
     bookingConverter = new BookingConverter(publicKeyConverter, timeDateConverter);
   }
 

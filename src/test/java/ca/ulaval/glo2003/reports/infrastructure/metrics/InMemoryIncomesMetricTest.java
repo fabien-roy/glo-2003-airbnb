@@ -27,7 +27,7 @@ public class InMemoryIncomesMetricTest extends InMemoryReportMetricTest {
   @ParameterizedTest
   @MethodSource("provideIncomes")
   public void calculate_withIncomes_shouldCalculateIncomes(
-      int numberOfReservations, Price incomes, Price sumIncomes) {
+      int numberOfReservations, Price incomes, Double sumIncomes) {
     data =
         aReportPeriodData()
             .withIncomes(incomes)
@@ -42,7 +42,7 @@ public class InMemoryIncomesMetricTest extends InMemoryReportMetricTest {
   @ParameterizedTest
   @MethodSource("provideIncomes")
   public void calculate_withIncomesAndCancelations_shouldCalculateIncomes(
-      int numberOfType, Price incomes, Price sumIncomes) {
+      int numberOfType, Price incomes, Double sumIncomes) {
     data =
         aReportPeriodData()
             .withIncomes(incomes)
@@ -57,15 +57,15 @@ public class InMemoryIncomesMetricTest extends InMemoryReportMetricTest {
 
   private static Stream<Arguments> provideIncomes() {
     return Stream.of(
-        Arguments.of(0, Price.zero(), Price.zero()),
-        Arguments.of(3, Price.valueOf(123.123), Price.valueOf(369.369)),
-        Arguments.of(5, Price.valueOf(49.99), Price.valueOf(249.95)));
+        Arguments.of(0, Price.zero(), 0.0),
+        Arguments.of(3, Price.valueOf(123.123), 369.369),
+        Arguments.of(5, Price.valueOf(49.99), 249.95));
   }
 
   @Test
   public void calculate_withoutEvent_shouldCalculateZero() {
     metric.calculate(data);
 
-    assertEquals(Price.zero(), data.getMetrics().get(0).getValue());
+    assertEquals(0.0, data.getMetrics().get(0).getValue());
   }
 }

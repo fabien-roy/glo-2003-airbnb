@@ -20,14 +20,16 @@ public abstract class DoubleDeserializer<E extends RuntimeException>
   @Override
   public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws E {
-    Double doubleNumber = 0d;
+    double value = 0d;
 
     try {
-      doubleNumber = jsonParser.getDoubleValue();
+      if (jsonParser.isNaN()) throwException();
+
+      value = jsonParser.getDoubleValue();
     } catch (IOException e) {
       throwException();
     }
 
-    return doubleNumber;
+    return value;
   }
 }

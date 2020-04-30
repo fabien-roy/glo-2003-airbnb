@@ -1,6 +1,5 @@
-package ca.ulaval.glo2003.admin.domain;
+package ca.ulaval.glo2003.transactions.domain;
 
-import ca.ulaval.glo2003.transactions.domain.Price;
 import java.math.BigDecimal;
 
 public class ServiceFee {

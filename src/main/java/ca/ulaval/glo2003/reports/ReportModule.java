@@ -1,6 +1,8 @@
 package ca.ulaval.glo2003.reports;
 
 import ca.ulaval.glo2003.errors.rest.factories.ErrorFactory;
+import ca.ulaval.glo2003.reports.converters.ReportPeriodConverter;
+import ca.ulaval.glo2003.reports.converters.ReportPeriodDataConverter;
 import ca.ulaval.glo2003.reports.domain.ReportQueryBuilder;
 import ca.ulaval.glo2003.reports.domain.ReportQueryFactory;
 import ca.ulaval.glo2003.reports.domain.ReportRepository;
@@ -16,10 +18,12 @@ import ca.ulaval.glo2003.reports.infrastructure.InMemoryReportRepository;
 import ca.ulaval.glo2003.reports.infrastructure.dimensions.InMemoryReportDimensionBuilder;
 import ca.ulaval.glo2003.reports.infrastructure.metrics.InMemoryReportMetricBuilder;
 import ca.ulaval.glo2003.reports.rest.ReportMapper;
+import ca.ulaval.glo2003.reports.rest.ReportResource;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportDimensionsErrorFactory;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportMetricsErrorFactory;
 import ca.ulaval.glo2003.reports.rest.factories.InvalidReportScopeErrorFactory;
 import ca.ulaval.glo2003.reports.rest.handlers.ReportExceptionHandler;
+import ca.ulaval.glo2003.reports.rest.serializers.ReportSerializingModule;
 import ca.ulaval.glo2003.reports.services.ReportService;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
@@ -38,8 +42,12 @@ public class ReportModule extends AbstractModule {
     bind(ReportDimensionBuilder.class).to(InMemoryReportDimensionBuilder.class);
     bind(ReportQueryBuilder.class).to(InMemoryReportQueryBuilder.class);
     bind(ReportQueryFactory.class);
+    bind(ReportSerializingModule.class);
     bind(ReportMapper.class);
     bind(ReportService.class);
+    bind(ReportPeriodConverter.class);
+    bind(ReportPeriodDataConverter.class);
+    bind(ReportResource.class);
     bind(ReportExceptionHandler.class);
   }
 

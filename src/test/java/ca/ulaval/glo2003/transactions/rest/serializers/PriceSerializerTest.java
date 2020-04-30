@@ -17,7 +17,7 @@ class PriceSerializerTest {
   private static SerializerProvider serializerProvider = mock(SerializerProvider.class);
 
   @BeforeAll
-  public static void setUpDeserializer() {
+  public static void setUpSerializer() {
     priceSerializer = new PriceSerializer();
   }
 

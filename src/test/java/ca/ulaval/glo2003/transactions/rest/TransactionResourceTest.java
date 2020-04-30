@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo2003.admin.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.transactions.services.TransactionService;
 import java.io.IOException;
 import java.util.Arrays;
@@ -20,7 +19,7 @@ class TransactionResourceTest {
 
   private static TransactionResource transactionResource;
   private static TransactionService transactionService = mock(TransactionService.class);
-  private static TransactionMapper transactionParser = mock(TransactionMapper.class);
+  private static TransactionMapper transactionMapper = mock(TransactionMapper.class);
 
   private static Request request = mock(Request.class);
   private static Response response = mock(Response.class);
@@ -30,26 +29,26 @@ class TransactionResourceTest {
 
   @BeforeAll
   public static void setUpResource() {
-    transactionResource = new TransactionResource(transactionService, transactionParser);
+    transactionResource = new TransactionResource(transactionService, transactionMapper);
   }
 
   @BeforeEach
   public void setUpMocks() throws IOException {
-    setUpMocksForGetAll();
     setUpMocksForUpdateServiceFee();
-  }
-
-  public void setUpMocksForGetAll() {
-    reset(response);
-    when(transactionService.getAllResponses())
-        .thenReturn(Arrays.asList(transactionResponse, otherTransactionResponse));
+    setUpMocksForGetAll();
   }
 
   public void setUpMocksForUpdateServiceFee() throws IOException {
     String requestBody = "requestBody";
     when(request.body()).thenReturn(requestBody);
-    when(transactionParser.readValue(requestBody, ServiceFeeRequest.class))
+    when(transactionMapper.readValue(requestBody, ServiceFeeRequest.class))
         .thenReturn(serviceFeeRequest);
+  }
+
+  private void setUpMocksForGetAll() {
+    reset(response);
+    when(transactionService.getAllResponses())
+        .thenReturn(Arrays.asList(transactionResponse, otherTransactionResponse));
   }
 
   @Test

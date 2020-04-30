@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.transactions.domain;
 
 import ca.ulaval.glo2003.admin.domain.Configuration;
-import ca.ulaval.glo2003.admin.domain.ServiceFee;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
