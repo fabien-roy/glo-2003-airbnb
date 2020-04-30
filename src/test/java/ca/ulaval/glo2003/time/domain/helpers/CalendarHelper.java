@@ -54,10 +54,7 @@ public class CalendarHelper {
   }
 
   private static Calendar thatDayOfMonth(int year, int month) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.YEAR, year);
-    calendar.set(Calendar.MONTH, month);
-    return calendar;
+    return new GregorianCalendar(year, month, 1);
   }
 
   public static int validDayOfMonthOfWeekOfYear(int year, int month, int weekOfYear) {
