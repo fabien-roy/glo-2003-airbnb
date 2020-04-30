@@ -28,20 +28,17 @@ public class ReportService {
     this.reportRepository = reportRepository;
   }
 
-  // TODO : Logic and tests of ReportService.getAll(...) (#331)
   public List<ReportPeriodResponse> getAll(Map<String, List<String>> params) {
     ReportQuery reportQuery = reportQueryFactory.create(params);
     List<ReportPeriod> periods = reportRepository.getPeriods(reportQuery);
     return reportPeriodConverter.toResponses(periods);
   }
 
-  // TODO : Test ReportService.addReservation
   public void addReservation(Bed bed, Booking booking) {
     ReportEvent event = reportEventFactory.create(ReportEventTypes.RESERVATION, bed, booking);
     reportRepository.addEvent(event);
   }
 
-  // TODO : Test ReportService.addCancelation
   public void addCancelation(Bed bed, Booking booking) {
     ReportEvent event = reportEventFactory.create(ReportEventTypes.CANCELATION, bed, booking);
     reportRepository.addEvent(event);

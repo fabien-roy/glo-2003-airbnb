@@ -10,7 +10,6 @@ import static org.mockito.Mockito.*;
 import ca.ulaval.glo2003.beds.converters.BedConverter;
 import ca.ulaval.glo2003.beds.converters.BedNumberConverter;
 import ca.ulaval.glo2003.beds.domain.*;
-import ca.ulaval.glo2003.beds.infrastructure.InMemoryBedQuery;
 import ca.ulaval.glo2003.beds.rest.BedRequest;
 import ca.ulaval.glo2003.beds.rest.BedResponse;
 import ca.ulaval.glo2003.locations.domain.Location;
@@ -68,7 +67,7 @@ public class BedServiceTest {
 
   @BeforeEach
   public void setUpMocksForGetAll() {
-    InMemoryBedQuery bedQuery = mock(InMemoryBedQuery.class);
+    BedQuery bedQuery = mock(BedQuery.class);
     when(bedQueryFactory.create(params)).thenReturn(bedQuery);
     when(bedRepository.getAll(bedQuery)).thenReturn(Arrays.asList(bed, otherBed));
     when(bedStarsCalculator.calculateStars(bed)).thenReturn(stars);
