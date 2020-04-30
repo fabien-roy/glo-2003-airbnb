@@ -19,13 +19,17 @@
 
 Maven is used as a built automation tool, as well as a dependency manager. To build the application, use : 
 
-`mvn clean install`
+```
+mvn clean install
+```
 
 ### Execute app
 
 To execute the application, use : 
 
-`mvn exec:java`
+```
+mvn exec:java
+```
 
 The app will be running on [http://localhost:4567](http://localhost:4567).
 
@@ -35,10 +39,24 @@ Tests are located in `src/test/java/ca/ulaval/glo2003`. They are all checked pre
 
 To run unit tests, use :
 
-`mvn surefire:test`
+```
+mvn surefire:test
+```
 
 ### Apply code style
 
 Code style is verified pre-commit. To apply [Google Java Code Style](https://google.github.io/styleguide/javaguide.html) throughout the source code, use : 
 
-`mvn git-code-format:format-code -DglobPattern=**/*`
+```
+mvn git-code-format:format-code -DglobPattern=**/*
+```
+
+### API documentation generation
+
+As said above, all requests for this app are listed on our GitHubPages. We used RAML 1.0. To render documentation, you must install `npm` dependencies and start the script : 
+
+```
+cd /docs
+npm install
+npm start
+```
