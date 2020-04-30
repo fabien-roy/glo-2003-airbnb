@@ -90,4 +90,8 @@ public class BedService {
         .sorted(Comparator.comparingInt(BedResponse::getStars).reversed())
         .collect(Collectors.toList());
   }
+
+  public void deleteAll() {
+    bedRepository.deleteAll();
+  }
 }

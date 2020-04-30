@@ -52,4 +52,16 @@ public class InMemoryTransactionRepositoryTest {
     assertTrue(actualTransactions.contains(expectedTransaction));
     assertTrue(actualTransactions.contains(otherExpectedTransaction));
   }
+
+  @Test
+  public void deleteAll_shouldDeleteAllTransactions() {
+    Transaction expectedTransaction = aTransaction().build();
+    Transaction otherExpectedTransaction = aTransaction().build();
+    transactionRepository.add(expectedTransaction);
+    transactionRepository.add(otherExpectedTransaction);
+
+    transactionRepository.deleteAll();
+
+    assertEquals(0, transactionRepository.getAll().size());
+  }
 }

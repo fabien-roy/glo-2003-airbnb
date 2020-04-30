@@ -7,4 +7,6 @@ public interface TransactionRepository {
   void add(Transaction transaction);
 
   List<Transaction> getAll();
+
+  void deleteAll();
 }

@@ -170,4 +170,11 @@ class TransactionServiceTest {
 
     verify(transactionRepository).add(eq(otherTransaction));
   }
+
+  @Test
+  public void deleteAll_shouldDeleteAllTransactions() {
+    transactionService.deleteAll();
+
+    verify(transactionRepository).deleteAll();
+  }
 }

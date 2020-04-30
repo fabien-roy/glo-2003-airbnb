@@ -46,4 +46,8 @@ public class ReportService {
     ReportEvent event = reportEventFactory.create(ReportEventTypes.CANCELATION, bed, booking);
     reportRepository.addEvent(event);
   }
+
+  public void deleteAll() {
+    reportRepository.deleteAll();
+  }
 }
