@@ -1,0 +1,35 @@
+#%RAML 1.0 Library
+types:
+    Price: !include ../types/transactions/price.raml
+    Transaction: !include ../types/transactions/transaction.raml
+    ServiceFee: !include ../types/transactions/service-fee.raml
+    Cancelation: !include ../types/transactions/cancelation.raml
+
+    ReportScope: !include ../types/reports/report-scope.raml
+    ReportDimension: !include ../types/reports/report-dimension.raml
+    ReportMetric: !include ../types/reports/report-metric.raml
+    ReportPeriod: !include ../types/reports/report-period.raml
+    ReportPeriodData: !include ../types/reports/report-period-data.raml
+    ReportDimensionData: !include ../types/reports/report-dimension-data.raml
+    ReportMetricData: !include ../types/reports/report-metric-data.raml
+
+    BedToAdd: !include ../types/beds/bed-to-add.raml
+    BedWithReference: !include ../types/beds/bed-with-reference.raml
+    BedWithoutReference: !include ../types/beds/bed-without-reference.raml
+    BedNumber: !include ../types/beds/bed-number.raml
+    PublicKey: !include ../types/beds/public-key.raml
+    ZipCode: !include ../types/beds/zip-code.raml
+    BedType: !include ../types/beds/bed-type.raml
+    CleaningFrequency: !include ../types/beds/cleaning-frequency.raml
+    BloodType: !include ../types/beds/blood-type.raml
+    LodgingMode: !include ../types/beds/lodging-mode.raml
+    Capacity: !include ../types/beds/capacity.raml
+    PackageName: !include ../types/beds/package-name.raml
+    BedPackage: !include ../types/beds/bed-package.raml
+    Stars: !include ../types/beds/stars.raml
+
+    BookingToAdd: !include ../types/bookings/booking-to-add.raml
+    Booking: !include ../types/bookings/booking.raml
+    BookingNumber: !include ../types/bookings/booking-number.raml
+    ColonySize: !include ../types/bookings/colony-size.raml
+    NumberOfNights: !include ../types/bookings/number-of-nights.raml
