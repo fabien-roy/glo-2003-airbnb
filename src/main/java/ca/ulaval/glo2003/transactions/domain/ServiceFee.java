@@ -1,7 +1,6 @@
 package ca.ulaval.glo2003.transactions.domain;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class ServiceFee {
 
@@ -20,6 +19,6 @@ public class ServiceFee {
   }
 
   private BigDecimal factorOfPrice() {
-    return serviceFee.divide(BigDecimal.valueOf(100), RoundingMode.UP);
+    return serviceFee.divide(BigDecimal.valueOf(100));
   }
 }
