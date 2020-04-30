@@ -1,0 +1,12 @@
+#%RAML 1.0 DataType
+type: object
+displayName: ReportPeriodData
+uses:
+  types: ../../libraries/types.raml
+properties:
+  dimensions:
+      required: true
+      type: types.ReportDimensionData[]
+  metrics:
+      required: true
+      type: types.ReportMetricData[]

@@ -1,0 +1,341 @@
+<!DOCTYPE HTML><html><head><title>Airbnb API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 7.5.0"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+  $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
+  $('[data-toggle]').click(function() {
+    var selector = $(this).data('target') + ' pre code';
+    $(selector).each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+
+  // open modal on hashes like #_action_get
+  $(window).bind('hashchange', function(e) {
+    var anchor_id = document.location.hash.substr(1); //strip #
+    var element = $('#' + anchor_id);
+
+    // do we have such element + is it a modal?  --> show it
+    if (element.length && element.hasClass('modal')) {
+      element.modal('show');
+    }
+  });
+
+  // execute hashchange on first page load
+  $(window).trigger('hashchange');
+
+  // remove url fragment on modal hide
+  $('.modal').on('hidden.bs.modal', function() {
+    try {
+      if (history && history.replaceState) {
+          history.replaceState({}, '', '#');
+      }
+    } catch(e) {}
+  });
+});
+    </script><style>
+      .hljs {
+  background: transparent;
+}
+.parent {
+  color: #999;
+}
+.list-group-item > .badge {
+  float: none;
+  margin-right: 6px;
+}
+.panel-title > .methods {
+  float: right;
+}
+.badge {
+  border-radius: 0;
+  text-transform: uppercase;
+  width: 70px;
+  font-weight: normal;
+  color: #f3f3f6;
+  line-height: normal;
+}
+.badge_get {
+  background-color: #63a8e2;
+}
+.badge_post {
+  background-color: #6cbd7d;
+}
+.badge_put {
+  background-color: #22bac4;
+}
+.badge_delete {
+  background-color: #d26460;
+}
+.badge_patch {
+  background-color: #ccc444;
+}
+.list-group,
+.panel-group {
+  margin-bottom: 0;
+}
+.panel-group .panel+.panel-white {
+  margin-top: 0;
+}
+.panel-group .panel-white {
+  border-bottom: 1px solid #F5F5F5;
+  border-radius: 0;
+}
+.panel-white:last-child {
+  border-bottom-color: white;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.panel-white .panel-heading {
+  background: white;
+}
+.tab-pane ul {
+  padding-left: 2em;
+}
+.tab-pane h1 {
+  font-size: 1.3em;
+}
+.tab-pane h2 {
+  font-size: 1.2em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+}
+.tab-pane h3 {
+  font-size: 1.1em;
+}
+.tab-content {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+#sidebar {
+  margin-top: 30px;
+  padding-right: 5px;
+  overflow: auto;
+  height: 90%;
+}
+.top-resource-description {
+  border-bottom: 1px solid #ddd;
+  background: #fcfcfc;
+  padding: 15px 15px 0 15px;
+  margin: -15px -15px 10px -15px;
+}
+.resource-description {
+  border-bottom: 1px solid #fcfcfc;
+  background: #fcfcfc;
+  padding: 15px 15px 0 15px;
+  margin: -15px -15px 10px -15px;
+}
+.resource-description p:last-child {
+  margin: 0;
+}
+.list-group .badge {
+  float: left;
+}
+.method_description {
+  margin-left: 85px;
+}
+.method_description p:last-child {
+  margin: 0;
+}
+.list-group-item {
+  cursor: pointer;
+}
+.list-group-item:hover {
+  background-color: #f5f5f5;
+}
+pre code {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+.items {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+}
+.examples {
+  margin-left: 0.5em;
+}
+.resource-modal li > ul {
+  margin-bottom: 1em;
+}
+.required {
+  color: #f00;
+}
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Airbnb API documentation <small>version 3.0.0</small></h1><p></p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="beds" class="panel-title">/beds</h3></div><div class="panel-body"><div class="top-resource-description"><p>Collection of beds</p></div><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_beds"><span class="parent"></span>/beds</a> <span class="methods"><a href="#beds_post"><span class="badge badge_post">post</span></a> <a href="#beds_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_beds" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#beds_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Add a new bed.</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#beds_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>List all Beds matching query criteria</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="beds_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/beds</h4></div><div class="modal-body"><div class="alert alert-info"><p>Add a new bed.</p></div><ul class="nav nav-tabs"><li class="active"><a href="#beds_post_request" data-toggle="tab">Request</a></li><li><a href="#beds_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="beds_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>ownerPublicKey</strong>: <em><span class="required">required</span>(string - pattern: ([A-F]|[0-9]){64})</em><p>64-chars hexadecimal string</p></li><li><strong>zipCode</strong>: <em><span class="required">required</span>(string - pattern: ([0-9]){5})</em><p>5-digit valid US zip code</p></li><li><strong>bedType</strong>: <em><span class="required">required</span>(one of latex, memoryFoam, springs)</em><p>Valid bed type</p></li><li><strong>cleaningFrequency</strong>: <em><span class="required">required</span>(one of never, weekly, monthly, annual)</em><p>Valid cleaning frequency</p></li><li><strong>bloodTypes</strong>: <em><span class="required">required</span>(array of types.BloodType)</em><p>Array of available blood types in bed</p></li><li><strong>lodgingMode</strong>: <em>(one of private, cohabitatioVn - default: private)</em><p>Valid lodging mode</p></li><li><strong>capacity</strong>: <em><span class="required">required</span>(integer - minimum: 1)</em><p>Capacity of bed, must be positive and must not exceed bed type capacity</p></li><li><strong>packages</strong>: <em><span class="required">required</span>(array of types.BedPackage)</em><p>Array of available packages in bed, with no duplicated package name</p><p><strong>Items</strong>: BedPackage</p><div class="items"><ul><li><strong>name</strong>: <em><span class="required">required</span>(one of bloodthirsty, allYouCanDrink, sweetTooth)</em><p>Valid package name</p></li><li><strong>pricePerNight</strong>: <em><span class="required">required</span>(number)</em><p>Price, with a maximum of 2 decimals</p></li></ul></div></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "ownerPublicKey": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+  "zipCode": "12345",
+  "bedType": "latex",
+  "cleaningFrequency": "weekly",
+  "bloodTypes": ["O-", "O+", "AB-"],
+  "capacity": 234,
+  "lodgingMode": "cohabitation",
+  "packages": [
+    {
+    "name": "bloodthirsty",
+    "pricePerNight": 99.99
+    }
+  ]
+}
+</code></pre></div></div><div class="tab-pane" id="beds_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Bed successfully added</p><h3>Headers</h3><ul><li><strong>location</strong>: <em><span class="required">required</span>(string)</em><p>Path to newly created bed</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>/beds/590041fd-afc4-4b5e-bc4d-3c65396c4bc6</code></pre></div></li></ul><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error while adding bed</p></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="beds_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/beds</h4></div><div class="modal-body"><div class="alert alert-info"><p>List all Beds matching query criteria</p></div><ul class="nav nav-tabs"><li class="active"><a href="#beds_get_request" data-toggle="tab">Request</a></li><li><a href="#beds_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="beds_get_request"><h3>Query Parameters</h3><ul><li><strong>package</strong>: <em>(one of bloodthirsty, allYouCanDrink, sweetTooth)</em><p>Valid package name</p></li><li><strong>bedType</strong>: <em>(one of latex, memoryFoam, springs)</em><p>Valid bed type</p></li><li><strong>cleaningFreq</strong>: <em>(one of never, weekly, monthly, annual)</em><p>Valid cleaning frequency</p></li><li><strong>bloodTypes</strong>: <em>(array of string)</em><p>Array of required blood types for bed</p></li><li><strong>minCapacity</strong>: <em>(types.BedCapacity)</em><p>Minimal residual capacity for given date and number of nights</p></li><li><strong>arrivalDate</strong>: <em>(date-only - default: now)</em><p>Requires minCapacity, must be set in future</p></li><li><strong>numberOfNights</strong>: <em>(integer - default: 3 - minimum: 1 - maximum: 90)</em><p>Requires minCapacity</p></li><li><strong>origin</strong>: <em>(string - pattern: ([0-9]){5})</em><p>5-digit valid US zip code</p></li><li><strong>maxDistance</strong>: <em>(integer - default: 10 - minimum: 1)</em><p>Distance from origin in kilometer, requires origin</p></li><li><strong>lodgingMode</strong>: <em>(one of private, cohabitatioVn)</em><p>Valid lodging mode</p></li></ul></div><div class="tab-pane" id="beds_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Requested beds matching query criteria</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: array of object</p><p><strong>Items</strong>: BedWithReference</p><div class="items"><ul><li><strong>bedNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing bed</p></li><li><strong>ownerPublicKey</strong>: <em><span class="required">required</span>(string - pattern: ([A-F]|[0-9]){64})</em><p>64-chars hexadecimal string</p></li><li><strong>zipCode</strong>: <em><span class="required">required</span>(string - pattern: ([0-9]){5})</em><p>5-digit valid US zip code</p></li><li><strong>bedType</strong>: <em><span class="required">required</span>(one of latex, memoryFoam, springs)</em><p>Valid bed type</p></li><li><strong>cleaningFrequency</strong>: <em><span class="required">required</span>(one of never, weekly, monthly, annual)</em><p>Valid cleaning frequency</p></li><li><strong>bloodTypes</strong>: <em><span class="required">required</span>(array of types.BloodType)</em><p>Array of available blood types in bed</p></li><li><strong>lodgingMode</strong>: <em><span class="required">required</span>(one of private, cohabitatioVn - default: private)</em><p>Valid lodging mode</p></li><li><strong>capacity</strong>: <em><span class="required">required</span>(integer - minimum: 1)</em><p>Capacity of bed, must be positive and must not exceed bed type capacity</p></li><li><strong>packages</strong>: <em><span class="required">required</span>(array of types.BedPackage)</em><p>Array of available packages in bed, with no duplicated package name</p><p><strong>Items</strong>: BedPackage</p><div class="items"><ul><li><strong>name</strong>: <em><span class="required">required</span>(one of bloodthirsty, allYouCanDrink, sweetTooth)</em><p>Valid package name</p></li><li><strong>pricePerNight</strong>: <em><span class="required">required</span>(number)</em><p>Price, with a maximum of 2 decimals</p></li></ul></div></li><li><strong>stars</strong>: <em><span class="required">required</span>(integer - minimum: 1 - maximum: 5)</em><p>Rating of bed</p></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code>[
+  {
+    "bedNumber": "590041fd-afc4-4b5e-bc4d-3c65396c4bc6",
+    "zipCode": "12345",
+    "bedType": "memoryFoam",
+    "cleaningFrequency": "never",
+    "bloodTypes": ["O-", "B-"],
+    "capacity": 600,
+    "packages": [
+    {
+      "name": "bloodthirsty",
+      "pricePerNight": 45.27
+    },
+    {
+      "name": "allYouCanDrink",
+      "pricePerNight": 55.63
+    }
+  ],
+  "stars": 4
+  },
+  {
+    "bedNumber": "897178c3-11e1-4991-a996-e522a9a74897",
+    "zipCode": "67891",
+    "bedType": "memoryFoam",
+    "cleaningFrequency": "annual",
+    "bloodTypes": ["O+", "B-"],
+    "capacity": 500,
+    "packages": [
+    {
+      "name": "bloodthirsty",
+      "pricePerNight": 30.00
+    }
+  ],
+  "stars": 3
+  }
+]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error getting beds with query</p></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_beds__bednumber_"><span class="parent">/beds</span>/{bedNumber}</a> <span class="methods"><a href="#beds__bednumber__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_beds__bednumber_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Bed entity</p></div><div class="list-group"><div onclick="window.location.href = '#beds__bednumber__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get the bed with <code>bedNumber = {bedNumber}</code></p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="beds__bednumber__get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/beds</span>/{bedNumber}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get the bed with <code>bedNumber = {bedNumber}</code></p></div><ul class="nav nav-tabs"><li class="active"><a href="#beds__bednumber__get_request" data-toggle="tab">Request</a></li><li><a href="#beds__bednumber__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="beds__bednumber__get_request"><h3>URI Parameters</h3><ul><li><strong>bedNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing bed</p></li></ul></div><div class="tab-pane" id="beds__bednumber__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Requested bed</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>ownerPublicKey</strong>: <em><span class="required">required</span>(string - pattern: ([A-F]|[0-9]){64})</em><p>64-chars hexadecimal string</p></li><li><strong>zipCode</strong>: <em><span class="required">required</span>(string - pattern: ([0-9]){5})</em><p>5-digit valid US zip code</p></li><li><strong>bedType</strong>: <em><span class="required">required</span>(one of latex, memoryFoam, springs)</em><p>Valid bed type</p></li><li><strong>cleaningFrequency</strong>: <em><span class="required">required</span>(one of never, weekly, monthly, annual)</em><p>Valid cleaning frequency</p></li><li><strong>bloodTypes</strong>: <em><span class="required">required</span>(array of types.BloodType)</em><p>Array of available blood types in bed</p></li><li><strong>lodgingMode</strong>: <em><span class="required">required</span>(one of private, cohabitatioVn - default: private)</em><p>Valid lodging mode</p></li><li><strong>capacity</strong>: <em><span class="required">required</span>(integer - minimum: 1)</em><p>Capacity of bed, must be positive and must not exceed bed type capacity</p></li><li><strong>packages</strong>: <em><span class="required">required</span>(array of types.BedPackage)</em><p>Array of available packages in bed, with no duplicated package name</p><p><strong>Items</strong>: BedPackage</p><div class="items"><ul><li><strong>name</strong>: <em><span class="required">required</span>(one of bloodthirsty, allYouCanDrink, sweetTooth)</em><p>Valid package name</p></li><li><strong>pricePerNight</strong>: <em><span class="required">required</span>(number)</em><p>Price, with a maximum of 2 decimals</p></li></ul></div></li><li><strong>stars</strong>: <em><span class="required">required</span>(integer - minimum: 1 - maximum: 5)</em><p>Rating of bed</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "zipCode": "12345",
+  "bedType": "memoryFoam",
+  "cleaningFrequency": "never",
+  "bloodTypes": ["O-", "B-"],
+  "capacity": 600,
+  "packages": [
+  {
+    "name": "bloodthirsty",
+    "pricePerNight": 45.27
+  },
+  {
+    "name": "allYouCanDrink",
+    "pricePerNight": 55.63
+  }
+],
+"stars": 4
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error getting bed with bed number</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Bed not found</p></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_beds__bednumber__bookings"><span class="parent">/beds/{bedNumber}</span>/bookings</a> <span class="methods"><a href="#beds__bednumber__bookings_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_beds__bednumber__bookings" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Collection of bookings in bed</p></div><div class="list-group"><div onclick="window.location.href = '#beds__bednumber__bookings_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Add a new booking to bed</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="beds__bednumber__bookings_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/beds/{bedNumber}</span>/bookings</h4></div><div class="modal-body"><div class="alert alert-info"><p>Add a new booking to bed</p></div><ul class="nav nav-tabs"><li class="active"><a href="#beds__bednumber__bookings_post_request" data-toggle="tab">Request</a></li><li><a href="#beds__bednumber__bookings_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="beds__bednumber__bookings_post_request"><h3>URI Parameters</h3><ul><li><strong>bedNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing bed</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>tenantPublicKey</strong>: <em><span class="required">required</span>(string - pattern: ([A-F]|[0-9]){64})</em><p>64-chars hexadecimal string</p></li><li><strong>arrivalDate</strong>: <em><span class="required">required</span>(date-only)</em></li><li><strong>numberOfNights</strong>: <em><span class="required">required</span>(integer - minimum: 1 - maximum: 90)</em><p>Number of nights for booking, must be between 1 and 90</p></li><li><strong>package</strong>: <em><span class="required">required</span>(one of bloodthirsty, allYouCanDrink, sweetTooth)</em><p>Valid package name</p></li><li><strong>colonySize</strong>: <em>(integer)</em><p>Colony size for booking, only required if bed has a cohabitation lodging mode</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "tenantPublicKey": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC",
+  "arrivalDate": "2020-05-21",
+  "numberOfNights": 3,
+  "package": "allYouCanDrink"
+}
+</code></pre></div></div><div class="tab-pane" id="beds__bednumber__bookings_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Booking was successful</p><h3>Headers</h3><ul><li><strong>location</strong>: <em><span class="required">required</span>(string)</em><p>Path to newly created booking.</p><p><strong>Example</strong>:</p><div class="examples"><pre><code>/beds/590041fd-afc4-4b5e-bc4d-3c65396c4bc6/bookings/897178c3-11e1-4991-a996-e522a9a74897</code></pre></div></li></ul><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error while adding booking to bed</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Bed or booking not found</p></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_beds__bednumber__bookings__bookingnumber_"><span class="parent">/beds/{bedNumber}/bookings</span>/{bookingNumber}</a> <span class="methods"><a href="#beds__bednumber__bookings__bookingnumber__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_beds__bednumber__bookings__bookingnumber_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Booking entity</p></div><div class="list-group"><div onclick="window.location.href = '#beds__bednumber__bookings__bookingnumber__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Get the booking with <code>bookingNumber = {bookingNumber}</code></p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="beds__bednumber__bookings__bookingnumber__get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/beds/{bedNumber}/bookings</span>/{bookingNumber}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Get the booking with <code>bookingNumber = {bookingNumber}</code></p></div><ul class="nav nav-tabs"><li class="active"><a href="#beds__bednumber__bookings__bookingnumber__get_request" data-toggle="tab">Request</a></li><li><a href="#beds__bednumber__bookings__bookingnumber__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="beds__bednumber__bookings__bookingnumber__get_request"><h3>URI Parameters</h3><ul><li><strong>bedNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing bed</p></li><li><strong>bookingNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing booking</p></li></ul></div><div class="tab-pane" id="beds__bednumber__bookings__bookingnumber__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Requested booking</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>arrivalDate</strong>: <em><span class="required">required</span>(date-only)</em></li><li><strong>numberOfNights</strong>: <em><span class="required">required</span>(integer - minimum: 1 - maximum: 90)</em><p>Number of nights for booking, must be between 1 and 90</p></li><li><strong>package</strong>: <em><span class="required">required</span>(one of bloodthirsty, allYouCanDrink, sweetTooth)</em><p>Valid package name</p></li><li><strong>colonySize</strong>: <em>(integer)</em><p>Colony size for booking, only displayed if bed has a cohabitation lodging mode</p></li><li><strong>total</strong>: <em><span class="required">required</span>(number)</em><p>Total for booking</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "arrivalDate": "2020-05-21",
+  "numberOfNights": 3,
+  "package": "allYouCanDrink",
+  "total": 340.89
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error getting booking with booking number</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Bed or booking not found</p></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_beds__bednumber__bookings__bookingnumber__cancel"><span class="parent">/beds/{bedNumber}/bookings/{bookingNumber}</span>/cancel</a> <span class="methods"><a href="#beds__bednumber__bookings__bookingnumber__cancel_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_beds__bednumber__bookings__bookingnumber__cancel" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#beds__bednumber__bookings__bookingnumber__cancel_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Cancels the booking with <code>bookingNumber = {bookingNumber}</code></p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="beds__bednumber__bookings__bookingnumber__cancel_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/beds/{bedNumber}/bookings/{bookingNumber}</span>/cancel</h4></div><div class="modal-body"><div class="alert alert-info"><p>Cancels the booking with <code>bookingNumber = {bookingNumber}</code></p></div><ul class="nav nav-tabs"><li class="active"><a href="#beds__bednumber__bookings__bookingnumber__cancel_post_request" data-toggle="tab">Request</a></li><li><a href="#beds__bednumber__bookings__bookingnumber__cancel_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="beds__bednumber__bookings__bookingnumber__cancel_post_request"><h3>URI Parameters</h3><ul><li><strong>bedNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing bed</p></li><li><strong>bookingNumber</strong>: <em><span class="required">required</span>(string)</em><p>UUID representing booking</p></li></ul></div><div class="tab-pane" id="beds__bednumber__bookings__bookingnumber__cancel_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Cancelation was successful</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>refundAmount</strong>: <em><span class="required">required</span>(number)</em><p>Amount refunded to tenant for cancelation</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "refundAmount": 170.44
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error canceling booking with booking number</p><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>Bed or booking not found</p></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="admin" class="panel-title">/admin</h3></div><div class="panel-body"><div class="top-resource-description"><p>Secured operations</p></div><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_admin_transactions"><span class="parent">/admin</span>/transactions</a> <span class="methods"><a href="#admin_transactions_get"><span class="badge badge_get">get</span></a> <a href="#admin_transactions_post"><span class="badge badge_post">post</span></a> <a href="#admin_transactions_delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_admin_transactions" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Collection of transactions</p></div><div class="list-group"><div onclick="window.location.href = '#admin_transactions_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>List all transactions</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#admin_transactions_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Configure new service fee</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#admin_transactions_delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"><p>Delete everything (beds, bookings, transactions, report events)</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="admin_transactions_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/admin</span>/transactions</h4></div><div class="modal-body"><div class="alert alert-info"><p>List all transactions</p></div><ul class="nav nav-tabs"><li class="active"><a href="#admin_transactions_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="admin_transactions_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>All transactions</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: array of object</p><p><strong>Items</strong>: Transactions</p><div class="items"><ul><li><strong>timestamp</strong>: <em><span class="required">required</span>(datetime)</em><p>Date and time of transactions</p></li><li><strong>from</strong>: <em><span class="required">required</span>(string)</em><p>Origin of transaction</p></li><li><strong>to</strong>: <em><span class="required">required</span>(string)</em><p>Destination of transaction</p></li><li><strong>reason</strong>: <em><span class="required">required</span>(one of STAY_BOOKED, STAY_COMPLETED, STAY_CANCELED)</em><p>Explanation of transaction</p></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code>[
+  {
+    "timestamp": "2050-05-21T15:23:20.142Z",
+    "from": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC",
+    "to": "airbnb",
+    "total": 340.89,
+    "reason": "STAY_BOOKED"
+  },
+  {
+    "timestamp": "2050-05-29T23:59:99.99999Z",
+    "from": "airbnb",
+    "to": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+    "total": 340.89,
+    "reason": "STAY_COMPLETED"
+  },
+  {
+    "timestamp": "2050-05-23T08:38:02.192Z",
+    "from": "airbnb",
+    "to": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC",
+    "total": 170.44,
+    "reason": "STAY_CANCELED"
+  },
+  {
+    "timestamp": "2050-05-23T08:38:02.192Z",
+    "from": "airbnb",
+    "to": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+    "total": 170.45,
+    "reason": "STAY_CANCELED"
+  },
+  {
+    "timestamp": "2050-05-29T23:59:99.99999Z",
+    "from": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+    "to": "airbnb",
+    "total": 340.89,
+    "reason": "STAY_CANCELED"
+  }
+]</code></pre></div></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="admin_transactions_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/admin</span>/transactions</h4></div><div class="modal-body"><div class="alert alert-info"><p>Configure new service fee</p></div><ul class="nav nav-tabs"><li class="active"><a href="#admin_transactions_post_request" data-toggle="tab">Request</a></li><li><a href="#admin_transactions_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="admin_transactions_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>serviceFee</strong>: <em><span class="required">required</span>(number - minimum: 0 - maximum: 15)</em><p>New service fee to configure</p></li></ul></div><div class="tab-pane" id="admin_transactions_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Configuration of service fee was successful</p><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error while configuring service fee</p></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="admin_transactions_delete"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent">/admin</span>/transactions</h4></div><div class="modal-body"><div class="alert alert-info"><p>Delete everything (beds, bookings, transactions, report events)</p></div><ul class="nav nav-tabs"><li class="active"><a href="#admin_transactions_delete_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="admin_transactions_delete_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Deletion was successful</p></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_admin_reports"><span class="parent">/admin</span>/reports</a> <span class="methods"><a href="#admin_reports_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_admin_reports" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Collection of report periods</p></div><div class="list-group"><div onclick="window.location.href = '#admin_reports_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>List all report periods matching query criteria</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="admin_reports_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/admin</span>/reports</h4></div><div class="modal-body"><div class="alert alert-info"><p>List all report periods matching query criteria</p></div><ul class="nav nav-tabs"><li class="active"><a href="#admin_reports_get_request" data-toggle="tab">Request</a></li><li><a href="#admin_reports_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="admin_reports_get_request"><h3>Query Parameters</h3><ul><li><strong>scope</strong>: <em>(one of weekly, monthly, quarterly, annual - default: annual)</em><p>Valid report scope</p></li><li><strong>metrics</strong>: <em>(array of string - default: incomes)</em></li><li><strong>dimensions</strong>: <em>(array of string - default: )</em></li></ul></div><div class="tab-pane" id="admin_reports_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Requested report periods matching query criteria</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: array of object</p><p><strong>Items</strong>: ReportPeriod</p><div class="items"><ul><li><strong>period</strong>: <em><span class="required">required</span>(string)</em><p>Period of displayed data</p></li><li><strong>data</strong>: <em><span class="required">required</span>(array of types.ReportPeriodData)</em><p><strong>Items</strong>: ReportPeriodData</p><div class="items"><ul><li><strong>dimensions</strong>: <em><span class="required">required</span>(array of types.ReportDimensionData)</em><p><strong>Items</strong>: ReportDimensionData</p><div class="items"><ul><li><strong>name</strong>: <em><span class="required">required</span>(one of package, lodgingMode)</em><p>Valid report dimension</p></li><li><strong>value</strong>: <em><span class="required">required</span>(string)</em><p>Value of dimension data</p></li></ul></div></li><li><strong>metrics</strong>: <em><span class="required">required</span>(array of types.ReportMetricData)</em><p><strong>Items</strong>: ReportMetricData</p><div class="items"><ul><li><strong>name</strong>: <em><span class="required">required</span>(one of incomes, reservations, cancelations)</em><p>Valid report metric</p></li><li><strong>value</strong>: <em><span class="required">required</span>(number)</em><p>Value of metric data</p></li></ul></div></li></ul></div></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code>[
+  {
+    "period": "2020",
+    "data": [
+      {
+        "dimensions": [
+          {
+            "name": "lodgingMode",
+            "value": "private"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "incomes",
+            "value": 353.28
+          },
+          {
+            "name": "reservations",
+            "value": 45
+          },
+          {
+            "name": "cancelations",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "dimensions": [
+          {
+            "name": "lodgingMode",
+            "value": "cohabitation"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "incomes",
+            "value": 9876.08
+          },
+          {
+            "name": "reservations",
+            "value": 32
+          },
+          {
+            "name": "cancelations",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  }
+]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Error getting report periods with query</p></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#beds">/beds</a></li><li><a href="#admin">/admin</a></li></ul></div></div></div></div></body></html>

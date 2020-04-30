@@ -1,0 +1,12 @@
+#%RAML 1.0 DataType
+type: object
+displayName: BedPackage
+uses:
+  types: ../../libraries/types.raml
+properties:
+  name:
+    required: true
+    type: types.PackageName
+  pricePerNight:
+    required: true
+    type: types.Price

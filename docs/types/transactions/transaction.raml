@@ -1,0 +1,22 @@
+#%RAML 1.0 DataType
+type: object
+displayName: Transactions
+uses:
+  types: ../../libraries/types.raml
+properties:
+  timestamp:
+      description: Date and time of transactions
+      required: true
+      type: datetime
+  from:
+      description: Origin of transaction
+      required: true
+      type: string
+  to:
+      description: Destination of transaction
+      required: true
+      type: string
+  reason:
+      description: Explanation of transaction
+      required: true
+      enum: [STAY_BOOKED, STAY_COMPLETED, STAY_CANCELED]

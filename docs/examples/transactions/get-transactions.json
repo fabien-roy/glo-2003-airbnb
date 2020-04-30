@@ -1,0 +1,37 @@
+[
+  {
+    "timestamp": "2050-05-21T15:23:20.142Z",
+    "from": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC",
+    "to": "airbnb",
+    "total": 340.89,
+    "reason": "STAY_BOOKED"
+  },
+  {
+    "timestamp": "2050-05-29T23:59:99.99999Z",
+    "from": "airbnb",
+    "to": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+    "total": 340.89,
+    "reason": "STAY_COMPLETED"
+  },
+  {
+    "timestamp": "2050-05-23T08:38:02.192Z",
+    "from": "airbnb",
+    "to": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC",
+    "total": 170.44,
+    "reason": "STAY_CANCELED"
+  },
+  {
+    "timestamp": "2050-05-23T08:38:02.192Z",
+    "from": "airbnb",
+    "to": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+    "total": 170.45,
+    "reason": "STAY_CANCELED"
+  },
+  {
+    "timestamp": "2050-05-29T23:59:99.99999Z",
+    "from": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+    "to": "airbnb",
+    "total": 340.89,
+    "reason": "STAY_CANCELED"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "zipCode": "12345",
+  "bedType": "memoryFoam",
+  "cleaningFrequency": "never",
+  "bloodTypes": ["O-", "B-"],
+  "capacity": 600,
+  "packages": [
+  {
+    "name": "bloodthirsty",
+    "pricePerNight": 45.27
+  },
+  {
+    "name": "allYouCanDrink",
+    "pricePerNight": 55.63
+  }
+],
+"stars": 4
+}

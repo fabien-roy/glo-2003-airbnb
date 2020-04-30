@@ -1,0 +1,51 @@
+[
+  {
+    "period": "2020",
+    "data": [
+      {
+        "dimensions": [
+          {
+            "name": "lodgingMode",
+            "value": "private"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "incomes",
+            "value": 353.28
+          },
+          {
+            "name": "reservations",
+            "value": 45
+          },
+          {
+            "name": "cancelations",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "dimensions": [
+          {
+            "name": "lodgingMode",
+            "value": "cohabitation"
+          }
+        ],
+        "metrics": [
+          {
+            "name": "incomes",
+            "value": 9876.08
+          },
+          {
+            "name": "reservations",
+            "value": 32
+          },
+          {
+            "name": "cancelations",
+            "value": 11
+          }
+        ]
+      }
+    ]
+  }
+]

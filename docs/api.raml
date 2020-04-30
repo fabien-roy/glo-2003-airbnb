@@ -1,0 +1,199 @@
+#%RAML 1.0
+title: Airbnb
+version: 3.0.0
+mediaType: application/json
+uses:
+    types: ./libraries/types.raml
+/beds:
+    description: Collection of beds
+    post:
+        description: Add a new bed.
+        body:
+          application/json:
+            type: types.BedToAdd
+            example: !include ./examples/beds/post-bed.json
+        responses:
+          201:
+            description: Bed successfully added
+            headers:
+              location:
+                description: Path to newly created bed
+                type: string
+                example: /beds/590041fd-afc4-4b5e-bc4d-3c65396c4bc6
+          400:
+            description: Error while adding bed
+    get:
+        description: List all Beds matching query criteria
+        queryParameters:
+            package:
+                required: false
+                type: types.PackageName
+            bedType:
+                required: false
+                type: types.BedType
+            cleaningFreq:
+                required: false
+                type: types.CleaningFrequency
+            bloodTypes:
+                description: Array of required blood types for bed
+                required: false
+                type: types.BloodType[]
+            minCapacity:
+                description: Minimal residual capacity for given date and number of nights
+                required: false
+                type: types.BedCapacity
+            arrivalDate:
+                description : Requires minCapacity, must be set in future
+                required: false
+                default: now
+                type: date-only
+            numberOfNights:
+                description : Requires minCapacity
+                required: false
+                default: 3
+                type: types.NumberOfNights
+            origin:
+                required: false
+                type: types.ZipCode
+            maxDistance:
+                description: Distance from origin in kilometer, requires origin
+                required: false
+                default: 10
+                type: integer
+                minimum: 1
+            lodgingMode:
+                required: false
+                type: types.LodgingMode
+        responses:
+            200:
+                description: Requested beds matching query criteria
+                body:
+                    application/json:
+                        type: types.BedWithReference[]
+                        example: !include ./examples/beds/get-beds.json
+            400:
+                description: Error getting beds with query
+    /{bedNumber}:
+        description: Bed entity
+        uriParameters:
+              bedNumber:
+                type: types.BedNumber
+        get:
+            description: Get the bed with `bedNumber = {bedNumber}`
+            responses:
+                200:
+                    description: Requested bed
+                    body:
+                        application/json:
+                            type: types.BedWithoutReference
+                            example: !include ./examples/beds/get-bed.json
+                400:
+                    description: Error getting bed with bed number
+                404:
+                    description: Bed not found
+        /bookings:
+            description: Collection of bookings in bed
+            post:
+                description: Add a new booking to bed
+                body:
+                  application/json:
+                    type: types.BookingToAdd
+                    example: !include ./examples/bookings/post-booking.json
+                responses:
+                  201:
+                    description: Booking was successful
+                    headers:
+                      location:
+                        description: Path to newly created booking.
+                        type: string
+                        example: /beds/590041fd-afc4-4b5e-bc4d-3c65396c4bc6/bookings/897178c3-11e1-4991-a996-e522a9a74897
+                  400:
+                    description: Error while adding booking to bed
+                  404:
+                    description: Bed or booking not found
+            /{bookingNumber}:
+                uriParameters:
+                      bookingNumber:
+                        type: types.BookingNumber
+                description: Booking entity
+                get:
+                    description: Get the booking with `bookingNumber = {bookingNumber}`
+                    responses:
+                        200:
+                            description: Requested booking
+                            body:
+                                application/json:
+                                    type: types.Booking
+                                    example: !include ./examples/bookings/get-booking.json
+                        400:
+                            description: Error getting booking with booking number
+                        404:
+                            description: Bed or booking not found
+                /cancel:
+                    post:
+                      description: Cancels the booking with `bookingNumber = {bookingNumber}`
+                      responses:
+                          200:
+                            description: Cancelation was successful
+                            body:
+                                application/json:
+                                    type: types.Cancelation
+                                    example: !include ./examples/bookings/cancel-booking.json
+                          400:
+                            description: Error canceling booking with booking number
+                          404:
+                             description: Bed or booking not found
+/admin:
+  description: Secured operations
+  /transactions:
+    description: Collection of transactions
+    get:
+      description: List all transactions
+      responses:
+        200:
+          description: All transactions
+          body:
+            application/json:
+              type: types.Transaction[]
+              example: !include ./examples/transactions/get-transactions.json
+    post:
+      description: Configure new service fee
+      body:
+        application/json:
+          type: types.ServiceFee
+      responses:
+        200:
+          description: Configuration of service fee was successful
+        400:
+          description: Error while configuring service fee
+    delete:
+      description: Delete everything (beds, bookings, transactions, report events)
+      responses:
+        200:
+          description: Deletion was successful
+  /reports:
+    description: Collection of report periods
+    get:
+        description: List all report periods matching query criteria
+        queryParameters:
+            scope:
+                required: false
+                default: annual
+                type: types.ReportScope
+            metrics:
+                required: false
+                default: [incomes]
+                type: types.ReportMetric[]
+            dimensions:
+                required: false
+                default: []
+                type: types.ReportDimension[]
+        responses:
+            200:
+                description: Requested report periods matching query criteria
+                body:
+                    application/json:
+                        type: types.ReportPeriod[]
+                        example: !include ./examples/reports/get-reports.json
+            400:
+                description: Error getting report periods with query

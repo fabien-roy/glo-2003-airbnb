@@ -1,0 +1,36 @@
+[
+  {
+    "bedNumber": "590041fd-afc4-4b5e-bc4d-3c65396c4bc6",
+    "zipCode": "12345",
+    "bedType": "memoryFoam",
+    "cleaningFrequency": "never",
+    "bloodTypes": ["O-", "B-"],
+    "capacity": 600,
+    "packages": [
+    {
+      "name": "bloodthirsty",
+      "pricePerNight": 45.27
+    },
+    {
+      "name": "allYouCanDrink",
+      "pricePerNight": 55.63
+    }
+  ],
+  "stars": 4
+  },
+  {
+    "bedNumber": "897178c3-11e1-4991-a996-e522a9a74897",
+    "zipCode": "67891",
+    "bedType": "memoryFoam",
+    "cleaningFrequency": "annual",
+    "bloodTypes": ["O+", "B-"],
+    "capacity": 500,
+    "packages": [
+    {
+      "name": "bloodthirsty",
+      "pricePerNight": 30.00
+    }
+  ],
+  "stars": 3
+  }
+]

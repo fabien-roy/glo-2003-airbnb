@@ -1,0 +1,15 @@
+{
+  "ownerPublicKey": "8F0436A6FB049085B7F19AB73933973BF21276276F2EC7D122AC110BB46A3A4E",
+  "zipCode": "12345",
+  "bedType": "latex",
+  "cleaningFrequency": "weekly",
+  "bloodTypes": ["O-", "O+", "AB-"],
+  "capacity": 234,
+  "lodgingMode": "cohabitation",
+  "packages": [
+    {
+    "name": "bloodthirsty",
+    "pricePerNight": 99.99
+    }
+  ]
+}
