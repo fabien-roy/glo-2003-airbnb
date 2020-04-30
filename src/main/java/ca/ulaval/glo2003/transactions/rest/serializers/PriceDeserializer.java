@@ -1,17 +1,12 @@
 package ca.ulaval.glo2003.transactions.rest.serializers;
 
-import ca.ulaval.glo2003.interfaces.domain.serializers.AbstractDeserializer;
+import ca.ulaval.glo2003.interfaces.rest.serializers.DoubleDeserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 
-public abstract class PriceDeserializer<E extends RuntimeException>
-    extends AbstractDeserializer<Double, E> {
+public abstract class PriceDeserializer<E extends RuntimeException> extends DoubleDeserializer<E> {
 
   private static final int MAX_DECIMALS = 2;
-
-  public PriceDeserializer() {
-    super(Double.class);
-  }
 
   @Override
   public Class<?> getType() {
@@ -21,11 +16,9 @@ public abstract class PriceDeserializer<E extends RuntimeException>
   @Override
   public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws E {
-    double price = 0d;
+    Double price = super.deserialize(jsonParser, deserializationContext);
 
     try {
-      if (jsonParser.isNaN()) throwException();
-
       if (!hasGoodAmountOfDecimals(jsonParser.getText())) throwException();
 
       price = jsonParser.getDoubleValue();

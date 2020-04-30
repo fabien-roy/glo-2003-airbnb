@@ -5,31 +5,31 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import java.io.IOException;
 
-public abstract class IntegerDeserializer<E extends RuntimeException>
-    extends AbstractDeserializer<Integer, E> {
+public abstract class DoubleDeserializer<E extends RuntimeException>
+    extends AbstractDeserializer<Double, E> {
 
-  protected IntegerDeserializer() {
-    super(Integer.class);
+  protected DoubleDeserializer() {
+    super(Double.class);
   }
 
   @Override
   public Class<?> getType() {
-    return Integer.class;
+    return Double.class;
   }
 
   @Override
-  public Integer deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+  public Double deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
       throws E {
-    int integer = 0;
+    double value = 0d;
 
     try {
       if (jsonParser.isNaN()) throwException();
 
-      integer = jsonParser.getIntValue();
+      value = jsonParser.getDoubleValue();
     } catch (IOException e) {
       throwException();
     }
 
-    return integer;
+    return value;
   }
 }
