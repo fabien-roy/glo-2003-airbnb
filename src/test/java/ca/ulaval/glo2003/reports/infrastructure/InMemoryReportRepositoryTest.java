@@ -59,6 +59,7 @@ public class InMemoryReportRepositoryTest {
     reportRepository.addEvent(reportEvent);
 
     reportRepository.deleteAll();
+    reportRepository.getPeriods(reportQuery);
 
     verify(reportQuery).setEvents(eq(Collections.emptyList()));
   }
