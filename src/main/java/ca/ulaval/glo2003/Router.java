@@ -34,11 +34,11 @@ public class Router {
       BedResource bedResource,
       BookingResource bookingResource) {
     this.errorMapper = errorMapper;
+    this.adminResource = adminResource;
     this.transactionResource = transactionResource;
+    this.reportResource = reportResource;
     this.bedResource = bedResource;
     this.bookingResource = bookingResource;
-    this.reportResource = reportResource;
-    this.adminResource = adminResource;
   }
 
   public void setUpRoutes() {
