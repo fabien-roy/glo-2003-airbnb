@@ -91,6 +91,7 @@ Optional query parameters are :
 - `numberOfNights` (positive, need minCapacity, default is 3)
 - `origin` (valid 5-digit US zip code)
 - `maxDistance` (positive, in kilometers, need origin, default is 10)
+- `lodgingMode` ("private" | "cohabitation")
 
 Returns filtered formatted beds.
 
@@ -102,7 +103,7 @@ Example request body :
   "tenantPublicKey": "72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC"::string,
   "arrivalDate": "2020-05-21"::string,
   "numberOfNights": 3::number,
-  "package": "allYouCanDrink"::string,
+  "package": "bloodthirsty" | "allYouCanDrink" | "sweetTooth"::string,
   "colonySize": 20::number
 }
 ```
@@ -122,6 +123,33 @@ Returns formatted booking.
 
 Cancels bed and adds cancelation transactions.
 
+### POST /admin/transactions
+
+Example request body :
+```{json}
+{
+  "serviceFee": "0.00"::number
+}
+```
+
+- `serviceFee` must be a between 0 and 15.
+
+Sets service fee for booking.
+
 ### GET /admin/transactions
 
 Returns formatted transactions.
+
+### DELETE /admin/transactions
+
+Delete everything : beds, bookings, transactions and report events.
+
+### GET /admin/reports
+
+Optional query parameters are : 
+
+- `scope` ("weekly " | "monthly" | "quarterly" | "annual")
+- `metrics` ("incomes" | "reservations" | "cancelations"  (array))
+- `dimensions` ("package" | "lodgingMode"  (array))
+
+Returns formatted report periods.
