@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.admin.rest;
 
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo2003.admin.service.AdminService;
+import ca.ulaval.glo2003.admin.services.AdminService;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

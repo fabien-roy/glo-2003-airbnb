@@ -2,6 +2,7 @@ package ca.ulaval.glo2003.admin.service;
 
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.admin.services.AdminService;
 import ca.ulaval.glo2003.beds.services.BedService;
 import ca.ulaval.glo2003.reports.services.ReportService;
 import ca.ulaval.glo2003.transactions.services.TransactionService;

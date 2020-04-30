@@ -2,7 +2,7 @@ package ca.ulaval.glo2003.admin.rest;
 
 import static spark.Spark.delete;
 
-import ca.ulaval.glo2003.admin.service.AdminService;
+import ca.ulaval.glo2003.admin.services.AdminService;
 import javax.inject.Inject;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;

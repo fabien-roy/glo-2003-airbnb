@@ -1,5 +1,6 @@
 package ca.ulaval.glo2003;
 
+import ca.ulaval.glo2003.admin.AdminModule;
 import ca.ulaval.glo2003.beds.BedModule;
 import ca.ulaval.glo2003.bookings.BookingModule;
 import ca.ulaval.glo2003.errors.ErrorModule;
@@ -24,11 +25,12 @@ public class Main {
         Guice.createInjector(
             new RoutingModule(),
             new ErrorModule(),
+            new AdminModule(),
             new TransactionModule(),
+            new ReportModule(),
             new BedModule(),
             new BookingModule(),
-            new LocationModule(),
-            new ReportModule());
+            new LocationModule());
     injector.getInstance(Server.class).start(retrievePortNumber());
   }
 
