@@ -4,16 +4,15 @@ import static ca.ulaval.glo2003.time.domain.helpers.TimestampBuilder.aTimestamp;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionBuilder.aTransaction;
 import static ca.ulaval.glo2003.transactions.domain.helpers.TransactionObjectMother.*;
 import static ca.ulaval.glo2003.transactions.services.TransactionService.AIRBNB;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo2003.admin.domain.Configuration;
 import ca.ulaval.glo2003.time.domain.Timestamp;
 import ca.ulaval.glo2003.transactions.converters.ServiceFeeConverter;
 import ca.ulaval.glo2003.transactions.converters.TransactionConverter;
-import ca.ulaval.glo2003.transactions.domain.Price;
-import ca.ulaval.glo2003.transactions.domain.Transaction;
-import ca.ulaval.glo2003.transactions.domain.TransactionFactory;
-import ca.ulaval.glo2003.transactions.domain.TransactionRepository;
+import ca.ulaval.glo2003.transactions.domain.*;
+import ca.ulaval.glo2003.transactions.rest.ServiceFeeRequest;
 import ca.ulaval.glo2003.transactions.rest.TransactionResponse;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +32,8 @@ class TransactionServiceTest {
   private static Transaction anotherTransaction = aTransaction().build();
   private static TransactionResponse transactionResponse = mock(TransactionResponse.class);
   private static TransactionResponse otherTransactionResponse = mock(TransactionResponse.class);
+  private static ServiceFeeRequest serviceFeeRequest = mock(ServiceFeeRequest.class);
+  private static ServiceFee updatedServiceFee = mock(ServiceFee.class);
   private static String tenant = createFrom();
   private static String owner = createTo();
   private static Price tenantRefund = createTotal();
@@ -176,5 +177,15 @@ class TransactionServiceTest {
     transactionService.deleteAll();
 
     verify(transactionRepository).deleteAll();
+  }
+
+  @Test
+  public void updateServiceFee_shouldUpdateServiceFeeOfConfiguration() {
+    when(serviceFeeConverter.fromRequest(serviceFeeRequest)).thenReturn(updatedServiceFee);
+
+    transactionService.updateServiceFee(serviceFeeRequest);
+    ServiceFee serviceFee = Configuration.instance().getServiceFee();
+
+    assertSame(serviceFee, updatedServiceFee);
   }
 }

@@ -83,7 +83,6 @@ public class TransactionService {
     transactionRepository.deleteAll();
   }
 
-  // TODO : Test TransactionService.updateServiceFee
   public void updateServiceFee(ServiceFeeRequest request) {
     ServiceFee serviceFee = serviceFeeConverter.fromRequest(request);
     Configuration.instance().setServiceFee(serviceFee);
