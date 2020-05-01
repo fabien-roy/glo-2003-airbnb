@@ -1,7 +1,17 @@
 {
-	"id": "547ab860-8e42-4dfc-91e2-10b3a505c0b5",
+	"id": "12b575de-5b2c-46c1-b9f5-dd378472245d",
 	"name": "Airbnb - Integration Tests",
 	"values": [
+		{
+			"key": "beds.2.bedNumber",
+			"value": "",
+			"enabled": false
+		},
+		{
+			"key": "beds.3.bedNumber",
+			"value": "",
+			"enabled": false
+		},
 		{
 			"key": "queryParam.bedType",
 			"value": "latex",
@@ -158,12 +168,52 @@
 			"enabled": true
 		},
 		{
+			"key": "isoTime",
+			"value": "2020-05-01",
+			"enabled": true
+		},
+		{
 			"key": "beds.1.bedNumber",
-			"value": "99a93a6f-24fe-43de-9c54-004af3ec5bcc",
+			"value": "519ac4fc-825f-4c09-a52e-0e8fcfc1b9bb",
+			"enabled": true
+		},
+		{
+			"key": "beds.2.bedNumber",
+			"value": "b413e494-0618-4dc2-96bf-a0c20d622b34",
+			"enabled": true
+		},
+		{
+			"key": "beds.3.bedNumber",
+			"value": "547f43aa-fd3a-46bc-8c6d-1da906ffeaba",
+			"enabled": true
+		},
+		{
+			"key": "beds.4.bedNumber",
+			"value": "86d6a56a-f3cf-49ab-b986-7e0e7cbce469",
+			"enabled": true
+		},
+		{
+			"key": "bookings.1.bookingNumber",
+			"value": "9ba86872-ea37-496d-b959-03dc0030d1e4",
+			"enabled": true
+		},
+		{
+			"key": "bookings.2.bookingNumber",
+			"value": "c125ff79-4f02-4cba-9c25-098ca58c2046",
+			"enabled": true
+		},
+		{
+			"key": "bookings.3.bookingNumber",
+			"value": "7106323b-d40e-44f5-944d-d9751d8af45f",
+			"enabled": true
+		},
+		{
+			"key": "bookings.4.bookingNumber",
+			"value": "4d896421-5f60-441f-bc1a-3460b50336d5",
 			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2020-04-12T16:18:04.421Z",
-	"_postman_exported_using": "Postman/7.22.1"
+	"_postman_exported_at": "2020-05-01T18:46:16.867Z",
+	"_postman_exported_using": "Postman/7.21.2"
 }

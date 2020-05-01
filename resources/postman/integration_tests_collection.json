@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "475d74e7-a547-4757-8489-75e75627f7ab",
+		"_postman_id": "a242274e-451e-4b19-b23e-711ee8b7ca0b",
 		"name": "Airbnb - Integration Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,7 +22,7 @@
 											"pm.test(\"response is ok\", function () {",
 											"    pm.response.to.have.status(201);",
 											"    var bedNumber = responseBody.split('/')[2]",
-											"    pm.setEnvironmentVariable(\"beds.1.bedNumber\", bedNumber)",
+											"    pm.environment.set(\"beds.1.bedNumber\", bedNumber)",
 											"});"
 										],
 										"type": "text/javascript"
@@ -70,6 +70,8 @@
 										"exec": [
 											"pm.test(\"response is ok\", function () {",
 											"    pm.response.to.have.status(201);",
+											"    var bedNumber = responseBody.split('/')[2]",
+											"    pm.environment.set(\"beds.2.bedNumber\", bedNumber)",
 											"});"
 										],
 										"type": "text/javascript"
@@ -117,6 +119,8 @@
 										"exec": [
 											"pm.test(\"response is ok\", function () {",
 											"    pm.response.to.have.status(201);",
+											"    var bedNumber = responseBody.split('/')[2]",
+											"    pm.environment.set(\"beds.3.bedNumber\", bedNumber)",
 											"});"
 										],
 										"type": "text/javascript"
@@ -164,6 +168,8 @@
 										"exec": [
 											"pm.test(\"response is ok\", function () {",
 											"    pm.response.to.have.status(201);",
+											"    var bedNumber = responseBody.split('/')[2]",
+											"    pm.environment.set(\"beds.4.bedNumber\", bedNumber)",
 											"});"
 										],
 										"type": "text/javascript"
@@ -1089,6 +1095,283 @@
 									],
 									"path": [
 										"beds"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Add Booking",
+					"item": [
+						{
+							"name": "Booking 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a0e2dae3-0f62-4c9d-8359-6033e91b164e",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"    var bookingNumber = responseBody.split('/')[4]",
+											"    postman.setEnvironmentVariable(\"bookings.1.bookingNumber\", bookingNumber)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tenantPublicKey\":\n    \"72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC\",\n  \"arrivalDate\": \"2020-05-21\",\n  \"numberOfNights\": 3,\n  \"package\": \"allYouCanDrink\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds/{{beds.1.bedNumber}}/bookings",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds",
+										"{{beds.1.bedNumber}}",
+										"bookings"
+									]
+								},
+								"description": "This will take bedNumber of Bed 1 and make a Booking with it"
+							},
+							"response": []
+						},
+						{
+							"name": "Booking 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a0e2dae3-0f62-4c9d-8359-6033e91b164e",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"    var bookingNumber = responseBody.split('/')[4]",
+											"    postman.setEnvironmentVariable(\"bookings.2.bookingNumber\", bookingNumber)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tenantPublicKey\":\n    \"72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC\",\n  \"arrivalDate\": \"{{isoTime}}\",\n  \"numberOfNights\": 3,\n  \"package\": \"allYouCanDrink\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds/{{beds.2.bedNumber}}/bookings",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds",
+										"{{beds.2.bedNumber}}",
+										"bookings"
+									]
+								},
+								"description": "This will take bedNumber of Bed 2 and make a Booking with it"
+							},
+							"response": []
+						},
+						{
+							"name": "Booking 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a0e2dae3-0f62-4c9d-8359-6033e91b164e",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"    var bookingNumber = responseBody.split('/')[4]",
+											"    postman.setEnvironmentVariable(\"bookings.3.bookingNumber\", bookingNumber)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tenantPublicKey\":\n    \"72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC\",\n  \"arrivalDate\": \"2020-05-21\",\n  \"numberOfNights\": 3,\n  \"package\": \"allYouCanDrink\",\n  \"colonySize\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds/{{beds.3.bedNumber}}/bookings",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds",
+										"{{beds.3.bedNumber}}",
+										"bookings"
+									]
+								},
+								"description": "This will take bedNumber of Bed 3 and make a Booking with it"
+							},
+							"response": []
+						},
+						{
+							"name": "Booking 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a0e2dae3-0f62-4c9d-8359-6033e91b164e",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(201);",
+											"    var bookingNumber = responseBody.split('/')[4]",
+											"    postman.setEnvironmentVariable(\"bookings.4.bookingNumber\", bookingNumber)",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tenantPublicKey\":\n    \"72001343BA93508E74E3BFFA68593C2016D0434CF0AA76CB3DF64F93170D60EC\",\n  \"arrivalDate\": \"2020-05-21\",\n  \"numberOfNights\": 3,\n  \"package\": \"allYouCanDrink\",\n  \"colonySize\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/beds/{{beds.4.bedNumber}}/bookings",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds",
+										"{{beds.4.bedNumber}}",
+										"bookings"
+									]
+								},
+								"description": "This will take bedNumber of Bed 4 and make a Booking with it"
+							},
+							"response": []
+						}
+					],
+					"description": "Thoses requests will add three bookings based on Bed 1,2 and 3 to tests multiple elements related to Bookings",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7492a949-51f0-4b89-b9b9-6444274fe16a",
+								"type": "text/javascript",
+								"exec": [
+									"let dateString = (new Date()).toISOString();",
+									"postman.setEnvironmentVariable('isoTime',dateString.substring(0,10));"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6311b4e-82c5-41b6-8871-d151d6059143",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Cancel first booking",
+					"item": [
+						{
+							"name": "Valid Booking Cancel",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cff0e3b7-52d3-4526-b00b-7b7051298315",
+										"exec": [
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/beds/{{beds.1.bedNumber}}/bookings/{{bookings.1.bookingNumber}}/cancel",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"beds",
+										"{{beds.1.bedNumber}}",
+										"bookings",
+										"{{bookings.1.bookingNumber}}",
+										"cancel"
 									]
 								}
 							},
@@ -5680,19 +5963,17 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.externalApi.zippopotamus\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"NON_EXISTING_ZIP_CODE\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"zip code is not an existing US postal code\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"NON_EXISTING_ZIP_CODE\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"zip code is not an existing US postal code\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6065,19 +6346,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_PUBLIC_KEY\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"BiteCoins account public key should contain only alphanumeric characters and have a 256-bits length\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6302,21 +6581,19 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    let response = JSON.parse(responseBody);",
-													"    ",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(response.error ===\"INVALID_ARRIVAL_DATE\").to.be.true;",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"         pm.expect(response.description === \"arrival date should be formatted as YYYY-MM-DD\").to.be.true;",
-													"    });",
-													"}"
+													"let response = JSON.parse(responseBody);",
+													"",
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(response.error ===\"INVALID_ARRIVAL_DATE\").to.be.true;",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"     pm.expect(response.description === \"arrival date should be formatted as YYYY-MM-DD\").to.be.true;",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6606,21 +6883,19 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    let response = JSON.parse(responseBody);",
-													"    ",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"         pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
-													"    });",
-													"}"
+													"let response = JSON.parse(responseBody);",
+													"",
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"     pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6726,21 +7001,19 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    let response = JSON.parse(responseBody);",
-													"    ",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"         pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
-													"    });",
-													"}"
+													"let response = JSON.parse(responseBody);",
+													"",
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"     pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6787,21 +7060,19 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    let response = JSON.parse(responseBody);",
-													"    ",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"         pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
-													"    });",
-													"}"
+													"let response = JSON.parse(responseBody);",
+													"",
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"     pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6848,21 +7119,19 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    let response = JSON.parse(responseBody);",
-													"    ",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"         pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
-													"    });",
-													"}"
+													"let response = JSON.parse(responseBody);",
+													"",
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"     pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6909,21 +7178,19 @@
 											"script": {
 												"id": "52f232af-963a-44e2-b39b-52b2487004a6",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    let response = JSON.parse(responseBody);",
-													"    ",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"         pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
-													"    });",
-													"}"
+													"let response = JSON.parse(responseBody);",
+													"",
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(response.error ===\"INVALID_NUMBER_OF_NIGHTS\").to.be.true;",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"     pm.expect(response.description === \"number of nights should be a number between 1 and 90\").to.be.true;",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -6977,19 +7244,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGE\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"package should be one of bloodthirsty, allYouCanDrink, sweetTooth\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGE\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"package should be one of bloodthirsty, allYouCanDrink, sweetTooth\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -7036,19 +7301,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGE\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"package should be one of bloodthirsty, allYouCanDrink, sweetTooth\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGE\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"package should be one of bloodthirsty, allYouCanDrink, sweetTooth\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -7095,19 +7358,17 @@
 											"script": {
 												"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 												"exec": [
-													"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-													"    pm.test(\"response is ok\", function () {",
-													"        pm.response.to.have.status(400);",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right error\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGE\");",
-													"    });",
-													"    ",
-													"    pm.test(\"contains right description\", function () {",
-													"        pm.expect(pm.response.text()).to.include(\"package should be one of bloodthirsty, allYouCanDrink, sweetTooth\");",
-													"    });",
-													"}"
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"INVALID_PACKAGE\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"package should be one of bloodthirsty, allYouCanDrink, sweetTooth\");",
+													"});"
 												],
 												"type": "text/javascript"
 											}
@@ -7302,6 +7563,170 @@
 					"_postman_isSubFolder": true
 				},
 				{
+					"name": "Cancel booking",
+					"item": [
+						{
+							"name": "Invalid Booking Cancel",
+							"item": [
+								{
+									"name": "Invalid Cancel (under 24h before)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "9c836746-c804-45ed-a938-c0a6fa43c71c",
+												"exec": [
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"CANCELATION_NOT_ALLOWED\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"cancelation period for this booking is over\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/beds/{{beds.2.bedNumber}}/bookings/{{bookings.2.bookingNumber}}/cancel",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"beds",
+												"{{beds.2.bedNumber}}",
+												"bookings",
+												"{{bookings.2.bookingNumber}}",
+												"cancel"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid Cancel (already cancelled)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "cff0e3b7-52d3-4526-b00b-7b7051298315",
+												"exec": [
+													"pm.test(\"response is ok\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"contains right error\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"BOOKING_ALREADY_CANCELED\");",
+													"});",
+													"",
+													"pm.test(\"contains right description\", function () {",
+													"    pm.expect(pm.response.text()).to.include(\"booking has already been canceled\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/beds/{{beds.1.bedNumber}}/bookings/{{bookings.1.bookingNumber}}/cancel",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"beds",
+												"{{beds.1.bedNumber}}",
+												"bookings",
+												"{{bookings.1.bookingNumber}}",
+												"cancel"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Cancel Validation",
+							"item": [
+								{
+									"name": "Cancel should return parameter refund amount",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "cff0e3b7-52d3-4526-b00b-7b7051298315",
+												"exec": [
+													"pm.test(\"Should have refund amount\", () => {",
+													"  pm.expect(pm.response.text()).to.include(\"refundAmount\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/beds/{{beds.3.bedNumber}}/bookings/{{bookings.3.bookingNumber}}/cancel",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"beds",
+												"{{beds.3.bedNumber}}",
+												"bookings",
+												"{{bookings.3.bookingNumber}}",
+												"cancel"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "032bc2b8-7942-44c1-a628-d7ad44662143",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "66bc05f2-9dc9-4895-896b-b77e768ea27b",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Clear transactions",
 					"item": [
 						{
@@ -7312,11 +7737,9 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(200);",
-											"    });",
-											"}"
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7361,16 +7784,14 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(200);",
-											"    });",
-											"    let beds = JSON.parse(responseBody)",
-											"  ",
-											"    let flag = (beds.length === 0);",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"let beds = JSON.parse(responseBody)",
 											"",
-											"  pm.expect(flag).to.be.true;",
-											"}"
+											"let flag = (beds.length === 0);",
+											"",
+											"pm.expect(flag).to.be.true;"
 										],
 										"type": "text/javascript"
 									}
@@ -7418,16 +7839,14 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(200);",
-											"    });",
-											"    let beds = JSON.parse(responseBody)",
-											"  ",
-											"    let flag = (beds.length === 0);",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"let beds = JSON.parse(responseBody)",
 											"",
-											"  pm.expect(flag).to.be.true;",
-											"}"
+											"let flag = (beds.length === 0);",
+											"",
+											"pm.expect(flag).to.be.true;"
 										],
 										"type": "text/javascript"
 									}
@@ -7483,21 +7902,11 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7543,21 +7952,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"service fee should be a number greater than or equal to 0\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7603,21 +8010,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"service fee should be a number greater than or equal to 0\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7663,21 +8068,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_SERVICE_FEE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"service fee should be a value greater than or equal to 0\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"OUT_OF_BOUNDS_SERVICE_FEE\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"service fee should be a number greater than or equal to 0\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7723,21 +8126,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"OUT_OF_BOUNDS_SERVICE_FEE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"service fee should be a value between 0 and 15 inclusively\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"OUT_OF_BOUNDS_SERVICE_FEE\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"service fee should be a number between 0 and 15 inclusively\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7783,11 +8184,9 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(200);",
-											"    });",
-											"}"
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7840,21 +8239,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_REPORT_SCOPE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"report scope should be one of weekly, monthly, quaterly or annual\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_REPORT_SCOPE\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"report scope should be one of weekly, monthly, quaterly or annual\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7918,21 +8315,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_REPORT_SCOPE\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"report scope should be one of weekly, monthly, quaterly or annual\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_REPORT_SCOPE\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"report scope should be one of weekly, monthly, quaterly or annual\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -7996,21 +8391,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_REPORT_METRICS\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"report metrics should be one or many of incomes, reservations or cancelations\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_REPORT_METRICS\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"report metrics should be one or many of incomes, reservations or cancelations\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8074,21 +8467,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_REPORT_METRICS\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"report metrics should be one or many of incomes, reservations or cancelations\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_REPORT_METRICS\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"report metrics should be one or many of incomes, reservations or cancelations\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8152,21 +8543,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_REPORT_DIMENSIONS\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"report dimensions should be one or many of package or lodgingMode\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_REPORT_DIMENSIONS\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"report dimensions should be one or many of package or lodgingMode\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8230,21 +8619,19 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(400);",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right error\", function () {",
-											"        pm.expect(response.error ===\"INVALID_REPORT_DIMENSIONS\").to.be.true;",
-											"    });",
-											"    ",
-											"    pm.test(\"contains right description\", function () {",
-											"         pm.expect(response.description === \"report dimensions should be one or many of package or lodgingMode\").to.be.true;",
-											"    });",
-											"}"
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"contains right error\", function () {",
+											"    pm.expect(response.error ===\"INVALID_REPORT_DIMENSIONS\").to.be.true;",
+											"});",
+											"",
+											"pm.test(\"contains right description\", function () {",
+											"     pm.expect(response.description === \"report dimensions should be one or many of package or lodgingMode\").to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
@@ -8308,100 +8695,98 @@
 									"script": {
 										"id": "332deaad-7b4b-449a-aa77-74c467db9878",
 										"exec": [
-											"if (pm.environment.get(\"testFeatures.nullFields\") === true) {",
-											"    let response = JSON.parse(responseBody);",
-											"    ",
-											"    pm.test(\"response is ok\", function () {",
-											"        pm.response.to.have.status(200);",
-											"    });",
-											"    ",
-											"    ",
-											"    var Ajv = require('ajv'),",
-											"        ajv = new Ajv({logger: console}),",
-											"        schema = {",
-											"        \"items\": {",
-											"            \"required\": [",
-											"                \"period\",",
-											"                \"data\"",
-											"            ],",
-											"            \"properties\": {",
-											"                \"period\": {",
-											"                    \"$id\": \"#/items/properties/period\",",
-											"                    \"type\": \"string\"",
-											"                },",
-											"                \"data\": {",
-											"                    \"items\": {",
-											"                        \"required\": [",
-											"                            \"dimensions\",",
-											"                            \"metrics\"",
-											"                        ],",
-											"                        \"properties\": {",
-											"                            \"dimensions\": {",
-											"                                \"items\": {",
-											"                                    \"required\": [",
-											"                                        \"name\",",
-											"                                        \"value\"",
-											"                                    ],",
-											"                                    \"properties\": {",
-											"                                        \"name\": {",
-											"                                            \"$id\": \"#/items/properties/data/items/properties/dimensions/items/properties/name\",",
-											"                                            \"type\": \"string\"",
-											"                                        },",
-											"                                        \"value\": {",
-											"                                            \"$id\": \"#/items/properties/data/items/properties/dimensions/items/properties/value\",",
-											"                                            \"type\": \"string\"",
-											"                                        }",
-											"                                    },",
-											"                                    \"$id\": \"#/items/properties/data/items/properties/dimensions/items\",",
-											"                                    \"type\": \"object\"",
-											"                                },",
-											"                                \"$id\": \"#/items/properties/data/items/properties/dimensions\",",
-											"                                \"type\": \"array\"",
-											"                            },",
-											"                            \"metrics\": {",
-											"                                \"items\": {",
-											"                                    \"required\": [",
-											"                                        \"name\",",
-											"                                        \"value\"",
-											"                                    ],",
-											"                                    \"properties\": {",
-											"                                        \"name\": {",
-											"                                            \"$id\": \"#/items/properties/data/items/properties/metrics/items/properties/name\",",
-											"                                            \"type\": \"string\"",
-											"                                        },",
-											"                                        \"value\": {",
-											"                                            \"$id\": \"#/items/properties/data/items/properties/metrics/items/properties/value\",",
-											"                                            \"type\": \"number\"",
-											"                                        }",
-											"                                    },",
-											"                                    \"$id\": \"#/items/properties/data/items/properties/metrics/items\",",
-											"                                    \"type\": \"object\"",
-											"                                },",
-											"                                \"$id\": \"#/items/properties/data/items/properties/metrics\",",
-											"                                \"type\": \"array\"",
-											"                            }",
-											"                        },",
-											"                        \"$id\": \"#/items/properties/data/items\",",
-											"                        \"type\": \"object\"",
-											"                    },",
-											"                    \"$id\": \"#/items/properties/data\",",
-											"                    \"type\": \"array\"",
-											"                }",
-											"            },",
-											"            \"$id\": \"#/items\",",
-											"            \"type\": \"object\"",
-											"        },",
-											"        \"$id\": \"http://example.org/root.json#\",",
-											"        \"type\": \"array\",",
-											"        \"definitions\": {},",
-											"        \"$schema\": \"http://json-schema.org/draft-07/schema#\"",
-											"    };",
-											" ",
-											"pm.test('Schema is valid', function() {",
-											"    var data = pm.response.json();",
-											"    pm.expect(ajv.validate(schema, data)).to.be.true;",
+											"let response = JSON.parse(responseBody);",
+											"",
+											"pm.test(\"response is ok\", function () {",
+											"    pm.response.to.have.status(200);",
 											"});",
-											"}"
+											"",
+											"",
+											"var Ajv = require('ajv'),",
+											"    ajv = new Ajv({logger: console}),",
+											"    schema = {",
+											"    \"items\": {",
+											"        \"required\": [",
+											"            \"period\",",
+											"            \"data\"",
+											"        ],",
+											"        \"properties\": {",
+											"            \"period\": {",
+											"                \"$id\": \"#/items/properties/period\",",
+											"                \"type\": \"string\"",
+											"            },",
+											"            \"data\": {",
+											"                \"items\": {",
+											"                    \"required\": [",
+											"                        \"dimensions\",",
+											"                        \"metrics\"",
+											"                    ],",
+											"                    \"properties\": {",
+											"                        \"dimensions\": {",
+											"                            \"items\": {",
+											"                                \"required\": [",
+											"                                    \"name\",",
+											"                                    \"value\"",
+											"                                ],",
+											"                                \"properties\": {",
+											"                                    \"name\": {",
+											"                                        \"$id\": \"#/items/properties/data/items/properties/dimensions/items/properties/name\",",
+											"                                        \"type\": \"string\"",
+											"                                    },",
+											"                                    \"value\": {",
+											"                                        \"$id\": \"#/items/properties/data/items/properties/dimensions/items/properties/value\",",
+											"                                        \"type\": \"string\"",
+											"                                    }",
+											"                                },",
+											"                                \"$id\": \"#/items/properties/data/items/properties/dimensions/items\",",
+											"                                \"type\": \"object\"",
+											"                            },",
+											"                            \"$id\": \"#/items/properties/data/items/properties/dimensions\",",
+											"                            \"type\": \"array\"",
+											"                        },",
+											"                        \"metrics\": {",
+											"                            \"items\": {",
+											"                                \"required\": [",
+											"                                    \"name\",",
+											"                                    \"value\"",
+											"                                ],",
+											"                                \"properties\": {",
+											"                                    \"name\": {",
+											"                                        \"$id\": \"#/items/properties/data/items/properties/metrics/items/properties/name\",",
+											"                                        \"type\": \"string\"",
+											"                                    },",
+											"                                    \"value\": {",
+											"                                        \"$id\": \"#/items/properties/data/items/properties/metrics/items/properties/value\",",
+											"                                        \"type\": \"number\"",
+											"                                    }",
+											"                                },",
+											"                                \"$id\": \"#/items/properties/data/items/properties/metrics/items\",",
+											"                                \"type\": \"object\"",
+											"                            },",
+											"                            \"$id\": \"#/items/properties/data/items/properties/metrics\",",
+											"                            \"type\": \"array\"",
+											"                        }",
+											"                    },",
+											"                    \"$id\": \"#/items/properties/data/items\",",
+											"                    \"type\": \"object\"",
+											"                },",
+											"                \"$id\": \"#/items/properties/data\",",
+											"                \"type\": \"array\"",
+											"            }",
+											"        },",
+											"        \"$id\": \"#/items\",",
+											"        \"type\": \"object\"",
+											"    },",
+											"    \"$id\": \"http://example.org/root.json#\",",
+											"    \"type\": \"array\",",
+											"    \"definitions\": {},",
+											"    \"$schema\": \"http://json-schema.org/draft-07/schema#\"",
+											"};",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"var data = pm.response.json();",
+											"pm.expect(ajv.validate(schema, data)).to.be.true;",
+											"});"
 										],
 										"type": "text/javascript"
 									}
