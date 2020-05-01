@@ -5,13 +5,10 @@ uses:
   types: ../../libraries/types.raml
 properties:
   arrivalDate:
-      required: true
       type: date-only
   numberOfNights:
-      required: true
       type: types.NumberOfNights
   package:
-      required: true
       type: types.PackageName
   colonySize:
       description: Colony size for booking, only displayed if bed has a cohabitation lodging mode
@@ -19,5 +16,4 @@ properties:
       type: types.ColonySize
   total:
       description: Total for booking
-      required: true
       type: types.Price

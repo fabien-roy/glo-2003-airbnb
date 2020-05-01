@@ -5,35 +5,27 @@ uses:
   types: ../../libraries/types.raml
 properties:
     bedNumber:
-        required: true
         type: types.BedNumber
     ownerPublicKey:
-        required: true
         type: types.PublicKey
     zipCode:
-        required: true
         type: types.ZipCode
     bedType:
-        required: true
         type: types.BedType
     cleaningFrequency:
-        required: true
         type: types.CleaningFrequency
     bloodTypes:
         description: Array of available blood types in bed
-        required: true
         type: types.BloodType[]
     lodgingMode:
-        required: true
+        required: false
         default: private
         type: types.LodgingMode
     capacity:
         required: true
         type: types.Capacity
     packages:
-        required: true
         description: Array of available packages in bed, with no duplicated package name
         type: types.BedPackage[]
     stars:
-        required: true
         type: types.Stars

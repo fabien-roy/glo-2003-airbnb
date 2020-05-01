@@ -5,18 +5,13 @@ uses:
   types: ../../libraries/types.raml
 properties:
   tenantPublicKey:
-      required: true
       type: types.PublicKey
   arrivalDate:
-      required: true
       type: date-only
   numberOfNights:
-      required: true
       type: types.NumberOfNights
   package:
-      required: true
       type: types.PackageName
   colonySize:
       description: Colony size for booking, only required if bed has a cohabitation lodging mode
-      required: false
       type: types.ColonySize
