@@ -189,22 +189,24 @@ class TimePeriodTest {
     assertEquals(secondMonth, months.get(13).getMonth() + 1);
   }
 
-  // Yes, this is a hack. Sorry.
   @Test
-  public void getWeeks_withSingleWeekPeriod_shouldGetWeekMinusFirst() {
+  public void getWeeks_withSingleWeekPeriod_shouldGetWeek() {
     List<TimeCalendar> weeks = singleWeekPeriod.getWeeks();
-
-    assertEquals(0, weeks.size());
-  }
-
-  // Yes, this is a hack. Sorry.
-  @Test
-  public void getWeeks_withMultipleWeeksPeriod_shouldGetWeeksMinusFirst() {
-    List<TimeCalendar> weeks = multipleWeeksPeriod.getWeeks();
 
     assertEquals(1, weeks.size());
     assertEquals(firstYear, weeks.get(0).getYear());
-    assertEquals(secondWeek, weeks.get(0).getWeekOfYear());
+    assertEquals(firstWeek, weeks.get(0).getWeekOfYear());
+  }
+
+  @Test
+  public void getWeeks_withMultipleWeeksPeriod_shouldGetWeeks() {
+    List<TimeCalendar> weeks = multipleWeeksPeriod.getWeeks();
+
+    assertEquals(2, weeks.size());
+    assertEquals(firstYear, weeks.get(0).getYear());
+    assertEquals(firstWeek, weeks.get(0).getWeekOfYear());
+    assertEquals(firstYear, weeks.get(1).getYear());
+    assertEquals(secondWeek, weeks.get(1).getWeekOfYear());
   }
 
   @Test

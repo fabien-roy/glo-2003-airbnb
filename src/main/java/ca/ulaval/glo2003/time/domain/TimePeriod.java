@@ -48,9 +48,7 @@ public class TimePeriod {
   }
 
   public List<TimeCalendar> getWeeks() {
-    List<TimeCalendar> weeks = getCalendars(TimeDate::getWeek);
-    if (!weeks.isEmpty()) weeks.remove(0);
-    return weeks;
+    return getCalendars(TimeDate::getWeek);
   }
 
   private List<TimeCalendar> getCalendars(GetCalendarOperator getCalendar) {
